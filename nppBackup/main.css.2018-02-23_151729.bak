@@ -1,0 +1,6 @@
+/* --- Page setup. ---*/
+html, body {
+  background-color: #FFFFFF;
+  margin: 10px;
+}
+/* --- End page setup. ---*/

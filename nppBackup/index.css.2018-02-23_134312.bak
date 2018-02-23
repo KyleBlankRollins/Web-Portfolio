@@ -1,0 +1,81 @@
+
+/* Mobile view */
+.wrapper {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas: 
+    "header"
+    "nav"
+    "content"
+    "sidebar"
+    "ad"
+    "footer";
+}
+
+/* 2-column view */
+@media (min-width: 500px) {
+  .wrapper {
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: 
+      "header  header"
+      "nav     nav"
+      "sidebar content"
+      "ad      footer";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* 3-column view */
+@media (min-width: 700px) {
+  .wrapper {
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas: 
+      "header header  header"
+      "nav    content sidebar"
+      "nav    content ad"
+      "footer footer  footer"
+   }
+   nav ul {
+     flex-direction: column;
+   }
+}
+
+/* Grid area definitions ---> */
+.main-head {
+	grid-area: header;
+	background-color: #294C5D;
+}
+.content {
+	grid-area: content;
+	background-color: #f7f7f7;
+}
+.main-nav {
+	grid-area: nav;
+	background-color: #DCC894;
+	list-style-type: none;
+	font-size: 1em;
+	margin: 0;
+	padding: 0 10px 0 10px;
+}
+.side {
+	grid-area: sidebar;
+}
+.ad {
+	grid-area: ad;
+}
+.main-footer {
+	grid-area: footer;
+	background-color: #DCA394;
+}
+/* <--- End grid area definitions */
+
+.main-nav {
+
+}
+
+.mItemSpacer {
+	padding: 2px 2px 2px 2px;
+}

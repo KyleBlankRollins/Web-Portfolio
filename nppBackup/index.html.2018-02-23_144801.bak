@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="main.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+		<title>Rollinsky Home</title>
+	</head>
+	
+	<body>
+
+		<div class="wrapper">
+				<header class="main-head">
+					<img id="banner" src="Images/K_R_Logo_350.png">
+					<div id="banner-space"></div>
+				</header>
+				
+				<nav class="main-nav">
+					<ul class="nav-list">
+						<li id="mItem1"><a href="index.html">Home</a></li>
+						<li class="mItemSpacer"></li>
+						<li id="mItem2"><a href="Technical_Writing.html">Technical Writing</a></li>
+						<li class="mItemSpacer"></li>
+						<li id="mItem3"><a href="Document_Design.html">Document Design</a></li>
+						<li class="mItemSpacer"></li>
+						<li id="mItem4"><a href="Work_History.html">Work History</a></li>
+						<li class="mItemSpacer"></li>
+						<li id="mItem5"><a href="Published_Content.html">Published Content</a></li>
+						<li class="mItemSpacer"></li>
+						<li id="mItem6"><a href="Resume.html">Resume</a></li>
+					</ul>
+				</nav>
+				<article class="content">
+					<h1>Nice to meet you!</h1>
+					<p>My name is Kyle Rollins. Learning is my passion. I use that passion to solve problems.</p>
+					<p>I've worked for some big companies and some small companies. 
+					Each of them have given me ample room to learn and grow.</p>
+					<p>My work at these companies covers, among other things:</p>
+					<ul>
+					  <li>HR policies</li>
+					  <li>Software manuals&nbsp;</li>
+					  <li>Document design</li>
+					  <li>Web development</li>
+					  <li>Tools analysis</li>
+					</ul>
+					<p>Of course, this isn't the extent of what I do. Technical writing is a confluence of many interests, 
+					skills, and ideas. As such, it's a natural fit for my desire to learn.</p>
+				</article> 
+				
+				<aside class="side">
+					<img src="Images/kyle03_Small.jpg">	
+				</aside>
+				
+				<footer class="main-footer">The footer</footer>
+		</div>
+
+	</body>
+
+</html>
