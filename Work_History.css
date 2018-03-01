@@ -1,0 +1,86 @@
+/* Mobile view */
+.wrapper {
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: 
+	"header header"
+	"subtitle subtitle"
+	"nav nav"
+	"content sidebar"
+	"footer footer";
+}
+
+/* 2-column view */
+@media (min-width: 650px) {
+	.wrapper {
+		grid-template-columns: 1fr 1.5fr;
+		grid-template-areas: 
+		  "header  subtitle"
+		  "nav     nav"
+		  "content sidebar"
+		  "footer footer";
+	}
+	nav ul {
+		display: flex;
+		justify-content: space-between;
+	}
+  
+	#banner {
+		border-right: 3px solid #934E3C;
+		border-bottom: none !important;
+	}
+	
+	.mItem {
+		border: none !important;
+	}
+}
+
+/* 3-column view */
+@media (min-width: 900px) {
+	.wrapper {
+		grid-template-columns: 1fr 1fr 2fr;
+		grid-template-areas: 
+		  "header subtitle subtitle"
+		  "nav    content sidebar"
+		  "nav    content sidebar"
+		  "footer footer  footer"
+	}
+	nav ul {
+		flex-direction: column;
+	}
+	
+	.mItem {
+		border-left: 6px solid #937b3c !important;
+	}
+}
+
+.imageGrid {
+	display: grid !important;
+	padding: 10px 10px 10px 10px;
+}
+
+.descriptionGrid {
+	justify-content: left !important;
+	display: inline-grid !important;
+	padding: 0 10px 0 0;
+}
+
+div.dGridItem {
+	max-height: 256px;
+	min-height: 256px;
+}
+
+.spacer {
+	margin: 5px;
+}
+
+/* --- Image handling. ---*/
+
+.content > img {
+	object-fit: cover;
+	width: auto !important;
+	height: auto !important;
+}
+
+/* --- End image handling. --- */
+
+/* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */

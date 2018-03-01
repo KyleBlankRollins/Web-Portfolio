@@ -1,0 +1,27 @@
+a:link {
+	color: #313865;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #B87462;
+	text-decoration: underline;
+}
+
+a:visited {
+	color: #4B517F;
+}
+
+a:visited:hover {
+	color: #B87462;
+}
+
+.sideitem {
+	grid-area: sidebar;
+	display: grid;
+	justify-content: center;
+}
+
+.sideSpace {
+	margin: 20px;
+}
