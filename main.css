@@ -34,7 +34,6 @@ html, body {
 	}
 
 	#banner {
-		border-right: 3px solid #934E3C;
 		border-bottom: none !important;
 	}
 
@@ -67,12 +66,14 @@ html, body {
 	grid-area: header;
 	display: flex;
 	justify-content: center;
+    border-right: 3px solid #934E3C;
 }
 .subtitle{
 	grid-area: subtitle;
 	display: flex;
 	align-items: center;
 	color: #294C5D;
+    margin-left: 20px;
 }
 .content {
 	grid-area: content;
