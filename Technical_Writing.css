@@ -46,7 +46,7 @@
 	padding: 10px 10px 10px 10px;
 }
 
-div.docItem {
+.docItem {
 	max-width: 250px;
 	min-width: 250px;
 }
@@ -54,6 +54,9 @@ div.docItem {
 .docItem > img {
     max-width: 200px;
     min-width: 200px;
+	padding: 1px;
+	border: 1px solid;
+	display: block;
 }
 
 .spacer {

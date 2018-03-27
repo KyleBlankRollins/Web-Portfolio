@@ -15,13 +15,3 @@ a:visited {
 a:visited:hover {
 	color: #B87462;
 }
-
-.sideitem {
-	grid-area: sidebar;
-	display: grid;
-	justify-content: center;
-}
-
-.sideSpace {
-	margin: 20px;
-}
