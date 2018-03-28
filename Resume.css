@@ -1,3 +1,39 @@
+/* 3-column view */
+@media (min-width: 900px) {
+	.wrapper {
+		grid-template-columns: .75fr 3.5fr 1.5fr;
+		grid-template-areas:
+		  "header subtitle subtitle"
+		  "nav nav nav"
+		  "content content content"
+		  "footer footer footer"
+
+	.mItem {
+		border-left: 6px solid #937b3c !important;
+	}
+}
+
 #rHeader {
 	text-align: center;
+}
+
+#rHeader > h2 {
+	margin-bottom: 10px;
+}
+
+#rHeader > h4 {
+	margin-top: 0px;
+	margin-bottom: 4px;
+}
+
+#thickLine {
+	background-color: #294C5D;
+	height: 6px;
+}
+
+#thinLine {
+	background-color: #294C5D;
+	height: 2px;
+	width: 70%
+
 }

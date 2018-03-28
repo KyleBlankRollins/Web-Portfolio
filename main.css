@@ -48,12 +48,9 @@ html, body {
 		grid-template-columns: .75fr 3.5fr 1.5fr;
 		grid-template-areas:
 		  "header subtitle subtitle"
-		  "nav    content sidebar"
-		  "nav    content sidebar"
-		  "footer footer  footer"
-	}
-	nav ul {
-		flex-direction: column;
+		  "nav nav nav"
+		  "content content sidebar"
+		  "footer footer footer"
 	}
 
 	.mItem {
@@ -84,7 +81,7 @@ html, body {
 	grid-area: nav;
 	display: flex;
 	align-items: flex-start;
-    margin-top: 30px;
+    margin-top: 10px;
 	background-color: #FFF9E8;
 	border: 1px solid #B8A062;
 	max-height: 270px;
@@ -123,9 +120,9 @@ html, body {
 /* Nav menu styling ---> */
 .nav-list {
 	list-style-type: none;
-	margin: 10px 0 10px 0;
-	padding: 10px 10px 0 10px;
 	font-size: 24px;
+    align-items: center;
+    margin: 5px;
 }
 
 .nav-list li {

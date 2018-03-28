@@ -39,12 +39,9 @@
 		grid-template-columns: .5fr 1fr 2fr;
 		grid-template-areas:
 		  "header subtitle subtitle"
-		  "nav    content sidebar"
-		  "nav    content sidebar"
+		  "nav    nav nav"
+		  "content    content sidebar"
 		  "footer footer  footer"
-	}
-	nav ul {
-		flex-direction: column;
 	}
 
 	.mItem {
