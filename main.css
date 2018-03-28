@@ -28,10 +28,6 @@ html, body {
 		  "sidebar content"
 		  "footer footer";
 	}
-	nav ul {
-		display: flex;
-		justify-content: space-between;
-	}
 
 	#banner {
 		border-bottom: none !important;
@@ -51,10 +47,6 @@ html, body {
 		  "nav nav nav"
 		  "content content sidebar"
 		  "footer footer footer"
-	}
-
-	.mItem {
-		border-left: 6px solid #937b3c !important;
 	}
 }
 
@@ -80,67 +72,105 @@ html, body {
 .main-nav {
 	grid-area: nav;
 	display: flex;
-	align-items: flex-start;
+    justify-content: center;
     margin-top: 10px;
 	background-color: #FFF9E8;
-	border: 1px solid #B8A062;
+	border-top: 1px solid #B8A062;
+    border-bottom: 1px solid #B8A062;
 	max-height: 270px;
 	min-width: 230px;
 }
 .side {
 	grid-area: sidebar;
+    display: grid;
+    justify-content: center;
 }
 
 .main-footer {
 	grid-area: footer;
 	display: flex;
-	align-items: center;
 	justify-content: center;
 	background-color: #FFEDE8;
-	border: 1px solid #B87462;
-	color: #294C5D;
-	font-size: 1.2em;
-	font-weight: bold;
+	border-top: 1px solid #B87462;
+    border-bottom: 1px solid #B87462;
 }
 /* <--- End grid area definitions */
 
-.socialMedia {
-	color: #294C5D !important;
+/* Footer styling --->*/
+
+.socialList {
+    display: flex;
+    list-style-type: none;
+    font-size: 24px;
+    align-items: stretch;
+    margin: 0 0 0 0;
+    padding: 0px;
 }
 
-.socialMedia:hover {
-	color: #934E3C !important;
-}
-
-.mItemSpacer {
-	padding: 4px !important;
-	border: none !important;
-}
-
-/* Nav menu styling ---> */
-.nav-list {
-	list-style-type: none;
-	font-size: 24px;
+.socialList li {
+    display: flex;
     align-items: center;
-    margin: 5px;
-}
-
-.nav-list li {
-	border-left: 6px solid #937b3c;
-	padding: 5px 0 0 5px;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
 	opacity: .7;
-	flex: 1;
+    width: 30%;
+    margin: 10 20 10 20;
+    border-left: 1px solid #B87462 !important;
+    border-right: 1px solid #B87462 !important;
 }
 
-.mItem:hover {
-	border-color: #934E3C;
-	background-color: #FFD7CC;
+.socialItem:hover {
+    background-color: #294C5D;
+    opacity: 1;
+    margin: -5 0 -5 0;
+}
+
+.socialItem:hover a:link, .socialItem:hover a:visited{
+	color: #FFEDE8;
+	font-size: 30px;
 	opacity: 1;
 }
 
+.main-footer a:link, .main-footer a:visited {
+    color: #294C5D;
+	text-decoration: none;
+}
+
+/* <--- End footer styling*/
+
+/* Nav menu styling ---> */
+.nav-list {
+    display: flex;
+    list-style-type: none;
+	font-size: 24px;
+    align-items: stretch;
+    margin: 0 5 0 5;
+    padding: 0px;
+}
+
+.nav-list li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+	opacity: .7;
+    width: 15%;
+    margin: 10 20 10 20;
+    border-left: 1px solid #B8A062 !important;
+    border-right: 1px solid #B8A062 !important;
+}
+
+.mItem:hover {
+	background-color: #B8A062;
+	opacity: 1;
+    margin: -5 0 -5 0;
+}
+
 .mItem:hover a:link, .mItem:hover a:visited{
-	color: #294C5D;
-	font-size: 26px;
+	color: #FFF9E8;
+	font-size: 30px;
 	opacity: 1;
 }
 
@@ -148,24 +178,13 @@ html, body {
     color: #937b3c;
 	text-decoration: none;
 }
+/* <--- End nav menu styling */
 
-.main-nav a:hover {
-	font-size: 26px;
-	color: #294C5D;
-}
-
-.sideitem {
-	grid-area: sidebar;
-	display: grid;
-	justify-content: center;
-}
+/* --- End page setup. ---*/
 
 .sideSpace {
 	margin: 20px;
 }
-/* <--- End nav menu styling */
-
-/* --- End page setup. ---*/
 
 #banner {
 	object-fit: fill;
