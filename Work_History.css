@@ -3,7 +3,6 @@
 	grid-template-columns: 1fr 1fr;
 	grid-template-areas:
 	"header header"
-	"subtitle subtitle"
 	"nav nav"
 	"content sidebar"
 	"footer footer";
@@ -14,22 +13,10 @@
 	.wrapper {
 		grid-template-columns: 1fr 1.5fr;
 		grid-template-areas:
-		  "header  subtitle"
+		  "header  header"
 		  "nav     nav"
 		  "content sidebar"
 		  "footer footer";
-	}
-	nav ul {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	#banner {
-		border-bottom: none !important;
-	}
-
-	.mItem {
-		border: none !important;
 	}
 }
 
@@ -38,15 +25,12 @@
 	.wrapper {
 		grid-template-columns: .5fr 1fr 2fr;
 		grid-template-areas:
-		  "header subtitle subtitle"
+		  "header header header"
 		  "nav    nav nav"
 		  "content    content sidebar"
 		  "footer footer  footer"
 	}
 
-	.mItem {
-		border-left: 6px solid #937b3c !important;
-	}
 }
 
 .imageGrid {

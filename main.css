@@ -11,7 +11,6 @@ html, body {
 	grid-gap: 10px;
 	grid-template-areas:
 	"header"
-	"subtitle"
 	"nav"
 	"content"
 	"sidebar"
@@ -23,18 +22,10 @@ html, body {
 	.wrapper {
 		grid-template-columns: 1fr 3fr;
 		grid-template-areas:
-		  "header  subtitle"
+		  "header  header"
 		  "nav     nav"
 		  "sidebar content"
 		  "footer footer";
-	}
-
-	#banner {
-		border-bottom: none !important;
-	}
-
-	.mItem {
-		border: none !important;
 	}
 }
 
@@ -43,28 +34,21 @@ html, body {
 	.wrapper {
 		grid-template-columns: .75fr 3.5fr 1.5fr;
 		grid-template-areas:
-		  "header subtitle subtitle"
+		  "header header header"
 		  "nav nav nav"
 		  "content content sidebar"
 		  "footer footer footer"
 	}
 }
+/* --- End page setup. ---*/
 
 /* Grid area definitions ---> */
 .main-head {
 	grid-area: header;
-	display: flex;
-	justify-content: center;
-    align-items: baseline;
-    border-right: 3px solid #934E3C;
+    display: flex;
+    align-items: center;
 }
-.subtitle{
-	grid-area: subtitle;
-	display: flex;
-	align-items: center;
-	color: #294C5D;
-    margin-left: 20px;
-}
+
 .content {
 	grid-area: content;
 	margin: 0 20px 5px 20px;
@@ -77,7 +61,6 @@ html, body {
 	background-color: #FFF9E8;
 	border-top: 1px solid #B8A062;
     border-bottom: 1px solid #B8A062;
-	max-height: 270px;
 	min-width: 230px;
 }
 .side {
@@ -107,7 +90,7 @@ html, body {
     padding: 0px;
 }
 
-.socialList li {
+.socialList a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,16 +103,12 @@ html, body {
     border-right: 1px solid #B87462 !important;
 }
 
-.socialItem:hover {
+.socialList a:hover {
     background-color: #294C5D;
+    color: #FFEDE8 !important;
+    font-size: 30px;
     opacity: 1;
     margin: -5 0 -5 0;
-}
-
-.socialItem:hover a:link, .socialItem:hover a:visited{
-	color: #FFEDE8;
-	font-size: 30px;
-	opacity: 1;
 }
 
 .main-footer a:link, .main-footer a:visited {
@@ -149,7 +128,7 @@ html, body {
     padding: 0px;
 }
 
-.nav-list li {
+.nav-list a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,16 +141,12 @@ html, body {
     border-right: 1px solid #B8A062 !important;
 }
 
-.mItem:hover {
+.nav-list a:hover {
 	background-color: #B8A062;
+    color: #FFF9E8 !important;
+    font-size: 30px;
 	opacity: 1;
     margin: -5 0 -5 0;
-}
-
-.mItem:hover a:link, .mItem:hover a:visited{
-	color: #FFF9E8;
-	font-size: 30px;
-	opacity: 1;
 }
 
 .main-nav a:link, .main-nav a:visited {
@@ -180,16 +155,49 @@ html, body {
 }
 /* <--- End nav menu styling */
 
-/* --- End page setup. ---*/
-
+/* Banner styling ---> */
 .sideSpace {
 	margin: 20px;
 }
 
-#banner {
-	object-fit: fill;
-	padding: 20px 40px 0px 20px;
+.subtitle {
+    color: #294C5D;
+    grid-column: 2 / span 2;
+    margin: 0 0 0 30;
 }
+
+.banner {
+    display: flex;
+    align-items: baseline;
+}
+
+.banner div > h2
+{
+    color: #294C5D;
+    margin: 0;
+    padding-left: 30px;
+}
+
+.glyph {
+    display: flex;
+    align-items: baseline;
+    font-size: 3em;
+    border-right: 4px solid #B87462;
+    padding: 0 30 0 0;
+}
+
+.glyphOuter {
+    color: #294C5D;
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 0;
+}
+
+#glyphInner {
+    color: #B87462;
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 0;
+}
+/* <--- End banner styling */
 
 
 

@@ -3,18 +3,16 @@
 	.wrapper {
 		grid-template-columns: .75fr 3.5fr 1.5fr;
 		grid-template-areas:
-		  "header subtitle subtitle"
+		  "header header header"
 		  "nav nav nav"
 		  "content content content"
 		  "footer footer footer"
-
-	.mItem {
-		border-left: 6px solid #937b3c !important;
 	}
 }
 
 #rHeader {
-	text-align: center;
+
+	border-bottom: 6px solid #294C5D;
 }
 
 #rHeader > h2 {
@@ -26,14 +24,20 @@
 	margin-bottom: 4px;
 }
 
-#thickLine {
-	background-color: #294C5D;
-	height: 6px;
+#rHeader > p {
+	margin-top: 0px;
+	margin-bottom: 6px;
 }
 
-#thinLine {
-	background-color: #294C5D;
-	height: 2px;
-	width: 70%
+.expColumn {
+	border-left: 2px solid #294C5D;
+	padding-left: 10px;
+}
+
+.expColumn p {
+	padding-left: 20px;
+}
+
+#expContent {
 
 }

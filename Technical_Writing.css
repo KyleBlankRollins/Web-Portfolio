@@ -1,73 +1,71 @@
-/* 2-column view */
-@media (min-width: 650px) {
-	.wrapper {
-		grid-template-columns: 1fr 1.5fr;
-		grid-template-areas:
-		  "header  subtitle"
-		  "nav     nav"
-		  "content sidebar"
-		  "footer footer";
-	}
-	nav ul {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	#banner {
-		border-bottom: none !important;
-	}
-
-	.mItem {
-		border: none !important;
-	}
-}
-
 /* 3-column view */
 @media (min-width: 900px) {
 	.wrapper {
-		grid-template-columns: .5fr 1fr 2fr;
+		/* Two columns instead of main three. */
+		grid-template-columns: 1fr 1fr;
 		grid-template-areas:
-		  "header subtitle subtitle"
-		  "nav nav nav"
-		  "content content sidebar"
-		  "footer footer  footer"
+		  "header header"
+		  "nav nav"
+		  /* sample replaces content and sidebar. */
+		  "sample sample"
+		  "footer footer"
 	}
+}
 
-	.mItem {
-		border-left: 6px solid #937b3c !important;
-	}
+/* Grid area definitions ---> */
+.sample {
+	grid-area: sample;
 }
 
 .docGrid {
 	display: grid !important;
 	padding: 10px 10px 10px 10px;
+	grid-template-columns: auto auto auto;
+}
+/* <--- End grid area definitions */
+
+.docGrid > div {
+	display: flex;
 }
 
 .docItem {
-	max-width: 250px;
-	min-width: 250px;
+	text-align: center;
 }
 
-.docItem > img {
-    max-width: 200px;
-    min-width: 200px;
-	padding: 1px;
-	border: 1px solid;
-	display: block;
+#docItem1 {
+	position: relative;
+    width: 100%;
+    max-width: 300px;
 }
 
-.spacer {
-	margin: 5px;
+#docItem1:hover #docItem1Overlay {
+	opacity: 1;
 }
 
-/* --- Image handling. ---*/
-
-.content > img {
-	object-fit: cover;
-	width: auto !important;
-	height: auto !important;
+#docItem1Text {
+	width: 100%;
 }
 
-/* --- End image handling. --- */
+#docItem1Overlay {
+	position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+	width: 100%;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+a > img {
+	width: 300px;
+    object-fit: fill;
+	border: 1px solid black;
+}
+
+
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
