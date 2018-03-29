@@ -16,6 +16,7 @@
 .sample {
 	grid-area: sample;
 	display: grid;
+	grid-gap: 40px;
 	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
 	grid-auto-rows: 100px;
 	grid-auto-flow: dense;
@@ -25,14 +26,30 @@
 /* <--- End grid area definitions */
 
 .docItem {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-	grid-auto-rows: 200px;
-	grid-auto-flow: dense;
+	position: relative;
     width: 100%;
 }
 
-/* .horizontal {
+.docItem:hover .docItemOverlay {
+	opacity: 1;
+}
+
+.docItemOverlay {
+	position: absolute;
+    bottom: 0;
+	height: 33%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.75); /* Black see-through */
+    color: #f1f1f1;
+	width: 100%;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: .75em;
+    text-align: center;
+}
+
+.horizontal {
 	grid-row: span 2;
 	grid-column: span 3;
 }
@@ -40,17 +57,6 @@
 .vertical {
 	grid-row: span 4;
 	grid-column: span 3;
-} */
-.jobDesc {
-	float: right;
-	margin-right: 30px;
-	background: rgb(0, 0, 0);
-	background: rgba(0, 0, 0, 0.5); /* Black see-through */
-}
-
-.square {
-	grid-row: span 2;
-	grid-column: span 6;
 }
 
 a > img {
@@ -59,5 +65,7 @@ a > img {
     object-fit: cover;
 	border: 1px solid black;
 }
+
+
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
