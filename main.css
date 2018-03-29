@@ -79,6 +79,14 @@ html, body {
 }
 /* <--- End grid area definitions */
 
+/* Link styling */
+
+a {
+    text-decoration: none;
+}
+
+/* End link styling */
+
 /* Footer styling --->*/
 
 .socialList {

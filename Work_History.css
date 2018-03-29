@@ -16,6 +16,7 @@
 .sample {
 	grid-area: sample;
 	display: grid;
+	grid-gap: 10px;
 	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
 	grid-auto-rows: 100px;
 	grid-auto-flow: dense;
@@ -28,7 +29,7 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
 	grid-auto-rows: 200px;
-	grid-auto-flow: dense;
+	grid-auto-flow: row;
     width: 100%;
 }
 
@@ -42,15 +43,31 @@
 	grid-column: span 3;
 } */
 .jobDesc {
-	float: right;
-	margin-right: 30px;
-	background: rgb(0, 0, 0);
-	background: rgba(0, 0, 0, 0.5); /* Black see-through */
+	padding-left: 10px;
+	background: rgba(41, 76, 93, 0.15); /* Black see-through */
 }
 
 .square {
 	grid-row: span 2;
 	grid-column: span 6;
+}
+
+.employer {
+	display: flex;
+	background-color: #FFEDE8;
+	height: 100%;
+	justify-content: center;
+	align-items: baseline;
+}
+
+.employer > h1 {
+	color: #294C5D;
+	font-size: 4em;
+	margin: 0;
+}
+
+a > .employer:hover {
+	opacity: .6;
 }
 
 a > img {
