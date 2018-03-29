@@ -116,7 +116,11 @@ html, body {
 	text-decoration: none;
 }
 
-/* <--- End footer styling*/
+.socialMedia {
+    width: 42px !important;
+}
+
+/* <--- End footer styling */
 
 /* Nav menu styling ---> */
 .nav-list {
