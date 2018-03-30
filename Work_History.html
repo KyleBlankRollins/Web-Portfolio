@@ -27,38 +27,40 @@
                 </ul>
             </nav>
 
-            <div class="sample">
-                <div class="docItem square">
-                    <div><a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank"><img src="Images/employers/3M_Logo.jpg"/></a></div>
-                    <div class="jobDesc">
-                        <h4>Description</h4>
-                        <p>At 3M, I blah, blah, blah, blah</p>
-                        <h4>Skills</h4>
-                        <p>blah, blah, blah, blah</p>
+<!-- TODO: add some onClick events for dropDownBox. On click, slide jobTitle and DropDown to the top, reveal jobDesc in the remaining space. -->
+            <div class="empMatrix">
+                <div class="empBox">
+                    <div class="empImage">
+                        <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
+                    </div>
+                    <div class="jobTitle">
+                        <h1>Technical Writer</h1>
+                    </div>
+                    <div class="dropDown" onclick="slideReveal()">
+                        <div class="dropDownBox"><i class="fas fa-caret-down"></i></div>
+                    </div>
+                    <div id="jobDesc1">
+                        <p>This is a job description.</p>
                     </div>
                 </div>
-                <div class="docItem square">
-                    <a href="https://www.ebay.com/" target="_blank"><div class="employer"><h1>eBay</h1></div></a>
-                    <div class="jobDesc">
-                        <h4>Description</h4>
-                        <p>At eBay, I blah, blah, blah, blah</p>
-                        <h4>Skills</h4>
-                        <p>blah, blah, blah, blah</p>
+                <div class="empBox">
+                    <div class="empImage">
+                        <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
                     </div>
-                </div>
-                <div class="docItem square">
-                    <div><a href="http://www.economicmodeling.com/" target="_blank"><img src="Images/employers/Emsi_Logo.jpg"/></a></div>
-                </div>
-                <div class="docItem square">
-                    <div><a href="http://www.purch.com/" target="_blank"><img src="Images/employers/Purch_Logo.jpg"/></a></div>
-                </div>
-                <div class="docItem square">
-                    <div><a href="https://www.weber.edu/" target="_blank"><img src="Images/employers/WSU_Logo.jpg"/></a></div>
-                </div>
-                <div class="docItem square">
-                    <div><a href="https://www.lds.org/?lang=eng" target="_blank"><img src="Images/employers/LDS_Logo.jpg"/></a></div>
+                    <div class="jobTitle">
+                        <h1>Technical Writer</h1>
+                    </div>
+                    <div class="dropDown">
+                        <div class="dropDownBox"><i class="fas fa-caret-down"></i></div>
+                    </div>
+                    <div class="jobDesc">
+                        <p>This is a job description.</p>
+                    </div>
                 </div>
             </div>
+
+
+
 
             <!-- <div class="content">
 				<div class="imageGrid">
@@ -74,53 +76,8 @@
 					<div class="spacer"> </div>
 					<div><a href="https://www.lds.org/?lang=eng" target="_blank"><img src="Images/employers/LDS_Logo.jpg"/></a></div>
 				</div>
-			</div>
+			</div> -->
 
-			<aside class="side">
-				<div class="descriptionGrid">
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At 3M, I blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div>
-					<div class="spacer"> </div>
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At Purch, I blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div>
-					<div class="spacer"> </div>
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At WSU blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div >
-					<div class="spacer"> </div>
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At eBay, I blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div>
-					<div class="spacer"> </div>
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At Emsi, I blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div>
-					<div class="spacer"> </div>
-					<div class="dGridItem">
-						<h4>Description</h4>
-						<p>At LDS blah, blah, blah, blah</p>
-						<h4>Skills</h4>
-						<p>blah, blah, blah, blah</p>
-					</div>
-				</div>
-			</aside> -->
 
             <footer class="main-footer">
                 <ul class="socialList">
@@ -130,5 +87,18 @@
                 </ul class="socialList">
 			</footer>
         </div>
+
+        <script>
+			/* When the user clicks on the button,
+			toggle between hiding and showing the dropdown content */
+			function slideReveal() {
+				var jobDesc = document.getElementById("jobDesc1");
+
+                if (jobDesc.style.display="none"){
+                    jobDesc.style.display="block"
+                } // TODO: rig it so another click collapses jobDescription.
+			}
+
+		</script>
     </body>
 </html>

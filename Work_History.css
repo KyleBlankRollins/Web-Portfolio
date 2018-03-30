@@ -6,75 +6,82 @@
 		grid-template-areas:
 		  "header header"
 		  "nav nav"
-		  /* sample replaces content and sidebar. */
-		  "sample sample"
+		  "empMatrix empMatrix"
 		  "footer footer"
 	}
 }
 
 /* Grid area definitions ---> */
-.sample {
-	grid-area: sample;
+.empMatrix {
+ 	grid-area: empMatrix;
 	display: grid;
 	grid-gap: 10px;
 	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-	grid-auto-rows: 100px;
-	grid-auto-flow: dense;
+	grid-auto-rows: auto-fit;
 	padding: 20 10 20 10;
+	background-color: #3f87a6;
 }
 
+.empBox {
+	display: grid;
+	grid-template-columns: 256px auto auto;
+	grid-auto-rows: auto-fit;
+	background-color: #fff4e6;
+	align-items: stretch;
+	height: 100%;
+	width: 100%;
+}
 /* <--- End grid area definitions */
 
-.docItem {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-	grid-auto-rows: 200px;
-	grid-auto-flow: row;
-    width: 100%;
-}
-
-/* .horizontal {
-	grid-row: span 2;
-	grid-column: span 3;
-}
-
-.vertical {
-	grid-row: span 4;
-	grid-column: span 3;
-} */
-.jobDesc {
-	padding-left: 10px;
-	background: rgba(41, 76, 93, 0.15); /* Black see-through */
-}
-
-.square {
-	grid-row: span 2;
-	grid-column: span 6;
-}
-
-.employer {
+.empImage {
 	display: flex;
-	background-color: #FFEDE8;
+	align-items: center;
 	height: 100%;
+	width: 100%;
+	background-color: red;
+}
+
+.jobTitle {
+	display: flex;
+	align-items: center;
+	background-color: green;
+	margin: 10 0 10 10;
+	padding: 10px;
+}
+
+.dropDown {
+	display: flex;
+	align-items: center;
 	justify-content: center;
-	align-items: baseline;
+	margin: 10px;
+	font-size: 2em;
+	background-color: yellow;
 }
 
-.employer > h1 {
-	color: #294C5D;
-	font-size: 4em;
-	margin: 0;
+.dropDownBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	height: 15%;
+	width: 100%;
+	background-color: orange;
 }
 
-a > .employer:hover {
+.dropDownBox:hover {
 	opacity: .6;
 }
 
-a > img {
-	width: 100%;
-    height: 100%;
-    object-fit: cover;
-	border: 1px solid black;
+#jobDesc1 {
+	display: none;
+	color: white;
+	background-color: black;
+}
+
+.jobDesc {
+	display: none;
+	color: white;
+	background-color: black;
 }
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
