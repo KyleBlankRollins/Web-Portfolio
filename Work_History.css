@@ -24,7 +24,7 @@
 
 .empBox {
 	display: grid;
-	grid-template-columns: 256px auto auto;
+	grid-template-columns: 256px auto minmax(70px, 80px);
 	grid-auto-rows: auto-fit;
 	background-color: #fff4e6;
 	align-items: stretch;
@@ -53,9 +53,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	max-width: 70px;
 	margin: 10px;
-	font-size: 2em;
+	font-size: 1.5em;
 	background-color: yellow;
+}
+
+.dropDownBox p {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .dropDownBox {
@@ -63,7 +69,8 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	height: 15%;
+	height: 45px;
+	min-width: 70px;
 	width: 100%;
 	background-color: orange;
 }
@@ -72,14 +79,12 @@
 	opacity: .6;
 }
 
-#jobDesc1 {
-	display: none;
-	color: white;
-	background-color: black;
-}
-
 .jobDesc {
 	display: none;
+}
+
+.jobDescShow{
+	display: block;
 	color: white;
 	background-color: black;
 }

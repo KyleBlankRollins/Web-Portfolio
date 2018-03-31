@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href="main.css">
 		<link rel="stylesheet" href="Work_History.css">
+        <script src="Work_History.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 		<title>Work History</title>
@@ -36,10 +37,12 @@
                     <div class="jobTitle">
                         <h1>Technical Writer</h1>
                     </div>
-                    <div class="dropDown" onclick="slideReveal()">
-                        <div class="dropDownBox"><i class="fas fa-caret-down"></i></div>
+                    <div class="dropDown">
+                        <div class="dropDownBox">
+                            <p>▼</p>
+                        </div>
                     </div>
-                    <div id="jobDesc1">
+                    <div class="jobDesc">
                         <p>This is a job description.</p>
                     </div>
                 </div>
@@ -51,7 +54,9 @@
                         <h1>Technical Writer</h1>
                     </div>
                     <div class="dropDown">
-                        <div class="dropDownBox"><i class="fas fa-caret-down"></i></div>
+                        <div class="dropDownBox">
+                            <p>▼</p>
+                        </div>
                     </div>
                     <div class="jobDesc">
                         <p>This is a job description.</p>
@@ -88,17 +93,18 @@
 			</footer>
         </div>
 
-        <script>
+        <!-- <script>
 			/* When the user clicks on the button,
 			toggle between hiding and showing the dropdown content */
 			function slideReveal() {
 				var jobDesc = document.getElementById("jobDesc1");
 
-                if (jobDesc.style.display="none"){
+                if (jobDesc.style.display==="none"){
                     jobDesc.style.display="block"
-                } // TODO: rig it so another click collapses jobDescription.
+                } else {
+                    jobDesc.style.display="none"
+                }
 			}
-
-		</script>
+		</script> -->
     </body>
 </html>
