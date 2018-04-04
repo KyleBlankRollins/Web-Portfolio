@@ -38,11 +38,11 @@
                         <h1>Technical Writer</h1>
                     </div>
                     <div class="dropDown">
-                        <div class="dropDownBox">
+                        <div class="dropDownBox" id="dropDown1" onclick="reveal1()">
                             <p>▼</p>
                         </div>
                     </div>
-                    <div class="jobDesc">
+                    <div class="jobDesc" id="description1">
                         <p>This is a job description.</p>
                     </div>
                 </div>
@@ -54,11 +54,11 @@
                         <h1>Technical Writer</h1>
                     </div>
                     <div class="dropDown">
-                        <div class="dropDownBox">
+                        <div class="dropDownBox" id="dropDown2" onclick="reveal2()">
                             <p>▼</p>
                         </div>
                     </div>
-                    <div class="jobDesc">
+                    <div class="jobDesc" id="description2">
                         <p>This is a job description.</p>
                     </div>
                 </div>
@@ -92,6 +92,33 @@
                 </ul class="socialList">
 			</footer>
         </div>
+
+        <script>
+            function reveal1() {
+                var description = document.getElementById("description1");
+                description.style.display="block";
+            }
+
+            function reveal2() {
+                var description = document.getElementById("description2");
+                description.style.display="block";
+            }
+
+            window.onclick = function(e) {
+                var description1 = document.getElementById("description1");
+                var description2 = document.getElementById("description2");
+                if (!e.target.matches('.dropDownBox')) {
+
+                    if (description1.style.display="block"){
+                        description1.style.display="none"
+                    }
+
+                    if (description2.style.display="block"){
+                        description2.style.display="none"
+                    }
+                }
+            }
+        </script>
 
     </body>
 </html>
