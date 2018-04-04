@@ -2,7 +2,6 @@
     <head>
         <link rel="stylesheet" href="main.css">
 		<link rel="stylesheet" href="Work_History.css">
-        <script src="Work_History.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 		<title>Work History</title>
@@ -35,32 +34,24 @@
                         <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
                     </div>
                     <div class="jobTitle">
-                        <h1>Technical Writer</h1>
-                    </div>
-                    <div class="dropDown">
-                        <div class="dropDownBox" id="dropDown1" onclick="reveal1()">
-                            <p>▼</p>
+                        <div><h1>Technical Writer</h1></div>
+                        <div class="jobDesc" id="description1">
+                            <p>This is a job description.</p>
                         </div>
                     </div>
-                    <div class="jobDesc" id="description1">
-                        <p>This is a job description.</p>
-                    </div>
+                    <button class="jobRevealButton" id="jobReveal1"> + </button>
                 </div>
                 <div class="empBox">
                     <div class="empImage">
                         <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
                     </div>
                     <div class="jobTitle">
-                        <h1>Technical Writer</h1>
-                    </div>
-                    <div class="dropDown">
-                        <div class="dropDownBox" id="dropDown2" onclick="reveal2()">
-                            <p>▼</p>
+                        <div><h1>Technical Writer</h1></div>
+                        <div class="jobDesc" id="description2">
+                            <p>This is another job description.</p>
                         </div>
                     </div>
-                    <div class="jobDesc" id="description2">
-                        <p>This is a job description.</p>
-                    </div>
+                    <button class="jobRevealButton" id="jobReveal2"> + </button>
                 </div>
             </div>
 
@@ -94,30 +85,26 @@
         </div>
 
         <script>
-            function reveal1() {
-                var description = document.getElementById("description1");
-                description.style.display="block";
+
+            var jobDesc1 = document.getElementById("description1");
+            var jobReveal1 = document.getElementById("jobReveal1");
+            var jobDesc2 = document.getElementById("description2");
+            var jobReveal2 = document.getElementById("jobReveal2");
+
+            jobDesc1.classList.add('jobDescHide');
+            jobDesc2.classList.add('jobDescHide');
+
+            function jobDescToggle1() {
+                jobDesc1.classList.toggle('jobDescHide');
             }
 
-            function reveal2() {
-                var description = document.getElementById("description2");
-                description.style.display="block";
+            function jobDescToggle2() {
+                jobDesc2.classList.toggle('jobDescHide');
             }
 
-            window.onclick = function(e) {
-                var description1 = document.getElementById("description1");
-                var description2 = document.getElementById("description2");
-                if (!e.target.matches('.dropDownBox')) {
+            jobReveal1.addEventListener('click', jobDescToggle1);
+            jobReveal2.addEventListener('click', jobDescToggle2);
 
-                    if (description1.style.display="block"){
-                        description1.style.display="none"
-                    }
-
-                    if (description2.style.display="block"){
-                        description2.style.display="none"
-                    }
-                }
-            }
         </script>
 
     </body>

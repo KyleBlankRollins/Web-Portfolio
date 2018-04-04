@@ -43,50 +43,45 @@
 
 .jobTitle {
 	display: flex;
+	position: relative;
 	align-items: center;
 	background-color: green;
-	margin: 10 0 10 10;
 	padding: 10px;
+	width: 100%;
 }
 
-.dropDown {
+.jobRevealButton {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	max-width: 70px;
+	width: 100%;
 	margin: 10px;
 	font-size: 1.5em;
 	background-color: yellow;
-}
-
-.dropDownBox p {
-	font-size: 20px;
-	font-weight: bold;
-}
-
-.dropDownBox {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	cursor: pointer;
-	height: 45px;
-	min-width: 70px;
-	width: 100%;
-	background-color: orange;
 }
 
-.dropDownBox:hover {
+.jobRevealButton:hover {
 	opacity: .6;
 }
 
 .jobDesc {
-	display: none;
+	position: absolute;
+	opacity: 1;
+	left: 0;
+	height: 100%;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.75); /* Black see-through */
+	color: #f1f1f1;
+	width: 100%;
+	transition: .5s ease;
+	color: white;
+	font-size: 1em;
+	padding: 0 10 0 10;
 }
 
-.jobDescShow{
-	display: block;
-	color: white;
-	background-color: black;
+.jobDescHide{
+	opacity:0;
 }
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
