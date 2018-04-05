@@ -18,13 +18,13 @@
 
             <nav class="main-nav">
                 <ul class="nav-list">
-                    <a href="index.html"><li class="mItem" id="mItem1">Home</li></a>
-                    <a href="Technical_Writing.html"><li class="mItem" id="mItem2">Technical Writing</li></a>
-                    <a href="Document_Design.html"><li class="mItem" id="mItem3">Document Design</li></a>
-                    <a href="Work_History.html"><li class="mItem" id="mItem4">Work<br>History</li></a>
-                    <a href="Published_Content.html"><li class="mItem" id="mItem5">Published Content</li></a>
-                    <a href="Resume.html"><li class="mItem" id="mItem6">Resume</li></a>
-                </ul>
+					<a href="index.html"><li>Home</li></a>
+					<a href="Technical_Writing.html"><li>Technical Writing</li></a>
+					<a href="Document_Design.html"><li>Document Design</li></a>
+					<a href="Work_History.html"><li>Work<br>History</li></a>
+					<a href="Published_Content.html"><li>Published Content</li></a>
+					<a href="Resume.html"><li>Resume</li></a>
+				</ul>
             </nav>
 
 <!-- TODO: add some onClick events for dropDownBox. On click, slide jobTitle and DropDown to the top, reveal jobDesc in the remaining space. -->
@@ -33,8 +33,8 @@
                     <div class="empImage">
                         <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
                     </div>
-                    <div class="jobTitle">
-                        <div><h1>Technical Writer</h1></div>
+                    <div class="jobBox">
+                        <div class="jobTitle" id="jobTitle1">Technical Writer</div>
                         <div class="jobDesc" id="description1">
                             <p>This is a job description.</p>
                         </div>
@@ -45,10 +45,10 @@
                     <div class="empImage">
                         <a href="https://www.ebay.com/" target="_blank"><img src="Images/employers/eBay_Logo.jpg"/></a>
                     </div>
-                    <div class="jobTitle">
-                        <div><h1>Technical Writer</h1></div>
+                    <div class="jobBox">
+                        <div class="jobTitle" id="jobTitle2">Technical Writer</div>
                         <div class="jobDesc" id="description2">
-                            <p>This is another job description.</p>
+                            <p>This is a job description.</p>
                         </div>
                     </div>
                     <button class="jobRevealButton" id="jobReveal2"> + </button>
@@ -87,19 +87,25 @@
         <script>
 
             var jobDesc1 = document.getElementById("description1");
-            var jobReveal1 = document.getElementById("jobReveal1");
             var jobDesc2 = document.getElementById("description2");
+            var jobReveal1 = document.getElementById("jobReveal1");
             var jobReveal2 = document.getElementById("jobReveal2");
 
-            jobDesc1.classList.add('jobDescHide');
-            jobDesc2.classList.add('jobDescHide');
+            var jobTitle1 = document.getElementById("jobTitle1");
+            var jobTitle2 = document.getElementById("jobTitle2");
+
+            jobDesc1.classList.add('hide');
+            jobDesc2.classList.add('hide');
+
 
             function jobDescToggle1() {
-                jobDesc1.classList.toggle('jobDescHide');
+                jobDesc1.classList.toggle('hide');
+                jobTitle1.classList.toggle('titleMove');
             }
 
             function jobDescToggle2() {
-                jobDesc2.classList.toggle('jobDescHide');
+                jobDesc2.classList.toggle('hide');
+                jobTitle2.classList.toggle('titleMove');
             }
 
             jobReveal1.addEventListener('click', jobDescToggle1);

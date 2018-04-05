@@ -25,7 +25,6 @@
 .empBox {
 	display: grid;
 	grid-template-columns: 256px auto minmax(70px, 80px);
-	grid-auto-rows: auto-fit;
 	background-color: #fff4e6;
 	align-items: stretch;
 	height: 100%;
@@ -41,21 +40,50 @@
 	background-color: red;
 }
 
-.jobTitle {
+.jobBox {
 	display: flex;
 	position: relative;
-	align-items: center;
-	background-color: green;
-	padding: 10px;
+	height: 100%;
 	width: 100%;
+	background-color: green;
+}
+
+.jobDesc {
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	opacity: 1;
+	height: 80%;
+	width: 100%;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.75); /* Black see-through */
+	color: #f1f1f1;
+	transition: 1s ease;
+	color: white;
+	font-size: 1em;
+}
+
+.hide {
+	opacity:0;
+	height: 1%;
+}
+
+.jobTitle {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	background-color: grey;
+}
+
+.titleMove {
+	position: relative;
+	height: 20%;
+	top: 0;
+	transition: height 1s ease;
 }
 
 .jobRevealButton {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	margin: 10px;
 	font-size: 1.5em;
 	background-color: yellow;
 	cursor: pointer;
@@ -63,25 +91,6 @@
 
 .jobRevealButton:hover {
 	opacity: .6;
-}
-
-.jobDesc {
-	position: absolute;
-	opacity: 1;
-	left: 0;
-	height: 100%;
-	background: rgb(0, 0, 0);
-	background: rgba(0, 0, 0, 0.75); /* Black see-through */
-	color: #f1f1f1;
-	width: 100%;
-	transition: .5s ease;
-	color: white;
-	font-size: 1em;
-	padding: 0 10 0 10;
-}
-
-.jobDescHide{
-	opacity:0;
 }
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
