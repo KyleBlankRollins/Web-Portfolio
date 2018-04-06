@@ -1,7 +1,17 @@
 /* 3-column view */
+.wrapper {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-areas:
+	"header"
+	"nav"
+	"resume"
+	"footer";
+}
+
 @media (min-width: 900px) {
 	.wrapper {
-		grid-template-columns: .5fr minmax(700px, 1fr) .5fr;
+		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-areas:
 		  "header header header"
 		  "nav nav nav"
@@ -13,8 +23,13 @@
 .resume {
 	grid-area: resume;
 	display: flex;
-	grid-column: 2;
+	justify-content: center;
+}
+
+.paper {
 	background-color: lightgray;
+	max-width: 750px;
+	min-width: 600px;
 }
 
 #rHeader {
