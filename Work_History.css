@@ -16,16 +16,14 @@
  	grid-area: empMatrix;
 	display: grid;
 	grid-gap: 10px;
-	grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-	grid-auto-rows: auto-fit;
+	grid-template-columns: 1fr 1fr;
+	grid-auto-rows: 256px;
 	padding: 20 10 20 10;
-	background-color: #3f87a6;
 }
 
 .empBox {
 	display: grid;
 	grid-template-columns: 256px auto minmax(70px, 80px);
-	background-color: #fff4e6;
 	align-items: stretch;
 	height: 100%;
 	width: 100%;
@@ -37,7 +35,6 @@
 	align-items: center;
 	height: 100%;
 	width: 100%;
-	background-color: red;
 }
 
 .jobBox {
@@ -45,7 +42,6 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
-	background-color: green;
 }
 
 .jobDesc {
@@ -73,7 +69,6 @@
 	align-items: center;
 	height: 100%;
 	width: 100%;
-	background-color: grey;
 }
 
 .titleMove {
@@ -85,7 +80,6 @@
 
 .jobRevealButton {
 	font-size: 1.5em;
-	background-color: yellow;
 	cursor: pointer;
 }
 

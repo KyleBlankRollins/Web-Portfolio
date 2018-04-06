@@ -1,13 +1,20 @@
 /* 3-column view */
 @media (min-width: 900px) {
 	.wrapper {
-		grid-template-columns: .75fr 3.5fr 1.5fr;
+		grid-template-columns: .5fr minmax(700px, 1fr) .5fr;
 		grid-template-areas:
 		  "header header header"
 		  "nav nav nav"
-		  "content content content"
+		  "resume resume resume"
 		  "footer footer footer"
 	}
+}
+
+.resume {
+	grid-area: resume;
+	display: flex;
+	grid-column: 2;
+	background-color: lightgray;
 }
 
 #rHeader {
@@ -38,5 +45,5 @@
 }
 
 #expContent {
-/* TODO:  */
+
 }
