@@ -13,20 +13,16 @@
 			<header class="main-head">
                 <div class="banner">
                     <div class ="glyph"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></div>
-                    <div><h2>Technical Writer | Documentation Specialist | Editor </h2></div>
+                    <nav class="main-nav">
+        				<ul class="nav-list">
+        					<a href="index.html#samples"><li>Samples</li></a>
+        					<a href="index.html#workHistory"><li>Work History</li></a>
+        					<a href="index.html#contact"><li>Contact</li></a>
+        				</ul>
+        			</nav>
                 </div>
 			</header>
 
-			<nav class="main-nav">
-				<ul class="nav-list">
-					<a href="index.html"><li>Home</li></a>
-					<a href="Technical_Writing.html"><li>Technical Writing</li></a>
-					<a href="Document_Design.html"><li>Document Design</li></a>
-					<a href="Work_History.html"><li>Work<br>History</li></a>
-					<a href="Published_Content.html"><li>Published Content</li></a>
-					<a href="Resume.html"><li>Resume</li></a>
-				</ul>
-			</nav>
 			<div class="content">
                 <div class="aboutMe">
                     <h1>Nice to meet you!</h1>
@@ -44,12 +40,16 @@
     				<p>Of course, this isn't the extent of what I do. Technical writing is a confluence of many interests,
     				skills, and ideas. As such, it's a natural fit for my desire to learn.</p>
                 </div>
-                <div class="samples">
+                <div class="samples" id="samples">
                     <div class="techWriting">
-                        <div class="techWritingOverlay">
+                        <div class="techWritingOverlay" id="techExpand">
                             Check out my technical writing!
+                            <div class="expandButton"> <!-- TODO: Make the expand/collapse button behave consistently -->
+                                <div class="expandText" id="expandText1">See more</div>
+                                <div class="expandChevron" id="expandChevron1"> > </div>
+                            </div>
                         </div>
-                        <div class="sampleItems">
+                        <div class="sampleTech">
                             <div class="docItem vertical">
             					<div >
                                     <div><a href="Documents/Technical_Writing/Chi_Tester_User's_Guide_V2.docx"><img src="Images/writing_samples/Chi_Tester.jpg"/></a></div>
@@ -101,10 +101,14 @@
                         </div>
           			</div>
                     <div class="docDesign">
-                        <div class="docDesignOverlay">
+                        <div class="docDesignOverlay" id="designExpand">
                             Check out my document design!
+                            <div class="expandButton">
+                                <div class="expandText" id="expandText2">See more</div>
+                                <div class="expandChevron" id="expandChevron2"> > </div>
+                            </div>
                         </div>
-                        <div class="sampleItems">
+                        <div class="sampleDesign">
                             <div class="docItem horizontal">
             					<div>
                                     <div><a href="Documents/Document_Design/Quick_Tips.pdf"><img src="Images/writing_samples/Quick_Tips.png"/></a></div>
@@ -156,8 +160,12 @@
                         </div>
                     </div>
                     <div class="pubContent">
-                        <div class="pubContentOverlay">
+                        <div class="pubContentOverlay" id="pubExpand">
                             Check out my published content!
+                            <div class="expandButton">
+                                <div class="expandText" id="expandText3">See more</div>
+                                <div class="expandChevron" id="expandChevron3"> > </div>
+                            </div>
                         </div>
         				<div class="sampleArticles">
                             <div>
@@ -208,7 +216,7 @@
         			</div>
                 </div>
 
-                <div class="workHistory">
+                <div class="workHistory" id="workHistory">
                     <div class="empMatrix">
                         <div class="empBox">
                             <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">
@@ -332,6 +340,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="contact" id="contact">
+                    kyleblankrollins@gmail.com
+                </div>
 			</div>
 
 			<footer class="main-footer">
@@ -344,6 +355,7 @@
 		</div>
 	</body>
 
+    <script src="js/main.js"></script>
     <script src="js/Work_History.js"></script>
 
 </html>
