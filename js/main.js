@@ -1,70 +1,56 @@
 
-            var techExpand = document.getElementById("techExpand");
-            var designExpand = document.getElementById("designExpand");
-            var pubExpand = document.getElementById("pubExpand");
+            var techWriting = document.getElementById("techWriting");
+            var docDesign = document.getElementById("docDesign");
+            var pubContent = document.getElementById("pubContent");
             var samples = document.getElementById("samples");
+            var sampleTech = document.getElementById("sampleTech");
             var expandButton1 = document.getElementById("expandButton1");
             var expandButton2 = document.getElementById("expandButton2");
             var expandButton3 = document.getElementById("expandButton3");
 
-            samples.classList.add('techExpand');
-            samples.classList.add('designExpand');
-            samples.classList.add('pubExpand');
+            techWriting.addEventListener('click', widthToggle);
+            docDesign.addEventListener('click', widthToggle);
+            pubContent.addEventListener('click', widthToggle);
 
-            function techToggle() {
-                samples.classList.toggle('techExpand');
+            function widthToggle(event) {
+                event.preventDefault();
 
-                if (samples.classList.contains('designExpand') || samples.classList.contains('pubExpand')) {
-                    samples.classList.remove("designExpand");
-                    samples.classList.remove("pubExpand");
+                var el = event.target.parentElement;
+
+                console.log(el.id);
+
+                if (el.id === techWriting.id) {
+                    techWriting.classList.add("expand");
+                    techWriting.classList.remove("collapse");
+                    sampleTech.style.display="block"; // TODO: properly hides the content, but making it reappear isn't working.
+                    docDesign.classList.add("collapse");
+                    docDesign.classList.remove("expand");
+                    pubContent.classList.add("collapse");
+                    pubContent.classList.remove("expand");
+                    console.log(techWriting.classList);
+                } else if (el.id === docDesign.id) {
+                    techWriting.classList.add("collapse");
+                    techWriting.classList.remove("expand");
+                    sampleTech.style.display="none";
+                    docDesign.classList.add("expand");
+                    docDesign.classList.remove("collapse");
+                    pubContent.classList.add("collapse");
+                    pubContent.classList.remove("expand");
+                    console.log(docDesign.classList);
+                } else if (el.id === pubContent.id) {
+                    techWriting.classList.add("collapse");
+                    techWriting.classList.remove("expand");
+                    sampleTech.style.display="none";
+                    docDesign.classList.add("collapse");
+                    docDesign.classList.remove("expand");
+                    pubContent.classList.add("expand");
+                    pubContent.classList.remove("collapse");
+                    console.log(pubContent.classList);
                 }
 
-                if (techExpand.style.width >= "300px") {
-                    expandText1.innerHTML = "See less";
-                    expandChevron1.innerHTML = "<";
-                }
-
-                // else {
-                //     expandText1.innerHTML = "See more";
-                //     expandChevron1.innerHTML = ">";
+                // if (techWriting.style.width < "25%" && pubContent.style.width < "25%") {
+                //     docDesign.classList.toggle("expand");
+                // } else if (techWriting.style.width < "25%" && docDesign.style.width < "25%") {
+                //     pubContent.classList.toggle("expand");
                 // }
             }
-
-            function designToggle() {
-                samples.classList.toggle('designExpand');
-
-                if (samples.classList.contains('techExpand') || samples.classList.contains('pubExpand')) {
-                    samples.classList.remove("techExpand");
-                    samples.classList.remove("pubExpand");
-                }
-
-                if (expandText2.innerHTML === "See more") {
-                    expandText2.innerHTML = "See less";
-                    expandChevron2.innerHTML = "<";
-                } else {
-                    expandText2.innerHTML = "See more";
-                    expandChevron2.innerHTML = ">";
-                }
-
-            }
-
-            function pubToggle() {
-                samples.classList.toggle('pubExpand');
-
-                if (samples.classList.contains('designExpand') || samples.classList.contains('techExpand')) {
-                    samples.classList.remove("designExpand");
-                    samples.classList.remove("techExpand");
-                }
-
-                if (expandText3.innerHTML === "See more") {
-                    expandText3.innerHTML = "See less";
-                    expandChevron3.innerHTML = "<";
-                } else {
-                    expandText3.innerHTML = "See more";
-                    expandChevron3.innerHTML = ">";
-                }
-            }
-
-            techExpand.addEventListener('click', techToggle);
-            designExpand.addEventListener('click', designToggle);
-            pubExpand.addEventListener('click', pubToggle);
