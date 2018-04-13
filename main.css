@@ -66,7 +66,6 @@ a:visited:hover {
         grid-area: aboutMe;
         border-bottom: solid 4px #B87462;
         margin-top: 20px;
-        padding: 0 20 10 20;
     }
 
     .samples {
@@ -443,22 +442,15 @@ a > img {
 	width: 100%;
 }
 
-.jobTitle:after {
-    content: '\002B';
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-
-.jobTitle:after {
-    content: "\2212";
+.jobTitle:hover {
+	font-size: 32px;
 }
 
 .titleMove {
 	position: relative;
 	height: 20%;
 	top: 0;
-	transition: height 1s ease;
+	transition: height .5s ease;
 }
 
 .jobRevealButton {
@@ -468,10 +460,6 @@ a > img {
 	background-color: transparent;
 	padding: 0;
 	outline: none;
-}
-
-.jobRevealButton:hover {
-	font-size: 2em;
 }
 
 .empName {
