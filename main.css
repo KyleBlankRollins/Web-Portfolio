@@ -31,135 +31,228 @@ a:visited {
 a:visited:hover {
 	color: #B87462;
 }
-
-/* Mobile view */
-.wrapper {
-	display: grid;
-	grid-gap: 10px;
-	grid-template-areas:
-	"header"
-	"content"
-	"footer";
-}
 /* <--- End page setup. */
 
+
+@media (max-width: 1250px) {
+    .resetRotation {
+        transform: rotate(0deg) !important;
+    }
+
+    .rotate {
+        font-size: 18px;
+        transform: rotate(-90deg);
+    }
+}
+
 /* Grid area definitions ---> */
-.main-head {
-	grid-area: header;
-    display: flex;
-    margin-left: 20px;
+
+/* Tier 1 structure */
+.wrapper {
+display: grid;
+grid-gap: 10px;
+grid-template-areas:
+"header"
+"content"
+"footer";
 }
 
-.content {
-	grid-area: content;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-    "aboutMe"
-    "samples"
-    "workPhilosophy"
-    "workHistory";
-	margin: 0 20px 5px 20px;
-}
-
-    .aboutMe {
-        grid-area: aboutMe;
-        border-bottom: solid 4px #B87462;
-        margin-top: 20px;
-    }
-
-    .samples {
-        grid-area: samples;
-        justify-self: center;
+/*-- Tier 2 structure */
+    .main-head {
+    	grid-area: header;
         display: flex;
-        height: 100%;
-        width: 105%;
+        margin-left: 20px;
     }
 
-        .pane {
-            width: 80%;
-            margin: 40 0 40 0;
-            background-color: #E9E9E9;
-            border-right: solid 2px #E9E9E9;
-            cursor: pointer;
-        }
-
-            #sampleTech {
-                grid-area: sampleTech;
-                display: grid;
-                margin-top: 20px;
-                grid-gap: 40px;
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                grid-auto-rows: 100px;
-                grid-auto-flow: dense;
-            }
-
-            #sampleDesign {
-                grid-area: sampleDesign;
-                display: grid;
-                margin-top: 20px;
-                grid-gap: 40px;
-                grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-                grid-auto-rows: 100px;
-                grid-auto-flow: dense;
-            }
-
-            #sampleArticles {
-                grid-area: sampleArticles;
-                display: grid;
-                margin-top: 20px;
-                grid-gap: 30px;
-                grid-template-columns: 1fr 1fr;
-                grid-auto-flow: row;
-            }
-
-    .workPhilosophy {
-        grid-area: workPhilosophy;
-        border-top: solid 4px #B87462;
-        border-bottom: solid 4px #B87462;
-    }
-
-    .contact {
-        border-top: solid 4px #B87462;
-        border-bottom: solid 4px #B87462;
-    }
-
-    .workHistory {
-        grid-area: workHistory;
+    .content {
+    	grid-area: content;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-template-areas:
-          "empMatrix empMatrix";
-        width: 100%;
+        "aboutMe"
+        "samples"
+        "workPhilosophy"
+        "workHistory"
+        "contact";
+    	margin: 0 20px 5px 20px;
+        margin-top: 40px;
     }
 
-        .empMatrix {
-            grid-area: empMatrix;
-            justify-self: center;
-            width: 100%;
-            display: grid;
-            grid-gap: 10px;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            grid-auto-rows: 256px;
-            margin: 20 0 20 0;
-            padding: 20 0 20 0;
+/*----- Tier 3 structure */
+        .aboutMe {
+            grid-area: aboutMe;
+            border-bottom: solid 4px #B87462;
+            margin-top: 20px;
         }
 
-            .empBox {
-                display: grid;
-                grid-template-columns: minmax(150px, .5fr) minmax(300px, 1fr) 40px;
-                grid-gap: 5px;
+        .samples {
+            grid-area: samples;
+            justify-self: center;
+            display: flex;
+            height: 100%;
+            width: 105%;
+        }
+
+/*--------- Tier 4 structure */
+            .pane {
+                width: 80%;
+                margin: 40 0 40 0;
+                background-color: #E9E9E9;
+                border-right: solid 2px #E9E9E9;
+                cursor: pointer;
             }
 
-.main-footer {
-	grid-area: footer;
-	display: flex;
-	justify-content: center;
-	background-color: #FFEDE8;
-	border-top: 1px solid #B87462;
-    border-bottom: 1px solid #B87462;
-}
+/*------------- Tier 5 structure */
+                #sampleTech {
+                    grid-area: sampleContainer;
+                    display: none;
+                    margin-top: 20px;
+                    grid-gap: 40px;
+                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    grid-auto-rows: 100px;
+                    grid-auto-flow: dense;
+                }
+
+                #sampleDesign {
+                    grid-area: sampleContainer;
+                    display: none;
+                    margin-top: 20px;
+                    grid-gap: 40px;
+                    grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
+                    grid-auto-rows: 100px;
+                    grid-auto-flow: dense;
+                }
+
+                #sampleArticles {
+                    grid-area: sampleContainer;
+                    display: none;
+                    margin-top: 20px;
+                    grid-gap: 30px;
+                    grid-template-columns: 1fr 1fr;
+                    grid-auto-flow: row;
+                }
+
+        .workPhilosophy {
+            grid-area: workPhilosophy;
+            border-top: solid 4px #B87462;
+            border-bottom: solid 4px #B87462;
+        }
+
+        .contact {
+            grid-area: contact;
+            border-top: solid 4px #B87462;
+            border-bottom: solid 4px #B87462;
+            margin-bottom: 40px;
+        }
+
+        .workHistory {
+            grid-area: workHistory;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+              "empMatrix empMatrix";
+            width: 100%;
+        }
+
+            .empMatrix {
+                grid-area: empMatrix;
+                justify-self: center;
+                width: 100%;
+                display: grid;
+                grid-gap: 10px;
+                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+                grid-auto-rows: 256px;
+                margin: 20 0 20 0;
+                padding: 20 0 20 0;
+            }
+
+                .empBox {
+                    display: grid;
+                    grid-template-columns: minmax(150px, .5fr) minmax(300px, 1fr);
+                    grid-gap: 5px;
+                }
+
+    .main-footer {
+    	grid-area: footer;
+    	display: flex;
+    	justify-content: center;
+        width: 100%;
+        background-color: #FFFFFF;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-top: solid 1px #294C5D;
+    }
 /* <--- End grid area definitions */
+
+/* Banner styling ---> */
+.banner {
+    display: flex;
+    align-items: baseline;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10 0 10 20;
+    background-color: #FFFFFF;
+    border-bottom: solid 1px #294C5D;
+}
+
+.glyph {
+    display: flex;
+    align-items: baseline;
+    font-size: 38px;
+    border-right: 4px solid #B87462;
+    padding: 0 30 0 0;
+}
+
+.glyphOuter {
+    color: #294C5D;
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 0;
+}
+
+#glyphInner {
+    color: #B87462;
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 0;
+}
+/* <--- End banner styling */
+
+/* Nav menu styling ---> */
+.nav-list {
+    display: flex;
+    list-style-type: none;
+    font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    height: 100%;
+	font-size: 20px;
+    align-items: stretch;
+    margin: 0 5 0 5;
+    padding: 0px;
+}
+
+.nav-list a {
+    display: flex;
+    text-align: center;
+    height: 100%;
+    padding: 0 15 0 15;
+	opacity: .7;
+    border-right: 2px solid #B87462 !important;
+}
+
+.nav-list a:hover {
+    color: #294C5D !important;
+    font-size: 24px;
+	opacity: 1;
+    margin: -5 0 -5 0;
+}
+
+.main-nav a:link, .main-nav a:visited {
+    color: #294C5D;
+	text-decoration: none;
+}
+/* <--- End nav menu styling */
 
 /* Footer styling --->*/
 
@@ -205,107 +298,20 @@ a:visited:hover {
 
 /* <--- End footer styling */
 
-/* Nav menu styling ---> */
-.nav-list {
-    display: flex;
-    list-style-type: none;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-    height: 100%;
-	font-size: 24px;
-    align-items: stretch;
-    margin: 0 5 0 5;
-    padding: 0px;
-}
-
-.nav-list a {
-    display: flex;
-    text-align: center;
-    height: 100%;
-    padding: 0 15 0 15;
-	opacity: .7;
-    border-right: 2px solid #B87462 !important;
-}
-
-.nav-list a:hover {
-    color: #294C5D !important;
-    font-size: 30px;
-	opacity: 1;
-    margin: -5 0 -5 0;
-}
-
-.main-nav a:link, .main-nav a:visited {
-    color: #294C5D;
-	text-decoration: none;
-}
-/* <--- End nav menu styling */
-
-/* Banner styling ---> */
-.banner {
-    display: flex;
-    align-items: baseline;
-}
-
-.glyph {
-    display: flex;
-    align-items: baseline;
-    font-size: 48px;
-    border-right: 4px solid #B87462;
-    padding: 0 30 0 0;
-}
-
-.glyphOuter {
-    color: #294C5D;
-    font-family: 'IBM Plex Mono', monospace;
-    margin: 0;
-}
-
-#glyphInner {
-    color: #B87462;
-    font-family: 'IBM Plex Mono', monospace;
-    margin: 0;
-}
-/* <--- End banner styling */
-
-.textBlock {
-    padding: 5 20 5 20;
-}
-
 /* Begin techWriting, docDesign, and pubContent styling ---> */
-.techWritingOverlay {
+.overlay {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas:
     "paneTitle"
-    "sampleTech";
-    padding: 10px;
-    margin: 20 0 20 0;
-    cursor: initial;
-}
-
-.docDesignOverlay {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-    "paneTitle"
-    "sampleDesign";
-    padding: 10px;
-    margin: 20 0 20 0;
-    cursor: initial;
-}
-
-.pubContentOverlay {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-    "paneTitle"
-    "sampleArticles";
+    "sampleContainer";
     padding: 10px;
     margin: 20 0 20 0;
     cursor: initial;
 }
 
 .sampleContainer {
-    display: none !important;
+    display: none;
     padding: 10 10 0 10;
 }
 
@@ -319,23 +325,22 @@ a:visited:hover {
 
 .collapse {
     width: 10% !important;
-    transition: width 1s ease;
+    transition: width 1s;
     background-color: #4a4a4a;
     color: #FFFFFF;
 }
 
 .expand {
     width: 90% !important;
-    transition: width 1s ease;
+    transition: width .5s ease-in-out;
 }
 
 .paneTitle {
     grid-area: paneTitle;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     width: 100%;
     border-bottom: solid 2px #4a4a4a;
+    padding-bottom: 10px;
     cursor: pointer;
 }
 
@@ -404,6 +409,18 @@ a > img {
 	width: 100%;
 }
 
+.jobTitle {
+	display: flex;
+	align-items: center;
+	font-family: "IBM Plex Sans", Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: bold;
+	margin-left: 10px;
+	height: 100%;
+	width: 100%;
+    cursor: pointer;
+}
+
 .jobDesc {
 	position: absolute;
 	bottom: 0;
@@ -417,29 +434,24 @@ a > img {
 	transition: 1s ease;
 	color: white;
 	font-size: 1em;
+    cursor: pointer;
+}
+
+.empName {
+    background-color: #294C5D;
 }
 
 .jobDesc p,h4 {
 	margin-left: 10px;
 }
 
-.hide {
-	display: none;
-}
-
-.show {
-	display: block;
-}
-
-.jobTitle {
+.horizontalUL {
 	display: flex;
-	align-items: center;
-	font-family: "IBM Plex Sans", Helvetica, sans-serif;
-	font-size: 28px;
-	font-weight: bold;
-	margin-left: 10px;
-	height: 100%;
-	width: 100%;
+	list-style-type: none;
+}
+
+.horizontalUL li {
+    padding-right: 6px;
 }
 
 .jobTitle:hover {
@@ -453,29 +465,18 @@ a > img {
 	transition: height .5s ease;
 }
 
-.jobRevealButton {
-	font-size: 1.5em;
-	cursor: pointer;
-	border: none;
-	background-color: transparent;
-	padding: 0;
-	outline: none;
-}
-
-.empName {
-    background-color: #294C5D;
-}
-
 /* <--- End workHistory styling */
 
-.horizontalUL {
-	display: flex;
-	list-style-type: none;
+.textBlock {
+    padding: 5 20 5 20;
 }
 
-.horizontalUL li {
-    padding-right: 6px;
+.hide {
+	display: none;
 }
 
+.show {
+	display: block;
+}
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
