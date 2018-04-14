@@ -10,6 +10,10 @@ h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
 }
 
+p {
+    margin: 0;
+}
+
 h1 {
     font-size: 28px;
 }
@@ -69,10 +73,15 @@ grid-template-areas:
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas:
+        "titleA"
         "aboutMe"
+        "titleB"
         "samples"
+        "titleC"
         "workPhilosophy"
+        "titleD"
         "workHistory"
+        "titleE"
         "contact";
     	margin: 0 20px 5px 20px;
         margin-top: 40px;
@@ -90,7 +99,7 @@ grid-template-areas:
             justify-self: center;
             display: flex;
             height: 100%;
-            width: 105%;
+            width: 100%;
         }
 
 /*--------- Tier 4 structure */
@@ -117,7 +126,7 @@ grid-template-areas:
                     grid-area: sampleContainer;
                     display: none;
                     margin-top: 20px;
-                    grid-gap: 40px;
+                    grid-gap: 20px;
                     grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
                     grid-auto-rows: 100px;
                     grid-auto-flow: dense;
@@ -150,6 +159,7 @@ grid-template-areas:
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas:
+              "title title"
               "empMatrix empMatrix";
             width: 100%;
         }
@@ -157,18 +167,18 @@ grid-template-areas:
             .empMatrix {
                 grid-area: empMatrix;
                 justify-self: center;
-                width: 100%;
+                width: 97%;
                 display: grid;
                 grid-gap: 10px;
                 grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
                 grid-auto-rows: 256px;
-                margin: 20 0 20 0;
-                padding: 20 0 20 0;
+                margin: 0 0 20 0;
+                padding: 0 0 20 0;
             }
 
                 .empBox {
                     display: grid;
-                    grid-template-columns: minmax(150px, .5fr) minmax(300px, 1fr);
+                    grid-template-columns: minmax(200px, .5fr) minmax(300px, 1fr);
                     grid-gap: 5px;
                 }
 
@@ -379,6 +389,16 @@ grid-template-areas:
 	grid-column: span 3;
 }
 
+.verticalDesign {
+	grid-row: span 4;
+	grid-column: span 3;
+}
+
+.horizontalDesign {
+	grid-row: span 2;
+	grid-column: span 3;
+}
+
 a > img {
 	width: 100%;
     height: 100%;
@@ -399,7 +419,6 @@ a > img {
 	font-size: 28px;
 	font-weight: bold;
 	color: white;
-	border-right: 5px solid white;
 }
 
 .jobBox {
@@ -409,16 +428,30 @@ a > img {
 	width: 100%;
 }
 
+.title {
+    grid-area: titleA; /* TODO: Can I assign multiple areas? If not, I need to revert the title div changes in index.html */
+    margin: 10 0 10 0;
+}
+
 .jobTitle {
 	display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
 	margin-left: 10px;
 	height: 100%;
 	width: 100%;
     cursor: pointer;
+}
+
+.jobTitle:before {
+    content: '\002B';
+}
+
+.jobTitle:hover {
+	font-size: 26px;
+    color: #B87462;
 }
 
 .jobDesc {
@@ -454,10 +487,6 @@ a > img {
     padding-right: 6px;
 }
 
-.jobTitle:hover {
-	font-size: 32px;
-}
-
 .titleMove {
 	position: relative;
 	height: 20%;
@@ -465,10 +494,15 @@ a > img {
 	transition: height .5s ease;
 }
 
+.titleMove:before {
+    content: "\2212";
+}
+
 /* <--- End workHistory styling */
 
 .textBlock {
     padding: 5 20 5 20;
+    margin: 10 0 20 0;
 }
 
 .hide {
