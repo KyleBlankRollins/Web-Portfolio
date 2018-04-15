@@ -36,7 +36,7 @@ function responsiveResponse(viewportWidth, event) { //Checks to see if viewport 
     }
 }
 
-function widthToggle(event) {
+function widthToggle(event) { // REVIEW: Is there any way to clean this up? Should be a way and I'm just not thinking of it. Maybe for v1.5 or something.
 
     var el = event.target;
     var elParent = el.parentElement;
@@ -44,7 +44,7 @@ function widthToggle(event) {
     var designClassList = docDesign.classList;
     var pubClassList = pubContent.classList;
 
-    if (elParent.id === techWriting.id || el.id === techWriting.id || el.id === "techTitle") {
+    if (elParent.id == techWriting.id || el.id == techWriting.id || el.id == "techTitle") {
 
         if (techWriting.className.match("collapse")) {
             techClassList.add("expand");
@@ -61,7 +61,7 @@ function widthToggle(event) {
             sampleArticles.style.cssText = "display: none !important";
         }
 
-    } else if (elParent.id === docDesign.id || el.id === docDesign.id || el.id === "designTitle") {
+    } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "designTitle") {
 
         if (docDesign.className.match("collapse")) {
             designClassList.add("expand");
@@ -78,7 +78,7 @@ function widthToggle(event) {
             sampleArticles.style.cssText = "display: none !important";
         }
 
-    } else if (elParent.id === pubContent.id || el.id === pubContent.id || el.id === "pubTitle") {
+    } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pubTitle") {
 
         if (pubContent.className.match("collapse")) {
             pubClassList.add("expand");

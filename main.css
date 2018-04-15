@@ -90,8 +90,6 @@ grid-template-areas:
 /*----- Tier 3 structure */
         .aboutMe {
             grid-area: aboutMe;
-            border-bottom: solid 4px #B87462;
-            margin-top: 20px;
         }
 
         .samples {
@@ -105,7 +103,7 @@ grid-template-areas:
 /*--------- Tier 4 structure */
             .pane {
                 width: 80%;
-                margin: 40 0 40 0;
+                margin: 15 0 40 0;
                 background-color: #E9E9E9;
                 border-right: solid 2px #E9E9E9;
                 cursor: pointer;
@@ -143,13 +141,10 @@ grid-template-areas:
 
         .workPhilosophy {
             grid-area: workPhilosophy;
-            border-top: solid 4px #B87462;
-            border-bottom: solid 4px #B87462;
         }
 
         .contact {
             grid-area: contact;
-            border-top: solid 4px #B87462;
             border-bottom: solid 4px #B87462;
             margin-bottom: 40px;
         }
@@ -162,6 +157,7 @@ grid-template-areas:
               "title title"
               "empMatrix empMatrix";
             width: 100%;
+            margin-top: 15px;
         }
 
             .empMatrix {
@@ -285,13 +281,15 @@ grid-template-areas:
 	opacity: .7;
     width: 30%;
     margin: 10 20 10 20;
-    border-left: 1px solid #B87462 !important;
-    border-right: 1px solid #B87462 !important;
+    border-left: 2px solid #B87462;
+    border-right: 2px solid #B87462;
 }
 
 .socialList a:hover {
     background-color: #294C5D;
-    color: #FFEDE8 !important;
+    border-left: 2px solid #294C5D;
+    border-right: 2px solid #294C5D;
+    color: #FFFFFF !important;
     font-size: 30px;
     opacity: 1;
     margin: -5 0 -5 0;
@@ -316,7 +314,7 @@ grid-template-areas:
     "paneTitle"
     "sampleContainer";
     padding: 10px;
-    margin: 20 0 20 0;
+    margin-bottom: 20;
     cursor: initial;
 }
 
@@ -429,8 +427,14 @@ a > img {
 }
 
 .title {
-    grid-area: titleA; /* TODO: Can I assign multiple areas? If not, I need to revert the title div changes in index.html */
-    margin: 10 0 10 0;
+    grid-area: titleA, titleB;
+    margin: 0;
+    padding-top: 10px;
+    border-top: solid 4px #B87462;
+}
+
+#titleA {
+    border-top: none;
 }
 
 .jobTitle {
@@ -476,15 +480,6 @@ a > img {
 
 .jobDesc p,h4 {
 	margin-left: 10px;
-}
-
-.horizontalUL {
-	display: flex;
-	list-style-type: none;
-}
-
-.horizontalUL li {
-    padding-right: 6px;
 }
 
 .titleMove {

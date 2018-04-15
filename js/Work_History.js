@@ -32,36 +32,34 @@ for (i = 0; i < jobDesc.length; i++) {
 function toggleVisibility(id) {
 
     var el = event.target;
-    var elParent = el.parentElement;
+    var elParent = el.parentElement; // REVIEW: Is there any way to clean this up? Should be a way and I'm just not thinking of it. Maybe for v1.5 or something.
 
-    console.log(elParent);
-
-    if (el.id == "jobTitle1" || elParent.id == "jobDesc1" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle1" || elParent.id == "jobDesc1" || el.id == "jobDesc1") {
         jobDesc1.classList.toggle('hide');
         jobTitle1.classList.toggle('titleMove');
     }
 
-    if (el.id == "jobTitle2" || elParent.id == "jobDesc2" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle2" || elParent.id == "jobDesc2" || el.id == "jobDesc2") {
         jobDesc2.classList.toggle('hide');
         jobTitle2.classList.toggle('titleMove');
     }
 
-    if (el.id == "jobTitle3" || elParent.id == "jobDesc3" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle3" || elParent.id == "jobDesc3" || el.id == "jobDesc3") {
         jobDesc3.classList.toggle('hide');
         jobTitle3.classList.toggle('titleMove');
     }
 
-    if (el.id == "jobTitle4" || elParent.id == "jobDesc4" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle4" || elParent.id == "jobDesc4" || el.id == "jobDesc4") {
         jobDesc4.classList.toggle('hide');
         jobTitle4.classList.toggle('titleMove');
     }
 
-    if (el.id == "jobTitle5" || elParent.id == "jobDesc5" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle5" || elParent.id == "jobDesc5" || el.id == "jobDesc5") {
         jobDesc5.classList.toggle('hide');
         jobTitle5.classList.toggle('titleMove');
     }
 
-    if (el.id == "jobTitle6" || elParent.id == "jobDesc6" || elParent.id == "horizontalUL") {
+    if (el.id == "jobTitle6" || elParent.id == "jobDesc6" || el.id == "jobDesc6") {
         jobDesc6.classList.toggle('hide');
         jobTitle6.classList.toggle('titleMove');
     }
