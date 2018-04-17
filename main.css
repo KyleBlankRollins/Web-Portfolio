@@ -1,17 +1,14 @@
 /* Being page setup. ---> */
 html, body {
-  margin: 10px;
-  font-family: Roboto, Helvetica, sans-serif;
-  font-size: 24px;
-  color: #4a4a4a;
+    height: 100%;
+    margin: 10px;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 24px;
+    color: #4a4a4a;
 }
 
 h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
-}
-
-p {
-    margin: 0;
 }
 
 h1 {
@@ -90,6 +87,8 @@ grid-template-areas:
 /*----- Tier 3 structure */
         .aboutMe {
             grid-area: aboutMe;
+            display: grid;
+            grid-template-columns: 1fr .6fr;
         }
 
         .samples {
@@ -141,10 +140,14 @@ grid-template-areas:
 
         .workPhilosophy {
             grid-area: workPhilosophy;
+            display: grid;
+            grid-template-columns: 1fr .5fr;
         }
 
         .contact {
             grid-area: contact;
+            display: grid;
+            grid-template-columns: 1fr .6fr;
             border-bottom: solid 4px #B87462;
             margin-bottom: 40px;
         }
@@ -203,6 +206,10 @@ grid-template-areas:
     padding: 10 0 10 20;
     background-color: #FFFFFF;
     border-bottom: solid 1px #294C5D;
+}
+
+.banner a:hover {
+	text-decoration: none !important;
 }
 
 .glyph {
@@ -331,6 +338,30 @@ grid-template-areas:
     margin: 0;
 }
 
+.profilePic {
+    background-color: #4a4a4a;
+    margin: 10 10 30 10;
+}
+
+.philosophyList {
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    background-color: #4a4a4a;
+    margin: 10 10 30 10;
+}
+
+.philosophyList ul {
+    font-size: 28px;
+    line-height: 48px;
+    margin-left: 10%;
+}
+
+.resume {
+    background-color: #4a4a4a;
+    margin: 10 10 30 10;
+}
+
 .collapse {
     width: 10% !important;
     transition: width 1s;
@@ -427,7 +458,6 @@ a > img {
 }
 
 .title {
-    grid-area: titleA, titleB;
     margin: 0;
     padding-top: 10px;
     border-top: solid 4px #B87462;
@@ -468,7 +498,6 @@ a > img {
 	background: rgb(0, 0, 0);
 	background: rgba(0, 0, 0, 0.75); /* Black see-through */
 	color: #f1f1f1;
-	transition: 1s ease;
 	color: white;
 	font-size: 1em;
     cursor: pointer;
@@ -498,6 +527,36 @@ a > img {
 .textBlock {
     padding: 5 20 5 20;
     margin: 10 0 20 0;
+}
+
+.textblock p {
+    margin: 0 0 24 0;
+}
+
+.textblock a:link {
+    color: #294C5D;
+    font-weight: bolder;
+}
+
+.textblock a:visited {
+    color: #294C5D;
+    font-weight: bolder;
+}
+
+.textblock a:hover {
+    color: #B87462;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.textSpotlight {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bolder;
+    padding: 10px;
+    margin: 0 0 0 10;
+    background-color: #E9E9E9;
 }
 
 .hide {

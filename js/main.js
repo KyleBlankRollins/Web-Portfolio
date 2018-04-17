@@ -17,11 +17,12 @@ for (i = 0; i < sampleChildren.length; i++) {
   sampleChildren[i].classList.add("collapse");
   sampleChildren[i].addEventListener('click', widthToggle);
 }
+
 techWriting.classList.add("expand");
 techWriting.classList.remove("collapse");
 sampleTech.style.cssText = "display: grid !important";
 
-responsiveResponse(width1250px); //Run the function that checks for viewport width.
+responsiveResponse(width1250px); //Run responsiveResponse, which checks viewport width.
 width1250px.addListener(responsiveResponse);
 
 function responsiveResponse(viewportWidth, event) { //Checks to see if viewport matches width of width variables.
