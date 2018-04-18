@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="main.css">
-		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|IBM+Plex+Mono|Roboto|Roboto+Condensed|Roboto+Slab" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 		<title>Rollinsky Home</title>
 	</head>
@@ -11,7 +11,7 @@
 		<div class="wrapper">
 			<header class="main-head">
                 <div class="banner">
-                    <a href="index.html#titleA"><div class ="glyph"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></div></a>
+                    <div class ="glyph"><a href="index.html#titleA"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></a></div>
                     <nav class="main-nav">
         				<ul class="nav-list"> <!-- REVIEW: On click, takes to section, but hides title under header.  -->
                             <a href="index.html#titleA"><li>About</li></a>
@@ -21,10 +21,17 @@
         				</ul>
         			</nav>
                 </div>
+                <div class="contactIcons"> <!-- TODO: get these aligned properly -->
+                    <ul class="socialList">
+        				<a href="https://twitter.com/KyleBRollins" class="socialMedia" target="_blank"><li><i class="fab fa-twitter fa-fw"></i></li></a>
+        				<a href="https://www.linkedin.com/in/kyle-blank-rollins/" class="socialMedia" target="_blank"><li><i class="fab fa-linkedin-in fa-fw"></i></li></a>
+        				<a href="https://github.com/KyleBlankRollins" class="socialMedia" target="_blank"><li><i class="fab fa-github"></i></li></a>
+                    </ul>
+                </div>
 			</header>
 
 			<div class="content">
-                <div class="title" id="titleA"><h1>About</h1></div>
+                <div class="title" id="titleA"><h1>Kyle Rollins</h1></div>
                 <div class="aboutMe">
                     <div class="textBlock">
         				<p class="textSpotlight">I'm an experienced technical writer who loves evaluating, breaking down, and solving complex problems.</p>
@@ -310,21 +317,13 @@
                 <div class="title" id="titleE"><h1>Contact</h1></div>
                 <div class="contact" id="contact"> <!-- TODO: Build two-column grid. Add resume PDF on right. -->
                     <div class="textBlock">
-                        Thank you for your interest. To get in touch, follow the social media links in the footer. You can also download my resume to see my email address.
+                        Thank you for your interest. To get in touch, follow the social media links in the header. My resume contains my email address.
                     </div>
                     <div class="resume">
-                        
+
                     </div>
                 </div>
 			</div>
-
-			<footer class="main-footer">
-                <ul class="socialList">
-    				<a class="socialMedia" href="https://twitter.com/KyleBRollins" target="_blank"><li class="socialItem"><i class="fab fa-twitter fa-fw"></i></li></a>
-    				<a class="socialMedia" href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank"><li class="socialItem"><i class="fab fa-linkedin-in fa-fw"></i></li></a>
-    				<a class="socialMedia" href="https://github.com/KyleBlankRollins" target="_blank"><li class="socialItem"><i class="fab fa-github"></i></li></a>
-                </ul class="socialList">
-			</footer>
 		</div>
 	</body>
 
