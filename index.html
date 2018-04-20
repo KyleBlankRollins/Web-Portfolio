@@ -14,11 +14,11 @@
                 <div class="banner">
                     <div class ="glyph"><a href="index.html#titleA"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></a></div>
                     <nav class="main-nav">
-        				<ul class="nav-list"> <!-- REVIEW: On click, takes to section, but hides title under header.  -->
-                            <a href="index.html#titleA"><li>About</li></a>
-                            <a href="index.html#titleB"><li>Samples</li></a>
-        					<a href="index.html#titleC"><li>Work</li></a>
-        					<a href="index.html#titleE"><li>Contact</li></a>
+        				<ul class="nav-list">
+                            <a href="index.html#anchorA"><li>About</li></a>
+                            <a href="index.html#anchorB"><li>Samples</li></a>
+        					<a href="index.html#anchorC"><li>Work</li></a>
+        					<a href="index.html#anchorE"><li>Contact</li></a>
         				</ul>
         			</nav>
                 </div>
@@ -32,6 +32,7 @@
 			</header>
 
 			<div class="content">
+                <div class="anchor" id="anchorA"></div>
                 <div class="title" id="titleA"><h1>Kyle Rollins</h1></div>
                 <div class="aboutMe">
                     <div class="textBlock">
@@ -55,9 +56,19 @@
                         <img src="Images/kyle_01.jpg"/>
                     </div>
                 </div>
-                <div class="title" id="titleB"><h1>Samples</h1></div>
+                <div class="anchor" id="anchorB"></div>
+                <div class="title" id="titleB"><h1>Samples</h1>
+                    <div class="textBlock">
+                        <p>
+                            As with many other technical writers, it's not possible for me to share many of the documents I've created on the corporate dime. That content doesn't belong to me and I often don't have permission to share it.
+                        </p>
+                        <p>
+                            However, I do have some samples to share, ranging from technical writing to document design. Take a look below!
+                        </p>
+                    </div>
+                </div>
                 <div class="samples" id="samples">
-                    <div class="pane" id="techWriting"> <!-- TODO: Add more samples and write real titles -->
+                    <div class="pane" id="techWriting">
                         <div class="overlay" id="techOverlay">
                             <div class="paneTitle" id="techTitle">Technical Writing</div>
                             <div class="sampleContainer" id="sampleTech">
@@ -96,7 +107,7 @@
                             </div>
                         </div>
           			</div>
-                    <div class="pane" id="docDesign"> <!-- TODO: Add more samples and write real titles -->
+                    <div class="pane" id="docDesign">
                         <div class="overlay" id="designOverlay">
                             <div class="paneTitle" id="designTitle">Document Design</div>
                             <div class="sampleContainer" id="sampleDesign">
@@ -227,13 +238,14 @@
                         </div>
         			</div>
                 </div>
+                <div class="anchor" id="anchorC"></div>
                 <div class="title" id="titleC"><h1>Work philosophy</h1></div>
                 <div class="workPhilosophy">
-                    <div class="textBlock"> <!-- TODO: Talk about my clifton strengths and ever-learning prediliction. -->
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel nulla ultrices, tristique velit ut, efficitur justo. Nam fringilla vel velit sit amet vestibulum.</p>
-                        <p>Fusce fringilla ante eu urna pharetra fringilla eu et ante. Integer tincidunt lacinia placerat. Morbi dolor augue, cursus in suscipit eget, elementum id est. Praesent ac tincidunt ex, eget mollis tortor. Maecenas ullamcorper purus vitae turpis luctus, vitae blandit nisl vulputate.</p>
-                        <p>Suspendisse tempus quam vitae nisi eleifend gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas facilisis sit amet dolor id malesuada. Proin at euismod nibh.</p>
-                        <p>Praesent molestie metus a ipsum gravida accumsan et in nibh. Mauris ac odio euismod nulla tincidunt feugiat. Sed malesuada ultrices erat, eu tincidunt velit porta eget.</p>
+                    <div class="textBlock">
+                        <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
+                        <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
+                        <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
+                        <p>In everything, be kind, courteous, and understanding. Be open to criticism, as it's one of the best ways to learn. Communication is about people. Cater to their needs, and good communication will follow.</p>
                     </div>
                     <div class="philosophyList">
                         <div class="listTitle"><p>My Clifton Strengths top 5</p></div>
@@ -249,7 +261,7 @@
                                 </li>
                                 <li>
                                     <b>Discipline</b><br>
-                                    <p class="listDescription">Filing things in proper places makes me happy.</p>
+                                    <p class="listDescription">Structure is important to me.</p>
                                 </li>
                                 <li>
                                     <b>Intellection</b><br>
@@ -263,6 +275,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="anchor" id="anchorD"></div>
                 <div class="title" id="titleD"><h1>Work history</h1></div>
                 <div class="workHistory" id="workHistory">
                     <div class="empMatrix">
@@ -273,10 +286,10 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle1">&nbsp;&nbsp;Technical Writer</div>
+                                <div class="jobTitle" id="jobTitle1"><p>&nbsp;&nbsp;Technical Writer</p></div>
                                 <div class="jobDesc" id="jobDesc1">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>Coordinated with developers to create release notes and other documentation for a dozen healthcare software products.</p>
+                                    <p><b>Skills:</b> research, project management, content reuse</p>
                                 </div>
                             </div>
                         </div>
@@ -287,10 +300,10 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle2">&nbsp;&nbsp;Editor</div>
+                                <div class="jobTitle" id="jobTitle2"><p>&nbsp;&nbsp;Editor</p></div>
                                 <div class="jobDesc" id="jobDesc2">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>As part of the HR user experience team, gathered, curated, wrote, and edited content for a complete intranet overhaul.</p>
+                                    <p><b>Skills:</b> interviewing, project management, collaborative writing</p>
                                 </div>
                             </div>
                         </div>
@@ -301,10 +314,10 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle3">&nbsp;&nbsp;Technical Writer</div>
+                                <div class="jobTitle" id="jobTitle3"><p>&nbsp;&nbsp;Technical Writer</p></div>
                                 <div class="jobDesc" id="jobDesc3">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>Wrote economic development blog posts, created and edited RFPs and RFP templates, and conducted economic research.</p>
+                                    <p><b>Skills:</b> document management, interviewing, SEO</p>
                                 </div>
                             </div>
                         </div>
@@ -315,10 +328,10 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle4">&nbsp;&nbsp;Electronics Writer/Reviewer</div>
+                                <div class="jobTitle" id="jobTitle4"><p>&nbsp;&nbsp;Electronics Writer/Reviewer</p></div>
                                 <div class="jobDesc" id="jobDesc4">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>Benchmarked electronics hardware, researched product markets, and targeted product reviews to specific audiences.</p>
+                                    <p><b>Skills:</b> SEO, audience analysis, research</p>
                                 </div>
                             </div>
                         </div>
@@ -329,10 +342,10 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle5">&nbsp;&nbsp;Building Manager</div>
+                                <div class="jobTitle" id="jobTitle5"><p>&nbsp;&nbsp;Building Manager</p></div>
                                 <div class="jobDesc" id="jobDesc5">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>Managed venue events and coordinated with other staff to ensure public safety in a multi-million-dollar building. Contributed to documenting role responsibilities.</p>
+                                    <p><b>Skills:</b> communication, organization, leadership</p>
                                 </div>
                             </div>
                         </div>
@@ -343,15 +356,16 @@
                                 </div>
                             </a>
                             <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle6">&nbsp;&nbsp;Missionary</div>
+                                <div class="jobTitle" id="jobTitle6"><p>&nbsp;&nbsp;Missionary</p></div>
                                 <div class="jobDesc" id="jobDesc6">
-                                    <p>This is a job description.</p> <!-- TODO: add actual job description and skills -->
-                                    <p>skill 1, skill 2, skill 3</p>
+                                    <p>Contributed to and organized volunteer service for two years in Germany. Lead a small group of missionaries responsible for a specific geographic area.</p>
+                                    <p><b>Skills:</b> leadership, organization, communication</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="anchor" id="anchorE"></div>
                 <div class="title" id="titleE"><h1>Contact</h1></div>
                 <div class="contact" id="contact"> <!-- TODO: Add resume PDF on right. -->
                     <div class="textBlock">

@@ -80,14 +80,19 @@ grid-template-areas:
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas:
+        "anchorA"
         "titleA"
         "aboutMe"
+        "anchorB"
         "titleB"
         "samples"
+        "anchorC"
         "titleC"
         "workPhilosophy"
+        "anchorD"
         "titleD"
         "workHistory"
+        "anchorE"
         "titleE"
         "contact";
     	margin: 40 20 5 20;
@@ -111,7 +116,7 @@ grid-template-areas:
 /*--------- Tier 4 structure */
             .pane {
                 width: 80%;
-                margin: 15 0 40 0;
+                margin: 0 0 40 0;
                 background-color: #E9E9E9;
                 border-right: solid 2px #E9E9E9;
                 cursor: pointer;
@@ -123,8 +128,8 @@ grid-template-areas:
                     display: none;
                     margin-top: 20px;
                     grid-gap: 40px;
-                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                    grid-auto-rows: 100px;
+                    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+                    grid-auto-rows: 125px;
                     grid-auto-flow: dense;
                 }
 
@@ -178,7 +183,7 @@ grid-template-areas:
                 width: 97%;
                 display: grid;
                 grid-gap: 10px;
-                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
                 grid-auto-rows: 256px;
                 margin: 0 0 20 0;
                 padding: 0 0 20 0;
@@ -186,8 +191,9 @@ grid-template-areas:
 
                 .empBox {
                     display: grid;
-                    grid-template-columns: minmax(200px, .5fr) minmax(300px, 1fr);
+                    grid-template-columns: minmax(200px, .5fr) minmax(400px, 1fr);
                     grid-gap: 5px;
+                    min-width: 600px;
                 }
 /* <--- End grid area definitions */
 
@@ -206,7 +212,7 @@ grid-template-areas:
 .glyph {
     display: flex;
     align-items: baseline;
-    font-size: 38px;
+    font-size: 1.7em;
     opacity: 1;
     border-right: 4px solid #B87462;
     padding: 0 30 0 0;
@@ -236,7 +242,7 @@ grid-template-areas:
     list-style-type: none;
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
     height: 100%;
-	font-size: 20px;
+	font-size: .9em;
     align-items: stretch;
     margin: 0 5 0 5;
     padding: 0px;
@@ -404,8 +410,8 @@ grid-template-areas:
 }
 
 .vertical {
-	grid-row: span 4;
-	grid-column: span 3;
+	grid-row: span 3;
+	grid-column: span 2;
 }
 
 .horizontal {
@@ -440,7 +446,7 @@ a > img {
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
 	height: 100%;
 	width: 100%;
-	font-size: 28px;
+	font-size: 1.1em;
 	font-weight: bold;
 	color: white;
 }
@@ -452,49 +458,71 @@ a > img {
 	width: 100%;
 }
 
-.title {
-    margin: 0;
-    padding-top: 10px;
-    border-top: solid 4px #B87462;
-}
-
-#titleA {
-    border-top: none;
-}
-
 .jobTitle {
 	display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
-	font-size: 24px;
+	font-size: 1.1em;
 	font-weight: bold;
-	margin-left: 10px;
+	padding-left: 10px;
 	height: 100%;
 	width: 100%;
+    transition: border-width .5s ease-out;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-width: 0 8px 0 0;
     cursor: pointer;
 }
 
 .jobTitle:before {
+    position: relative;
+    bottom: 10px;
     content: '\002B';
 }
 
 .jobTitle:hover {
-	font-size: 26px;
+	font-size: 1.2em;
     color: #B87462;
+}
+
+.jobTitle p {
+    position: relative;
+    bottom: 10px;
+}
+
+.titleMove {
+	position: relative;
+	height: 20%;
+	top: 0;
+    border-style: solid;
+    border-color: #4a4a4a;
+    border-width: 10px 0 0 0;
+    color: #FFFFFF;
+    transition: border-width .3s;
+    background-color: #4a4a4a;
+}
+
+.titleMove:hover {
+    font-size: 1.1em;
+    color: #FFFFFF;
+}
+
+.titleMove:before {
+    position: relative;
+    bottom: 10px;
+    content: "\2212";
 }
 
 .jobDesc {
 	position: absolute;
-	bottom: 0;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
     right: 0;
 	opacity: 1;
 	height: 80%;
 	width: 100%;
-	background: rgb(0, 0, 0);
-	background: rgba(0, 0, 0, 0.75); /* Black see-through */
-	color: #f1f1f1;
-	color: white;
-	font-size: 1em;
+    background-color: #E9E9E9;
     cursor: pointer;
 }
 
@@ -503,18 +531,8 @@ a > img {
 }
 
 .jobDesc p,h4 {
-	margin-left: 10px;
-}
-
-.titleMove {
-	position: relative;
-	height: 20%;
-	top: 0;
-	transition: height .5s ease;
-}
-
-.titleMove:before {
-    content: "\2212";
+	margin: 15 10 0 10;
+    font-size: .9em;
 }
 
 /* <--- End workHistory styling */
@@ -531,7 +549,7 @@ a > img {
 .textblock a:link {
     color: #294C5D;
     opacity: .7;
-    font-size: 22px;
+    font-size: .9em;
     font-weight: bolder;
 }
 
@@ -546,6 +564,24 @@ a > img {
     text-decoration: underline;
 }
 
+.title {
+    margin: 0;
+    padding-top: 10px;
+    border-top: solid 4px #B87462;
+}
+
+#titleA {
+    border-top: none;
+}
+
+.title:before {
+
+}
+
+.title > .textBlock {
+    margin-bottom: 6px;
+}
+
 .note {
     font-size: .9em;
     border-top: solid 1px #294C5D;
@@ -553,6 +589,13 @@ a > img {
     opacity: .8;
     padding: 5px;
     margin: 0 20 0 20 !important;
+}
+
+.anchor {
+    display: block;
+    position: relative;
+    top: -70.6px;
+    visibility: hidden;
 }
 
 .hide {
