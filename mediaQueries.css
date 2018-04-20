@@ -1,0 +1,11 @@
+
+@media (max-width: 1250px) {
+    .resetRotation {
+        transform: rotate(0deg) !important;
+    }
+
+    .rotate {
+        font-size: 18px;
+        transform: rotate(-90deg);
+    }
+}
