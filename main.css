@@ -310,7 +310,7 @@ grid-template-areas:
     min-height: 400px;
 }
 
-.profilePic img {
+.profilePic img, .resume img {
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -321,6 +321,7 @@ grid-template-areas:
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    min-width: 400px;
     font-size: 1em;
     color: #FFFFFF;
     margin: 10 10 30 10;
@@ -356,7 +357,9 @@ grid-template-areas:
 }
 
 .resume {
-    background-color: #4a4a4a;
+    display: grid;
+    grid-template-columns: minmax(300px, .5fr);
+    grid-auto-rows: 450px;
     margin: 10 10 30 10;
 }
 
@@ -459,7 +462,7 @@ a > img {
 }
 
 .jobTitle {
-	display: flex;
+    display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
 	font-size: 1.1em;
@@ -475,19 +478,12 @@ a > img {
 }
 
 .jobTitle:before {
-    position: relative;
-    bottom: 10px;
     content: '\002B';
 }
 
 .jobTitle:hover {
 	font-size: 1.2em;
     color: #B87462;
-}
-
-.jobTitle p {
-    position: relative;
-    bottom: 10px;
 }
 
 .titleMove {
@@ -508,8 +504,6 @@ a > img {
 }
 
 .titleMove:before {
-    position: relative;
-    bottom: 10px;
     content: "\2212";
 }
 

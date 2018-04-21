@@ -13,6 +13,7 @@ var jobTitle6 = document.getElementById('jobTitle6');
 var jobDesc6 = document.getElementById("jobDesc6");
 var jobTitle = document.getElementsByClassName("jobTitle");
 var jobDesc = document.getElementsByClassName("jobDesc");
+var jobClick = document.getElementsByClassName("jobClick");
 
 jobDesc1.classList.add('hide');
 jobDesc2.classList.add('hide');
