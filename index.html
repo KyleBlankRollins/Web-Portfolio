@@ -1,8 +1,8 @@
 <html>
     <head>
         <link rel="stylesheet" href="main.css">
-		<link rel="stylesheet" href="index.css">
-		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+        <link rel="stylesheet" href="mediaQueries.css">
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 		<title>Rollinsky Home</title>
 	</head>
@@ -12,32 +12,374 @@
 		<div class="wrapper">
 			<header class="main-head">
                 <div class="banner">
-                    <div class ="glyph"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></div>
-                    <div><h2>Technical Writer | Documentation Specialist | Editor </h2></div>
+                    <div class ="glyph"><a href="index.html#titleA"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></a></div>
+                    <nav class="main-nav">
+        				<ul class="nav-list">
+                            <a href="index.html#anchorA"><li>About</li></a>
+                            <a href="index.html#anchorB"><li>Samples</li></a>
+        					<a href="index.html#anchorC"><li>Work</li></a>
+        					<a href="index.html#anchorE"><li>Contact</li></a>
+        				</ul>
+        			</nav>
+                </div>
+                <div class="contactIcons">
+                    <ul class="socialList">
+        				<a href="https://twitter.com/KyleBRollins" class="socialMedia" target="_blank"><li><i class="fab fa-twitter fa-fw"></i></li></a>
+        				<a href="https://www.linkedin.com/in/kyle-blank-rollins/" class="socialMedia" target="_blank"><li><i class="fab fa-linkedin-in fa-fw"></i></li></a>
+        				<a href="https://github.com/KyleBlankRollins" class="socialMedia" target="_blank"><li><i class="fab fa-github"></i></li></a>
+                    </ul>
                 </div>
 			</header>
 
-			<nav class="main-nav">
-				<ul class="nav-list">
-					<a><li class="mItem" id="mItem1">Home</li></a>
-					<a><li class="mItem" id="mItem2">Technical Writing</li></a>
-					<a><li class="mItem" id="mItem3">Document Design</li></a>
-					<a><li class="mItem" id="mItem4">Work<br>History</li></a>
-					<a><li class="mItem" id="mItem5">Published Content</li></a>
-					<a><li class="mItem" id="mItem6">Resume</li></a>
-				</ul>
-			</nav>
 			<div class="content">
-				<h1>Site under construction</h1>
+                <div class="anchor" id="anchorA"></div>
+                <div class="title" id="titleA"><h1>Kyle Rollins</h1></div>
+                <div class="aboutMe">
+                    <div class="textBlock">
+                        <p>
+                            My experience covers consumer electronics reviews, marketing copy, technical documentation, and website/UI microcopy.
+                        </p>
+                        <p>
+                            I've worked with small companies (like <a href="http://www.economicmodeling.com/" target="_blank">Emsi</a>) and large companies (like <a href="https://www.ebay.com/" target="_blank">eBay</a>). At each, I meet great people and learned invaluable skills.
+                        </p>
+                        <p>
+                            Currently, I work for <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">3M Health Information Systems</a>, documenting software in the healthcare industry.
+                        </p>
+                        <p>
+                            As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis. I'm honored to facilitate knowledge sharing in the local community.
+                        </p>
+                        <p class="note">
+                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit a pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
+                        </p>
+                    </div>
+                    <div class="profilePic">
+                        <img src="Images/kyle_01.jpg"/>
+                    </div>
+                </div>
+                <div class="anchor" id="anchorB"></div>
+                <div class="title" id="titleB"><h1>Samples</h1>
+                    <div class="textBlock">
+                        <p>
+                            As with many other technical writers, it's not possible for me to share many of the documents I've created on the corporate dime. That content doesn't belong to me and I often don't have permission to share it.
+                        </p>
+                        <p>
+                            However, I do have some samples to share, ranging from technical writing to document design. Take a look below!
+                        </p>
+                    </div>
+                </div>
+                <div class="samples" id="samples">
+                    <div class="pane" id="techWriting">
+                        <div class="overlay" id="techOverlay">
+                            <div class="paneTitle" id="techTitle">Technical Writing</div>
+                            <div class="sampleContainer" id="sampleTech">
+                                <div class="docItem vertical">
+                                    <div >
+                                        <div><a href="Documents/Technical_Writing/Chi_Tester_User's_Guide_V2.pdf" target="_blank"><img src="Images/writing_samples/Chi_Tester.jpg"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem1Text"><h4>Chi Tester User's Guide</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem vertical">
+                                    <div>
+                                        <div><a href="Documents/Technical_Writing/Gimo_Games_Style_Guide.pdf" target="_blank"><img src="Images/writing_samples/Gimo_Games_Style_Guide.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem2Text"><h4>Gimo Games Style Guide</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem vertical">
+                                    <div>
+                                        <div><a href="Documents/Technical_Writing/Shepherd_Union_Building_Manager_Handbook.pdf" target="_blank"><img src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem3Text"><h4>Shepherd Union Building Manager Handbook</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem vertical">
+                                    <div>
+                                        <div><a href="Documents/Technical_Writing/Proposal_Template.pdf" target="_blank"><img src="Images/writing_samples/Proposal_Template.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem4Text"><h4>Proposal Template</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+          			</div>
+                    <div class="pane" id="docDesign">
+                        <div class="overlay" id="designOverlay">
+                            <div class="paneTitle" id="designTitle">Document Design</div>
+                            <div class="sampleContainer" id="sampleDesign">
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/WTD_Jan_Role-Documentarian.pdf" target="_blank"><img src="Images/writing_samples/WTD_Jan_Role-Documentarian.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem1Text"><h4>WTD Role Card</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem verticalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/WTD_Apr_Agenda.pdf" target="_blank"><img src="Images/writing_samples/WTD_Apr_Agenda.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem2Text"><h4>WTD Meetup Agenda</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/WTD_Jan_Role-Client.pdf" target="_blank"><img src="Images/writing_samples/WTD_Jan_Role-Client.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem3Text"><h4>WTD Role Card</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/Quick_tips_front.pdf" target="_blank"><img src="Images/writing_samples/Quick_tips_front.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem4Text"><h4>WTD Quick Tips</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/Quick_tips_back.pdf" target="_blank"><img src="Images/writing_samples/Quick_tips_back.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem4Text"><h4>WTD Quick Tips</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem verticalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/WTD_Jan_Reference_Sheet.pdf" target="_blank"><img src="Images/writing_samples/WTD_Jan_Reference_Sheet.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem5Text"><h4>WTD Meetup Reference</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Documents/Document_Design/WTD_Jan_Role-ProductOwner.pdf" target="_blank"><img src="Images/writing_samples/WTD_Jan_Role-ProductOwner.png"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem6Text"><h4>WTD Role Card</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Images/writing_samples/APA_outside.jpg" target="_blank"><img src="Images/writing_samples/APA_outside.jpg"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem6Text"><h4>APA Style Guide Brochure</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="docItem horizontalDesign">
+                                    <div>
+                                        <div><a href="Images/writing_samples/MLA_outside.jpg" target="_blank"><img src="Images/writing_samples/MLA_outside.jpg"/></a></div>
+                                        <div class="docItemOverlay">
+                                            <div id="docItem6Text"><h4>MLA Style Guide Brochure</h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane" id="pubContent">
+                        <div class="overlay" id="pubOverlay">
+                            <div class="paneTitle" id="pubTitle">Published Articles</div>
+                            <div class="sampleContainer" id="sampleArticles">
+                                <div>
+                					<a href="http://www.economicmodeling.com/2016/09/09/fastest-growing-academic-programs-2015/" target="_blank"><p><b>The Fastest-Growing Academic Programs of 2015</b></p></a>
+                					<p>With new IPEDS data at hand, I set out to determine which academic programs grew the most compared to 2014. There are the expected results, but also some surprises.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/08/08/exploring-mba-demand/" target="_blank"><p><b>Exploring the Demand for MBA Graduates</b></p></a>
+            					    <p>It's no secret that the MBA is a popular degree choice. In fact, it's the most popular post-grad in the country. Why is that? I analyzed Emsi's Job Posting Analytics to find out.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/05/31/the-rise-of-postsecondary-certificates-in-the-us/" target="_blank"><p><b>The Rise of Postsecondary Certificates in the US</b></p></a>
+    			                    <p>Four-year degrees are expensive. That's why many displaced workers looked to postsecondary certificates during and after the great recession. But what happened as the economy improved and what does it mean for higher education institutions?</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/05/17/guided-pathways-stories-pilot-colleges/" target="_blank"><p><b>Guided Pathways: Stories From Pilot Colleges</b></p></a>
+    			                    <p>How does the Guided Pathways model benefit students and community colleges? I asked some college leaders at pathways pilot colleges to find out.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/03/30/state-tech-industry-7-takeaways-comptias-cyberstates-2016-report/" target="_blank"><p><b>State of the Tech Industry: 7 Takeaways from CompTIA’s Cyberstates 2016 Report</b></p></a>
+    			                    <p>The tech industry rapidly changes, which is why CompTIA releases a major industry report every year. Don't have time to dig through it all? I summarized seven main points to pay attention to.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/03/22/proliferation-general-studies-degrees/" target="_blank"><p><b>The Proliferation of General Studies Degrees</b></p></a>
+    			                    <p>What drove the massive completions growth in general studies after the great recession? I compiled and analyzed the data to identify trends and pose some answers.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/03/03/8-fast-growing-college-programs-not-keeping-up-with-employer-demand/" target="_blank"><p><b>8 Fast-Growing College Programs Not Keeping Up With Employer Demand</b></p></a>
+    			                    <p>Not all academic programs are in demand. However, some are in so much demand that there simply aren't enough graduates to fill open positions. Check out this infographic to learn more.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/02/12/from-provo-to-peoria-ranking-the-largest-150-metros-for-regional-competitiveness/" target="_blank"><p><b>From Provo to Peoria, Ranking the Largest 150 Metros for Regional Competitiveness</b></p></a>
+    			                    <p>Once I adjusted for national growth using Emsi's labor market data, it became clear which metros are more competitive than the rest. See the interactive map to see which metros are at the top.</p>
+                                </div>
+            					<div>
+                                    <a href="http://www.economicmodeling.com/2016/07/14/franklin-university-leveraging-data/" target="_blank"><p><b>Franklin University: Leveraging Data to Reach Adult Learners</b></p></a>
+    			                    <p>I spoke with Franklin University about how it tackles rapid program development and deployment in online education. The university was one of the first to embrace online education.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/05/12/fscj-leads-thousands-to-success/" target="_blank"><p><b>How Florida State College at Jacksonville Leads Thousands to Academic and Career Success</b></p></a>
+    			                    <p>Improving student success is no easy feat. It's a nebulous goal that encompasses many complicated processes. Florida State College at Jacksonville focuses on giving students an end goal--providing the tools they need to plan for future careers.</p>
+                                </div>
+                                <div>
+                                    <a href="http://www.economicmodeling.com/2016/08/25/proven-impact-allegany-college-maryland/" target="_blank"><p><b>Proven Return on Investment: Demonstrating the Impact of Allegany College of Maryland</b></p></a>
+    			                    <p>With shrinking public funding, community colleges across the nation are feeling fincancial pressure. To diversify funding, Allegany College of Maryland uses data to recruit and retain donors.</p>
+                                </div>
+                            </div>
+                        </div>
+        			</div>
+                </div>
+                <div class="anchor" id="anchorC"></div>
+                <div class="title" id="titleC"><h1>Work philosophy</h1></div>
+                <div class="workPhilosophy">
+                    <div class="textBlock">
+                        <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
+                        <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
+                        <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
+                        <p>In everything, be kind, courteous, and understanding. Be open to criticism, as it's one of the best ways to learn. Communication is about people. Cater to their needs, and good communication will follow.</p>
+                    </div>
+                    <div class="philosophyList">
+                        <div class="listTitle"><p>My Clifton Strengths top 5</p></div>
+                        <div class="philOrdered">
+                            <ol>
+                                <li>
+                                    <b>Restorative</b><br>
+                                    <p class="listDescription">I enjoy finding and solving problems.</p>
+                                </li>
+                                <li>
+                                    <b>Learner</b><br>
+                                    <p class="listDescription">New ideas and challenges excite me.</p>
+                                </li>
+                                <li>
+                                    <b>Discipline</b><br>
+                                    <p class="listDescription">Structure is important to me.</p>
+                                </li>
+                                <li>
+                                    <b>Intellection</b><br>
+                                    <p class="listDescription">I'm introspective.</p>
+                                </li>
+                                <li>
+                                    <b>Developer</b><br>
+                                    <p class="listDescription">Helping others improve gives me purpose.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="anchorD"></div>
+                <div class="title" id="titleD"><h1>Work history</h1></div>
+                <div class="workHistory" id="workHistory">
+                    <div class="empMatrix">
+                        <div class="empBox">
+                            <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">
+                                <div class=empName>
+                                    3M
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle1">&nbsp;&nbsp;Technical Writer</div>
+                                <div class="jobDesc" id="jobDesc1">
+                                    <p>Coordinated with developers to create release notes and other documentation for a dozen healthcare software products.</p>
+                                    <p><b>Skills:</b> research, project management, content reuse</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="empBox">
+                            <a href="https://www.ebay.com/" target="_blank">
+                                <div class=empName>
+                                    eBay
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle2">&nbsp;&nbsp;Editor</div>
+                                <div class="jobDesc" id="jobDesc2">
+                                    <p>As part of the HR user experience team, gathered, curated, wrote, and edited content for a complete intranet overhaul.</p>
+                                    <p><b>Skills:</b> interviewing, project management, collaborative writing</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="empBox">
+                            <a href="http://www.economicmodeling.com/" target="_blank">
+                                <div class=empName>
+                                    Emsi
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle3">&nbsp;&nbsp;Technical Writer</div>
+                                <div class="jobDesc" id="jobDesc3">
+                                    <p>Wrote economic development blog posts, created and edited RFPs and RFP templates, and conducted economic research.</p>
+                                    <p><b>Skills:</b> document management, interviewing, SEO</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="empBox">
+                            <a href="http://www.purch.com/" target="_blank">
+                                <div class=empName>
+                                    Purch
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle4">&nbsp;&nbsp;Electronics Writer/Reviewer</div>
+                                <div class="jobDesc" id="jobDesc4">
+                                    <p>Benchmarked electronics hardware, researched product markets, and targeted product reviews to specific audiences.</p>
+                                    <p><b>Skills:</b> SEO, audience analysis, research</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="empBox">
+                            <a href="https://www.weber.edu/" target="_blank">
+                                <div class=empName>
+                                    Weber State University
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle5">&nbsp;&nbsp;Building Manager</div>
+                                <div class="jobDesc" id="jobDesc5">
+                                    <p>Managed venue events and coordinated with other staff to ensure public safety in a multi-million-dollar building. Contributed to documenting role responsibilities.</p>
+                                    <p><b>Skills:</b> communication, organization, leadership</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="empBox">
+                            <a href="https://www.lds.org/" target="_blank">
+                                <div class=empName>
+                                    The Church of Jesus Christ of Latter-Day Saints
+                                </div>
+                            </a>
+                            <div class="jobBox">
+                                <div class="jobTitle" id="jobTitle6">&nbsp;&nbsp;Missionary</div>
+                                <div class="jobDesc" id="jobDesc6">
+                                    <p>Contributed to and organized volunteer service for two years in Germany. Lead a small group of missionaries responsible for a specific geographic area.</p>
+                                    <p><b>Skills:</b> leadership, organization, communication</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="anchorE"></div>
+                <div class="title" id="titleE"><h1>Contact</h1></div>
+                <div class="contact" id="contact"> <!-- TODO: Add resume PDF on right. -->
+                    <div class="textBlock">
+                        Thank you for your interest. To get in touch, follow the social media links in the header. My resume contains my email address.
+                    </div>
+                    <div class="resume">
+                        <a href="Documents/Resume_04.2018.pdf" target="_blank"><img src="Images/Resume_04.2018.png"/></a>
+                    </div>
+                </div>
 			</div>
-
-			<footer class="main-footer">
-                <ul class="socialList">
-    				<a class="socialMedia" href="https://twitter.com/KyleBRollins" target="_blank"><li class="socialItem"><i class="fab fa-twitter fa-fw"></i></li></a>
-    				<a class="socialMedia" href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank"><li class="socialItem"><i class="fab fa-linkedin-in fa-fw"></i></li></a>
-    				<a class="socialMedia" href="https://github.com/KyleBlankRollins" target="_blank"><li class="socialItem"><i class="fab fa-github"></i></li></a>
-                </ul class="socialList">
-			</footer>
 		</div>
 	</body>
+
+    <script src="js/main.js"></script>
+    <script src="js/Work_History.js"></script>
+
 </html>
