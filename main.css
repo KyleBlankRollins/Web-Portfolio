@@ -72,12 +72,14 @@ grid-template-areas:
         background-color: #FFFFFF;
         border-bottom: solid 1px #294C5D;
         grid-template-areas:
-        "banner contactIcons";
+        "banner";
     }
 
     .content {
     	grid-area: content;
+        justify-self: center;
         display: grid;
+        max-width: 1350px;
         grid-template-columns: 1fr;
         grid-template-areas:
         "anchorA"
@@ -102,20 +104,21 @@ grid-template-areas:
         .aboutMe {
             grid-area: aboutMe;
             display: grid;
-            grid-template-columns: 1fr .6fr;
+            grid-template-columns: 1fr;
         }
 
         .samples {
             grid-area: samples;
             justify-self: center;
             display: flex;
+            flex-direction: column;
             height: 100%;
             width: 100%;
         }
 
 /*--------- Tier 4 structure */
             .pane {
-                width: 80%;
+                width: 100%;
                 margin: 0 0 40 0;
                 background-color: #E9E9E9;
                 border-right: solid 2px #E9E9E9;
@@ -155,13 +158,13 @@ grid-template-areas:
         .workPhilosophy {
             grid-area: workPhilosophy;
             display: grid;
-            grid-template-columns: 1fr .5fr;
+            grid-template-columns: 1fr;
         }
 
         .contact {
             grid-area: contact;
             display: grid;
-            grid-template-columns: 1fr .6fr;
+            grid-template-columns: 1fr;
             border-bottom: solid 4px #B87462;
             margin-bottom: 40px;
         }
@@ -246,6 +249,10 @@ grid-template-areas:
     align-items: stretch;
     margin: 0 5 0 5;
     padding: 0px;
+}
+
+.nav-list .icon {
+    display: none;
 }
 
 .main-head a {
@@ -364,16 +371,16 @@ grid-template-areas:
 }
 
 .collapse {
-    width: 10% !important;
-    transition: width 1s;
+    height: 10% !important;
+    transition: height 1s;
     background-color: #4a4a4a;
     color: #FFFFFF;
 }
 
 .expand {
-    width: 90% !important;
-    transition: width .5s ease-in-out;
-}
+    height: 90% !important;
+    transition: height .5s ease-in-out;
+    }
 
 .paneTitle {
     grid-area: paneTitle;

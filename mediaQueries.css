@@ -1,11 +1,88 @@
+/* Large-width screens are handled by default in main.css. */
 
-@media (max-width: 1250px) {
-    .resetRotation {
-        transform: rotate(0deg) !important;
+/* Medium-width screens */
+@media screen and (max-width: 991px) {
+
+}
+
+/* Small-width screens */
+@media screen and (min-width: 500px) { /* TODO: Samples section is having difficulty. Need to figure out what's going on with the expand and collapse classes. */
+    .main-head {
+        grid-template-areas:
+        "banner contactIcons";
     }
 
-    .rotate {
-        font-size: 18px;
-        transform: rotate(-90deg);
+    .aboutMe {
+        grid-template-columns: 1fr .6fr;
+    }
+
+    .samples {
+        flex-direction: row;
+    }
+
+    .pane {
+        height: 80%;
+        margin: 0 0 40 0;
+        background-color: #E9E9E9;
+        border-right: solid 2px #E9E9E9;
+        cursor: pointer;
+    }
+
+    .overlay {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "paneTitle"
+        "sampleContainer";
+        padding: 10px;
+        margin-bottom: 20;
+        cursor: initial;
+    }
+
+    #sampleTech {
+        grid-area: sampleContainer;
+        display: none;
+        margin-top: 20px;
+        grid-gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+        grid-auto-rows: 125px;
+        grid-auto-flow: dense;
+    }
+
+    #sampleDesign {
+        grid-area: sampleContainer;
+        display: none;
+        margin-top: 20px;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
+        grid-auto-rows: 100px;
+        grid-auto-flow: dense;
+    }
+
+    #sampleArticles {
+        grid-area: sampleContainer;
+        display: none;
+        margin-top: 20px;
+        grid-gap: 30px;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-flow: row;
+    }
+
+    .workPhilosophy {
+        grid-template-columns: 1fr .5fr;
+        }
+
+    .contact {
+        grid-template-columns: 1fr .6fr;
+    }
+
+    .collapse {
+        width: 10% !important;
+        transition: width 1s;
+    }
+
+    .expand {
+        width: 90% !important;
+        transition: width .5s ease-in-out;
     }
 }
