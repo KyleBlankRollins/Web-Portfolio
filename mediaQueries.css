@@ -13,12 +13,11 @@
     }
 
     .aboutMe {
-        grid-template-columns: 1fr .6fr;
+        grid-template-columns: .6fr 1fr;
     }
 
     .samples {
         flex-direction: row;
-        width: 120%;
         margin: 0 0 30 0;
     }
 
@@ -67,7 +66,8 @@
         }
 
     .contact {
-        grid-template-columns: 1fr .6fr;
+        grid-template-columns: 1fr .5fr;
+        grid-template-rows: 200px;
     }
 
     .collapse {

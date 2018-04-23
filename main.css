@@ -34,7 +34,6 @@ a:link {
 
 a:hover {
 	color: #B87462;
-	text-decoration: underline;
 }
 
 a:visited {
@@ -43,7 +42,6 @@ a:visited {
 
 a:visited:hover {
 	color: #B87462;
-    text-decoration: underline;
 }
 /* <--- End page setup. */
 
@@ -105,6 +103,7 @@ grid-template-areas:
             grid-area: aboutMe;
             display: grid;
             grid-template-columns: 1fr;
+            align-items: center;
         }
 
         .samples {
@@ -159,6 +158,7 @@ grid-template-areas:
             grid-area: workPhilosophy;
             display: grid;
             grid-template-columns: 1fr;
+            align-items: center;
         }
 
         .contact {
@@ -167,6 +167,7 @@ grid-template-areas:
             grid-template-columns: 1fr;
             border-bottom: solid 4px #B87462;
             margin-bottom: 40px;
+            align-items: center;
         }
 
         .workHistory {
@@ -314,10 +315,10 @@ grid-template-areas:
 
 .profilePic {
     margin: 10 10 30 10;
-    min-height: 400px;
+    min-height: 300px;
 }
 
-.profilePic img, .resume img {
+.profilePic img {
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -355,6 +356,7 @@ grid-template-areas:
     height: 3em;
     width: 100%;
     background-color: #4a4a4a;
+    border-bottom: groove 6px #B87462;
 }
 
 .philOrdered {
@@ -364,10 +366,12 @@ grid-template-areas:
 }
 
 .resume {
-    display: grid;
-    grid-template-columns: minmax(300px, .5fr);
-    grid-auto-rows: 450px;
     margin: 10 10 30 10;
+    height: 100%;
+}
+
+.resumeBox:hover{
+    background-color: #B87462;
 }
 
 .collapse {
@@ -459,6 +463,26 @@ a > img {
 	font-size: 1.1em;
 	font-weight: bold;
 	color: white;
+    background-color: #294C5D;
+}
+
+.resumeBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    height: 80%;
+    width: 60%;
+    min-width: 160px;
+    background-color: #294C5D;
+}
+
+.empName:hover{
+    background-color: #B87462;
 }
 
 .jobBox {
@@ -527,10 +551,6 @@ a > img {
     cursor: pointer;
 }
 
-.empName {
-    background-color: #294C5D;
-}
-
 .jobDesc p,h4 {
 	margin: 15 10 0 10;
     font-size: .9em;
@@ -541,6 +561,7 @@ a > img {
 .textBlock {
     padding: 5 20 5 20;
     margin: 10 0 30 0;
+    max-width: 900px;
 }
 
 .textblock p {
@@ -589,7 +610,7 @@ a > img {
     border-bottom: solid 1px #294C5D;
     opacity: .8;
     padding: 5px;
-    margin: 0 20 0 20 !important;
+    margin: 0 40 0 40 !important;
 }
 
 .anchor {
