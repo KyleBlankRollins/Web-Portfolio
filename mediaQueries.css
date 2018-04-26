@@ -18,7 +18,6 @@
 
     .samples {
         flex-direction: row;
-        margin: 0 0 30 0;
     }
 
     .overlay {
@@ -72,7 +71,7 @@
 
     .collapse {
         width: 10% !important;
-        height: 100% !important;
+        height: 97% !important;
         background-color: #4a4a4a;
         color: #FFFFFF;
         transition: width 1s;
@@ -80,7 +79,7 @@
 
     .expand {
         width: 90% !important;
-        height: 100% !important;
+        height: 97% !important;
         transition: width .5s ease-in-out;
     }
 }

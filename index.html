@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="mediaQueries.css">
+        <!-- <link rel="stylesheet" href="mediaQueries.css"> -->
 		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 		<title>Rollinsky Home</title>
@@ -64,42 +64,55 @@
                         <div class="overlay" id="techOverlay">
                             <div class="paneTitle" id="techTitle">Technical Writing</div>
                             <div class="sampleContainer" id="sampleTech">
-                                <div class="docItem vertical">
-                                    <div >
-                                        <div><a href="Documents/Technical_Writing/Chi_Tester_User's_Guide_V2.pdf" target="_blank"><img src="Images/writing_samples/Chi_Tester.jpg"/></a></div>
-                                        <div class="docItemOverlay">
-                                            <div id="docItem1Text"><h4>Chi Tester User's Guide</h4></div>
-                                        </div>
-                                    </div>
+                                <div class="w3-content w3-display-container">
+                                      <img class="mySlides" src="Images/1.png" style="width:100%">
+                                      <img class="mySlides" src="Images/2.png" style="width:100%">
+                                      <img class="mySlides" src="Images/3.png" style="width:100%">
+                                      <img class="mySlides" src="Images/4.png" style="width:100%">
+
+                                      <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                      <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
                                 </div>
-                                <div class="docItem vertical">
-                                    <div>
-                                        <div><a href="Documents/Technical_Writing/Gimo_Games_Style_Guide.pdf" target="_blank"><img src="Images/writing_samples/Gimo_Games_Style_Guide.png"/></a></div>
-                                        <div class="docItemOverlay">
-                                            <div id="docItem2Text"><h4>Gimo Games Style Guide</h4></div>
+                                <div class="slideshow">
+                                    <div class="docItem">
+                                        <div >
+                                            <div><a href="Documents/Technical_Writing/Chi_Tester_User's_Guide_V2.pdf" target="_blank"><img src="Images/writing_samples/Chi_Tester.jpg"/></a></div>
+                                            <div class="docItemOverlay">
+                                                <div id="docItem1Text"><h4>Chi Tester User's Guide</h4></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="docItem vertical">
-                                    <div>
-                                        <div><a href="Documents/Technical_Writing/Shepherd_Union_Building_Manager_Handbook.pdf" target="_blank"><img src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png"/></a></div>
-                                        <div class="docItemOverlay">
-                                            <div id="docItem3Text"><h4>Shepherd Union Building Manager Handbook</h4></div>
+                                    <div class="docItem">
+                                        <div>
+                                            <div><a href="Documents/Technical_Writing/Gimo_Games_Style_Guide.pdf" target="_blank"><img src="Images/writing_samples/Gimo_Games_Style_Guide.png"/></a></div>
+                                            <div class="docItemOverlay">
+                                                <div id="docItem2Text"><h4>Gimo Games Style Guide</h4></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="docItem vertical">
-                                    <div>
-                                        <div><a href="Documents/Technical_Writing/Proposal_Template.pdf" target="_blank"><img src="Images/writing_samples/Proposal_Template.png"/></a></div>
-                                        <div class="docItemOverlay">
-                                            <div id="docItem4Text"><h4>Proposal Template</h4></div>
+                                    <div class="docItem">
+                                        <div>
+                                            <div><a href="Documents/Technical_Writing/Shepherd_Union_Building_Manager_Handbook.pdf" target="_blank"><img src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png"/></a></div>
+                                            <div class="docItemOverlay">
+                                                <div id="docItem3Text"><h4>Shepherd Union Building Manager Handbook</h4></div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="docItem">
+                                        <div>
+                                            <div><a href="Documents/Technical_Writing/Proposal_Template.pdf" target="_blank"><img src="Images/writing_samples/Proposal_Template.png"/></a></div>
+                                            <div class="docItemOverlay">
+                                                <div id="docItem4Text"><h4>Proposal Template</h4></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
                                 </div>
                             </div>
                         </div>
           			</div>
-                    <div class="pane" id="docDesign">
+                    <!-- <div class="pane" id="docDesign">
                         <div class="overlay" id="designOverlay">
                             <div class="paneTitle" id="designTitle">Document Design</div>
                             <div class="sampleContainer" id="sampleDesign">
@@ -177,8 +190,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="pane" id="pubContent">
+                    </div> -->
+                    <!-- <div class="pane" id="pubContent">
                         <div class="overlay" id="pubOverlay">
                             <div class="paneTitle" id="pubTitle">Published Articles</div>
                             <div class="sampleContainer" id="sampleArticles">
@@ -228,7 +241,7 @@
                                 </div>
                             </div>
                         </div>
-        			</div>
+        			</div> -->
                 </div>
                 <div class="anchor" id="anchorC"></div>
                 <div class="title" id="titleC"><h1>Work philosophy</h1></div>
@@ -375,7 +388,8 @@
 		</div>
 	</body>
 
-    <script src="js/main.js"></script>
+    <script src="js/slideshow.js"></script>
+    <!-- <script src="js/main.js"></script> -->
     <script src="js/Work_History.js"></script>
 
 </html>

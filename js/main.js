@@ -20,7 +20,6 @@ for (i = 0; i < sampleChildren.length; i++) {
 
 techWriting.classList.add("expand");
 techWriting.classList.remove("collapse");
-sampleTech.style.cssText = "display: grid !important";
 
 responsiveResponse(width1250px); //Run responsiveResponse, which checks viewport width.
 width1250px.addListener(responsiveResponse);
@@ -57,9 +56,6 @@ function widthToggle(event) { // REVIEW: Is there any way to clean this up? Shou
             pubClassList.add("collapse");
             pubClassList.remove("expand");
             pubTitle.classList.add("rotate");
-            sampleTech.style.cssText = "display: grid !important";
-            sampleDesign.style.cssText = "display: none !important";
-            sampleArticles.style.cssText = "display: none !important";
         }
 
     } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "designTitle") {
@@ -74,9 +70,6 @@ function widthToggle(event) { // REVIEW: Is there any way to clean this up? Shou
             pubClassList.add("collapse");
             pubClassList.remove("expand");
             pubTitle.classList.add("rotate");
-            sampleDesign.style.cssText = "display: grid !important";
-            sampleTech.style.cssText = "display: none !important";
-            sampleArticles.style.cssText = "display: none !important";
         }
 
     } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pubTitle") {
@@ -91,9 +84,6 @@ function widthToggle(event) { // REVIEW: Is there any way to clean this up? Shou
             designClassList.add("collapse");
             designClassList.remove("expand");
             designTitle.classList.add("rotate");
-            sampleArticles.style.cssText = "display: grid !important";
-            sampleTech.style.cssText = "display: none !important";
-            sampleDesign.style.cssText = "display: none !important";
         }
     } else {
 
