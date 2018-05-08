@@ -20,12 +20,6 @@ for (i = 0; i < sampleChildren.length; i++) {
   sampleChildren[i].addEventListener('click', heightToggle);
 }
 
-sampleTech.classList.add("hide");
-sampleDesign.classList.add("hide");
-sampleArticles.classList.add("hide");
-banner.classList.add("hide");
-contactIcons.classList.add("hide");
-
 responsiveResponse(width1250px); //Run responsiveResponse, which checks viewport width.
 width1250px.addListener(responsiveResponse);
 
@@ -41,7 +35,7 @@ function responsiveResponse(viewportWidth, event) { //Checks to see if viewport 
     }
 }
 
-function heightToggle(event) { // REVIEW: Is there any way to clean this up? Should be a way and I'm just not thinking of it. Maybe for v1.5 or something.
+function heightToggle(event) {
 
     var el = event.target;
     var elParent = el.parentElement;
@@ -51,62 +45,47 @@ function heightToggle(event) { // REVIEW: Is there any way to clean this up? Sho
 
     if (elParent.id == techWriting.id || el.id == techWriting.id || el.id == "techTitle") {
 
-        if (techWriting.className.match("collapse")) {
-            techClassList.add("expand");
-            techClassList.remove("collapse");
-            techTitle.classList.remove("rotate");
-            sampleTech.classList.add("show");
-            sampleTech.classList.remove("hide");
-            designClassList.add("collapse");
-            designClassList.remove("expand");
-            designTitle.classList.add("rotate");
-            sampleDesign.classList.add("hide");
-            sampleDesign.classList.remove("show");
-            pubClassList.add("collapse");
-            pubClassList.remove("expand");
-            pubTitle.classList.add("rotate");
-            sampleArticles.classList.add("hide");
-            sampleArticles.classList.remove("show");
+        techClassList.toggle("collapse");
+        sampleTech.classList.toggle("hide");
+
+        if (!designClassList.contains("collapse")) {
+            designClassList.toggle("collapse");
+            sampleDesign.classList.toggle("hide");
+        }
+
+        if (!pubClassList.contains("collapse")) {
+            pubClassList.toggle("collapse");
+            sampleArticles.classList.toggle("hide");
         }
 
     } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "designTitle") {
 
-        if (docDesign.className.match("collapse")) {
-            designClassList.add("expand");
-            designClassList.remove("collapse");
-            designTitle.classList.remove("rotate");
-            sampleDesign.classList.add("show");
-            sampleDesign.classList.remove("hide");
-            techClassList.add("collapse");
-            techClassList.remove("expand");
-            sampleTech.classList.add("hide");
-            sampleTech.classList.remove("show");
-            techTitle.classList.add("rotate");
-            pubClassList.add("collapse");
-            pubClassList.remove("expand");
-            sampleArticles.classList.add("hide");
-            sampleArticles.classList.remove("show");
-            pubTitle.classList.add("rotate");
+        designClassList.toggle("collapse");
+        sampleDesign.classList.toggle("hide");
+
+        if (!techClassList.contains("collapse")) {
+            techClassList.toggle("collapse");
+            sampleTech.classList.toggle("hide");
+        }
+
+        if (!pubClassList.contains("collapse")) {
+            pubClassList.toggle("collapse");
+            sampleArticles.classList.toggle("hide");
         }
 
     } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pubTitle") {
 
-        if (pubContent.className.match("collapse")) {
-            pubClassList.add("expand");
-            pubClassList.remove("collapse");
-            pubTitle.classList.remove("rotate");
-            sampleArticles.classList.add("show");
-            sampleArticles.classList.remove("hide");
-            techClassList.add("collapse");
-            techClassList.remove("expand");
-            techTitle.classList.add("rotate");
-            sampleTech.classList.add("hide");
-            sampleTech.classList.remove("show");
-            designClassList.add("collapse");
-            designClassList.remove("expand");
-            designTitle.classList.add("rotate");
-            sampleDesign.classList.add("hide");
-            sampleDesign.classList.remove("show");
+        pubClassList.toggle("collapse");
+        sampleArticles.classList.toggle("hide");
+
+        if (!techClassList.contains("collapse")) {
+            techClassList.toggle("collapse");
+            sampleTech.classList.toggle("hide");
+        }
+
+        if (!designClassList.contains("collapse")) {
+            designClassList.toggle("collapse");
+            sampleDesign.classList.toggle("hide");
         }
     }
 }

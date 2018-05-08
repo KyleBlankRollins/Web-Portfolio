@@ -12,30 +12,29 @@
 
 		<div class="wrapper">
 			<header class="main-head">
-                <div class ="glyph"><a href="index.html#titleA"><p class="glyphOuter">K</p><p id="glyphInner">_</p><p class=glyphOuter>R</p></a></div>
+                <div class ="logo"><a href="index.html#titleA"><p class="logoOuter">K</p><p id="logoInner">_</p><p class="logoOuter">R</p></a></div>
                 <div class="menu" onclick="expandMenu(this)">
                   <div class="bar1"></div>
                   <div class="bar2"></div>
                   <div class="bar3"></div>
+                </div>
 
-                  <div class="banner" id="banner">
-                      <nav class="main-nav">
-          				<ul class="nav-list">
-                              <a href="index.html#anchorA"><li>About</li></a>
-                              <a href="index.html#anchorB"><li>Samples</li></a>
-          					<a href="index.html#anchorC"><li>Work</li></a>
-          					<a href="index.html#anchorE"><li>Contact</li></a>
-                              <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
-          				</ul>
-          			</nav>
-                  </div>
-                  <div class="contactIcons" id="contactIcons">
-                      <ul class="socialList">
-          				<a href="https://twitter.com/KyleBRollins" class="socialMedia" target="_blank"><li><i class="fab fa-twitter fa-fw"></i></li></a>
-          				<a href="https://www.linkedin.com/in/kyle-blank-rollins/" class="socialMedia" target="_blank"><li><i class="fab fa-linkedin-in fa-fw"></i></li></a>
-          				<a href="https://github.com/KyleBlankRollins" class="socialMedia" target="_blank"><li><i class="fab fa-github"></i></li></a>
+                <div class="banner hide" id="banner">
+                    <nav class="main-nav">
+                      <ul class="nav-list">
+                          <a href="index.html#anchorA"><li>About</li></a>
+                          <a href="index.html#anchorB"><li>Samples</li></a>
+                          <a href="index.html#anchorC"><li>Work</li></a>
+                          <a href="index.html#anchorE"><li>Contact</li></a>
                       </ul>
-                  </div>
+                  </nav>
+                </div>
+                <div class="contactIcons hide" id="contactIcons">
+                    <ul class="socialList">
+                      <a href="https://twitter.com/KyleBRollins" class="socialMedia" target="_blank"><li><i class="fab fa-twitter fa-fw"></i></li></a>
+                      <a href="https://www.linkedin.com/in/kyle-blank-rollins/" class="socialMedia" target="_blank"><li><i class="fab fa-linkedin-in fa-fw"></i></li></a>
+                      <a href="https://github.com/KyleBlankRollins" class="socialMedia" target="_blank"><li><i class="fab fa-github"></i></li></a>
+                    </ul>
                 </div>
             </header>
 
@@ -54,7 +53,7 @@
                             As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.
                         </p>
                         <p class="note">
-                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit a pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
+                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
                         </p>
                     </div>
                 </div>
@@ -70,15 +69,17 @@
                     <div class="pane" id="techWriting">
                         <div class="overlay" id="techOverlay">
                             <div class="paneTitle" id="techTitle">Technical Writing</div>
-                            <div class="sampleContainer" id="sampleTech">
-                                <div>
+                            <div class="sampleContainer  hide" id="sampleTech">
+                                <div class="slideContainer">
                                       <img class="techSlides" src="Images/writing_samples/Chi_Tester.jpg" style="width:100%">
                                       <img class="techSlides" src="Images/writing_samples/Gimo_Games_Style_Guide.png" style="width:100%">
                                       <img class="techSlides" src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png" style="width:100%">
                                       <img class="techSlides" src="Images/writing_samples/Proposal_Template.png" style="width:100%">
 
-                                      <button class="buttonDisplayLeft" onclick="plusTechDivs(-1)">&#10094;</button>
-                                      <button class="buttonDisplayRight" onclick="plusTechDivs(1)">&#10095;</button>
+                                      <div class="buttonBlock">
+                                          <button class="buttonDisplayLeft" onclick="plusTechDivs(-1)">&#10094;</button>
+                                          <button class="buttonDisplayRight" onclick="plusTechDivs(1)">&#10095;</button>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +87,8 @@
                     <div class="pane" id="docDesign">
                         <div class="overlay" id="designOverlay">
                             <div class="paneTitle" id="designTitle">Document Design</div>
-                            <div class="sampleContainer" id="sampleDesign">
-                                <div>
+                            <div class="sampleContainer  hide" id="sampleDesign">
+                                <div class="slideContainer">
                                       <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Documentarian.png" style="width:100%">
                                       <img class="designSlides" src="Images/writing_samples/WTD_Apr_Agenda.png" style="width:100%">
                                       <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Client.png" style="width:100%">
@@ -98,8 +99,10 @@
                                       <img class="designSlides" src="Images/writing_samples/APA_outside.jpg" style="width:100%">
                                       <img class="designSlides" src="Images/writing_samples/MLA_outside.jpg" style="width:100%">
 
-                                      <button class="buttonDisplayLeft" onclick="plusDesignDivs(-1)">&#10094;</button>
-                                      <button class="buttonDisplayRight" onclick="plusDesignDivs(1)">&#10095;</button>
+                                      <div class="buttonBlock">
+                                          <button class="buttonDisplayLeft" onclick="plusDesignDivs(-1)">&#10094;</button>
+                                          <button class="buttonDisplayRight" onclick="plusDesignDivs(1)">&#10095;</button>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +110,8 @@
                     <div class="pane" id="pubContent">
                         <div class="overlay" id="pubOverlay">
                             <div class="paneTitle" id="pubTitle">Published Content</div>
-                            <div class="sampleContainer" id="sampleArticles">
-                                <div>
+                            <div class="sampleContainer  hide" id="sampleArticles">
+                                <div class="slideContainer">
                                       <div class="pubSlides" style="width:100%">
                                           <a href="http://www.economicmodeling.com/2016/09/09/fastest-growing-academic-programs-2015/" target="_blank"><p><b>The Fastest-Growing Academic Programs of 2015</b></p></a>
                       					  <p>With new IPEDS data at hand, I set out to determine which academic programs grew the most compared to 2014. There are the expected results, but also some surprises.</p>
@@ -139,8 +142,10 @@
           			                      <p>Once I adjusted for national growth using Emsi's labor market data, it became clear which metros are more competitive than the rest. See the interactive map to see which metros are at the top.</p>
                                       </div>
 
-                                      <button class="buttonDisplayLeft" onclick="plusPubDivs(-1)">&#10094;</button>
-                                      <button class="buttonDisplayRight" onclick="plusPubDivs(1)">&#10095;</button>
+                                      <div class="buttonBlock">
+                                          <button class="buttonDisplayLeft" onclick="plusPubDivs(-1)">&#10094;</button>
+                                          <button class="buttonDisplayRight" onclick="plusPubDivs(1)">&#10095;</button>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -186,8 +191,8 @@
                 <div class="anchor" id="anchorD"></div>
                 <div class="title" id="titleD"><h1>Work history</h1></div>
                 <div class="workHistory" id="workHistory">
-                    <div class="empMatrix">
-                        <div class="empBox">
+                    <div class="empMatrix" id="empMatrix">
+                        <div class="empBox" id="empBox1">
                             <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">
                                 <div class="empName">
                                     3M
@@ -201,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="empBox">
+                        <div class="empBox" id="empBox2">
                             <a href="https://www.ebay.com/" target="_blank">
                                 <div class="empName">
                                     eBay
@@ -215,7 +220,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="empBox">
+                        <div class="empBox" id="empBox3">
                             <a href="http://www.economicmodeling.com/" target="_blank">
                                 <div class="empName">
                                     Emsi
@@ -229,7 +234,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="empBox">
+                        <div class="empBox" id="empBox4">
                             <a href="http://www.purch.com/" target="_blank">
                                 <div class="empName">
                                     Purch
@@ -243,7 +248,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="empBox">
+                        <div class="empBox" id="empBox5">
                             <a href="https://www.weber.edu/" target="_blank">
                                 <div class="empName">
                                     Weber State University
@@ -257,7 +262,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="empBox">
+                        <div class="empBox" id="empBox6">
                             <a href="https://www.lds.org/" target="_blank">
                                 <div class="empName">
                                     The Church of Jesus Christ of Latter-Day Saints
