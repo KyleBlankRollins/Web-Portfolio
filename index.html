@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>K_R</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Web Portfolio">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="stylesheet" href="main.css">
         <!-- <link rel="stylesheet" href="mediaQueries.css"> -->
 		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto" rel="stylesheet">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-		<title>Rollinsky Home</title>
 	</head>
 
 	<body>
-
-		<div class="wrapper">
+		<section class="wrapper">
 			<header class="main-head">
                 <div class ="logo"><a href="index.html#titleA"><p class="logoOuter">K</p><p id="logoInner">_</p><p class="logoOuter">R</p></a></div>
                 <div class="menu" onclick="expandMenu(this)">
@@ -38,12 +41,14 @@
                 </div>
             </header>
 
-			<div class="content">
+			<main class="content">
                 <div class="anchor" id="anchorA"></div>
-                <div class="title" id="titleA"><h1>Kyle Rollins</h1></div>
-                <div class="aboutMe">
+                <div class="title" id="titleA">
+                    <h1>Kyle Rollins</h1>
+                </div>
+                <article class="aboutMe">
                     <div class="profilePic">
-                        <img src="Images/kyle_01.jpg"/>
+                        <img src="Images/kyle_01.jpg" alt="Kyle Rollins profile photo."/>
                     </div>
                     <div class="textBlock">
                         <p>
@@ -53,28 +58,30 @@
                             As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.
                         </p>
                         <p class="note">
-                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
+                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
                         </p>
                     </div>
-                </div>
+                </article>
+                <hr>
                 <div class="anchor" id="anchorB"></div>
-                <div class="title" id="titleB"><h1>Samples</h1>
+                <div class="title" id="titleB">
+                    <h2>Samples</h2>
                     <div class="textBlock">
                         <p>
                             These samples range from technical writing to document design. Take a look below!
                         </p>
                     </div>
                 </div>
-                <div class="samples" id="samples">
+                <article class="samples" id="samples">
                     <div class="pane" id="techWriting">
                         <div class="overlay" id="techOverlay">
                             <div class="paneTitle" id="techTitle">Technical Writing</div>
                             <div class="sampleContainer  hide" id="sampleTech">
                                 <div class="slideContainer">
-                                      <img class="techSlides" src="Images/writing_samples/Chi_Tester.jpg" style="width:100%">
-                                      <img class="techSlides" src="Images/writing_samples/Gimo_Games_Style_Guide.png" style="width:100%">
-                                      <img class="techSlides" src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png" style="width:100%">
-                                      <img class="techSlides" src="Images/writing_samples/Proposal_Template.png" style="width:100%">
+                                      <img class="techSlides" src="Images/writing_samples/Chi_Tester.jpg" style="width:100%" alt="Chi Tester User Guide writing sample."/>
+                                      <img class="techSlides" src="Images/writing_samples/Gimo_Games_Style_Guide.png" style="width:100%" alt="Gimo Games Style Guide writing sample."/>
+                                      <img class="techSlides" src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png" style="width:100%" alt="Shepherd Union Building Manager Handbook writing sample."/>
+                                      <img class="techSlides" src="Images/writing_samples/Proposal_Template.png" style="width:100%" alt="Proposal Template writing sample."/>
 
                                       <div class="buttonBlock">
                                           <button class="buttonDisplayLeft" onclick="plusTechDivs(-1)">&#10094;</button>
@@ -89,15 +96,15 @@
                             <div class="paneTitle" id="designTitle">Document Design</div>
                             <div class="sampleContainer  hide" id="sampleDesign">
                                 <div class="slideContainer">
-                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Documentarian.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/WTD_Apr_Agenda.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Client.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/Quick_tips_front.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/Quick_tips_back.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Reference_Sheet.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-ProductOwner.png" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/APA_outside.jpg" style="width:100%">
-                                      <img class="designSlides" src="Images/writing_samples/MLA_outside.jpg" style="width:100%">
+                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Documentarian.png" style="width:100%" alt="Workshop card design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/WTD_Apr_Agenda.png" style="width:100%" alt="Meetup agenda design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Client.png" style="width:100%" alt="Workshop card design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/Quick_tips_front.png" style="width:100%" alt="Quick tips front design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/Quick_tips_back.png" style="width:100%" alt="Quick tips back design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Reference_Sheet.png" style="width:100%" alt="Meetup reference sheet design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-ProductOwner.png" style="width:100%" alt="Workshop card design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/APA_outside.jpg" style="width:100%" alt="APA brochure design sample."/>
+                                      <img class="designSlides" src="Images/writing_samples/MLA_outside.jpg" style="width:100%" alt="MLA brochure design sample."/>
 
                                       <div class="buttonBlock">
                                           <button class="buttonDisplayLeft" onclick="plusDesignDivs(-1)">&#10094;</button>
@@ -150,10 +157,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
+                <hr>
                 <div class="anchor" id="anchorC"></div>
-                <div class="title" id="titleC"><h1>Work philosophy</h1></div>
-                <div class="workPhilosophy">
+                <div class="title" id="titleC">
+                    <h2>Work philosophy</h2>
+                </div>
+                <article class="workPhilosophy">
                     <div class="textBlock">
                         <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
                         <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
@@ -187,10 +197,13 @@
                             </ol>
                         </div>
                     </div>
-                </div>
+                </article>
+                <hr>
                 <div class="anchor" id="anchorD"></div>
-                <div class="title" id="titleD"><h1>Work history</h1></div>
-                <div class="workHistory" id="workHistory">
+                <div class="title" id="titleD">
+                    <h2>Work history</h2>
+                </div>
+                <article class="workHistory" id="workHistory">
                     <div class="empMatrix" id="empMatrix">
                         <div class="empBox" id="empBox1">
                             <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">
@@ -277,27 +290,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
+                <hr>
                 <div class="anchor" id="anchorE"></div>
-                <div class="title" id="titleE"><h1>Contact</h1></div>
-                <div class="contact" id="contact">
+                <div class="title" id="titleE">
+                    <h2>Contact</h2>
+                </div>
+                <article class="contact" id="contact">
                     <div class="textBlock">
                         Thank you for your interest. To get in touch, follow the social media links in the header. My resume contains my email address.
                     </div>
                     <div class="resume">
                         <a href="Documents/Resume_04.2018.pdf" target="_blank">
                             <div class="resumeBox">
-                                >>> Resume
+                                Resume >>>
                             </div>
                         </a>
                     </div>
-                </div>
-			</div>
-		</div>
+                </article>
+			</main>
+		</section>
+
+        <script src="js/slideshow.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/Work_History.js"></script>
 	</body>
-
-    <script src="js/slideshow.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/Work_History.js"></script>
-
 </html>

@@ -75,27 +75,8 @@ grid-template-areas:
 
     .content {
     	grid-area: content;
-        justify-self: center;
-        display: grid;
         max-width: 1350px;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-        "anchorA"
-        "titleA"
-        "aboutMe"
-        "anchorB"
-        "titleB"
-        "samples"
-        "anchorC"
-        "titleC"
-        "workPhilosophy"
-        "anchorD"
-        "titleD"
-        "workHistory"
-        "anchorE"
-        "titleE"
-        "contact";
-    	margin: 40 20 5 20;
+        margin: 0 10px 0 10px;
     }
 
 /*----- Tier 3 structure */
@@ -136,7 +117,6 @@ grid-template-areas:
             grid-area: contact;
             display: grid;
             grid-template-columns: 1fr;
-            border-bottom: solid 4px #B87462;
             align-items: center;
         }
 
@@ -452,6 +432,7 @@ a > img {
     height: 80%;
     width: 60%;
     min-width: 160px;
+    margin: 15px 0 15px 0;
     background-color: #294C5D;
 }
 
@@ -530,7 +511,10 @@ a > img {
 /* <--- End workHistory styling */
 
 .textBlock {
-    margin: 10px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0 10px 0;
     max-width: 900px;
 }
 
@@ -559,7 +543,6 @@ a > img {
 .title {
     margin: 0;
     padding-top: 10px;
-    border-top: solid 4px #B87462;
 }
 
 #titleA {
@@ -580,7 +563,7 @@ a > img {
     border-bottom: solid 1px #294C5D;
     opacity: .8;
     padding: 5px;
-    margin: 0 40px 0 30px !important;
+    width: 90%;
 }
 
 .anchor {
@@ -596,6 +579,14 @@ a > img {
 
 .show {
 	display: block;
+}
+
+hr {
+    background-color: #B87462;
+    height: 4px;
+    width: 100%;
+    border: 0;
+    margin: 15px 0 0 0;
 }
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
