@@ -1,85 +1,19 @@
-/* Large-width screens are handled by default in main.css. */
-
 /* Medium-width screens */
-@media screen and (max-width: 991px) {
-
-}
-
-/* Small-width screens */
-@media screen and (min-width: 500px) { /* TODO: Samples section is having difficulty. Need to figure out what's going on with the expand and collapse classes. */
-    .main-head {
-        grid-template-areas:
-        "banner contactIcons";
-    }
-
+@media (min-width: 768px) {
     .aboutMe {
-        grid-template-columns: .6fr 1fr;
-    }
-
-    .samples {
-        flex-direction: row;
-    }
-
-    .overlay {
+        grid-area: aboutMe;
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr .4fr;
         grid-template-areas:
-        "paneTitle"
-        "sampleContainer";
-        padding: 10px;
-        margin-bottom: 20;
-        cursor: initial;
+        "aboutMeText profilePic";
+        align-items: center;
     }
 
-    #sampleTech {
-        grid-area: sampleContainer;
-        display: none;
-        margin-top: 20px;
-        grid-gap: 40px;
-        grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-        grid-auto-rows: 125px;
-        grid-auto-flow: dense;
+    #aboutMeText {
+        grid-area: aboutMeText;
     }
 
-    #sampleDesign {
-        grid-area: sampleContainer;
-        display: none;
-        margin-top: 20px;
-        grid-gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-        grid-auto-rows: 100px;
-        grid-auto-flow: dense;
-    }
-
-    #sampleArticles {
-        grid-area: sampleContainer;
-        display: none;
-        margin-top: 20px;
-        grid-gap: 30px;
-        grid-template-columns: 1fr 1fr;
-        grid-auto-flow: row;
-    }
-
-    .workPhilosophy {
-        grid-template-columns: 1fr .5fr;
-        }
-
-    .contact {
-        grid-template-columns: 1fr .5fr;
-        grid-template-rows: 200px;
-    }
-
-    .collapse {
-        width: 10% !important;
-        height: 97% !important;
-        background-color: #4a4a4a;
-        color: #FFFFFF;
-        transition: width 1s;
-    }
-
-    .expand {
-        width: 90% !important;
-        height: 97% !important;
-        transition: width .5s ease-in-out;
+    #profilePic {
+        grid-area: profilePic;
     }
 }
