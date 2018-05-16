@@ -1,5 +1,12 @@
 /* Medium-width screens */
 @media (min-width: 768px) {
+    .wrapper {
+        grid-template-columns: .2fr 1fr .2fr;
+        grid-template-areas:
+        "header  header  header"
+        "lSidebar content rSidebar";
+    }
+
     .aboutMe {
         grid-template-columns: 1fr .3fr;
         grid-auto-rows: 250px;
@@ -15,6 +22,8 @@
 
     .profilePic img {
         object-fit: cover;
+        max-height: 230px;
+        max-width: 240px;
         width: 100%;
     }
 
@@ -39,5 +48,9 @@
 
     .empMatrix {
         grid-auto-rows: 200px;
+    }
+
+    .sidebar {
+        width: 100%;
     }
 }
