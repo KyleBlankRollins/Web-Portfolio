@@ -3,7 +3,7 @@ html, body {
     height: 100%;
     margin: 10px;
     font-family: Roboto, Helvetica, sans-serif;
-    font-size: 120%;
+    font-size: 110%;
     color: #4a4a4a;
 }
 
@@ -34,7 +34,6 @@ a:link {
 
 a:hover {
 	color: #B87462;
-	text-decoration: underline;
 }
 
 a:visited {
@@ -43,7 +42,6 @@ a:visited {
 
 a:visited:hover {
 	color: #B87462;
-    text-decoration: underline;
 }
 /* <--- End page setup. */
 
@@ -63,7 +61,6 @@ grid-template-areas:
     .main-head {
     	grid-area: header;
         display: grid;
-        align-items: baseline;
         position: fixed;
         z-index: 2;
         top: 0;
@@ -72,128 +69,78 @@ grid-template-areas:
         background-color: #FFFFFF;
         border-bottom: solid 1px #294C5D;
         grid-template-areas:
+        "logo menu"
         "banner contactIcons";
     }
 
     .content {
     	grid-area: content;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-areas:
-        "anchorA"
-        "titleA"
-        "aboutMe"
-        "anchorB"
-        "titleB"
-        "samples"
-        "anchorC"
-        "titleC"
-        "workPhilosophy"
-        "anchorD"
-        "titleD"
-        "workHistory"
-        "anchorE"
-        "titleE"
-        "contact";
-    	margin: 40 20 5 20;
+        max-width: 1350px;
+        margin: 0 10px 0 10px;
     }
 
 /*----- Tier 3 structure */
         .aboutMe {
             grid-area: aboutMe;
             display: grid;
-            grid-template-columns: 1fr .6fr;
+            grid-template-columns: 1fr;
         }
 
         .samples {
             grid-area: samples;
             justify-self: center;
             display: flex;
+            flex-direction: column;
             height: 100%;
             width: 100%;
         }
 
 /*--------- Tier 4 structure */
+
             .pane {
-                width: 80%;
-                margin: 0 0 40 0;
                 background-color: #E9E9E9;
-                border-right: solid 2px #E9E9E9;
+                width: 100%;
                 cursor: pointer;
+                margin-bottom: 30px;
             }
 
 /*------------- Tier 5 structure */
-                #sampleTech {
-                    grid-area: sampleContainer;
-                    display: none;
-                    margin-top: 20px;
-                    grid-gap: 40px;
-                    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-                    grid-auto-rows: 125px;
-                    grid-auto-flow: dense;
-                }
-
-                #sampleDesign {
-                    grid-area: sampleContainer;
-                    display: none;
-                    margin-top: 20px;
-                    grid-gap: 20px;
-                    grid-template-columns: repeat(auto-fit, minmax(100px, .5fr));
-                    grid-auto-rows: 100px;
-                    grid-auto-flow: dense;
-                }
-
-                #sampleArticles {
-                    grid-area: sampleContainer;
-                    display: none;
-                    margin-top: 20px;
-                    grid-gap: 30px;
-                    grid-template-columns: 1fr 1fr;
-                    grid-auto-flow: row;
-                }
-
         .workPhilosophy {
             grid-area: workPhilosophy;
             display: grid;
-            grid-template-columns: 1fr .5fr;
+            grid-template-columns: 1fr;
+            align-items: center;
         }
 
         .contact {
             grid-area: contact;
             display: grid;
-            grid-template-columns: 1fr .6fr;
-            border-bottom: solid 4px #B87462;
-            margin-bottom: 40px;
+            grid-template-columns: 1fr;
+            align-items: center;
         }
 
         .workHistory {
             grid-area: workHistory;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-              "title title"
-              "empMatrix empMatrix";
             width: 100%;
             margin-top: 15px;
         }
 
             .empMatrix {
-                grid-area: empMatrix;
                 justify-self: center;
                 width: 97%;
                 display: grid;
                 grid-gap: 10px;
-                grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-                grid-auto-rows: 256px;
-                margin: 0 0 20 0;
-                padding: 0 0 20 0;
+                grid-template-columns: minmax(250px, 1fr);
+                grid-auto-rows: 250px;
+                margin: 0 0 30px 0;
             }
 
                 .empBox {
                     display: grid;
-                    grid-template-columns: minmax(200px, .5fr) minmax(400px, 1fr);
                     grid-gap: 5px;
-                    min-width: 600px;
+                    grid-template-columns: minmax(50px, .5fr) minmax(200px, 1fr);
+                    width: 100%;
                 }
 /* <--- End grid area definitions */
 
@@ -201,35 +148,27 @@ grid-template-areas:
 .banner {
     grid-area: banner;
     display: flex;
-    align-items: baseline;
-    padding: 10 0 10 30;
+    flex-direction: column;
 }
 
 .banner a:hover {
 	text-decoration: none !important;
 }
 
-.glyph {
+.logo {
+    grid-area: logo;
     display: flex;
-    align-items: baseline;
     font-size: 1.7em;
-    opacity: 1;
-    border-right: 4px solid #B87462;
-    padding: 0 30 0 0;
+    margin: 5px 0 5px 10px;
 }
 
-.glyph a {
-    opacity: 1 !important;
-    padding: 0px !important;
-}
-
-.glyphOuter {
+.logoOuter {
     color: #294C5D;
     font-family: 'IBM Plex Mono', monospace;
     margin: 0;
 }
 
-#glyphInner {
+#logoInner {
     color: #B87462;
     font-family: 'IBM Plex Mono', monospace;
     margin: 0;
@@ -237,33 +176,69 @@ grid-template-areas:
 /* <--- End banner styling */
 
 /* Nav menu styling ---> */
-.nav-list, .socialList {
+
+.menu {
+    grid-area: menu;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    cursor: pointer;
+    margin: 5px 10px 5px 0;
+    padding-top: 5px;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #4a4a4a;
+    margin: 3px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+.nav-list {
+    margin-left: 10px;
+}
+
+.socialList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 10px;
+}
+
+.nav-list, .socialList {
     list-style-type: none;
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
-    height: 100%;
-	font-size: .9em;
-    align-items: stretch;
-    margin: 0 5 0 5;
-    padding: 0px;
+    width: 100%;
+    padding: 15px 0 0 0;
+    border-top: solid 1px #294C5D;
+}
+
+.socialMedia {
+    padding: 5px 10px 5px 10px;
 }
 
 .main-head a {
     display: flex;
     height: 100%;
-    padding: 0 15 0 15;
-	opacity: .7;
-}
-
-.nav-list a, .socialList a {
-    border-right: 2px solid #B87462 !important;
 }
 
 .nav-list a:hover, .socialList a:hover {
-    color: #294C5D;
-    font-size: 24px;
+    color: #B87462 !important;
+    font-size: 1.125em;
 	opacity: 1;
-    margin: -5 0 -5 0;
 }
 
 .main-head a:link, .main-head a:visited {
@@ -274,8 +249,8 @@ grid-template-areas:
 .contactIcons {
     grid-area: contactIcons;
     display: flex;
-    justify-content: flex-end;
-    margin-right: 30px;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* <--- End nav menu styling */
@@ -288,13 +263,55 @@ grid-template-areas:
     "paneTitle"
     "sampleContainer";
     padding: 10px;
-    margin-bottom: 20;
     cursor: initial;
+    padding-top: 10px;
+}
+
+.slideContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.slideContainer img {
+    object-fit: cover;
+    width: 60% !important;
+}
+
+.buttonBlock {
+    margin: 10px 0 10px 0;
 }
 
 .sampleContainer {
-    display: none;
-    padding: 10 10 0 10;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.buttonDisplayLeft {
+    float: left;
+    height: 10%;
+    width: 50px;
+    opacity: 1;
+    outline: none;
+    background-color: #FFFFFF;
+    border-color: #4a4a4a;
+    color: #4a4a4a;
+}
+
+.buttonDisplayRight {
+    float: right;
+    height: 10%;
+    width: 50px;
+    opacity: 1;
+    outline: none;
+    background-color: #FFFFFF;
+    border-color: #4a4a4a;
+    color: #4a4a4a;
+}
+
+.buttonDisplayLeft:hover, .buttonDisplayRight:hover {
+    opacity: .7;
 }
 
 #sampleArticles > div p {
@@ -306,14 +323,7 @@ grid-template-areas:
 }
 
 .profilePic {
-    margin: 10 10 30 10;
-    min-height: 400px;
-}
-
-.profilePic img, .resume img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+    display: none;
 }
 
 .philosophyList {
@@ -324,20 +334,20 @@ grid-template-areas:
     min-width: 400px;
     font-size: 1em;
     color: #FFFFFF;
-    margin: 10 10 30 10;
+    margin: -10px 0 0 0;
 }
 
 .philosophyList p {
-    margin: 0 5 0 5;
+    margin: 0 5px 0 5px;
 }
 
 .philosophyList ol {
-    margin: 20 5 20 5;
+    margin: 20px 5px 20px 5px;
 }
 
 .listDescription {
     font-size: .9em !important;
-    margin: 5 0 5 0 !important;
+    margin: 5px 0 5px 0 !important;
 }
 
 .listTitle {
@@ -348,88 +358,43 @@ grid-template-areas:
     height: 3em;
     width: 100%;
     background-color: #4a4a4a;
+    border-bottom: groove 6px #B87462;
 }
 
 .philOrdered {
     width: 100%;
     color: initial;
     background-color: #E9E9E9;
+    margin-bottom: 30px;
 }
 
 .resume {
-    display: grid;
-    grid-template-columns: minmax(300px, .5fr);
-    grid-auto-rows: 450px;
-    margin: 10 10 30 10;
+    margin: 10px 10px 30px 0;
+    height: 100%;
+}
+
+.resumeBox:hover{
+    background-color: #B87462;
 }
 
 .collapse {
-    width: 10% !important;
-    transition: width 1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
     background-color: #4a4a4a;
     color: #FFFFFF;
-}
-
-.expand {
-    width: 90% !important;
-    transition: width .5s ease-in-out;
+    margin-bottom: 30px;
 }
 
 .paneTitle {
     grid-area: paneTitle;
+    display: block !important;
     text-align: center;
     width: 100%;
+    height: 100%;
     border-bottom: solid 2px #4a4a4a;
-    padding-bottom: 10px;
     cursor: pointer;
-}
-
-.docItem {
-	position: relative;
-    width: 100%;
-    max-width: 400px;
-}
-
-.docItem:hover .docItemOverlay {
-	opacity: 1;
-}
-
-.docItemOverlay {
-	position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    bottom: 0;
-	height: 33%;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.85); /* Black see-through */
-    color: #f1f1f1;
-	width: 100%;
-    transition: .5s ease;
-    opacity: 0;
-    color: white;
-    font-size: .75em;
-}
-
-.vertical {
-	grid-row: span 3;
-	grid-column: span 2;
-}
-
-.horizontal {
-	grid-row: span 2;
-	grid-column: span 3;
-}
-
-.verticalDesign {
-	grid-row: span 4;
-	grid-column: span 3;
-}
-
-.horizontalDesign {
-	grid-row: span 2;
-	grid-column: span 3;
 }
 
 a > img {
@@ -452,25 +417,43 @@ a > img {
 	font-size: 1.1em;
 	font-weight: bold;
 	color: white;
+    background-color: #294C5D;
+}
+
+.resumeBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    height: 80%;
+    width: 20%;
+    min-width: 160px;
+    margin: 15px 0 15px 0;
+    background-color: #294C5D;
+}
+
+.empName:hover{
+    background-color: #B87462;
 }
 
 .jobBox {
-	display: flex;
 	position: relative;
-	height: 100%;
-	width: 100%;
 }
 
 .jobTitle {
     display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
-	font-size: 1.1em;
+	font-size: .9em;
 	font-weight: bold;
 	padding-left: 10px;
 	height: 100%;
 	width: 100%;
-    transition: border-width .5s ease-out;
+    transition: border-width .75s;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.5);
     border-width: 0 8px 0 0;
@@ -488,7 +471,7 @@ a > img {
 
 .titleMove {
 	position: relative;
-	height: 20%;
+	height: 15%;
 	top: 0;
     border-style: solid;
     border-color: #4a4a4a;
@@ -520,39 +503,37 @@ a > img {
     cursor: pointer;
 }
 
-.empName {
-    background-color: #294C5D;
-}
-
 .jobDesc p,h4 {
-	margin: 15 10 0 10;
+	margin: 15px 10px 0 10px;
     font-size: .9em;
 }
 
 /* <--- End workHistory styling */
 
 .textBlock {
-    padding: 5 20 5 20;
-    margin: 10 0 30 0;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+    max-width: 900px;
 }
 
-.textblock p {
-    margin: 0 0 24 0;
+.textBlock p {
+    margin: 0 0 24px 0;
 }
 
-.textblock a:link {
+.textBlock a:link {
     color: #294C5D;
     opacity: .7;
     font-size: .9em;
     font-weight: bolder;
 }
 
-.textblock a:visited {
+.textBlock a:visited {
     color: #294C5D;
     font-weight: bolder;
 }
 
-.textblock a:hover {
+.textBlock a:hover {
     color: #B87462;
     font-weight: bolder;
     text-decoration: underline;
@@ -561,7 +542,6 @@ a > img {
 .title {
     margin: 0;
     padding-top: 10px;
-    border-top: solid 4px #B87462;
 }
 
 #titleA {
@@ -582,7 +562,8 @@ a > img {
     border-bottom: solid 1px #294C5D;
     opacity: .8;
     padding: 5px;
-    margin: 0 20 0 20 !important;
+    width: 90%;
+    margin-left: 20px !important;
 }
 
 .anchor {
@@ -598,6 +579,14 @@ a > img {
 
 .show {
 	display: block;
+}
+
+hr {
+    background-color: #B87462;
+    height: 4px;
+    width: 100%;
+    border: 0;
+    margin: 15px 0 0 0;
 }
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */
