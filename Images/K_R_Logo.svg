@@ -2,7 +2,6 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -10,26 +9,31 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="77mm"
-   height="40mm"
-   viewBox="0 0 77 40"
+   width="256"
+   height="256"
+   viewBox="0 0 67.733331 67.733331"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="logo prototype.svg"
-   inkscape:export-filename="C:\Users\a73m1zz\Desktop\CSS Grid\CSS-Grid-tet\Images\logo prototype.svg.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="K_R_Logo.svg"
+   inkscape:export-filename="C:\Users\a73m1zz\Documents\a_Web-Dev\Web-Portfolio\Images\K_R_Logo_16.png"
+   inkscape:export-xdpi="6"
+   inkscape:export-ydpi="6">
   <defs
      id="defs2">
-    <linearGradient
-       id="linearGradient958"
-       osb:paint="solid">
-      <stop
-         style="stop-color:#294c5d;stop-opacity:1;"
-         offset="0"
-         id="stop956" />
-    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1400"
+       x="-0.0087167806"
+       width="1.0174336"
+       y="-0.019250978"
+       height="1.038502">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.28027344"
+         id="feGaussianBlur1402" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -38,17 +42,40 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4467452"
-     inkscape:cx="143.24443"
-     inkscape:cy="41.35821"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:zoom="1.979899"
+     inkscape:cx="66.912725"
+     inkscape:cy="179.42033"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
      showgrid="false"
-     inkscape:window-width="942"
-     inkscape:window-height="987"
-     inkscape:window-x="960"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     width="256mm"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1005"
+     inkscape:window-x="979"
+     inkscape:window-y="1071"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="0,0"
+       orientation="0,256"
+       id="guide1374"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="67.733331,0"
+       orientation="-256,0"
+       id="guide1376"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="67.733331,67.733331"
+       orientation="0,-256"
+       id="guide1378"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="0,67.733331"
+       orientation="256,0"
+       id="guide1380"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -57,51 +84,54 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Background">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:0.98514849;stroke:none;stroke-width:0.70555556;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1396"
+       width="67.73333"
+       height="67.73333"
+       x="6.135254e-007"
+       y="6.135254e-007" />
+    <rect
+       style="opacity:0.98999999;fill:#b87462;fill-opacity:1;stroke:none;stroke-width:0.39648801;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1416"
+       width="19.243404"
+       height="2.9399645"
+       x="24.244963"
+       y="60.367302" />
+  </g>
+  <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-34.121323,-121.48661)">
-    <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.7571432;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1194"
-       width="77"
-       height="40"
-       x="34.121323"
-       y="121.48661" />
+     transform="translate(0,-229.26668)">
     <flowRoot
        xml:space="preserve"
-       id="flowRoot815-8"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;line-height:1.25;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       transform="matrix(0.26458333,0,0,0.26458333,24.950846,100.96269)"><flowRegion
-         id="flowRegion817-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"><rect
-           id="rect819-5"
-           width="744.48242"
-           height="194.95944"
-           x="33.335033"
-           y="34.585392"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></flowRegion><flowPara
-         id="flowPara823-3"><flowSpan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#294c5d;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="flowSpan1176">K</flowSpan><flowSpan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#934e3c;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="flowSpan1184">_</flowSpan><flowSpan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:160px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#294960;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="flowSpan1182">R</flowSpan></flowPara></flowRoot>    <flowRoot
+       id="flowRoot1404"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion1406"><rect
+           id="rect1408"
+           width="256"
+           height="124.24876"
+           x="0"
+           y="63.565941" /></flowRegion><flowPara
+         id="flowPara1410"></flowPara></flowRoot>    <text
        xml:space="preserve"
-       id="flowRoot1186"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       transform="scale(0.26458333)"><flowRegion
-         id="flowRegion1188"><rect
-           id="rect1190"
-           width="0.11110879"
-           height="145.34456"
-           x="150.42603"
-           y="66.804665" /></flowRegion><flowPara
-         id="flowPara1192"></flowPara></flowRoot>  </g>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:62.35399246px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.55884171"
+       x="-4.5935693"
+       y="284.8949"
+       id="text1414"><tspan
+         sodipodi:role="line"
+         id="tspan1412"
+         x="-4.5935693"
+         y="284.8949"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:62.35399246px;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#294c5d;fill-opacity:1;stroke-width:1.55884171;opacity:0.99">KR</tspan></text>
+  </g>
 </svg>
