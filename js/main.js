@@ -13,19 +13,19 @@ var designTitle = document.getElementById("designTitle");
 var pubTitle = document.getElementById("pubTitle");
 var samples = document.getElementById("samples");
 var sampleChildren = samples.children;
-var width1250px = window.matchMedia("(max-width: 1250px)");
+var width768px = window.matchMedia("(max-width: 768px)");
 
 for (i = 0; i < sampleChildren.length; i++) {
   sampleChildren[i].classList.add("collapse");
   sampleChildren[i].addEventListener('click', heightToggle);
 }
 
-responsiveResponse(width1250px); //Run responsiveResponse, which checks viewport width.
+responsiveResponse(width768px); //Run responsiveResponse, which checks viewport width.
 width1250px.addListener(responsiveResponse);
 
 function responsiveResponse(viewportWidth, event) { //Checks to see if viewport matches width of width variables.
 
-    if (width1250px.matches) {
+    if (width768px.matches) {
         for (i = 0; i < paneTitle.length; i++) {
           paneTitle[i].classList.add("rotate");
           techTitle.classList.remove("rotate");
@@ -89,6 +89,7 @@ function heightToggle(event) {
         }
     }
 }
+
 
 //Animate menu icon.
 function expandMenu(x) {

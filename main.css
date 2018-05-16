@@ -84,7 +84,6 @@ grid-template-areas:
             grid-area: aboutMe;
             display: grid;
             grid-template-columns: 1fr;
-            align-items: center;
         }
 
         .samples {
@@ -269,7 +268,15 @@ grid-template-areas:
 }
 
 .slideContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-bottom: 10px;
+}
+
+.slideContainer img {
+    object-fit: cover;
+    width: 60% !important;
 }
 
 .buttonBlock {
@@ -316,14 +323,7 @@ grid-template-areas:
 }
 
 .profilePic {
-    margin: 10 10 30 10;
-    min-height: 300px;
-}
-
-.profilePic img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+    display: none;
 }
 
 .philosophyList {
@@ -430,7 +430,7 @@ a > img {
     font-weight: bold;
     color: white;
     height: 80%;
-    width: 60%;
+    width: 20%;
     min-width: 160px;
     margin: 15px 0 15px 0;
     background-color: #294C5D;
@@ -513,7 +513,6 @@ a > img {
 .textBlock {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 10px 0 10px 0;
     max-width: 900px;
 }
@@ -564,6 +563,7 @@ a > img {
     opacity: .8;
     padding: 5px;
     width: 90%;
+    margin-left: 20px !important;
 }
 
 .anchor {
