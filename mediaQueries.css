@@ -53,4 +53,10 @@
     .sidebar {
         width: 100%;
     }
+
+    .slideContainer img {
+        object-fit: cover;
+        width: 40% !important;
+        max-width: 500px !important;
+    }
 }

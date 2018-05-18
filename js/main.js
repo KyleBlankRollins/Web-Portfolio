@@ -21,7 +21,7 @@ for (i = 0; i < sampleChildren.length; i++) {
 }
 
 responsiveResponse(width768px); //Run responsiveResponse, which checks viewport width.
-width1250px.addListener(responsiveResponse);
+width768px.addListener(responsiveResponse);
 
 function responsiveResponse(viewportWidth, event) { //Checks to see if viewport matches width of width variables.
 
