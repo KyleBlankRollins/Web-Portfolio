@@ -422,7 +422,7 @@ a > img {
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
 	height: 100%;
 	width: 100%;
-	font-size: 1.1em;
+	font-size: 1em;
 	font-weight: bold;
 	color: white;
     background-color: #294C5D;
@@ -456,7 +456,7 @@ a > img {
     display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
-	font-size: .9em;
+	font-size: .8em;
 	font-weight: bold;
 	padding-left: 10px;
 	height: 100%;
@@ -473,7 +473,6 @@ a > img {
 }
 
 .jobTitle:hover {
-	font-size: 1.2em;
     color: #B87462;
 }
 
@@ -490,7 +489,6 @@ a > img {
 }
 
 .titleMove:hover {
-    font-size: 1.1em;
     color: #FFFFFF;
 }
 
@@ -502,6 +500,7 @@ a > img {
 	position: absolute;
     display: flex;
     flex-direction: column;
+    font-size: .9em;
     bottom: 0;
     right: 0;
 	opacity: 1;
