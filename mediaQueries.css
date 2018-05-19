@@ -59,4 +59,11 @@
         width: 40% !important;
         max-width: 500px !important;
     }
+
+    .empBox {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: minmax(50px, .2fr) minmax(200px, .7fr);
+        width: 100%;
+    }
 }
