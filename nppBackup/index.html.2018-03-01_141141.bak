@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+		<title>DoK Compare</title>
+	</head>
+	
+	<body>
+
+		<div class="wrapper">
+			<header class="main-head">
+				Title
+			</header>
+			
+			<div class="lName">
+				<div class="factionHeader" id="kushanHeader">
+					<h3>Kushan</h3>
+				</div>
+			</div>
+			<div class="rName">
+				<div class="factionHeader" id="gaalsienHeader">
+					<h3>Gaalsien</h3>
+				</div>
+			</div>
+			
+			<nav class="main-nav">
+				Main nav
+			</nav>
+			<div class="cLeft">
+				cLeft
+			</div> 
+			
+			<div class="cRight">
+				cRight
+			</div>
+			
+			<footer class="main-footer">
+				Main footer
+			</footer>
+		</div>
+	</body>
+</html>

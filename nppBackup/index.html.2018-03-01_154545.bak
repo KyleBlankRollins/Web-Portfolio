@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+		<title>DoK Compare</title>
+	</head>
+	
+	<body>
+
+		<div class="wrapper">
+			<header class="main-head">
+				Title
+			</header>
+			
+			<div class="lName">
+				<div class="factionHeader" id="kushanHeader">
+					<div>
+						<h3 class="noMarginH3">Kushan</h3>
+					</div>
+					<div class="dropdown">
+						<button class="dropBtn" onclick="lDropMenu()">
+							<p class="btnText">Select vehicle</p>
+						</button>
+						<div class="dropdown-content" id="lNameDrop">
+						  <a href="#">Vehicle 1</a>
+						  <a href="#">Vehicle 2</a>
+						  <a href="#">Vehicle 3</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rName">
+				<div class="factionHeader" id="gaalsienHeader">
+					<div>
+						<h3 class="noMarginH3">Gaalsien</h3>
+					</div>
+					<div class="dropdown">
+						<button class="dropBtn" onclick="rDropMenu()">
+							<p class="btnText">Select vehicle</p>
+						</button>
+						<div class="dropdown-content" id="rNameDrop">
+						  <a href="#">Vehicle 1</a>
+						  <a href="#">Vehicle 2</a>
+						  <a href="#">Vehicle 3</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<nav class="main-nav">
+				Main nav
+			</nav>
+			<div class="cLeft">
+				<p class="description">cLeft</p>
+			</div> 
+			
+			<div class="cRight">
+				<p class="description">cRight</p>
+			</div>
+			
+			<footer class="main-footer">
+				Main footer
+			</footer>
+		</div>
+		
+		<script>
+			/* When the user clicks on the button, 
+			toggle between hiding and showing the dropdown content */
+			function lDropMenu() {
+				var lNameDrop = document.getElementById("lNameDrop");
+				lNameDrop.style.display="block";
+			}
+			
+			function rDropMenu() {
+				var rNameDrop = document.getElementById("rNameDrop");
+				rNameDrop.style.display="block";
+			}
+
+			// Close the dropdown if the user clicks outside of it
+			window.onclick = function(e) {
+				var rNameDrop = document.getElementById("rNameDrop");
+				var lNameDrop = document.getElementById("lNameDrop");
+			    if (e.target.matches('.dropdown')) {
+				
+					if (lNameDrop.style.display="block"){
+						lNameDrop.style.display="none"
+					}
+					
+					if (rNameDrop.style.display="block"){
+						rNameDrop.style.display="none"
+					}
+				}
+			}
+			
+			/*	if (lNameDrop.classList.contains('show')) {
+					lNameDrop.classList.remove('show');
+				  } else if (rNameDrop.classList.contains('show')) {
+					rNameDrop.classList.remove('show');
+				  }
+			*/
+		</script>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+/* --- Page setup. ---*/
+html, body {
+  background-color: #FFFFFF;
+  margin: 10px;
+  font-size: 1.1em;
+}
+
+/* Mobile view */
+.wrapper {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: 
+	"header header"
+	"nav nav"
+	"lName rName"
+	"cLeft cRight"
+	"cLeft cRight"
+	"footer footer";
+}
+
+/* 2-column view */
+@media (min-width: 650px) {
+	.wrapper {
+		grid-template-areas: 
+			"header header"
+			"nav nav"
+			"lName rName"
+			"cLeft cRight"
+			"cLeft cRight"
+			"footer footer";
+	}
+}
+
+/* 3-column view */
+@media (min-width: 900px) {
+	.wrapper {
+		grid-template-areas: 
+			"header header"
+			"nav nav"
+			"lName rName"
+			"cLeft cRight"
+			"cLeft cRight"
+			"footer footer";
+	}
+}
+
+.main-head {
+	grid-area: header;
+	background-color: black;
+}
+.lName{
+	grid-area: lName;
+	background-color: #809696;
+}
+
+.rName{
+	grid-area: rName;
+	display: flex;
+	background-color: #F9D5D5;
+}
+
+.main-nav {
+	grid-area: nav;
+	border: 1px solid #B8A062;
+}
+
+.main-footer {
+	grid-area: footer;
+	border: 1px solid #B87462;
+}
+
+.cLeft {
+	grid-area: cLeft;
+	background-color: #294C5D;
+}
+
+.cRight {
+	grid-area: cRight;
+	background-color: #FFF9E8;
+}
+
+.factionHeader {
+	margin: 10px;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	max-height: 50px;
+}
+
+.dropdown .dropbtn {
+    cursor: pointer;
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    background-color: AAC7AA;
+	margin-left: 50px;
+	max-height: 50px;
+}
+
+/* http://paletton.com/#uid=7000u0k1Xqw4Fvi3tot56l+76k8 */
