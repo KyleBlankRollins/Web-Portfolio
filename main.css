@@ -47,7 +47,6 @@ a:visited:hover {
 
 /* Grid area definitions ---> */
 
-/* Tier 1 structure */
 .wrapper {
 display: grid;
 grid-gap: 10px;
@@ -56,7 +55,6 @@ grid-template-areas:
 "content";
 }
 
-/*-- Tier 2 structure */
     .main-head {
     	grid-area: header;
         display: grid;
@@ -78,15 +76,12 @@ grid-template-areas:
         margin: 0 10px 0 10px;
     }
 
-/*----- Tier 3 structure */
-        .aboutMe {
-            grid-area: aboutMe;
+        .about {
             display: grid;
             grid-template-columns: 1fr;
         }
 
         .samples {
-            grid-area: samples;
             justify-self: center;
             display: flex;
             flex-direction: column;
@@ -94,7 +89,6 @@ grid-template-areas:
             width: 100%;
         }
 
-/*--------- Tier 4 structure */
 
             .pane {
                 background-color: #E9E9E9;
@@ -103,26 +97,31 @@ grid-template-areas:
                 margin-bottom: 30px;
             }
 
-/*------------- Tier 5 structure */
-        .workPhilosophy {
-            grid-area: workPhilosophy;
+        /* .learning-experiments --Included for structure reference */
+
+            .experiment-box-container {
+                display: grid;
+                grid-gap: 5px;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-auto-rows: 75px;
+                grid-auto-flow: dense;
+            }
+
+        .work-philosophy {
             display: grid;
             grid-template-columns: 1fr;
             align-items: center;
         }
 
         .contact {
-            grid-area: contact;
             display: grid;
             grid-template-columns: 1fr;
             align-items: center;
         }
 
-        .workHistory {
-            grid-area: workHistory;
-        }
+        /* .work-history --Included for structure reference */
 
-            .empMatrix {
+            .emp-matrix {
                 justify-self: center;
                 width: 97%;
                 display: grid;
@@ -132,7 +131,7 @@ grid-template-areas:
                 margin: 0 0 30px 0;
             }
 
-                .empBox {
+                .emp-box {
                     display: grid;
                     grid-gap: 5px;
                     grid-template-columns: minmax(50px, .5fr) minmax(200px, 1fr);
@@ -158,13 +157,13 @@ grid-template-areas:
     margin: 5px 0 5px 10px;
 }
 
-.logoOuter {
+.logo-outer {
     color: #294C5D;
     font-family: 'IBM Plex Mono', monospace;
     margin: 0;
 }
 
-#logoInner {
+#logo-inner {
     color: #B87462;
     font-family: 'IBM Plex Mono', monospace;
     margin: 0;
@@ -207,14 +206,14 @@ grid-template-areas:
     margin-left: 10px;
 }
 
-.socialList {
+.social-list {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     margin-right: 10px;
 }
 
-.nav-list, .socialList {
+.nav-list, .social-list {
     list-style-type: none;
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
     width: 100%;
@@ -222,7 +221,7 @@ grid-template-areas:
     border-top: solid 1px #294C5D;
 }
 
-.socialMedia {
+.social-media {
     padding: 5px 10px 5px 10px;
 }
 
@@ -231,7 +230,7 @@ grid-template-areas:
     height: 100%;
 }
 
-.nav-list a:hover, .socialList a:hover {
+.nav-list a:hover, .social-list a:hover {
     color: #B87462 !important;
     font-size: 1.125em;
 	opacity: 1;
@@ -242,7 +241,7 @@ grid-template-areas:
 	text-decoration: none;
 }
 
-.contactIcons {
+.contact-icons {
     grid-area: contactIcons;
     display: flex;
     flex-direction: column;
@@ -263,42 +262,42 @@ grid-template-areas:
     padding-top: 10px;
 }
 
-.slideContainer {
+.slide-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 10px;
 }
 
-.slideContainer a {
+.slide-container a {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.pubSlides a {
+.pub-slides a {
     display: flex;
     flex-direction: column;
     align-items: flex-start !important;
 }
 
-.slideContainer > a > img {
+.slide-container > a > img {
     object-fit: cover;
     width: 70% !important;
     max-width: 400px;
     border: none;
 }
 
-.buttonBlock {
+.button-block {
     margin: 10px 0 10px 0;
 }
 
-.sampleContainer {
+.sample-container {
     padding-top: 10px;
     margin-bottom: 10px;
 }
 
-.buttonDisplayLeft {
+.button-display-left {
     height: 10%;
     width: 50px;
     opacity: 1;
@@ -308,7 +307,7 @@ grid-template-areas:
     color: #4a4a4a;
 }
 
-.buttonDisplayRight {
+.button-display-right {
     height: 10%;
     width: 50px;
     opacity: 1;
@@ -318,23 +317,23 @@ grid-template-areas:
     color: #4a4a4a;
 }
 
-.buttonDisplayLeft:hover, .buttonDisplayRight:hover {
+.button-display-left:hover, .button-display-right:hover {
     opacity: .7;
 }
 
-#sampleArticles > div p {
+#sample-articles > div p {
     margin-left: 10px;
 }
 
-#sampleArticles > div h4 {
+#sample-articles > div h4 {
     margin: 0;
 }
 
-.profilePic {
+.profile-pic {
     display: none;
 }
 
-.philosophyList {
+.philosophy-list {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -345,20 +344,20 @@ grid-template-areas:
     margin: -10px 0 0 0;
 }
 
-.philosophyList p {
+.philosophy-list p {
     margin: 0 5px 0 5px;
 }
 
-.philosophyList ol {
+.philosophy-list ol {
     margin: 20px 5px 20px 5px;
 }
 
-.listDescription {
+.list-description {
     font-size: .9em !important;
     margin: 5px 0 5px 0 !important;
 }
 
-.listTitle {
+.list-title {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -369,7 +368,7 @@ grid-template-areas:
     border-bottom: groove 6px #B87462;
 }
 
-.philOrdered {
+.phil-ordered {
     width: 100%;
     color: initial;
     background-color: #E9E9E9;
@@ -381,7 +380,23 @@ grid-template-areas:
     height: 100%;
 }
 
-.resumeBox:hover{
+.resume-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    height: 80%;
+    width: 20%;
+    min-width: 160px;
+    margin: 15px 0 15px 0;
+    background-color: #294C5D;
+}
+
+.resume-box:hover{
     background-color: #B87462;
 }
 
@@ -395,7 +410,7 @@ grid-template-areas:
     margin-bottom: 30px;
 }
 
-.paneTitle {
+.pane-title {
     grid-area: paneTitle;
     display: block !important;
     text-align: center;
@@ -414,7 +429,7 @@ a > img {
 /* <--- End techWriting, docDesign, and pubContent styling */
 
 /* Begin workHistory styling ---> */
-.empName {
+.emp-name {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -428,31 +443,15 @@ a > img {
     background-color: #294C5D;
 }
 
-.resumeBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: white;
-    height: 80%;
-    width: 20%;
-    min-width: 160px;
-    margin: 15px 0 15px 0;
-    background-color: #294C5D;
-}
-
-.empName:hover{
+.emp-name:hover{
     background-color: #B87462;
 }
 
-.jobBox {
+.job-box {
 	position: relative;
 }
 
-.jobTitle {
+.job-title {
     display: flex;
 	align-items: center;
 	font-family: "IBM Plex Sans", Helvetica, sans-serif;
@@ -468,15 +467,15 @@ a > img {
     cursor: pointer;
 }
 
-.jobTitle:before {
+.job-title:before {
     content: '\002B';
 }
 
-.jobTitle:hover {
+.job-title:hover {
     color: #B87462;
 }
 
-.titleMove {
+.title-move {
 	position: relative;
 	height: 15%;
 	top: 0;
@@ -488,15 +487,15 @@ a > img {
     background-color: #4a4a4a;
 }
 
-.titleMove:hover {
+.title-move:hover {
     color: #FFFFFF;
 }
 
-.titleMove:before {
+.title-move:before {
     content: "\2212";
 }
 
-.jobDesc {
+.job-desc {
 	position: absolute;
     display: flex;
     flex-direction: column;
@@ -510,37 +509,37 @@ a > img {
     cursor: pointer;
 }
 
-.jobDesc p,h4 {
+.job-desc p,h4 {
 	margin: 15px 10px 0 10px;
     font-size: .9em;
 }
 
 /* <--- End workHistory styling */
 
-.textBlock {
+.text-block {
     display: flex;
     flex-direction: column;
     margin: 10px 0 10px 0;
     max-width: 900px;
 }
 
-.textBlock p {
+.text-block p {
     margin: 0 0 24px 0;
 }
 
-.textBlock a:link {
+.text-block a:link {
     color: #294C5D;
     opacity: .7;
     font-size: .9em;
     font-weight: bolder;
 }
 
-.textBlock a:visited {
+.text-block a:visited {
     color: #294C5D;
     font-weight: bolder;
 }
 
-.textBlock a:hover {
+.text-block a:hover {
     color: #B87462;
     font-weight: bolder;
     text-decoration: underline;
@@ -559,7 +558,7 @@ a > img {
 
 }
 
-.title > .textBlock {
+.title > .text-block {
     margin-bottom: 6px;
 }
 
@@ -595,5 +594,49 @@ hr {
     border: 0;
     margin: 15px 0 0 0;
 }
+
+/* Begin learning-experiments styling ---> */
+
+.experiment-box {
+    display: flex;
+    position: relative;
+    grid-column: span 3;
+    grid-row: span 2;
+    background-color: lightblue;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.experiment-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.experiment-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(74,74,74,.95);
+    overflow: hidden;
+    width: 100%;
+    height: 30%;
+    transition: .5s ease;
+}
+
+.experiment-title {
+    color: #FFFFFF;
+    font-family: "IBM Plex Sans";
+    font-size: 1.1em;
+    font-weight: bold;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* <--- End learning-experiments styling */
 
 /* http://paletton.com/#uid=33s0u0kaqr-2VJZ6nwCf1n5iSit */

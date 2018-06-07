@@ -13,24 +13,24 @@
         left: 15%;
     }
 
-    .aboutMe {
+    .about {
         grid-template-columns: 1fr .3fr;
         grid-auto-rows: 250px;
         grid-template-areas:
         "aboutMeText profilePic";
     }
 
-    .workPhilosophy {
+    .work-philosophy {
         grid-template-columns: 1fr .2fr;
     }
 
-    .profilePic {
+    .profile-pic {
         display: block;
         margin: 10px;
         min-height: 300px;
     }
 
-    .profilePic img {
+    .profile-pic img {
         object-fit: cover;
         max-height: 230px;
         max-width: 240px;
@@ -51,11 +51,11 @@
         transition: width 1s;
     }
 
-    .jobTitle {
+    .job-title {
         font-size: 1.1em;
     }
 
-    .empMatrix {
+    .emp-matrix {
         grid-auto-rows: 200px;
     }
 
@@ -63,32 +63,48 @@
         width: 100%;
     }
 
-    .slideContainer img {
+    .slide-container img {
         object-fit: cover;
         width: 40% !important;
         max-width: 500px !important;
     }
 
-    .empBox {
+    .emp-box {
         display: grid;
         grid-gap: 5px;
         grid-template-columns: minmax(50px, .2fr) minmax(200px, .7fr);
         width: 100%;
     }
 
-    .philosophyList {
+    .philosophy-list {
         margin-left: 20px;
     }
 
-    .workPhilosophy > .textBlock {
+    .work-philosophy > .text-block {
         min-width: 330px;
+    }
+
+    .experiment-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(74,74,74,.95);
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        transition: .5s ease;
+    }
+
+    .experiment-box:hover .experiment-overlay {
+        height: 30%;
     }
 }
 
 
 @media (min-width: 1200px) {
 
-    .philosophyList {
+    .philosophy-list {
         min-width: 400px;
     }
 

@@ -1,16 +1,16 @@
 
 var banner = document.getElementById("banner");
-var contactIcons = document.getElementById("contactIcons");
-var techWriting = document.getElementById("techWriting");
-var docDesign = document.getElementById("docDesign");
-var pubContent = document.getElementById("pubContent");
-var sampleTech = document.getElementById("sampleTech");
-var sampleDesign = document.getElementById("sampleDesign");
-var sampleArticles = document.getElementById("sampleArticles");
-var paneTitle = document.getElementsByClassName("paneTitle");
-var techTitle = document.getElementById("techTitle");
-var designTitle = document.getElementById("designTitle");
-var pubTitle = document.getElementById("pubTitle");
+var contactIcons = document.getElementById("contact-icons");
+var techWriting = document.getElementById("tech-writing");
+var docDesign = document.getElementById("doc-design");
+var pubContent = document.getElementById("pub-content");
+var sampleTech = document.getElementById("sample-tech");
+var sampleDesign = document.getElementById("sample-design");
+var sampleArticles = document.getElementById("sample-articles");
+var paneTitle = document.getElementsByClassName("pane-title");
+var techTitle = document.getElementById("tech-title");
+var designTitle = document.getElementById("design-title");
+var pubTitle = document.getElementById("pub-title");
 var samples = document.getElementById("samples");
 var sampleChildren = samples.children;
 var width768px = window.matchMedia("(max-width: 768px)");
@@ -43,7 +43,7 @@ function heightToggle(event) {
     var designClassList = docDesign.classList;
     var pubClassList = pubContent.classList;
 
-    if (elParent.id == techWriting.id || el.id == techWriting.id || el.id == "techTitle") {
+    if (elParent.id == techWriting.id || el.id == techWriting.id || el.id == "tech-title") {
 
         techClassList.toggle("collapse");
         sampleTech.classList.toggle("hide");
@@ -58,7 +58,7 @@ function heightToggle(event) {
             sampleArticles.classList.toggle("hide");
         }
 
-    } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "designTitle") {
+    } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "design-title") {
 
         designClassList.toggle("collapse");
         sampleDesign.classList.toggle("hide");
@@ -73,7 +73,7 @@ function heightToggle(event) {
             sampleArticles.classList.toggle("hide");
         }
 
-    } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pubTitle") {
+    } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pub-title") {
 
         pubClassList.toggle("collapse");
         sampleArticles.classList.toggle("hide");

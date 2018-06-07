@@ -39,7 +39,7 @@ function showDesignDivs(n) {
 
 function showPubDivs(n) {
   var i;
-  var x = document.getElementsByClassName("pubSlides");
+  var x = document.getElementsByClassName("pub-slides");
   if (n > x.length) {slideIndex = 1}
   if (n < 1) {slideIndex = x.length}
   for (i = 0; i < x.length; i++) {
