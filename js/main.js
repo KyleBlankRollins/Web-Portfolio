@@ -1,4 +1,6 @@
 
+var banner = document.getElementById("banner");
+var contactIcons = document.getElementById("contactIcons");
 var techWriting = document.getElementById("techWriting");
 var docDesign = document.getElementById("docDesign");
 var pubContent = document.getElementById("pubContent");
@@ -11,23 +13,19 @@ var designTitle = document.getElementById("designTitle");
 var pubTitle = document.getElementById("pubTitle");
 var samples = document.getElementById("samples");
 var sampleChildren = samples.children;
-var width1250px = window.matchMedia("(max-width: 1250px)");
+var width768px = window.matchMedia("(max-width: 768px)");
 
 for (i = 0; i < sampleChildren.length; i++) {
   sampleChildren[i].classList.add("collapse");
-  sampleChildren[i].addEventListener('click', widthToggle);
+  sampleChildren[i].addEventListener('click', heightToggle);
 }
 
-techWriting.classList.add("expand");
-techWriting.classList.remove("collapse");
-sampleTech.style.cssText = "display: grid !important";
-
-responsiveResponse(width1250px); //Run responsiveResponse, which checks viewport width.
-width1250px.addListener(responsiveResponse);
+responsiveResponse(width768px); //Run responsiveResponse, which checks viewport width.
+width768px.addListener(responsiveResponse);
 
 function responsiveResponse(viewportWidth, event) { //Checks to see if viewport matches width of width variables.
 
-    if (width1250px.matches) {
+    if (width768px.matches) {
         for (i = 0; i < paneTitle.length; i++) {
           paneTitle[i].classList.add("rotate");
           techTitle.classList.remove("rotate");
@@ -37,7 +35,7 @@ function responsiveResponse(viewportWidth, event) { //Checks to see if viewport 
     }
 }
 
-function widthToggle(event) { // REVIEW: Is there any way to clean this up? Should be a way and I'm just not thinking of it. Maybe for v1.5 or something.
+function heightToggle(event) {
 
     var el = event.target;
     var elParent = el.parentElement;
@@ -47,55 +45,55 @@ function widthToggle(event) { // REVIEW: Is there any way to clean this up? Shou
 
     if (elParent.id == techWriting.id || el.id == techWriting.id || el.id == "techTitle") {
 
-        if (techWriting.className.match("collapse")) {
-            techClassList.add("expand");
-            techClassList.remove("collapse");
-            techTitle.classList.remove("rotate")
-            designClassList.add("collapse");
-            designClassList.remove("expand");
-            designTitle.classList.add("rotate");
-            pubClassList.add("collapse");
-            pubClassList.remove("expand");
-            pubTitle.classList.add("rotate");
-            sampleTech.style.cssText = "display: grid !important";
-            sampleDesign.style.cssText = "display: none !important";
-            sampleArticles.style.cssText = "display: none !important";
+        techClassList.toggle("collapse");
+        sampleTech.classList.toggle("hide");
+
+        if (!designClassList.contains("collapse")) {
+            designClassList.toggle("collapse");
+            sampleDesign.classList.toggle("hide");
+        }
+
+        if (!pubClassList.contains("collapse")) {
+            pubClassList.toggle("collapse");
+            sampleArticles.classList.toggle("hide");
         }
 
     } else if (elParent.id == docDesign.id || el.id == docDesign.id || el.id == "designTitle") {
 
-        if (docDesign.className.match("collapse")) {
-            designClassList.add("expand");
-            designClassList.remove("collapse");
-            designTitle.classList.remove("rotate")
-            techClassList.add("collapse");
-            techClassList.remove("expand");
-            techTitle.classList.add("rotate");
-            pubClassList.add("collapse");
-            pubClassList.remove("expand");
-            pubTitle.classList.add("rotate");
-            sampleDesign.style.cssText = "display: grid !important";
-            sampleTech.style.cssText = "display: none !important";
-            sampleArticles.style.cssText = "display: none !important";
+        designClassList.toggle("collapse");
+        sampleDesign.classList.toggle("hide");
+
+        if (!techClassList.contains("collapse")) {
+            techClassList.toggle("collapse");
+            sampleTech.classList.toggle("hide");
+        }
+
+        if (!pubClassList.contains("collapse")) {
+            pubClassList.toggle("collapse");
+            sampleArticles.classList.toggle("hide");
         }
 
     } else if (elParent.id == pubContent.id || el.id == pubContent.id || el.id == "pubTitle") {
 
-        if (pubContent.className.match("collapse")) {
-            pubClassList.add("expand");
-            pubClassList.remove("collapse");
-            pubTitle.classList.remove("rotate")
-            techClassList.add("collapse");
-            techClassList.remove("expand");
-            techTitle.classList.add("rotate");
-            designClassList.add("collapse");
-            designClassList.remove("expand");
-            designTitle.classList.add("rotate");
-            sampleArticles.style.cssText = "display: grid !important";
-            sampleTech.style.cssText = "display: none !important";
-            sampleDesign.style.cssText = "display: none !important";
-        }
-    } else {
+        pubClassList.toggle("collapse");
+        sampleArticles.classList.toggle("hide");
 
+        if (!techClassList.contains("collapse")) {
+            techClassList.toggle("collapse");
+            sampleTech.classList.toggle("hide");
+        }
+
+        if (!designClassList.contains("collapse")) {
+            designClassList.toggle("collapse");
+            sampleDesign.classList.toggle("hide");
+        }
     }
+}
+
+
+//Animate menu icon.
+function expandMenu(x) {
+    x.classList.toggle("change");
+    banner.classList.toggle("hide");
+    contactIcons.classList.toggle("hide");
 }
