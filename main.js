@@ -116,7 +116,7 @@ var galSieCruiser = Vue.component('support-cruiser',{
 var unitView= new Vue({
     el: '#gaalsien',
     data: {
-        currentComponent: null,
+        view: "Sandskimmer",
         componentsArray: [
             'AssaultRailgun', 'AssaultShip', 'Baserunner', 'Carrier', 'HeavyRailgun', 'HonorguardCruiser', 'Interceptor', 'MissileShip', 'PrecisionBomber', 'ProductionCruiser', 'Salvager', 'Sandskimmer', 'SiegeCruiser',
         ],
@@ -139,10 +139,10 @@ var unitView= new Vue({
     },
     methods: {
         swapComponent: function(component) {
-            if (this.currentComponent === component) {
-                this.currentComponent = null;
+            if (this.view === component) {
+                this.view = null;
             } else {
-                this.currentComponent = component;
+                this.view = component;
             }
         }
     }
@@ -151,7 +151,7 @@ var unitView= new Vue({
 var unitView= new Vue({
     el: '#coalition',
     data: {
-        currentComponent: null,
+        view: "AAV",
         componentsArray: [
             'AAV', 'ArtilleryCruiser', 'AssaultCruiser', 'Baserunner', 'BattleCruiser',  'Carrier', 'Gunship', 'LAV', 'MissileBattery', 'Railgun', 'Salvager', 'StrikeFighter', 'SupportCruiser', 'TacticalBomber',
         ],
@@ -175,10 +175,10 @@ var unitView= new Vue({
     },
     methods: {
         swapComponent: function(component) {
-            if (this.currentComponent === component) {
-                this.currentComponent = null;
+            if (this.view === component) {
+                this.view = null;
             } else {
-                this.currentComponent = component;
+                this.view = component;
             }
         }
     }

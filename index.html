@@ -25,12 +25,14 @@
             </header>
 
             <main class="content">
+
+                <!-- Gaalsien section -->
                 <section class="gaalsien" id="gaalsien">
-                    <transition name="fade" mode="out-in">
+                    <transition name="slide-fade" mode="out-in">
                         <div class="gaalsien-select-menu-a" v-if="!show" @click="show = !show" key="menu"><h2>Select Gaalsien unit</h2></div>
                         <div class="gaalsien-select-menu-b" v-else @click="show = !show" key="clear"><h2>Close Gaalsien menu</h2></div>
                     </transition>
-                    <transition name="fade">
+                    <transition name="vertical-fade" mode="out-in">
                         <ul class="list-grid" v-if="show">
                             <li v-for="component in componentsArray">
                                 <div @click="swapComponent(component)"> {{ component }} </div>
@@ -38,15 +40,19 @@
                         </ul>
                     </transition>
                     <div class="unit-container">
-                        <div id="unitSelect" :is="currentComponent"></div>
+                        <transition name="fade" mode="in-out">
+                            <div id="unitSelect-gaalsien" :is="view"></div>
+                        </transition>
                     </div>
                 </section>
+
+                <!-- Coalition section -->
                 <section class="coalition" id="coalition">
-                    <transition name="fade" mode="out-in">
+                    <transition name="slide-fade" mode="out-in">
                         <div class="coalition-select-menu-a" v-if="!show" @click="show = !show" key="menu"><h2>Select Coalition unit</h2></div>
                         <div class="coalition-select-menu-b" v-else @click="show = !show" key="clear"><h2>Close Coalition menu</h2></div>
                     </transition>
-                    <transition name="fade">
+                    <transition name="vertical-fade" mode="out-in">
                         <ul class="list-grid" v-if="show">
                             <li v-for="component in componentsArray">
                                 <div @click="swapComponent(component)"> {{ component }} </div>
@@ -54,11 +60,14 @@
                         </ul>
                     </transition>
                     <div class="unit-container">
-                        <div id="unitSelect" :is="currentComponent"></div>
+                        <transition name="fade" mode="in-out">
+                            <div id="unitSelect" :is="view"></div>
+                        </transition>
                     </div>
                 </section>
             </main>
         </section>
+
         <!-- Link to local .js file -->
         <script src="main.js"></script>
 	</body>
@@ -67,7 +76,7 @@
 <!-- Vue templates -->
 
 <!-- For for Coalition unit components. -->
-<template id="aav">
+<script type="text/x-template" id="aav">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/AAV_coalition.jpg"/>
@@ -100,9 +109,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="artillery-cruiser">
+<script type="text/x-template" id="artillery-cruiser">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/artilleryCruiser_coalition.jpg"/>
@@ -135,9 +144,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="assault-cruiser">
+<script type="text/x-template" id="assault-cruiser">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/assaultCruiser_coalition.jpg"/>
@@ -170,9 +179,9 @@
                 </div>
             </div>
         </div>
-</template>
+</script>
 
-<template id="baserunner">
+<script type="text/x-template" id="baserunner">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/baserunner_coalition.jpg"/>
@@ -204,9 +213,9 @@
                 </div>
             </div>
         </div>
-</template>
+</script>
 
-<template id="battle-cruiser">
+<script type="text/x-template" id="battle-cruiser">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/battleCruiser_coalition.jpg" />
@@ -246,9 +255,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="carrier">
+<script type="text/x-template" id="carrier">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/carrier_coalition.jpg" />
@@ -288,9 +297,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="gunship">
+<script type="text/x-template" id="gunship">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/gunship_coalition.jpg" />
@@ -330,9 +339,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="lav">
+<script type="text/x-template" id="lav">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/LAV_coalition.jpg" />
@@ -372,9 +381,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="missile-battery">
+<script type="text/x-template" id="missile-battery">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/missileBattery_coalition.jpg" />
@@ -414,9 +423,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="railgun">
+<script type="text/x-template" id="railgun">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/railgun_coalition.jpg" />
@@ -456,9 +465,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="salvager">
+<script type="text/x-template" id="salvager">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/salvager_coalition.jpg" />
@@ -498,9 +507,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="strike-fighter">
+<script type="text/x-template" id="strike-fighter">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/interceptor_coalition.jpg" />
@@ -540,9 +549,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="support-cruiser">
+<script type="text/x-template" id="support-cruiser">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/supportCruiser_coalition.jpg" />
@@ -582,9 +591,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="tactical-bomber">
+<script type="text/x-template" id="tactical-bomber">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/coalitionUnits/bomber_coalition.jpg" />
@@ -624,11 +633,11 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
 <!-- For for Gaalsien unit components. -->
 
-<template id="assault-railgun-gaalsien">
+<script type="text/x-template" id="assault-railgun-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/assaultRailgun_gaalsien.jpg" />
@@ -668,9 +677,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="assault-ship-gaalsien">
+<script type="text/x-template" id="assault-ship-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/assaultShip_gaalsien.jpg" />
@@ -710,9 +719,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="baserunner-gaalsien">
+<script type="text/x-template" id="baserunner-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/baserunner_gaalsien.jpg" />
@@ -752,9 +761,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="carrier-gaalsien">
+<script type="text/x-template" id="carrier-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/carrier_gaalsien.jpg" />
@@ -794,9 +803,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="heavy-railgun-gaalsien">
+<script type="text/x-template" id="heavy-railgun-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/heavyRailgun_gaalsien.jpg" />
@@ -836,9 +845,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="honorguard-cruiser-gaalsien">
+<script type="text/x-template" id="honorguard-cruiser-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/honorguardCruiser_gaalsien.jpg" />
@@ -878,9 +887,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="interceptor-gaalsien">
+<script type="text/x-template" id="interceptor-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/interceptor_gaalsien.jpg" />
@@ -920,9 +929,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="missile-ship-gaalsien">
+<script type="text/x-template" id="missile-ship-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/missileShip_gaalsien.jpg" />
@@ -962,9 +971,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="precision-bomber-gaalsien">
+<script type="text/x-template" id="precision-bomber-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/precisionBomber_gaalsien.jpg" />
@@ -1004,9 +1013,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="production-cruiser-gaalsien">
+<script type="text/x-template" id="production-cruiser-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/productionCruiser_gaalsien.jpg" />
@@ -1046,9 +1055,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="salvager-gaalsien">
+<script type="text/x-template" id="salvager-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/salvager_gaalsien.jpg" />
@@ -1088,9 +1097,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="sandskimmer-gaalsien">
+<script type="text/x-template" id="sandskimmer-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/sandskimmer_gaalsien.jpg" />
@@ -1130,9 +1139,9 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
-<template id="siege-cruiser-gaalsien">
+<script type="text/x-template" id="siege-cruiser-gaalsien">
     <div class="unitInfo">
         <figure class="unitImage">
             <img src="images/gaalsienUnits/siegeCruiser_gaalsien.jpg" />
@@ -1172,6 +1181,6 @@
             </div>
         </div>
     </div>
-</template>
+</script>
 
 <!-- Read for transitions: https://css-tricks.com/intro-to-vue-5-animations/ -->

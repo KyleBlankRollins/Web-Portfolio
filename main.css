@@ -69,6 +69,7 @@ li > div:hover {
             flex-direction: column;
             background-color: #F74839;
             margin: 5px;
+            border-radius: .4em;
         }
 
             .unitGrid {
@@ -101,6 +102,7 @@ li > div:hover {
             flex-direction: column;
             background-color: #F8D014;
             margin: 5px;
+            border-radius: .4em;
         }
 
 /* End CSS grid layouts and definitions <-- */
@@ -115,7 +117,7 @@ li > div:hover {
     }
 
     .header > figure > img {
-        width: 100%;
+        width: 102%;
         height: 100%;
         max-height: 250px;
         object-fit: cover;
@@ -123,14 +125,17 @@ li > div:hover {
 
     .header > figure > figcaption {
         position: absolute;
-        top: 20px;
+        top: 10%;
         left: 20px;
         background-color: rgba(255, 255, 255, 0.61);
         padding: 0 10px 0 10px;
+        border-radius: .4em;
     }
 
         .title {
-            font-size: 2em;
+            font-size: 2.5em;
+            margin: 20px;
+            color: #F74839;
         }
 
 
@@ -144,6 +149,7 @@ li > div:hover {
         height: 100%;
         max-height: 300px;
         object-fit: cover;
+        border-radius: .4em;
     }
 
     .unitImage > figcaption {
@@ -151,6 +157,7 @@ li > div:hover {
         bottom: 10px;
         left: 10px;
         background-color: rgba(255, 255, 255, 0.61);
+        border-radius: .4em;
     }
 
         .unitImage > figcaption > h2 {
@@ -160,17 +167,18 @@ li > div:hover {
 
     .unitDescription {
         grid-area: unitDescription;
-        background-color: #FFFFFF;
+        background-color: rgba(255, 255, 255, 0.61);
         padding: 2px 4px 2px 4px;
     }
 
     .stat {
         display: flex;
         flex-direction: column;
-        align-items: baseline;
+        align-items: center;
         background-color: #FFFFFF;
         padding: 2px 4px 2px 4px;
         border: solid 1px #4a4a4a;
+        border-radius: .2em;
     }
 
         .stat h4, p {
@@ -232,5 +240,51 @@ li > div:hover {
         font-weight: bolder;
         color: #FFFFFF;
     }
+
+/* Transitions */
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s ease;
+}
+
+.fade-enter-to, .fade-leave {
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all .6s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-fade-leave {
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
+.vertical-fade-enter-active {
+    transition: all .6s ease;
+}
+
+.vertical-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.vertical-fade-enter {
+    transform: translateX(0, 10px);
+    opacity: 0;
+}
+
+.vertical-fade-leave {
+    transform: translateX(0, -10px);
+    opacity: 0;
+}
 
 /* http://paletton.com/#uid=7000u0k1Xqw4Fvi3tot56l+76k8 */
