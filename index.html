@@ -41,7 +41,7 @@
                     </transition>
                     <div class="unit-container">
                         <transition name="fade" mode="in-out">
-                            <div id="unitSelect-gaalsien" :is="view"></div>
+                            <div v-cloak id="unit-info-gaalsien" :is="view"></div>
                         </transition>
                     </div>
                 </section>
@@ -61,7 +61,7 @@
                     </transition>
                     <div class="unit-container">
                         <transition name="fade" mode="in-out">
-                            <div id="unitSelect" :is="view"></div>
+                            <div  v-cloak id="unit-info" :is="view"></div>
                         </transition>
                     </div>
                 </section>
