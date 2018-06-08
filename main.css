@@ -2,45 +2,29 @@
 html, body {
     height: 100%;
     margin: 10px;
-    font-family: Roboto, Helvetica, sans-serif;
+    font-family: "Roboto", Helvetica, sans-serif;
     font-size: 110%;
     color: #4a4a4a;
 }
 
-h1 {
-    font-size: 1.4em;
+h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
 }
 
-h2 {
-    font-size: 1.3em;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-}
+h1 { font-size: 1.4em; }
 
-h3 {
-    font-size: 1.2em;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-}
+h2 { font-size: 1.3em; }
 
-h4 {
-    font-size: 1.1em;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-}
+h3 { font-size: 1.2em; }
 
-a:link {
+h4 { font-size: 1.1em; }
+
+a:link, a:visited {
 	color: #294C5D;
 	text-decoration: none;
 }
 
-a:hover {
-	color: #B87462;
-}
-
-a:visited {
-	color: #294C5D;
-}
-
-a:visited:hover {
+a:hover, a:visited:hover {
 	color: #B87462;
 }
 /* <--- End page setup. */
@@ -63,7 +47,7 @@ grid-template-areas:
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #FFFFFF;
+        background-color: rgba(255, 255, 255, 0.95);
         border-bottom: solid 1px #294C5D;
         grid-template-areas:
         "logo menu"
@@ -79,6 +63,7 @@ grid-template-areas:
         .about {
             display: grid;
             grid-template-columns: 1fr;
+            overflow: hidden;
         }
 
         .samples {
@@ -222,6 +207,7 @@ grid-template-areas:
 }
 
 .social-media {
+    font-size: 1.3em;
     padding: 5px 10px 5px 10px;
 }
 
@@ -376,7 +362,6 @@ grid-template-areas:
 }
 
 .resume {
-    margin: 10px 10px 30px 0;
     height: 100%;
 }
 
