@@ -1,126 +1,166 @@
 //Create components
+//Menus
+Vue.component('gaalsien-menu',{
+    data: {
+      items: [
+           'AssaultRailgun', 'AssaultShip', 'Baserunner', 'Carrier', 'HeavyRailgun', 'HonorguardCruiser', 'Interceptor', 'MissileShip', 'PrecisionBomber', 'ProductionCruiser', 'Salvager', 'Sandskimmer', 'SiegeCruiser',
+       ],
+       show: false,
+   },
+});
+
+Vue.component('coalition-menu',{
+    data: {
+      items: [
+           'AAV', 'ArtilleryCruiser', 'AssaultCruiser', 'Baserunner', 'BattleCruiser',  'Carrier', 'Gunship', 'LAV', 'MissileBattery', 'Railgun', 'Salvager', 'StrikeFighter', 'SupportCruiser', 'TacticalBomber',
+       ],
+       show: false,
+   },
+});
+
 //Coalition components
 var colAAV = Vue.component('aav',{
-    template: '#aav',
+    template: '#coalition-unit-template',
+    data: function () {
+        return {
+            title: "Coalition AAV",
+            desc: "This is a heavily armored attack vehicle.",
+            image: 'AAV_coalition.jpg',
+            speed: 80,
+            armor: 8,
+            damage: 11,
+            rof: 'Very high',
+            hull: 1400,
+            strong: 'Strikecraft',
+            weak: 'Railguns, Cruisers',
+        }
+    },
 });
 
 var colArtCruiser = Vue.component('artillery-cruiser',{
-    template: '#artillery-cruiser',
+    template: '#coalition-unit-template',
 });
 
 var colAssCruiser = Vue.component('assault-cruiser',{
-    template: '#assault-cruiser',
+    template: '#coalition-unit-template',
 });
 
 var colBaserunner = Vue.component('baserunner',{
-    template: '#baserunner',
+    template: '#coalition-unit-template',
 });
 
 var colBatCruiser = Vue.component('battle-cruiser',{
-    template: '#battle-cruiser',
+    template: '#coalition-unit-template',
 });
 
 var colCarrier = Vue.component('carrier',{
-    template: '#carrier',
+    template: '#coalition-unit-template',
 });
 
 var colGunship = Vue.component('gunship',{
-    template: '#gunship',
+    template: '#coalition-unit-template',
 });
 
 var colLAV = Vue.component('lav',{
-    template: '#lav',
+    template: '#coalition-unit-template',
 });
 
 var colMisBattery = Vue.component('missile-battery',{
-    template: '#missile-battery',
+    template: '#coalition-unit-template',
 });
 
 var colRailgun = Vue.component('railgun',{
-    template: '#railgun',
+    template: '#coalition-unit-template',
 });
 
 var colSalvager = Vue.component('salvager',{
-    template: '#salvager',
+    template: '#coalition-unit-template',
 });
 
 var colStrFighter = Vue.component('strike-fighter',{
-    template: '#strike-fighter',
+    template: '#coalition-unit-template',
 });
 
 var colSupCruiser = Vue.component('support-cruiser',{
-    template: '#support-cruiser',
+    template: '#coalition-unit-template',
 });
 
 var colTacBomber = Vue.component('tactical-bomber',{
-    template: '#tactical-bomber',
+    template: '#coalition-unit-template',
 });
-
 
 
 //Gaalsien components
 var galAssRailgun = Vue.component('aav',{
-    template: '#assault-railgun-gaalsien',
+    template: '#gaalsien-unit-template',
+    data: function () {
+        return {
+            title: "Gaalsien Assault Railgun",
+            desc: "Long-range, heavy attack.",
+            image: 'assaultRailgun_gaalsien.jpg',
+            speed: 100,
+            armor: 6,
+            damage: 50,
+            rof: 'High',
+            hull: 550,
+            strong: 'Armored, Railguns',
+            weak: 'Railguns, Aircraft, Cruisers',
+        }
+    },
 });
 
 var galAssShip = Vue.component('artillery-cruiser',{
-    template: '#assault-ship-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galBaserunner = Vue.component('baserunner',{
-    template: '#baserunner-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galCarrier = Vue.component('carrier',{
-    template: '#carrier-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galHvyRailgun = Vue.component('assault-cruiser',{
-    template: '#heavy-railgun-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galHonCruiser = Vue.component('battle-cruiser',{
-    template: '#honorguard-cruiser-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galInterceptor = Vue.component('gunship',{
-    template: '#interceptor-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galMisShip = Vue.component('lav',{
-    template: '#missile-ship-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galPreBomber = Vue.component('missile-battery',{
-    template: '#precision-bomber-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galProCruiser = Vue.component('railgun',{
-    template: '#production-cruiser-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galSalvager = Vue.component('salvager',{
-    template: '#salvager-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galSandskimmer = Vue.component('strike-fighter',{
-    template: '#sandskimmer-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
 var galSieCruiser = Vue.component('support-cruiser',{
-    template: '#siege-cruiser-gaalsien',
+    template: '#gaalsien-unit-template',
 });
 
-// Create new Vue instance for gaalsien-dropdown.
-
-var unitView= new Vue({
-    el: '#gaalsien',
+//Gaalsien unit view
+Vue.component('gaalsien',{
     data: {
         view: "Sandskimmer",
-        componentsArray: [
-            'AssaultRailgun', 'AssaultShip', 'Baserunner', 'Carrier', 'HeavyRailgun', 'HonorguardCruiser', 'Interceptor', 'MissileShip', 'PrecisionBomber', 'ProductionCruiser', 'Salvager', 'Sandskimmer', 'SiegeCruiser',
-        ],
-        show: false,
     },
     components: {
         'AssaultRailgun': galAssRailgun,
@@ -148,14 +188,10 @@ var unitView= new Vue({
     }
 });
 
-var unitView= new Vue({
-    el: '#coalition',
+//Coalition unit view
+Vue.component('coalition',{
     data: {
         view: "AAV",
-        componentsArray: [
-            'AAV', 'ArtilleryCruiser', 'AssaultCruiser', 'Baserunner', 'BattleCruiser',  'Carrier', 'Gunship', 'LAV', 'MissileBattery', 'Railgun', 'Salvager', 'StrikeFighter', 'SupportCruiser', 'TacticalBomber',
-        ],
-        show: false,
     },
     components: {
         'AAV': colAAV,
@@ -183,6 +219,11 @@ var unitView= new Vue({
         }
     }
 });
+
+new Vue ({
+    el: '#app',
+});
+
 
 // images: [
 //     { url: 'images/coalitionUnits/AAV_coalition.jpg', alt: 'coalition AAV' },

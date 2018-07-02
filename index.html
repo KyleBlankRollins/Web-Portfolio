@@ -12,1175 +12,161 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
         <!-- Load Vue.min.js -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-
 	</head>
 
 	<body>
         <section class="wrapper">
             <header class="header">
                 <figure>
-                    <img src="images/coalitionUnits/battle.jpg"/>
+                    <img src="images/battle.jpg"/>
                     <figcaption> <h1 class="title"> DoK Compare </h1> </figcaption>
                 </figure>
             </header>
 
-            <main class="content">
+            <main class="content" id="app">
 
+                <aav></aav>
                 <!-- Gaalsien section -->
                 <section class="gaalsien" id="gaalsien">
-                    <transition name="slide-fade" mode="out-in">
-                        <div class="gaalsien-select-menu-a" v-if="!show" @click="show = !show" key="menu"><h2>Select Gaalsien unit</h2></div>
-                        <div class="gaalsien-select-menu-b" v-else @click="show = !show" key="clear"><h2>Close Gaalsien menu</h2></div>
-                    </transition>
-                    <transition name="vertical-fade" mode="out-in">
-                        <ul class="list-grid" v-if="show">
-                            <li v-for="component in componentsArray">
-                                <div @click="swapComponent(component)"> {{ component }} </div>
-                            </li>
-                        </ul>
-                    </transition>
-                    <div class="unit-container">
-                        <transition name="fade" mode="in-out">
-                            <div v-cloak id="unit-info-gaalsien" :is="view"></div>
+                    <gaalsien-menu>
+                        <!-- <transition name="slide-fade" mode="out-in">
+                            <div class="gaalsien-select-menu-a" v-if="!show" @click="show = !show"><h2>Select Gaalsien unit</h2></div>
+                            <div class="gaalsien-select-menu-b" v-else @click="show = !show"><h2>Close Gaalsien menu</h2></div>
                         </transition>
-                    </div>
+                        <transition name="vertical-fade" mode="out-in">
+                            <ul class="list-grid" v-if="show">
+                                <li v-for="component in componentsArray">
+                                    <div @click="swapComponent(component)"> {{ component }} </div>
+                                </li>
+                            </ul>
+                        </transition> -->
+                    </gaalsien-menu>
+
+                    <gaalsien>
+                        <div class="unit-container">
+                            <!-- <transition name="fade" mode="in-out">
+                                <div id="unit-info-gaalsien" :is="view">
+
+                                </div>
+                            </transition> -->
+
+                        </div>
+                    </gaalsien>
                 </section>
 
                 <!-- Coalition section -->
                 <section class="coalition" id="coalition">
-                    <transition name="slide-fade" mode="out-in">
-                        <div class="coalition-select-menu-a" v-if="!show" @click="show = !show" key="menu"><h2>Select Coalition unit</h2></div>
-                        <div class="coalition-select-menu-b" v-else @click="show = !show" key="clear"><h2>Close Coalition menu</h2></div>
-                    </transition>
-                    <transition name="vertical-fade" mode="out-in">
-                        <ul class="list-grid" v-if="show">
-                            <li v-for="component in componentsArray">
-                                <div @click="swapComponent(component)"> {{ component }} </div>
-                            </li>
-                        </ul>
-                    </transition>
-                    <div class="unit-container">
-                        <transition name="fade" mode="in-out">
-                            <div  v-cloak id="unit-info" :is="view"></div>
+                    <col-menu>
+                        <!-- <transition name="slide-fade" mode="out-in">
+                            <div class="coalition-select-menu-a" v-if="!show" @click="show = !show"><h2>Select Coalition unit</h2></div>
+                            <div class="coalition-select-menu-b" v-else @click="show = !show"><h2>Close Coalition menu</h2></div>
                         </transition>
-                    </div>
+                        <transition name="vertical-fade" mode="out-in">
+                            <ul class="list-grid" v-if="show">
+                                <li v-for="component in componentsArray">
+                                    <div @click="swapComponent(component)"> {{ component }} </div>
+                                </li>
+                            </ul>
+                        </transition> -->
+                    </col-menu>
+
+                    <coalition>
+                        <div class="unit-container">
+                            <!-- <transition name="fade" mode="in-out">
+                                <div id="unit-info" :is="view">
+
+                                </div>
+                            </transition> -->
+                        </div>
+                    </coalition>
                 </section>
             </main>
         </section>
 
         <!-- Link to local .js file -->
         <script src="main.js"></script>
+
+        <!-- Vue templates -->
+
+        <!-- coalition template -->
+        <script type="text/x-template" id="coalition-unit-template">
+            <div class="unit-info">
+                <figure class="unit-image">
+                    <img :src="'images/coalitionUnits/' + image"/>
+                    <figcaption> <h2> {{ title }} </h2> </figcaption>
+                </figure>
+                <div class="unit-description" id="unit-description">
+                    <p> {{ desc }} </p>
+                </div>
+                <div class="unit-stats" id="coalition-stats">
+                    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> {{ speed }} </div> </div>
+                    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> {{ armor }} </div> </div>
+                    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> {{ damage }} </div> </div>
+                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> {{ rof }} </div> </div>
+                    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> {{ hull }} </div> </div>
+                    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> {{ strong }} </div> </div>
+                    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> {{ weak }} </div> </div>
+                </div>
+            </div>
+        </script>
+
+        <!-- gaalsien template -->
+        <script type="text/x-template" id="gaalsien-unit-template">
+            <div class="unit-info">
+                <figure class="unit-image">
+                    <img :src="'images/gaalsienUnits/' + image"/>
+                    <figcaption> <h2> {{ title }} </h2> </figcaption>
+                </figure>
+                <div class="unit-description" id="unit-description">
+                    <p> {{ desc }} </p>
+                </div>
+                <div class="unit-stats" id="gaalsien-stats">
+                    <div class="stat"> <strong>Speed:</strong> <div id="gal-stat-speed"> {{ speed }} </div> </div>
+                    <div class="stat"> <strong>Armor:</strong> <div id="gal-stat-armore"> {{ armor }} </div> </div>
+                    <div class="stat"> <strong>Damage:</strong> <div id="gal-stat-damage"> {{ damage }} </div> </div>
+                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="gal-stat-rof"> {{ rof }} </div> </div>
+                    <div class="stat"> <strong>Hull:</strong> <div id="gal-stat-hull"> {{ hull }} </div> </div>
+                    <div class="stat"> <strong>Strong vs:</strong> <div id="gal-stat-strong"> {{ strong }} </div> </div>
+                    <div class="stat"> <strong>Weak vs:</strong> <div id="gal-stat-weak"> {{ weak }} </div> </div>
+                </div>
+            </div>
+        </script>
 	</body>
 </html>
 
-<!-- Vue templates -->
+<!--
+<figure class="unit-image">
+    <img src="images/coalitionUnits/AAV_coalition.jpg"/>
+    <figcaption> <h2> Coalition AAV </h2> </figcaption>
+</figure>
+<div class="unit-description" id="unit-description">
+    <p> This is a heavily armored attack vehicle. </p>
+</div>
+<div class="unit-stats" id="coalition-stats">
+    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> 80 </div> </div>
+    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> 8 </div> </div>
+    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> 11 </div> </div>
+    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> Very high </div> </div>
+    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> 1400 </div> </div>
+    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> Strikecraft </div> </div>
+    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> Railguns, Cruisers </div> </div>
+</div> -->
 
-<!-- For for Coalition unit components. -->
-<script type="text/x-template" id="aav">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/AAV_coalition.jpg"/>
-            <figcaption> <h2> Coalition AAV </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="aav-speed">
-                <h4>Speed:</h4> <p>80</p>
-            </div>
-            <div class="stat" id="aav-armor">
-                <h4>Armor:</h4> <p>8</p>
-            </div>
-            <div class="stat" id="aav-damage">
-                <h4>Damage:</h4> <p>11</p>
-            </div>
-            <div class="stat" id="aav-RoF">
-                <h4>Rate of Fire:</h4> <p>Very high</p>
-            </div>
-            <div class="stat" id="aav-hull">
-                <h4>Hull:</h4> <p>1400</p>
-            </div>
-            <div class="stat" id="aav-strong">
-                <h4>Strong vs:</h4> <p>Strikecraft</p>
-            </div>
-            <div class="stat" id="aav-weak">
-                <h4>Weak vs:</h4> <p>Railguns, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="artillery-cruiser">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/artilleryCruiser_coalition.jpg"/>
-            <figcaption> <h2> Coalition Artillery Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coaltion-speed">
-                <h4>Speed:</h4> <p>50</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4> <p>5</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4> <p>100</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4> <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4> <p>2500</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4> <p>Ground</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4> <p>Strikecraft, Railguns</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="assault-cruiser">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/assaultCruiser_coalition.jpg"/>
-            <figcaption> <h2> Coalition Assault Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4> <p>65</p></div>
-                <div class="stat" id="coalition-armor">
-                    <h4>Armor:</h4> <p>15</p>
-                </div>
-                <div class="stat" id="coalition-damage">
-                    <h4>Damage:</h4> <p>70</p>
-                </div>
-                <div class="stat" id="coalition-rof">
-                    <h4>Rate of Fire:</h4>
-                    <p>High</p>
-                </div>
-                <div class="stat" id="coalition-hull">
-                    <h4>Hull:</h4> <p>2700</p>
-                </div>
-                <div class="stat" id="coalition-strong">
-                    <h4>Strong vs:</h4> <p>Ground</p>
-                </div>
-                <div class="stat" id="coalition-weak">
-                    <h4>Weak vs:</h4> <p>Aircraft, Railguns</p>
-                </div>
-            </div>
-        </div>
-</script>
-
-<script type="text/x-template" id="baserunner">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/baserunner_coalition.jpg"/>
-            <figcaption> <h2> Coalition Baserunner </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p></div>
-            <div class="unitStats">
-                <div class="stat" id="coalition-speed">
-                    <h4>Speed:</h4> <p>65</p>
-                </div>
-                <div class="stat" id="coalition-armor">
-                    <h4>Armor:</h4> <p>2</p>
-                </div>
-                <div class="stat" id="coalition-damage">
-                    <h4>Damage:</h4> <p>5</p>
-                </div>
-                <div class="stat" id="coalition-rof">
-                    <h4>Rate of Fire:</h4> <p>Medium</p>
-                </div>
-                <div class="stat" id="coalition-hull">
-                    <h4>Hull:</h4> <p>3350</p>
-                </div>
-                <div class="stat" id="coalition-strong">
-                    <h4>Strong vs:</h4> <p>N/A</p>
-                </div>
-                <div class="stat" id="coalition-weak">
-                    <h4>Weak vs:</h4> <p>Everything</p>
-                </div>
-            </div>
-        </div>
-</script>
-
-<script type="text/x-template" id="battle-cruiser">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/battleCruiser_coalition.jpg" />
-            <figcaption> <h2> Coalition Battlecruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>50</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>25</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>300</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>6500</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Aircraft, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="carrier">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/carrier_coalition.jpg" />
-            <figcaption> <h2> Coalition Carrier </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>60</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>25</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>10</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Very low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>15000</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="carrier-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="gunship">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/gunship_coalition.jpg" />
-            <figcaption> <h2> Coalition Gunship </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>375</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>10</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>15</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Very high</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>1050</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Anti-air, Interceptors, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="lav">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/LAV_coalition.jpg" />
-            <figcaption> <h2> Coalition LAV </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>110</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>0</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>15</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>500</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Strikecraft, Railguns</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>AAVs, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="missile-battery">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/missileBattery_coalition.jpg" />
-            <figcaption> <h2> Coalition Missile Battery </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>50</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>5</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>250</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>1800</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Aircraft</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Ground units</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="railgun">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/railgun_coalition.jpg" />
-            <figcaption> <h2> Coalition Railgun </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>66</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>3</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>225</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>675</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Armored, Railguns</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Aircraft, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="salvager">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/salvager_coalition.jpg" />
-            <figcaption><h2> Coalition Salvager </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>75</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>5</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>0</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>900</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Everything</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="strike-fighter">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/interceptor_coalition.jpg" />
-            <figcaption><h2> Coalition Interceptor </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>435</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>1</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>120</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>650</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Anti-air, Interceptors, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="support-cruiser">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/supportCruiser_coalition.jpg" />
-            <figcaption> <h2> Coalition Support Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>70</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>2</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>1</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>4100</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Everthing</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="tactical-bomber">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/coalitionUnits/bomber_coalition.jpg" />
-            <figcaption> <h2> Coalition Tactical Bomber </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="coalition-speed">
-                <h4>Speed:</h4>
-                <p>370</p>
-            </div>
-            <div class="stat" id="coalition-armor">
-                <h4>Armor:</h4>
-                <p>15</p>
-            </div>
-            <div class="stat" id="coalition-damage">
-                <h4>Damage:</h4>
-                <p>2500</p>
-            </div>
-            <div class="stat" id="coalition-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="coalition-hull">
-                <h4>Hull:</h4>
-                <p>1050</p>
-            </div>
-            <div class="stat" id="coalition-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="coalition-weak">
-                <h4>Weak vs:</h4>
-                <p>Anti-air, Interceptors, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<!-- For for Gaalsien unit components. -->
-
-<script type="text/x-template" id="assault-railgun-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/assaultRailgun_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Assault Railgun </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>100</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>6</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>50</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>High</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>550</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Armored, Railguns</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Aircraft, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="assault-ship-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/assaultShip_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Assault Ship </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>70</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>6</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>24</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>1400</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Strikecraft</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="baserunner-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/baserunner_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Baserunner </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>70</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>2</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>5</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>3350</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Everything</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="carrier-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/carrier_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Carrier </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>10</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>40</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>10</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Very Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>12500</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="heavy-railgun-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/heavyRailgun_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Heavy Railgun </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>62</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>3</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>225</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>620</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Armored, Railguns</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Railguns, Aircraft, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="honorguard-cruiser-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/honorguardCruiser_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Honorguard Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>60</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>6</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>400</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>3600</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Aircraft, Railguns</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="interceptor-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/interceptor_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Interceptor </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>435</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>1</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>150</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>475</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Anti-air, Interceptors, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="missile-ship-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/missileShip_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Missile Ship </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>55</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>5</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>250</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>1800</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Aircraft</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Ground units</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="precision-bomber-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/precisionBomber_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Precision Bomber </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>550</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>15</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>1000</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>1250</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Anti-air, Interceptors, Strikecraft</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="production-cruiser-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/productionCruiser_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Production Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>70</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>5</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>20</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>4100</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Everything</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="salvager-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/salvager_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Salvager </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>75</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>2</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>0</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>900</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>N/A</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Everything</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="sandskimmer-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/sandskimmer_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Sandskimmer </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>130</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>0</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>15</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Medium</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>650</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Strikecraft, Railguns</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>AAVs, Cruisers</p>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-template" id="siege-cruiser-gaalsien">
-    <div class="unitInfo">
-        <figure class="unitImage">
-            <img src="images/gaalsienUnits/siegeCruiser_gaalsien.jpg" />
-            <figcaption> <h2> Gaalsien Siege Cruiser </h2> </figcaption>
-        </figure>
-        <div class="unitDescription" id="unitDescription">
-            <p>This is a description</p>
-        </div>
-        <div class="unitStats">
-            <div class="stat" id="gaalsien-speed">
-                <h4>Speed:</h4>
-                <p>55</p>
-            </div>
-            <div class="stat" id="gaalsien-armor">
-                <h4>Armor:</h4>
-                <p>3</p>
-            </div>
-            <div class="stat" id="gaalsien-damage">
-                <h4>Damage:</h4>
-                <p>100</p>
-            </div>
-            <div class="stat" id="gaalsien-rof">
-                <h4>Rate of Fire:</h4>
-                <p>Low</p>
-            </div>
-            <div class="stat" id="gaalsien-hull">
-                <h4>Hull:</h4>
-                <p>2500</p>
-            </div>
-            <div class="stat" id="gaalsien-strong">
-                <h4>Strong vs:</h4>
-                <p>Ground</p>
-            </div>
-            <div class="stat" id="gaalsien-weak">
-                <h4>Weak vs:</h4>
-                <p>Strikecraft, Railguns</p>
-            </div>
-        </div>
-    </div>
-</script>
+<!-- <figure class="unit-image">
+    <img src="images/gaalsienUnits/assaultRailgun_gaalsien.jpg"/>
+    <figcaption> <h2> Gaalsien Assault Railgun </h2> </figcaption>
+</figure>
+<div class="unit-description" id="unit-description">
+    <p> Long-range, heavy attack. </p>
+</div>
+<div class="unit-stats" id="coalition-stats">
+    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> 100 </div> </div>
+    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> 6 </div> </div>
+    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> 50 </div> </div>
+    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> High </div> </div>
+    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> 550 </div> </div>
+    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> Armored, Railguns </div> </div>
+    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> Railguns, Aircraft, Cruisers </div> </div>
+</div> -->
 
 <!-- Read for transitions: https://css-tricks.com/intro-to-vue-5-animations/ -->
