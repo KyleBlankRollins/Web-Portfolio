@@ -11,7 +11,7 @@
         <!-- Load font awesome icon library -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
         <!-- Load Vue.min.js -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- TODO: Change to "vue.min.js" -->
 	</head>
 
 	<body>
@@ -24,61 +24,84 @@
             </header>
 
             <main class="content" id="app">
-
-                <aav></aav>
                 <!-- Gaalsien section -->
                 <section class="gaalsien" id="gaalsien">
-                    <gaalsien-menu>
-                        <!-- <transition name="slide-fade" mode="out-in">
-                            <div class="gaalsien-select-menu-a" v-if="!show" @click="show = !show"><h2>Select Gaalsien unit</h2></div>
-                            <div class="gaalsien-select-menu-b" v-else @click="show = !show"><h2>Close Gaalsien menu</h2></div>
+                    <template id="gaalsien-menu-template">
+                        <transition name="slide-fade" mode="out-in">
+                            <div class="gaalsien-select-menu-a" v-if="!galMenuShow" @click="galMenuShow = !galMenuShow"><h2>Select Gaalsien unit</h2></div>
+                            <div class="gaalsien-select-menu-b" v-else @click="galMenuShow = !galMenuShow"><h2>Close Gaalsien menu</h2></div>
                         </transition>
                         <transition name="vertical-fade" mode="out-in">
-                            <ul class="list-grid" v-if="show">
-                                <li v-for="component in componentsArray">
-                                    <div @click="swapComponent(component)"> {{ component }} </div>
+                            <ul class="list-grid" v-if="galMenuShow">
+                                <li v-for="component in galComponents">
+                                    <div @click="swapGalUnit(component)"> {{ component }} </div>
                                 </li>
                             </ul>
-                        </transition> -->
-                    </gaalsien-menu>
+                        </transition>
+                    </template>
 
-                    <gaalsien-units>
-                        <div class="unit-container">
-                            <!-- <transition name="fade" mode="in-out">
-                                <div id="unit-info-gaalsien" :is="view">
-
+                    <template id="gaalsien-unit-template">
+                        <transition name="fade" mode="in-out">
+                            <div class="unit-info" :is="galUnit">
+                                <!-- <figure class="unit-image">
+                                    <img :src="'images/gaalsienUnits/' + image"/>
+                                    <figcaption> <h2> {{ title }} </h2> </figcaption>
+                                </figure>
+                                <div class="unit-description" id="unit-description">
+                                    <p> {{ desc }} </p>
                                 </div>
-                            </transition> -->
-
-                        </div>
-                    </gaalsien-units>
+                                <div class="unit-stats" id="gaalsien-stats">
+                                    <div class="stat"> <strong>Speed:</strong> <div id="gal-stat-speed"> {{ speed }} </div> </div>
+                                    <div class="stat"> <strong>Armor:</strong> <div id="gal-stat-armore"> {{ armor }} </div> </div>
+                                    <div class="stat"> <strong>Damage:</strong> <div id="gal-stat-damage"> {{ damage }} </div> </div>
+                                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="gal-stat-rof"> {{ rof }} </div> </div>
+                                    <div class="stat"> <strong>Hull:</strong> <div id="gal-stat-hull"> {{ hull }} </div> </div>
+                                    <div class="stat"> <strong>Strong vs:</strong> <div id="gal-stat-strong"> {{ strong }} </div> </div>
+                                    <div class="stat"> <strong>Weak vs:</strong> <div id="gal-stat-weak"> {{ weak }} </div> </div> -->
+                                </div>
+                            </div>
+                        </transition>
+                    </template>
                 </section>
 
                 <!-- Coalition section -->
                 <section class="coalition" id="coalition">
-                    <coalition-menu>
+                    <template id="coalition-menu-template">
                         <transition name="slide-fade" mode="out-in">
-                            <div class="coalition-select-menu-a" v-if="!showColMenu" @click="showColMenu = !showColMenu"><h2>Select Coalition unit</h2></div>
-                            <div class="coalition-select-menu-b" v-else @click="showColMenu = !showColMenu"><h2>Close Coalition menu</h2></div>
+                            <div class="coalition-select-menu-a" v-if="!colMenuShow" @click="colMenuShow = !colMenuShow"><h2>Select Coalition unit</h2></div>
+                            <div class="coalition-select-menu-b" v-else @click="colMenuShow = !colMenuShow"><h2>Close Coalition menu</h2></div>
                         </transition>
                         <transition name="vertical-fade" mode="out-in">
-                            <ul class="list-grid" v-if="showColMenu">
-                                <li v-for="item in items">
-                                    <div @click="swapComponent(component)"> {{ item }} </div>
+                            <ul class="list-grid" v-if="colMenuShow">
+                                <li v-for="component in colComponents">
+                                    <div @click="swapColUnit(component)"> {{ component }} </div>
                                 </li>
                             </ul>
                         </transition>
-                    </coalition-menu>
+                    </template>
 
-                    <coalition-units>
-                        <div class="unit-container">
-                            <!-- <transition name="fade" mode="in-out">
-                                <div id="unit-info" :is="view">
-
+                    <template id="coalition-unit-template">
+                        <transition name="fade" mode="in-out">
+                            <div class="unit-info" :is="colUnit">
+                                <figure class="unit-image">
+                                    <img :src="'images/coalitionUnits/' + image"/>
+                                    <figcaption> <h2> {{ title }} </h2> </figcaption>
+                                </figure>
+                                <div class="unit-description" id="unit-description">
+                                    <p> {{ desc }} </p>
                                 </div>
-                            </transition> -->
-                        </div>
-                    </coalition-units>
+                                <div class="unit-stats" id="coalition-stats">
+                                    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> {{ speed }} </div> </div>
+                                    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> {{ armor }} </div> </div>
+                                    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> {{ damage }} </div> </div>
+                                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> {{ rof }} </div> </div>
+                                    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> {{ hull }} </div> </div>
+                                    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> {{ strong }} </div> </div>
+                                    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> {{ weak }} </div> </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </template>
                 </section>
             </main>
         </section>
@@ -86,87 +109,7 @@
         <!-- Link to local .js file -->
         <script src="main.js"></script>
 
-        <!-- Vue templates -->
-
-        <!-- coalition template -->
-        <script type="text/x-template" id="coalition-unit-template">
-            <div class="unit-info">
-                <figure class="unit-image">
-                    <img :src="'images/coalitionUnits/' + image"/>
-                    <figcaption> <h2> {{ title }} </h2> </figcaption>
-                </figure>
-                <div class="unit-description" id="unit-description">
-                    <p> {{ desc }} </p>
-                </div>
-                <div class="unit-stats" id="coalition-stats">
-                    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> {{ speed }} </div> </div>
-                    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> {{ armor }} </div> </div>
-                    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> {{ damage }} </div> </div>
-                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> {{ rof }} </div> </div>
-                    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> {{ hull }} </div> </div>
-                    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> {{ strong }} </div> </div>
-                    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> {{ weak }} </div> </div>
-                </div>
-            </div>
-        </script>
-
-        <!-- gaalsien template -->
-        <script type="text/x-template" id="gaalsien-unit-template">
-            <div class="unit-info">
-                <figure class="unit-image">
-                    <img :src="'images/gaalsienUnits/' + image"/>
-                    <figcaption> <h2> {{ title }} </h2> </figcaption>
-                </figure>
-                <div class="unit-description" id="unit-description">
-                    <p> {{ desc }} </p>
-                </div>
-                <div class="unit-stats" id="gaalsien-stats">
-                    <div class="stat"> <strong>Speed:</strong> <div id="gal-stat-speed"> {{ speed }} </div> </div>
-                    <div class="stat"> <strong>Armor:</strong> <div id="gal-stat-armore"> {{ armor }} </div> </div>
-                    <div class="stat"> <strong>Damage:</strong> <div id="gal-stat-damage"> {{ damage }} </div> </div>
-                    <div class="stat"> <strong>Rate of Fire:</strong> <div id="gal-stat-rof"> {{ rof }} </div> </div>
-                    <div class="stat"> <strong>Hull:</strong> <div id="gal-stat-hull"> {{ hull }} </div> </div>
-                    <div class="stat"> <strong>Strong vs:</strong> <div id="gal-stat-strong"> {{ strong }} </div> </div>
-                    <div class="stat"> <strong>Weak vs:</strong> <div id="gal-stat-weak"> {{ weak }} </div> </div>
-                </div>
-            </div>
-        </script>
 	</body>
 </html>
-
-<!--
-<figure class="unit-image">
-    <img src="images/coalitionUnits/AAV_coalition.jpg"/>
-    <figcaption> <h2> Coalition AAV </h2> </figcaption>
-</figure>
-<div class="unit-description" id="unit-description">
-    <p> This is a heavily armored attack vehicle. </p>
-</div>
-<div class="unit-stats" id="coalition-stats">
-    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> 80 </div> </div>
-    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> 8 </div> </div>
-    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> 11 </div> </div>
-    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> Very high </div> </div>
-    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> 1400 </div> </div>
-    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> Strikecraft </div> </div>
-    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> Railguns, Cruisers </div> </div>
-</div> -->
-
-<!-- <figure class="unit-image">
-    <img src="images/gaalsienUnits/assaultRailgun_gaalsien.jpg"/>
-    <figcaption> <h2> Gaalsien Assault Railgun </h2> </figcaption>
-</figure>
-<div class="unit-description" id="unit-description">
-    <p> Long-range, heavy attack. </p>
-</div>
-<div class="unit-stats" id="coalition-stats">
-    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> 100 </div> </div>
-    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> 6 </div> </div>
-    <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> 50 </div> </div>
-    <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> High </div> </div>
-    <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> 550 </div> </div>
-    <div class="stat"> <strong>Strong vs:</strong> <div id="col-stat-strong"> Armored, Railguns </div> </div>
-    <div class="stat"> <strong>Weak vs:</strong> <div id="col-stat-weak"> Railguns, Aircraft, Cruisers </div> </div>
-</div> -->
 
 <!-- Read for transitions: https://css-tricks.com/intro-to-vue-5-animations/ -->

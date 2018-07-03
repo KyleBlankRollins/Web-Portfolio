@@ -69,6 +69,7 @@ li > div:hover {
             flex-direction: column;
             background-color: #F74839;
             margin: 5px;
+            min-height: 500px; /* TODO: remove later */
             border-radius: .4em;
         }
 

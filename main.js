@@ -1,58 +1,41 @@
-//Create components
-//Menus
-Vue.component('gaalsien-menu',{
+new Vue ({
+    el: '#app',
     data: {
-      items: [
-           'AssaultRailgun', 'AssaultShip', 'Baserunner', 'Carrier', 'HeavyRailgun', 'HonorguardCruiser', 'Interceptor', 'MissileShip', 'PrecisionBomber', 'ProductionCruiser', 'Salvager', 'Sandskimmer', 'SiegeCruiser',
-       ],
-       show: false,
-   },
-});
-
-Vue.component('coalition-menu',{
-    data: {
-      items: [
-           'AAV', 'ArtilleryCruiser', 'AssaultCruiser', 'Baserunner', 'BattleCruiser',  'Carrier', 'Gunship', 'LAV', 'MissileBattery', 'Railgun', 'Salvager', 'StrikeFighter', 'SupportCruiser', 'TacticalBomber',
-       ],
-       show: false,
-   },
-});
-
-//Gaalsien unit view
-Vue.component('gaalsien-units',{
-    data: {
-        view: "Sandskimmer",
-    },
-    components: {
-        'AssaultRailgun': galAssRailgun,
-        'AssaultShip': galAssShip,
-        'Baserunner': galBaserunner,
-        'Carrier': galCarrier,
-        'HeavyRailgun': galHvyRailgun,
-        'HonorguardCruiser': galHonCruiser,
-        'Interceptor': galInterceptor,
-        'MissileShip': galMisShip,
-        'PrecisionBomber': galPreBomber,
-        'ProductionCruiser': galProCruiser,
-        'Salvager': galSalvager,
-        'Sandskimmer': galSandskimmer,
-        'SiegeCruiser': galSieCruiser,
-    },
-    methods: {
-        swapComponent: function(component) {
-            if (this.view === component) {
-                this.view = null;
-            } else {
-                this.view = component;
-            }
-        }
-    }
-});
-
-//Coalition unit view
-Vue.component('coalition-units',{
-    data: {
-        view: "AAV",
+        colUnit: 'LAV',
+        galUnit: 'Sandskimmer',
+        galMenuShow: false,
+        colMenuShow: false,
+        colComponents: [
+            'AAV',
+            'ArtilleryCruiser',
+            'AssaultCruiser',
+            'Baserunner',
+            'BattleCruiser',
+            'Carrier',
+            'Gunship',
+            'LAV',
+            'MissileBattery',
+            'Railgun',
+            'Salvager',
+            'StrikeFighter',
+            'SupportCruiser',
+            'TacticalBomber',
+        ],
+        galComponents: [
+            'AssaultRailgun',
+            'AssaultShip',
+            'Baserunner',
+            'Carrier',
+            'HeavyRailgun',
+            'HonorguardCruiser',
+            'Interceptor',
+            'MissileShip',
+            'PrecisionBomber',
+            'ProductionCruiser',
+            'Salvager',
+            'Sandskimmer',
+            'SiegeCruiser',
+        ],
     },
     components: {
         'AAV': colAAV,
@@ -69,24 +52,71 @@ Vue.component('coalition-units',{
         'StrikeFighter': colStrFighter,
         'SupportCruiser': colSupCruiser,
         'TacticalBomber': colTacBomber,
+        'AssaultRailgun': galAssRailgun,
+        'AssaultShip': galAssShip,
+        'Baserunner': galBaserunner,
+        'Carrier': galCarrier,
+        'HeavyRailgun': galHvyRailgun,
+        'HonorguardCruiser': galHonCruiser,
+        'Interceptor': galInterceptor,
+        'MissileShip': galMisShip,
+        'PrecisionBomber': galPreBomber,
+        'ProductionCruiser': galProCruiser,
+        'Salvager': galSalvager,
+        'Sandskimmer': galSandskimmer,
+        'SiegeCruiser': galSieCruiser,
     },
     methods: {
-        swapComponent: function(component) {
-            if (this.view === component) {
-                this.view = null;
+        swapGalUnit: function(component) {
+            console.log(this.galUnit + "  before");
+            if (this.galUnit === component) {
+                this.galUnit = null;
+                console.log(this.galUnit + "  if galUnit===current component");
             } else {
-                this.view = component;
+                this.galUnit = component;
+                console.log(this.galUnit + "  if !galUnit===current component");
             }
-        }
+        },
+        swapColUnit: function(component) {
+            console.log(this.colUnit + "  before");
+            if (this.colUnit === component) {
+                this.colUnit = null;
+                console.log(this.colUnit + "  if colUnit===current component");
+            } else {
+                this.colUnit = component;
+                console.log(this.colUnit + "  if !colUnit===current component");
+            }
+        },
     }
 });
 
+//Create components
+//Menus
+Vue.component('gaalsien-menu',{
+    template: '#gaalsien-menu-template',
+});
+
+Vue.component('coalition-menu',{
+    template: '#coalition-menu-template',
+});
+
+//Gaalsien unit view
+Vue.component('gaalsien-units',{
+    template: '#gaalsien-unit-template',
+});
+
+//Coalition unit view
+Vue.component('coalition-units',{
+    template: '#coalition-unit-template',
+});
+
 //Coalition components
+
 var colAAV = Vue.component('col-aav',{
     template: '#coalition-unit-template',
     data: function () {
         return {
-            title: "Coalition AAV",
+            title: "AAV",
             desc: "This is a heavily armored attack vehicle.",
             image: 'AAV_coalition.jpg',
             speed: 80,
@@ -102,6 +132,20 @@ var colAAV = Vue.component('col-aav',{
 
 var colArtCruiser = Vue.component('col-artillery-cruiser',{
     template: '#coalition-unit-template',
+    data: function () {
+        return {
+            title: "Artillery Cruiser",
+            desc: "Smashes things with missles.",
+            image: 'artilleryCruiser_coalition.jpg',
+            speed: 50,
+            armor: 5,
+            damage: 100,
+            rof: 'Low',
+            hull: 2500,
+            strong: 'Ground',
+            weak: 'Strikecraft, Railguns',
+        }
+    },
 });
 
 var colAssCruiser = Vue.component('col-assault-cruiser',{
@@ -218,12 +262,4 @@ var galSandskimmer = Vue.component('gal-strike-fighter',{
 
 var galSieCruiser = Vue.component('gal-support-cruiser',{
     template: '#gaalsien-unit-template',
-});
-
-new Vue ({
-    el: '#app',
-    data: {
-        showColMenu: false,
-        showGalMenu: false,
-    }
 });
