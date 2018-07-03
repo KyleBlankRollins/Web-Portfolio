@@ -42,7 +42,7 @@
                         </transition> -->
                     </gaalsien-menu>
 
-                    <gaalsien>
+                    <gaalsien-units>
                         <div class="unit-container">
                             <!-- <transition name="fade" mode="in-out">
                                 <div id="unit-info-gaalsien" :is="view">
@@ -51,26 +51,26 @@
                             </transition> -->
 
                         </div>
-                    </gaalsien>
+                    </gaalsien-units>
                 </section>
 
                 <!-- Coalition section -->
                 <section class="coalition" id="coalition">
-                    <col-menu>
-                        <!-- <transition name="slide-fade" mode="out-in">
-                            <div class="coalition-select-menu-a" v-if="!show" @click="show = !show"><h2>Select Coalition unit</h2></div>
-                            <div class="coalition-select-menu-b" v-else @click="show = !show"><h2>Close Coalition menu</h2></div>
+                    <coalition-menu>
+                        <transition name="slide-fade" mode="out-in">
+                            <div class="coalition-select-menu-a" v-if="!showColMenu" @click="showColMenu = !showColMenu"><h2>Select Coalition unit</h2></div>
+                            <div class="coalition-select-menu-b" v-else @click="showColMenu = !showColMenu"><h2>Close Coalition menu</h2></div>
                         </transition>
                         <transition name="vertical-fade" mode="out-in">
-                            <ul class="list-grid" v-if="show">
-                                <li v-for="component in componentsArray">
-                                    <div @click="swapComponent(component)"> {{ component }} </div>
+                            <ul class="list-grid" v-if="showColMenu">
+                                <li v-for="item in items">
+                                    <div @click="swapComponent(component)"> {{ item }} </div>
                                 </li>
                             </ul>
-                        </transition> -->
-                    </col-menu>
+                        </transition>
+                    </coalition-menu>
 
-                    <coalition>
+                    <coalition-units>
                         <div class="unit-container">
                             <!-- <transition name="fade" mode="in-out">
                                 <div id="unit-info" :is="view">
@@ -78,7 +78,7 @@
                                 </div>
                             </transition> -->
                         </div>
-                    </coalition>
+                    </coalition-units>
                 </section>
             </main>
         </section>
