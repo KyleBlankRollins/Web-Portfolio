@@ -28,22 +28,24 @@
                 <section class="gaalsien" id="gaalsien">
                     <template id="gaalsien-menu-template">
                         <transition name="slide-fade" mode="out-in">
-                            <div class="gaalsien-select-menu-a" v-if="!galMenuShow" @click="galMenuShow = !galMenuShow"><h2>Select Gaalsien unit</h2></div>
-                            <div class="gaalsien-select-menu-b" v-else @click="galMenuShow = !galMenuShow"><h2>Close Gaalsien menu</h2></div>
+                            <div class="gaalsien-select-menu-a" v-if="!showMenu" @click="showMenu = !showMenu"><h2>Select Gaalsien unit</h2></div>
+                            <div class="gaalsien-select-menu-b" v-else @click="showMenu = !showMenu"><h2>Close Gaalsien menu</h2></div>
                         </transition>
                         <transition name="vertical-fade" mode="out-in">
-                            <ul class="list-grid" v-if="galMenuShow">
-                                <li v-for="component in galComponents">
-                                    <div @click="swapGalUnit(component)"> {{ component }} </div>
+                            <ul class="list-grid" v-if="showMenu">
+                                <li v-for="component in componentsArray">
+                                    <div @click="swapUnit(component)"> {{ component }} </div>
                                 </li>
                             </ul>
                         </transition>
                     </template>
 
-                    <template id="gaalsien-unit-template">
+                    <component :is="currentUnit"> </component>
+
+                    <template id="gaalsien-unit-template" v-if="showTemplate">
                         <transition name="fade" mode="in-out">
-                            <div class="unit-info" :is="galUnit">
-                                <!-- <figure class="unit-image">
+                            <div class="unit-info">
+                                <figure class="unit-image">
                                     <img :src="'images/gaalsienUnits/' + image"/>
                                     <figcaption> <h2> {{ title }} </h2> </figcaption>
                                 </figure>
@@ -57,7 +59,7 @@
                                     <div class="stat"> <strong>Rate of Fire:</strong> <div id="gal-stat-rof"> {{ rof }} </div> </div>
                                     <div class="stat"> <strong>Hull:</strong> <div id="gal-stat-hull"> {{ hull }} </div> </div>
                                     <div class="stat"> <strong>Strong vs:</strong> <div id="gal-stat-strong"> {{ strong }} </div> </div>
-                                    <div class="stat"> <strong>Weak vs:</strong> <div id="gal-stat-weak"> {{ weak }} </div> </div> -->
+                                    <div class="stat"> <strong>Weak vs:</strong> <div id="gal-stat-weak"> {{ weak }} </div> </div>
                                 </div>
                             </div>
                         </transition>
@@ -68,21 +70,23 @@
                 <section class="coalition" id="coalition">
                     <template id="coalition-menu-template">
                         <transition name="slide-fade" mode="out-in">
-                            <div class="coalition-select-menu-a" v-if="!colMenuShow" @click="colMenuShow = !colMenuShow"><h2>Select Coalition unit</h2></div>
-                            <div class="coalition-select-menu-b" v-else @click="colMenuShow = !colMenuShow"><h2>Close Coalition menu</h2></div>
+                            <div class="coalition-select-menu-a" v-if="!showMenu" @click="showMenu = !showMenu"><h2>Select Coalition unit</h2></div>
+                            <div class="coalition-select-menu-b" v-else @click="showMenu = !showMenu"><h2>Close Coalition menu</h2></div>
                         </transition>
                         <transition name="vertical-fade" mode="out-in">
-                            <ul class="list-grid" v-if="colMenuShow">
-                                <li v-for="component in colComponents">
-                                    <div @click="swapColUnit(component)"> {{ component }} </div>
+                            <ul class="list-grid" v-if="showMenu">
+                                <li v-for="component in componentsArray">
+                                    <div @click="swapUnit(component)"> {{ component }} </div>
                                 </li>
                             </ul>
                         </transition>
                     </template>
 
-                    <template id="coalition-unit-template">
+                    <component :is="currentUnit"> </component>
+
+                    <template id="coalition-unit-template" v-if="showTemplate">
                         <transition name="fade" mode="in-out">
-                            <div class="unit-info" :is="colUnit">
+                            <div class="unit-info">
                                 <figure class="unit-image">
                                     <img :src="'images/coalitionUnits/' + image"/>
                                     <figcaption> <h2> {{ title }} </h2> </figcaption>
