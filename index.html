@@ -53,8 +53,14 @@
                                     <p> {{ desc }} </p>
                                 </div>
                                 <div class="unit-stats" id="gaalsien-stats">
-                                    <div class="stat"> <strong>Speed:</strong> <div id="gal-stat-speed"> {{ speed }} </div> </div>
-                                    <div class="stat"> <strong>Armor:</strong> <div id="gal-stat-armore"> {{ armor }} </div> </div>
+                                    <div class="stat">
+                                        <strong>Speed:</strong>
+                                        <div id="gal-stat-speed"> {{ speed }} </div>
+                                        <div v-if="speedHigher === 'true'"> <i class="fas fa-angle-double-up"></i> </div>
+                                        <div v-else-if="speedHigher === 'false'"> <i class="fas fa-angle-double-down"></i> </div>
+                                        <div v-else-if="speedHigher === null"> -- </div>
+                                    </div>
+                                    <div class="stat"> <strong>Armor:</strong> <div id="gal-stat-armor"> {{ armor }} </div> </div>
                                     <div class="stat"> <strong>Damage:</strong> <div id="gal-stat-damage"> {{ damage }} </div> </div>
                                     <div class="stat"> <strong>Rate of Fire:</strong> <div id="gal-stat-rof"> {{ rof }} </div> </div>
                                     <div class="stat"> <strong>Hull:</strong> <div id="gal-stat-hull"> {{ hull }} </div> </div>
@@ -95,8 +101,14 @@
                                     <p> {{ desc }} </p>
                                 </div>
                                 <div class="unit-stats" id="coalition-stats">
-                                    <div class="stat"> <strong>Speed:</strong> <div id="col-stat-speed"> {{ speed }} </div> </div>
-                                    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armore"> {{ armor }} </div> </div>
+                                    <div class="stat">
+                                        <strong>Speed:</strong>
+                                        <div id="col-stat-speed"> {{ speed }} </div>
+                                        <div v-if="speedHigher === 'true'"> <i class="fas fa-angle-double-up"></i> </div>
+                                        <div v-else-if="speedHigher === 'false'"> <i class="fas fa-angle-double-down"></i> </div>
+                                        <div v-else-if="speedHigher === null"> -- </div>
+                                    </div>
+                                    <div class="stat"> <strong>Armor:</strong> <div id="col-stat-armor"> {{ armor }} </div> </div>
                                     <div class="stat"> <strong>Damage:</strong> <div id="col-stat-damage"> {{ damage }} </div> </div>
                                     <div class="stat"> <strong>Rate of Fire:</strong> <div id="col-stat-rof"> {{ rof }} </div> </div>
                                     <div class="stat"> <strong>Hull:</strong> <div id="col-stat-hull"> {{ hull }} </div> </div>

@@ -1,3 +1,158 @@
+//Custom global functions as mixins
+var colStats = {
+    created: function() {
+        this.setColStats();
+        this.compare();
+    },
+    mounted: function () {
+        console.log("colStats - Mounted:" + colSpeedHigher);
+        console.log("colStats - Mounted:" + this.speedHigher);
+    },
+    data: function () {
+        return {
+            speedHigher: colSpeedHigher, //// REVIEW: speedHigher doesn't seem to be updating, leading to incorrect display of v-if divs.
+            armorHigher: colArmorHigher,
+            damageHigher: colDamageHigher,
+            rofHigher: colRofHigher,
+            hullHigher: colHullHigher,
+        }
+    },
+    methods: {
+        setColStats:
+            function(component) {
+                colSpeed = this.speed;
+                colArmor = this.armor;
+                colDamage = this.damage;
+                colRof = this.rof;
+                colHull = this.hull;
+            },
+        compare:
+            function(component) {
+                console.log("colStats - Coalition:" + colSpeed);
+                console.log("colStats - Gaalsien:" + galSpeed);
+
+                if (colSpeed > galSpeed) {
+                    colSpeedHigher = "true";
+                } else if (colSpeed < galSpeed) {
+                    colSpeedHigher = "false";
+                } else if (colSpeed === galSpeed) {
+                    colSpeedHigher = null;
+                }
+
+                if (colArmor > galArmor) {
+                    colArmorHigher = "true";
+                } else if (colArmor < galArmor) {
+                    colArmorHigher = "false";
+                } else if (colArmor === galArmor) {
+                    colArmorHigher = null;
+                }
+
+                if (colDamage > galDamage) {
+                    colDamageHigher = "true";
+                } else if (colDamage < galDamage) {
+                    colDamageHigher = "false";
+                } else if (colDamage === galDamage) {
+                    colDamageHigher = null;
+                }
+
+                // if (colRof > galRof) { //// TODO: figure out how to compare text.
+                //     colRofHigher = "true";
+                // } else if (colRof < galRof) {
+                //     colRofHigher = "false";
+                // } else if (colRof === galRof) {
+                //     colRofHigher = null;
+                // }
+
+                if (colHull > galHull) {
+                    colHullHigher = "true";
+                } else if (colHull < galHull) {
+                    colHullHigher = "false";
+                } else if (colHull === galHull) {
+                    colHullHigher = null;
+                }
+
+                console.log("colStats - Created:" + colSpeedHigher);
+            }
+    }
+}
+
+var galStats = {
+    created: function() {
+        this.setGalStats(),
+        this.compare();
+    },
+    mounted: function () {
+        console.log("galStats - Mounted:" + galSpeedHigher);
+        console.log("galStats - Mounted:" + this.speedHigher);
+    },
+    data: function () {
+        return {
+            speedHigher: galSpeedHigher,
+            armorHigher: galArmorHigher,
+            damageHigher: galDamageHigher,
+            rofHigher: galRofHigher,
+            hullHigher: galHullHigher,
+        }
+    },
+    methods: {
+        setGalStats:
+            function(component) {
+                galSpeed = this.speed;
+                galArmor = this.armor;
+                galDamage = this.damage;
+                galRof = this.rof;
+                galHull = this.hull;
+            },
+        compare:
+            function(component) {
+                console.log("galStats - Coalition:" + colSpeed);
+                console.log("galStats - Gaalsien:" + galSpeed);
+
+                if (galSpeed > colSpeed) {
+                    galSpeedHigher = "true";
+                } else if (galSpeed < colSpeed) {
+                    galSpeedHigher = "false";
+                } else if (galSpeed === colSpeed) {
+                    galSpeedHigher = null;
+                }
+
+                if (galArmor > colArmor) {
+                    galArmorHigher = "true";
+                } else if (galArmor < colArmor) {
+                    galArmorHigher = "false";
+                } else if (galArmor === colArmor) {
+                    galArmorHigher = null;
+                }
+
+                if (galDamage > colDamage) {
+                    galDamageHigher = "true";
+                } else if (galDamage < colDamage) {
+                    galDamageHigher = "false";
+                } else if (galDamage === colDamage) {
+                    galDamageHigher = null;
+                }
+
+                // if (galRof > colRof) { //// TODO: figure out how to compare text.
+                //     galRofHigher = "true";
+                // } else if (galRof < colRof) {
+                //     galRofHigher = "false";
+                // } else if (galRof === colRof) {
+                //     galRofHigher = null;
+                // }
+
+                if (galHull > colHull) {
+                    galHullHigher = "true";
+                } else if (galHull < colHull) {
+                    galHullHigher = "false";
+                } else if (galHull === colHull) {
+                    galHullHigher = null;
+                }
+
+                console.log("galStats - Gaalsien:" + galSpeedHigher);
+            }
+    }
+}
+
 //Create components
 //Coalition components //// NOTE: These individual unit components point to the proper template and contain all of the units' data. The template controls how that data is presented.
 
@@ -18,6 +173,7 @@
                 weak: 'Railguns, Cruisers',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colArtCruiser = Vue.component('col-artillery-cruiser',{
@@ -36,6 +192,7 @@
                 weak: 'Strikecraft, Railguns',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colAssCruiser = Vue.component('col-assault-cruiser',{
@@ -54,6 +211,7 @@
                 weak: 'Aircraft, Railguns',
             }
         },
+        mixins: [ galStats ]
     });
 
     var colBaserunner = Vue.component('col-baserunner',{
@@ -72,6 +230,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colBatCruiser = Vue.component('col-battle-cruiser',{
@@ -90,6 +249,7 @@
                 weak: 'Railguns, Aircraft, Strikecraft',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colCarrier = Vue.component('col-carrier',{
@@ -108,6 +268,7 @@
                 weak: 'Railguns, Cruisers',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colGunship = Vue.component('col-gunship',{
@@ -126,6 +287,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colLAV = Vue.component('col-lav',{
@@ -144,6 +306,7 @@
                 weak: 'AAVs, Cruisers',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colMisBattery = Vue.component('missile-battery',{
@@ -162,6 +325,7 @@
                 weak: 'Ground units',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colRailgun = Vue.component('col-railgun',{
@@ -180,6 +344,7 @@
                 weak: 'Railguns, Aircraft, Cruisers',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colSalvager = Vue.component('col-salvager',{
@@ -198,6 +363,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colStrFighter = Vue.component('col-strike-fighter',{
@@ -206,7 +372,7 @@
             return {
                 title: "Strike Figther",
                 desc: "Fast air superiority unit.",
-                image: 'strikeFighter_coalition.jpg', //// REVIEW: Broken image
+                image: 'strikeFighter_coalition.jpg',
                 speed: 435,
                 armor: 1,
                 damage: 120,
@@ -216,6 +382,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colSupCruiser = Vue.component('col-support-cruiser',{
@@ -234,6 +401,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ colStats ]
     });
 
     var colTacBomber = Vue.component('col-tactical-bomber',{
@@ -242,7 +410,7 @@
             return {
                 title: "Tactical Bomber",
                 desc: "Drops big bombs that make big explosions.",
-                image: 'tacticalBomber_coalition.jpg',  //// REVIEW: Broken image
+                image: 'tacticalBomber_coalition.jpg',
                 speed: 370,
                 armor: 15,
                 damage: 2500,
@@ -252,6 +420,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ colStats ]
     });
 
 //Gaalsien components //// NOTE: These individual unit components point to the proper template and contain all of the units' data. The template controls how that data is presented.
@@ -261,7 +430,7 @@
         template: '#gaalsien-unit-template',
         data: function () {
             return {
-                title: "ssault Railgun",
+                title: "Assault Railgun",
                 desc: "Long-range, heavy attack.",
                 image: 'assaultRailgun_gaalsien.jpg',
                 speed: 100,
@@ -273,6 +442,7 @@
                 weak: 'Railguns, Aircraft, Cruisers',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galAssShip = Vue.component('gal-assault-ship',{
@@ -291,6 +461,7 @@
                 weak: 'Railguns, Cruisers',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galBaserunner = Vue.component('gal-baserunner',{
@@ -309,6 +480,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galCarrier = Vue.component('gal-carrier',{
@@ -327,6 +499,7 @@
                 weak: 'Railguns, Cruisers',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galHvyRailgun = Vue.component('gal-heavy-railgun',{
@@ -345,6 +518,7 @@
                 weak: 'Railguns, Aircraft, Cruisers',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galHonCruiser = Vue.component('gal-honorguard-cruiser',{
@@ -363,6 +537,7 @@
                 weak: 'Aircraft, Railguns',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galInterceptor = Vue.component('gal-interceptor',{
@@ -381,6 +556,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galMisShip = Vue.component('gal-missile-ship',{
@@ -399,6 +575,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galPreBomber = Vue.component('gal-precision-bomber',{
@@ -417,6 +594,7 @@
                 weak: 'Anti-air, Interceptors, Strikecraft',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galProCruiser = Vue.component('gal-production-cruiser',{
@@ -435,6 +613,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galSalvager = Vue.component('gal-salvager',{
@@ -453,6 +632,7 @@
                 weak: 'Everything',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galSandskimmer = Vue.component('gal-sandskimmer',{
@@ -471,6 +651,7 @@
                 weak: 'AAVs, Cruisers',
             }
         },
+        mixins: [ galStats ]
     });
 
     var galSieCruiser = Vue.component('gal-siege-cruiser',{
@@ -489,6 +670,7 @@
                 weak: 'Strikecraft, Railguns',
             }
         },
+        mixins: [ galStats ]
     });
 
 
@@ -512,7 +694,7 @@ Vue.component('coalition-menu',{
     template: '#coalition-menu-template',
 });
 
-new Vue ({
+var gaalsien = new Vue ({
     el: '#gaalsien',
     data: {
         currentUnit: "Sandskimmer",
@@ -551,19 +733,16 @@ new Vue ({
     },
     methods: {
         swapUnit: function(component) {
-            console.log(this.currentUnit + "  before");
             if (this.currentUnit === component) {
                 this.currentUnit = null;
-                console.log(this.currentUnit + "  if galUnit===current component");
             } else {
                 this.currentUnit = component;
-                console.log(this.currentUnit + "  if !galUnit===current component");
             }
         },
-    }
+    },
 });
 
-new Vue ({
+var coalition = new Vue ({
     el: '#coalition',
     data: {
         currentUnit: "LAV",
@@ -604,14 +783,34 @@ new Vue ({
     },
     methods: {
         swapUnit: function(component) {
-            console.log(this.currentUnit + "  before");
             if (this.currentUnit === component) {
                 this.currentUnit = null;
-                console.log(this.currentUnit + "  if galUnit===current component");
             } else {
                 this.currentUnit = component;
-                console.log(this.currentUnit + "  if !galUnit===current component");
             }
         },
-    }
+    },
 });
+
+//Global variables that rely on DOM structure being in place - therefore must be referenced after view has been initialized.
+var colSpeed = document.getElementById("col-stat-speed").innerHTML;
+var galSpeed = document.getElementById("gal-stat-speed").innerHTML;
+var colArmor = document.getElementById("col-stat-armor").innerHTML;
+var galArmor = document.getElementById("gal-stat-armor").innerHTML;
+var colDamage = document.getElementById("col-stat-damage").innerHTML;
+var galDamage = document.getElementById("gal-stat-damage").innerHTML;
+var colRof = document.getElementById("col-stat-rof").innerHTML;
+var galRof = document.getElementById("gal-stat-rof").innerHTML;
+var colHull = document.getElementById("col-stat-hull").innerHTML;
+var galHull = document.getElementById("gal-stat-hull").innerHTML;
+
+var galSpeedHigher = null;
+var galArmorHigher = null;
+var galDamageHigher = null;
+var galRofHigher = null;
+var galHullHigher = null;
+var colSpeedHigher = null;
+var colArmorHigher = null;
+var colDamageHigher = null;
+var colRofHigher = null;
+var colHullHigher = null;
