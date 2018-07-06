@@ -1,10 +1,10 @@
 html, body {
     background-color: #FFFFFF;
     margin: 0;
-    font-family: "Lato", Helvetica, sans-serif;
+    font-family: "Montserrat", Helvetica, sans-serif;
     font-size: 110%;
     color: #4a4a4a;
-    background-color: #000;
+    background-color: #f0f1f2;
 }
 
 h1, h2, h3, h4 {
@@ -17,6 +17,7 @@ h1 {
 
 h2 {
     font-size: 1.3em;
+    margin: .7em 0 .4em 0;
 }
 
 h3 {
@@ -29,7 +30,6 @@ h4 {
 
 ul {
     background-color: #FFF;
-    border-top: solid 3px rgba(0,0,0,.75);
     margin: 0;
     padding: 0;
     width: 100%;
@@ -43,7 +43,7 @@ li > div:hover {
     font-weight: 400;
     font-size: 1.1em;
     background-color: rgba(0,0,0,.75);
-    color: #F8D014;
+    color: #FFD1AA;
 }
 
 /* --> Begin CSS grid layouts and definitions */
@@ -58,8 +58,8 @@ li > div:hover {
     .content {
         grid-area: content;
         display: grid;
+        grid-gap: 5px;
         grid-template-areas:
-        "header header"
         "gaalsien coalition";
     }
 
@@ -67,9 +67,8 @@ li > div:hover {
             grid-area: gaalsien;
             display: flex;
             flex-direction: column;
-            background-color: #F74839;
-            margin: 5px;
-            min-height: 500px; /* TODO: remove later */
+            background-color: #AA3939;
+            padding-bottom: 10px;
             border-radius: .4em;
         }
 
@@ -77,6 +76,7 @@ li > div:hover {
                 display: grid;
                 flex-direction: row;
                 grid-gap: 5px;
+                margin-bottom: 15px;
                 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
 
@@ -84,8 +84,8 @@ li > div:hover {
             grid-area: coalition;
             display: flex;
             flex-direction: column;
-            background-color: #F8D014;
-            margin: 5px;
+            background-color: #226666;
+            padding-bottom: 10px;
             border-radius: .4em;
         }
 
@@ -119,62 +119,83 @@ li > div:hover {
         .title {
             font-size: 2.5em;
             margin: 20px;
-            color: #F74839;
+            color: #4a4a4a;
         }
 
-
-.unit-image {
-    position: relative;
+.unit-info {
+    margin: 0 10px 0 10px;
 }
 
-    .unit-image > img {
-        width: 100%;
-        height: 100%;
-        max-height: 300px;
-        object-fit: cover;
-        border-radius: .4em;
+    .unit-image {
+        position: relative;
     }
 
-    .unit-image > figcaption {
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        background-color: rgba(255, 255, 255, 0.61);
-        border-radius: .4em;
-    }
-
-        .unit-image > figcaption > h2 {
-            margin: 0;
-            padding: 0 5px 0 5px;
+        .unit-image > img {
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
+            max-width: 600px;
+            object-fit: cover;
+            border-radius: .4em;
         }
 
-    .unit-description {
-        background-color: rgba(255, 255, 255, 0.61);
-        padding: 2px 4px 2px 4px;
-    }
+        .unit-image > figcaption {
+            position: absolute;
+            bottom: 10px;
+            left: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: .4em;
+        }
 
-    .stat {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #FFFFFF;
-        padding: 2px 4px 2px 4px;
-        border: solid 1px #4a4a4a;
-        border-radius: .2em;
-    }
+            .unit-image > figcaption > h3 {
+                margin: 0;
+                padding: 0 5px 0 5px;
+            }
 
-        .stat h4, p {
+        .stat {
+            display: grid;
+            grid-template-areas:
+            "stat-title stat-title"
+            "stat-value stat-eval";
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2px 4px 2px 4px;
+            border-radius: .2em;
+        }
+
+            .stat-title {
+                grid-area: stat-title;
+                font-size: .8em;
+            }
+
+            .stat-value {
+                grid-area: stat-value;
+                font-size: .85em;
+                text-align: center;
+            }
+
+            .stat-eval {
+                grid-area: stat-eval;
+                font-size: 1.2em;
+                text-align: center;
+            }
+
+        .unit-description {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2px 12px 2px 12px;
             font-size: .9em;
-            margin: 2px;
+            border-radius: .2em;
         }
 
 .list-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(170px, .8fr));
     grid-auto-rows: 1.3em;
     cursor: pointer;
+    margin-top: 10px;
     transition: all .3s ease;
-    padding: 10px 0 10px 0;
+    padding: 5px 0 10px 0;
 }
 
     .list-grid li {
@@ -183,7 +204,7 @@ li > div:hover {
 
     .list-grid li div {
         padding: 0 5px 0 5px;
-        border-left: solid 3px #09f;
+        border-left: solid 3px #669999;
         margin: 5px 0 5px 0;
     }
 
@@ -203,8 +224,9 @@ li > div:hover {
     display: flex;
     align-items: center;
     margin: 0 10px 0 10px;
+    border-bottom: solid 3px #f0f1f2;
     cursor: pointer;
-    color: #FFFFFF;
+    color: #f0f1f2;
 }
 
     .coalition-select-menu-a:after, .gaalsien-select-menu-a:after {
@@ -212,7 +234,7 @@ li > div:hover {
         padding-left: 10px;
         font-size: 2em;
         font-weight: bolder;
-        color: #FFFFFF;
+        color: #f0f1f2;
     }
 
     .coalition-select-menu-b:after, .gaalsien-select-menu-b:after {
@@ -220,7 +242,7 @@ li > div:hover {
         padding-left: 10px;
         font-size: 2em;
         font-weight: bolder;
-        color: #FFFFFF;
+        color: #f0f1f2;
     }
 
 /* Transitions */
@@ -267,6 +289,20 @@ li > div:hover {
 .vertical-fade-leave {
     transform: translateX(0, -10px);
     opacity: 0;
+}
+
+
+/* Font Awesome styling */
+.icon-green {
+    color: #2D882D;
+}
+
+.icon-red {
+    color: #AA3939
+}
+
+.icon-blue {
+    color: #226666
 }
 
 /* http://paletton.com/#uid=7000u0k1Xqw4Fvi3tot56l+76k8 */

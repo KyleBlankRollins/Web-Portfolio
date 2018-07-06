@@ -1,20 +1,17 @@
 //Custom global functions as mixins
-var colStats = {
+var colStats = { ///// REVIEW: Currently, resets velue evaluation for the active faction, but not the other. Need to update values in galStats when they're updated here and vice versa.
     created: function() {
         this.setColStats();
         this.compare();
-    },
-    mounted: function () {
-        console.log("colStats - Mounted:" + colSpeedHigher);
-        console.log("colStats - Mounted:" + this.speedHigher);
+        this.setColStats();
     },
     data: function () {
         return {
-            speedHigher: colSpeedHigher, //// REVIEW: speedHigher doesn't seem to be updating, leading to incorrect display of v-if divs.
-            armorHigher: colArmorHigher,
-            damageHigher: colDamageHigher,
-            rofHigher: colRofHigher,
-            hullHigher: colHullHigher,
+            speedHigher: false,
+            armorHigher: null,
+            damageHigher: null,
+            rofHigher: null,
+            hullHigher: false,
         }
     },
     methods: {
@@ -32,27 +29,27 @@ var colStats = {
                 console.log("colStats - Gaalsien:" + galSpeed);
 
                 if (colSpeed > galSpeed) {
-                    colSpeedHigher = "true";
+                    this.speedHigher = "true";
                 } else if (colSpeed < galSpeed) {
-                    colSpeedHigher = "false";
+                    this.speedHigher = "false";
                 } else if (colSpeed === galSpeed) {
-                    colSpeedHigher = null;
+                    this.speedHigher = null;
                 }
 
                 if (colArmor > galArmor) {
-                    colArmorHigher = "true";
+                    this.armorHigher = "true";
                 } else if (colArmor < galArmor) {
-                    colArmorHigher = "false";
+                    this.armorHigher = "false";
                 } else if (colArmor === galArmor) {
-                    colArmorHigher = null;
+                    this.armorHigher = null;
                 }
 
                 if (colDamage > galDamage) {
-                    colDamageHigher = "true";
+                    this.damageHigher = "true";
                 } else if (colDamage < galDamage) {
-                    colDamageHigher = "false";
+                    this.damageHigher = "false";
                 } else if (colDamage === galDamage) {
-                    colDamageHigher = null;
+                    this.damageHigher = null;
                 }
 
                 // if (colRof > galRof) { //// TODO: figure out how to compare text.
@@ -64,34 +61,29 @@ var colStats = {
                 // }
 
                 if (colHull > galHull) {
-                    colHullHigher = "true";
+                    this.hullHigher = "true";
                 } else if (colHull < galHull) {
-                    colHullHigher = "false";
+                    this.hullHigher = "false";
                 } else if (colHull === galHull) {
-                    colHullHigher = null;
+                    this.hullHigher = null;
                 }
-
-                console.log("colStats - Created:" + colSpeedHigher);
             }
     }
 }
 
 var galStats = {
     created: function() {
-        this.setGalStats(),
+        this.setGalStats();
         this.compare();
-    },
-    mounted: function () {
-        console.log("galStats - Mounted:" + galSpeedHigher);
-        console.log("galStats - Mounted:" + this.speedHigher);
+        this.setGalStats();
     },
     data: function () {
         return {
-            speedHigher: galSpeedHigher,
-            armorHigher: galArmorHigher,
-            damageHigher: galDamageHigher,
-            rofHigher: galRofHigher,
-            hullHigher: galHullHigher,
+            speedHigher: true,
+            armorHigher: null,
+            damageHigher: null,
+            rofHigher: null,
+            hullHigher: true,
         }
     },
     methods: {
@@ -109,27 +101,27 @@ var galStats = {
                 console.log("galStats - Gaalsien:" + galSpeed);
 
                 if (galSpeed > colSpeed) {
-                    galSpeedHigher = "true";
+                    this.speedHigher = "true";
                 } else if (galSpeed < colSpeed) {
-                    galSpeedHigher = "false";
+                    this.speedHigher = "false";
                 } else if (galSpeed === colSpeed) {
-                    galSpeedHigher = null;
+                    this.speedHigher = null;
                 }
 
                 if (galArmor > colArmor) {
-                    galArmorHigher = "true";
+                    this.armorHigher = "true";
                 } else if (galArmor < colArmor) {
-                    galArmorHigher = "false";
+                    this.armorHigher = "false";
                 } else if (galArmor === colArmor) {
-                    galArmorHigher = null;
+                    this.armorHigher = null;
                 }
 
                 if (galDamage > colDamage) {
-                    galDamageHigher = "true";
+                    this.damageHigher = "true";
                 } else if (galDamage < colDamage) {
-                    galDamageHigher = "false";
+                    this.damageHigher = "false";
                 } else if (galDamage === colDamage) {
-                    galDamageHigher = null;
+                    this.damageHigher = null;
                 }
 
                 // if (galRof > colRof) { //// TODO: figure out how to compare text.
@@ -141,14 +133,12 @@ var galStats = {
                 // }
 
                 if (galHull > colHull) {
-                    galHullHigher = "true";
+                    this.hullHigher = "true";
                 } else if (galHull < colHull) {
-                    galHullHigher = "false";
+                    this.hullHigher = "false";
                 } else if (galHull === colHull) {
-                    galHullHigher = null;
+                    this.hullHigher = null;
                 }
-
-                console.log("galStats - Gaalsien:" + galSpeedHigher);
             }
     }
 }
@@ -803,14 +793,3 @@ var colRof = document.getElementById("col-stat-rof").innerHTML;
 var galRof = document.getElementById("gal-stat-rof").innerHTML;
 var colHull = document.getElementById("col-stat-hull").innerHTML;
 var galHull = document.getElementById("gal-stat-hull").innerHTML;
-
-var galSpeedHigher = null;
-var galArmorHigher = null;
-var galDamageHigher = null;
-var galRofHigher = null;
-var galHullHigher = null;
-var colSpeedHigher = null;
-var colArmorHigher = null;
-var colDamageHigher = null;
-var colRofHigher = null;
-var colHullHigher = null;
