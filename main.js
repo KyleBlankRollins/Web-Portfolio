@@ -1,9 +1,22 @@
+// This looks like it could help: https://stackoverflow.com/questions/41663010/update-parent-model-from-child-component-vue/41663430
+
 //Custom global functions as mixins
+
+colSpeed = null;
+colArmor = null;
+colDamage = null;
+colRof = null;
+colHull = null;
+galSpeed = null;
+galArmor = null;
+galDamage = null;
+galRof = null;
+galHull = null;
+
 var colStats = { ///// REVIEW: Currently, resets velue evaluation for the active faction, but not the other. Need to update values in galStats when they're updated here and vice versa.
     created: function() {
         this.setColStats();
         this.compare();
-        this.setColStats();
     },
     data: function () {
         return {
@@ -22,11 +35,10 @@ var colStats = { ///// REVIEW: Currently, resets velue evaluation for the active
                 colDamage = this.damage;
                 colRof = this.rof;
                 colHull = this.hull;
+                console.log('colStats: ' + colSpeed);
             },
         compare:
             function(component) {
-                console.log("colStats - Coalition:" + colSpeed);
-                console.log("colStats - Gaalsien:" + galSpeed);
 
                 if (colSpeed > galSpeed) {
                     this.speedHigher = "true";
@@ -75,7 +87,6 @@ var galStats = {
     created: function() {
         this.setGalStats();
         this.compare();
-        this.setGalStats();
     },
     data: function () {
         return {
@@ -97,8 +108,6 @@ var galStats = {
             },
         compare:
             function(component) {
-                console.log("galStats - Coalition:" + colSpeed);
-                console.log("galStats - Gaalsien:" + galSpeed);
 
                 if (galSpeed > colSpeed) {
                     this.speedHigher = "true";
@@ -736,6 +745,11 @@ var coalition = new Vue ({
     el: '#coalition',
     data: {
         currentUnit: "LAV",
+        speed: colSpeed,
+        armor: colArmor,
+        damage: colDamage,
+        rof: colRof,
+        hull: colHull,
         showMenu: false, //// NOTE: Controls whether the drop-down menu is visible. Altered by @click effects in the HTML.
         showTemplate: false, //// NOTE: Hides or shows the template for this view. It should never be visible, as the <component> tags in the HTML handle presenting the unit view.
         componentsArray: [ //// NOTE: This array populates the navigation menu. On click, it loads the relevant component.
@@ -779,17 +793,25 @@ var coalition = new Vue ({
                 this.currentUnit = component;
             }
         },
+        setStats: function() {
+            console.log('coalition updated: ' + this.speed);
+            console.log('coalition updated - colSpeed: ' + colSpeed);
+            // this.speed = colSpeed;
+            // this.armor = colArmor;
+            // this.damage = colDamage;
+            // this.rof = colRof;
+            // this.hull = colHull;
+        },
+    },
+    created: function() {
+        console.log('coalition created: ' + this.speed);
+        console.log('coalition created - colSpeed: ' + colSpeed);
+    },
+    mounted: function() {
+        console.log('coalition mounted: ' + this.speed);
+        console.log('coalition mounted - colSpeed: ' + colSpeed);
+    },
+    updated: function() {
+        setTimeout (this.setStats, 500)
     },
 });
-
-//Global variables that rely on DOM structure being in place - therefore must be referenced after view has been initialized.
-var colSpeed = document.getElementById("col-stat-speed").innerHTML;
-var galSpeed = document.getElementById("gal-stat-speed").innerHTML;
-var colArmor = document.getElementById("col-stat-armor").innerHTML;
-var galArmor = document.getElementById("gal-stat-armor").innerHTML;
-var colDamage = document.getElementById("col-stat-damage").innerHTML;
-var galDamage = document.getElementById("gal-stat-damage").innerHTML;
-var colRof = document.getElementById("col-stat-rof").innerHTML;
-var galRof = document.getElementById("gal-stat-rof").innerHTML;
-var colHull = document.getElementById("col-stat-hull").innerHTML;
-var galHull = document.getElementById("gal-stat-hull").innerHTML;

@@ -128,7 +128,7 @@
                                 <div class="unit-stats" id="coalition-stats">
                                     <div class="stat">
                                         <div class="stat-title"><strong>Speed:</strong></div>
-                                        <div class="stat-value" id="col-stat-speed"> {{ speed }} </div>
+                                        <div class="stat-value" id="col-stat-speed" v-bind:this.speed="speed"> {{ speed }} </div>
                                         <div v-if="speedHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
                                         <div v-else-if="speedHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
                                         <div v-else-if="speedHigher === null" class="stat-eval   icon-blue"> -- </div>

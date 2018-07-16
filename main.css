@@ -59,6 +59,7 @@ li > div:hover {
         grid-area: content;
         display: grid;
         grid-gap: 5px;
+        margin: 0 5px 0 5px;
         grid-template-areas:
         "gaalsien coalition";
     }
