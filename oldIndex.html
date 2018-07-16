@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>DoK Compare</title>
+        <meta charset="utf-8">
+        <meta name="description" content="DoK Compare">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css">
+		<link href="https://fonts.googleapis.com/css?family=Oswald|Montserrat" rel="stylesheet">
+
+        <!-- Load font awesome icon library -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+        <!-- Load Vue.min.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- TODO: Change to "vue.min.js" -->
+	</head>
+
+	<body>
+        <main class="wrapper">
+            <header class="header">
+                <figure>
+                    <img src="images/battle.jpg"/>
+                    <figcaption> <h1 class="title"> DoK Compare </h1> </figcaption>
+                </figure>
+            </header>
+
+            <section class="content" id="app">
+                <!-- Gaalsien section -->
+                <section class="gaalsien" id="gaalsien">
+                    <template id="gaalsien-menu-template">
+                        <transition name="slide-fade" mode="out-in">
+                            <div class="gaalsien-select-menu-a" v-if="!displayData.showGalMenu" @click="displayData.showGalMenu = !displayData.showGalMenu"><h2>Select Gaalsien unit</h2></div>
+                            <div class="gaalsien-select-menu-b" v-else @click="displayData.showGalMenu = !displayData.showGalMenu"><h2>Close Gaalsien menu</h2></div>
+                        </transition>
+                        <transition name="vertical-fade" mode="out-in">
+                            <ul class="list-grid" v-if="displayData.showGalMenu">
+                                <li v-for="component in galComponentsArray">
+                                    <div @click="swapGalUnit(component)"> {{ component }} </div>
+                                </li>
+                            </ul>
+                        </transition>
+                    </template>
+
+                    <component ref="currentGalUnit" :is="currentGalUnit"> </component>
+
+                    <template id="gaalsien-unit-template" v-if="displayData.showGalTemplate">
+                        <transition name="fade" mode="in-out">
+                            <div class="unit-info">
+                                <figure class="unit-image">
+                                    <img :src="'images/gaalsienUnits/' + image"/>
+                                    <figcaption> <h3> {{ title }} </h3> </figcaption>
+                                </figure>
+                                <div class="unit-stats" id="gaalsien-stats">
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Speed:</strong></div>
+                                        <div class="stat-value" id="gal-stat-speed"> {{ speed }} </div>
+                                        <div v-if="galSpeedHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="galSpeedHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="galSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Armor:</strong></div>
+                                        <div class="stat-value" id="gal-stat-armor"> {{ armor }} </div>
+                                        <div v-if="galArmorHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="galArmorHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="galArmorHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Damage:</strong></div>
+                                        <div class="stat-value" id="gal-stat-damage"> {{ damage }} </div>
+                                        <div v-if="this.galDamageHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="galDamageHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="galDamageHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <!-- Update the follow block once I've figured out how to compare text. -->
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Rate of Fire:</strong></div>
+                                        <div class="stat-value" id="gal-stat-rof"> {{ rof }} </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Hull:</strong></div>
+                                        <div class="stat-value" id="gal-stat-hull"> {{ hull }} </div>
+                                        <div v-if="galHullHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="galHullHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="galHullHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Strong vs:</strong></div>
+                                        <div class="stat-value" id="gal-stat-strong"> {{ strong }} </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Weak vs:</strong></div>
+                                        <div class="stat-value" id="gal-stat-weak"> {{ weak }} </div>
+                                    </div>
+                                </div>
+                                <div class="unit-description">
+                                    <p> {{ desc }} </p>
+                                </div>
+                            </div>
+                        </transition>
+                    </template>
+                </section>
+
+                <!-- Coalition section -->
+                <section class="coalition" id="coalition">
+                    <template id="coalition-menu-template">
+                        <transition name="slide-fade" mode="out-in">
+                            <div class="coalition-select-menu-a" v-if="!displayData.showColMenu" @click="displayData.showColMenu = !displayData.showColMenu"><h2>Select Coalition unit</h2></div>
+                            <div class="coalition-select-menu-b" v-else @click="displayData.showColMenu = !displayData.showColMenu"><h2>Close Coalition menu</h2></div>
+                        </transition>
+                        <transition name="vertical-fade" mode="out-in">
+                            <ul class="list-grid" v-if="displayData.showColMenu">
+                                <li v-for="component in colComponentsArray">
+                                    <div @click="swapColUnit(component)"> {{ component }} </div>
+                                </li>
+                            </ul>
+                        </transition>
+                    </template>
+
+                    <component ref="currentColUnit" :is="currentColUnit"> </component>
+
+                    <template id="coalition-unit-template" v-if="displayData.showColTemplate">
+                        <transition name="fade" mode="in-out">
+                            <div class="unit-info">
+                                <figure class="unit-image">
+                                    <img :src="'images/coalitionUnits/' + image"/>
+                                    <figcaption> <h3> {{ title }} </h3> </figcaption>
+                                </figure>
+                                <div class="unit-stats" id="coalition-stats">
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Speed:</strong></div>
+                                        <div class="stat-value" id="col-stat-speed"> {{ speed }} </div>
+                                        <div v-if="colSpeedHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="colSpeedHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="colSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Armor:</strong></div>
+                                        <div class="stat-value" id="col-stat-armor"> {{ armor }} </div>
+                                        <div v-if="colArmorHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="colArmorHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="colArmorHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Damage:</strong></div>
+                                        <div class="stat-value" id="col-stat-damage"> {{ damage }} </div>
+                                        <div v-if="colDamageHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="colDamageHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="colDamageHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <!-- Update the follow block once I've figured out how to compare text. -->
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Rate of Fire:</strong></div>
+                                        <div class="stat-value" id="col-stat-rof"> {{ rof }} </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Hull:</strong></div>
+                                        <div class="stat-value" id="col-stat-hull"> {{ hull }} </div>
+                                        <div v-if="colHullHigher === 'true'" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                        <div v-else-if="colHullHigher === 'false'" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                        <div v-else-if="colHullHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Strong vs:</strong></div>
+                                        <div class="stat-value" id="col-stat-strong"> {{ strong }} </div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-title"><strong>Weak vs:</strong></div>
+                                        <div class="stat-value" id="col-stat-weak"> {{ weak }} </div>
+                                    </div>
+                                </div>
+                                <div class="unit-description">
+                                    <p> {{ desc }} </p>
+                                </div>
+                            </div>
+                        </transition>
+                    </template>
+                </section>
+            </section>
+        </main>
+
+        <!-- Link to local .js file -->
+        <script src="main.js"></script>
+
+	</body>
+</html>
+
+<!-- Read for transitions: https://css-tricks.com/intro-to-vue-5-animations/ -->

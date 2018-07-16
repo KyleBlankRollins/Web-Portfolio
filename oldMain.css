@@ -245,10 +245,6 @@ li > div:hover {
         color: #f0f1f2;
     }
 
-[v-cloak] {
-    display: none;
-}
-
 /* Transitions */
 
 .fade-enter-active, .fade-leave-active {
