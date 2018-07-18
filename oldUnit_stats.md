@@ -63,7 +63,7 @@
     - Rate of Fire: Medium
     - Hull: 500
     - Strong vs: Strikecraft, Railguns
-    - Weak vs: AAVs, Cruisers
+    - Weak vs: Assault Railguns, Cruisers
 + MissileBattery
     - Speed: 50
     - Armor: 5
