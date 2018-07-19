@@ -29,8 +29,8 @@
                     </transition>
                     <transition name="vertical-fade" mode="out-in">
                         <ul class="list-grid    gal-list-grid" v-if="showGalMenu">
-                            <li v-for="unit in galUnits">
-                                <figure class="list-image    gal-list-image">
+                            <li v-for="(unit, index) in galUnits">
+                                <figure class="list-image    gal-list-image" @click="activeGalSwap(unit)">
                                     <img :src="'images/gaalsienUnits/' + unit.image"/>
                                     <figcaption><h5> {{ unit.title }} </h5></figcaption>
                                 </figure>
@@ -38,8 +38,47 @@
                         </ul>
                     </transition>
 
-                    <gaalsien-units v-for="unit in galUnits" :key="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed">
-                        <speed></speed>
+                    <gaalsien-units v-for="unit in activeGalUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak">
+                        <div id="current-gal-unit" >
+                            <figure class="unit-image">
+                                <img :src="'images/gaalsienUnits/' + unit.image"/>
+                                <figcaption> <h3> {{ unit.title }} </h3> </figcaption>
+                            </figure>
+                            <div class="unit-stats" id="gaalsien-stats">
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Speed:</strong></div>
+                                    <div class="stat-value"> {{ unit.speed }} </div>
+                                    <div v-if="galSpeedHigher === true" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                    <div v-else-if="galSpeedHigher === false" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                    <div v-else="galSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Armor:</strong></div>
+                                    <div class="stat-value"> {{ unit.armor }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Damage:</strong></div>
+                                    <div class="stat-value"> {{ unit.damage }} </div>
+                                </div>
+                                <!-- Update the follow block once I've figured out how to compare text. -->
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Rate of Fire:</strong></div>
+                                    <div class="stat-value"> {{ unit.rof }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Hull:</strong></div>
+                                    <div class="stat-value"> {{ unit.hull }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Strong vs:</strong></div>
+                                    <div class="stat-value"> {{ unit.strong }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Weak vs:</strong></div>
+                                    <div class="stat-value"> {{ unit.weak }} </div>
+                                </div>
+                            </div>
+                        </div>
                     </gaalsien-units>
 
                 </section>
@@ -52,7 +91,7 @@
                     <transition name="vertical-fade" mode="out-in">
                         <ul class="list-grid    col-list-grid" v-if="showColMenu">
                             <li v-for="unit in colUnits">
-                                <figure class="list-image    col-list-image">
+                                <figure class="list-image    col-list-image" @click="activeColSwap(unit)">
                                     <img :src="'images/coalitionUnits/' + unit.image"/>
                                     <figcaption><h5> {{ unit.title }} </h5></figcaption>
                                 </figure>
@@ -60,8 +99,47 @@
                         </ul>
                     </transition>
 
-                    <coalition-units v-for="unit in colUnits" :key="unit.id" :title="unit.title" :speed="unit.speed">
-                        <speed></speed>
+                    <coalition-units v-for="unit in activeColUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak">
+                        <div id="current-col-unit">
+                            <figure class="unit-image">
+                                <img :src="'images/coalitionUnits/' + unit.image"/>
+                                <figcaption> <h3> {{ unit.title }} </h3> </figcaption>
+                            </figure>
+                            <div class="unit-stats" id="coalition-stats">
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Speed:</strong></div>
+                                    <div class="stat-value"> {{ unit.speed }} </div>
+                                    <div v-if="colSpeedHigher === true" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                    <div v-else-if="colSpeedHigher === false" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
+                                    <div v-else="colSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Armor:</strong></div>
+                                    <div class="stat-value"> {{ unit.armor }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Damage:</strong></div>
+                                    <div class="stat-value"> {{ unit.damage }} </div>
+                                </div>
+                                <!-- Update the follow block once I've figured out how to compare text. -->
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Rate of Fire:</strong></div>
+                                    <div class="stat-value"> {{ unit.rof }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Hull:</strong></div>
+                                    <div class="stat-value"> {{ unit.hull }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Strong vs:</strong></div>
+                                    <div class="stat-value"> {{ unit.strong }} </div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-title"><strong>Weak vs:</strong></div>
+                                    <div class="stat-value"> {{ unit.weak }} </div>
+                                </div>
+                            </div>
+                        </div>
                     </coalition-units>
 
                 </section>
