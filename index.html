@@ -38,7 +38,7 @@
                         </ul>
                     </transition>
 
-                    <gaalsien-units v-for="unit in activeGalUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak">
+                    <gaalsien-units v-for="unit in activeGalUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak" :speed-higher="unit.speedHigher">
                         <div id="current-gal-unit" >
                             <figure class="unit-image">
                                 <img :src="'images/gaalsienUnits/' + unit.image"/>
@@ -48,9 +48,8 @@
                                 <div class="stat">
                                     <div class="stat-title"><strong>Speed:</strong></div>
                                     <div class="stat-value"> {{ unit.speed }} </div>
-                                    <div v-if="galSpeedHigher === true" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
-                                    <div v-else-if="galSpeedHigher === false" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
-                                    <div v-else="galSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    <div v-if="unit.speedHigher !== false" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                    <div v-else class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
                                 </div>
                                 <div class="stat">
                                     <div class="stat-title"><strong>Armor:</strong></div>
@@ -99,7 +98,7 @@
                         </ul>
                     </transition>
 
-                    <coalition-units v-for="unit in activeColUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak">
+                    <coalition-units v-for="unit in activeColUnit" :key="unit.id" :id="unit.id" :title="unit.title" :desc="unit.desc" :image="unit.image" :speed="unit.speed" :armor="unit.armor" :damage="unit.damage" :hull="unit.hull" :rof="unit.rof" :strong="unit.strong" :weak="unit.weak" :speed-higher="unit.speedHigher">
                         <div id="current-col-unit">
                             <figure class="unit-image">
                                 <img :src="'images/coalitionUnits/' + unit.image"/>
@@ -109,9 +108,8 @@
                                 <div class="stat">
                                     <div class="stat-title"><strong>Speed:</strong></div>
                                     <div class="stat-value"> {{ unit.speed }} </div>
-                                    <div v-if="colSpeedHigher === true" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
-                                    <div v-else-if="colSpeedHigher === false" class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
-                                    <div v-else="colSpeedHigher === null" class="stat-eval   icon-blue"> -- </div>
+                                    <div v-if="unit.speedHigher !== false" class="stat-eval"> <i class="fas fa-angle-double-up   icon-green"></i> </div>
+                                    <div v-else class="stat-eval"> <i class="fas fa-angle-double-down   icon-red"></i> </div>
                                 </div>
                                 <div class="stat">
                                     <div class="stat-title"><strong>Armor:</strong></div>
