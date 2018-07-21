@@ -232,4 +232,19 @@ var vm = new Vue({
             };
         },
     },
+});  
+
+        },
+    },
+    created: function() {
+        console.log('coalition created: ' + this.speed);
+        console.log('coalition created - colSpeed: ' + colSpeed);
+    },
+    mounted: function() {
+        console.log('coalition mounted: ' + this.speed);
+        console.log('coalition mounted - colSpeed: ' + colSpeed);
+    },
+    updated: function() {
+        setTimeout (this.setStats, 500)
+    },
 });
