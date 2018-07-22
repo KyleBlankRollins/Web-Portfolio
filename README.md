@@ -6,10 +6,10 @@ I needed to update my online presence and I wanted to mess around with CSS Grid.
 ## How it's built
 From a technical standpoint, it's pretty basic: HTML, CSS, and some vanilla JavaScript. CSS Grid is the site's backbone.
 
-Hosted by Netlify at http://www.rollinsky.com/ and deployed from the "prod" branch. As part of continuous delivery, any changes to "prod" will be reflected in the live site.
+Hosted by Netlify at http://www.KyleBlankRollins.com/ and deployed from the "prod" branch. As part of continuous delivery, any changes to "prod" will be reflected in the live site.
 
 ## Repository structure
 ### Branches
 * **prod.** This is the Master branch, and the branch Netlify uses to deploy. I don't do any development work here, as I want it to be stable.
-* **dev.** Where the magic happens. Here, I sort out bugs and build new features. They get merged with "prod" as they're ready.
-* **Single-page.** I'll probably archive this branch at some point. It sprung off as an exploratory path and then became the main show. Active development should mostly happen in "dev". I know, capitalization isn't consistent with the other branches. I'll fix it. Maybe. Eventually.
+* **dev.** Where the magic happens. Here, I sort out bugs and build new features for the main portfolio site. They get merged with "prod" as they're ready.
+* **DoK-Compare.** This branch is deployed alongside prod as a subdomain. It's a Vue.js app that compares units from the RTS game Homeworld: Deserts of Kharak.
