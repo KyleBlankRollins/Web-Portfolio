@@ -6,10 +6,10 @@
         <meta name="description" content="Web Portfolio">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> --> <!-- TODO: Fix favicon -->
         <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="mediaQueries.css">
-		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto|Material+Icons" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="mediaQueries.css"> --> <!-- TODO: re-build mediaQueries.css -->
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Montserrat" rel="stylesheet">
         <!-- Load Vue.js -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -24,32 +24,47 @@
 	</head>
 
 	<body>
-		<section class="wrapper" id="app" v-cloak>
-            <header class="main-head">
-                <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div> <!-- TODO: Add href to top of page -->
-                <transition name="slide-fade" mode="out-in">
-                    <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu"><i class="material-icons md-36">menu</i></div>
-                    <div class="menu" else @click="showMenu = !showMenu"><i class="material-icons md-36" >close</i></div>
-                </transition>
+        <div id="app" v-cloak>
+            <template id=page-head-template>
+                <header class="main-head">
+                    <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div> <!-- TODO: Add href to top of page -->
+                    <transition name="fade" mode="out-in">
+                        <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu" key="menu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                        <div class="menu" v-else @click="showMenu = !showMenu" key="close"><img class="menu-icons" src="Images/close.svg" /></div>
+                    </transition>
 
-                <div class="nav-list" v-if="showMenu">
-                    <transition-group name="vertical-fade" mode="out-in" tag="ul" class="main-nav">
-                        <li v-for="section in siteSections" :key="section.id">
-                            <h5> {{ section.title }} </h5>
-                        </li>
-                    </transition-group>
-                </div>
+                    <div class="nav-list">
+                        <transition name="fade">
+                            <ul name="list-slide" tag="ul" class="main-nav" v-if="showMenu">
+                                <li v-for="section in siteSections" :key="section.id">
+                                    <a :href="section.link"><h5> {{ section.title }} </h5></a>
+                                </li>
+                            </ul>
+                        </transition>
+                    </div>
 
-                <div class="contact-icons" id="contact-icons" v-if="showMenu">
-                    <transition-group name="vertical-fade" mode="out-in" tag="ul" class="social-list">
-                        <li v-for="site in socialMedia" :key="site.id">
-                            <a :href="site.link"><h5> {{ site.title }} </h5></a>
-                        </li>
-                    </transition-group>
-                </div>
-            </header>
+                    <!-- <div class="contact-icons" id="contact-icons" v-if="showMenu">
+                        <transition-group name="vertical-fade" mode="out-in" tag="ul" class="social-list">
+                            <li v-for="site in socialMedia" :key="site.id">
+                                <a :href="site.link"><h5> {{ site.title }} </h5></a>
+                            </li>
+                        </transition-group>
+                    </div> -->
+                </header>
+            </template>
 
-		</section>
+    		<section class="wrapper">
+                <section class="content">
+                    <about></about>
+                    <samples>
+                        
+                    </samples>
+                    <learning-experiences></learning-experiences>
+                    <work></work>
+                    <contact></contact>
+                </section>
+    		</section>
+        </div>
         <script src="main.js"></script>
 	</body>
 </html>

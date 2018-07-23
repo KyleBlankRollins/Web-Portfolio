@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
-    margin: 10px;
-    font-family: "Roboto", Helvetica, sans-serif;
+    margin: 0 10px 10px 10px;
+    font-family: "Montserrat", Helvetica, sans-serif;
     font-size: 110%;
     color: #4a4a4a;
 }
@@ -29,41 +29,22 @@ a:hover, a:visited:hover {
 /* <--- End page setup. */
 
 /* Grid area definitions ---> */
-.wrapper {
-display: grid;
-grid-gap: 10px;
-grid-template-areas:
-"header"
-"content";
+
+.main-head { /* TODO: Figure out how to make this a sticky header */
+	grid-area: header;
+    display: grid;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: solid 1px #294C5D;
+    grid-template-areas:
+    "logo     menu"
+    "nav-list nav-list";
 }
-
-    .main-head {
-    	grid-area: header;
-        display: grid;
-        position: fixed;
-        z-index: 2;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.95);
-        border-bottom: solid 1px #294C5D;
-        grid-template-areas:
-        "logo   menu"
-        "banner contactIcons";
-    }
-
 
 /* Banner styling ---> */
-.banner {
-    grid-area: banner;
-    display: flex;
-    flex-direction: column;
-}
-
-.banner a:hover {
-	text-decoration: none !important;
-}
-
 .logo {
     grid-area: logo;
     display: flex;
@@ -71,104 +52,252 @@ grid-template-areas:
     margin: 5px 0 5px 10px;
 }
 
-.logo-outer {
-    color: #294C5D;
-    font-family: 'IBM Plex Mono', monospace;
-    margin: 0;
-}
+    .logo-outer {
+        color: #294C5D;
+        font-family: 'IBM Plex Mono', monospace;
+        margin: 0;
+    }
 
-#logo-inner {
-    color: #B87462;
-    font-family: 'IBM Plex Mono', monospace;
-    margin: 0;
-}
+    #logo-inner {
+        color: #B87462;
+        font-family: 'IBM Plex Mono', monospace;
+        margin: 0;
+    }
 /* <--- End banner styling */
 
 /* Nav menu styling ---> */
 
+.close {
+    grid-area: menu;
+    display: flex !important;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: all .3s ease;
+    padding-top: 5px;
+}
+
 .menu {
     grid-area: menu;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
+    display: flex !important;
+    justify-content: flex-end;
     cursor: pointer;
+    transition: all .3s ease;
     padding-top: 5px;
-    justify-content: center;
 }
 
-.bar1, .bar2, .bar3 {
-    width: 35px;
-    height: 5px;
-    background-color: #4a4a4a;
-    margin: 3px 0;
-    transition: 0.4s;
-}
+    .nav-list {
+        grid-area: nav-list;
+        width: 100%;
+        border-top: solid 1px #294C5D;
+    }
 
-.change .bar1 {
-    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-    transform: rotate(-45deg) translate(-9px, 6px);
-}
+        .nav-list > ul {
+            display: grid;
+            grid-gap: 5px;
+        }
 
-.change .bar2 {opacity: 0;}
+            .nav-list li {
+                list-style-type: none;
+                margin: 0;
+            }
 
-.change .bar3 {
-    -webkit-transform: rotate(45deg) translate(-8px, -8px);
-    transform: rotate(45deg) translate(-8px, -8px);
-}
+                .nav-list h5 {
+                    margin: 0;
+                }
 
-.nav-list {
-    margin-left: 10px;
-}
+    .menu-icons {
+        width: 2em;
+    }
 
-.nav-list li {
-    list-style-type: none;
-}
+    .social-list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
 
-.social-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
+    .nav-list, .social-list {
+        list-style-type: none;
+        font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    }
 
-.nav-list, .social-list {
-    list-style-type: none;
-    font-family: "IBM Plex Sans", Helvetica, sans-serif;
-}
+    /* .contact-icons {
+        grid-area: contactIcons;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    } */
 
-.social-media {
-    font-size: 1.3em;
-    padding: 5px 10px 5px 10px;
-}
+    .material-icons.md-36 {
+        font-size: 36px;
+    }
 
-.main-head a {
-    display: flex;
-    height: 100%;
-}
+/* <--- End nav menu styling */
 
-.nav-list a:hover, .social-list a:hover {
-    color: #B87462 !important;
-    font-size: 1.125em;
-	opacity: 1;
-}
-
-.main-head a:link, .main-head a:visited {
-    color: #294C5D;
-	text-decoration: none;
-}
-
-.contact-icons {
-    grid-area: contactIcons;
+/* Begin section styling ---> */
+.content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.material-icons.md-36 {
-    font-size: 36px;
+.section {
+    max-width: 1200px;
 }
 
-/* <--- End nav menu styling */
+.about {
+    display: grid;
+    grid-template-columns: 1fr .5fr;
+    grid-template-areas:
+    "aboutTitle  profilePic"
+    "aboutMeText profilePic";
+}
+
+    .about-title {
+        grid-area: aboutTitle;
+    }
+
+        .about-title h3 {
+            margin: .8em 0 .3em 0;
+        }
+
+    .about-me-text {
+        grid-area: aboutMeText;
+    }
+
+.learning-experiences {
+
+}
+
+    .experiment-box-container {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-auto-rows: 75px;
+        grid-auto-flow: dense;
+    }
+
+        .experiment-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(74,74,74,.95);
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+
+        .experiment-box {
+            display: flex;
+            position: relative;
+            grid-column: span 3;
+            grid-row: span 2;
+            background-color: lightblue;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .experiment-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .experiment-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(74,74,74,.95);
+            overflow: hidden;
+            width: 100%;
+            height: 30%;
+            transition: .5s ease;
+        }
+
+        .experiment-title {
+            color: #FFFFFF;
+            font-family: "IBM Plex Sans";
+            font-size: .9em;
+            font-weight: bold;
+            position: absolute;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+.text-block {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+    max-width: 900px;
+}
+
+    .text-block p {
+        margin: 0 0 24px 0;
+    }
+
+    .text-block a:link {
+        color: #294C5D;
+        opacity: .7;
+        font-size: .9em;
+        font-weight: bolder;
+    }
+
+    .text-block a:visited {
+        color: #294C5D;
+        font-weight: bolder;
+    }
+
+    .text-block a:hover {
+        color: #B87462;
+        font-weight: bolder;
+        text-decoration: underline;
+    }
+
+.note {
+    font-size: .9em;
+    border-top: solid 1px #294C5D;
+    border-bottom: solid 1px #294C5D;
+    opacity: .8;
+    padding: 5px;
+    width: 90%;
+    margin: 0 0 0 20px !important;
+}
+
+.profile-pic {
+    grid-area: profilePic;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+    .profile-pic img {
+        object-fit: cover;
+        max-height: 230px;
+        max-width: 240px;
+        width: 100%;
+        border-radius: 200px;
+    }
+
+/* <--- End section styling */
+
+/* Begin transition styling ---> */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .3s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* <--- End transition styling */
 
 [v-cloak] {
     display: none;
