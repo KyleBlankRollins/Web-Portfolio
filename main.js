@@ -1,50 +1,114 @@
-var pageHeader = Vue.component('page-header',{
-    template: '#main-head',
+// Vue.component('about',{
+//     template: '#about-template',
+//     data: function() {
+//         return {
+//             title: "About",
+//         }
+//     },
+// });
+//
+// Vue.component('samples',{ // TODO: Get sample child components working. This sort of worked, but ran into scope issues: https://vuejs.org/v2/guide/components.html#Dynamic-Components
+//     template: '<section class="samples"><div class="samples-title"><h3> {{ title }} </h3></div></section>',
+//     data: function() {
+//         return {
+//             title: "Samples",
+//         }
+//     },
+// });
+//
+// Vue.component('learning-experiences',{
+//     template: '#learning-experiences-template',
+//     data: function() {
+//         return {
+//             title: "Learning experiences",
+//             image: "DoK_compare.png",
+//             experiments: [
+//                 {id: 1, title: "DoK Compare", desc: "This web app compares unit stats from game Homeworld: Deserts of Kharak."}
+//             ]
+//         }
+//     },
+// });
+//
+// Vue.component('work-philosophy',{
+//     template: '#work-phil-template',
+//     data: function() {
+//         return {
+//             title: "Work philosophy",
+//         }
+//     },
+// });
+//
+// Vue.component('work-history',{
+//     template: '<section class="work-history"> <div class="work-history-title"><h3> {{ title }} </h3></div></section>',
+//     data: function() {
+//         return {
+//             title: "Work history",
+//         }
+//     },
+// });
+//
+// Vue.component('contact',{
+//     template: '<section class="contact"><div class="contact-title"> <h3> {{ title }} </h3> </div></section>',
+//     data: function() {
+//         return {
+//             title: "Contact",
+//         }
+//     },
+// });
+
+Vue.component('tabs', {
+    template: `
+        <div class="tab-row-container">
+            <div>
+              <ul class="tab-row">
+                <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
+                    <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="tabs-details">
+                <slot></slot>
+            </div>
+        </div>
+    `,
+    data() {
+        return {tabs: [] };
+    },
+    created() {
+        this.tabs = this.$children;
+    },
+    methods: {
+        selectTab(selectedTab) {
+            this.tabs.forEach(tab => {
+                tab.isActive = (tab.name == selectedTab.name);
+            });
+        }
+    }
 });
 
-var about = Vue.component('about',{
-    template: '<div class="section    about" id="about"> <div class="about-title"><h3> {{ title }} </h3></div><div class="text-block    about-me-text"><p>I am a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p><p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p><p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p></div><div class="profile-pic" id="profile-pic"><img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo."></div></div>',
-    data: function() {
+Vue.component('tab', {
+    template: `
+        <div v-show="isActive">
+            <slot></slot>
+        </div>`,
+    props: {
+        name: { required: true },
+        selected: { default: false}
+    },
+    data() {
         return {
-            title: "About",
+            isActive: false
+        };
+    },
+    computed: {
+        href() {
+            return '#' + this.name.toLowerCase().replace(/ /g, '-');
         }
     },
-});
-
-var samples = Vue.component('samples',{ // TODO: Get sample child components working. This sort of worked, but ran into scope issues: https://vuejs.org/v2/guide/components.html#Dynamic-Components
-    template: '<div class="section" id="samples"> <div class="samples-title"><h3> {{ title }} </h3></div>',
-    data: function() {
-        return {
-            title: "Samples",
-        }
-    },
-});
-
-var learningExperiences = Vue.component('learning-experiences',{
-    template: '<div class="section" id="learning-experiences"> <div> <h3> {{ title }} </h3> </div> <div class="experiment-box-container"><div class="experiment-box"><a href="https://dok-compare.kyleblankrollins.com/"><img class="experiment-image" src="Images/DoK_compare.png" alt="DoK Compare image"/><div class="experiment-overlay"><div class="experiment-title">DoK Compare</div></a></div></div></div>', // TODO: Break this kup into data elements.
-    data: function() {
-        return {
-            title: "Learning experiences",
-        }
-    },
-});
-
-var work = Vue.component('work',{
-    template: '<div class="section" id="work"> <h3> {{ title }} </h3> </div>',
-    data: function() {
-        return {
-            title: "Work",
-        }
-    },
-});
-
-var contact = Vue.component('contact',{
-    template: '<div class="section" id="contact"> <h3> {{ title }} </h3> </div>',
-    data: function() {
-        return {
-            title: "Contact",
-        }
-    },
+    mounted() {
+        this.isActive = this.selected;
+    }
 });
 
 var vm = new Vue({
@@ -64,13 +128,5 @@ var vm = new Vue({
             { id: 2, title: "LinkedIn", link: 'https://www.linkedin.com/in/kyle-blank-rollins/' },
             { id: 3, title: "GitHub", link: 'https://github.com/KyleBlankRollins' },
         ],
-    },
-    components: {
-        'pageHeader': pageHeader,
-        'about': about,
-        'samples': samples,
-        'learningExperiences': learningExperiences,
-        'work': work,
-        'contact': contact,
     },
 });

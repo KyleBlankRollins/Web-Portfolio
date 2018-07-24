@@ -12,58 +12,116 @@
 		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Montserrat" rel="stylesheet">
         <!-- Load Vue.js -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-84528778-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+        <!-- Load BootstrapVue -->
+        <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+        <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics --> <!-- TODO: getting weird error with the script. Re-enable later. -->
 
-          gtag('config', 'UA-84528778-1');
-        </script>
 	</head>
 
 	<body>
         <div id="app" v-cloak>
-            <template id=page-head-template>
-                <header class="main-head">
-                    <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div> <!-- TODO: Add href to top of page -->
-                    <transition name="fade" mode="out-in">
-                        <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu" key="menu"><img class="menu-icons" src="Images/menu.svg" /></div>
-                        <div class="menu" v-else @click="showMenu = !showMenu" key="close"><img class="menu-icons" src="Images/close.svg" /></div>
-                    </transition>
+            <header class="main-head">
+                <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div>
 
-                    <div class="nav-list">
-                        <transition name="fade">
-                            <ul name="list-slide" tag="ul" class="main-nav" v-if="showMenu">
-                                <li v-for="section in siteSections" :key="section.id">
-                                    <a :href="section.link"><h5> {{ section.title }} </h5></a>
-                                </li>
-                            </ul>
-                        </transition>
+                <tabs>
+                    <tab class="tab-body" name="About" :selected="true">
+                    <section class="about">
+                        <div class="text-block    about-me-text">
+                            <p>I am a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
+                            <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                            <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
+                        </div>
+                        <figure class="profile-pic" id="profile-pic">
+                            <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
+                            <figcaption>Me: Kyle Rollins</figcaption>
+                        </figure>
+                    </section>
+                    </tab>
+
+                    <tab class="tab-body" name="Technical writing">
+                        <h2>Yeah tech writing!</h2>
+                    </tab>
+
+                    <tab class="tab-body" name="Document design">
+                        <h2>Some of my more designer-y stuff.</h2>
+                    </tab>
+
+                    <tab class="tab-body" name="Published content">
+                        <h2>Articles/blogs that have been published.</h2>
+                    </tab>
+                </tabs>
+            </header>
+
+
+
+            <section class="content">
+
+
+                <!-- <section class="about">
+                    <div class="about-title"><h3> {{ title }} </h3></div>
+                    <div class="text-block    about-me-text">
+                        <p>I am a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
+                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
                     </div>
-
-                    <!-- <div class="contact-icons" id="contact-icons" v-if="showMenu">
-                        <transition-group name="vertical-fade" mode="out-in" tag="ul" class="social-list">
-                            <li v-for="site in socialMedia" :key="site.id">
-                                <a :href="site.link"><h5> {{ site.title }} </h5></a>
-                            </li>
-                        </transition-group>
-                    </div> -->
-                </header>
-            </template>
-
-    		<section class="wrapper">
-                <section class="content">
-                    <about></about>
-                    <samples>
-                        
-                    </samples>
-                    <learning-experiences></learning-experiences>
-                    <work></work>
-                    <contact></contact>
+                    <div class="profile-pic" id="profile-pic">
+                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
+                    </div>
                 </section>
-    		</section>
+                <samples></samples>
+                <section class="learning-experiences">
+                    <div class="learning-experiences-title"><h3> {{ title }} </h3></div>
+                    <div class="experiment-box-container">
+                        <div class="experiment-box">
+                            <a href="https://dok-compare.kyleblankrollins.com/">
+                                <img class="experiment-image" src="Images/DoK_compare.png" alt="DoK Compare image"/>
+                                <div class="experiment-overlay">
+                                    <div class="experiment-title">DoK Compare</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <section class="work-philosophy">
+                    <div class="work-philosophy-title"><h3> {{ title }} </h3></div>
+                    <div class="textBlock">
+                        <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
+                        <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
+                        <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
+                        <p>In everything, be kind, courteous, and understanding. Be open to criticism, as it's one of the best ways to learn. Communication is about people. Cater to their needs, and good communication will follow.</p>
+                    </div>
+                    <div class="philosophy-list">
+                        <div class="list-title"><p>My Clifton Strengths top 5</p></div>
+                        <div class="phil-ordered">
+                            <ol>
+                                <li>
+                                    <b>Restorative</b><br>
+                                    <p class="list-description">I enjoy finding and solving problems.</p>
+                                </li>
+                                <li>
+                                    <b>Learner</b><br>
+                                    <p class="list-description">New ideas and challenges excite me.</p>
+                                </li>
+                                <li>
+                                    <b>Discipline</b><br>
+                                    <p class="list-description">Structure is important to me.</p>
+                                </li>
+                                <li>
+                                    <b>Intellection</b><br>
+                                    <p class="list-description">I'm introspective.</p>
+                                </li>
+                                <li>
+                                    <b>Developer</b><br>
+                                    <p class="list-description">Helping others improve gives me purpose.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+                <work-history></work-history>
+                <contact></contact> -->
+            </section>
         </div>
         <script src="main.js"></script>
 	</body>
