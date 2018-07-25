@@ -24,54 +24,58 @@
             <header class="main-head">
                 <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div>
 
-                <tabs>
-                    <tab class="tab-body" name="About" :selected="true">
-                    <section class="about">
-                        <div class="text-block    about-me-text">
-                            <p>I am a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
-                            <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
-                            <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
-                        </div>
-                        <figure class="profile-pic" id="profile-pic">
-                            <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
-                            <figcaption>Me: Kyle Rollins</figcaption>
-                        </figure>
-                    </section>
-                    </tab>
+                <transition name="slide-fade" mode="out-in">
+                        <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                        <div class="close" v-else @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                </transition>
 
-                    <tab class="tab-body" name="Technical writing">
-                        <h2>Yeah tech writing!</h2>
-                    </tab>
-
-                    <tab class="tab-body" name="Document design">
-                        <h2>Some of my more designer-y stuff.</h2>
-                    </tab>
-
-                    <tab class="tab-body" name="Published content">
-                        <h2>Articles/blogs that have been published.</h2>
-                    </tab>
-                </tabs>
+                <transition name="vertical-fade" mode="out-in">
+                    <ul class="nav-list" v-if="showMenu">
+                        <li v-for="section in siteSections">
+                            <a :href="section.link"><h5> {{ section.title }} </h5></a>
+                        </li>
+                    </ul>
+                    <!-- TODO: Maybe add social media links here. -->
+                </transition>
             </header>
 
 
 
             <section class="content">
-
-
-                <!-- <section class="about">
-                    <div class="about-title"><h3> {{ title }} </h3></div>
+                <section class="about" id="about">
+                    <h2 class="about-title"> About </h2>
                     <div class="text-block    about-me-text">
-                        <p>I am a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
+                        <p>I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
                         <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
                         <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
                     </div>
-                    <div class="profile-pic" id="profile-pic">
+                    <figure class="profile-pic" id="profile-pic">
                         <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
-                    </div>
+                        <figcaption>Me: Kyle Rollins</figcaption>
+                    </figure>
                 </section>
-                <samples></samples>
-                <section class="learning-experiences">
-                    <div class="learning-experiences-title"><h3> {{ title }} </h3></div>
+
+                <section class="samples" id="samples">
+                    <h2> Samples </h2>
+                    <tabs>
+                        <tab class="tab-body" name="Technical writing" :selected="true">
+                            <section class="Technical writing">
+                                <h5>Yeah tech writing!</h5>
+                            </section>
+                        </tab>
+
+                        <tab class="tab-body" name="Document design">
+                            <h5>Some of my more designer-y stuff.</h5>
+                        </tab>
+
+                        <tab class="tab-body" name="Published content">
+                            <h5>Articles/blogs that have been published.</h5>
+                        </tab>
+                    </tabs>
+                </section>
+
+                <section class="learning-experiences" id="learning-experiences">
+                    <div class="learning-experiences-title"><h2> Learning experiences </h2></div>
                     <div class="experiment-box-container">
                         <div class="experiment-box">
                             <a href="https://dok-compare.kyleblankrollins.com/">
@@ -83,9 +87,10 @@
                         </div>
                     </div>
                 </section>
-                <section class="work-philosophy">
-                    <div class="work-philosophy-title"><h3> {{ title }} </h3></div>
-                    <div class="textBlock">
+
+                <section class="work-philosophy" id="work-philosophy">
+                    <div class="work-philosophy-title"><h2> Work philosophy </h2></div>
+                    <div class="text-block  phil-text">
                         <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
                         <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
                         <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
@@ -119,8 +124,25 @@
                         </div>
                     </div>
                 </section>
-                <work-history></work-history>
-                <contact></contact> -->
+
+                <section class="work-history" id="work-history">
+                    <div class="work-history-title"><h2> Work history </h2></div>
+
+                </section>
+
+                <section class="contact" id="contact">
+                    <div class="contact-title"><h2> Contact </h2></div>
+                    <div class="textBlock">
+                        Thank you for your interest. My resume contains my email address. <!-- TODO: Add social media links in this section. -->
+                    </div>
+                    <div class="resume">
+                        <a href="Documents/Resume_05_2018.pdf" target="_blank">
+                            <div class="resume-box">
+                                Resume >>>
+                            </div>
+                        </a>
+                    </div>
+                </section>
             </section>
         </div>
         <script src="main.js"></script>

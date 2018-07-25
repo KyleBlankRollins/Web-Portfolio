@@ -10,13 +10,13 @@ h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
 }
 
-h1 { font-size: 1.4em; }
+h1 { font-size: 1.4rem; }
 
-h2 { font-size: 1.3em; }
+h2 { font-size: 1.3rem; margin: .8em 0 .3em 0; }
 
-h3 { font-size: 1.2em; }
+h3 { font-size: 1.2rem; }
 
-h4 { font-size: 1.1em; }
+h4 { font-size: 1.1rem; }
 
 a:link, a:visited {
 	color: #294C5D;
@@ -32,18 +32,24 @@ a:hover, a:visited:hover {
 
 .main-head { /* TODO: Figure out how to make this a sticky header */
 	grid-area: header;
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    width: 100%;
     display: grid;
     grid-template-columns: .075fr 1fr;
     background-color: rgba(255, 255, 255, 0.95);
     grid-template-areas:
-    "logo tabRowCont";
+    "logo     menu"
+    "nav-list nav-list";
+    border-bottom: 1px solid #294C5D;
 }
 
 /* Banner styling ---> */
 .logo {
     grid-area: logo;
     display: flex;
-    font-size: 1.7em;
+    font-size: 1.7rem;
     margin: 5px 0 5px 10px;
 }
 
@@ -83,6 +89,8 @@ a:hover, a:visited:hover {
     .nav-list {
         grid-area: nav-list;
         width: 100%;
+        padding: 10px 0 10px 0;
+        margin: 0;
         border-top: solid 1px #294C5D;
     }
 
@@ -93,7 +101,7 @@ a:hover, a:visited:hover {
 
             .nav-list li {
                 list-style-type: none;
-                margin: 0;
+                margin: 0 0 0 40px;
             }
 
                 .nav-list h5 {
@@ -101,36 +109,13 @@ a:hover, a:visited:hover {
                 }
 
     .menu-icons {
-        width: 2em;
-    }
-
-    .social-list {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .nav-list, .social-list {
-        list-style-type: none;
-        font-family: "IBM Plex Sans", Helvetica, sans-serif;
-    }
-
-    /* .contact-icons {
-        grid-area: contactIcons;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    } */
-
-    .material-icons.md-36 {
-        font-size: 36px;
+        width: 36px;
     }
 
 /* <--- End nav menu styling */
 
 /* Begin tab styling ---> */
 .tab-row-container {
-    grid-area: tabRowCont;
     display: grid;
     grid-template-areas:
     "tab-row"
@@ -205,7 +190,7 @@ a:hover, a:visited:hover {
 /* Begin section styling ---> */
 .content {
     display: grid;
-    grid-template-columns: .2fr 1fr .2fr;
+    grid-template-columns: .1fr 1fr .1fr;
     grid-template-areas:
     "lside  about       rside"
     "lside  samples     rside"
@@ -218,10 +203,11 @@ a:hover, a:visited:hover {
     .about {
         grid-area: about;
         display: grid;
+        padding-top: 40px;
         grid-template-columns: 1fr .5fr;
         max-width: 1200px;
-        margin-top: 4em;
         grid-template-areas:
+        "aboutTitle aboutTitle"
         "aboutMeText profilePic";
     }
 
@@ -229,16 +215,12 @@ a:hover, a:visited:hover {
             grid-area: aboutTitle;
         }
 
-            .about-title h3 {
-                margin: .8em 0 .3em 0;
-            }
-
         .about-me-text {
             grid-area: aboutMeText;
         }
 
         .note {
-            font-size: .9em;
+            font-size: .9rem;
             border-top: solid 1px #294C5D;
             border-bottom: solid 1px #294C5D;
             opacity: .8;
@@ -253,7 +235,6 @@ a:hover, a:visited:hover {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 10px;
         }
 
             .profile-pic img {
@@ -324,7 +305,7 @@ a:hover, a:visited:hover {
             .experiment-title {
                 color: #FFFFFF;
                 font-family: "IBM Plex Sans";
-                font-size: .9em;
+                font-size: .9rem;
                 font-weight: bold;
                 position: absolute;
                 overflow: hidden;
@@ -335,7 +316,61 @@ a:hover, a:visited:hover {
 
     .work-philosophy {
         grid-area: workPhil;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr .2fr;
+        grid-template-areas:
+        "philTitle philTitle"
+        "philText philList";
+        align-items: center;
     }
+
+        .work-philosophy-title {
+            grid-area: philTitle;
+        }
+
+        .phil-ordered {
+            width: 100%;
+            color: initial;
+            background-color: #E9E9E9;
+            margin-bottom: 30px;
+        }
+
+        .philosophy-list {
+            grid-area: philList;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            min-width: 300px;
+            font-size: 1em;
+            color: #FFFFFF;
+            margin: -10px 0 0 0;
+        }
+
+        .philosophy-list p {
+            margin: 0 5px 0 5px;
+        }
+
+        .philosophy-list ol {
+            margin: 20px 5px 20px 5px;
+        }
+
+        .list-description {
+            font-size: .9em !important;
+            margin: 5px 0 5px 0 !important;
+        }
+
+        .list-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 3em;
+            width: 100%;
+            background-color: #4a4a4a;
+            border-bottom: groove 6px #B87462;
+        }
 
     .work-history {
         grid-area: workHist;
@@ -343,36 +378,34 @@ a:hover, a:visited:hover {
 
     .contact {
         grid-area: contact;
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
     }
 
-.text-block {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0 10px 0;
-    max-width: 900px;
-}
+        .resume {
+            height: 100%;
+        }
 
-    .text-block p {
-        margin: 0 0 24px 0;
-    }
+        .resume-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: "IBM Plex Sans", Helvetica, sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            height: 80%;
+            width: 20%;
+            min-width: 160px;
+            margin: 15px 0 15px 0;
+            background-color: #294C5D;
+        }
 
-    .text-block a:link {
-        color: #294C5D;
-        opacity: .7;
-        font-size: .9em;
-        font-weight: bolder;
-    }
-
-    .text-block a:visited {
-        color: #294C5D;
-        font-weight: bolder;
-    }
-
-    .text-block a:hover {
-        color: #B87462;
-        font-weight: bolder;
-        text-decoration: underline;
-    }
+        .resume-box:hover{
+            background-color: #B87462;
+        }
 
 /* <--- End section styling */
 
@@ -389,6 +422,35 @@ a:hover, a:visited:hover {
 }
 
 /* <--- End transition styling */
+
+.text-block {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 60px 0;
+    max-width: 900px;
+}
+
+    .text-block p {
+        margin: 0 0 24px 0;
+    }
+
+    .text-block a:link {
+        color: #0F5C30;
+        opacity: .7;
+        font-size: .9rem;
+        font-weight: bolder;
+    }
+
+    .text-block a:visited {
+        color: #0F5C30;
+        font-weight: bolder;
+    }
+
+    .text-block a:hover {
+        color: #812B15;
+        font-weight: bolder;
+        text-decoration: underline;
+    }
 
 [v-cloak] {
     display: none;
