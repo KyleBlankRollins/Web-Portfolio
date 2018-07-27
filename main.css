@@ -115,81 +115,168 @@ a:hover, a:visited:hover {
 /* <--- End nav menu styling */
 
 /* Begin tab styling ---> */
-.tab-row-container {
+.tab-container {
     display: grid;
     grid-template-areas:
     "tab-row"
     "tab-body";
 }
 
-.tab-row {
-    display: grid;
-    position: relative;
-    grid-template-columns: .4fr .4fr .4fr .4fr;
-    list-style-type: none;
-    text-align: center;
-    margin: 20px 0 0 0;
-    padding: 0;
-    line-height: 24px;
-}
-
-    .tabrow:before {
-        z-index: 1;
-    }
-
-    .tab-row:after {
-        position: absolute;
-        content: "";
-        width: 100%;
-        bottom: 0;
-        left: 0;
-        border-bottom: 1px solid #294C5D;
-        z-index: 1;
-    }
-
-    .tab-row > li {
+    .tab-row {
+        display: grid;
+        grid-gap: 10px;
         position: relative;
-        z-index: 0;
-        margin: 0 10px;
-        padding: 0 10px;
-        border: 1px solid #294C5D;
-        display: inline-block;
-        background: linear-gradient(to bottom, #3F6375 50%, #082534 100%);
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        grid-template-columns: .4fr .4fr .4fr .4fr;
+        list-style-type: none;
+        text-align: center;
+        margin: 20px 0 0 0;
+        padding: 0;
+        line-height: 24px;
     }
 
-        .is-active {
-            background: #FFFFFF !important;
-            z-index: 2 !important;
-            border-bottom-color: #FFFFFF !important;
+        .tabrow:before {
+            z-index: 1;
         }
 
-            .is-active > a {
-                color: #294C5D !important;
-            }
-
-            .is-active:before {
-                box-shadow: 2px 2px 0 #FFFFFF;
-            }
-
-            .is-active:after {
-                box-shadow: -2px 2px 0 #FFFFFF;
-            }
-
-        .tab-row > li > a {
-            color: #FFFFFF;
+        .tab-row:after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            border-bottom: 1px solid #294C5D;
+            z-index: 1;
         }
 
-.tab-body {
+        .tab-row > li {
+            position: relative;
+            z-index: 0;
+            width: 100%;
+            margin: 0 10px 0 10px;
+            border: 1px solid #4a4a4a;
+            display: inline-block;
+            background: #4a4a4a;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
 
-}
+            .is-active {
+                background: #E9E9E9 !important;
+                z-index: 2 !important;
+                border-bottom-color: #E9E9E9 !important;
+            }
+
+                .is-active > a {
+                    color: #4a4a4a !important;
+                    font-weight: 600;
+                }
+
+                .is-active > a:hover {
+                    color: #4a4a4a !important;
+                }
+
+                .is-active:before {
+                    box-shadow: 2px 2px 0 #4a4a4a;
+                }
+
+                .is-active:after {
+                    box-shadow: -2px 2px 0 #4a4a4a;
+                }
+
+            .tab-row > li > a {
+                color: #FFFFFF;
+                width: 100%;
+            }
+
+                .tab-row > li > a:hover {
+                    color: #FFFFFF;
+                }
+
+                .tab-row > li > a > div:hover {
+                    font-size: 1.15rem;
+                }
+
+    .tab-body {
+        background-color: #E9E9E9;
+        padding: 10px;
+        border-bottom: 1px solid #4a4a4a;
+        border-left: 1px solid #4a4a4a;
+        border-right: 1px solid #4a4a4a;
+    }
+        .tab-desc {
+            margin: 10px;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-gap: 15px;
+            margin: 0 10px 10px 10px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+            .tech-doc {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+                .tech-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .doc-title {
+                    position: absolute;
+                    text-align: center;
+                    width: 100%;
+                    bottom: 0;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    color: #FFFFFF;
+                }
+
+            .design-doc {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+                .design-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+        .pub-grid {
+            display: grid;
+            grid-gap: 15px;
+            margin: 0 10px 10px 10px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* TODO: Look at improving how this behaves. */
+        }
+
+            .pub-doc {
+                display: flex;
+                flex-direction: column;
+            }
+
+                .pub-description {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .pub-title {
+                    text-align: center;
+                    width: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    color: #FFFFFF;
+                }
 
 /* <--- End tab styling */
 
 /* Begin section styling ---> */
 .content {
     display: grid;
+    grid-gap: 40px;
     grid-template-columns: .1fr 1fr .1fr;
     grid-template-areas:
     "lside  about       rside"
@@ -248,6 +335,7 @@ a:hover, a:visited:hover {
 
     .samples {
         grid-area: samples;
+
     }
 
     .learning-experiences {
@@ -426,7 +514,7 @@ a:hover, a:visited:hover {
 .text-block {
     display: flex;
     flex-direction: column;
-    margin: 10px 0 60px 0;
+    margin: 10px 0 10px 0;
     max-width: 900px;
 }
 

@@ -59,17 +59,66 @@
                     <h2> Samples </h2>
                     <tabs>
                         <tab class="tab-body" name="Technical writing" :selected="true">
-                            <section class="Technical writing">
-                                <h5>Yeah tech writing!</h5>
+                            <section class="technical-writing">
+                                <div class="tab-desc">
+                                    <h5>Yeah tech writing!</h5>
+                                    <p>Here's some tech writing stuff I've done.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div v-for="image in techImages">
+                                        <a :href="'Documents/Technical_Writing/' + image.doc">
+                                            <div class="tech-doc">
+                                                <img class="tech-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             </section>
                         </tab>
 
                         <tab class="tab-body" name="Document design">
-                            <h5>Some of my more designer-y stuff.</h5>
+                            <section class="document-design">
+                                <div class="tab-desc">
+                                    <h5>Yeah design stuff!</h5>
+                                    <p>Here's some doc design stuff I've done.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div class="doc-grid" v-for="image in designImages"> <!-- TODO: Look into assigning different classes for different items in the array. -->
+                                        <a :href="'Documents/Document_Design/' + image.doc">
+                                            <div class="design-doc">
+                                                <img class="design-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
                         </tab>
 
                         <tab class="tab-body" name="Published content">
-                            <h5>Articles/blogs that have been published.</h5>
+                            <section class="published-content">
+                                <div class="tab-desc">
+                                    <h5>Published content!</h5>
+                                    <p>Here are some published things that I'm allowed to share.</p>
+                                </div>
+                                <div class="pub-grid">
+                                    <div v-for="link in pubLinks">
+                                        <div class="pub-doc">
+                                            <div class="pub-title">
+                                                <h5>{{ link.title }}</h5>
+                                            </div>
+                                            <div class="pub-desc">
+                                                <p>{{ link.text }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </tab>
                     </tabs>
                 </section>
