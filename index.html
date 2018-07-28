@@ -109,9 +109,11 @@
                                 <div class="pub-grid">
                                     <div v-for="link in pubLinks">
                                         <div class="pub-doc">
-                                            <div class="pub-title">
-                                                <h5>{{ link.title }}</h5>
-                                            </div>
+                                            <a :href="link.link">
+                                                <div class="pub-title">
+                                                    <h5>{{ link.title }}</h5>
+                                                </div>
+                                            </a>
                                             <div class="pub-desc">
                                                 <p>{{ link.text }}</p>
                                             </div>

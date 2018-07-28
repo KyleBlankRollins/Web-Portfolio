@@ -62,8 +62,9 @@ var vm = new Vue({
             { id: 1, title: "About", link: '#about' },
             { id: 2, title: "Samples", link: '#samples' },
             { id: 3, title: "Learning experiences", link: '#learning-experiences' },
-            { id: 4, title: "Work", link: '#work' },
-            { id: 5, title: "Contact", link: '#contact' },
+            { id: 4, title: "Work philosophy", link: '#work-philosophy' },
+            { id: 5, title: "Work History", link: '#work-history' },
+            { id: 6, title: "Contact", link: '#contact' },
         ],
         socialMedia: [
             { id: 1, title: "Twitter", link: 'https://twitter.com/KyleBRollins' },

@@ -30,7 +30,7 @@ a:hover, a:visited:hover {
 
 /* Grid area definitions ---> */
 
-.main-head { /* TODO: Figure out how to make this a sticky header */
+.main-head {
 	grid-area: header;
     position: fixed;
     z-index: 4;
@@ -210,14 +210,17 @@ a:hover, a:visited:hover {
         .doc-grid {
             display: grid;
             grid-gap: 15px;
-            margin: 0 10px 10px 10px;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            padding: 0 10px 10px 10px;
+            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
             .tech-doc {
                 position: relative;
                 display: flex;
                 flex-direction: column;
+                border: 1px solid #294C5D;
+                overflow: hidden;
             }
 
                 .tech-image {
@@ -251,7 +254,7 @@ a:hover, a:visited:hover {
             display: grid;
             grid-gap: 15px;
             margin: 0 10px 10px 10px;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* TODO: Look at improving how this behaves. */
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         }
 
             .pub-doc {
@@ -259,17 +262,26 @@ a:hover, a:visited:hover {
                 flex-direction: column;
             }
 
-                .pub-description {
+                .pub-desc {
                     width: 100%;
                     height: 100%;
                 }
 
+                    .pub-desc p {
+                        margin: 0 0 10px 0;
+                    }
+
                 .pub-title {
-                    text-align: center;
-                    width: 100%;
+                    padding: 5px 0 5px 10px;
+                    width: 75%;
+                    margin: 10px 0 10px 0;
                     background-color: rgba(0, 0, 0, 0.5);
                     color: #FFFFFF;
                 }
+
+                    .pub-title h5 {
+                        margin: 10px 0 5px 0;
+                    }
 
 /* <--- End tab styling */
 
@@ -277,7 +289,7 @@ a:hover, a:visited:hover {
 .content {
     display: grid;
     grid-gap: 40px;
-    grid-template-columns: .1fr 1fr .1fr;
+    grid-template-columns: .03fr 1fr .03fr;
     grid-template-areas:
     "lside  about       rside"
     "lside  samples     rside"
