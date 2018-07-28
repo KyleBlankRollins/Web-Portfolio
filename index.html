@@ -36,17 +36,27 @@
                 </transition>
             </header>
 
-
-
             <section class="content">
+                <section class="about" id="about">
+                    <h2 class="about-title"> About </h2>
+                    <div class="text-block    about-me-text">
+                        <p>I'm a technical writer with a diverse background. I currently document software in the healthcare industry for 3M Health Information Systems.</p>
+                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
+                    </div>
+                    <figure class="profile-pic" id="profile-pic">
+                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
+                        <figcaption>Kyle Rollins</figcaption>
+                    </figure>
+                </section>
+
                 <section class="samples" id="samples">
                     <h2> Samples </h2>
                     <tabs>
                         <tab class="tab-body" name="Technical writing" :selected="true">
                             <section class="technical-writing">
                                 <div class="tab-desc">
-                                    <h5>Yeah tech writing!</h5>
-                                    <p>Here's some tech writing stuff I've done.</p>
+                                    <p>Most of these samples as older, as I can't share any of my current work. However, I've updated all of these within the last 18 months.</p>
                                 </div>
                                 <div class="doc-grid">
                                     <div v-for="image in techImages">
@@ -66,8 +76,7 @@
                         <tab class="tab-body" name="Document design">
                             <section class="document-design">
                                 <div class="tab-desc">
-                                    <h5>Yeah design stuff!</h5>
-                                    <p>Here's some doc design stuff I've done.</p>
+                                    <p>Document and web design are more hobbies for me than professional responsibilities. These are some examples of work I've done for Writhe the Docs SLC.</p>
                                 </div>
                                 <div class="doc-grid">
                                     <div class="doc-grid" v-for="image in designImages"> <!-- TODO: Look into assigning different classes for different items in the array. -->
@@ -87,8 +96,7 @@
                         <tab class="tab-body" name="Published content">
                             <section class="published-content">
                                 <div class="tab-desc">
-                                    <h5>Published content!</h5>
-                                    <p>Here are some published things that I'm allowed to share.</p>
+                                    <p>You can find some of my published work on the web.</p>
                                 </div>
                                 <div class="pub-grid">
                                     <div v-for="link in pubLinks">
@@ -109,23 +117,10 @@
                     </tabs>
                 </section>
 
-                <section class="about" id="about">
-                    <h2 class="about-title"> About </h2>
-                    <div class="text-block    about-me-text">
-                        <p>I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
-                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
-                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
-                    </div>
-                    <figure class="profile-pic" id="profile-pic">
-                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
-                        <figcaption>Kyle Rollins</figcaption>
-                    </figure>
-                </section>
-
                 <section class="learning-experiences" id="learning-experiences">
                     <div class="learning-experiences-title"><h2> Learning experiences </h2></div>
                     <div class="text-block">
-                            <p>I'm always looking for new things to learn. Here, you can see some of my learning exploration. Some of these are in development, but others are mostly complete.</p>
+                            <p>I'm always looking for new things to learn. Here, you can see some of my learning explorations.</p>
                     </div>
                     <div class="experiment-box-container">
                         <div class="experiment-box">
@@ -180,6 +175,9 @@
 
                 <section class="work-history" id="work-history"> <!-- REVIEW: Maybe build this out into tabs. Could have vertical tabs on the left-hand side. -->
                     <div class="work-history-title"><h2> Work history </h2></div>
+                    <div class="text-block">
+                            <p>My work history is diverse, and this is only part of it. If you're interested in seeing more, <a href="#contact">contact me</a>.</p>
+                    </div>
                     <div class="emp-matrix" id="emp-matrix">
                         <div v-for="job in jobHistory">
                             <div class="emp-box">

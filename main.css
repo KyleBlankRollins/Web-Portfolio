@@ -307,8 +307,8 @@ a:hover, a:visited:hover {
     grid-gap: 30px;
     grid-template-columns: .03fr 1fr .03fr;
     grid-template-areas:
-    "lside  samples     rside"
     "lside  about       rside"
+    "lside  samples     rside"
     "lside  learningExp rside"
     "lside  workPhil    rside"
     "lside  workHist    rside"
@@ -325,6 +325,7 @@ a:hover, a:visited:hover {
         grid-template-areas:
         "aboutTitle aboutTitle"
         "aboutMeText profilePic";
+        padding-top: 40px;
     }
 
         .about-title {
@@ -364,7 +365,6 @@ a:hover, a:visited:hover {
 
     .samples {
         grid-area: samples;
-        padding-top: 40px;
     }
 
     .learning-experiences {
@@ -539,10 +539,11 @@ a:hover, a:visited:hover {
     .contact {
         grid-area: contact;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        grid-template-columns: 1fr .1fr;
         grid-template-areas:
         "contactTitle contactTitle"
-        "contactText  contactText"
+        "contactText  socialBox"
         "resume       socialBox";
         align-items: center;
     }
@@ -583,11 +584,14 @@ a:hover, a:visited:hover {
 
         .social-box { /* REVIEW: Can't get flex's flex-end property to work. It does somthing funky and makes the icons disappear... But only when they're wrapped in anchor tags... */
             grid-area: socialBox;
+            display: flex;
+            flex-direction: column;
         }
 
             .social-box > a > img {
                 padding: 5px;
                 max-width: 50px;
+                right: 0;
             }
 
             .social-box > a > img:hover { /* REVIEW: Maybe figure out how to do a better hover effect that fits in with the rest of the site. */

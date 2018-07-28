@@ -58,8 +58,8 @@ var vm = new Vue({
     data: {
         showMenu: false,
         siteSections: [
-            { id: 1, title: "Samples", link: '#samples' },
-            { id: 2, title: "About", link: '#about' },
+            { id: 1, title: "About", link: '#about' },
+            { id: 2, title: "Samples", link: '#samples' },
             { id: 3, title: "Learning experiences", link: '#learning-experiences' },
             { id: 4, title: "Work philosophy", link: '#work-philosophy' },
             { id: 5, title: "Work History", link: '#work-history' },
