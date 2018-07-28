@@ -55,12 +55,11 @@ Vue.component('tab', {
 
 var vm = new Vue({
     el: "#app",
-    created: console.log("[][] App created."),
     data: {
         showMenu: false,
         siteSections: [
-            { id: 1, title: "About", link: '#about' },
-            { id: 2, title: "Samples", link: '#samples' },
+            { id: 1, title: "Samples", link: '#samples' },
+            { id: 2, title: "About", link: '#about' },
             { id: 3, title: "Learning experiences", link: '#learning-experiences' },
             { id: 4, title: "Work philosophy", link: '#work-philosophy' },
             { id: 5, title: "Work History", link: '#work-history' },
@@ -94,6 +93,13 @@ var vm = new Vue({
             { id: 6, title: "The Proliferation of General Studies Degrees", link: "http://www.economicmodeling.com/2016/03/22/proliferation-general-studies-degrees/", text: "What drove the massive completions growth in general studies after the great recession? I compiled and analyzed the data to identify trends and pose some answers." },
             { id: 7, title: "8 Fast-Growing College Programs Not Keeping Up With Employer Demand", link: "http://www.economicmodeling.com/2016/03/03/8-fast-growing-college-programs-not-keeping-up-with-employer-demand/", text: "Not all academic programs are in demand. However, some are in so much demand that there simply aren't enough graduates to fill open positions. Check out this infographic to learn more." },
             { id: 8, title: "From Provo to Peoria, Ranking the Largest 150 Metros for Regional Competitiveness", link: "http://www.economicmodeling.com/2016/02/12/from-provo-to-peoria-ranking-the-largest-150-metros-for-regional-competitiveness/", text: "Once I adjusted for national growth using Emsi's labor market data, it became clear which metros are more competitive than the rest. See the interactive map to see which metros are at the top." },
+        ],
+        jobHistory: [
+            { id: 1, employer: "3M", link: 'https://www.3m.com/3M/en_US/health-information-systems-us/', job: "Technical Writer", desc: "Coordinated with developers to create release notes and other documentation for a dozen healthcare software products.", skills: "research, project management, content reuse" },
+            { id: 2, employer: "eBay", link: 'https://www.ebay.com/', job: "Editor", desc: "As part of the HR user experience team, gathered, curated, wrote, and edited content for a complete intranet overhaul.", skills: "interviewing, project management, collaborative writing" },
+            { id: 3, employer: "Emsi", link: 'http://www.economicmodeling.com/', job: "Technical Writer", desc: "Wrote economic development blog posts, created and edited RFPs and RFP templates, and conducted economic research.", skills: "document management, interviewing, SEO" },
+            { id: 4, employer: "Purch", link: 'http://www.purch.com/', job: "Electronics Writer/Reviewer", desc: "Benchmarked electronics hardware, researched product markets, and targeted product reviews to specific audiences.", skills: "SEO, audience analysis, research" },
+            { id: 5, employer: "Weber State University", link: 'https://www.weber.edu/', job: "Building Manager", desc: "Managed venue events and coordinated with other staff to ensure public safety in a multi-million-dollar building. Contributed to documenting role responsibilities.", skills: "communication, organization, leadership" },
         ],
     },
 });

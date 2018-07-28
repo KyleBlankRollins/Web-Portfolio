@@ -11,28 +11,25 @@
         <!-- <link rel="stylesheet" href="mediaQueries.css"> --> <!-- TODO: re-build mediaQueries.css -->
 		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Montserrat" rel="stylesheet">
         <!-- Load Vue.js -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <!-- Load BootstrapVue -->
-        <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
-        <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
         <!-- Global site tag (gtag.js) - Google Analytics --> <!-- TODO: getting weird error with the script. Re-enable later. -->
 
 	</head>
 
 	<body>
-        <div id="app" v-cloak>
+        <div class="wrapper" id="app" v-cloak>
             <header class="main-head">
                 <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div>
 
                 <transition name="slide-fade" mode="out-in">
                         <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
-                        <div class="close" v-else @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                        <div class="close" v-else @click="showMenu = !showMenu"><img class="menu-icons" src="Images/close.svg" /></div>
                 </transition>
 
                 <transition name="vertical-fade" mode="out-in">
                     <ul class="nav-list" v-if="showMenu">
                         <li v-for="section in siteSections">
-                            <a :href="section.link"><h5> {{ section.title }} </h5></a>
+                            <a :href="section.link"><h3> {{ section.title }} </h3></a>
                         </li>
                     </ul>
                     <!-- TODO: Maybe add social media links here. -->
@@ -42,19 +39,6 @@
 
 
             <section class="content">
-                <section class="about" id="about">
-                    <h2 class="about-title"> About </h2>
-                    <div class="text-block    about-me-text">
-                        <p>I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
-                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
-                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
-                    </div>
-                    <figure class="profile-pic" id="profile-pic">
-                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
-                        <figcaption>Me: Kyle Rollins</figcaption>
-                    </figure>
-                </section>
-
                 <section class="samples" id="samples">
                     <h2> Samples </h2>
                     <tabs>
@@ -125,14 +109,32 @@
                     </tabs>
                 </section>
 
+                <section class="about" id="about">
+                    <h2 class="about-title"> About </h2>
+                    <div class="text-block    about-me-text">
+                        <p>I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
+                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
+                    </div>
+                    <figure class="profile-pic" id="profile-pic">
+                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
+                        <figcaption>Kyle Rollins</figcaption>
+                    </figure>
+                </section>
+
                 <section class="learning-experiences" id="learning-experiences">
                     <div class="learning-experiences-title"><h2> Learning experiences </h2></div>
+                    <div class="text-block">
+                            <p>I'm always looking for new things to learn. Here, you can see some of my learning exploration. Some of these are in development, but others are mostly complete.</p>
+                    </div>
                     <div class="experiment-box-container">
                         <div class="experiment-box">
                             <a href="https://dok-compare.kyleblankrollins.com/">
-                                <img class="experiment-image" src="Images/DoK_compare.png" alt="DoK Compare image"/>
+                                <div class="experiment-image">
+                                    <img src="Images/DoK_compare.png" alt="DoK Compare image"/>
+                                </div>
                                 <div class="experiment-overlay">
-                                    <div class="experiment-title">DoK Compare</div>
+                                    <div class="experiment-title">Website: DoK Compare</div>
                                 </div>
                             </a>
                         </div>
@@ -176,21 +178,47 @@
                     </div>
                 </section>
 
-                <section class="work-history" id="work-history">
+                <section class="work-history" id="work-history"> <!-- REVIEW: Maybe build this out into tabs. Could have vertical tabs on the left-hand side. -->
                     <div class="work-history-title"><h2> Work history </h2></div>
-
+                    <div class="emp-matrix" id="emp-matrix">
+                        <div v-for="job in jobHistory">
+                            <div class="emp-box">
+                                <a :href="job.link">
+                                    <div class="emp-name"> {{ job.employer }} </div>
+                                </a>
+                                <div class="job-box">
+                                    <div class="job-title"> {{ job.job }} </div>
+                                    <div class="job-desc">
+                                        <p> {{ job.desc  }} </p>
+                                        <p><b>Skills: </b>{{ job.skills }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="contact" id="contact">
                     <div class="contact-title"><h2> Contact </h2></div>
-                    <div class="textBlock">
-                        Thank you for your interest. My resume contains my email address. <!-- TODO: Add social media links in this section. -->
+                    <div class="textBlock    contact-text">
+                        Thank you for your interest. You can find me in many of the usual places around the web. My resume contains my email address if you want to get in touch that way. <!-- TODO: Add social media links in this section. -->
                     </div>
                     <div class="resume">
                         <a href="Documents/Resume_05_2018.pdf" target="_blank">
                             <div class="resume-box">
-                                Resume >>>
+                                Resume >>
                             </div>
+                        </a>
+                    </div>
+                    <div class="social-box">
+                        <a href="https://github.com/KyleBlankRollins">
+                            <img src="Images/github-square.svg" />
+                        </a>
+                        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">
+                            <img src="Images/linkedin.svg" />
+                        </a>
+                        <a href="https://twitter.com/KyleBRollins">
+                            <img src="Images/twitter-square.svg" />
                         </a>
                     </div>
                 </section>

@@ -10,9 +10,9 @@ h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", Helvetica, sans-serif;
 }
 
-h1 { font-size: 1.4rem; }
+h1 { font-size: 1.5rem; }
 
-h2 { font-size: 1.3rem; margin: .8em 0 .3em 0; }
+h2 { font-size: 1.4rem; margin: .8em 0 .3em 0; }
 
 h3 { font-size: 1.2rem; }
 
@@ -27,23 +27,6 @@ a:hover, a:visited:hover {
 	color: #B87462;
 }
 /* <--- End page setup. */
-
-/* Grid area definitions ---> */
-
-.main-head {
-	grid-area: header;
-    position: fixed;
-    z-index: 4;
-    left: 0;
-    width: 100%;
-    display: grid;
-    grid-template-columns: .075fr 1fr;
-    background-color: rgba(255, 255, 255, 0.95);
-    grid-template-areas:
-    "logo     menu"
-    "nav-list nav-list";
-    border-bottom: 1px solid #294C5D;
-}
 
 /* Banner styling ---> */
 .logo {
@@ -68,49 +51,64 @@ a:hover, a:visited:hover {
 
 /* Nav menu styling ---> */
 
-.close {
-    grid-area: menu;
-    display: flex !important;
-    justify-content: flex-end;
-    cursor: pointer;
-    transition: all .3s ease;
-    padding-top: 5px;
+.main-head {
+	grid-area: header;
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: .075fr 1fr;
+    background-color: rgba(255, 255, 255, 0.95);
+    grid-template-areas:
+    "logo     menu"
+    "nav-list nav-list";
+    border-bottom: 1px solid #294C5D;
 }
 
-.menu {
-    grid-area: menu;
-    display: flex !important;
-    justify-content: flex-end;
-    cursor: pointer;
-    transition: all .3s ease;
-    padding-top: 5px;
-}
-
-    .nav-list {
-        grid-area: nav-list;
-        width: 100%;
-        padding: 10px 0 10px 0;
-        margin: 0;
-        border-top: solid 1px #294C5D;
+    .close {
+        grid-area: menu;
+        display: flex !important;
+        justify-content: flex-end;
+        cursor: pointer;
+        transition: all .3s ease;
+        padding-top: 5px;
     }
 
-        .nav-list > ul {
-            display: grid;
-            grid-gap: 5px;
+    .menu {
+        grid-area: menu;
+        display: flex !important;
+        justify-content: flex-end;
+        cursor: pointer;
+        transition: all .3s ease;
+        padding-top: 5px;
+    }
+
+        .nav-list {
+            grid-area: nav-list;
+            width: 100%;
+            padding: 10px 0 10px 0;
+            margin: 0;
+            border-top: solid 1px #294C5D;
         }
 
-            .nav-list li {
-                list-style-type: none;
-                margin: 0 0 0 40px;
+            .nav-list > ul {
+                display: grid;
+                grid-gap: 5px;
             }
 
-                .nav-list h5 {
-                    margin: 0;
+                .nav-list li {
+                    list-style-type: none;
+                    margin: 0 0 0 40px;
                 }
 
-    .menu-icons {
-        width: 36px;
-    }
+                    .nav-list h3 {
+                        margin: 5px 0 5px 0;
+                    }
+
+        .menu-icons {
+            width: 36px;
+        }
 
 /* <--- End nav menu styling */
 
@@ -190,6 +188,7 @@ a:hover, a:visited:hover {
 
                 .tab-row > li > a:hover {
                     color: #FFFFFF;
+                    opacity: .7;
                 }
 
                 .tab-row > li > a > div:hover {
@@ -238,6 +237,10 @@ a:hover, a:visited:hover {
                     color: #FFFFFF;
                 }
 
+                .tech-doc:hover {
+                    opacity: .7;
+                }
+
             .design-doc {
                 position: relative;
                 display: flex;
@@ -248,6 +251,10 @@ a:hover, a:visited:hover {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                }
+
+                .design-doc:hover {
+                    opacity: .7;
                 }
 
         .pub-grid {
@@ -283,26 +290,36 @@ a:hover, a:visited:hover {
                         margin: 10px 0 5px 0;
                     }
 
+                    .pub-title:hover {
+                        opacity: .7;
+                    }
+
+
 /* <--- End tab styling */
 
 /* Begin section styling ---> */
+.wrapper {
+    display: grid;
+}
+
 .content {
     display: grid;
-    grid-gap: 40px;
+    grid-gap: 30px;
     grid-template-columns: .03fr 1fr .03fr;
     grid-template-areas:
-    "lside  about       rside"
     "lside  samples     rside"
+    "lside  about       rside"
     "lside  learningExp rside"
     "lside  workPhil    rside"
     "lside  workHist    rside"
     "lside  contact     rside";
+    justify-self: center;
+    max-width: 1200px;
 }
 
     .about {
         grid-area: about;
         display: grid;
-        padding-top: 40px;
         grid-template-columns: 1fr .5fr;
         max-width: 1200px;
         grid-template-areas:
@@ -347,7 +364,7 @@ a:hover, a:visited:hover {
 
     .samples {
         grid-area: samples;
-
+        padding-top: 40px;
     }
 
     .learning-experiences {
@@ -357,48 +374,33 @@ a:hover, a:visited:hover {
         .experiment-box-container {
             display: grid;
             grid-gap: 5px;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            grid-auto-rows: 75px;
-            grid-auto-flow: dense;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
-            .experiment-overlay {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background-color: rgba(74,74,74,.95);
-                overflow: hidden;
-                width: 100%;
-                height: 0;
-                transition: .5s ease;
-            }
-
             .experiment-box {
-                display: flex;
                 position: relative;
-                grid-column: span 3;
-                grid-row: span 2;
-                background-color: lightblue;
                 margin: 5px;
                 cursor: pointer;
             }
 
-            .experiment-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+                .experiment-box:hover {
+                    opacity: .7;
+                }
+
+                .experiment-image img {
+                    width: 100%;
+                    object-fit: cover;
+                }
 
             .experiment-overlay {
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                background-color: rgba(74,74,74,.95);
+                background-color: rgba(74,74,74,.7);
                 overflow: hidden;
                 width: 100%;
-                height: 30%;
+                height: 10%;
                 transition: .5s ease;
             }
 
@@ -476,36 +478,121 @@ a:hover, a:visited:hover {
         grid-area: workHist;
     }
 
+        .emp-matrix {
+            justify-self: center;
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: minmax(250px, 1fr);
+            margin: 20px 0 0 0;
+        }
+
+            .emp-box {
+                display: grid;
+                grid-gap: 5px;
+                grid-template-columns: minmax(50px, .5fr) minmax(200px, 1fr);
+                width: 100%;
+            }
+
+                .emp-name {
+                	display: flex;
+                	align-items: center;
+                	justify-content: center;
+                	text-align: center;
+                	font-family: "IBM Plex Sans", Helvetica, sans-serif;
+                	height: 100%;
+                	width: 100%;
+                	font-size: 1em;
+                	font-weight: bold;
+                	color: white;
+                    background-color: #294C5D;
+                }
+
+                .emp-name:hover{
+                    background-color: #B87462;
+                }
+
+                .job-box {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .job-title {
+                    display: flex;
+                	align-items: center;
+                	font-family: "IBM Plex Sans", Helvetica, sans-serif;
+                	font-weight: bold;
+                	padding-left: 10px;
+                    color: #FFFFFF;
+                    background-color: #4a4a4a;
+                }
+
+                .job-desc {
+                    background-color: #E9E9E9;
+                    padding-bottom: 5px;
+                }
+
+                .job-desc p,h4 {
+                	margin: 15px 10px 0 10px;
+                    font-size: .9em;
+                }
+
     .contact {
         grid-area: contact;
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "contactTitle contactTitle"
+        "contactText  contactText"
+        "resume       socialBox";
         align-items: center;
     }
 
-        .resume {
-            height: 100%;
+        .contact-title {
+            grid-area: contactTitle;
         }
 
-        .resume-box {
+        .contact-text {
+            grid-area: contactText;
+        }
+
+        .resume {
+            grid-area: resume;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-family: "IBM Plex Sans", Helvetica, sans-serif;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: white;
-            height: 80%;
-            width: 20%;
-            min-width: 160px;
-            margin: 15px 0 15px 0;
-            background-color: #294C5D;
         }
 
-        .resume-box:hover{
-            background-color: #B87462;
+            .resume-box {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-family: "IBM Plex Sans", Helvetica, sans-serif;
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: white;
+                height: 3rem;
+                width: 20%;
+                min-width: 160px;
+                margin: 15px 0 15px 0;
+                background-color: #294C5D;
+            }
+
+            .resume-box:hover {
+                background-color: #B87462;
+            }
+
+        .social-box { /* REVIEW: Can't get flex's flex-end property to work. It does somthing funky and makes the icons disappear... But only when they're wrapped in anchor tags... */
+            grid-area: socialBox;
         }
+
+            .social-box > a > img {
+                padding: 5px;
+                max-width: 50px;
+            }
+
+            .social-box > a > img:hover { /* REVIEW: Maybe figure out how to do a better hover effect that fits in with the rest of the site. */
+                opacity: .7;
+            }
 
 /* <--- End section styling */
 
