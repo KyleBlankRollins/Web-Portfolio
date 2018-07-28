@@ -6,321 +6,224 @@
         <meta name="description" content="Web Portfolio">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> --> <!-- TODO: Fix favicon -->
         <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="mediaQueries.css">
-		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Roboto" rel="stylesheet">
-		<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+        <!-- <link rel="stylesheet" href="mediaQueries.css"> --> <!-- TODO: re-build mediaQueries.css -->
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Montserrat" rel="stylesheet">
+        <!-- Load Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics --> <!-- TODO: getting weird error with the script. Re-enable later. -->
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-84528778-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'UA-84528778-1');
-        </script>
 	</head>
 
 	<body>
-		<section class="wrapper">
-			<header class="main-head">
-                <div class ="logo"><a href="index.html#titleA"><p class="logoOuter">K</p><p id="logoInner">_</p><p class="logoOuter">R</p></a></div>
-                <div class="menu" onclick="expandMenu(this)">
-                  <div class="bar1"></div>
-                  <div class="bar2"></div>
-                  <div class="bar3"></div>
-                </div>
+        <div class="wrapper" id="app" v-cloak>
+            <header class="main-head">
+                <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div>
 
-                <div class="banner hide" id="banner">
-                    <nav class="main-nav">
-                      <ul class="nav-list">
-                          <a href="index.html#anchorA"><li>About</li></a>
-                          <a href="index.html#anchorB"><li>Samples</li></a>
-                          <a href="index.html#anchorC"><li>Work</li></a>
-                          <a href="index.html#anchorE"><li>Contact</li></a>
-                      </ul>
-                  </nav>
-                </div>
-                <div class="contactIcons hide" id="contactIcons">
-                    <ul class="socialList">
-                      <a href="https://twitter.com/KyleBRollins" class="socialMedia" target="_blank"><li><i class="fab fa-twitter fa-fw"></i></li></a>
-                      <a href="https://www.linkedin.com/in/kyle-blank-rollins/" class="socialMedia" target="_blank"><li><i class="fab fa-linkedin-in fa-fw"></i></li></a>
-                      <a href="https://github.com/KyleBlankRollins" class="socialMedia" target="_blank"><li><i class="fab fa-github"></i></li></a>
+                <transition name="slide-fade" mode="out-in">
+                        <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                        <div class="close" v-else @click="showMenu = !showMenu"><img class="menu-icons" src="Images/close.svg" /></div>
+                </transition>
+
+                <transition name="vertical-fade" mode="out-in">
+                    <ul class="nav-list" v-if="showMenu">
+                        <li v-for="section in siteSections">
+                            <a :href="section.link"><h3> {{ section.title }} </h3></a>
+                        </li>
                     </ul>
-                </div>
+                    <!-- TODO: Maybe add social media links here. -->
+                </transition>
             </header>
 
-			<main class="content">
-                <div class="anchor" id="anchorA"></div>
-                <div class="title" id="titleA">
-                    <h1>Kyle Rollins</h1>
-                </div>
-                <article class="aboutMe">
-                    <div class="textBlock" id="aboutMeText">
-                        <p>
-                            I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.
-                        </p>
-                        <p>
-                            As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.
-                        </p>
-                        <p class="note">
-                            <b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.
-                        </p>
+
+
+            <section class="content">
+                <section class="samples" id="samples">
+                    <h2> Samples </h2>
+                    <tabs>
+                        <tab class="tab-body" name="Technical writing" :selected="true">
+                            <section class="technical-writing">
+                                <div class="tab-desc">
+                                    <h5>Yeah tech writing!</h5>
+                                    <p>Here's some tech writing stuff I've done.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div v-for="image in techImages">
+                                        <a :href="'Documents/Technical_Writing/' + image.doc">
+                                            <div class="tech-doc">
+                                                <img class="tech-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
+
+                        <tab class="tab-body" name="Document design">
+                            <section class="document-design">
+                                <div class="tab-desc">
+                                    <h5>Yeah design stuff!</h5>
+                                    <p>Here's some doc design stuff I've done.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div class="doc-grid" v-for="image in designImages"> <!-- TODO: Look into assigning different classes for different items in the array. -->
+                                        <a :href="'Documents/Document_Design/' + image.doc">
+                                            <div class="design-doc">
+                                                <img class="design-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
+
+                        <tab class="tab-body" name="Published content">
+                            <section class="published-content">
+                                <div class="tab-desc">
+                                    <h5>Published content!</h5>
+                                    <p>Here are some published things that I'm allowed to share.</p>
+                                </div>
+                                <div class="pub-grid">
+                                    <div v-for="link in pubLinks">
+                                        <div class="pub-doc">
+                                            <a :href="link.link">
+                                                <div class="pub-title">
+                                                    <h5>{{ link.title }}</h5>
+                                                </div>
+                                            </a>
+                                            <div class="pub-desc">
+                                                <p>{{ link.text }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
+                    </tabs>
+                </section>
+
+                <section class="about" id="about">
+                    <h2 class="about-title"> About </h2>
+                    <div class="text-block    about-me-text">
+                        <p>I'm a technical writer with experience in electronics reviews, marketing copy, technical documentation, and website/UI microcopy.</p>
+                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
                     </div>
-                    <div class="profilePic" id="profilePic">
+                    <figure class="profile-pic" id="profile-pic">
                         <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
-                    </div>
-                </article>
-                <hr>
-                <div class="anchor" id="anchorB"></div>
-                <div class="title" id="titleB">
-                    <h2>Samples</h2>
-                    <div class="textBlock">
-                        <p>
-                            These samples range from technical writing to document design. Take a look below!
-                        </p>
-                    </div>
-                </div>
-                <article class="samples" id="samples">
-                    <div class="pane" id="techWriting">
-                        <div class="overlay" id="techOverlay">
-                            <div class="paneTitle" id="techTitle">Technical Writing</div>
-                            <div class="sampleContainer  hide" id="sampleTech">
-                                <div class="slideContainer">
-                                      <a href="Documents/Technical_Writing/Gimo_Games_Style_Guide.pdf" target="_blank"><img class="techSlides" src="Images/writing_samples/Gimo_Games_Style_Guide.png" style="width:100%" alt="Gimo Games Style Guide writing sample."/></a>
-                                      <a href="Documents/Technical_Writing/Chi_Tester_User_Guide.pdf" target="_blank"><img class="techSlides" src="Images/writing_samples/Chi_Tester.png" style="width:100%" alt="Chi Tester User Guide writing sample."/></a>
-                                      <a href="Documents/Technical_Writing/Shepherd_Union_Building_Manager_Handbook.pdf" target="_blank"><img class="techSlides" src="Images/writing_samples/Shepherd_Union_Building_Manager_Handbook.png" style="width:100%" alt="Shepherd Union Building Manager Handbook writing sample."/></a>
-                                      <a href="Documents/Technical_Writing/Proposal_Template.pdf" target="_blank"> <img class="techSlides" src="Images/writing_samples/Proposal_Template.png" style="width:100%" alt="Proposal Template writing sample."/></a>
+                        <figcaption>Kyle Rollins</figcaption>
+                    </figure>
+                </section>
 
-                                      <div class="buttonBlock">
-                                          <button class="buttonDisplayLeft" onclick="plusTechDivs(-1)">&#10094;</button>
-                                          <button class="buttonDisplayRight" onclick="plusTechDivs(1)">&#10095;</button>
-                                      </div>
+                <section class="learning-experiences" id="learning-experiences">
+                    <div class="learning-experiences-title"><h2> Learning experiences </h2></div>
+                    <div class="text-block">
+                            <p>I'm always looking for new things to learn. Here, you can see some of my learning exploration. Some of these are in development, but others are mostly complete.</p>
+                    </div>
+                    <div class="experiment-box-container">
+                        <div class="experiment-box">
+                            <a href="https://dok-compare.kyleblankrollins.com/">
+                                <div class="experiment-image">
+                                    <img src="Images/DoK_compare.png" alt="DoK Compare image"/>
                                 </div>
-                            </div>
-                        </div>
-          			</div>
-                    <div class="pane" id="docDesign">
-                        <div class="overlay" id="designOverlay">
-                            <div class="paneTitle" id="designTitle">Document Design</div>
-                            <div class="sampleContainer  hide" id="sampleDesign">
-                                <div class="slideContainer">
-                                      <a href="Documents/Document_Design/WTD_Jan_Role-Documentarian.pdf" target="_blank"><img class="designSlides" src="Images/writing_samples/WTD_Jan_Role-Documentarian.png" style="width:100%" alt="Workshop card design sample."/></a>
-                                      <a href="Documents/Document_Design/WTD_Apr_Agenda.pdf" target="_blank"><img class="designSlides" src="Images/writing_samples/WTD_Apr_Agenda.png" style="width:100%" alt="Meetup agenda design sample."/></a>
-                                      <a href="Documents/Document_Design/Quick_tips_front.pdf" target="_blank"><img class="designSlides" src="Images/writing_samples/Quick_tips_front.png" style="width:100%" alt="Quick tips front design sample."/></a>
-                                      <a href="Documents/Document_Design/WTD_Jan_Reference_Sheet.pdf" target="_blank"><img class="designSlides" src="Images/writing_samples/WTD_Jan_Reference_Sheet.png" style="width:100%" alt="Meetup reference sheet design sample."/></a>
-                                      <a href="Documents/Document_Design/APA_outside.pdf" target="_blank"><img class="designSlides" src="Images/writing_samples/APA_outside.jpg" style="width:100%" alt="APA brochure design sample."/></a>
-                                      <a href="Documents/Document_Design/MLA_outside.pdf" target="_blank"> <img class="designSlides" src="Images/writing_samples/MLA_outside.jpg" style="width:100%" alt="MLA brochure design sample."/></a>
-
-                                      <div class="buttonBlock">
-                                          <button class="buttonDisplayLeft" onclick="plusDesignDivs(-1)">&#10094;</button>
-                                          <button class="buttonDisplayRight" onclick="plusDesignDivs(1)">&#10095;</button>
-                                      </div>
+                                <div class="experiment-overlay">
+                                    <div class="experiment-title">Website: DoK Compare</div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
-                    <div class="pane" id="pubContent">
-                        <div class="overlay" id="pubOverlay">
-                            <div class="paneTitle" id="pubTitle">Published Content</div>
-                            <div class="sampleContainer  hide" id="sampleArticles">
-                                <div class="slideContainer">
-                                      <div class="pubSlides" style="width:100%">
-                                          <a href="http://www.economicmodeling.com/2016/09/09/fastest-growing-academic-programs-2015/" target="_blank"><p><b>The Fastest-Growing Academic Programs of 2015</b></p></a>
-                      					  <p>With new IPEDS data at hand, I set out to determine which academic programs grew the most compared to 2014. There are the expected results, but also some surprises.</p>
+                </section>
 
-                                          <a href="http://www.economicmodeling.com/2016/08/08/exploring-mba-demand/" target="_blank"><p><b>Exploring the Demand for MBA Graduates</b></p></a>
-                                          <p>It's no secret that the MBA is a popular degree choice. In fact, it's the most popular post-grad in the country. Why is that? I analyzed Emsi's Job Posting Analytics to find out.</p>
-                                      </div>
-                                      <div class="pubSlides" style="width:100%">
-                                          <a href="http://www.economicmodeling.com/2016/05/31/the-rise-of-postsecondary-certificates-in-the-us/" target="_blank"><p><b>The Rise of Postsecondary Certificates in the US</b></p></a>
-          			                      <p>Four-year degrees are expensive. That's why many displaced workers looked to postsecondary certificates during and after the great recession. But what happened as the economy improved and what does it mean for higher education institutions?</p>
-
-                                          <a href="http://www.economicmodeling.com/2016/05/17/guided-pathways-stories-pilot-colleges/" target="_blank"><p><b>Guided Pathways: Stories From Pilot Colleges</b></p></a>
-          			                      <p>How does the Guided Pathways model benefit students and community colleges? I asked some college leaders at pathways pilot colleges to find out.</p>
-                                      </div>
-
-                                      <div class="pubSlides" style="width:100%">
-                                          <a href="http://www.economicmodeling.com/2016/03/30/state-tech-industry-7-takeaways-comptias-cyberstates-2016-report/" target="_blank"><p><b>State of the Tech Industry: 7 Takeaways from CompTIA’s Cyberstates 2016 Report</b></p></a>
-          			                      <p>The tech industry rapidly changes, which is why CompTIA releases a major industry report every year. Don't have time to dig through it all? I summarized seven main points to pay attention to.</p>
-
-                                          <a href="http://www.economicmodeling.com/2016/03/22/proliferation-general-studies-degrees/" target="_blank"><p><b>The Proliferation of General Studies Degrees</b></p></a>
-          			                      <p>What drove the massive completions growth in general studies after the great recession? I compiled and analyzed the data to identify trends and pose some answers.</p>
-                                      </div>
-                                      <div class="pubSlides" style="width:100%">
-                                          <a href="http://www.economicmodeling.com/2016/03/03/8-fast-growing-college-programs-not-keeping-up-with-employer-demand/" target="_blank"><p><b>8 Fast-Growing College Programs Not Keeping Up With Employer Demand</b></p></a>
-          			                      <p>Not all academic programs are in demand. However, some are in so much demand that there simply aren't enough graduates to fill open positions. Check out this infographic to learn more.</p>
-
-                                          <a href="http://www.economicmodeling.com/2016/02/12/from-provo-to-peoria-ranking-the-largest-150-metros-for-regional-competitiveness/" target="_blank"><p><b>From Provo to Peoria, Ranking the Largest 150 Metros for Regional Competitiveness</b></p></a>
-          			                      <p>Once I adjusted for national growth using Emsi's labor market data, it became clear which metros are more competitive than the rest. See the interactive map to see which metros are at the top.</p>
-                                      </div>
-
-                                      <div class="buttonBlock">
-                                          <button class="buttonDisplayLeft" onclick="plusPubDivs(-1)">&#10094;</button>
-                                          <button class="buttonDisplayRight" onclick="plusPubDivs(1)">&#10095;</button>
-                                      </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <hr>
-                <div class="anchor" id="anchorC"></div>
-                <div class="title" id="titleC">
-                    <h2>Work philosophy</h2>
-                </div>
-                <article class="workPhilosophy">
-                    <div class="textBlock">
+                <section class="work-philosophy" id="work-philosophy">
+                    <div class="work-philosophy-title"><h2> Work philosophy </h2></div>
+                    <div class="text-block  phil-text">
                         <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
                         <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
                         <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
                         <p>In everything, be kind, courteous, and understanding. Be open to criticism, as it's one of the best ways to learn. Communication is about people. Cater to their needs, and good communication will follow.</p>
                     </div>
-                    <div class="philosophyList">
-                        <div class="listTitle"><p>My Clifton Strengths top 5</p></div>
-                        <div class="philOrdered">
+                    <div class="philosophy-list">
+                        <div class="list-title"><p>My Clifton Strengths top 5</p></div>
+                        <div class="phil-ordered">
                             <ol>
                                 <li>
                                     <b>Restorative</b><br>
-                                    <p class="listDescription">I enjoy finding and solving problems.</p>
+                                    <p class="list-description">I enjoy finding and solving problems.</p>
                                 </li>
                                 <li>
                                     <b>Learner</b><br>
-                                    <p class="listDescription">New ideas and challenges excite me.</p>
+                                    <p class="list-description">New ideas and challenges excite me.</p>
                                 </li>
                                 <li>
                                     <b>Discipline</b><br>
-                                    <p class="listDescription">Structure is important to me.</p>
+                                    <p class="list-description">Structure is important to me.</p>
                                 </li>
                                 <li>
                                     <b>Intellection</b><br>
-                                    <p class="listDescription">I'm introspective.</p>
+                                    <p class="list-description">I'm introspective.</p>
                                 </li>
                                 <li>
                                     <b>Developer</b><br>
-                                    <p class="listDescription">Helping others improve gives me purpose.</p>
+                                    <p class="list-description">Helping others improve gives me purpose.</p>
                                 </li>
                             </ol>
                         </div>
                     </div>
-                </article>
-                <hr>
-                <div class="anchor" id="anchorD"></div>
-                <div class="title" id="titleD">
-                    <h2>Work history</h2>
-                </div>
-                <article class="workHistory" id="workHistory">
-                    <div class="empMatrix" id="empMatrix">
-                        <div class="empBox" id="empBox1">
-                            <a href="https://www.3m.com/3M/en_US/health-information-systems-us/" target="_blank">
-                                <div class="empName">
-                                    3M
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle1">&nbsp;&nbsp;Technical Writer</div>
-                                <div class="jobDesc" id="jobDesc1">
-                                    <p>Coordinated with developers to create release notes and other documentation for a dozen healthcare software products.</p>
-                                    <p><b>Skills:</b> research, project management, content reuse</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empBox" id="empBox2">
-                            <a href="https://www.ebay.com/" target="_blank">
-                                <div class="empName">
-                                    eBay
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle2">&nbsp;&nbsp;Editor</div>
-                                <div class="jobDesc" id="jobDesc2">
-                                    <p>As part of the HR user experience team, gathered, curated, wrote, and edited content for a complete intranet overhaul.</p>
-                                    <p><b>Skills:</b> interviewing, project management, collaborative writing</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empBox" id="empBox3">
-                            <a href="http://www.economicmodeling.com/" target="_blank">
-                                <div class="empName">
-                                    Emsi
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle3">&nbsp;&nbsp;Technical Writer</div>
-                                <div class="jobDesc" id="jobDesc3">
-                                    <p>Wrote economic development blog posts, created and edited RFPs and RFP templates, and conducted economic research.</p>
-                                    <p><b>Skills:</b> document management, interviewing, SEO</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empBox" id="empBox4">
-                            <a href="http://www.purch.com/" target="_blank">
-                                <div class="empName">
-                                    Purch
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle4">&nbsp;&nbsp;Electronics Writer/Reviewer</div>
-                                <div class="jobDesc" id="jobDesc4">
-                                    <p>Benchmarked electronics hardware, researched product markets, and targeted product reviews to specific audiences.</p>
-                                    <p><b>Skills:</b> SEO, audience analysis, research</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empBox" id="empBox5">
-                            <a href="https://www.weber.edu/" target="_blank">
-                                <div class="empName">
-                                    Weber State University
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle5">&nbsp;&nbsp;Building Manager</div>
-                                <div class="jobDesc" id="jobDesc5">
-                                    <p>Managed venue events and coordinated with other staff to ensure public safety in a multi-million-dollar building. Contributed to documenting role responsibilities.</p>
-                                    <p><b>Skills:</b> communication, organization, leadership</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="empBox" id="empBox6">
-                            <a href="https://www.lds.org/" target="_blank">
-                                <div class="empName">
-                                    Gimo Games
-                                </div>
-                            </a>
-                            <div class="jobBox">
-                                <div class="jobTitle" id="jobTitle6">&nbsp;&nbsp;Copy Writer/Editor</div>
-                                <div class="jobDesc" id="jobDesc6">
-                                    <p>Organized team documents, wrote a team style guide, and wrote/edited story elements.</p>
-                                    <p><b>Skills:</b> content management, story telling, style development</p>
+                </section>
+
+                <section class="work-history" id="work-history"> <!-- REVIEW: Maybe build this out into tabs. Could have vertical tabs on the left-hand side. -->
+                    <div class="work-history-title"><h2> Work history </h2></div>
+                    <div class="emp-matrix" id="emp-matrix">
+                        <div v-for="job in jobHistory">
+                            <div class="emp-box">
+                                <a :href="job.link">
+                                    <div class="emp-name"> {{ job.employer }} </div>
+                                </a>
+                                <div class="job-box">
+                                    <div class="job-title"> {{ job.job }} </div>
+                                    <div class="job-desc">
+                                        <p> {{ job.desc  }} </p>
+                                        <p><b>Skills: </b>{{ job.skills }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </article>
-                <hr>
-                <div class="anchor" id="anchorE"></div>
-                <div class="title" id="titleE">
-                    <h2>Contact</h2>
-                </div>
-                <article class="contact" id="contact">
-                    <div class="textBlock">
-                        Thank you for your interest. To get in touch, follow the social media links in the header. My resume contains my email address.
+                </section>
+
+                <section class="contact" id="contact">
+                    <div class="contact-title"><h2> Contact </h2></div>
+                    <div class="textBlock    contact-text">
+                        Thank you for your interest. You can find me in many of the usual places around the web. My resume contains my email address if you want to get in touch that way. <!-- TODO: Add social media links in this section. -->
                     </div>
                     <div class="resume">
                         <a href="Documents/Resume_05_2018.pdf" target="_blank">
-                            <div class="resumeBox">
-                                Resume >>>
+                            <div class="resume-box">
+                                Resume >>
                             </div>
                         </a>
                     </div>
-                </article>
-			</main>
-		</section>
-
-        <script src="js/slideshow.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/Work_History.js"></script>
+                    <div class="social-box">
+                        <a href="https://github.com/KyleBlankRollins">
+                            <img src="Images/github-square.svg" />
+                        </a>
+                        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">
+                            <img src="Images/linkedin.svg" />
+                        </a>
+                        <a href="https://twitter.com/KyleBRollins">
+                            <img src="Images/twitter-square.svg" />
+                        </a>
+                    </div>
+                </section>
+            </section>
+        </div>
+        <script src="main.js"></script>
 	</body>
 </html>

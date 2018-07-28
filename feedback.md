@@ -146,3 +146,41 @@ Great point! I'll reduce the text further. Thanks again for taking the time to l
 
 wouter [9:28 AM]
 my pleasure, props for sharing :thumbsup_all:
+
+
+
+
+Hey Kyle,
+
+Here are some initial thoughts. I looked at this from two approaches: a) from the perspective of an outside coming to the site and a general UI/UX impression and b) from a perspective of code.
+
+A:
+- I'm a big fan of portrait photos in circles rather than squares
+- If someone clicks on your menu, what if the rest of the page moved down with it, instead of being overlayed?
+- The bottom of the page says follow the social media icons in the header, and my first thought was ... where are they? I didn't realize they were in the drop down.
+- You might look into a smooth scroll JS library. Additionally, when some one jumps to a section, I'd have the menu auto-close
+- you might consider some use of imagery, something like FontAwesome
+
+B:
+- have you considered using a CSS framework like bootstrap?
+- you might look into using jQuery for some of your animations if you haven't already done so. You'll find it's easier to create more complicated and smoother transitions
+-  jQuery would also help clean up the JS in your workhistory (per your comment on github)
+- standard practice would be to keep all your JS in one .js document as your CSS in one .css file.
+- in your CSS, you'll want to group attributes that are the same to keep your code DRY  (https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)  i.e.
+
+h1,h2,h3,h4 {  font-family: "IBM Plex Sans", Helvetica, sans-serif; }
+
+h1 {  font-size: 1.4em; }
+h2 { etc etc
+
+-  if your box model properties are the same vertically vs. horizontally, you can save your self some bytes like this:
+
+instead of
+.buttonBlock {
+ margin: 10px 0 10px 0;
+}
+
+use: .buttonBlock { margin: 10px 0; }
+The first is the bottom and top, and the second is the right and left attributes.
+
+Nice work :) You've got some neat stuff going on here... if there's anything you've wanted to do and need help with, just let me know :)

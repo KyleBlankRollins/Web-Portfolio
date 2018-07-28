@@ -1,8 +1,0 @@
-/* --- Page setup. ---*/
-html, body {
-  background-color: #FFFFFF;
-  margin: 10px;
-  font-size: 1.2em;
-}
-
-/* --- End page setup. ---*/
