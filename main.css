@@ -57,8 +57,9 @@ a:hover, a:visited:hover {
     z-index: 4;
     left: 0;
     width: 100%;
+    max-width: 500px;
     display: grid;
-    grid-template-columns: .075fr 1fr;
+    grid-template-columns: .1fr 1fr;
     background-color: rgba(255, 255, 255, 0.95);
     grid-template-areas:
     "logo     menu"
@@ -315,6 +316,10 @@ a:hover, a:visited:hover {
 }
 
     @media only screen and (min-width: 500px) {
+        .main-head {
+            max-width: 2000px;
+        }
+
         .content {
             display: grid;
             grid-gap: 30px;
