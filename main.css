@@ -1,6 +1,6 @@
 html, body {
     height: 100%;
-    margin: 0 10px 10px 10px;
+    margin: 0 4px 10px 4px;
     font-family: "Montserrat", Helvetica, sans-serif;
     font-size: 110%;
     color: #4a4a4a;
@@ -52,12 +52,10 @@ a:hover, a:visited:hover {
 /* Nav menu styling ---> */
 
 .main-head {
-	grid-area: header;
     position: fixed;
     z-index: 4;
     left: 0;
     width: 100%;
-    max-width: 500px;
     display: grid;
     grid-template-columns: .1fr 1fr;
     background-color: rgba(255, 255, 255, 0.95);
@@ -300,11 +298,13 @@ a:hover, a:visited:hover {
 /* Begin section styling ---> */
 .wrapper {
     display: grid;
+    grid-template-columns: 1fr;
 }
 
 .content {
     display: grid;
-    grid-gap: 30px;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
     grid-template-areas:
     "about"
     "samples"
@@ -316,13 +316,17 @@ a:hover, a:visited:hover {
 }
 
     @media only screen and (min-width: 500px) {
+        html, body {
+            margin: 0 10px 10px 10px;
+        }
+
         .main-head {
             max-width: 2000px;
         }
 
         .content {
             display: grid;
-            grid-gap: 30px;
+            grid-gap: 30px !important;
             grid-template-columns: .03fr 1fr .03fr;
             grid-template-areas:
             "lside  about       rside"
@@ -356,7 +360,7 @@ a:hover, a:visited:hover {
             .profile-pic img {
                 object-fit: cover;
                 max-height: 230px;
-                max-width: 240px;
+                max-width: 240px !important;
                 width: 100%;
                 border-radius: 200px;
                 margin-bottom: 10px;
@@ -414,6 +418,7 @@ a:hover, a:visited:hover {
 
             .profile-pic img {
                 visibility: hidden;
+                max-width: 1px;
             }
 
     .samples {
