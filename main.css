@@ -125,7 +125,6 @@ a:hover, a:visited:hover {
         grid-gap: 10px;
         position: relative;
         grid-template-columns: .4fr .4fr .4fr .4fr;
-        list-style-type: none;
         text-align: center;
         margin: 20px 0 0 0;
         padding: 0;
@@ -211,7 +210,7 @@ a:hover, a:visited:hover {
             grid-gap: 15px;
             padding: 0 10px 10px 10px;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         }
 
             .tech-doc {
@@ -305,26 +304,82 @@ a:hover, a:visited:hover {
 .content {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: .03fr 1fr .03fr;
     grid-template-areas:
-    "lside  about       rside"
-    "lside  samples     rside"
-    "lside  learningExp rside"
-    "lside  workPhil    rside"
-    "lside  workHist    rside"
-    "lside  contact     rside";
+    "about"
+    "samples"
+    "learningExp"
+    "workPhil"
+    "workHist"
+    "contact";
     justify-self: center;
-    max-width: 1200px;
 }
+
+    @media only screen and (min-width: 500px) {
+        .content {
+            display: grid;
+            grid-gap: 30px;
+            grid-template-columns: .03fr 1fr .03fr;
+            grid-template-areas:
+            "lside  about       rside"
+            "lside  samples     rside"
+            "lside  learningExp rside"
+            "lside  workPhil    rside"
+            "lside  workHist    rside"
+            "lside  contact     rside";
+            justify-self: center;
+            max-width: 1200px;
+        }
+
+        .about {
+            grid-template-columns: 1fr .5fr;
+            max-width: 1200px;
+            grid-template-areas:
+            "aboutTitle aboutTitle"
+            "aboutMeText profilePic" !important;
+        }
+
+        .profile-pic {
+            grid-area: profilePic;
+            position: relative !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            visibility: visible !important;
+        }
+
+            .profile-pic img {
+                object-fit: cover;
+                max-height: 230px;
+                max-width: 240px;
+                width: 100%;
+                border-radius: 200px;
+                margin-bottom: 10px;
+                visibility: visible !important;
+            }
+
+        .doc-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+        }
+
+    }
+
+    @media only screen and (min-width: 800px) {
+        .work-philosophy {
+            grid-template-columns: 1fr .2fr !important;
+            grid-template-areas:
+            "philTitle philTitle"
+            "philText philList" !important;
+        }
+    }
 
     .about {
         grid-area: about;
         display: grid;
-        grid-template-columns: 1fr .5fr;
         max-width: 1200px;
         grid-template-areas:
-        "aboutTitle aboutTitle"
-        "aboutMeText profilePic";
+        "aboutTitle"
+        "aboutMeText";
         padding-top: 40px;
     }
 
@@ -348,19 +403,12 @@ a:hover, a:visited:hover {
 
         .profile-pic {
             grid-area: profilePic;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: absolute;
+            visibility: hidden;
         }
 
             .profile-pic img {
-                object-fit: cover;
-                max-height: 230px;
-                max-width: 240px;
-                width: 100%;
-                border-radius: 200px;
-                margin-bottom: 10px;
+                visibility: hidden;
             }
 
     .samples {
@@ -420,10 +468,10 @@ a:hover, a:visited:hover {
         grid-area: workPhil;
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: 1fr .2fr;
         grid-template-areas:
-        "philTitle philTitle"
-        "philText philList";
+        "philTitle"
+        "philText"
+        "philList";
         align-items: center;
     }
 
