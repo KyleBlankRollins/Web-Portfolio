@@ -45,7 +45,6 @@ li {
 .wrapper {
     display: grid;
     grid-template-areas:
-    "header"
     "content";
 }
 
@@ -55,7 +54,37 @@ li {
         grid-gap: 5px;
         margin: 0 5px 0 5px;
         grid-template-areas:
-        "gaalsien coalition";
+        "gaalsien"
+        "coalition";
+    }
+
+    @media only screen and (min-width: 700px) {
+        .wrapper {
+            display: grid;
+            grid-template-areas:
+            "header"
+            "content";
+        }
+
+        .content {
+            grid-area: content;
+            display: grid;
+            grid-gap: 5px;
+            margin: 0 5px 0 5px;
+            grid-template-areas:
+            "gaalsien coalition";
+        }
+
+        .header {
+            position: relative !important;
+            margin: 0;
+            visibility: visible !important;
+            max-height: 250px;
+        }
+
+            .header > figure > img {
+                max-height: 235px;
+            }
     }
 
         .gaalsien {
@@ -87,8 +116,8 @@ li {
 /* End CSS grid layouts and definitions <-- */
 
 .header {
-    grid-area: header;
-    margin: 0;
+    visibility: hidden;
+    position: absolute;
 }
 
     .header > figure {
@@ -98,7 +127,6 @@ li {
     .header > figure > img {
         width: 100%;
         height: 100%;
-        max-height: 250px;
         object-fit: cover;
     }
 
