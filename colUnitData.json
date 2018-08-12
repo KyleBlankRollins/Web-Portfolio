@@ -1,0 +1,28 @@
+{
+    "colUnits": [
+        { "id": "col1",
+            "title": "AAV",
+            "desc": "Armored assault vehicle.",
+            "speed": 80,
+            "armor": 8,
+            "damage": 1,
+            "rof": "Very high",
+            "hull": 1400,
+            "strong": "Strikecraft",
+            "weak": "Railguns, Cruisers",
+            "image": "AAV_coalition.jpg"
+        },
+        { "id": "col2",
+            "title": "Artillery Cruiser",
+            "desc": "Smashes things with missles.",
+            "speed": 50,
+            "armor": 5,
+            "damage": 100,
+            "rof": "Low",
+            "hull": 2500,
+            "strong": "Ground",
+            "weak": "Strikecraft, Railguns",
+            "image": "artilleryCruiser_coalition.jpg"
+        },
+    ]
+}

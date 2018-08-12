@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>DoK Compare</title>
+        <meta charset="utf-8">
+        <meta name="description" content="DoK Compare">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css">
+		<link href="https://fonts.googleapis.com/css?family=Oswald|Montserrat" rel="stylesheet">
+        <!-- Load font awesome icon library -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+        <!-- Load Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- TODO: Change to .min before publish -->
+        <!-- Load Vuex -->
+        <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
+        <!-- Load Promise -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+        <!-- Load Axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- Google Analytics -->
+        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-84528778-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-84528778-1');
+        </script> -->
+	</head>
+
+    <body>
+        <main class="wrapper">
+            <header class="header">
+                <figure>
+                    <img src="images/battle.jpg"/>
+                    <figcaption> <h1 class="title"> DoK Compare </h1> </figcaption>
+                </figure>
+            </header>
+            <section class="content" id="app">
+                <section class="gaalsien">
+                    <ul>
+                        <li v-for="(unit, index) in galUnits">
+                            {{ unit.title }}
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="coalition">
+
+                </section>
+            </section>
+            <footer class="footer">
+                <div class="footer-content">
+                    <h4> Feedback: </h4>
+                    <p> Submit issues and pull requests <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/DoK-Compare"> on GitHub! </a> </p>
+                    <p> This site was created with Vue.js, CSS Grid, and a lot of trial and error.</p>
+                </div>
+            </footer>
+        </main>
+        <!-- Load local .js file. -->
+        <script src="main.js"></script>
+    </body>
+</html>
