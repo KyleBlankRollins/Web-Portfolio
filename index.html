@@ -1,63 +1,227 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<title>DoK Compare</title>
+        <title>KyleBlankRollins.com</title>
         <meta charset="utf-8">
-        <meta name="description" content="DoK Compare">
+        <meta name="description" content="Web Portfolio">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="main.css">
-		<link href="https://fonts.googleapis.com/css?family=Oswald|Montserrat" rel="stylesheet">
-        <!-- Load font awesome icon library -->
-        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-        <!-- Load Vue.js -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- TODO: Change to .min before publish -->
-        <!-- Load Vuex -->
-        <script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
-        <!-- Load Promise -->
-        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
-        <!-- Load Axios -->
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!-- Google Analytics -->
-        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-84528778-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
 
-          gtag('config', 'UA-84528778-1');
-        </script> -->
+        <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> --> <!-- TODO: Fix favicon -->
+        <link rel="stylesheet" href="main.css">
+        <!-- <link rel="stylesheet" href="mediaQueries.css"> --> <!-- TODO: re-build mediaQueries.css -->
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Montserrat" rel="stylesheet">
+        <!-- Load Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics --> <!-- TODO: getting weird error with the script. Re-enable later. -->
+
 	</head>
 
-    <body>
-        <main class="wrapper">
-            <header class="header">
-                <figure>
-                    <img src="images/battle.jpg"/>
-                    <figcaption> <h1 class="title"> DoK Compare </h1> </figcaption>
-                </figure>
-            </header>
-            <section class="content" id="app">
-                <section class="gaalsien">
-                    <ul>
-                        <li v-for="(unit, index) in galUnits">
-                            {{ unit.title }}
+	<body>
+        <div class="wrapper" id="app" v-cloak>
+            <header class="main-head">
+                <div class ="logo"><p class="logo-outer">K</p><p id="logo-inner">_</p><p class="logo-outer">R</p></div>
+
+                <transition name="slide-fade" mode="out-in">
+                        <div class="menu" v-if="!showMenu" @click="showMenu = !showMenu"><img class="menu-icons" src="Images/menu.svg" /></div>
+                        <div class="close" v-else @click="showMenu = !showMenu"><img class="menu-icons" src="Images/close.svg" /></div>
+                </transition>
+
+                <transition name="vertical-fade" mode="out-in">
+                    <ul class="nav-list" v-if="showMenu">
+                        <li v-for="section in siteSections">
+                            <a :href="section.link"><h3> {{ section.title }} </h3></a>
                         </li>
                     </ul>
+                    <!-- TODO: Maybe add social media links here. -->
+                </transition>
+            </header>
+
+            <section class="content">
+                <section class="about" id="about">
+                    <h2 class="about-title"> About </h2>
+                    <div class="text-block    about-me-text">
+                        <p>I'm a technical writer with a diverse background. I currently document software in the healthcare industry for 3M Health Information Systems.</p>
+                        <p>As a co-organizer for the <a href="https://www.meetup.com/Write-the-Docs-SLC/" target="_blank">Write the Docs SLC meetup</a>, I get to meet and learn from amazing people on a regular basis.</p>
+                        <p class="note"><b>Note:</b> I built this site from scratch. If you have suggestions or notice a bug, submit an issue or pull request <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank">on GitHub</a>.</p>
+                    </div>
+                    <figure class="profile-pic" id="profile-pic">
+                        <img src="Images/kyle_02.jpg" alt="Kyle Rollins profile photo.">
+                        <figcaption>Kyle Rollins</figcaption>
+                    </figure>
                 </section>
 
-                <section class="coalition">
+                <section class="samples" id="samples">
+                    <h2> Samples </h2>
+                    <tabs>
+                        <tab class="tab-body" name="Technical writing" :selected="true">
+                            <section class="technical-writing">
+                                <div class="tab-desc">
+                                    <p>Most of these samples are older, as I can't share any of my current work. However, I've updated all of these within the last 18 months.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div v-for="image in techImages">
+                                        <a :href="'Documents/Technical_Writing/' + image.doc">
+                                            <div class="tech-doc">
+                                                <img class="tech-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
 
+                        <tab class="tab-body" name="Document design">
+                            <section class="document-design">
+                                <div class="tab-desc">
+                                    <p>Document and web design are more hobbies for me than professional responsibilities. These are some examples of work I've done for Write the Docs SLC.</p>
+                                </div>
+                                <div class="doc-grid">
+                                    <div class="doc-grid" v-for="image in designImages"> <!-- TODO: Look into assigning different classes for different items in the array. -->
+                                        <a :href="'Documents/Document_Design/' + image.doc">
+                                            <div class="design-doc">
+                                                <img class="design-image" :src="'Images/Writing_Samples/' + image.pic" />
+                                                <div class="doc-title">
+                                                    <h5>{{ image.title }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
+
+                        <tab class="tab-body" name="Published content">
+                            <section class="published-content">
+                                <div class="tab-desc">
+                                    <p>You can find some of my published work on the web.</p>
+                                </div>
+                                <div class="pub-grid">
+                                    <div v-for="link in pubLinks">
+                                        <div class="pub-doc">
+                                            <a :href="link.link">
+                                                <div class="pub-title">
+                                                    <h5>{{ link.title }}</h5>
+                                                </div>
+                                            </a>
+                                            <div class="pub-desc">
+                                                <p>{{ link.text }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </tab>
+                    </tabs>
+                </section>
+
+                <section class="learning-experiences" id="learning-experiences">
+                    <div class="learning-experiences-title"><h2> Learning experiences </h2></div>
+                    <div class="text-block">
+                            <p>I'm always looking for new things to learn. Here, you can see some of my learning explorations.</p>
+                    </div>
+                    <div class="experiment-box-container">
+                        <div class="experiment-box">
+                            <a href="https://dok-compare.kyleblankrollins.com/">
+                                <div class="experiment-image">
+                                    <img src="Images/DoK_compare.png" alt="DoK Compare image"/>
+                                </div>
+                                <div class="experiment-overlay">
+                                    <div class="experiment-title">Website: DoK Compare</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="work-philosophy" id="work-philosophy">
+                    <div class="work-philosophy-title"><h2> Work philosophy </h2></div>
+                    <div class="text-block  phil-text">
+                        <p>Good communication is hard. Good communication through text-based mediums is particularly difficult. You need to take your chaotic information and package it in a way that someone else will understand it.</p>
+                        <p>The first step to good communication is patience. Take the time to understand who you're communicating with and what they need. This can be through empathy research, usage analytics, or any number of other research methods.</p>
+                        <p>The next step? Don't waste time. You get little time to convince people that you have the answers they're looking for.</p>
+                        <p>In everything, be kind, courteous, and understanding. Be open to criticism, as it's one of the best ways to learn. Communication is about people. Cater to their needs, and good communication will follow.</p>
+                    </div>
+                    <div class="philosophy-list">
+                        <div class="list-title"><p>My Clifton Strengths top 5</p></div>
+                        <div class="phil-ordered">
+                            <ol>
+                                <li>
+                                    <b>Restorative</b><br>
+                                    <p class="list-description">I enjoy finding and solving problems.</p>
+                                </li>
+                                <li>
+                                    <b>Learner</b><br>
+                                    <p class="list-description">New ideas and challenges excite me.</p>
+                                </li>
+                                <li>
+                                    <b>Discipline</b><br>
+                                    <p class="list-description">Structure is important to me.</p>
+                                </li>
+                                <li>
+                                    <b>Intellection</b><br>
+                                    <p class="list-description">I'm introspective.</p>
+                                </li>
+                                <li>
+                                    <b>Developer</b><br>
+                                    <p class="list-description">Helping others improve gives me purpose.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="work-history" id="work-history"> <!-- REVIEW: Maybe build this out into tabs. Could have vertical tabs on the left-hand side. -->
+                    <div class="work-history-title"><h2> Work history </h2></div>
+                    <div class="text-block">
+                            <p>My work history is diverse, and this is only part of it. If you're interested in seeing more, <a href="#contact">contact me</a>.</p>
+                    </div>
+                    <div class="emp-matrix" id="emp-matrix">
+                        <div v-for="job in jobHistory">
+                            <div class="emp-box">
+                                <a :href="job.link">
+                                    <div class="emp-name"> {{ job.employer }} </div>
+                                </a>
+                                <div class="job-box">
+                                    <div class="job-title"> {{ job.job }} </div>
+                                    <div class="job-desc">
+                                        <p> {{ job.desc  }} </p>
+                                        <p><b>Skills: </b>{{ job.skills }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="contact" id="contact">
+                    <div class="contact-title"><h2> Contact </h2></div>
+                    <div class="textBlock    contact-text">
+                        Thank you for your interest. You can find me in many of the usual places around the web. My resume contains my email address if you want to get in touch that way. <!-- TODO: Add social media links in this section. -->
+                    </div>
+                    <div class="resume">
+                        <a href="Documents/Resume_05_2018.pdf" target="_blank">
+                            <div class="resume-box">
+                                Resume >>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="social-box">
+                        <a href="https://github.com/KyleBlankRollins">
+                            <img src="Images/github-square.svg" />
+                        </a>
+                        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">
+                            <img src="Images/linkedin.svg" />
+                        </a>
+                        <a href="https://twitter.com/KyleBRollins">
+                            <img src="Images/twitter-square.svg" />
+                        </a>
+                    </div>
                 </section>
             </section>
-            <footer class="footer">
-                <div class="footer-content">
-                    <h4> Feedback: </h4>
-                    <p> Submit issues and pull requests <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/DoK-Compare"> on GitHub! </a> </p>
-                    <p> This site was created with Vue.js, CSS Grid, and a lot of trial and error.</p>
-                </div>
-            </footer>
-        </main>
-        <!-- Load local .js file. -->
+        </div>
         <script src="main.js"></script>
-    </body>
+	</body>
 </html>
