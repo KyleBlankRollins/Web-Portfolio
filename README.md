@@ -1,27 +1,14 @@
-# Using Vue with Airtable's Study Guide Template
+# Default starter for Gridsome
 
-Project Walkthrough [here](http://patrickwho.me/tutorial/integrate-airtable-study-guide-template-with-vue-js/).
+This is the project you get when you run `gridsome create new-project`.
 
-This is just a simple project to help others get more familiar with using Vue and Airtable.
+### 1. Install Gridsome CLI tool if you don't have
 
-Get some experience with the following:
+`npm install --global @gridsome/cli`
 
-* v-on:change / @change event
-* v-for and :key
-* v-bind / :
-* Using Axios to get, post, put and delete records.
-* Computed properties and how they relate to data properties.
+### 2. Create a Gridsome project
 
-## About Me - Junior Dev for Life
-
-I learn best by looking at the code others have written and building things.
-
-In my own learning journey I have often been frustrated with the lack of simple, to-the-point code examples. 
-
-Rather, there seems to be an over-abundance of lengthy tutorials that often teach too many things to absorb effectively.
-
-The short projects I publish are my attempt to provide succinct illustrations of a handful of new concepts along with a few ideas on how to practice.
-
-Any and all constructive feedback and requests are very welcome.
-
-[Patrick](http://patrickwho.me)
+1. `gridsome create my-gridsome-site` to install default starter
+2. `cd my-gridsome-site` to open the folder
+3. `gridsome develop` to start a local dev server at `http://localhost:8080`
+4. Happy coding 🎉🙌

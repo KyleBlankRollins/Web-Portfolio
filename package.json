@@ -1,16 +1,12 @@
 {
-  "name": "air-table-study-guide",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "netlify-cms-prototype",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gridsome build",
+    "develop": "gridsome develop",
+    "explore": "gridsome explore"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "axios": "0.15.3",
-    "material-design-lite": "1.2.1",
-    "vue": "2.1.4"
+    "gridsome": "^0.6.0"
   }
 }
