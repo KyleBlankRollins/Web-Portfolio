@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentGalUnit: 'Sandskimmer',
+    currentColUnit: 'LAV',
     coalition: {
       name: "Coalition",
       "units": {
@@ -347,8 +349,21 @@ export default new Vuex.Store({
     },
     galUnits: state => {
       return state.gaalsien;
+    },
+    currentUnits: state => {
+      return {
+        currentColUnit: state.currentColUnit,
+        currentGalUnit: state.currentGalUnit
+      }
     }
   },
-  mutations: {},
+  mutations: {
+    setGalUnit: (state, payload) => {
+      state.currentGalUnit = payload;
+    },
+    setColUnit: (state, payload) => {
+      state.currentColUnit = payload;
+    }
+  },
   actions: {}
 });

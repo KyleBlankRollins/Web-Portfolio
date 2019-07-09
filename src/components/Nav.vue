@@ -61,7 +61,10 @@
         </div>
       </div>
     </nav>
-    <img class="mt-2" src="@/assets/dok-logo.svg" alt="DoK Compare">
+    <div class="flex">
+      <img class="mt-2 mr-6 h-10" src="@/assets/baserunner.svg" alt="baserunner">
+      <img class="mt-2" src="@/assets/dok-logo.svg" alt="DoK Compare">
+    </div>
   </header>
 </template>
 

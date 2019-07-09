@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold"> test </h1>
-    <UnitSelector />
     <!-- <ul v-for="unit in galUnits.units" :key="unit.id">
       <li> 
         <h3 class="text-xl uppercase"> {{ unit.name }} </h3>
@@ -25,8 +24,7 @@ export default {
   computed: {
     // mix the getters into computed with object spread operator
     ...mapGetters([
-      'galUnits',
-      'colUnits'
+      'galUnits'
       // ...
     ])
   }

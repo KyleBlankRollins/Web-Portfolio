@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Coalition</h1>
-    <UnitSelector />
     <!-- <ul v-for="unit in colUnits.units" :key="unit.id">
       <li>
         <h3 class="text-xl uppercase">{{ unit.name }}</h3>
@@ -12,22 +11,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import UnitSelector from "@/components/UnitSelector.vue";
-
 export default {
   name: "CoalitionUnitViwer",
-  components: {
-    UnitSelector
+  props: {
+    units: Object
   },
-  computed: {
-    // mix the getters into computed with object spread operator
-    ...mapGetters([
-      "colUnits",
-      'galUnits'
-      // ...
-    ])
-  }
 };
 </script>
 
