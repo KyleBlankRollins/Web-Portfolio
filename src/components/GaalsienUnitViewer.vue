@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1> Gaalsien </h1>
+    <h1 class="text-2xl font-bold"> Gaalsien </h1>
     <ul v-for="unit in galUnits.units" :key="unit.id">
       <li> 
-        <p> {{ unit.name }} </p>
+        <h3 class="text-xl uppercase"> {{ unit.name }} </h3>
         <img :src="unit.image" :alt="unit.name">
       </li>
     </ul>

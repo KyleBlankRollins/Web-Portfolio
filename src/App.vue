@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="m-10">
-    <Navbar />
-    <router-view class="m-10" />
+  <div id="app">
+    <Navbar class="p-10 bg-black"/>
+    <router-view class="font-body" />
   </div>
 </template>
 
