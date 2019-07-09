@@ -1,8 +1,11 @@
 <template>
   <div class="flex">
-    <CoalitionUnitViewer class="w-5/12" />
-    <span class="w-2/12"></span>
-    <GaalsienUnitViewer class="w-5/12" />
+    <div class="mr-2">
+      <CoalitionUnitViewer />
+    </div>
+    <div class="ml-2">
+      <GaalsienUnitViewer />
+    </div>
   </div>
 </template>
 
@@ -16,6 +19,13 @@ export default {
   components: {
     CoalitionUnitViewer,
     GaalsienUnitViewer
-  }
+  },
+  // computed: {
+  //   currentUnitLeft: function() {
+  //     return "tab-" + this.currentTab.toLowerCase();
+  //   }
+  // }
+  // https://jsfiddle.net/chrisvfritz/o3nycadu/
+  // https://vuejs.org/v2/guide/components.html#Dynamic-Components
 };
 </script>

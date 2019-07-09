@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold"> Gaalsien </h1>
+    <h1 class="text-2xl font-bold"> test </h1>
     <UnitSelector />
-    <!-- <component :is="" :key=""> </component> -->
     <!-- <ul v-for="unit in galUnits.units" :key="unit.id">
       <li> 
         <h3 class="text-xl uppercase"> {{ unit.name }} </h3>
@@ -15,12 +14,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import UnitSelector from "@/components/UnitSelector.vue";
 
 export default {
-  name: "GaalsienUnitViwer",
-  components: {
-    UnitSelector
+  name: "Sandskimmer",
+  data() {
+    return {
+      unitData: { }
+    };
   },
   computed: {
     // mix the getters into computed with object spread operator
