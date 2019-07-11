@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: kyleblankrollins/netlif-cms-prototype
+  repo: kyleblankrollins/the-canney-valley
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
