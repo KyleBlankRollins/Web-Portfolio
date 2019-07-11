@@ -16,3 +16,6 @@ collections:
       - {label: "Excerpt", name: "excerpt", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "date"}
       - {label: "Body", name: "body", widget: "markdown"}
+
+# Adding featured images
+# https://www.netlifycms.org/docs/widgets/image/#image
