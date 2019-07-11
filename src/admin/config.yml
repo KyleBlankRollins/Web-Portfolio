@@ -1,5 +1,5 @@
 backend:
-  name: gith-gateway
+  name: git-gateway
   branch: the-canney-valley
 
 media_folder: "static/uploads"
