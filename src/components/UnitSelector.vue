@@ -1,16 +1,20 @@
 <template>
   <nav>
-    <button class="w-full bg-primary font-bold p-4 mb-2 rounded">
-      <p v-on:click="openNav()" class="text-xl text-dark-grey text-left">Select unit...</p>
-    </button>
+    <div class="my-6 shadow-lg">
+      <div class="gradient-bar h-1 rounded-t"></div>
+      <h1 class="bg-white m-0 px-2 gradient-bar-bg">{{ unitdata.name }}</h1>
+      <button class="w-full bg-primary font-bold p-4 rounded-b">
+        <p v-on:click="openNav()" class="text-xl text-dark-grey text-left">Select unit...</p>
+      </button>
+    </div>
     <span :class="hidden">
       <div>
-        <ul v-if="this.unitdata.name === 'Gaalsien'" class="w-1/2 cursor-pointer">
+        <ul v-if="this.unitdata.name === 'Gaalsien'" class="flex flex-wrap cursor-pointer">
           <li
             v-for="unit in unitdata.units"
             :key="unit.id"
-            v-on:click="openNav(); setGalUnit(unit.name); "
-            class="relative border border-white opacity-75 hover:opacity-100"
+            v-on:click="openNav(); setGalUnit(unit); "
+            class="w-1/2 relative border border-white opacity-75 hover:opacity-100"
           >
             <h3
               class="w-full text-xl text-dark-grey uppercase absolute px-2 bg-callout opacity-75"
@@ -18,12 +22,12 @@
             <img :src="unit.image" :alt="unit.name" />
           </li>
         </ul>
-        <ul v-else class="w-1/2 cursor-pointer">
+        <ul v-else class="flex flex-wrap cursor-pointer">
           <li
             v-for="unit in unitdata.units"
             :key="unit.id"
-            v-on:click="openNav(); setColUnit(unit.name);"
-            class="relative border border-white opacity-75 hover:opacity-100"
+            v-on:click="openNav(); setColUnit(unit);"
+            class="w-1/2 relative border border-white opacity-75 hover:opacity-100"
           >
             <h3
               class="w-full text-xl text-dark-grey uppercase absolute px-2 bg-secondary opacity-75"
@@ -41,7 +45,7 @@ export default {
   name: "UnitSelector",
   props: {
     unitdata: Object,
-    currentUnit: String
+    currentUnit: Object
   },
   data() {
     return {
@@ -56,10 +60,11 @@ export default {
       }
     },
     setGalUnit(selectedUnit) {
-      this.$store.commit('setGalUnit', selectedUnit);
+      this.$store.commit("setGalUnit", selectedUnit);
+      console.log(selectedUnit);
     },
     setColUnit(selectedUnit) {
-      this.$store.commit('setColUnit', selectedUnit);
+      this.$store.commit("setColUnit", selectedUnit);
     }
   }
 };
