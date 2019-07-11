@@ -13,6 +13,6 @@
 # Specific branch context: Deploys from this branch
 # will take these settings and override their
 # current ones.
-[context."Web-Portfolio/DoK-Compare"]
+[context.DoK-Compare]
   command = "vue-cli-service-build"
   publish = "dist"
