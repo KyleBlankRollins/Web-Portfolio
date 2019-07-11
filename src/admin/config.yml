@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: kyleblankrollins/the-canney-valley
+  site_domain: <username>.github.io
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
