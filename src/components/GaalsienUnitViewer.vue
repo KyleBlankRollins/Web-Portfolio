@@ -17,7 +17,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#50955d" stroke="#50955d">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#50955d"
+                stroke="#50955d"
+              >
                 <path
                   d="m138.09 118h-85.672l42.836-74.194 21.418 37.097zm-64.759-1.6749h43.845v70.943h-43.845z"
                   fill="#50955d"
@@ -33,7 +37,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#e74c3c" stroke="#e74c3c">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#e74c3c"
+                stroke="#e74c3c"
+              >
                 <path
                   d="m138.09 113.08h-85.672l42.836 74.194 21.418-37.097zm-64.759 1.6749h43.845v-70.943h-43.845z"
                   fill="#e74c3c"
@@ -43,10 +51,10 @@
                 />
               </g>
             </svg>
-            <svg 
+            <svg
               v-else
-              class="h-6" 
-              viewBox="0 0 86.672 144.46" 
+              class="h-6"
+              viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g transform="translate(-51.914 -43.308)">
@@ -73,7 +81,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#50955d" stroke="#50955d">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#50955d"
+                stroke="#50955d"
+              >
                 <path
                   d="m138.09 118h-85.672l42.836-74.194 21.418 37.097zm-64.759-1.6749h43.845v70.943h-43.845z"
                   fill="#50955d"
@@ -89,7 +101,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#e74c3c" stroke="#e74c3c">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#e74c3c"
+                stroke="#e74c3c"
+              >
                 <path
                   d="m138.09 113.08h-85.672l42.836 74.194 21.418-37.097zm-64.759 1.6749h43.845v-70.943h-43.845z"
                   fill="#e74c3c"
@@ -99,10 +115,10 @@
                 />
               </g>
             </svg>
-            <svg 
+            <svg
               v-else
-              class="h-6" 
-              viewBox="0 0 86.672 144.46" 
+              class="h-6"
+              viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g transform="translate(-51.914 -43.308)">
@@ -129,7 +145,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#50955d" stroke="#50955d">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#50955d"
+                stroke="#50955d"
+              >
                 <path
                   d="m138.09 118h-85.672l42.836-74.194 21.418 37.097zm-64.759-1.6749h43.845v70.943h-43.845z"
                   fill="#50955d"
@@ -145,7 +165,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#e74c3c" stroke="#e74c3c">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#e74c3c"
+                stroke="#e74c3c"
+              >
                 <path
                   d="m138.09 113.08h-85.672l42.836 74.194 21.418-37.097zm-64.759 1.6749h43.845v-70.943h-43.845z"
                   fill="#e74c3c"
@@ -155,10 +179,10 @@
                 />
               </g>
             </svg>
-            <svg 
+            <svg
               v-else
-              class="h-6" 
-              viewBox="0 0 86.672 144.46" 
+              class="h-6"
+              viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g transform="translate(-51.914 -43.308)">
@@ -189,7 +213,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#50955d" stroke="#50955d">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#50955d"
+                stroke="#50955d"
+              >
                 <path
                   d="m138.09 118h-85.672l42.836-74.194 21.418 37.097zm-64.759-1.6749h43.845v70.943h-43.845z"
                   fill="#50955d"
@@ -205,7 +233,11 @@
               viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g transform="translate(-51.914 -43.308)" fill="#e74c3c" stroke="#e74c3c">
+              <g
+                transform="translate(-51.914 -43.308)"
+                fill="#e74c3c"
+                stroke="#e74c3c"
+              >
                 <path
                   d="m138.09 113.08h-85.672l42.836 74.194 21.418-37.097zm-64.759 1.6749h43.845v-70.943h-43.845z"
                   fill="#e74c3c"
@@ -215,10 +247,10 @@
                 />
               </g>
             </svg>
-            <svg 
+            <svg
               v-else
-              class="h-6" 
-              viewBox="0 0 86.672 144.46" 
+              class="h-6"
+              viewBox="0 0 86.672 144.46"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g transform="translate(-51.914 -43.308)">
@@ -263,5 +295,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

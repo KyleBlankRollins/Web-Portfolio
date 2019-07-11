@@ -34,7 +34,11 @@
         <button
           class="flex m-5 px-3 py-2 border text-secondary rounded border-secondary hover:text-callout hover:border-callout"
         >
-          <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="fill-current h-6 w-6"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <title>Menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
@@ -47,23 +51,25 @@
               <a
                 href="https://www.kyleblankrollins.com/"
                 class="py-2 px-4 lg:mt-0 no-underline uppercase text-primary hover:text-callout hover:underline"
-              >About</a>
+                >About</a
+              >
               <a
                 href="https://www.kyleblankrollins.com/samples/"
                 class="py-2 px-4 lg:mt-0 no-underline uppercase text-primary hover:text-callout hover:underline"
-              >Samples</a>
+                >Samples</a
+              >
               <a
                 href="https://www.kyleblankrollins.com/projects/"
                 class="py-2 px-4 lg:mt-0 no-underline uppercase hover:text-callout hover:underline bg-secondary text-white"
-              >Web Projects</a>
+                >Web Projects</a
+              >
             </span>
           </span>
         </div>
       </div>
     </nav>
     <div class="flex">
-      <img class="mt-2 mr-6 h-10" src="@/assets/baserunner.svg" alt="baserunner">
-      <img class="mt-2" src="@/assets/dok-logo.svg" alt="DoK Compare">
+      <img class="mt-2" src="@/assets/dok-logo.svg" alt="DoK Compare" />
     </div>
   </header>
 </template>

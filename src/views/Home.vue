@@ -1,19 +1,31 @@
 <template>
   <div class="md:flex lg:flex xl:flex">
     <div class="mr-2">
-      <UnitSelector :unitdata="this.colUnits" :currentUnit="this.currentUnits.currentColUnit" />
-      <CoalitionUnitViewer :unit="this.currentUnits.currentColUnit" :comparison="this.comparison.colUnit" />
+      <UnitSelector
+        :unitdata="this.colUnits"
+        :currentUnit="this.currentUnits.currentColUnit"
+      />
+      <CoalitionUnitViewer
+        :unit="this.currentUnits.currentColUnit"
+        :comparison="this.comparison.colUnit"
+      />
     </div>
     <div class="ml-2">
-      <UnitSelector :unitdata="this.galUnits" :currentUnit="this.currentUnits.currentGalUnit" />
-      <GaalsienUnitViewer :unit="this.currentUnits.currentGalUnit" :comparison="this.comparison.galUnit" />
+      <UnitSelector
+        :unitdata="this.galUnits"
+        :currentUnit="this.currentUnits.currentGalUnit"
+      />
+      <GaalsienUnitViewer
+        :unit="this.currentUnits.currentGalUnit"
+        :comparison="this.comparison.galUnit"
+      />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 import CoalitionUnitViewer from "@/components/CoalitionUnitViewer.vue";
 import GaalsienUnitViewer from "@/components/GaalsienUnitViewer.vue";
@@ -48,15 +60,21 @@ export default {
           armor: null,
           damage: null,
           hull: null
-        },
-      }
+        }
+      };
 
       // Comparison logic for speed, armor, damage, and hull.
       // SPEED
-      if (this.currentUnits.currentGalUnit.speed > this.currentUnits.currentColUnit.speed) {
+      if (
+        this.currentUnits.currentGalUnit.speed >
+        this.currentUnits.currentColUnit.speed
+      ) {
         comparison.galUnit.speed = true;
         comparison.colUnit.speed = false;
-      } else if (this.currentUnits.currentGalUnit.speed < this.currentUnits.currentColUnit.speed) {
+      } else if (
+        this.currentUnits.currentGalUnit.speed <
+        this.currentUnits.currentColUnit.speed
+      ) {
         comparison.galUnit.speed = false;
         comparison.colUnit.speed = true;
       } else {
@@ -65,10 +83,16 @@ export default {
       }
 
       // ARMOR
-      if (this.currentUnits.currentGalUnit.armor > this.currentUnits.currentColUnit.armor) {
+      if (
+        this.currentUnits.currentGalUnit.armor >
+        this.currentUnits.currentColUnit.armor
+      ) {
         comparison.galUnit.armor = true;
         comparison.colUnit.armor = false;
-      } else if (this.currentUnits.currentGalUnit.armor < this.currentUnits.currentColUnit.armor) {
+      } else if (
+        this.currentUnits.currentGalUnit.armor <
+        this.currentUnits.currentColUnit.armor
+      ) {
         comparison.galUnit.armor = false;
         comparison.colUnit.armor = true;
       } else {
@@ -77,10 +101,16 @@ export default {
       }
 
       // DAMAGE
-      if (this.currentUnits.currentGalUnit.damage > this.currentUnits.currentColUnit.damage) {
+      if (
+        this.currentUnits.currentGalUnit.damage >
+        this.currentUnits.currentColUnit.damage
+      ) {
         comparison.galUnit.damage = true;
         comparison.colUnit.damage = false;
-      } else if (this.currentUnits.currentGalUnit.damage < this.currentUnits.currentColUnit.damage) {
+      } else if (
+        this.currentUnits.currentGalUnit.damage <
+        this.currentUnits.currentColUnit.damage
+      ) {
         comparison.galUnit.damage = false;
         comparison.colUnit.damage = true;
       } else {
@@ -89,10 +119,16 @@ export default {
       }
 
       // HULL
-      if (this.currentUnits.currentGalUnit.hull > this.currentUnits.currentColUnit.hull) {
+      if (
+        this.currentUnits.currentGalUnit.hull >
+        this.currentUnits.currentColUnit.hull
+      ) {
         comparison.galUnit.hull = true;
         comparison.colUnit.hull = false;
-      } else if (this.currentUnits.currentGalUnit.hull < this.currentUnits.currentColUnit.hull) {
+      } else if (
+        this.currentUnits.currentGalUnit.hull <
+        this.currentUnits.currentColUnit.hull
+      ) {
         comparison.galUnit.hull = false;
         comparison.colUnit.hull = true;
       } else {
@@ -101,9 +137,8 @@ export default {
       }
 
       // Return comparison data.
-      return comparison
+      return comparison;
     }
-
   }
 };
 </script>
