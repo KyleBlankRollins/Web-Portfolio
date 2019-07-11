@@ -5,7 +5,6 @@
 # “command” is your build command.
 # “publish” is the directory to publish (relative to the root of your repo).
 
-[build]
-
+[context.DoK-Compare]
   command = "vue-cli-service-build"
   publish = "dist"
