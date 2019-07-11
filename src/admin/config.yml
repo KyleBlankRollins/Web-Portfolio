@@ -1,7 +1,6 @@
 backend:
-  name: github
-  repo: kyleblankrollins/the-canney-valley
-  site_domain: <username>.github.io
+  name: gith-gateway
+  branch: the-canney-valley
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
