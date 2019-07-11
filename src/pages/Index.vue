@@ -18,6 +18,23 @@
   </Layout>
 </template>
 
+<page-query>
+query Posts {
+  posts: allPost {
+    edges {
+      node { 
+        id
+        title
+        excerpt
+        date
+        timeToRead
+        path
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
 export default {
   metaInfo: {

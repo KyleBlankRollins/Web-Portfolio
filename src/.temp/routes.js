@@ -1,12 +1,25 @@
 export default [
   {
-    path: "/about",
-    component: () => import(/* webpackChunkName: "page--src--pages--about-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/About.vue")
+    path: "/blog",
+    component: () => import(/* webpackChunkName: "page--src--pages--blog-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Blog.vue"),
+    meta: {
+      data: true
+    }
   },
   {
     name: "home",
     path: "/",
-    component: () => import(/* webpackChunkName: "page--src--pages--index-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Index.vue")
+    component: () => import(/* webpackChunkName: "page--src--pages--index-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Index.vue"),
+    meta: {
+      data: true
+    }
+  },
+  {
+    path: "/posts/this-is-a-test",
+    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
+    meta: {
+      data: true
+    }
   },
   {
     name: "404",
