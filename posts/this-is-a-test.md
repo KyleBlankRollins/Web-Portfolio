@@ -1,7 +1,7 @@
 ---
 title: This is a test
 excerpt: How does this work? We'll find out.
-date: 2019-07-11T17:00:43.946Z
+date: 2019-07-11
 ---
 ![](/uploads/webdev.png "Image!")
 

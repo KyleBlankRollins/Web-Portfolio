@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <Sidebar />
-    <div class="layout">
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metaData.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/blog">Blog</g-link>
-      </nav>
-    </header>
-    <slot/>
-  </div>
+  <div class="m-10">
+    <Navbar class="nav" />
+    <Sidebar class="sidebar" />
+    <div class="ml-10">
+      <header class="header">
+        <strong>
+          <g-link to="/">{{ $static.metaData.siteName }}</g-link>
+        </strong>
+      </header>
+      <slot />
+    </div>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -25,39 +23,42 @@ query {
 </static-query>
 
 <script>
-import Sidebar from '~/components/Sidebar.vue';
+import Sidebar from "~/components/Sidebar.vue";
+import Footer from "~/components/Footer.vue";
+import Navbar from "~/components/Navbar.vue";
 
 export default {
   components: {
-    Sidebar
+    Sidebar,
+    Footer,
+    Navbar
   }
-}
+};
 </script>
 
 <style>
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
-  line-height: 1.5;
+#app {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+  grid-template-areas: 
+  "nav nav"
+  "sidebar content"
+  "footer footer"
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.sidebar {
+  grid-area: sidebar;
 }
 
 .layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  grid-area: content;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.nav__link {
-  margin-left: 20px;
+.footer {
+  grid-area: footer;
 }
 </style>

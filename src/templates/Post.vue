@@ -14,11 +14,11 @@ query Post ($id: String!) {
 </page-query>
 
 <script>
-import Layout from '~/layouts/PostLayout.vue'
+import PostLayout from '~/layouts/PostLayout.vue'
 
 export default {
   components: {
-    Layout
+    PostLayout
   },
   metaInfo () {
     return {

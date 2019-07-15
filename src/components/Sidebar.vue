@@ -1,20 +1,23 @@
 <template>
   <div>
-    <ul v-for="post in $page.posts.edges" :key="post.node.id">
-      <li>
-        <h2>{{ post.node.title }}</h2>
-        <p>{{ post.node.excerpt }}</p>
-        <p>{{ post.node.date }}</p>
-        <p>{{ post.node.timeToRead }}</p>
+    <nav class="text-xl">
+      <g-link to="/" class="pr-2">Home</g-link>
+      <g-link to="/blog" class="pl-2">Blog</g-link>
+    </nav>
+    <div>
+      <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <a :href="post.node.path">
-          <button>Read more</button>
+          <li>
+            <h2>{{ post.node.title }}</h2>
+            <p>{{ post.node.date }}</p>
+          </li>
         </a>
-      </li>
-    </ul>
+      </ul>
+    </div>
   </div>
 </template>
 
-<page-query>
+<static-query>
 query Posts {
   posts: allPost {
     edges {
@@ -29,11 +32,11 @@ query Posts {
     }
   }
 }
-</page-query>
+</static-query>
 
 <script>
 export default {
-  name: 'Sidebar'
+  name: "Sidebar"
 };
 </script>
 
