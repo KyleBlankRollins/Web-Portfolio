@@ -1,5 +1,9 @@
 @tailwind base;
 
+/* html{
+  @apply bg-white;
+} */
+
 h1 {
   @apply text-3xl; 
   @apply font-extrabold; 
@@ -34,13 +38,18 @@ p {
 }
 
 .gradient-bar {
-  background: rgb(0,153,255);
-  background: linear-gradient(90deg, rgba(0,153,255,1) 2%, rgba(161,205,227,1) 40%, rgba(153,153,153,1) 60%, rgba(51,51,51,1) 80%, rgba(0,0,0,1) 98%); 
+  background: rgb(102,171,104);
+  background: linear-gradient(90deg, rgba(102,171,104,1) 2%, rgba(150,104,127,1) 50%, rgba(38,50,56,1) 98%);  
 }
 
 .gradient-bar-bg {
-  background: rgb(0,153,255);
-  background: linear-gradient(90deg, rgba(0,153,255,.2) 2%, rgba(161,205,227,.2) 40%, rgba(153,153,153,.2) 60%, rgba(51,51,51,.2) 80%, rgba(0,0,0,.2) 98%); 
+  background: rgb(102,171,104);
+  background: linear-gradient(90deg, rgba(102,171,104,.2) 2%, rgba(150,104,127,.2) 50%, rgba(38,50,56,.2) 98%); 
+}
+
+.router-link-exact-active {
+  background: #18151c;
+  color: #f8f8f8 !important;
 }
 
 @tailwind components;

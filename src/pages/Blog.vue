@@ -7,7 +7,7 @@
           <h2> {{ post.node.title }} </h2>
           <p> {{ post.node.excerpt }} </p>
           <p> {{ post.node.date }} </p>
-          <p> {{ post.node.timeToRead }} </p>
+            <p>Time to read (minutes): {{ post.node.timeToRead }}</p>
           <a :href="post.node.path">
             <button> Read more </button>
             </a>

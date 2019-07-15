@@ -2,12 +2,7 @@
   <div class="m-10">
     <Navbar class="nav" />
     <Sidebar class="sidebar" />
-    <div class="ml-10">
-      <header class="header">
-        <strong>
-          <g-link to="/">{{ $static.metaData.siteName }}</g-link>
-        </strong>
-      </header>
+    <div class="ml-10 bg-primary">
       <slot />
     </div>
     <Footer class="footer" />

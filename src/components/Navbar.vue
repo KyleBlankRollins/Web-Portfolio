@@ -88,8 +88,5 @@ export default {
 </script>
 
 <style>
-.router-link-exact-active {
-  background: #18151c;
-  color: #f8f8f8 !important;
-}
+
 </style>

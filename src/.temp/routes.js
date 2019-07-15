@@ -3,7 +3,7 @@ export default [
     path: "/blog",
     component: () => import(/* webpackChunkName: "page--src--pages--blog-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Blog.vue"),
     meta: {
-      data: [1,"1b856897"]
+      data: true
     }
   },
   {
@@ -11,21 +11,28 @@ export default [
     path: "/",
     component: () => import(/* webpackChunkName: "page--src--pages--index-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Index.vue"),
     meta: {
-      data: [1,"1b856897"]
+      data: true
+    }
+  },
+  {
+    path: "/posts/this-is-test-post-3",
+    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
+    meta: {
+      data: true
     }
   },
   {
     path: "/posts/this-is-a-test",
     component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
     meta: {
-      data: [1,"7e87cdde"]
+      data: true
     }
   },
   {
     path: "/posts/this-is-post-2",
     component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
     meta: {
-      data: [1,"07ac3872"]
+      data: true
     }
   },
   {
