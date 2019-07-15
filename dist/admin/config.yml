@@ -1,6 +1,6 @@
 backend:
-  name: github
-  repo: kyleblankrollins/netlif-cms-prototype
+  name: git-gateway
+  branch: the-canney-valley
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
@@ -14,5 +14,8 @@ collections:
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Excerpt", name: "excerpt", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "date"}
+      - {label: "Publish Date", name: "date", widget: "date", default: "", format: "MMM Do YY"}
       - {label: "Body", name: "body", widget: "markdown"}
+
+# Adding featured images
+# https://www.netlifycms.org/docs/widgets/image/#image
