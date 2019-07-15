@@ -16,7 +16,28 @@ collections:
       - {label: "Excerpt", name: "excerpt", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "date", default: "", format: "MMM Do YY"}
       - {label: "Body", name: "body", widget: "markdown"}
-      - {label: "Tags", name: "tags", widget: "list", default: "miscellaneous"}
+      - {
+          label: "Tags", 
+          name: "tags", 
+          widget: "list", 
+          default: "miscellaneous", 
+          field: {
+            label: "Tag",
+            name: "tag_name",
+            widget: "string"
+          }
+      }
+      - {
+          label: "Categories", 
+          name: "categories", 
+          widget: "list", 
+          default: "general", 
+          field: {
+            label: Category",
+            name: "category_name",
+            widget: "string"
+          }
+      }
 
 # Adding featured images
 # https://www.netlifycms.org/docs/widgets/image/#image

@@ -7,7 +7,7 @@
         <g-link to="/blog" class="pl-2 hover:text-primary">Archive</g-link>
       </nav>
     </header>
-    <div class="p-2">
+    <div class="flex p-2">
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <a :href="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
@@ -39,7 +39,7 @@ query Posts {
 
 <script scoped>
 export default {
-  name: "Sidebar"
+  name: "Postbar"
 };
 </script>
 

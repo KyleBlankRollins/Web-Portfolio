@@ -1,11 +1,13 @@
 <template>
   <div class="m-10">
-    <Navbar class="nav" />
-    <Sidebar class="sidebar" />
-    <div class="ml-10 bg-primary">
-      <slot />
+    <Navbar />
+    <Postbar class="mb-4" />
+    <div class="p-2 mb-10 bg-secondary-light rounded">
+      <div class="bg-white p-2 m-4 shadow-lg rounded">
+        <slot />
+      </div>
     </div>
-    <Footer class="footer" />
+    <Footer />
   </div>
 </template>
 
@@ -18,14 +20,14 @@ query {
 </static-query>
 
 <script>
-import Sidebar from "~/components/Sidebar.vue";
+import Postbar from "~/components/Postbar.vue";
 import Footer from "~/components/Footer.vue";
 import Navbar from "~/components/Navbar.vue";
 
 export default {
   name: "PostLayout",
   components: {
-    Sidebar,
+    Postbar,
     Footer,
     Navbar
   }

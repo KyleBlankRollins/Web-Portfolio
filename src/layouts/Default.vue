@@ -1,13 +1,13 @@
 <template>
   <div class="m-10">
-    <Navbar class="nav" />
-    <div class="flex mb-10 shadow-lg">
-      <Sidebar class="w-1/4 sidebar rounded-l" />
-      <div class="w-3/4 bg-white p-2 rounded-r">
+    <Navbar />
+    <div class=" lg:flex mb-10 bg-secondary-light rounded">
+      <Sidebar class="w-full lg:w-1/4 shadow-lg rounded" />
+      <div class="w-full lg:w-3/4 bg-white p-2 m-4 shadow-lg rounded">
         <slot />
       </div>
     </div>
-    <Footer class="footer" />
+    <Footer />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
-  <Layout :title="$page.post.title">
-    <div v-html="$page.post.content"></div>
-  </Layout>
+  <PostLayout :title="$page.post.title">
+    <div class="m-4" v-html="$page.post.content"></div>
+  </PostLayout>
 </template>
 
 <page-query>
@@ -14,7 +14,7 @@ query Post ($id: String!) {
 </page-query>
 
 <script>
-import PostLayout from '~/layouts/PostLayout.vue'
+import PostLayout from '~/layouts/PostLayout.vue';
 
 export default {
   components: {

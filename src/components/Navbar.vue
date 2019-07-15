@@ -61,7 +61,7 @@
         </div>
       </div>
     </nav>
-    <div class="flex">
+    <div class="text-secondary">
       <h1>THE CANNEY VALLEY</h1>
     </div>
   </header>
