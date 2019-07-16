@@ -47,10 +47,6 @@ export default {
 </script>
 
 <style>
-li {
-  list-style: none;
-}
-
 .posts:nth-child(odd) {
   background-color: #b2d5b3;
 }

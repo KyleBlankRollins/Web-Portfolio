@@ -39,6 +39,14 @@ p {
   @apply font-body;
 }
 
+ol {
+  @apply list-decimal;
+  @apply text-xl;
+  @apply leading-snug;
+  @apply font-body;
+  @apply ml-6;
+}
+
 .gradient-bar {
   background: rgb(102,171,104);
   background: linear-gradient(90deg, rgba(102,171,104,1) 2%, rgba(150,104,127,1) 50%, rgba(38,50,56,1) 98%);  

@@ -2,7 +2,7 @@
   <PostLayout :title="$page.post.title" class="text-secondary">
     <header class="border-b border-secondary">
       <div class="flex items-end">
-        <h2 class="w-3/4 font-displayb uppercase">{{ $page.post.title }}</h2>
+        <h2 class="w-3/4 font-displayB uppercase">{{ $page.post.title }}</h2>
         <p class="w-1/4 flex justify-end">{{ $page.post.timeToRead }} minutes to read</p>
       </div>
       <div class="mb-4">

@@ -15,28 +15,7 @@ export default [
     }
   },
   {
-    path: "/posts/test-post-4",
-    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
-    meta: {
-      data: true
-    }
-  },
-  {
-    path: "/posts/this-is-a-test",
-    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
-    meta: {
-      data: true
-    }
-  },
-  {
-    path: "/posts/this-is-post-2",
-    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
-    meta: {
-      data: true
-    }
-  },
-  {
-    path: "/posts/this-is-test-post-3",
+    path: "/posts/enable-virtualization-in-your-pcs-bios",
     component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
     meta: {
       data: true

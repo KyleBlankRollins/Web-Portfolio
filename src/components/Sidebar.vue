@@ -11,7 +11,7 @@
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <g-link :to="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
-            <h3 class="text-lg font-display m-0">{{ post.node.title }}</h3>
+            <h3 class="text-lg font-display leading-snug m-0">{{ post.node.title }}</h3>
             <p class="text-sm font-mono">{{ post.node.date }}</p>
           </li>
         </g-link>
@@ -44,9 +44,6 @@ export default {
 </script>
 
 <style scoped>
-li {
-  list-style: none;
-}
 a.active--exact {
   @apply bg-white;
   @apply text-callout;
