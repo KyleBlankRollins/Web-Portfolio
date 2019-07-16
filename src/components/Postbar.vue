@@ -8,6 +8,9 @@
       </nav>
     </header>
     <div class="flex p-2">
+      <div class="flex border-r border-white self-center">
+        <h4 class="m-0 pl-2 pr-4 py-3"> Recent posts </h4>
+      </div>
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <a :href="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
@@ -22,7 +25,7 @@
 
 <static-query>
 query Posts {
-  posts: allPost {
+  posts: allPost (sortBy: "date", order: ASC, limit: 3) {
     edges {
       node { 
         id

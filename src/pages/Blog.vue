@@ -29,6 +29,7 @@ query Posts {
         timeToRead
         path
         tags
+        categories
       }
     }
   }

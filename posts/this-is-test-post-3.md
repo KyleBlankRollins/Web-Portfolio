@@ -7,6 +7,7 @@ tags:
   - lots of tags
   - CMS
 categories:
-  - 'test, text only'
+  - test
+  - text only
 ---
 Seems like it did. That should make things a bit cleaner.

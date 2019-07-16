@@ -7,7 +7,8 @@ tags:
   - second
   - third
 categories:
-  - 'test, image'
+  - test
+  - image
 ---
 ![](/uploads/webdev.png "Image!")
 

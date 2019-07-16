@@ -22,7 +22,7 @@
 
 <static-query>
 query Posts {
-  posts: allPost {
+  posts: allPost (sortBy: "date", order: ASC, limit: 10) {
     edges {
       node { 
         id

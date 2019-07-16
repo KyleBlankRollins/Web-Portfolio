@@ -1,13 +1,20 @@
 <template>
   <PostLayout :title="$page.post.title">
-    <header class="flex">
-      <h2> {{ $page.post.title }} </h2>
-      <p> {{ $page.post.timeToRead }} </p>
+    <header>
+      <div class="flex items-baseline">
+        <h2 class="w-3/4 uppercase"> {{ $page.post.title }} </h2>
+      <p class="w-1/4"> {{ $page.post.timeToRead }} </p>
+      </div>
+      <div class="flex flex-wrap">
+        <ul v-for="(category, index) in $page.post.categories" :key="index" class="p-2 mx-2 bg-callout shadow-lg rounded">
+        <p> {{ category }} </p>
+      </ul>
+      </div>
     </header>
     <div class="m-4" v-html="$page.post.content"></div>
     <div class="flex flex-wrap">
       <ul v-for="(tag, index) in $page.post.tags" :key="index" class="p-2 mx-2 bg-primary-light shadow-lg rounded">
-        <p> {{ tag }} </p>
+        <p class="uppercase"> {{ tag }} </p>
       </ul>
     </div>
   </PostLayout>
@@ -21,6 +28,7 @@ query Post ($id: String!) {
     tags
     date
     timeToRead
+    categories
   }
 }
 </page-query>
