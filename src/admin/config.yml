@@ -14,7 +14,7 @@ collections:
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Excerpt", name: "excerpt", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "date", default: "", format: "MMM Do YY"}
+      - {label: "Publish Date", name: "date", widget: "date", default: "", format: "MMMM Do YYYY"}
       - {label: "Body", name: "body", widget: "markdown"}
       - {
           label: "Tags", 

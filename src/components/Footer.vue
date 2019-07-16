@@ -11,13 +11,13 @@
               href="https://www.kyleblankrollins.com/"
               class="text-secondar hover:underline"
             >
-              <p class="text-lg">KyleBlankRollins.com</p>
+              <p class="no-margin text-lg">KyleBlankRollins.com</p>
             </a>
             <a
               href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/DoK-Compare2.0"
               class="text-secondary hover:underline"
             >
-              <p class="text-sm">Fork on GitHub</p>
+              <p class="no-margin text-sm">Fork on GitHub</p>
             </a>
           </div>
         </div>

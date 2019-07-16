@@ -1,20 +1,20 @@
 <template>
   <PostLayout :title="$page.post.title">
-    <header>
-      <div class="flex items-baseline">
+    <header class="border-b border-secondary">
+      <div class="flex items-end">
         <h2 class="w-3/4 uppercase"> {{ $page.post.title }} </h2>
-      <p class="w-1/4"> {{ $page.post.timeToRead }} </p>
+        <p class="w-1/4 flex justify-end"> {{ $page.post.timeToRead }} </p>
       </div>
-      <div class="flex flex-wrap">
-        <ul v-for="(category, index) in $page.post.categories" :key="index" class="p-2 mx-2 mb-0 bg-callout shadow-lg rounded">
-        <p> {{ category }} </p>
+      <div class="flex flex-wrap mb-4">
+        <ul v-for="(category, index) in $page.post.categories" :key="index" class="p-2 mx-2 bg-callout shadow-lg rounded">
+        <p class="no-margin text-sm"> {{ category }} </p>
       </ul>
       </div>
     </header>
     <div class="m-4" v-html="$page.post.content"></div>
     <div class="flex flex-wrap">
-      <ul v-for="(tag, index) in $page.post.tags" :key="index" class="p-2 mx-2 mb-0 bg-primary-light shadow-lg rounded">
-        <p class="uppercase"> {{ tag }} </p>
+      <ul v-for="(tag, index) in $page.post.tags" :key="index" class="p-2 mx-2 bg-primary-light shadow-lg rounded">
+        <p class="no-margin text-sm uppercase"> {{ tag }} </p>
       </ul>
     </div>
   </PostLayout>

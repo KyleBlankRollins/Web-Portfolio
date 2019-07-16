@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout class="text-secondary">
     
     <h2>Welcome!</h2>
    
@@ -38,7 +38,7 @@ query Posts {
 <script>
 export default {
   metaInfo: {
-    title: 'Hello, world!'
+    title: 'Home'
   }
 }
 </script>

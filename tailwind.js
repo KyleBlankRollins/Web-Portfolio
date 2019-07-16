@@ -3,6 +3,7 @@ module.exports = {
     fontFamily: {
       display: ["Oswald", "sans-serif"],
       displayB: ["Playfair Display", "sans-serif"],
+      mono: ["IBM Plex Mono", "sans-serif"],
       body: ["Lato", "sans-serif"]
     },
     extend: {
