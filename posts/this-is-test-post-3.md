@@ -6,5 +6,7 @@ tags:
   - Third post
   - lots of tags
   - CMS
+categories:
+  - 'test, text only'
 ---
 Seems like it did. That should make things a bit cleaner.
