@@ -2,20 +2,20 @@
   <div class="bg-secondary text-white rounded shadow-xl">
     <div class="gradient-bar h-1 rounded-t"></div>
     <header class="p-2 bg-white text-secondary border">
-      <nav class="text-xl font-bold">
+      <nav class="text-lg font-display uppercase">
         <g-link to="/" class="pr-2 hover:text-primary">Home</g-link>
         <g-link to="/posts" class="pl-2 hover:text-primary">All posts</g-link>
       </nav>
     </header>
     <div class="flex p-2">
       <div class="flex border-r border-white self-center">
-        <h4 class="m-0 pl-2 pr-4 py-3"> Recent posts </h4>
+        <h4 class="m-0 pl-2 pr-4 py-3 font-display"> Recent posts </h4>
       </div>
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <g-link :to="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
-            <h2 class="text-lg m-0">{{ post.node.title }}</h2>
-            <p class="text-base">{{ post.node.date }}</p>
+            <h3 class="text-lg font-display m-0">{{ post.node.title }}</h3>
+            <p class="text-sm font-mono">{{ post.node.date }}</p>
           </li>
         </g-link>
       </ul>

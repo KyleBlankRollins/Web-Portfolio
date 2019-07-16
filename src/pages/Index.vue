@@ -1,7 +1,7 @@
 <template>
   <Layout class="text-secondary">
     
-    <h2>Welcome!</h2>
+    <h2 class="font-display">Welcome!</h2>
    
     <p>
       This is The Canney Valley. It's a place where I take commonplace experiences and turn them into something more - something we can learn from.

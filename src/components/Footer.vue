@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="font-body">
     <div class="gradient-bar h-1 rounded-t"></div>
     <div
       class="w-full text-base lg:text-xl md:text-sm sm:text-sm block flex-grow gradient-bar-bg"

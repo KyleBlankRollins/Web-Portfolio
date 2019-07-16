@@ -15,7 +15,6 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Excerpt", name: "excerpt", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "date", default: "", format: "MMMM Do YYYY"}
-      - {label: "Body", name: "body", widget: "markdown"}
       - {
           label: "Tags", 
           name: "tags", 
@@ -38,6 +37,13 @@ collections:
             widget: "string"
           }
       }
+      - {
+          label: "Featured Image", 
+          name: "thumbnail", 
+          widget: "image", 
+          required: false
+        }
+      - {label: "Body", name: "body", widget: "markdown"}
 
 # Adding featured images
 # https://www.netlifycms.org/docs/widgets/image/#image

@@ -2,7 +2,7 @@
   <div class="bg-secondary text-white rounded shadow-xl">
     <div class="gradient-bar h-1 rounded-t"></div>
     <header class="p-2 bg-white text-secondary border">
-      <nav class="text-xl font-bold">
+      <nav class="text-lg font-display uppercase">
         <g-link to="/" class="pr-2 hover:text-primary">Home</g-link>
         <g-link to="/posts" class="pl-2 hover:text-primary">All posts</g-link>
       </nav>
@@ -11,7 +11,7 @@
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <g-link :to="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
-            <h2 class="text-lg m-0">{{ post.node.title }}</h2>
+            <h3 class="text-lg font-display m-0">{{ post.node.title }}</h3>
             <p class="text-sm font-mono">{{ post.node.date }}</p>
           </li>
         </g-link>
