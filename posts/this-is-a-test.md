@@ -6,6 +6,8 @@ tags:
   - test
   - second
   - third
+categories:
+  - 'test, image'
 ---
 ![](/uploads/webdev.png "Image!")
 
