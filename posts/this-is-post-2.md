@@ -6,5 +6,7 @@ tags:
   - More tags
   - should be separated by commas
   - we'll see
+categories:
+  - 'test, text only'
 ---
 Text shows up here that explains what's going on. Let's make sure we get the date displaying properly. We don't need the specific time something was published.
