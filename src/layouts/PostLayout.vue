@@ -3,7 +3,7 @@
     <Navbar />
     <Postbar class="mb-4" />
     <div class="p-2 mb-10 bg-secondary-light rounded">
-      <div class="bg-white p-2 m-4 shadow-lg rounded">
+      <div class="bg-white p-4 m-4 shadow-lg rounded">
         <slot />
       </div>
     </div>

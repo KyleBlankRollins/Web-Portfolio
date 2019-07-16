@@ -27,6 +27,7 @@ query Posts {
         date
         timeToRead
         path
+        tags
       }
     }
   }

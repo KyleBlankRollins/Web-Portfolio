@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout class="text-secondary">
     <h1>Archive</h1>
     <div>
       <ul v-for="post in $page.posts.edges" :key="post.node.id">
@@ -28,6 +28,7 @@ query Posts {
         date
         timeToRead
         path
+        tags
       }
     }
   }
