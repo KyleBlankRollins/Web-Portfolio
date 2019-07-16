@@ -6,14 +6,14 @@
       <p class="w-1/4"> {{ $page.post.timeToRead }} </p>
       </div>
       <div class="flex flex-wrap">
-        <ul v-for="(category, index) in $page.post.categories" :key="index" class="p-2 mx-2 bg-callout shadow-lg rounded">
+        <ul v-for="(category, index) in $page.post.categories" :key="index" class="p-2 mx-2 mb-0 bg-callout shadow-lg rounded">
         <p> {{ category }} </p>
       </ul>
       </div>
     </header>
     <div class="m-4" v-html="$page.post.content"></div>
     <div class="flex flex-wrap">
-      <ul v-for="(tag, index) in $page.post.tags" :key="index" class="p-2 mx-2 bg-primary-light shadow-lg rounded">
+      <ul v-for="(tag, index) in $page.post.tags" :key="index" class="p-2 mx-2 mb-0 bg-primary-light shadow-lg rounded">
         <p class="uppercase"> {{ tag }} </p>
       </ul>
     </div>
