@@ -9,12 +9,12 @@
     </header>
     <div class="flex p-2">
       <div class="flex border-r border-white self-center">
-        <h4 class="m-0 pl-2 pr-4 py-3 font-display"> Recent posts </h4>
+        <p class="m-0 pl-2 pr-4 py-3 font-display"> Recent posts </p>
       </div>
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
         <g-link :to="post.node.path">
           <li class="m-2 px-2 hover:bg-white rounded hover:text-secondary">
-            <h3 class="text-lg font-display leading-snug m-0">{{ post.node.title }}</h3>
+            <p class="text-lg font-display uppercase leading-snug m-0">{{ post.node.title }}</p>
             <p class="text-sm font-mono">{{ post.node.date }}</p>
           </li>
         </g-link>

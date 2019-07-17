@@ -1,9 +1,9 @@
 <template>
   <PostLayout :title="$page.post.title" class="text-secondary">
     <header class="border-b border-secondary">
-      <div class="flex items-end">
-        <h2 class="w-3/4 font-displayB uppercase">{{ $page.post.title }}</h2>
-        <p class="w-1/4 flex justify-end">{{ $page.post.timeToRead }} minutes to read</p>
+      <div class="md:flex md:items-end">
+        <h2 id="post-title" class="w-3/4 font-displayB uppercase">{{ $page.post.title }}</h2>
+        <p class="w-1/4 mx-2 flex ju`stify-end">{{ $page.post.timeToRead }} min to read</p>
       </div>
       <div class="mb-4">
         <ul class="flex flex-wrap">
@@ -17,7 +17,9 @@
         </ul>
       </div>
     </header>
-    <div class="m-4" v-html="$page.post.content"></div>
+
+    <div id="post" class="m-4" v-html="$page.post.content"></div>
+
     <div class="border-t border-secondary">
       <ul class="flex flex-wrap mt-4">
         <li

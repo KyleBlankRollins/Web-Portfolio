@@ -1,9 +1,10 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
 
-/* html{
-  @apply bg-white;
-} */
-
+/* SMALL SCREEN (DEFAULT) STYLES */
+/* General site styles */
 h1 {
   @apply text-3xl; 
   @apply font-extrabold; 
@@ -14,13 +15,13 @@ h1 {
 h2 {
   @apply text-2xl; 
   @apply font-extrabold; 
-  @apply leading-loose; 
+  @apply leading-snug; 
   @apply mb-4;
 }
 
 h3 {
   @apply text-2xl; 
-  @apply leading-loose; 
+  @apply leading-snug; 
   @apply mb-4;
   @apply uppercase;
 }
@@ -28,12 +29,67 @@ h3 {
 h4 {
   @apply text-xl; 
   @apply font-extrabold; 
-  @apply leading-loose; 
+  @apply leading-snug; 
   @apply mb-4;
 }
 
+/* Post content-specific styles */
+#post-title {
+  @apply font-displayB;
+  @apply text-2xl; 
+  @apply font-extrabold; 
+  @apply leading-snug; 
+  @apply mb-4;
+}
+
+#post h3 {
+  @apply font-displayB;
+  @apply text-xl; 
+  @apply leading-snug; 
+  @apply mb-4;
+  @apply normal-case;
+  @apply font-bold;
+}
+
+#post h4 {
+  @apply font-displayB;
+  @apply text-xl; 
+  @apply font-extrabold; 
+  @apply leading-snug; 
+  @apply mb-4;
+}
+
+#post h5 {
+  @apply font-displayB;
+  @apply text-base; 
+  @apply font-extrabold; 
+  @apply italic;
+  @apply leading-snug; 
+  @apply mb-4;
+  @apply border-b;
+  @apply border-secondary;
+  @apply mr-10;
+}
+
+#post a {
+  @apply text-callout;
+  @apply underline;
+}
+
+#post div.note {
+  @apply bg-primary-light;
+  @apply rounded;
+  @apply p-2;
+  @apply border-l-4;
+  @apply border-primary;
+  @apply mb-6;
+}
+
+#post div.note p {
+  @apply m-0;
+}
+
 p {
-  @apply text-xl;
   @apply leading-normal;
   @apply mb-4;
   @apply font-body;
@@ -41,10 +97,46 @@ p {
 
 ol {
   @apply list-decimal;
-  @apply text-xl;
   @apply leading-snug;
   @apply font-body;
   @apply ml-6;
+  @apply mb-6;
+}
+
+/* MEDIUM AND LARGER SCREEN STYLES: @media (min-width: 768px) */
+@screen md {
+  #post-title {
+    @apply text-3xl; 
+  }
+
+  #post h3 {
+    @apply text-2xl; 
+  }
+
+  #post h5 {
+    @apply text-xl; 
+  }
+  
+  p {
+    @apply text-xl;
+    @apply leading-normal;
+    @apply mb-4;
+    @apply font-body;
+  }
+
+  ol {
+    @apply list-decimal;
+    @apply text-xl;
+    @apply leading-snug;
+    @apply font-body;
+    @apply ml-6;
+    @apply mb-6;
+  }
+
+  #post div.note p {
+    @apply text-base;
+    @apply m-0;
+  }
 }
 
 .gradient-bar {
@@ -65,8 +157,5 @@ ol {
 .no-margin {
   margin: 0 !important;
 }
-
-@tailwind components;
-@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css?family=Lato:400,900|Oswald|Playfair+Display|IBM+Plex+Mono|&display=swap');
