@@ -8,34 +8,44 @@
           :key="post.node.id"
           class="posts p-4 my-4 bg-white border-l-2 border-secondary rounded"
         >
-          <h3 class="font-display">{{ post.node.title }}</h3>
-          <p class="font-body">{{ post.node.excerpt }}</p>
-          <div class="flex mb-4 items-end">
-            <p class="w-2/3 md:w-2/4 no-margin font-mono text-sm">{{ post.node.date }}</p>
-            <p
-              class="w-1/3 md:w-1/4 no-margin font-mono text-sm"
-            >{{ post.node.timeToRead }} min to read</p>
-            <a class="hidden md:inline-block md:w-1/4" :href="post.node.path">
+          <div class="md:flex">
+            <h3 class="w-3/4 font-display">{{ post.node.title }}</h3>
+            <a class="md:flex md:justify-end md:inline-block md:w-1/4" :href="post.node.path">
               <button
-                class="p-2 bg-white border border-callout font-displayB text-callout font-bold hover:bg-primary hover:text-white hover:border-white rounded"
+                class="p-2 bg-white border border-callout font-displayB text-callout font-bold hover:bg-primary hover:text-white hover:border-white shadow-lg rounded"
               >Read more</button>
             </a>
           </div>
-          <a class="md:hidden" :href="post.node.path">
-            <button
-              class="p-2 bg-white border border-callout font-displayB text-callout font-bold hover:bg-primary hover:text-white hover:border-white rounded"
-            >Read more</button>
-          </a>
-          <div>
-            <ul class="flex flex-wrap mt-4">
-              <li
-                v-for="(tag, index) in post.node.tags"
-                :key="index"
-                class="p-2 mx-2 bg-primary-light shadow-lg rounded"
-              >
-                <p class="no-margin text-sm">{{ tag }}</p>
-              </li>
-            </ul>
+          <p class="mt-4 font-body">{{ post.node.excerpt }}</p>
+          <div class="flex mb-4 items-end">
+            <p class="w-2/3 no-margin font-mono text-sm">{{ post.node.date }}</p>
+            <p
+              class="w-1/3 flex justify-end no-margin font-mono text-sm"
+            >{{ post.node.timeToRead }} min to read</p>
+          </div>
+          <div class="md:flex my-4">
+            <div>
+              <ul class="flex flex-wrap">
+                <li
+                  v-for="(category, index) in post.node.categories"
+                  :key="index"
+                  class="p-2 mx-2 my-1 bg-callout text-white shadow-lg rounded"
+                >
+                  <p class="no-margin text-sm">{{ category }}</p>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul class="flex flex-wrap">
+                <li
+                  v-for="(tag, index) in post.node.tags"
+                  :key="index"
+                  class="p-2 mx-2 my-1 bg-white shadow-lg rounded"
+                >
+                  <p class="no-margin text-sm">{{ tag }}</p>
+                </li>
+              </ul>
+            </div>
           </div>
         </li>
       </ul>

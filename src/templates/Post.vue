@@ -3,7 +3,7 @@
     <header class="border-b border-secondary">
       <div class="md:flex md:items-end">
         <h2 id="post-title" class="w-3/4 font-displayB uppercase">{{ $page.post.title }}</h2>
-        <p class="w-1/4 mx-2 flex ju`stify-end">{{ $page.post.timeToRead }} min to read</p>
+        <p class="w-1/4 mx-2 flex justify-end">{{ $page.post.timeToRead }} min to read</p>
       </div>
       <div class="mb-4">
         <ul class="flex flex-wrap">
