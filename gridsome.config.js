@@ -6,6 +6,11 @@
 
 module.exports = {
   siteName: 'The Canney Valley',
+  // icon: {
+  //   favicon: {
+  //     src: './src/favicon.ico'
+  //   }
+  // },
   transformers: {
     remark: {
       externalLinksTarget: '_blank',
