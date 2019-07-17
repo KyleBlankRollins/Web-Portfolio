@@ -18,6 +18,8 @@
       </div>
     </header>
 
+    <g-image :src="$page.post.thumbnail" class="w-full my-4 rounded"/>
+
     <div id="post" class="m-4" v-html="$page.post.content"></div>
 
     <div class="border-t border-secondary">
@@ -43,6 +45,7 @@ query Post ($id: String!) {
     date
     timeToRead
     categories
+    thumbnail
   }
 }
 </page-query>

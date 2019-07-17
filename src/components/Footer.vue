@@ -14,7 +14,7 @@
               <p class="no-margin text-lg">KyleBlankRollins.com</p>
             </a>
             <a
-              href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/DoK-Compare2.0"
+              href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/the-canney-valley"
               class="text-secondary hover:underline"
             >
               <p class="no-margin text-sm">Fork on GitHub</p>

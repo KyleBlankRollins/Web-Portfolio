@@ -9,10 +9,7 @@ export default [
   },
   {
     path: "/posts",
-    component: () => import(/* webpackChunkName: "page--src--pages--posts-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Posts.vue"),
-    meta: {
-      data: true
-    }
+    component: () => import(/* webpackChunkName: "page--src--pages--posts-vue" */ "/home/kyle/Documents/Web-Portfolio/src/pages/Posts.vue")
   },
   {
     path: "/posts/enable-virtualization-in-your-pcs-bios",
