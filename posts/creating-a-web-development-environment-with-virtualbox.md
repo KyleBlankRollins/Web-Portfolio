@@ -54,14 +54,16 @@ While the initial work involved is substantial, it's easy to build off of later 
 1. [Enable virtualization for your computer](https://the-canney-valley.kyleblankrollins.com/posts/enable-virtualization-in-your-pcs-bios) if it isn't already enabled.
 2. Download and install VirtualBox v6.0.8 (<http://download.virtualbox.org/virtualbox/6.0.8/>).
    Look for the "**VirtualBox-6.0.8-130520-Win.exe**" link.
+
 <img class="procedure-image" src="/uploads/windows-download.png" />
 
-1. Download VirtualBox Guest Additions v6.0.8 (<http://download.virtualbox.org/virtualbox/6.0.8/>).
+3. Download VirtualBox Guest Additions v6.0.8 (<http://download.virtualbox.org/virtualbox/6.0.8/>).
    Look for the "**VBoxGuestAdditions_6.0.8.iso**" link.
+
 <img class="procedure-image" src="/uploads/windows-guest-additions.png" />
 
-1. Download Ubuntu 18.04.2 virtual disk image (<https://ubuntu.com/download/desktop>).
-2. Create a base virtual machine in VirtualBox (article pending).
-3. Set up your base Ubuntu VM (article pending).
-4. Clone your base VM (article pending).
-5. Set up your cloned VM for your web development project (article pending).
+4. Download Ubuntu 18.04.2 virtual disk image (<https://ubuntu.com/download/desktop>).
+5. Create a base virtual machine in VirtualBox (article pending).
+6. Set up your base Ubuntu VM (article pending).
+7. Clone your base VM (article pending).
+8. Set up your cloned VM for your web development project (article pending).
