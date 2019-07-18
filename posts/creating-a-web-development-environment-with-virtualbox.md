@@ -54,11 +54,11 @@ While the initial work involved is substantial, it's easy to build off of later 
 1. [Enable virtualization for your computer](https://the-canney-valley.kyleblankrollins.com/posts/enable-virtualization-in-your-pcs-bios) if it isn't already enabled.
 2. Download and install VirtualBox v6.0.8 (<http://download.virtualbox.org/virtualbox/6.0.8/>).
    Look for the "**VirtualBox-6.0.8-130520-Win.exe**" link.
-<img class="max-w-lg" src="/uploads/windows-download.png" />
+<img class="procedure-image" src="/uploads/windows-download.png" />
 
 1. Download VirtualBox Guest Additions v6.0.8 (<http://download.virtualbox.org/virtualbox/6.0.8/>).
    Look for the "**VBoxGuestAdditions_6.0.8.iso**" link.
-<img class="max-w-lg" src="/uploads/windows-guest-additions.png" />
+<img class="procedure-image" src="/uploads/windows-guest-additions.png" />
 
 1. Download Ubuntu virtual disk imag (<https://ubuntu.com/download/desktop>).
 2. Create a base virtual machine in VirtualBox (article pending).

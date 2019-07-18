@@ -22,6 +22,13 @@ export default [
     }
   },
   {
+    path: "/posts/creating-a-web-development-environment-with-virtualbox",
+    component: () => import(/* webpackChunkName: "page--src--templates--post-vue" */ "/home/kyle/Documents/Web-Portfolio/src/templates/Post.vue"),
+    meta: {
+      data: true
+    }
+  },
+  {
     name: "404",
     path: "/404",
     component: () => import(/* webpackChunkName: "page--node-modules--gridsome--app--pages--404-vue" */ "/home/kyle/Documents/Web-Portfolio/node_modules/gridsome/app/pages/404.vue")

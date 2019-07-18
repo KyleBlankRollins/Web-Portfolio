@@ -63,7 +63,7 @@
     </nav>
     <div class="flex items-center text-secondary">
       <g-image src="~/assets/logo-opt.svg" class="h-10 w-10 mr-4" />
-      <h1 class="m-0">THE CANNEY VALLEY</h1>
+      <h1 class="leading-tight m-0">THE CANNEY VALLEY</h1>
     </div>
   </header>
 </template>

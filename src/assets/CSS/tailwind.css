@@ -33,6 +33,36 @@ h4 {
   @apply mb-4;
 }
 
+p {
+  @apply leading-normal;
+  @apply mb-4;
+  @apply font-body;
+}
+
+ol {
+  @apply list-decimal;
+  @apply leading-snug;
+  @apply font-body;
+  @apply list-inside;
+  @apply mb-6;
+}
+
+ol li {
+  @apply mb-2;
+}
+
+ul li {
+  @apply mb-2;
+}
+
+.procedure-image {
+  @apply hidden;
+  @apply shadow-lg;
+  @apply rounded;
+  @apply ml-10;
+  @apply my-6;
+}
+
 /* Post content-specific styles */
 #post-title {
   @apply font-displayB;
@@ -89,17 +119,11 @@ h4 {
   @apply m-0;
 }
 
-p {
-  @apply leading-normal;
-  @apply mb-4;
-  @apply font-body;
-}
-
-ol {
-  @apply list-decimal;
+#post ul {
+  @apply list-disc;
   @apply leading-snug;
   @apply font-body;
-  @apply ml-6;
+  @apply list-inside;
   @apply mb-6;
 }
 
@@ -116,6 +140,20 @@ ol {
   #post h5 {
     @apply text-xl; 
   }
+
+  #post ul {
+    @apply list-disc;
+    @apply text-xl;
+    @apply leading-snug;
+    @apply font-body;
+    @apply list-inside;
+    @apply mb-6;
+  }
+
+  #post div.note p {
+    @apply text-base;
+    @apply m-0;
+  }
   
   p {
     @apply text-xl;
@@ -129,13 +167,17 @@ ol {
     @apply text-xl;
     @apply leading-snug;
     @apply font-body;
-    @apply ml-6;
+    @apply list-inside;
     @apply mb-6;
   }
 
-  #post div.note p {
-    @apply text-base;
-    @apply m-0;
+  .procedure-image {
+    @apply inline-block;
+    @apply max-w-lg;
+    @apply shadow-lg;
+    @apply rounded;
+    @apply ml-10;
+    @apply my-6;
   }
 }
 
