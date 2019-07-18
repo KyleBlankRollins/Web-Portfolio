@@ -2,7 +2,7 @@
   <div class="flex flex-col m-1 md:m-10 items-center">
     <Navbar class="w-full" />
     <div class="max-w-6xl pb-2 mb-10 bg-secondary-light rounded">
-      <Postbar class="max-w-6xl mb-4" />
+      <Postbar class="mb-4" />
       <div class="bg-white p-4 m-4 shadow-lg rounded">
         <slot />
       </div>
