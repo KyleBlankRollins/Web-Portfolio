@@ -60,7 +60,7 @@ While the initial work involved is substantial, it's easy to build off of later 
    Look for the "**VBoxGuestAdditions_6.0.8.iso**" link.
 <img class="procedure-image" src="/uploads/windows-guest-additions.png" />
 
-1. Download Ubuntu virtual disk imag (<https://ubuntu.com/download/desktop>).
+1. Download Ubuntu 18.04.2 virtual disk image (<https://ubuntu.com/download/desktop>).
 2. Create a base virtual machine in VirtualBox (article pending).
 3. Set up your base Ubuntu VM (article pending).
 4. Clone your base VM (article pending).
