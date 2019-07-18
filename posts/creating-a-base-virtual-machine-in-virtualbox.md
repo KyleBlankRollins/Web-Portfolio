@@ -32,12 +32,14 @@ This article covers creating your initial base Ubuntu VM that includes the Virtu
 <img class="procedure-image" src="/uploads/name-and-os.png" />
 
 5. On the "Memory size" window, select how much RAM you want to allocate to the machine while it's running, then select Next.
+
 <div class="note">  <p><strong>Note:</strong> Allocating more RAM will reduce the amount of RAM available to other applications on your computer, but increase the VM's performance.</p></div>
 
 6. On the Hard disk window, select "Create a virtual hard disk now," then click Create.
 7. On the Hard disk file type window, use the initial selection (VDI), and click Next.
 8. On the next window, select Fixed size, then click Next.
 9. Give the virtual hard disk a name and select how much storage space to allocate to it, then click Create.
+
 <div class="note">  <p><strong>Note:</strong> For most projects, 10 - 20GB should be plenty of space. You cannot change this later.</p></div>
 
 10.  Install Ubuntu on your virtual machine (article pending).
