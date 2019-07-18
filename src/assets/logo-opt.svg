@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="359.95" version="1.1" viewBox="0 0 105.83 95.237" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-87.197 -166.29)" stroke="#263238" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="134.82" cy="213.91" r="46.667" fill="#263238" stroke-width="1.9023" style="paint-order:markers fill stroke"/>
+  <circle cx="143.3" cy="213.91" r="46.667" fill="#fff" stroke-width="1.9023" style="paint-order:markers fill stroke"/>
+  <g transform="matrix(8.1787 0 0 8.1787 -683.39 -1341)" fill="#263238">
+   <path d="m98.013 188.31 3.0647 3.0647 3.0645-3.0647c-1e-3 -0.11379-9e-3 -0.22742-0.0227-0.34037l-3.0418 2.7093-3.042-2.724c-0.01443 0.11779-0.02199 0.23632-0.02267 0.355z" stroke-width=".12492" style="paint-order:markers fill stroke"/>
+   <path d="m96.409 189.22 4.669 4.669 4.6688-4.669c-2e-3 -0.17336-0.0137-0.34648-0.0346-0.51856l-4.6342 4.1277-4.6345-4.1499c-0.02198 0.17945-0.0335 0.36003-0.03454 0.54084z" stroke-width=".19032" style="paint-order:markers fill stroke"/>
+   <path d="m99.429 187.64 1.6493 1.6493 1.6492-1.6493c-5.3e-4 -0.0612-5e-3 -0.12239-0.0122-0.18317l-1.637 1.458-1.6371-1.4659c-0.0078 0.0634-0.01183 0.12718-0.0122 0.19105z" stroke-width=".067228" style="paint-order:markers fill stroke"/>
+  </g>
+ </g>
+</svg>

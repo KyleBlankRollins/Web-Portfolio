@@ -8,7 +8,8 @@ module.exports = {
   siteName: 'The Canney Valley',
   // icon: {
   //   favicon: {
-  //     src: './src/favicon.ico'
+  //     src: './src/assets/favicon.png',
+  //     sizes: [16, 32, 96]
   //   }
   // },
   transformers: {

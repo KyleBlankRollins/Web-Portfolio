@@ -10,12 +10,15 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="50"
-   height="44.993961"
-   viewBox="0 0 13.229166 11.904652"
+   height="50"
+   viewBox="0 0 13.229166 13.229166"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="logo-SM.svg">
+   inkscape:version="0.92.4 (33fec40, 2019-01-16)"
+   sodipodi:docname="logo-SM.svg"
+   inkscape:export-filename="/home/kyle/Documents/Web-Portfolio/src/assets/favicon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,16 +28,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="6.3942078"
-     inkscape:cy="-68.422148"
+     inkscape:zoom="7.919596"
+     inkscape:cx="-21.485165"
+     inkscape:cy="8.6272242"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1361"
-     inkscape:window-x="2391"
-     inkscape:window-y="-9"
+     inkscape:window-width="2493"
+     inkscape:window-height="1255"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      units="px" />
   <metadata
@@ -53,10 +56,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-88.127379,-188.53437)">
+     transform="translate(-88.127379,-187.20986)">
     <g
        id="g1144"
-       transform="matrix(0.64194207,0,0,0.64194207,31.554708,71.768782)">
+       transform="matrix(0.64194207,0,0,0.64194207,31.554708,71.106534)">
       <g
          id="g1135">
         <circle

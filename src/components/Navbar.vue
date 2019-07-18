@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="mb-6">
     <nav
       class="nav flex items-center justify-between flex-wrap text-right border-b border-secondary text-primary font-display text-xl"
     >
@@ -61,8 +61,9 @@
         </div>
       </div>
     </nav>
-    <div class="text-secondary">
-      <h1>THE CANNEY VALLEY</h1>
+    <div class="flex items-center text-secondary">
+      <g-image src="~/assets/logo-opt.svg" class="h-10 w-10 mr-4" />
+      <h1 class="m-0">THE CANNEY VALLEY</h1>
     </div>
   </header>
 </template>
@@ -88,5 +89,4 @@ export default {
 </script>
 
 <style>
-
 </style>
