@@ -7,8 +7,8 @@
         <g-link to="/posts" class="pl-2 hover:text-primary">All posts</g-link>
       </nav>
     </header>
-    <div class="flex p-2">
-      <div class="flex border-r border-white self-center">
+    <div class="md:flex p-2">
+      <div class="flex border-b md:border-r md:border-b-0 border-white self-center">
         <p class="m-0 pl-2 pr-4 py-3 font-display"> Recent posts </p>
       </div>
       <ul v-for="post in $static.posts.edges" :key="post.node.id">
