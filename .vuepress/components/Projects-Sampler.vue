@@ -2,21 +2,21 @@
   <div class="flex flex-wrap text-xl">
     <div
       v-for="project in projects"
-      class="projects max-w-sm md:max-w-full my-10 items-center shadow-md rounded"
+      class="projects max-w-sm md:max-w-full lg:w-4/9 mx-2 my-10 items-center shadow-md rounded"
     >
-      <div class="flex px-6 py-2 bg-secondary rounded-t">
+      <div class="flex px-1 md:px-6 py-2 bg-secondary rounded-t">
         <h3
           class="w-10/12 m-0 font-bold font-display text-2xl text-white"
         >{{ project.frontmatter.title }}</h3>
-        <button v-if="project.frontmatter.url" class="w-2/12 text-center bg-button-primary hover:bg-callout grow hover:grow px-2 rounded" >
+        <button v-if="project.frontmatter.url" class="w-2/12 h-12 text-center bg-button-primary hover:bg-callout grow hover:grow px-2 rounded" >
           <div>
             <a :href="project.frontmatter.url">
               <p class="text-white">Visit</p>
             </a>
           </div>
         </button>
-        <div v-else class="w-2/12 text-center bg-button-warning px-2 rounded">
-          <p>Not available</p>
+        <div v-else class="w-2/12 h-12 text-center bg-button-warning px-2 rounded">
+          <p>N/A</p>
         </div>
       </div>
       <div class="gradient-bar h-1"></div>
