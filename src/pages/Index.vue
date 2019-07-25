@@ -27,8 +27,14 @@ query Posts {
         date
         timeToRead
         path
-        tags
-        categories
+        tags {
+          id
+          path
+        }
+        categories {
+          id
+          path
+        }
       }
     }
   }

@@ -42,6 +42,18 @@ module.exports = {
           plugins: [
             // ...local plugins
           ]
+        },
+        refs: {
+          tags: {
+            typeName: "Tag",
+            route: "/tag/:id",
+            create: true
+          },
+          categories: {
+            typeName: "Category",
+            route: "/category/:id",
+            create: true
+          }
         }
       }
     },

@@ -41,10 +41,16 @@ query Post ($id: String!) {
   post: post (id: $id) {
     title
     content
-    tags
+    tags {
+      id
+      path
+    }
+    categories {
+      id
+      path
+    }
     date
     timeToRead
-    categories
     thumbnail
   }
 }
