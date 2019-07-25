@@ -12,13 +12,17 @@
             :key="index"
             class="p-2 mx-2 bg-callout text-white shadow-lg rounded"
           >
-            <p class="no-margin text-sm">{{ category }}</p>
+            <g-link :to="category.path">
+              <span class="w-full">
+                <p class="no-margin text-sm">{{ category.id }}</p>
+              </span>
+            </g-link>
           </li>
         </ul>
       </div>
     </header>
 
-    <g-image :src="$page.post.thumbnail" class="w-full my-4 rounded"/>
+    <g-image :src="$page.post.thumbnail" class="w-full my-4 rounded" />
 
     <div id="post" class="m-4" v-html="$page.post.content"></div>
 
@@ -29,7 +33,11 @@
           :key="index"
           class="p-2 mx-2 bg-primary-light shadow-lg rounded"
         >
-          <p class="no-margin text-sm">{{ tag }}</p>
+          <g-link :to="tag.path">
+            <span class="w-full">
+              <p class="no-margin text-sm">{{ tag.id }}</p>
+            </span>
+          </g-link>
         </li>
       </ul>
     </div>

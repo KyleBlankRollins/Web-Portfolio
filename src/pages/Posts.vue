@@ -7,7 +7,7 @@
         :key="post.node.id"
         class="posts p-4 my-4 bg-white border-l-2 border-secondary rounded"
       >
-        <header class="md:flex">
+        <header class="md:flex mb-4">
           <h3 class="w-3/4 font-display">{{ post.node.title }}</h3>
           <g-link :to="post.node.path" class="md:flex md:justify-end md:inline-block md:w-1/4">
             <button
@@ -33,7 +33,7 @@
                 class="p-2 mx-2 my-1 bg-callout text-white shadow-lg rounded"
               >
                 <g-link :to="category.path">
-                  <span>
+                  <span class="w-full">
                     <p class="no-margin text-sm">{{ category.id }}</p>
                   </span>
                 </g-link>
