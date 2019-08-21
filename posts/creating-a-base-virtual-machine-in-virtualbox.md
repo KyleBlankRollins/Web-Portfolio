@@ -42,5 +42,5 @@ This article covers creating your initial base Ubuntu VM that includes the Virtu
 
 <div class="note">  <p><strong>Note:</strong> For most projects, 10 - 20GB should be plenty of space. You cannot change this later.</p></div>
 
-10.  Install Ubuntu on your virtual machine (article pending).
-11.  Install VirtualBox v6.0.8 Guest Additions on your guest machine (article pending).
+10.  [Install Ubuntu on your virtual machine](https://the-canney-valley.kyleblankrollins.com/posts/installing-ubuntu-on-your-virtualbox-vm).
+11.  [Install VirtualBox v6.0.8 Guest Additions on your guest machine](https://the-canney-valley.kyleblankrollins.com/posts/installing-virtualbox-guest-additions-for-your-vm).
