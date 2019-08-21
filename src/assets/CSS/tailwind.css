@@ -57,11 +57,26 @@ ul li {
 
 .procedure-image {
   @apply hidden;
-  @apply shadow-lg;
-  @apply rounded;
-  @apply ml-10;
-  @apply my-6;
 }
+
+.code {
+  @apply font-mono;
+  @apply text-white;
+  @apply bg-secondary;
+  @apply rounded;
+  @apply p-2;
+  @apply mb-3;
+  @apply -mt-2;
+  @apply mx-12;
+}
+
+.code p {
+  @apply m-0;
+ }
+
+ .code p.comment {
+   @apply text-secondary-light;
+ }
 
 /* Post content-specific styles */
 #post-title {
@@ -86,7 +101,7 @@ ul li {
   @apply text-xl; 
   @apply font-extrabold; 
   @apply leading-snug; 
-  @apply mb-4;
+  @apply my-4;
 }
 
 #post h5 {
@@ -95,10 +110,11 @@ ul li {
   @apply font-extrabold; 
   @apply italic;
   @apply leading-snug; 
-  @apply mb-4;
+  @apply my-4;
   @apply border-b;
   @apply border-secondary;
   @apply mr-10;
+  @apply w-1/3;
 }
 
 #post a {
@@ -113,6 +129,7 @@ ul li {
   @apply border-l-4;
   @apply border-primary;
   @apply mb-6;
+  @apply mx-12;
 }
 
 #post div.note p {
@@ -177,7 +194,7 @@ ul li {
     @apply shadow-lg;
     @apply rounded;
     @apply ml-10;
-    @apply my-6;
+    @apply mb-8;
   }
 }
 

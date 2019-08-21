@@ -45,7 +45,7 @@
               <li
                 v-for="(tag, index) in post.node.tags"
                 :key="index"
-                class="p-2 mx-2 my-1 bg-white shadow-lg rounded"
+                class="p-2 mx-2 my-1 bg-primary-light shadow-lg rounded"
               >
                 <g-link :to="tag.path">
                   <span class="w-full">
@@ -63,7 +63,7 @@
 
 <page-query>
 query Posts {
-  posts: allPost {
+  posts: allPost (sortBy: "date", order: ASC) {
     edges {
       node { 
         id
@@ -96,11 +96,17 @@ export default {
 </script>
 
 <style>
-.posts:nth-child(odd) {
+
+/* li.posts:nth-child(odd) > article:nth-child(3) {
   background-color: #b2d5b3;
+  @apply rounded;
+  @apply p-1;
 }
 
-.posts:nth-child(even) {
+li.posts:nth-child(even) > article:nth-child(3) {
   background-color: #cab3bf;
-}
+  @apply rounded;
+  @apply p-1;
+} */
+
 </style>

@@ -20,27 +20,36 @@ Once you have a VirtualBox VM with Ubuntu installed, it's time to add VirtualBox
 ##### To install VirtualBox Guest Additions
 1. Update your Ubuntu operating system from the terminal.
 
-  ```
-  sudo apt update
-  sudo apt upgrade
-  ```
+<div class="code">
+  <p class="comment">// In the Terminal</p>
+  <p>sudo apt update</p>
+  <p>sudo apt upgrade</p>
+</div>
 
-  The upgrade could take a while, depending on your internet connection.
-  <div class="note"><p><strong>Note:</strong> If prompted for a y/n response, press y to install the upgrades.</p></div>
+The upgrade could take a while, depending on your internet connection.
+
+<div class="note"><p><strong>Note:</strong> If prompted for a y/n response, press y to install the upgrades.</p></div>
 
 2. Reboot your guest operating system (Ubuntu).
 3. Install required packages.
 
-  ```
-  sudo apt install build-essential dkms linux-headers-$(uname -r)
-  ```
+<div class="code">
+  <p class="comment">// In the Terminal</p>
+  <p>sudo apt install build-essential dkms linux-headers-$(uname -r)</p>
+</div>
 
 4. From the VirtualBox VM window's menu bar, select Devices, then select "Insert Guest Additions CD image."
+
 <img class="procedure-image" src="/uploads/mount_guest_additions.png" />
+
 5. When prompted by the auto-run window, select Run.
+
 <img class="procedure-image" src="/uploads/run_guest_additions.png" />
+
 6. After installation is complete, in the Terminal window, press Return.
+
 <img class="procedure-image" src="/uploads/finish_guest_additions.png" />
+
 7. Turn off your VM by selecting Machine > ACPI shutodwn.
 
 #### Next steps
