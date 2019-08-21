@@ -9,7 +9,7 @@ tags:
   - VirtualBox
 categories:
   - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/install_ubuntu_cover.jpg
+thumbnail: /uploads/install_ubuntu_cover.svg
 ---
 So, you created a VirtualBox VM. Great! Now, you need to install an operating system to make it usable. In this article, we'll install Ubuntu v18.04.2.
 
