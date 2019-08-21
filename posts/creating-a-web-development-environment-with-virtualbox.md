@@ -63,7 +63,7 @@ While the initial work involved is substantial, it's easy to build off of later 
 <img class="procedure-image" src="/uploads/windows-guest-additions.png" />
 
 4. Download Ubuntu 18.04.2 virtual disk image (<https://ubuntu.com/download/desktop>).
-5. Create a base virtual machine in VirtualBox (article pending).
+5. [Create a base virtual machine in VirtualBox](https://the-canney-valley.kyleblankrollins.com/posts/creating-a-base-virtual-machine-in-virtualbox).
 6. Set up your base Ubuntu VM (article pending).
 7. Clone your base VM (article pending).
 8. Set up your cloned VM for your web development project (article pending).
