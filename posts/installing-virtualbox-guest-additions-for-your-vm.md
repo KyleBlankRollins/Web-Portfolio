@@ -9,7 +9,7 @@ tags:
   - Guest Additions
 categories:
   - Set up a Linux web development environment with VirtualBox
-thumbnail: ''
+thumbnail: /uploads/install_guest_additions_cover.svg
 ---
 Once you have a VirtualBox VM with Ubuntu installed, it's time to add VirtualBox's Guest Additions functionality. This gives you a bunch of useful features like better input integration and a shared clipboard for copy and pasting from your host machine into your virtual machine.
 
