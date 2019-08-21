@@ -34,4 +34,4 @@ So, you created a VirtualBox VM. Great! Now, you need to install an operating sy
 
 #### Next steps
 
-Install VirtualBox Guest Additions for your VM. (article pending)
+[Install VirtualBox Guest Additions for your VM](https://the-canney-valley.kyleblankrollins.com/posts/installing-virtualbox-guest-additions-for-your-vm)
