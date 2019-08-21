@@ -21,10 +21,12 @@ So, you created a VirtualBox VM. Great! Now, you need to install an operating sy
 ##### To install Ubuntu on your VM
 
 1. In VirtualBox Manager, on the left-hand side, double click the virtual machine you want to install Ubuntu on.
+<img class="procedure-image" src="/uploads/start-up-disk.png" />
 2. On the Select start-up disk window, click the folder icon to navigate to and select the Ubuntu Virtual Disk Image you downloaded earlier, then click Start.
 3. On the Welcome window, select the language you want the OS to run in, then click Install Ubuntu.
 4. On the next window, select your keyboard layout, then test it and click Continue.
 5. On the next window, select "Minimal installation" and Download updates while installing Ubuntu, then click Continue.
+<img class="procedure-image" src="/uploads/minimal_installation.png" />
 6. On the next window, select "Erase disk and install Ubuntu," then click Install Now.
 7. On the confirmation window, click Continue.
 8. On the next window, select your time zone, then click Continue.
