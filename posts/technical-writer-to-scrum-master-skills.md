@@ -10,6 +10,11 @@ tags:
   - Career
 thumbnail: /uploads/technical_writer_to_scrum_master_cover.svg
 ---
+For technical writers looking to change their career trajectories, Scrum Master roles can be a great fit. Many technical writing skills directly overlap with the Scrum Master skillset or are excellent supplemental skills.
+
+You can download a PDF version of this post below.
+<a href="/uploads/tech-writer-to-scrum-master-final.pdf"><img class="w-8" src="/uploads/pdf.svg" /></a>
+
 ### What does a Scrum Master do?
 Scrum Masters serve members of their Scrum teams by gathering data for inspection and improvement. They seek to improve processes and remove impediments. 
 
