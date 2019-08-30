@@ -3,7 +3,7 @@ title: 'Technical Writer to Scrum Master: skills'
 excerpt: >-
   This an exploration of the skills and knowledge that technical writers and
   Scrum Masters share.
-date: 2019-08-30T05:00:00.000Z
+date: 2019-08-30
 tags:
   - Technical writing
   - Scrum Master
