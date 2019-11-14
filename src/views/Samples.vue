@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2>HOME BODY SECTION</h2>
+    <h2>SAMPLE BODY SECTION</h2>
   </section>
 </template>
 
@@ -8,6 +8,6 @@
 // @ is an alias to /src
 
 export default {
-  name: "home"
+  name: "samples"
 };
 </script>

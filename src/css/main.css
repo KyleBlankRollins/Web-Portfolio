@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================
+ABOUT MY USE OF CSS GRID AND TAILWINDCSS 
+===================================== */
+/* 
+
+I enjoy using TailwindCSS with .vue files because it gives an immediacy to the code. I don't have to reference another file to see what's happening at the presentation layer.
+
+With Tailwind, that association is very close. However, I also want to use CSS Grid for layout. To keep things clear, I'll set some ground rules.
+
+1. /css/main.css is only for truly global classes that can't be applied in Tailwind for some reason (for example, background gradients).
+2. All component CSS is defined in the component's .vue file, including any CSS Grids.
+
+*/

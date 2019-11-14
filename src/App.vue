@@ -1,32 +1,46 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div class="h-screen" id="app">
+    <MainNav />
+    <router-view class="body" />
+    <Foot />
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+import MainNav from "@/components/MainNav.vue";
+import Foot from "@/components/Footer.vue";
+
+export default {
+  name: "app",
+  components: {
+    MainNav,
+    Foot
+  }
+};
+</script>
+
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "lmargin body  rmargin"
+    "footer footer footer";
+  grid-template-rows: 3rem 1fr 3rem;
+  grid-template-columns: 1fr 800px 1fr;
 }
 
-#nav {
-  padding: 30px;
+.main-nav {
+  grid-area: header;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.foot {
+  grid-area: footer;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.body {
+  grid-area: body;
 }
+
 </style>
