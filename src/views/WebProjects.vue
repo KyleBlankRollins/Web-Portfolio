@@ -1,11 +1,13 @@
 <template>
-  <div></div>
+  <section>
+    <h2>WEB PROJECTS BODY SECTION</h2>
+  </section>
 </template>
 
 <script>
 // @ is an alias to /src
 
 export default {
-  name: "sample"
+  name: "WebProjects"
 };
 </script>

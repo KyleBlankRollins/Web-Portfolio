@@ -1,7 +1,5 @@
 <template>
-  <div class="foot h-12 bg-gray-400">
-
-  </div>
+  <div class="foot h-12 bg-gray-400"></div>
 </template>
 
 <script>

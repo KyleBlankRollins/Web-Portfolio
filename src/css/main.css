@@ -5,6 +5,7 @@
 /* =====================================
 ABOUT MY USE OF CSS GRID AND TAILWINDCSS 
 ===================================== */
+
 /* 
 
 I enjoy using TailwindCSS with .vue files because it gives an immediacy to the code. I don't have to reference another file to see what's happening at the presentation layer.
@@ -15,3 +16,15 @@ With Tailwind, that association is very close. However, I also want to use CSS G
 2. All component CSS is defined in the component's .vue file, including any CSS Grids.
 
 */
+
+/* =====================================
+TRANSISTIONS AND TRANSFORMATIONS
+===================================== */
+
+.skew {
+  transform: skewX(-30deg);
+}
+
+.skew-reset {
+  transform: skewX(30deg);
+}

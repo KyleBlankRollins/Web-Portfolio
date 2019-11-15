@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen" id="app">
-    <MainNav />
-    <router-view class="body" />
+    <MainNav class="fixed" />
+    <router-view class="body mt-12" />
     <Foot />
   </div>
 </template>
@@ -42,5 +42,4 @@ export default {
 .body {
   grid-area: body;
 }
-
 </style>
