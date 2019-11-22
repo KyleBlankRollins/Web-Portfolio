@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen" id="app">
-    <MainNav class="fixed" />
-    <router-view class="body mt-12" />
+    <MainNav />
+    <router-view class="content" />
     <Foot />
   </div>
 </template>
@@ -24,10 +24,10 @@ export default {
 #app {
   display: grid;
   grid-template-areas:
-    "header header header"
-    "lmargin body  rmargin"
-    "footer footer footer";
-  grid-template-rows: 3rem 1fr 3rem;
+    "header  header  header"
+    "content content content"
+    "footer  footer  footer";
+  grid-template-rows: 4rem 1fr 3rem;
   grid-template-columns: 1fr 800px 1fr;
 }
 
@@ -35,11 +35,15 @@ export default {
   grid-area: header;
 }
 
+.sub-nav {
+  grid-area: sideNav;
+}
+
 .foot {
   grid-area: footer;
 }
 
-.body {
-  grid-area: body;
+.content {
+  grid-area: content;
 }
 </style>

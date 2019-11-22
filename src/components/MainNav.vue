@@ -1,45 +1,41 @@
 <template>
   <div class="bg-green-700 w-full main-nav flex shadow-lg">
     <nav class="w-full">
-      <ul class="bg-green-200 h-16 flex list-none">
-        <!-- TODO: Figure out how to get the router link to work with @click. -->
+      <ul class="bg-green-200 h-16 flex">
         <router-link
           to="/"
           :class="{'nav-slide': activeHome}"
-          class="bg-green-200 skew cursor-pointer"
+          class="bg-green-200 nav-link skew flex items-center cursor-pointer"
+          v-on:click.native="setCurrentNav('0')"
         >
-          <li @click="setCurrentNav('0')" class="px-6">
-            <span class="flex skew-reset px-4 my-2">
-              <p>Home</p>
-            </span>
+          <li class="flex skew-reset px-6">
+            <p class="m-0">Home</p>
           </li>
         </router-link>
         <router-link
           to="/samples"
           :class="{'nav-slide': activeSamples}"
-          class="bg-green-300 skew cursor-pointer"
+          class="bg-green-300 nav-link skew flex items-center cursor-pointer"
+          v-on:click.native="setCurrentNav('1')"
         >
-          <li @click="setCurrentNav('1')" class="px-6">
-            <span class="flex skew-reset px-4 my-2">
-              <p>Samples</p>
-            </span>
+          <li class="flex skew-reset px-6">
+            <p class="m-0">Samples</p>
           </li>
         </router-link>
         <router-link
           to="/web_projects"
           :class="{'nav-slide': activeProjects}"
-          class="bg-green-400 skew cursor-pointer"
+          class="bg-green-400 nav-link skew flex items-center cursor-pointer"
+          v-on:click.native="setCurrentNav('2')"
         >
-          <li @click="setCurrentNav('2')" class="px-6">
-            <span class="flex skew-reset px-4 my-2">
-              <p>Web Projects</p>
-            </span>
+          <li class="flex skew-reset leading-tight px-6">
+            <p class="m-0">Web Projects</p>
           </li>
         </router-link>
       </ul>
     </nav>
-    <div class="bg-green-700 skew flex justify-end items-center">
-      <router-link to="/" class="skew-reset px-6">
+    <div class="bg-green-200 flex justify-end items-center">
+      <router-link to="/" class="px-6">
         <svg
           width="26.458mm"
           height="12mm"
@@ -73,24 +69,37 @@
 
 export default {
   name: "MainNav",
+  mounted() {
+    this.initialize();
+  },
   data() {
     return {
+      currentNavId: "0",
+      currentPathId: this.$route.meta.id,
       activeHome: true,
       activeSamples: false,
       activeProjects: false
     };
   },
   methods: {
+    initialize() {
+      if (this.currentPathId !== this.currentNavId) {
+        this.setCurrentNav(this.currentPathId);
+      }
+    },
     setCurrentNav(activeComponent) {
       if (activeComponent === "0") {
+        this.currentNavId = "0";
         this.activeHome = true;
         this.activeSamples = false;
         this.activeProjects = false;
       } else if (activeComponent === "1") {
+        this.currentNavId = "1";
         this.activeHome = false;
         this.activeSamples = true;
         this.activeProjects = false;
       } else if (activeComponent === "2") {
+        this.currentNavId = "2";
         this.activeHome = false;
         this.activeSamples = false;
         this.activeProjects = true;
@@ -101,6 +110,14 @@ export default {
 </script>
 
 <style scoped>
+.nav-link {
+  @apply w-1/6;
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+}
+
 .nav-slide {
   @apply w-full;
 }
