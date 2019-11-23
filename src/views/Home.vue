@@ -13,60 +13,26 @@
       </section>
       <section class="flex mt-6">
         <div class="w-1/3 max-w-xs mx-2 mt-10">
-          <svg
-            width="64mm"
-            height="25mm"
-            viewBox="0 0 64 25"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xml:space="preserve"
-            xmlns:serif="http://www.serif.com/"
-          >
-            <path d="M64,0l-49.913,0l-14.087,24.4l49.913,0l14.087,-24.4Z" style="fill:#356e84;" />
+          <svg 
+          viewBox="0 0 182 141" version="1.1" 
+            xmlns="http://www.w3.org/2000/svg" 
+            xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" 
+            xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+            <g>
+              <path d="M0,71.659l141.486,0l39.931,69.165l-141.485,0l-39.932,-69.165Z" style="fill:#0d0c0d;fill-rule:nonzero;"/>
+              <path d="M181.417,0l-141.485,0l-39.932,69.165l141.486,0l39.931,-69.165Z" style="fill:#356e84;fill-rule:nonzero;"/>
+            </g>
           </svg>
-          <div class="flip-h">
-            <svg
-              class="fill-current"
-              width="64mm"
-              height="25mm"
-              viewBox="0 0 64 25"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              xml:space="preserve"
-              xmlns:serif="http://www.serif.com/"
-            >
-              <path d="M64,0l-49.913,0l-14.087,24.4l49.913,0l14.087,-24.4Z" />
-            </svg>
-          </div>
-          <svg
-            width="64mm"
-            height="25mm"
-            viewBox="0 0 64 25"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xml:space="preserve"
-            xmlns:serif="http://www.serif.com/"
-          >
-            <path d="M64,0l-49.913,0l-14.087,24.4l49.913,0l14.087,-24.4Z" style="fill:#356e84;" />
+          <svg 
+          viewBox="0 0 182 141" version="1.1" 
+            xmlns="http://www.w3.org/2000/svg" 
+            xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" 
+            xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+            <g>
+              <path d="M0,71.659l141.486,0l39.931,69.165l-141.485,0l-39.932,-69.165Z" style="fill:#0d0c0d;fill-rule:nonzero;"/>
+              <path d="M181.417,0l-141.485,0l-39.932,69.165l141.486,0l39.931,-69.165Z" style="fill:#356e84;fill-rule:nonzero;"/>
+            </g>
           </svg>
-          <div class="flip-h">
-            <svg
-              class="fill-current"
-              width="64mm"
-              height="25mm"
-              viewBox="0 0 64 25"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              xml:space="preserve"
-              xmlns:serif="http://www.serif.com/"
-            >
-              <path d="M64,0l-49.913,0l-14.087,24.4l49.913,0l14.087,-24.4Z" />
-            </svg>
-          </div>
         </div>
 
         <div class="w-2/3 mx-2">

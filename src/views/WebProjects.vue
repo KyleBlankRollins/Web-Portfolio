@@ -5,34 +5,68 @@
       <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
     </div>
     <div class="web-items">
-      <ul class="w-full">
-        <li
-          v-for="project in projects"
-          :key="project.id"
-          :class="project.colors.bg"
-          class="flex items-center justify-center my-6 overflow-x-hidden"
-        >
-          <div v-if="project.alternate" class="w-11/12 flex">
+      <div
+        v-for="project in projects"
+        :key="project.id"
+        :class="project.colors.bg"
+        class="flex items-center justify-center my-6 overflow-x-hidden"
+      >
+        <div v-if="project.state.alternate">
+          <div class="flex">
             <div class="w-1/3 p-6">
               <p>{{ project.description }}</p>
               <button :class="project.colors.accent" class="px-4 py-2 rounded">Visit</button>
             </div>
-            <div class="w-2/3 skew" :class="project.colors.bgDark">
-              <div class="skew-reset flex flex-col items-center">
+            <div class="w-2/3 skew pb-2 flex flex-col items-center" :class="project.colors.bgDark">
+              <div class="skew-reset">
                 <h3>{{ project.name }}</h3>
                 <div class="w-11/12">
                   <img :src="project.image" :alt="project.alt" class="rounded" />
                 </div>
+                <div class="w-11/12 flex flex-col justify-center items-center">
+                  <h4>See more</h4>
+                  <Toggle
+                    :expand="project.state.expand"
+                    :class="project.colors.accent"
+                    @toggled="handleToggle($event, project.id)"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div v-else class="w-11/12 flex">
-            <div class="w-2/3 reverse-skew" :class="project.colors.bgDark">
+
+          <transition name="slide">
+            <div v-if="project.state.expand" class="mx-8 my-6">
+              <ul class="m-0">
+                <li v-for="feature in project.features" :key="feature.id" class="flex">
+                  <div class="w-1/3">
+                <h4> {{ feature.name }} </h4>
+              </div>
+              <div class="w-2/3">
+                <p> {{ feature.description }} </p>
+              </div>
+                </li>
+              </ul>
+            </div>
+          </transition>
+        </div>
+
+        <div v-else>
+          <div class="flex">
+            <div class="w-2/3 reverse-skew pb-2" :class="project.colors.bgDark">
               <div class="reverse-skew-reset flex flex-col items-center">
                 <h3>{{ project.name }}</h3>
                 <div class="w-11/12">
                   <img :src="project.image" :alt="project.alt" class="rounded" />
                 </div>
+                <div class="w-11/12 flex flex-col justify-center items-center">
+                  <h4>See more</h4>
+                  <Toggle
+                    :expand="project.state.expand"
+                    :class="project.colors.accent"
+                    @toggled="handleToggle($event, project.id)"
+                  />
+                </div>
               </div>
             </div>
             <div class="w-1/3 p-6">
@@ -40,17 +74,36 @@
               <button :class="project.colors.accent" class="px-4 py-2 rounded">Visit</button>
             </div>
           </div>
-        </li>
-      </ul>
+
+          <transition name="slide">
+            <div v-if="project.state.expand" class="mx-8 my-6">
+              <ul class="m-0">
+                <li v-for="feature in project.features" :key="feature.id" class="flex">
+                  <div class="w-1/3">
+                <h4> {{ feature.name }} </h4>
+              </div>
+              <div class="w-2/3">
+                <p> {{ feature.description }} </p>
+              </div>
+                </li>
+              </ul>
+            </div>
+          </transition>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 // @ is an alias to /src
+import Toggle from "@/components/ui/toggle.vue";
 
 export default {
   name: "WebProjects",
+  components: {
+    Toggle
+  },
   data() {
     return {
       projects: [
@@ -68,7 +121,36 @@ export default {
             bgDark: "bg-orange-600",
             accent: "bg-red-600"
           },
-          alternate: false
+          state: {
+            alternate: false,
+            expand: false
+          },
+          features: [
+            {
+              id: "101",
+              name: "Google Analytics Reporting API",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            },
+            {
+              id: "103",
+              name: "Analytics reports",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            },
+            {
+              id: "102",
+              name: "Plotly.js charts",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            }
+          ]
         },
         {
           id: "11",
@@ -84,7 +166,28 @@ export default {
             bgDark: "bg-teal-600",
             accent: "bg-green-600"
           },
-          alternate: true
+          state: {
+            alternate: true,
+            expand: false
+          },
+          features: [
+            {
+              id: "111",
+              name: "Unit statitics",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            },
+            {
+              id: "113",
+              name: "Dynamic value calculations",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            }
+          ]
         },
         {
           id: "12",
@@ -100,10 +203,46 @@ export default {
             bgDark: "bg-indigo-600",
             accent: "bg-blue-600"
           },
-          alternate: false
+          state: {
+            alternate: false,
+            expand: false
+          },
+          features: [
+            {
+              id: "131",
+              name: "Gridsome GraphQL layer",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            },
+            {
+              id: "133",
+              name: "Dynamic navigation",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            },
+            {
+              id: "132",
+              name: "Responsive design",
+              description:
+                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+              image: "",
+              code: ""
+            }
+          ]
         }
       ]
     };
+  },
+  methods: {
+    handleToggle(value, id) {
+      let clickedProject = this.projects.filter(project => project.id === id);
+
+      clickedProject[0].state.expand = value;
+    }
   }
 };
 </script>
