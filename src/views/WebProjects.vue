@@ -15,7 +15,7 @@
           <div class="flex">
             <div class="w-1/3 p-6">
               <p>{{ project.description }}</p>
-              <button :class="project.colors.accent" class="px-4 py-2 rounded">Visit</button>
+              <button :class="project.colors.accent" class="btn">Visit</button>
             </div>
             <div class="w-2/3 skew pb-2 flex flex-col items-center" :class="project.colors.bgDark">
               <div class="skew-reset">
@@ -40,11 +40,11 @@
               <ul class="m-0">
                 <li v-for="feature in project.features" :key="feature.id" class="flex">
                   <div class="w-1/3">
-                <h4> {{ feature.name }} </h4>
-              </div>
-              <div class="w-2/3">
-                <p> {{ feature.description }} </p>
-              </div>
+                    <h4>{{ feature.name }}</h4>
+                  </div>
+                  <div class="w-2/3">
+                    <p>{{ feature.description }}</p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="w-1/3 p-6">
               <p>{{ project.description }}</p>
-              <button :class="project.colors.accent" class="px-4 py-2 rounded">Visit</button>
+              <button :class="project.colors.accent" class="btn">Visit</button>
             </div>
           </div>
 
@@ -80,11 +80,11 @@
               <ul class="m-0">
                 <li v-for="feature in project.features" :key="feature.id" class="flex">
                   <div class="w-1/3">
-                <h4> {{ feature.name }} </h4>
-              </div>
-              <div class="w-2/3">
-                <p> {{ feature.description }} </p>
-              </div>
+                    <h4>{{ feature.name }}</h4>
+                  </div>
+                  <div class="w-2/3">
+                    <p>{{ feature.description }}</p>
+                  </div>
                 </li>
               </ul>
             </div>

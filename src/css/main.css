@@ -1,5 +1,10 @@
 @tailwind base;
 @tailwind components;
+
+.btn{
+  @apply px-5 py-2 rounded
+}
+
 @tailwind utilities;
 
 /* =====================================
@@ -139,34 +144,26 @@ TRANSISTIONS AND TRANSFORMATIONS
   transform: rotateX(180deg);
 }
 
-.slide-enter-active {
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -moz-transition-timing-function: ease-in;
-  -webkit-transition-timing-function: ease-in;
-  -o-transition-timing-function: ease-in;
-  transition-timing-function: ease-in;
-}
-
-.slide-leave-active {
-  -moz-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -moz-transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-  -webkit-transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-  -o-transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-  transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-}
-
-.slide-enter-to, .slide-leave {
-  max-height: 100px;
-  overflow: hidden;
+.slide-enter-active, .slide-leave-active {
+  transition: all .75s cubic-bezier(.4,.01,.76,.67);
+  max-height: 230px;
 }
 
 .slide-enter, .slide-leave-to {
   overflow: hidden;
   max-height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: height 1s ease-in-out;
+  overflow: hidden;
+}
+
+.expand-enter,
+.expand-leave-to {
+  height: 0;
 }

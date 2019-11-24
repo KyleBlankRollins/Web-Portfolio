@@ -14,7 +14,7 @@
             <h3 class="mx-2 leading-tight"> {{ sample.name }} </h3>
             <p class="p-2">{{ sample.description }}</p>
             <a :href="sample.link">
-              <button class="w-full p-2 border">View sample</button>
+              <button class="btn">View sample</button>
             </a>
           </div>
         </li>

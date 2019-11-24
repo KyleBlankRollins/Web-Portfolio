@@ -2,17 +2,17 @@
   <section class="home">
     <div class="home-content p-4">
       <section class="flex">
-        <div class="w-2/3 mx-2">
+        <div class="w-full md:w-2/3 mx-2">
           <h2>About me</h2>
           <p>Bushwick Schlitz. Est Shoreditch small batch, dolor Schlitz sapiente twee stumptown ex. Duis Carles pickled, cornhole Thundercats McSweeney's minim PBR vegan Tumblr irony. Kogi eu Thundercats, sed scenester before they sold out et aesthetic.</p>
         </div>
 
-        <div class="w-1/3 max-w-xs mx-2 mt-10 rounded shadow-lg">
-          <img src="../assets/images/profile.jpg" alt="Portrait of Kyle Rollins." class="rounded" />
+        <div class="hidden md:block md:w-1/3 mx-2 mt-10 rounded">
+          <img class="h-64 rounded object-cover shadow-lg" src="../assets/images/profile.jpg" alt="Portrait of Kyle Rollins." />
         </div>
       </section>
       <section class="flex mt-6">
-        <div class="w-1/3 max-w-xs mx-2 mt-10">
+        <div class="w-1/3 mx-2 mt-10">
           <svg 
           viewBox="0 0 182 141" version="1.1" 
             xmlns="http://www.w3.org/2000/svg" 
