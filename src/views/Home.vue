@@ -1,17 +1,17 @@
 <template>
-  <section class="home">
+  <section class="home mt-6">
     <div class="home-content p-4">
-      <section class="flex">
+      <section class="flex bg-inverse-soft text-inverse rounded">
         <div class="w-full md:w-2/3 mx-2">
           <h2>About me</h2>
           <p>Bushwick Schlitz. Est Shoreditch small batch, dolor Schlitz sapiente twee stumptown ex. Duis Carles pickled, cornhole Thundercats McSweeney's minim PBR vegan Tumblr irony. Kogi eu Thundercats, sed scenester before they sold out et aesthetic.</p>
         </div>
 
-        <div class="hidden md:block md:w-1/3 mx-2 mt-10 rounded">
-          <img class="h-64 rounded object-cover shadow-lg" src="../assets/images/profile.jpg" alt="Portrait of Kyle Rollins." />
+        <div class="hidden md:block md:w-1/3 md:relative rounded">
+          <img class="absolute h-full w-full inset-0 object-cover object-center rounded-r shadow-lg" src="../assets/images/profile.jpg" alt="Portrait of Kyle Rollins." />
         </div>
       </section>
-      <section class="flex mt-6">
+      <section class="flex mt-6 pb-6 bg-inverse-soft text-inverse rounded">
         <div class="w-1/3 mx-2 mt-10">
           <svg 
           viewBox="0 0 182 141" version="1.1" 
@@ -36,7 +36,7 @@
         </div>
 
         <div class="w-2/3 mx-2">
-          <h2>How this site was built</h2>
+          <h2>How I built this site</h2>
           <p>Cosby sweater plaid shabby chic kitsch pour-over ex. Try-hard fanny pack mumblecore cornhole cray scenester. Assumenda narwhal occupy, Blue Bottle nihil culpa fingerstache. Meggings kogi vinyl meh, food truck banh mi Etsy magna 90's duis typewriter banjo organic leggings Vice.</p>
         </div>
       </section>
@@ -56,7 +56,7 @@ export default {
 .home {
   display: grid;
   grid-template-areas: "lmargin content rmargin";
-  grid-template-columns: 0.2fr 1fr 0.2fr;
+  grid-template-columns: 1fr minmax(min-content, 900px) 1fr;
 }
 
 .home-content {

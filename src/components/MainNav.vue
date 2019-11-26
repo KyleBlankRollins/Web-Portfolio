@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-green-700 w-full main-nav flex shadow-lg">
+  <div class="w-full main-nav flex shadow-lg">
     <nav class="w-full">
-      <ul class="bg-green-200 h-16 flex">
+      <ul class="h-16 flex">
         <router-link
           to="/"
           :class="{'nav-slide': activeHome}"
-          class="bg-green-200 nav-link skew flex items-center cursor-pointer"
+          class="inactive-nav-link skew nav-link"
           v-on:click.native="setCurrentNav('0')"
         >
           <li class="flex skew-reset px-6">
@@ -15,7 +15,7 @@
         <router-link
           to="/samples"
           :class="{'nav-slide': activeSamples}"
-          class="bg-green-300 nav-link skew flex items-center cursor-pointer"
+          class="inactive-nav-link skew nav-link"
           v-on:click.native="setCurrentNav('1')"
         >
           <li class="flex skew-reset px-6">
@@ -25,7 +25,7 @@
         <router-link
           to="/web_projects"
           :class="{'nav-slide': activeProjects}"
-          class="bg-green-400 nav-link skew flex items-center cursor-pointer"
+          class="inactive-nav-link skew nav-link"
           v-on:click.native="setCurrentNav('2')"
         >
           <li class="flex skew-reset leading-tight px-6">
@@ -34,7 +34,7 @@
         </router-link>
       </ul>
     </nav>
-    <div class="bg-green-200 flex justify-end items-center">
+    <div class="flex justify-end items-center">
       <router-link to="/" class="px-6">
         <svg
           width="26.458mm"
@@ -111,6 +111,18 @@ export default {
 
 <style scoped>
 .nav-link {
+  @apply border-r border-primary flex items-center cursor-pointer;
+}
+
+.nav-link:hover {
+  @apply bg-default;
+}
+
+.nav-link:focus {
+  @apply bg-secondary;
+}
+
+.inactive-nav-link {
   @apply w-1/6;
   -webkit-transition: width 1s ease-in-out;
   -moz-transition: width 1s ease-in-out;
@@ -120,5 +132,6 @@ export default {
 
 .nav-slide {
   @apply w-full;
+  @apply bg-secondary;
 }
 </style>

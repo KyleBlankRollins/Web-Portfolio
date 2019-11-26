@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 
-.btn{
+.btn {
   @apply px-5 py-2 rounded
-}
+};
 
 @tailwind utilities;
 
@@ -144,17 +144,19 @@ TRANSISTIONS AND TRANSFORMATIONS
   transform: rotateX(180deg);
 }
 
-.slide-enter-active, .slide-leave-active {
-  transition: all .75s cubic-bezier(.4,.01,.76,.67);
-  max-height: 230px;
+.slide-left-leave-active,
+.slide-left-enter-active,
+.slide-right-leave-active,
+.slide-right-enter-active {
+  transition: 1s;
 }
-
-.slide-enter, .slide-leave-to {
-  overflow: hidden;
-  max-height: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
+.slide-left-enter,
+.slide-right-leave-to {
+  transform: translate(100%, 0);
+}
+.slide-left-leave-to,
+.slide-right-enter {
+  transform: translate(-100%, 0);
 }
 
 .expand-enter-active,
@@ -166,4 +168,52 @@ TRANSISTIONS AND TRANSFORMATIONS
 .expand-enter,
 .expand-leave-to {
   height: 0;
+}
+
+/* =====================================
+CSS THEME VARIABLES
+===================================== */
+
+/* These variables are exposed in tailwind.js. They allow for on-the-fly switching between themes. */
+
+.dark {
+  --color-bg-primary: #1C121C;
+  --color-bg-secondary: #AC556B;
+  --color-bg-default: #333F5F;
+  --color-bg-inverse: #F6F6F4;
+  --color-bg-inverse-soft: #D9D7D9;
+
+  --color-border-primary: #F6F6F4;
+  --color-border-secondary: #AC556B;
+  --color-border-default: #7A81A6;
+  --color-border-inverse: #1C121C;
+  --color-border-inverse-soft: #686168;
+
+  --color-text-primary: #F6F6F4;
+  --color-text-secondary: #BA7385;
+  --color-text-default: #D9D7D9;
+  --color-text-default-soft: #8D888D;
+  --color-text-inverse: #082730;
+  --color-text-inverse-soft: #839397;
+}
+
+.light {
+  --color-bg-primary: #F6F6F4;
+  --color-bg-secondary: #AC556B;
+  --color-bg-default: #7A81A6;
+  --color-bg-inverse: #1C121C;
+  --color-bg-inverse-soft: #686168;
+  
+  --color-border-primary: #1C121C;
+  --color-border-secondary: #3D4153;
+  --color-border-default: #333F5F;
+  --color-border-inverse: #F6F6F4;
+  --color-border-inverse-soft: #D9D7D9;
+
+  --color-text-primary: #082730;
+  --color-text-secondary: #1C121C;
+  --color-text-default: #292929;
+  --color-text-default-soft: #7B7B7A;
+  --color-text-inverse: #F6F6F4;
+  --color-text-inverse-soft: #D9D7D9;
 }

@@ -1,8 +1,10 @@
 <template>
-  <div class="h-screen" id="app">
+  <div class="h-screen dark bg-primary text-primary" id="app">
     <MainNav />
-    <router-view class="content" />
-    <Foot />
+    <transition :name="transitionName">
+      <router-view class="content" />
+    </transition>
+    <Foot class="bg-default" />
   </div>
 </template>
 
@@ -16,6 +18,18 @@ export default {
   components: {
     MainNav,
     Foot
+  },
+  data() {
+    return {
+      transitionName: ""
+    }
+  },
+  watch: {
+    $route(to, from) {
+      const toDepth = to.meta.id;
+      const fromDepth = from.meta.id;
+      this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+    }
   }
 };
 </script>

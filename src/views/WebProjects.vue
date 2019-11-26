@@ -1,10 +1,22 @@
 <template>
-  <section class="web-projects">
-    <div class="web-intro">
-      <h2>Web projects page</h2>
-      <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
+  <section class="web-projects mt-6">
+    <div class="web-intro p-4">
+      <section class="flex bg-inverse-soft text-inverse rounded">
+        <div class="w-full md:w-2/3 mx-2">
+          <h2>Web projects page</h2>
+          <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
+        </div>
+
+        <div class="hidden md:block md:w-1/3 md:relative rounded">
+          <img
+            class="absolute h-full w-full inset-0 object-cover object-center rounded-r shadow-lg"
+            src="../assets/images/profile.jpg"
+            alt="Portrait of Kyle Rollins."
+          />
+        </div>
+      </section>
     </div>
-    <div class="web-items">
+    <div class="web-items bg-primary">
       <div
         v-for="project in projects"
         :key="project.id"
@@ -117,9 +129,9 @@ export default {
           description:
             "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
           colors: {
-            bg: "bg-orange-200",
-            bgDark: "bg-orange-600",
-            accent: "bg-red-600"
+            bg: "bg-secondary",
+            bgDark: "bg-default",
+            accent: "bg-inverse"
           },
           state: {
             alternate: false,
@@ -162,9 +174,9 @@ export default {
           description:
             "Scenester High Life Banksy, proident master cleanse tousled squid sriracha ad chillwave post-ironic retro.",
           colors: {
-            bg: "bg-teal-200",
-            bgDark: "bg-teal-600",
-            accent: "bg-green-600"
+            bg: "bg-inverse",
+            bgDark: "bg-secondary",
+            accent: "bg-default"
           },
           state: {
             alternate: true,
@@ -199,9 +211,9 @@ export default {
           description:
             "Roof party put a bird on it incididunt sed umami craft beer cred.",
           colors: {
-            bg: "bg-indigo-200",
-            bgDark: "bg-indigo-600",
-            accent: "bg-blue-600"
+            bg: "bg-secondary",
+            bgDark: "bg-default",
+            accent: "bg-inverse"
           },
           state: {
             alternate: false,
@@ -253,7 +265,7 @@ export default {
   grid-template-areas:
     "lmargin content rmargin"
     "items   items   items";
-  grid-template-columns: 0.2fr 1fr 0.2fr;
+  grid-template-columns: 1fr minmax(min-content, 900px) 1fr;
 }
 
 .web-intro {
