@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full main-nav flex shadow-lg">
+  <div class="main-nav w-full h-16 flex shadow-lg">
     <nav class="w-full">
       <ul class="h-16 flex">
         <router-link

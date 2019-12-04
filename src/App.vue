@@ -1,17 +1,17 @@
 <template>
-  <div class="h-screen dark bg-primary text-primary" id="app">
+  <div class="h-screen bg-primary text-primary" :class="{ 'dark': theme, 'light': !theme }" id="app">
     <MainNav />
     <transition :name="transitionName">
       <router-view class="content" />
     </transition>
-    <Foot class="bg-default" />
+    <Foot @themeChange="updateTheme" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MainNav from "@/components/MainNav.vue";
-import Foot from "@/components/Footer.vue";
+import MainNav from "@/components/ui/MainNav.vue";
+import Foot from "@/components/ui/Footer.vue";
 
 export default {
   name: "app",
@@ -21,7 +21,13 @@ export default {
   },
   data() {
     return {
-      transitionName: ""
+      transitionName: "",
+      theme: false
+    }
+  },
+  methods: {
+    updateTheme(event) {
+      this.theme = event;
     }
   },
   watch: {
@@ -47,6 +53,9 @@ export default {
 
 .main-nav {
   grid-area: header;
+  position: fixed;
+  @apply z-40;
+  @apply bg-primary;
 }
 
 .sub-nav {
@@ -55,6 +64,9 @@ export default {
 
 .foot {
   grid-area: footer;
+  position: fixed;
+  bottom: 0;
+  @apply z-40;
 }
 
 .content {
