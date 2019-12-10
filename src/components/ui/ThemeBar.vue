@@ -1,6 +1,6 @@
 <template>
-  <div class="skew flex flex-col bg-primary justify-center items-center py-2 px-6">
-    <p class="skew-reset m-0">Toggle theme</p>
+  <div class="flex flex-col bg-default text-primary justify-center items-center border border-primary m-2 py-2 px-6 shadow-lg rounded">
+    <p class="m-0">Toggle theme</p>
     <label class="switch my-2">
       <input type="checkbox" v-model="theme" />
       <span class="slider"></span>
@@ -52,7 +52,7 @@ export default {
   bottom: 0;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  @apply bg-default;
+  @apply bg-primary;
 }
 
 .slider:before {
@@ -62,13 +62,13 @@ export default {
   width: 1.5em;
   left: .25em;
   bottom: .15em;
-  @apply bg-inverse-soft;
+  @apply bg-default;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  @apply bg-secondary;
+  @apply bg-primary;
 }
 
 input:focus + .slider {

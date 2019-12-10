@@ -177,43 +177,47 @@ CSS THEME VARIABLES
 /* These variables are exposed in tailwind.js. They allow for on-the-fly switching between themes. */
 
 .dark {
-  --color-bg-primary: #1C121C;
-  --color-bg-secondary: #AC556B;
-  --color-bg-default: #333F5F;
-  --color-bg-inverse: #F6F6F4;
-  --color-bg-inverse-soft: #D9D7D9;
+  --color-bg-primary: #EDF0E9;
+  --color-bg-primary-soft: #4A6173;
+  --color-bg-secondary: #7D7C90;
+  --color-bg-tertiary: #D0A77E;
+  --color-bg-default: #2A3741;
+  --color-bg-accent: #CC4162;
 
-  --color-border-primary: #F6F6F4;
-  --color-border-secondary: #AC556B;
-  --color-border-default: #7A81A6;
-  --color-border-inverse: #1C121C;
-  --color-border-inverse-soft: #686168;
+  --color-border-primary: #EDF0E9;
+  --color-border-primary-soft: #4A6173;
+  --color-border-secondary: #7D7C90;
+  --color-border-tertiary: #D0A77E;
+  --color-border-default: #2A3741;
+  --color-border-accent: #CC4162;
 
-  --color-text-primary: #F6F6F4;
-  --color-text-secondary: #BA7385;
-  --color-text-default: #D9D7D9;
-  --color-text-default-soft: #8D888D;
-  --color-text-inverse: #082730;
-  --color-text-inverse-soft: #839397;
+  --color-text-primary: #EDF0E9;
+  --color-text-primary-soft: #4A6173;
+  --color-text-secondary: #7D7C90;
+  --color-text-tertiary: #D0A77E;
+  --color-text-default: #2A3741;
+  --color-text-accent: #CC4162;
 }
 
 .light {
-  --color-bg-primary: #F6F6F4;
-  --color-bg-secondary: #AC556B;
-  --color-bg-default: #7A81A6;
-  --color-bg-inverse: #1C121C;
-  --color-bg-inverse-soft: #686168;
-  
-  --color-border-primary: #1C121C;
-  --color-border-secondary: #3D4153;
-  --color-border-default: #333F5F;
-  --color-border-inverse: #F6F6F4;
-  --color-border-inverse-soft: #D9D7D9;
+  --color-bg-primary: #A8BAC7;
+  --color-bg-primary-soft: #CED2BC;
+  --color-bg-secondary: #7D7C90;
+  --color-bg-tertiary: #D0A77E;
+  --color-bg-default: #EDF0E9;
+  --color-bg-accent: #CC4162;
 
-  --color-text-primary: #082730;
-  --color-text-secondary: #1C121C;
-  --color-text-default: #292929;
-  --color-text-default-soft: #7B7B7A;
-  --color-text-inverse: #F6F6F4;
-  --color-text-inverse-soft: #D9D7D9;
+  --color-border-primary: #2A3741;
+  --color-border-primary-soft: #CED2BC;
+  --color-border-secondary: #7D7C90;
+  --color-border-tertiary: #D0A77E;
+  --color-border-default: #EDF0E9;
+  --color-border-accent: #CC4162;
+
+  --color-text-primary: #2A3741;
+  --color-text-primary-soft: #CED2BC;
+  --color-text-secondary: #7D7C90;
+  --color-text-tertiary: #D0A77E;
+  --color-text-default: #2A3741;
+  --color-text-accent: #CC4162;
 }

@@ -1,11 +1,11 @@
 <template>
-  <div class="main-nav w-full h-16 flex shadow-lg">
+  <div class="main-nav w-full h-16 flex bg-default text-primary shadow-lg">
     <nav class="w-full">
       <ul class="h-16 flex">
         <router-link
           to="/"
           :class="{'nav-slide': activeHome}"
-          class="inactive-nav-link skew nav-link"
+          class="inactive-nav-link skew nav-link border-b border-default"
           v-on:click.native="setCurrentNav('0')"
         >
           <li class="flex skew-reset px-6">
@@ -15,7 +15,7 @@
         <router-link
           to="/samples"
           :class="{'nav-slide': activeSamples}"
-          class="inactive-nav-link skew nav-link"
+          class="inactive-nav-link skew nav-link border-b border-default"
           v-on:click.native="setCurrentNav('1')"
         >
           <li class="flex skew-reset px-6">
@@ -25,7 +25,7 @@
         <router-link
           to="/web_projects"
           :class="{'nav-slide': activeProjects}"
-          class="inactive-nav-link skew nav-link"
+          class="inactive-nav-link skew nav-link border-b border-default"
           v-on:click.native="setCurrentNav('2')"
         >
           <li class="flex skew-reset leading-tight px-6">
@@ -111,15 +111,17 @@ export default {
 
 <style scoped>
 .nav-link {
-  @apply border-r border-primary flex items-center cursor-pointer;
+  @apply flex items-center cursor-pointer;
 }
 
 .nav-link:hover {
-  @apply bg-default;
+  @apply bg-primary-soft;
 }
 
 .nav-link:focus {
-  @apply bg-secondary;
+  @apply bg-primary-soft;
+  @apply border-b-4;
+  @apply border-accent;
 }
 
 .inactive-nav-link {
@@ -132,6 +134,7 @@ export default {
 
 .nav-slide {
   @apply w-full;
-  @apply bg-secondary;
+  @apply border-b-2;
+  @apply border-accent;
 }
 </style>

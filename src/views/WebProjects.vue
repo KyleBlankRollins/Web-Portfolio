@@ -1,7 +1,7 @@
 <template>
   <section class="web-projects mt-6">
     <div class="web-intro p-4">
-      <section class="flex bg-inverse-soft text-inverse rounded">
+      <section class="flex bg-primary-soft text-primary rounded">
         <div class="w-full md:w-2/3 mx-2">
           <h2>Web projects page</h2>
           <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
@@ -131,7 +131,7 @@ export default {
           colors: {
             bg: "bg-secondary",
             bgDark: "bg-default",
-            accent: "bg-inverse"
+            accent: "bg-primary"
           },
           state: {
             alternate: false,
@@ -174,7 +174,7 @@ export default {
           description:
             "Scenester High Life Banksy, proident master cleanse tousled squid sriracha ad chillwave post-ironic retro.",
           colors: {
-            bg: "bg-inverse",
+            bg: "bg-primary",
             bgDark: "bg-secondary",
             accent: "bg-default"
           },
@@ -213,7 +213,7 @@ export default {
           colors: {
             bg: "bg-secondary",
             bgDark: "bg-default",
-            accent: "bg-inverse"
+            accent: "bg-primary"
           },
           state: {
             alternate: false,

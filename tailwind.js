@@ -3,75 +3,36 @@ module.exports = {
     colors: {},
     textColor: {
       primary: "var(--color-text-primary)",
+      "primary-soft": "var(--color-text-primary-soft)",
       secondary: "var(--color-text-secondary)",
-      default: "var(--color-text-default)",
-      "default-soft": "var(--color-text-default-soft)",
-      inverse: "var(--color-text-inverse)",
-      "inverse-soft": "var(--color-text-inverse-soft)"
+      tertiary: "var(--color-text-tertiary)",
+      accent: "var(--color-text-accent)",
+      default: "var(--color-text-default)"
     },
     backgroundColor: {
       primary: "var(--color-bg-primary)",
+      "primary-soft": "var(--color-bg-primary-soft)",
       secondary: "var(--color-bg-secondary)",
-      default: "var(--color-bg-default)",
-      inverse: "var(--color-bg-inverse)",
-      "inverse-soft": "var(--color-bg-inverse-soft)"
+      tertiary: "var(--color-bg-tertiary)",
+      accent: "var(--color-bg-accent)",
+      default: "var(--color-bg-default)"
     },
     borderColor: {
       primary: "var(--color-border-primary)",
+      "primary-soft": "var(--color-border-primary-soft)",
       secondary: "var(--color-border-secondary)",
-      default: "var(--color-border-default)",
-      inverse: "var(--color-border-inverse)",
-      "inverse-soft": "var(--color-border-inverse-soft)"
+      tertiary: "var(--color-border-tertiary)",
+      accent: "var(--color-border-accent)",
+      default: "var(--color-border-default)"
     },
     extend: {
       colors: {
-        red: {
-          1: "#BA7385",
-          2: "#AC556B",
-          3: "#864253",
-          4: "#6B3543",
-          5: "#512832",
-          6: "#361A21"
-        },
-        teal: {
-          1: "#D6DBDC",
-          2: "#ADB7BA",
-          3: "#839397",
-          4: "#5A6F75",
-          5: "#314B53",
-          6: "#082730"
-        },
-        purple: {
-          1: "#7A81A6",
-          2: "#666C8A",
-          3: "#51566F",
-          4: "#3D4153",
-          5: "#292B37",
-          6: "#14161C"
-        },
-        dusk: {
-          1: "#000000",
-          2: "#B3B0B3",
-          3: "#8D888D",
-          4: "#686168",
-          5: "#423A42",
-          6: "#1C121C"
-        },
-        grey: {
-          1: "#F6F6F4",
-          2: "#CDCDCB",
-          3: "#A4A4A3",
-          4: "#7B7B7A",
-          5: "#525251",
-          6: "#292929"
-        },
         state: {
-          // "Info" same as "dusk-6".
-          "info": "#1C121C",
-          "warning": "#C27D1D",
-          "error": "#F44336",
-          "success": "#458D55",
-          "primary": "#333F5F"
+          "info": "#2a3741",
+          "warning": "#f17d1d",
+          "error": "#f44336",
+          "success": "#748d55",
+          "primary": "#d13e60"
         }
       }
     }

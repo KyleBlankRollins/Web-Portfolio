@@ -1,7 +1,7 @@
 <template>
   <section class="samples mt-6">
     <div class="sample-intro p-4">
-      <section class="flex bg-inverse-soft text-inverse rounded">
+      <section class="flex bg-primary-soft text-primary rounded">
         <div class="w-full md:w-2/3 mx-2">
           <h2>Samples page</h2>
           <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
@@ -14,11 +14,11 @@
     </div>
     <div class="sample-items">
       <ul class="flex justify-center my-6">
-        <li v-for="sample in samples" :key="sample.id" class="h-full mx-4 max-w-xs bg-inverse text-inverse rounded">
-          <div class="border border-inverse shadow-lg rounded-t">
+        <li v-for="sample in samples" :key="sample.id" class="h-full mx-4 max-w-xs bg-primary text-primary rounded">
+          <div class="border border-primary shadow-lg rounded-t">
             <img :src="sample.image" :alt="sample.alt" class="rounded-t" />
           </div>
-          <div class="border border-inverse shadow-lg rounded-b">
+          <div class="border border-primary shadow-lg rounded-b">
             <h3 class="mx-2 leading-tight">{{ sample.name }}</h3>
             <p class="p-2">{{ sample.description }}</p>
             <a :href="sample.link">

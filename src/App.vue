@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-primary text-primary" :class="{ 'dark': theme, 'light': !theme }" id="app">
+  <div class="h-screen bg-default text-default" :class="{ 'dark': theme, 'light': !theme }" id="app">
     <MainNav />
     <transition :name="transitionName">
       <router-view class="content" />
