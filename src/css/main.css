@@ -1,9 +1,18 @@
+/* =====================================
+Import font families from Google Fonts. 
+===================================== */
+@import url("https://fonts.googleapis.com/css?family=Montserrat|IBM+Plex+Mono|IBM+Plex+Sans&display=swap");
+
+/* =====================================
+Register Tailwind CSS classes. 
+===================================== */
+
 @tailwind base;
 @tailwind components;
 
 .btn {
-  @apply px-5 py-2 rounded
-};
+  @apply px-5 py-2 rounded;
+}
 
 @tailwind utilities;
 
@@ -28,51 +37,56 @@ TYPOGRAPHY
 
 html,
 .root {
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 24px;
+  line-height: 18px;
 }
-
 body,
 .article {
-  font-family: sans-serif;
-  font-family: sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 1em;
-  line-height: 1.27777778em;
+  line-height: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
 }
 h1,
 .h1 {
-  font-size: 4.22222222em;
-  line-height: 1.21052632em;
-  margin-top: 0.30263158em;
-  margin-bottom: 0.60526316em;
+  font-size: 2.35em;
+  line-height: 1.27659574em;
+  margin-top: 0.31914894em;
+  margin-bottom: 0.63829788em;
 }
 h2,
 .h2 {
-  font-size: 2.61111111em;
-  line-height: 1.46808511em;
-  margin-top: 0.4893617em;
-  margin-bottom: 0.4893617em;
+  font-size: 1.8em;
+  line-height: 1.25em;
+  margin-top: 0.41666667em;
+  margin-bottom: 0.41666667em;
 }
 h3,
 .h3 {
-  font-size: 1.61111111em;
-  line-height: 1.5862069em;
-  margin-top: 0.79310345em;
+  font-size: 1.35em;
+  line-height: 1.11111111em;
+  margin-top: 0.55555556em;
   margin-bottom: 0em;
 }
 h4,
 .h4 {
   font-size: 1em;
-  font-weight: bold;
-  line-height: 1.27777778em;
-  margin-top: 1.27777778em;
+  line-height: 1.5em;
+  margin-top: 0.75em;
   margin-bottom: 0em;
 }
 h5,
 .h5 {
   font-size: 1em;
-  line-height: 1.27777778em;
-  margin-top: 1.27777778em;
+  line-height: 1.5em;
+  margin-top: 0.75em;
   margin-bottom: 0em;
 }
 p,
@@ -82,7 +96,7 @@ pre,
 table,
 blockquote {
   margin-top: 0em;
-  margin-bottom: 1.27777778em;
+  margin-bottom: 0.75em;
 }
 ul ul,
 ol ol,
@@ -91,8 +105,6 @@ ol ul {
   margin-top: 0em;
   margin-bottom: 0em;
 }
-
-/* Let's make sure all's aligned */
 hr,
 .hr {
   border: 1px solid;
@@ -177,47 +189,47 @@ CSS THEME VARIABLES
 /* These variables are exposed in tailwind.js. They allow for on-the-fly switching between themes. */
 
 .dark {
-  --color-bg-primary: #EDF0E9;
-  --color-bg-primary-soft: #4A6173;
-  --color-bg-secondary: #7D7C90;
-  --color-bg-tertiary: #D0A77E;
-  --color-bg-default: #2A3741;
-  --color-bg-accent: #CC4162;
+  --color-bg-primary: #edf0e9;
+  --color-bg-primary-soft: #4a6173;
+  --color-bg-secondary: #7d7c90;
+  --color-bg-tertiary: #d0a77e;
+  --color-bg-default: #2a3741;
+  --color-bg-accent: #cc4162;
 
-  --color-border-primary: #EDF0E9;
-  --color-border-primary-soft: #4A6173;
-  --color-border-secondary: #7D7C90;
-  --color-border-tertiary: #D0A77E;
-  --color-border-default: #2A3741;
-  --color-border-accent: #CC4162;
+  --color-border-primary: #edf0e9;
+  --color-border-primary-soft: #4a6173;
+  --color-border-secondary: #7d7c90;
+  --color-border-tertiary: #d0a77e;
+  --color-border-default: #2a3741;
+  --color-border-accent: #cc4162;
 
-  --color-text-primary: #EDF0E9;
-  --color-text-primary-soft: #4A6173;
-  --color-text-secondary: #7D7C90;
-  --color-text-tertiary: #D0A77E;
-  --color-text-default: #2A3741;
-  --color-text-accent: #CC4162;
+  --color-text-primary: #edf0e9;
+  --color-text-primary-soft: #4a6173;
+  --color-text-secondary: #7d7c90;
+  --color-text-tertiary: #d0a77e;
+  --color-text-default: #2a3741;
+  --color-text-accent: #cc4162;
 }
 
 .light {
-  --color-bg-primary: #A8BAC7;
-  --color-bg-primary-soft: #CED2BC;
-  --color-bg-secondary: #7D7C90;
-  --color-bg-tertiary: #D0A77E;
-  --color-bg-default: #EDF0E9;
-  --color-bg-accent: #CC4162;
+  --color-bg-primary: #a8bac7;
+  --color-bg-primary-soft: #ced2bc;
+  --color-bg-secondary: #7d7c90;
+  --color-bg-tertiary: #d0a77e;
+  --color-bg-default: #edf0e9;
+  --color-bg-accent: #cc4162;
 
-  --color-border-primary: #2A3741;
-  --color-border-primary-soft: #CED2BC;
-  --color-border-secondary: #7D7C90;
-  --color-border-tertiary: #D0A77E;
-  --color-border-default: #EDF0E9;
-  --color-border-accent: #CC4162;
+  --color-border-primary: #2a3741;
+  --color-border-primary-soft: #ced2bc;
+  --color-border-secondary: #7d7c90;
+  --color-border-tertiary: #d0a77e;
+  --color-border-default: #edf0e9;
+  --color-border-accent: #cc4162;
 
-  --color-text-primary: #2A3741;
-  --color-text-primary-soft: #CED2BC;
-  --color-text-secondary: #7D7C90;
-  --color-text-tertiary: #D0A77E;
-  --color-text-default: #2A3741;
-  --color-text-accent: #CC4162;
+  --color-text-primary: #2a3741;
+  --color-text-primary-soft: #ced2bc;
+  --color-text-secondary: #7d7c90;
+  --color-text-tertiary: #d0a77e;
+  --color-text-default: #2a3741;
+  --color-text-accent: #cc4162;
 }

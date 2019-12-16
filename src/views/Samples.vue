@@ -1,24 +1,45 @@
 <template>
-  <section class="samples mt-6">
+  <section class="samples h-full bg-default mt-6">
     <div class="sample-intro p-4">
-      <section class="flex bg-primary-soft text-primary rounded">
-        <div class="w-full md:w-2/3 mx-2">
+      <section class="bg-primary-soft text-primary rounded">
+        <div class="px-4 py-2">
           <h2>Samples page</h2>
           <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
-        </div>
-
-        <div class="hidden md:block md:w-1/3 md:relative rounded">
-          <img class="absolute h-full w-full inset-0 object-cover object-center rounded-r shadow-lg" src="../assets/images/profile.jpg" alt="Portrait of Kyle Rollins." />
         </div>
       </section>
     </div>
     <div class="sample-items">
-      <ul class="flex justify-center my-6">
-        <li v-for="sample in samples" :key="sample.id" class="h-full mx-4 max-w-xs bg-primary text-primary rounded">
-          <div class="border border-primary shadow-lg rounded-t">
-            <img :src="sample.image" :alt="sample.alt" class="rounded-t" />
+      <nav>
+        <ul class="flex">
+          <li
+            class="flex-1 flex items-center bg-primary text-default hover:bg-primary-soft hover:text-primary cursor-pointer"
+            @click="setSelectedComp('UserDocs')"
+          >
+            <h4>User docs</h4>
+          </li>
+          <li
+            class="flex-1 flex items-center bg-secondary text-default hover:bg-primary-soft hover:text-primary cursor-pointer"
+            @click="setSelectedComp('DevDocs')"
+          >
+            <h4>Dev docs</h4>
+          </li>
+          <li
+            class="flex-1 flex items-center bg-tertiary text-default hover:bg-primary-soft hover:text-primary cursor-pointer"
+            @click="setSelectedComp('BlogDocs')"
+          >
+            <h4>Blog docs</h4>
+          </li>
+        </ul>
+      </nav>
+
+      <sampleSelector :selected-component="selectedComponent" />
+
+      <!-- <ul class="flex justify-center my-6">
+        <li v-for="sample in samples" :key="sample.id" class="w-1/3 mx-4 max-w-xs rounded">
+          <div class="border border-primary hidden md:block md:relative  shadow-lg rounded-t">
+            <img :src="sample.image" :alt="sample.alt" class="object-cover object-center rounded-t" />
           </div>
-          <div class="border border-primary shadow-lg rounded-b">
+          <div class="border border-primary bg-primary shadow-lg rounded-b">
             <h3 class="mx-2 leading-tight">{{ sample.name }}</h3>
             <p class="p-2">{{ sample.description }}</p>
             <a :href="sample.link">
@@ -26,18 +47,23 @@
             </a>
           </div>
         </li>
-      </ul>
+      </ul>-->
     </div>
   </section>
 </template>
 
 <script>
 // @ is an alias to /src
+import sampleSelector from "@/components/SampleSelector.vue";
 
 export default {
   name: "samples",
+  components: {
+    sampleSelector
+  },
   data() {
     return {
+      selectedComponent: "UserDocs",
       samples: [
         {
           id: "00",
@@ -72,6 +98,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    setSelectedComp(name) {
+      this.selectedComponent = name;
+    }
   }
 };
 </script>

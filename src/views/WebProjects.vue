@@ -1,7 +1,7 @@
 <template>
-  <section class="web-projects mt-6">
+  <section class="web-projects h-full bg-default mt-6">
     <div class="web-intro p-4">
-      <section class="flex bg-primary-soft text-primary rounded">
+      <section class="flex bg-primary rounded">
         <div class="w-full md:w-2/3 mx-2">
           <h2>Web projects page</h2>
           <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
@@ -16,7 +16,7 @@
         </div>
       </section>
     </div>
-    <div class="web-items bg-primary">
+    <div class="web-items">
       <div
         v-for="project in projects"
         :key="project.id"
@@ -124,7 +124,7 @@ export default {
           name: "Doc Dashboard",
           tech: "---",
           link: "Not public",
-          image: require("../assets/images/dd.png"),
+          image: require("../assets/images/sites/dd.png"),
           alt: "alt text",
           description:
             "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
@@ -169,7 +169,7 @@ export default {
           name: "Dok Compare",
           tech: "---",
           link: "DC/link/to/site.com",
-          image: require("../assets/images/dok-compare.png"),
+          image: require("../assets/images/sites/dok-compare.png"),
           alt: "alt text",
           description:
             "Scenester High Life Banksy, proident master cleanse tousled squid sriracha ad chillwave post-ironic retro.",
@@ -206,7 +206,7 @@ export default {
           name: "The Canny Valley",
           tech: "---",
           link: "DC/link/to/site.com",
-          image: require("../assets/images/the-canney-valley.png"),
+          image: require("../assets/images/sites/the-canney-valley.png"),
           alt: "alt text",
           description:
             "Roof party put a bird on it incididunt sed umami craft beer cred.",

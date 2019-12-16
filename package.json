@@ -35,7 +35,8 @@
       "@vue/prettier"
     ],
     "rules": {
-      "no-console": "off"
+      "no-console": "off",
+      "vue/no-unused-components": "warning"
     },
     "parserOptions": {
       "parser": "babel-eslint"
