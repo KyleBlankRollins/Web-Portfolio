@@ -1,20 +1,8 @@
 <template>
   <section class="web-projects h-full bg-default mt-6">
-    <div class="web-intro p-4">
-      <section class="flex bg-primary rounded">
-        <div class="w-full md:w-2/3 mx-2">
-          <h2>Web projects page</h2>
-          <p>Laboris selfies occaecat umami, forage Tumblr American Apparel. Retro Terry Richardson culpa id swag polaroid Intelligentsia American Apparel eu, esse non post-ironic fugiat master cleanse. Direct trade gluten-free blog, fanny pack cray labore skateboard before they sold out adipisicing non magna id Helvetica freegan.</p>
-        </div>
-
-        <div class="hidden md:block md:w-1/3 md:relative rounded">
-          <img
-            class="absolute h-full w-full inset-0 object-cover object-center rounded-r shadow-lg"
-            src="../assets/images/profile.jpg"
-            alt="Portrait of Kyle Rollins."
-          />
-        </div>
-      </section>
+    <div class="web-intro text-primary p-4">
+      <h2>Web projects</h2>
+      <p>As a hobbyist web developer, I'm always looking for interesting things to do and learn. You'll find a number of my recent projects on this page.</p>
     </div>
     <div class="web-items">
       <div
@@ -53,6 +41,7 @@
                 <li v-for="feature in project.features" :key="feature.id" class="flex">
                   <div class="w-1/3">
                     <h4>{{ feature.name }}</h4>
+                    <img :src="feature.image" :alt="feature.alt" class="rounded" />
                   </div>
                   <div class="w-2/3">
                     <p>{{ feature.description }}</p>
@@ -93,6 +82,7 @@
                 <li v-for="feature in project.features" :key="feature.id" class="flex">
                   <div class="w-1/3">
                     <h4>{{ feature.name }}</h4>
+                    <img :src="feature.image" :alt="feature.alt" class="rounded" />
                   </div>
                   <div class="w-2/3">
                     <p>{{ feature.description }}</p>
@@ -121,13 +111,22 @@ export default {
       projects: [
         {
           id: "10",
-          name: "Doc Dashboard",
-          tech: "---",
+          name: "Doc Dashboard v2.0",
+          tech: [
+            "Vue.js",
+            "Vuex",
+            "Vue Router",
+            "Google Analytics Reporting API v4",
+            "Plotly.js",
+            "Tailwind CSS"
+          ],
           link: "Not public",
-          image: require("../assets/images/sites/dd.png"),
-          alt: "alt text",
-          description:
-            "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
+          image: require("../assets/images/sites/overview_dark.png"),
+          alt: "Overview report for Doc Dashboard",
+          description: [
+            "Doc Dashboard v2.0 is a complete re-build of the first version. I completely re-worked the data structures to be innately flexible and exandable.",
+            "The original version only collated and analyzed Google Analytics data for 3M Health Information Systems' online help. v2.0 serves as more of a hub, adding information from PDF documents and support content."
+          ],
           colors: {
             bg: "bg-secondary",
             bgDark: "bg-default",
@@ -140,26 +139,29 @@ export default {
           features: [
             {
               id: "101",
-              name: "Google Analytics Reporting API",
+              name: "Metrics and internal sharing",
               description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+                "In comparison to Google Analytics itself, Doc Dashboard is quite easy to use. More importantly, it's extremely easy to share within the company. Just copy a report's URL and send it interested stakeholders.",
+              image: require("../assets/images/sites/reports.gif"),
+              alt: "Short gif of the report feature.",
               code: ""
             },
             {
               id: "103",
               name: "Analytics reports",
               description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+                "Doc Dashboard has many reports that focus on specific data - and actions users can take based on that data. Each report processes the Google Analytics data independently to ensure it's reliable and usable.",
+              image: require("../assets/images/sites/source_light.png"),
+              alt: "The source report, shown with the light theme active.",
               code: ""
             },
             {
               id: "102",
               name: "Plotly.js charts",
               description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+                "Several types of charts visually present the report data. These charts are most often intentionally simple. The goal is to show concrete, actionable information.",
+              image: require("../assets/images/sites/charts.gif"),
+              alt: "Short gif of the charts feature.",
               code: ""
             }
           ]
@@ -167,12 +169,14 @@ export default {
         {
           id: "11",
           name: "Dok Compare",
-          tech: "---",
-          link: "DC/link/to/site.com",
+          tech: ["Vue.js", "Vuex", "Tailwind CSS"],
+          link: "https://dok-compare.kyleblankrollins.com/#/",
           image: require("../assets/images/sites/dok-compare.png"),
-          alt: "alt text",
-          description:
-            "Scenester High Life Banksy, proident master cleanse tousled squid sriracha ad chillwave post-ironic retro.",
+          alt: "Home page for the DoK Compare website.",
+          description: [
+            "DoK Compare is based on the realt-time strategy game Homeworld: Deserts of Kharak. It allows users to view unit statistics side-by-side.",
+            "The statistics comparison update dynamically as new units are selected."
+          ],
           colors: {
             bg: "bg-primary",
             bgDark: "bg-secondary",
@@ -187,16 +191,30 @@ export default {
               id: "111",
               name: "Unit statitics",
               description:
+                "Every unit in Homeworld: Deserts of Kharak has a stats sheet. DoK Compare makes it easy to visualize those stats and see how different units stack up against each other.",
+              image: require("../assets/images/sites/stats.png"),
+              alt:
+                "A Battle Cruiser unit with its associated stats displayed in a table.",
+              code: ""
+            },
+            {
+              id: "112",
+              name: "Dynamic value calculations",
+              description:
                 "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+              image: require("../assets/images/sites/comparison.png"),
+              alt:
+                "Two statistics tables side-by-side that show which stats are higher or lower.",
               code: ""
             },
             {
               id: "113",
-              name: "Dynamic value calculations",
+              name: "Responsive design",
               description:
                 "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+              image: require("../assets/images/sites/responsive.png"),
+              alt:
+                "An Honorguard Cruiser that has been dynamically resized to fit the display width.",
               code: ""
             }
           ]
@@ -204,10 +222,16 @@ export default {
         {
           id: "12",
           name: "The Canny Valley",
-          tech: "---",
-          link: "DC/link/to/site.com",
-          image: require("../assets/images/sites/the-canney-valley.png"),
-          alt: "alt text",
+          tech: [
+            "Vue.js",
+            "Gridsome",
+            "GraphQL",
+            "Forestry.io CMS",
+            "Tailwind CSS"
+          ],
+          link: "https://the-canney-valley.kyleblankrollins.com/",
+          image: require("../assets/images/sites/the_canney_valley.png"),
+          alt: "The home page of The Canney Valley.",
           description:
             "Roof party put a bird on it incididunt sed umami craft beer cred.",
           colors: {
@@ -224,24 +248,27 @@ export default {
               id: "131",
               name: "Gridsome GraphQL layer",
               description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
-              code: ""
-            },
-            {
-              id: "133",
-              name: "Dynamic navigation",
-              description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+                "The GraphQL data layer in Gridsome makes all sorts of interesting things possible. For example, creating lists of posts that share a tag or a series. And none of it requires a server - it's all done during the build process.",
+              image: require("../assets/images/sites/graphQL.png"),
+              alt: "A list of blog posts created by the GraphQL data layer.",
               code: ""
             },
             {
               id: "132",
+              name: "Dynamic navigation",
+              description:
+                "The navigation throughout The Canney Valley updates based on the most recent posts.",
+              image: require("../assets/images/sites/dynamic_nav.png"),
+              alt: "The Recent Posts navigation updates based on new posts' dates.",
+              code: ""
+            },
+            {
+              id: "133",
               name: "Responsive design",
               description:
-                "Carles literally normcore, Williamsburg Echo Park fingerstache photo booth twee keffiyeh chambray whatever.",
-              image: "",
+                "The Canney Valley is mobile-friendly and can be viewed comfortably at nearly all screen sizes.",
+              image: require("../assets/images/sites/tcv_responsive.png"),
+              alt: "The Canney Valley as seen in a mobile layout.",
               code: ""
             }
           ]

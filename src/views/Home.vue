@@ -25,7 +25,7 @@
           </div>
         </div>
       </section>
-      <section class="flex mt-6 pb-6">
+      <section class="flex mt-12 pb-6">
         <div class="w-3/4 bg-primary rounded shadow-lg">
           <h2 class="w-full my-0 px-6 py-2 text-default rounded-t">How I built this site</h2>
           <div class="px-6 py-2">
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="w-1/4 flex flex-col items-center text-default mx-2 mr-10">
-          <h3 class="mb-6">Contact</h3>
+          <h3 class="mb-6">Connect</h3>
           <a href="https://github.com/KyleBlankRollins" class="flex flex-col items-center mb-6 hover:text-accent">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-20 fill-current">
               <path

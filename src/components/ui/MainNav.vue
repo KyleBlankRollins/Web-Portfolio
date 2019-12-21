@@ -5,60 +5,92 @@
         <router-link
           to="/"
           :class="{'nav-slide': activeHome}"
-          class="inactive-nav-link skew nav-link border-b border-default"
+          class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('0')"
         >
-          <li class="flex skew-reset px-6">
+          <li class="flex px-6">
             <p class="m-0">Home</p>
           </li>
         </router-link>
         <router-link
           to="/samples"
           :class="{'nav-slide': activeSamples}"
-          class="inactive-nav-link skew nav-link border-b border-default"
+          class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('1')"
         >
-          <li class="flex skew-reset px-6">
+          <li class="flex px-6">
             <p class="m-0">Samples</p>
           </li>
         </router-link>
         <router-link
           to="/web_projects"
           :class="{'nav-slide': activeProjects}"
-          class="inactive-nav-link skew nav-link border-b border-default"
+          class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('2')"
         >
-          <li class="flex skew-reset leading-tight px-6">
+          <li class="flex leading-tight px-6">
             <p class="m-0">Web Projects</p>
           </li>
         </router-link>
       </ul>
     </nav>
     <div class="flex justify-end items-center">
-      <router-link to="/" class="px-6">
-        <svg
-          width="26.458mm"
-          height="12mm"
-          version="1.1"
-          viewBox="0 0 26.458 15.259"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g transform="translate(-101.3 -204.23)">
-            <g transform="translate(-.20095 .83476)">
-              <path
-                d="m105.43 210.46-1.5162 1.7892v3.3964h-1.2736v-10.583h1.2736v5.5191h0.0455l1.3949-1.7588 3.1235-3.7603h1.5314l-3.7148 4.4577 3.8209 6.1256h-1.4859z"
-                fill="#082736"
-                style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
-              />
-              <path d="m111.5 217v-0.52917h6.9596v0.52917z" fill="#cc4162" />
-              <path
-                d="m121.12 215.64h-1.2736v-10.583h3.8512q1.4708 0 2.244 0.8036 0.77328 0.80361 0.77328 2.244 0 1.2888-0.66714 2.0621-0.66715 0.77329-1.9408 0.89458l2.6989 4.579h-1.4253l-2.5776-4.5184h-1.683zm2.5473-5.5949q0.8036 0 1.2433-0.39423 0.45487-0.40938 0.45487-1.1523v-0.78844q0-0.74297-0.45487-1.1372-0.43971-0.40938-1.2433-0.40938h-2.5473v3.8816z"
-                fill="#082736"
-                style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
-              />
-            </g>
-          </g>
-        </svg>
+      <router-link to="/" class="flex items-center px-6">
+        <div class="text-primary">
+          <svg
+            class="fill-current"
+            width="30"
+            height="40"
+            viewBox="0 0 30 40"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xml:space="preserve"
+            xmlns:serif="http://www.serif.com/"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+          >
+            <path
+              d="M10.487,20.344l-5.673,6.304l0,13.352l-4.814,0l0,-40l4.814,0l0,21.261l0.172,0l5.73,-6.934l12.092,-14.327l5.903,0l-14.9,17.135l15.931,22.865l-5.96,0l-13.295,-19.656Z"
+              style="fill-rule:nonzero;"
+            />
+          </svg>
+        </div>
+        <div class="text-accent pt-4">
+          <svg
+            class="fill-current"
+            width="28"
+            height="40"
+            viewBox="0 0 28 40"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xml:space="preserve"
+            xmlns:serif="http://www.serif.com/"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+          >
+            <rect x="0" y="35.2" width="28" height="4.8" style="fill-rule:nonzero;" />
+          </svg>
+        </div>
+
+        <div class="text-primary">
+          <svg
+            class="fill-current"
+            width="29"
+            height="40"
+            viewBox="0 0 29 40"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xml:space="preserve"
+            xmlns:serif="http://www.serif.com/"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+          >
+            <path
+              d="M4.814,40l-4.814,0l0,-40l15.931,0c3.515,0 6.256,0.974 8.224,2.923c1.967,1.948 2.951,4.756 2.951,8.424c0,2.941 -0.678,5.358 -2.034,7.249c-1.357,1.891 -3.353,3.142 -5.989,3.754l9.169,17.65l-5.444,0l-8.653,-17.192l-9.341,0l0,17.192Zm11.117,-21.318c1.91,0 3.391,-0.497 4.441,-1.49c1.051,-0.993 1.576,-2.407 1.576,-4.241l0,-2.98c0,-1.833 -0.525,-3.247 -1.576,-4.24c-1.05,-0.994 -2.531,-1.49 -4.441,-1.49l-11.117,0l0,14.441l11.117,0Z"
+              style="fill-rule:nonzero;"
+            />
+          </svg>
+        </div>
       </router-link>
     </div>
   </div>
