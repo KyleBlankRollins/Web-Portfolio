@@ -147,11 +147,10 @@ export default {
 }
 
 .nav-link:hover {
-  @apply bg-primary-soft;
+  @apply bg-utility-200;
 }
 
 .nav-link:focus {
-  @apply bg-primary-soft;
   @apply border-b-4;
   @apply border-accent;
 }

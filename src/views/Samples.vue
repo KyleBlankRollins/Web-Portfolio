@@ -1,5 +1,5 @@
 <template>
-  <section class="samples h-full bg-default mt-6">
+  <section class="samples bg-default mt-6">
     <div class="sample-intro text-primary p-4">
       <h2>Writing samples</h2>
       <p>Most of my writing is covered under NDAs and not publically shareable. However, you can find several documents below.</p>

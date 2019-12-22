@@ -45,11 +45,13 @@ TYPOGRAPHY
 
 html,
 .root {
+  height: 100%;
   font-size: 24px;
   line-height: 18px;
 }
 body,
 .article {
+  height: 100%;
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 1em;
   line-height: 1.5em;
@@ -240,4 +242,9 @@ CSS THEME VARIABLES
   --color-text-tertiary: #d0a77e;
   --color-text-default: #2a3741;
   --color-text-accent: #cc4162;
+}
+
+.gradient {
+  background: rgb(204,65,98);
+  background: linear-gradient(90deg, rgba(204,65,98,1) 2%, rgba(125,124,144,1) 93%);
 }

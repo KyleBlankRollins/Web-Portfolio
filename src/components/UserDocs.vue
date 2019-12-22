@@ -1,6 +1,5 @@
 <template>
   <div class="text-primary">
-    <h1>USER DOCS</h1>
     <ul>
       <li v-for="doc in docs" :key="doc.id" class="w-full my-5">
         <SampleViewer :doc="docs[doc.id]" class="w-3/4" />

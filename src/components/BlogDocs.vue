@@ -1,6 +1,5 @@
 <template>
   <div class="text-primary">
-    <h1>Blog posts</h1>
     <ul>
       <li v-for="doc in docs" :key="doc.id" class="w-full my-5">
         <div class="w-full flex justify-center rounded">
