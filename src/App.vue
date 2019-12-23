@@ -1,5 +1,9 @@
 <template>
-  <div class="h-full bg-default text-default" :class="{ 'dark': theme, 'light': !theme }" id="app">
+  <div
+    class="bg-default text-default"
+    :class="{ dark: theme, light: !theme }"
+    id="app"
+  >
     <MainNav />
     <transition :name="transitionName">
       <router-view class="content" />
@@ -23,7 +27,7 @@ export default {
     return {
       transitionName: "",
       theme: false
-    }
+    };
   },
   methods: {
     updateTheme(event) {

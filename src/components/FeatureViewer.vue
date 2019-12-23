@@ -1,8 +1,14 @@
 <template>
-  <div>
-    <div>
-      <img :src="feature.image" :alt="feature.alt"/>
-    </div>
+  <div class="px-4">
+    <transition name="fade">
+      <div v-if="feature.expand">
+        <img
+          :src="feature.image"
+          :alt="feature.alt"
+          class="rounded shadow-lg"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 

@@ -3,14 +3,16 @@
     <div class="relative h-48">
       <img
         src="@/assets/images/sites/overview_dark.png"
-        alt="Overview report for Doc Dashboard."
+        alt="Home page for the DoK Compare website."
         class="absolute h-full w-full inset-0 object-cover object-right"
       />
-      <ul class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1">
+      <ul
+        class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1"
+      >
         <li
           v-for="(item, index) in tech"
           :key="index"
-          class="bg-accent m-1 text-utility-100 rounded"
+          class="bg-state-success m-1 text-utility-100 rounded"
         >
           <div>
             <p class="m-0 px-1">{{ item }}</p>
@@ -20,27 +22,50 @@
     </div>
     <div class="feature-grid">
       <div class="proj-description p-4">
-        <h3>Doc Dashboard v2.0</h3>
-        <p>Doc Dashboard v2.0 is a complete re-build of the first version. I completely re-worked the data structures to be innately flexible and exandable.</p>
-        <p>The original version only collated and analyzed Google Analytics data for 3M Health Information Systems' online help. v2.0 serves as more of a hub, adding information from PDF documents and support content.</p>
+        <div class="flex items-end mb-4">
+          <h3 class="w-3/4">Doc Dashboard v2.0</h3>
+          <a v-if="link" :href="link" class="btn">
+            <button class="w-full">Visit site</button>
+          </a>
+          <div v-else class="btn">Not public</div>
+        </div>
+        <p>
+          Doc Dashboard v2.0 is a complete re-build of the first version. I
+          completely re-worked the data structures to be innately flexible and
+          exandable.
+        </p>
+        <p>
+          The original version only collated and analyzed Google Analytics data
+          for 3M Health Information Systems' online help. v2.0 serves as more of
+          a hub, adding information from PDF documents and support content.
+        </p>
       </div>
       <div class="proj-features">
         <ul class="m-0">
-          <li v-for="feature in features" :key="feature.id" class="w-full flex my-6">
-            <div
-              class="w-1/3 items-center"
-              
+          <transition-group name="fade" tag="div">
+            <li
+              v-for="feature in features"
+              :key="feature.id"
+              class="w-full flex my-6"
             >
-              <p class="w-full my-0 px-2 font-bold cursor-pointer hover:bg-accent hover:text-utility-100 rounded" @click="feature.expand = !feature.expand">{{ feature.name }}</p>
-              <div v-if="feature.expand" class="px-4">
-                <p>
-                  {{ feature.description }}
-                </p>
+              <div class="w-1/3 items-center rounded-l">
+                <div
+                  class="feature w-full flex px-2 font-bold cursor-pointer items-center border-b-2 border-tertiary hover:bg-accent hover:text-utility-100 rounded-b"
+                  @click="feature.expand = !feature.expand"
+                >
+                  <Toggle :expand="feature.expand" />
+                  <p class="m-0">{{ feature.name }}</p>
+                </div>
+                <transition name="fade">
+                  <div v-if="feature.expand" class="p-4">
+                    <p>{{ feature.description }}</p>
+                  </div>
+                </transition>
               </div>
-            </div>
 
-            <FeatureViewer v-if="feature.expand" :feature="feature" class="w-2/3" />
-          </li>
+              <FeatureViewer :feature="feature" class="w-2/3 rounded-r" />
+            </li>
+          </transition-group>
         </ul>
       </div>
     </div>
@@ -50,15 +75,16 @@
 <script>
 // @ is an alias to /src
 import FeatureViewer from "@/components/FeatureViewer.vue";
+import Toggle from "@/components/ui/Toggle.vue";
 
 export default {
   name: "docDashboard",
   components: {
-    FeatureViewer
+    FeatureViewer,
+    Toggle
   },
   data() {
     return {
-      id: "10",
       name: "Doc Dashboard v2.0",
       tech: [
         "Vue.js",
@@ -68,7 +94,7 @@ export default {
         "Plotly.js",
         "Tailwind CSS"
       ],
-      link: "Not public",
+      link: "",
       colors: {
         bg: "bg-secondary",
         bgDark: "bg-default",

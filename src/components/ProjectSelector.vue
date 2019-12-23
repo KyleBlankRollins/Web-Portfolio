@@ -1,6 +1,8 @@
 <template>
   <div>
-    <component :is="currentComponent"></component>
+    <transition name="slide-left">
+      <component :is="currentComponent"></component>
+    </transition>
   </div>
 </template>
 

@@ -9,10 +9,7 @@
           <h3 class="w-3/4 mb-6" v-html="doc.title"></h3>
 
           <div class="w-1/4 flex justify-end">
-            <a
-              :href="doc.link"
-              class="w-24 h-8 flex items-center justify-center border border-primary hover:bg-accent px-2 rounded shadow-lg"
-            >
+            <a :href="doc.link" class="btn">
               <button class="w-full">View doc</button>
             </a>
           </div>

@@ -4,7 +4,7 @@
       <ul class="h-16 flex">
         <router-link
           to="/"
-          :class="{'nav-slide': activeHome}"
+          :class="{ 'nav-slide': activeHome }"
           class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('0')"
         >
@@ -14,7 +14,7 @@
         </router-link>
         <router-link
           to="/samples"
-          :class="{'nav-slide': activeSamples}"
+          :class="{ 'nav-slide': activeSamples }"
           class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('1')"
         >
@@ -24,7 +24,7 @@
         </router-link>
         <router-link
           to="/web_projects"
-          :class="{'nav-slide': activeProjects}"
+          :class="{ 'nav-slide': activeProjects }"
           class="inactive-nav-link nav-link border-b border-default"
           v-on:click.native="setCurrentNav('2')"
         >
@@ -68,7 +68,13 @@
             xmlns:serif="http://www.serif.com/"
             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
           >
-            <rect x="0" y="35.2" width="28" height="4.8" style="fill-rule:nonzero;" />
+            <rect
+              x="0"
+              y="35.2"
+              width="28"
+              height="4.8"
+              style="fill-rule:nonzero;"
+            />
           </svg>
         </div>
 

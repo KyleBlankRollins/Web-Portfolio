@@ -9,11 +9,11 @@ module.exports = {
       accent: "var(--color-text-accent)",
       default: "var(--color-text-default)",
       state: {
-        "info": "#2a3741",
-        "warning": "#f17d1d",
-        "error": "#f44336",
-        "success": "#748d55",
-        "primary": "#d13e60"
+        info: "#2a3741",
+        warning: "#f17d1d",
+        error: "#f44336",
+        success: "#748d55",
+        primary: "#d13e60"
       },
       utility: {
         "100": "#F6F6F4",
@@ -32,11 +32,11 @@ module.exports = {
       accent: "var(--color-bg-accent)",
       default: "var(--color-bg-default)",
       state: {
-        "info": "#2a3741",
-        "warning": "#f17d1d",
-        "error": "#f44336",
-        "success": "#748d55",
-        "primary": "#d13e60"
+        info: "#2a3741",
+        warning: "#f17d1d",
+        error: "#f44336",
+        success: "#748d55",
+        primary: "#d13e60"
       },
       utility: {
         "100": "#F6F6F4",
@@ -55,11 +55,11 @@ module.exports = {
       accent: "var(--color-border-accent)",
       default: "var(--color-border-default)",
       state: {
-        "info": "#2a3741",
-        "warning": "#f17d1d",
-        "error": "#f44336",
-        "success": "#748d55",
-        "primary": "#d13e60"
+        info: "#2a3741",
+        warning: "#f17d1d",
+        error: "#f44336",
+        success: "#748d55",
+        primary: "#d13e60"
       },
       utility: {
         "100": "#F6F6F4",

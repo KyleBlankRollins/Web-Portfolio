@@ -11,7 +11,21 @@ Register Tailwind CSS classes.
 @tailwind components;
 
 .btn {
-  @apply px-5 py-2 rounded;
+  @apply w-24;
+  @apply h-8;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply border;
+  @apply border-primary;
+  @apply px-2;
+  @apply rounded;
+  @apply shadow-lg;
+}
+
+.btn:hover {
+  @apply bg-accent;
+  @apply text-utility-100;
 }
 
 .link {
@@ -146,24 +160,13 @@ sub {
 TRANSITIONS AND TRANSFORMATIONS
 ===================================== */
 
-.skew {
-  transform: skewX(-30deg);
+.rotate {
+  transform: rotate(45deg);
+  transition: all .5s;
 }
 
-.skew-reset {
-  transform: skewX(30deg);
-}
-
-.reverse-skew {
-  transform: skewX(30deg);
-}
-
-.reverse-skew-reset {
-  transform: skewX(-30deg);
-}
-
-.flip-h {
-  transform: rotateX(180deg);
+.toggle-plus {
+  transition: all .5s;
 }
 
 .slide-left-leave-active,
@@ -190,6 +193,13 @@ TRANSITIONS AND TRANSFORMATIONS
 .expand-enter,
 .expand-leave-to {
   height: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 /* =====================================
