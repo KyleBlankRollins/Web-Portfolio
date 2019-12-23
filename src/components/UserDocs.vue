@@ -31,7 +31,7 @@ export default {
           image: require("../assets/images/CScom-WN-Oct-2018.png"),
           alt:
             "ChartScript.com What's New in this Release cover image of healthcare professionals.",
-          link: "../assets/samples/dcn300_cscom_rel_october_2018.pdf"
+          link: "/public/samples/dcn300_cscom_rel_october_2018.pdf"
         },
         {
           id: 1,
@@ -45,7 +45,7 @@ export default {
           image: require("../assets/images/EAPG-meth-overview-jan-2020.png"),
           alt:
             "EAPG Methodology Overview cover image of healthcare professionals.",
-          link: "../assets/samples/dcn300_cscom_rel_october_2018.pdf"
+          link: "/public/samples/dcn300_cscom_rel_october_2018.pdf"
         },
         {
           id: 2,
@@ -59,7 +59,7 @@ export default {
           image: require("../assets/images/Provider-Client-WN-May-2019.png"),
           alt:
             "Provider Client What's New in this Release cover image of healthcare professionals.",
-          link: "../assets/samples/provider_client_rel_may_2019.pdf"
+          link: "/public/samples/provider_client_rel_may_2019.pdf"
         }
       ]
     };

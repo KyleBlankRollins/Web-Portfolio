@@ -31,7 +31,7 @@ export default {
           image: require("../assets/images/mf-WN-v2019.1.3.png"),
           alt:
             "APCGP What's New in this Release cover image of healthcare professionals.",
-          link: "../assets/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
+          link: "/public/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
         },
         {
           id: 1,
@@ -44,7 +44,7 @@ export default {
           image: require("../assets/images/opps-pricer-manual-v20.3.0.png"),
           alt:
             "TRICARE OPPS Pricer Software Manual cover image of healthcare professionals.",
-          link: "../assets/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
+          link: "/public/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
         }
       ]
     };
