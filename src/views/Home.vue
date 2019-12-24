@@ -64,7 +64,7 @@
             </p>
           </div>
         </div>
-        <div class="w-1/4 flex flex-col items-center text-default mx-2 mr-10">
+        <div class="w-1/4 flex flex-col items-center text-primary mx-2 mr-10">
           <h3 class="mb-6">Connect</h3>
           <a
             href="https://github.com/KyleBlankRollins"
