@@ -30,7 +30,6 @@
           <div v-else class="md:w-1/4 flex justify-end">
             <div class="btn">Not public</div>
           </div>
-          
         </div>
         <p>
           Doc Dashboard v2.0 is a complete re-build of the first version. I

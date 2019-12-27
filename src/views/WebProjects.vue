@@ -1,12 +1,12 @@
 <template>
   <section class="mt-6">
     <div class="max-w-text text-primary px-2 md:px-6">
-        <h2>Web projects</h2>
-        <p>
-          As a hobbyist web developer, I'm always looking for interesting things
-          to do and learn. You'll find a number of my recent projects on this
-          page.
-        </p>
+      <h2>Web projects</h2>
+      <p>
+        As a hobbyist web developer, I'm always looking for interesting things
+        to do and learn. You'll find a number of my recent projects on this
+        page.
+      </p>
     </div>
     <nav class="w-full bg-default text-primary sticky top-0 shadow-lg z-50">
       <ul class="md:h-16 md:flex md:justify-center m-0">

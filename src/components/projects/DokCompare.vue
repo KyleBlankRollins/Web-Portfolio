@@ -6,7 +6,9 @@
         alt="Home page for the DoK Compare website."
         class="absolute h-full w-full inset-0 object-cover object-right"
       />
-      <ul class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1">
+      <ul
+        class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1"
+      >
         <li
           v-for="(item, index) in tech"
           :key="index"
@@ -44,7 +46,11 @@
       <div>
         <ul class="m-0">
           <transition-group name="fade" tag="div">
-            <li v-for="feature in features" :key="feature.id" class="w-full md:flex my-6">
+            <li
+              v-for="feature in features"
+              :key="feature.id"
+              class="w-full md:flex my-6"
+            >
               <div class="md:w-1/3 items-center rounded-l">
                 <div
                   class="feature w-full flex px-2 font-bold cursor-pointer items-center border-b-2 border-tertiary hover:bg-accent hover:text-utility-100"

@@ -72,8 +72,8 @@ module.exports = {
     },
     extend: {
       maxWidth: {
-        "text": '900px',
-        "text-plus": '1100px'
+        text: "900px",
+        "text-plus": "1100px"
       }
     }
   },
