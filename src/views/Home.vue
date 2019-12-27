@@ -1,7 +1,7 @@
 <template>
-  <section class="home mt-6">
-    <div class="home-content p-4">
-      <section class="flex bg-primary rounded shadow-lg">
+  <section class="mt-6">
+    <div>
+      <section class="md:flex bg-primary rounded shadow-lg">
         <div class="hidden md:block md:w-1/3 md:relative rounded-l">
           <img
             class="absolute h-full w-full inset-0 object-cover object-right rounded-l"
@@ -9,11 +9,11 @@
             alt="Portrait of Kyle Rollins."
           />
         </div>
-        <div class="w-full md:w-2/3 rounded-r">
-          <h2 class="w-full my-0 px-6 py-2 text-default rounded-tl">
+        <div class="w-full md:w-2/3 px-2 md:px-6 rounded-r">
+          <h2 class="w-full my-0 py-2 text-default rounded-tl">
             About me
           </h2>
-          <div class="px-6 py-2">
+          <div class="py-2">
             <p>
               Hi, I'm
               <span class="text-accent font-semibold">Kyle Rollins</span> - nice
@@ -28,7 +28,8 @@
               While you're here take a look at some of my
               <router-link to="/samples" class="link"
                 >writing samples</router-link
-              >or my
+              >
+              or
               <router-link to="/web_projects" class="link"
                 >web development projects</router-link
               >.
@@ -36,12 +37,12 @@
           </div>
         </div>
       </section>
-      <section class="flex mt-12 pb-6">
-        <div class="w-3/4 bg-primary rounded shadow-lg">
-          <h2 class="w-full my-0 px-6 py-2 text-default rounded-t">
+      <section class="md:flex mt-12 pb-6">
+        <div class="md:w-3/4 bg-primary rounded px-2 md:px-6 shadow-lg">
+          <h2 class="w-full my-0 py-2 text-default rounded-t">
             How I built this site
           </h2>
-          <div class="px-6 py-2">
+          <div class="py-2">
             <p>
               The first iterations of my portfolio site were 100% vanilla HTML,
               CSS, and JavaScript.
@@ -64,7 +65,9 @@
             </p>
           </div>
         </div>
-        <div class="w-1/4 flex flex-col items-center text-primary mx-2 mr-10">
+        <div
+          class="md:w-1/4 flex flex-col items-center text-primary mt-6 md:mt-0 mx-2 md:mr-10"
+        >
           <h3 class="mb-6">Connect</h3>
           <a
             href="https://github.com/KyleBlankRollins"
@@ -125,15 +128,3 @@ export default {
   name: "home"
 };
 </script>
-
-<style scoped>
-.home {
-  display: grid;
-  grid-template-areas: "lmargin content rmargin";
-  grid-template-columns: 1fr minmax(min-content, 900px) 1fr;
-}
-
-.home-content {
-  grid-area: content;
-}
-</style>

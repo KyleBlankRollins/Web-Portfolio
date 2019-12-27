@@ -1,6 +1,22 @@
 <template>
   <div class="text-primary">
-    <ul>
+    <!-- Only appears when viewport is sm or smaller. -->
+    <ul class="md:hidden">
+      <li v-for="doc in docs" :key="doc.id" class="w-full mb-5">
+        <div class="w-full">
+          <div class="m-2 border-b border-primary">
+            <h3 class="mb-6">{{ doc.title }}</h3>
+            <p>{{ doc.description }}</p>
+            <a :href="doc.link" class="btn mb-6">
+              <button class="w-full">Read more</button>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Only appears when viewport is md or larger. -->
+    <ul class="hidden md:block">
       <li v-for="doc in docs" :key="doc.id" class="w-full my-5">
         <div class="w-full flex justify-center rounded">
           <div class="w-3/4 mx-4 border-l border-primary rounded-l">

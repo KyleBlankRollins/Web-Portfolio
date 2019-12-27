@@ -1,13 +1,14 @@
 <template>
-  <div class="p-4">
-    <component :is="currentComponent"></component>
+  <div class="p-2 md:p-4">
+    <transition name="slide-left" mode="out-in">
+      <component :is="currentComponent"></component>
+    </transition>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import FailState from "@/components/ui/FailState.vue";
-
 import UserDocs from "@/components/UserDocs.vue";
 import DevDocs from "@/components/DevDocs.vue";
 import BlogDocs from "@/components/BlogDocs.vue";

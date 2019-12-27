@@ -1,6 +1,6 @@
 <template>
-  <section class="samples bg-default mt-6">
-    <div class="sample-intro text-primary p-4">
+  <section class="mt-6">
+    <div class="text-primary px-2 md:px-6 pb-6">
       <h2>Writing samples</h2>
       <p>
         Most of my writing is covered under NDAs and not publically shareable.
@@ -15,25 +15,53 @@
         or <a href="https://twitter.com/KyleBRollins" class="link">Twitter</a>.
       </p>
     </div>
-    <div class="sample-items mx-2">
-      <nav>
-        <ul class="flex m-0">
+    <div>
+      <!-- Only appears when viewport is sm or smaller. -->
+      <nav class="w-full bg-default text-primary sticky top-0 shadow-lg z-50">
+        <ul class="md:hidden flex m-0">
           <li
-            class="flex-1 flex items-center justify-center cursor-pointer text-primary border-b border-primary bg-utility-400 hover:bg-tertiary text-utility-100 rounded-t"
+            class="flex-1 flex items-center justify-center cursor-pointer border-b border-default"
+            :class="{ 'active-docs': selectedComponent === 'UserDocs' }"
+            @click="setSelectedComp('UserDocs')"
+          >
+            <p class="m-0">User</p>
+          </li>
+          <li
+            class="flex-1 flex items-center justify-center cursor-pointer border-b border-default"
+            :class="{ 'active-docs': selectedComponent === 'DevDocs' }"
+            @click="setSelectedComp('DevDocs')"
+          >
+            <p class="m-0">Dev</p>
+          </li>
+          <li
+            class="flex-1 flex items-center justify-center cursor-pointer border-b border-default"
+            :class="{ 'active-docs': selectedComponent === 'BlogDocs' }"
+            @click="setSelectedComp('BlogDocs')"
+          >
+            <p class="m-0">Blog</p>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Only appears when viewport is md or larger. -->
+      <nav class="w-full bg-default text-primary sticky top-0 shadow-lg z-50">
+        <ul class="hidden md:block md:h-16 md:flex md:m-0">
+          <li
+            class="flex-1 flex items-center justify-center opacity-50 hover:bg-tertiary hover:opacity-75 cursor-pointer border-b border-default rounded-t"
             :class="{ 'active-docs': selectedComponent === 'UserDocs' }"
             @click="setSelectedComp('UserDocs')"
           >
             <h4>User docs</h4>
           </li>
           <li
-            class="flex-1 flex items-center justify-center cursor-pointer text-primary border-b border-primary bg-utility-400 hover:bg-tertiary text-utility-100 rounded-t"
+            class="flex-1 flex items-center justify-center opacity-50 hover:bg-tertiary hover:opacity-75 cursor-pointer border-b border-default rounded-t"
             :class="{ 'active-docs': selectedComponent === 'DevDocs' }"
             @click="setSelectedComp('DevDocs')"
           >
             <h4>Dev docs</h4>
           </li>
           <li
-            class="flex-1 flex items-center justify-center cursor-pointer text-primary border-b border-primary bg-utility-400 hover:bg-tertiary text-utility-100 rounded-t"
+            class="flex-1 flex items-center justify-center opacity-50 hover:bg-tertiary hover:opacity-75 cursor-pointer border-b border-default rounded-t"
             :class="{ 'active-docs': selectedComponent === 'BlogDocs' }"
             @click="setSelectedComp('BlogDocs')"
           >
@@ -42,10 +70,7 @@
         </ul>
       </nav>
 
-      <sampleSelector
-        :selected-component="selectedComponent"
-        class="border-l border-r border-b border-primary rounded-b"
-      />
+      <sampleSelector :selected-component="selectedComponent" />
     </div>
   </section>
 </template>
@@ -73,31 +98,9 @@ export default {
 </script>
 
 <style scoped>
-.samples {
-  display: grid;
-  grid-template-areas:
-    "lmargin content rmargin"
-    "items   items   items";
-  grid-template-columns: 1fr minmax(min-content, 900px) 1fr;
-}
-
-.sample-intro {
-  grid-area: content;
-}
-
-.sample-items {
-  grid-area: items;
-}
-
 .active-docs {
-  @apply rounded-t;
-  @apply border-t;
-  @apply border-r;
-  @apply border-l;
-  @apply border-primary;
-  @apply border-b-0;
-  @apply bg-default;
-  @apply text-primary;
-  @apply text-xl;
+  @apply border-accent;
+  @apply border-b-2;
+  @apply opacity-100;
 }
 </style>

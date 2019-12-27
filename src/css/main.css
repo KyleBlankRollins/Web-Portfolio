@@ -39,17 +39,17 @@ Register Tailwind CSS classes.
 @tailwind utilities;
 
 /* =====================================
-ABOUT MY USE OF CSS GRID AND TAILWINDCSS 
+ABOUT MY USE OF TAILWINDCSS 
 ===================================== */
 
 /* 
 
 I enjoy using TailwindCSS with .vue files because it gives an immediacy to the code. I don't have to reference another file to see what's happening at the presentation layer.
 
-With Tailwind, that association is very close. However, I also want to use CSS Grid for layout. To keep things clear, I'll set some ground rules.
+With Tailwind, that association is very close. However, sometimes there are truly global classes that I want to re-use. To keep things clear, here are some ground rules.
 
 1. /css/main.css is only for truly global classes that can't be applied in Tailwind for some reason (for example, background gradients).
-2. All component CSS is defined in the component's .vue file, including any CSS Grids.
+2. All CSS that affects only one component is defined in the component's .vue file.
 
 */
 
@@ -173,7 +173,7 @@ TRANSITIONS AND TRANSFORMATIONS
 .slide-left-enter-active,
 .slide-right-leave-active,
 .slide-right-enter-active {
-  transition: 1s;
+  transition: .75s;
 }
 .slide-left-enter,
 .slide-right-leave-to {
@@ -188,18 +188,11 @@ TRANSITIONS AND TRANSFORMATIONS
 .expand-leave-active {
   transition: height 1s ease-in-out;
   overflow: hidden;
-}
+} 
 
 .expand-enter,
 .expand-leave-to {
   height: 0;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 
 /* =====================================
@@ -252,9 +245,4 @@ CSS THEME VARIABLES
   --color-text-tertiary: #d0a77e;
   --color-text-default: #2a3741;
   --color-text-accent: #cc4162;
-}
-
-.gradient {
-  background: rgb(204,65,98);
-  background: linear-gradient(90deg, rgba(204,65,98,1) 2%, rgba(125,124,144,1) 93%);
 }

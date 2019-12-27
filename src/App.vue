@@ -4,24 +4,27 @@
     :class="{ dark: theme, light: !theme }"
     id="app"
   >
-    <MainNav />
-    <transition :name="transitionName">
-      <router-view class="content" />
+    <MainNav class="sticky top-0 z-40" />
+
+    <transition :name="transitionName" mode="out-in">
+      <router-view class="px-2 md:px-6" />
     </transition>
-    <Foot @themeChange="updateTheme" />
+    <div class="sticky bottom-0 z-40 p-2">
+      <ThemeBar @themeChange="updateTheme" />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import MainNav from "@/components/ui/MainNav.vue";
-import Foot from "@/components/ui/Footer.vue";
+import ThemeBar from "@/components/ui/ThemeBar.vue";
 
 export default {
   name: "app",
   components: {
     MainNav,
-    Foot
+    ThemeBar
   },
   data() {
     return {
@@ -45,35 +48,9 @@ export default {
 </script>
 
 <style>
-#app {
-  display: grid;
-  grid-template-areas:
-    "header  header  header"
-    "content content content"
-    "footer  footer  footer";
-  grid-template-rows: 4rem 1fr 3rem;
-  grid-template-columns: 1fr 800px 1fr;
-}
-
 .main-nav {
-  grid-area: header;
   position: fixed;
   @apply z-40;
   @apply bg-primary;
-}
-
-.sub-nav {
-  grid-area: sideNav;
-}
-
-.foot {
-  grid-area: footer;
-  position: fixed;
-  bottom: 0;
-  @apply z-40;
-}
-
-.content {
-  grid-area: content;
 }
 </style>

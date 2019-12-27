@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="slide-left">
+    <transition name="slide-left" mode="out-in">
       <component :is="currentComponent"></component>
     </transition>
   </div>

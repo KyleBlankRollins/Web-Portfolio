@@ -1,7 +1,42 @@
 <template>
-  <div class="main-nav w-full h-16 flex bg-default text-primary shadow-lg">
+  <div class="w-full md:h-16 md:flex bg-default text-primary shadow-lg">
     <nav class="w-full">
-      <ul class="h-16 flex">
+      <!-- Only appears when viewport is sm or smaller. -->
+      <ul class="md:hidden flex justify-between px-2">
+        <router-link
+          to="/"
+          :class="{ 'sm-nav-slide': activeHome }"
+          class="nav-link border-b border-default"
+          v-on:click.native="setCurrentNav('0')"
+        >
+          <li class="px-2">
+            <p class="m-0">Home</p>
+          </li>
+        </router-link>
+        <router-link
+          to="/samples"
+          :class="{ 'sm-nav-slide': activeSamples }"
+          class="nav-link border-b border-default"
+          v-on:click.native="setCurrentNav('1')"
+        >
+          <li class="px-2">
+            <p class="m-0">Samples</p>
+          </li>
+        </router-link>
+        <router-link
+          to="/web_projects"
+          :class="{ 'sm-nav-slide': activeProjects }"
+          class="nav-link border-b border-default"
+          v-on:click.native="setCurrentNav('2')"
+        >
+          <li class="leading-tight px-2">
+            <p class="m-0">Web</p>
+          </li>
+        </router-link>
+      </ul>
+
+      <!-- Only appears when viewport is md or larger. -->
+      <ul class="hidden md:block md:h-16 md:flex">
         <router-link
           to="/"
           :class="{ 'nav-slide': activeHome }"
@@ -34,7 +69,7 @@
         </router-link>
       </ul>
     </nav>
-    <div class="flex justify-end items-center">
+    <div class="hidden md:block md:flex md:justify-end md:items-center">
       <router-link to="/" class="flex items-center px-6">
         <div class="text-primary">
           <svg
@@ -149,11 +184,15 @@ export default {
 
 <style scoped>
 .nav-link {
-  @apply flex items-center cursor-pointer;
+  @apply flex;
+  @apply items-center;
+  @apply cursor-pointer;
+  @apply opacity-50;
 }
 
 .nav-link:hover {
-  @apply bg-utility-200;
+  @apply bg-tertiary;
+  @apply opacity-75;
 }
 
 .nav-link:focus {
@@ -173,5 +212,12 @@ export default {
   @apply w-full;
   @apply border-b-2;
   @apply border-accent;
+  @apply opacity-100;
+}
+
+.sm-nav-slide {
+  @apply border-b-2;
+  @apply border-accent;
+  @apply opacity-100;
 }
 </style>

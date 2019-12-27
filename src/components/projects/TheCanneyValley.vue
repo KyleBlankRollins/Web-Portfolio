@@ -15,19 +15,19 @@
           class="bg-state-success m-1 text-utility-100 rounded"
         >
           <div>
-            <p class="m-0 px-1">{{ item }}</p>
+            <p class="m-0 px-1 text-xs md:text-base">{{ item }}</p>
           </div>
         </li>
       </ul>
     </div>
-    <div class="feature-grid">
-      <div class="proj-description p-4">
-        <div class="flex items-end mb-4">
-          <h3 class="w-3/4">The Canney Valley</h3>
+    <div>
+      <div class="p-2 md:p-4">
+        <div class="md:flex md:items-end mb-4">
+          <h3 class="md:w-3/4 mb-4">The Canney Valley</h3>
           <a v-if="link" :href="link" class="btn">
             <button class="w-full">Visit site</button>
           </a>
-          <div v-else class="btn">Not publically available</div>
+          <div v-else class="btn">Not public</div>
         </div>
         <p>
           The Canney Valley is where I publish technical tutorials and share my
@@ -38,17 +38,17 @@
           GraphQL and Vue.js.
         </p>
       </div>
-      <div class="proj-features">
+      <div>
         <ul class="m-0">
           <transition-group name="fade" tag="div">
             <li
               v-for="feature in features"
               :key="feature.id"
-              class="w-full flex my-6"
+              class="w-full md:flex my-6"
             >
-              <div class="w-1/3 items-center rounded-l">
+              <div class="md:w-1/3 items-center rounded-l">
                 <div
-                  class="feature w-full flex px-2 font-bold cursor-pointer items-center border-b-2 border-tertiary hover:bg-accent hover:text-utility-100 rounded-b"
+                  class="feature w-full flex px-2 font-bold cursor-pointer items-center border-b-2 border-tertiary hover:bg-accent hover:text-utility-100"
                   @click="feature.expand = !feature.expand"
                 >
                   <Toggle :expand="feature.expand" />
@@ -60,7 +60,7 @@
                   </div>
                 </transition>
               </div>
-              <FeatureViewer :feature="feature" class="w-2/3 rounded-r" />
+              <FeatureViewer :feature="feature" class="md:w-2/3 rounded-r" />
             </li>
           </transition-group>
         </ul>
@@ -138,22 +138,6 @@ export default {
 </script>
 
 <style scoped>
-.feature-grid {
-  display: grid;
-  grid-template-areas:
-    "lmargin  description  rmargin"
-    "lmargin features features";
-  grid-template-columns: 1fr minmax(min-content, 900px) 1fr;
-}
-
-.proj-features {
-  grid-area: features;
-}
-
-.proj-description {
-  grid-area: description;
-}
-
 .opaque {
   background: rgba(42, 55, 65, 0.75);
 }

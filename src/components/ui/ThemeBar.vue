@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col bg-default text-primary justify-center items-center border border-primary m-2 py-2 px-2 shadow-lg rounded"
+    class="w-20 flex flex-col bg-default text-primary justify-center items-center border border-primary p-2 shadow-lg rounded"
   >
     <label class="switch">
       <input type="checkbox" v-model="theme" />
