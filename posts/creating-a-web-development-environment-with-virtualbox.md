@@ -1,16 +1,16 @@
 ---
 title: Creating a web development environment with VirtualBox
-excerpt: >-
-  Getting started with virtualization can be tricky. This guide will show you
+excerpt: Getting started with virtualization can be tricky. This guide will show you
   how to get up and running with VirtualBox.
-date: July 18th 2019
+date: 2019-07-18T05:00:00Z
 tags:
-  - VirtualBox
-  - Web development
-  - Virtual machine
+- VirtualBox
+- Web development
+- Virtual machine
 categories:
-  - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/webdev.png
+- Set up a Linux web development environment with VirtualBox
+thumbnail: "/uploads/webdev.png"
+
 ---
 Web devlopment can get messy. With so many modules and tools, it's easy to bloat your operating system with applications and files that might conflict with each other.
 

@@ -1,16 +1,16 @@
 ---
 title: Enable virtualization in your PC's BIOS
-excerpt: >-
-  To use virtual machines, you'll need to set things up properly in your
-  computer's BIOS. Many PCs are capable of virtualization, but ship without this
-  feature turned on.
-date: July 16th 2019
+excerpt: To use virtual machines, you'll need to set things up properly in your computer's
+  BIOS. Many PCs are capable of virtualization, but ship without this feature turned
+  on.
+date: 2019-07-16T05:00:00Z
 tags:
-  - Virtualization
-  - BIOS
+- Virtualization
+- BIOS
 categories:
-  - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/bios.svg
+- Set up a Linux web development environment with VirtualBox
+thumbnail: "/uploads/bios.svg"
+
 ---
 Before you can do any sort of virtualization, you need to:
 

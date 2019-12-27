@@ -24,7 +24,7 @@ query Posts {
         id
         title
         excerpt
-        date
+        date(format:"MMMM DD YYYY")
         timeToRead
         path
         tags {

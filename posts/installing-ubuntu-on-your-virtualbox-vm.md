@@ -1,15 +1,15 @@
 ---
 title: Installing Ubuntu on your VirtualBox VM
-excerpt: >-
-  After creating a VirtualBox VM, you still need to install the operating
-  system. This article shows you how to install Ubuntu.
-date: August 21st 2019
+excerpt: After creating a VirtualBox VM, you still need to install the operating system.
+  This article shows you how to install Ubuntu.
+date: 2019-08-21T05:00:00Z
 tags:
-  - Ubuntu
-  - VirtualBox
+- Ubuntu
+- VirtualBox
 categories:
-  - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/install_ubuntu_cover.svg
+- Set up a Linux web development environment with VirtualBox
+thumbnail: "/uploads/install_ubuntu_cover.svg"
+
 ---
 So, you created a VirtualBox VM. Great! Now, you need to install an operating system to make it usable. In this article, we'll install Ubuntu v18.04.2.
 

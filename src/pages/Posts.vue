@@ -63,13 +63,13 @@
 
 <page-query>
 query Posts {
-  posts: allPost (sortBy: "date", order: ASC) {
+  posts: allPost (sortBy: "date", order: DESC) {
     edges {
       node { 
         id
         title
         excerpt
-        date
+        date(format:"MMMM DD YYYY")
         timeToRead
         path
         tags {

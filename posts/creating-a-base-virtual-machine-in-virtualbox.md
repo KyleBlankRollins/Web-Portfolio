@@ -1,16 +1,16 @@
 ---
 title: Creating a base Virtual Machine in VirtualBox
-excerpt: >-
-  Starting with a base VM gives you a lot of flexibility in the future through
-  cloning. Learn how to create a new VM in VirtualBox and use it as a stable
-  base for future projects.
-date: July 18th 2019
+excerpt: Starting with a base VM gives you a lot of flexibility in the future through
+  cloning. Learn how to create a new VM in VirtualBox and use it as a stable base
+  for future projects.
+date: 2019-07-18T05:00:00Z
 tags:
-  - VirtualBox
-  - Virtual machine
+- VirtualBox
+- Virtual machine
 categories:
-  - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/virtualbox.png
+- Set up a Linux web development environment with VirtualBox
+thumbnail: "/uploads/virtualbox.png"
+
 ---
 When I create VMs in VirtualBox, I differentiate them as bases and builds. 
 

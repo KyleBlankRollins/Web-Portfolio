@@ -42,7 +42,7 @@ query Tag($id: String!) {
             path
             excerpt
             timeToRead
-            date
+            date(format:"MMMM DD YYYY")
           }
         }
       }

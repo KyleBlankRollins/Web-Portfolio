@@ -57,7 +57,7 @@ query Post ($id: String!) {
       id
       path
     }
-    date
+    date(format:"MMMM DD YYYY")
     timeToRead
     thumbnail
   }

@@ -1,15 +1,15 @@
 ---
 title: Installing VirtualBox Guest Additions for your VM
-excerpt: >-
-  With Ubuntu installed on your VM, we're ready to add the VirtualBox Guest
+excerpt: With Ubuntu installed on your VM, we're ready to add the VirtualBox Guest
   Additions functionality. You'll want it.
-date: August 21st 2019
+date: 2019-08-21T05:00:00Z
 tags:
-  - VirtualBox
-  - Guest Additions
+- VirtualBox
+- Guest Additions
 categories:
-  - Set up a Linux web development environment with VirtualBox
-thumbnail: /uploads/install_guest_additions_cover.svg
+- Set up a Linux web development environment with VirtualBox
+thumbnail: "/uploads/install_guest_additions_cover.svg"
+
 ---
 Once you have a VirtualBox VM with Ubuntu installed, it's time to add VirtualBox's Guest Additions functionality. This gives you a bunch of useful features like better input integration and a shared clipboard for copy and pasting from your host machine into your virtual machine.
 

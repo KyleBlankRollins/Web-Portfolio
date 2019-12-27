@@ -1,14 +1,14 @@
 ---
 title: 'Technical Writer to Scrum Master: skills'
-excerpt: >-
-  This an exploration of the skills and knowledge that technical writers and
+excerpt: This an exploration of the skills and knowledge that technical writers and
   Scrum Masters share.
-date: 2019-08-30T05:00:00.000Z
+date: 2019-08-30T05:00:00Z
 tags:
-  - Technical writing
-  - Scrum Master
-  - Career
-thumbnail: /uploads/technical_writer_to_scrum_master_cover.svg
+- Technical writing
+- Scrum Master
+- Career
+thumbnail: "/uploads/technical_writer_to_scrum_master_cover.svg"
+
 ---
 For technical writers looking to change their career trajectories, Scrum Master roles can be a great fit. Many technical writing skills directly overlap with the Scrum Master skillset or are excellent supplemental skills.
 
