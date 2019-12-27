@@ -7,7 +7,7 @@
     <MainNav class="sticky top-0 z-40" />
 
     <transition :name="transitionName" mode="out-in">
-      <router-view class="px-2 md:px-6" />
+      <router-view class="flex flex-col items-center px-2 md:px-6" />
     </transition>
     <div class="sticky bottom-0 z-40 p-2">
       <ThemeBar @themeChange="updateTheme" />

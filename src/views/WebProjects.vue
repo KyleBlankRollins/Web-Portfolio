@@ -1,17 +1,15 @@
 <template>
   <section class="mt-6">
-    <div class="text-primary px-2 md:px-6">
-      <div>
+    <div class="max-w-text text-primary px-2 md:px-6">
         <h2>Web projects</h2>
         <p>
           As a hobbyist web developer, I'm always looking for interesting things
           to do and learn. You'll find a number of my recent projects on this
           page.
         </p>
-      </div>
     </div>
     <nav class="w-full bg-default text-primary sticky top-0 shadow-lg z-50">
-      <ul class="md:h-16 md:flex md:justify-center">
+      <ul class="md:h-16 md:flex md:justify-center m-0">
         <li
           v-for="project in projects"
           :key="project.id"
@@ -27,7 +25,7 @@
         </li>
       </ul>
     </nav>
-    <div class="pt-4">
+    <div class="pt-4 my-5">
       <ProjectSelector :selected-component="selectedComponent" />
     </div>
   </section>

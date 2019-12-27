@@ -20,14 +20,18 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div class="max-w-text-plus">
       <div class="p-2 md:p-4">
-        <div class="md:flex md:items-end mb-4">
+        <div class="md:flex md:items-center mb-4">
           <h3 class="md:w-3/4 mb-4">The Canney Valley</h3>
-          <a v-if="link" :href="link" class="btn">
-            <button class="w-full">Visit site</button>
-          </a>
-          <div v-else class="btn">Not public</div>
+          <div v-if="link" class="md:w-1/4 flex justify-end">
+            <a :href="link" class="btn">
+              <button class="w-full">Visit</button>
+            </a>
+          </div>
+          <div v-else class="md:w-1/4 flex justify-end">
+            <div class="btn">Not public</div>
+          </div>
         </div>
         <p>
           The Canney Valley is where I publish technical tutorials and share my

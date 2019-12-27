@@ -1,6 +1,6 @@
 <template>
   <section class="mt-6">
-    <div class="text-primary px-2 md:px-6 pb-6">
+    <div class="max-w-text text-primary px-2 md:px-6 pb-6">
       <h2>Writing samples</h2>
       <p>
         Most of my writing is covered under NDAs and not publically shareable.

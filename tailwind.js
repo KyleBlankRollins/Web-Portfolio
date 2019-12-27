@@ -70,7 +70,12 @@ module.exports = {
         "600": "#292929"
       }
     },
-    extend: {}
+    extend: {
+      maxWidth: {
+        "text": '900px',
+        "text-plus": '1100px'
+      }
+    }
   },
   variants: {},
   plugins: []

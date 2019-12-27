@@ -1,7 +1,8 @@
 <template>
-  <div class="w-full md:flex md:items-center rounded">
+  <div class="w-full max-w-text-plus md:flex md:items-center rounded">
     <div class="relative md:w-1/4 rounded">
       <img :src="doc.image" :alt="doc.alt" class="rounded shadow-xl" />
+
       <!-- Only appears when viewport is sm or smaller. -->
       <div class="md:hidden w-full absolute bg-accent bottom-0 rounded-b">
         <a :href="doc.link">

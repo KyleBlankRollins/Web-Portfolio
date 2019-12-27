@@ -178,6 +178,11 @@ export default {
         this.activeProjects = true;
       }
     }
+  },
+  watch: {
+    $route() {
+      this.setCurrentNav(this.$route.meta.id);
+    }
   }
 };
 </script>
