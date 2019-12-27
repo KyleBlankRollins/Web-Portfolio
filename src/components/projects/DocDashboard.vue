@@ -7,7 +7,7 @@
         class="absolute h-full w-full inset-0 object-cover object-right"
       />
       <ul
-        class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1"
+        class="opaque absolute bottom-0 w-full flex items-center justify-center m-0 p-1 overflow-hidden"
       >
         <li
           v-for="(item, index) in tech"
