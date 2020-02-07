@@ -21,7 +21,7 @@
             </p>
             <p>
               I'm a technical writer by day and a content/web developer by
-              night. I always enjoy solving challenging problems and there's
+              night. I enjoy solving challenging problems and there's
               always a new challenge in web development.
             </p>
             <p>

@@ -34,7 +34,7 @@
         <p>
           Doc Dashboard v2.0 is a complete re-build of the first version. I
           completely re-worked the data structures to be innately flexible and
-          exandable.
+          expandable.
         </p>
         <p>
           The original version only collated and analyzed Google Analytics data
