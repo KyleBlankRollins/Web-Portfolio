@@ -1,0 +1,20 @@
+{
+  "name": "blueprint",
+  "version": "1.0.0",
+  "description": "Design system and repository",
+  "author": "Kyle Rollins",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "contentful": "^7.14.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^1.0.0"
+  }
+}
