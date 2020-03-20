@@ -1,7 +1,9 @@
 <template>
   <div class="page-component">
     <hr />
-    <h1>{{page.fields.heading}}</h1>
+    <div :style="{ backgroundImage: bannerGradient }">
+      <h1>{{page.fields.heading}}</h1>
+    </div>
     <img
       :src="page.fields.image.fields.file.url"
       :alt="page.fields.heading"
@@ -10,19 +12,25 @@
     <div class="content-container">
       <!-- Future page side-nav -->
       <!-- Pass page.fields.components or a computed property with list of component names to the sub nav. Might need to handle this the same way the main page nave works with a Vuex store module. -->
-      <nav class="placeholder-side-nav"></nav>
-      <p>{{page.fields.content}}</p>
+      <side-nav :page-title="page.fields.navTitle" :nav-items="components" ></side-nav>
+      <content-render :body="page.fields.content"></content-render>
     </div>
   </div>
 </template>
 
 <script>
 import { createClient } from "../../plugins/contentful";
+import ContentRender from "../../components/global/ContentRender.vue";
+import SideNav from "../../components/global/SideNav.vue";
 
 const contentfulClient = createClient();
 
 export default {
   name: "index",
+  components: {
+    ContentRender,
+    SideNav
+  },
   asyncData({ env, params }) {
     return contentfulClient
       .getEntries({
@@ -31,10 +39,17 @@ export default {
       })
       .then(page => {
         return {
-          page: page.items[0]
+          page: page.items[0],
+          components: page.items[0].fields.components,
+          theme: page.items[0].fields.theme
         };
       })
       .catch(console.error);
+  },
+  computed: {
+    bannerGradient() {
+      return `linear-gradient(${50}deg, ${this.theme.light.colors.background.default}, ${this.theme.light.colors.background.accent})`;
+    }
   }
 };
 </script>
@@ -57,12 +72,6 @@ hr {
 
 .content-container {
   display: flex;
-}
-
-.placeholder-side-nav {
-  width: 20%;
-  margin-right: 2em;
-  background-color: black;
 }
 
 </style>

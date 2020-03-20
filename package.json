@@ -11,8 +11,9 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "nuxt": "^2.0.0",
     "contentful": "^7.14.0",
-    "nuxt": "^2.0.0"
+    "marked": "^0.8.1"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^1.0.0"
