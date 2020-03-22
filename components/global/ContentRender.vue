@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar">
+  <div class="px-2 py-8 mx-8 text-2xl">
     <div v-html="processedMarkdown"></div>
   </div>
 </template>
@@ -21,10 +21,5 @@ export default {
 </script>
 
 <style>
- .top-bar {
-    display: flex;
-    align-items: center;
-    background-color: #f1f1f1;
-    padding: 50px 0;
- }
+
 </style>

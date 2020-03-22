@@ -1,19 +1,33 @@
 <template>
-  <div class="page-component">
-    <hr />
-    <div :style="{ backgroundImage: bannerGradient }">
-      <h1>{{page.fields.heading}}</h1>
+  <div class="text-2xl pb-12">
+    <div>
+      <div class="flex bg-theme-black text-primary shadow-xl">
+        <div class="w-24 p-4 bg-theme-white">
+          <img
+            :src="page.fields.image.fields.file.url"
+            :alt="page.fields.navTitle"
+            v-if="page.fields.image"
+          />
+        </div>
+        <div class="flex w-full ml-4 items-center">
+          <h1 class="text-4xl">{{ page.fields.navTitle }}</h1>
+        </div>
+      </div>
+      <content-render class="flex justify-center" :body="page.fields.content"></content-render>
     </div>
-    <img
-      :src="page.fields.image.fields.file.url"
-      :alt="page.fields.heading"
-      v-if="page.fields.image"
-    />
-    <div class="content-container">
-      <!-- Future page side-nav -->
-      <!-- Pass page.fields.components or a computed property with list of component names to the sub nav. Might need to handle this the same way the main page nave works with a Vuex store module. -->
-      <side-nav :page-title="page.fields.navTitle" :nav-items="components" ></side-nav>
-      <content-render :body="page.fields.content"></content-render>
+
+    <div class="flex w-full justify-center">
+      <div class="w-1/4 h-1 mb-8" :style="{ backgroundImage: gradientBar }"></div>
+    </div>
+
+    <div class="flex mx-4">
+      <side-nav
+        class="font-mono w-1/5"
+        @linkchange="updateCurrentContent"
+        :page-title="page.fields.navTitle"
+        :items="components"
+      ></side-nav>
+      <content-render class="w-4/5 ml-12" :body="currentContent"></content-render>
     </div>
   </div>
 </template>
@@ -41,37 +55,38 @@ export default {
         return {
           page: page.items[0],
           components: page.items[0].fields.components,
-          theme: page.items[0].fields.theme
+          theme: page.items[0].fields.theme,
+          currentContent: page.items[0].fields.components[0].fields.description
         };
       })
       .catch(console.error);
   },
   computed: {
-    bannerGradient() {
+    gradientBar() {
       return `linear-gradient(${50}deg, ${this.theme.light.colors.background.default}, ${this.theme.light.colors.background.accent})`;
+    },
+
+    // Sorts components array alphabetically by the 'name' field.
+    sortedComponents() {
+      const sortedArray = this.components.sort((a, b) =>
+        a.fields.name > b.fields.name
+          ? 1
+          : b.fields.name > a.fields.name
+          ? -1
+          : 0
+      );
+
+      return sortedArray;
+    }
+  },
+  methods: {
+    updateCurrentContent(eventContent) {
+      this.currentContent = eventContent;
     }
   }
 };
 </script>
 
 <style>
-
-hr {
-  margin: 20px 0;
-}
-
-.page-component {
-  padding: 50px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.page-component > img {
-  margin: 50px 0;
-}
-
-.content-container {
-  display: flex;
-}
 
 </style>

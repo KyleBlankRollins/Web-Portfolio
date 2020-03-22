@@ -1,5 +1,6 @@
 /* purgecss start ignore */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
+@import url('https://fonts.googleapis.com/css?family=Lato:400,900|Oswald|Playfair+Display|IBM+Plex+Mono|&display=swap');
 /* purgecss end ignore */
 @import 'tailwindcss/utilities';

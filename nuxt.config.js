@@ -28,7 +28,11 @@ module.exports = {
   ** Build configuration
   */
   build: {
-
-  }
+    
+  },
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
+    "@nuxtjs/tailwindcss"
+  ],
 }
 

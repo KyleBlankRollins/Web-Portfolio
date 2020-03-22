@@ -1,9 +1,9 @@
 <template>
-  <div class="navigation">
-    <h2>Projects</h2>
+  <div class="text-primary px-4">
+    <h2 class="font-mono text-4xl">Projects</h2>
     <nav>
-      <ul role="menu">
-        <li v-for="(page, index) in navItems" :key="index">
+      <ul class="flex" role="menu">
+        <li class="p-2 text-xl" v-for="(page, index) in navItems" :key="index">
           <nuxt-link :to="'/' + page.fields.slug.trim()" role="menuitem">{{page.fields.navTitle}}</nuxt-link>
         </li>
       </ul>
@@ -26,19 +26,5 @@ export default {
 </script>
 
 <style>
-.navigation ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
 
-.navigation li {
-  display: inline-block;
-  padding: 0 10px;
-}
-
-.navigation a {
-  color: #333;
-  text-decoration: none;
-}
 </style>

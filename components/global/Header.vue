@@ -1,7 +1,7 @@
 <template>
-  <div class="top-bar">
-    <AppLogo></AppLogo>
-    <Navigation></Navigation>
+  <div class="flex bg-theme-black shadow-2xl">
+    <Navigation class="w-4/5"></Navigation>
+    <AppLogo class="w-1/5"></AppLogo>
   </div>
 </template>
     
@@ -19,10 +19,5 @@ export default {
 </script>
 
 <style>
- .top-bar {
-    display: flex;
-    align-items: center;
-    background-color: #f1f1f1;
-    padding: 50px 0;
- }
+
 </style>
