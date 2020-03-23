@@ -4,3 +4,107 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,900|Oswald|Playfair+Display|IBM+Plex+Mono|&display=swap');
 /* purgecss end ignore */
 @import 'tailwindcss/utilities';
+
+html,
+.root {
+  font-size: 24px;
+  line-height: 18px;
+}
+body,
+.article {
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+h1,
+.h1 {
+  font-size: 2.35em;
+  line-height: 1.27659574em;
+  margin-top: 0.31914894em;
+  margin-bottom: 0.63829788em;
+}
+h2,
+.h2 {
+  font-size: 1.8em;
+  line-height: 1.25em;
+  margin-top: 0.63829788em;
+  margin-bottom: 0.41666667em;
+}
+h3,
+.h3 {
+  font-size: 1.35em;
+  line-height: 1.11111111em;
+  margin-top: 0.55555556em;
+  margin-bottom: 0em;
+}
+h4,
+.h4 {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin-top: 0.75em;
+  margin-bottom: 0em;
+}
+h5,
+.h5 {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin-top: 0.75em;
+  margin-bottom: 0em;
+}
+p,
+ul,
+ol,
+pre,
+table,
+blockquote {
+  margin-top: 0em;
+  margin-bottom: 0.75em;
+}
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+hr,
+.hr {
+  border: 1px solid;
+  margin: -1px 0;
+}
+a,
+b,
+i,
+strong,
+em,
+small,
+code {
+  line-height: 0;
+}
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+
+/* =====================================
+TRANSITIONS
+===================================== */
+
+.page-enter-active,
+.page-leave-active {
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}

@@ -1,16 +1,18 @@
 <template>
   <div class="h-screen font-body bg-primary grid-overlay">
     <Header></Header>
-    <nuxt class="m-8 page-container bg-theme-white shadow-2xl" />
+    <nuxt class="m-8 mx-auto page-container bg-theme-white shadow-2xl" />
   </div>
 </template>
 
 <script>
 import Header from "../components/global/Header";
 export default {
+  name: "DefaultLayout",
   components: {
     Header
-  }
+  },
+  transition: "page"
 };
 </script>
 

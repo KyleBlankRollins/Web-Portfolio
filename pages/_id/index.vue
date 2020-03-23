@@ -1,5 +1,5 @@
 <template>
-  <div class="text-2xl pb-12">
+  <div class="pb-12">
     <div>
       <div class="flex bg-theme-black text-primary shadow-xl">
         <div class="w-24 p-4 bg-theme-white">
@@ -10,7 +10,7 @@
           />
         </div>
         <div class="flex w-full ml-4 items-center">
-          <h1 class="text-4xl">{{ page.fields.navTitle }}</h1>
+          <h1 class="text-2xl my-0">{{ page.fields.navTitle }}</h1>
         </div>
       </div>
       <content-render class="flex justify-center" :body="page.fields.content"></content-render>
@@ -24,7 +24,7 @@
       <side-nav
         class="font-mono w-1/5"
         @linkchange="updateCurrentContent"
-        :page-title="page.fields.navTitle"
+        :current-item="currentItem"
         :items="components"
       ></side-nav>
       <content-render class="w-4/5 ml-12" :body="currentContent"></content-render>
@@ -56,7 +56,8 @@ export default {
           page: page.items[0],
           components: page.items[0].fields.components,
           theme: page.items[0].fields.theme,
-          currentContent: page.items[0].fields.components[0].fields.description
+          currentContent: page.items[0].fields.components[0].fields.description,
+          currentItem: page.items[0].fields.components[0]
         };
       })
       .catch(console.error);
@@ -80,8 +81,9 @@ export default {
     }
   },
   methods: {
-    updateCurrentContent(eventContent) {
-      this.currentContent = eventContent;
+    updateCurrentContent(item) {
+      this.currentContent = item.fields.description;
+      this.currentItem = item;
     }
   }
 };

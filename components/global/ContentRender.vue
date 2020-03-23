@@ -1,5 +1,5 @@
 <template>
-  <div class="px-2 py-8 mx-8 text-2xl">
+  <div class="px-2 py-8 mx-8 text-xl">
     <div v-html="processedMarkdown"></div>
   </div>
 </template>

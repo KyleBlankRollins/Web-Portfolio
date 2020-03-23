@@ -1,9 +1,9 @@
 <template>
-  <div class="side-navigation">
+  <div class="py-4 pr-2 border border-theme-black text-sm">
     <nav>
       <ul role="menu">
-        <li class="px-2 text-lg" v-for="(item, index) in items" :key="index" @click="$emit('linkchange', item.fields.description)">
-          <nuxt-link to="" role="menuitem"> {{ item.fields.name }} </nuxt-link>
+        <li class="p-2" v-for="(item, index) in items" :key="index" @click="$emit('linkchange', item)">
+          <nuxt-link class="sub-nav-link p-2 border-l-4 border-theme-white hover:bg-primary" :class="{ 'active-component': item.fields.name === currentItem.fields.name }" to="" role="menuitem"> {{ item.fields.name }} </nuxt-link>
         </li>
       </ul>
     </nav>
@@ -15,22 +15,18 @@
 export default {
   name: "SideNav",
   props: {
-    pageTitle: String,
-    items: Array
+    items: Array,
+    currentItem: Object
   },
 };
 </script>
 
 <style>
-nav ul li:hover {
-  background-color: #8EB6CB;
-  background-image: linear-gradient(
-      rgba(245, 245, 250, 0.3) 2px,
-      transparent 2px
-    ),
-    linear-gradient(90deg, rgba(245, 245, 250, 0.3) 2px, transparent 2px),
-    linear-gradient(rgba(245, 245, 250, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 245, 250, 0.3) 1px, transparent 1px);
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+.sub-nav-link {
+  transition: border 1s ease;
 }
+
+.active-component {
+  @apply border-primary;
+} 
 </style>

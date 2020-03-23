@@ -1,7 +1,7 @@
 <template>
-  <div class="w-48 p-4 bg-theme-white">
+  <div class="flex items-center justify-center w-48 p-4 bg-theme-white">
     <nuxt-link to="/">
-      <img src="../../assets/images/logo.svg" alt="Blueprint">
+      <img class="w-48" src="../../assets/images/logo.svg" alt="Blueprint">
     </nuxt-link>
   </div>
 </template>
