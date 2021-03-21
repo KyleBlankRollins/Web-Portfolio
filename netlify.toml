@@ -7,7 +7,7 @@
 
 [build]
 
-  publish = "/dist"
+  publish = "/"
 
 # Specific branch context: Deploys from this branch
 # will take these settings and override their
