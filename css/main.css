@@ -1,6 +1,45 @@
 /* NOTE
 html is set to 62.5% so that all REM measurements are based on 10px sizing. Example: 1.5rem = 15px */
 
+/* TODO: Make everything bigger at mobile sizes. */
+
+/* Global custom properties */
+:root {
+  --primary-gradient-cone: conic-gradient(
+    from 0deg at 80% -20%,
+    #cc414f,
+    #cf425f,
+    #cd4e87,
+    #b669b8,
+    #8786d9,
+    #4f9de3,
+    #28aadf,
+    #1eaedb
+  );
+  --primary-gradient-linear: linear-gradient(
+    90deg,
+    #8786d9,
+    #8d83d7,
+    #9b7bcf,
+    #ac70c1,
+    #bc63b0,
+    #c6589c,
+    #cc518d,
+    #cd4e87
+  );
+  --primary-gradient-linear-reversed: linear-gradient(
+    90deg,
+    #cd4e87,
+    #cc518d,
+    #c6589c,
+    #bc63b0,
+    #ac70c1,
+    #9b7bcf,
+    #8d83d7,
+    #8786d9
+  );
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 62.5%;
@@ -13,17 +52,7 @@ body {
   font-family: "IBM Plex Sans", "HelveticaNeue", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   color: #222;
-  background: conic-gradient(
-    from 0deg at 50% -10%,
-    #db1eae,
-    #d235bb,
-    #b559d7,
-    #837aee,
-    #4392f4,
-    #00a2eb,
-    #03abe0,
-    #1eaedb
-  );
+  background: var(--primary-gradient-cone);
   box-sizing: border-box;
 }
 
@@ -118,7 +147,7 @@ p {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
   display: inline-block;
-  background: linear-gradient(to bottom, #0fa0ce 0%, #0fa0ce 100%);
+  background: linear-gradient(to bottom, #8786d9 0%, #8786d9 100%);
   background-position: 0 100%;
   background-repeat: repeat-x;
   background-size: 4px 4px;
@@ -232,11 +261,24 @@ header h1 {
   color: #ffffff;
 }
 
+header a.social-icon {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  width: 2em;
+  border-radius: 3px;
+}
+
+header .social-icon svg {
+  fill: currentColor;
+}
+
 /* TOC
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .toc {
   position: sticky;
   top: 0;
+  width: 100%;
   padding-right: 1em;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.75);
@@ -266,33 +308,52 @@ header h1 {
 }
 
 .toc a {
+  position: relative;
   display: inline-block;
   color: #ffffff;
-  width: 100%;
-  background: linear-gradient(
-    90deg,
-    #03abe0,
-    #00a2eb,
-    #4392f4,
-    #837aee,
-    #b559d7,
-    #d235bb,
-    #db1eae
-  );
+  width: calc(100% - 2em);
+  background: var(--primary-gradient-linear);
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0%;
-  text-decoration: none;
-  transition: background-size 0.5s, box-shadow 0.75s;
-  padding: 0.5em 1em;
   box-shadow: none;
-  border-radius: 0;
+  text-decoration: none;
+  transition: background-size 0.35s;
+  padding: 0.5em 1em;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.toc a::after {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 8px;
+  right: 10px;
+  left: auto;
+  width: 0;
+  top: 0;
+  opacity: 0;
+  max-width: 300px;
+  transition: box-shadow 1s, opacity 0.75s;
+}
+
+.toc a:hover::after {
+  opacity: 1;
+  width: 70%;
+  -webkit-box-shadow: 0 15px 10px #222;
+  -moz-box-shadow: 0 15px 10px #222;
+  box-shadow: 0 15px 10px #222;
+  -webkit-transform: rotate(7deg);
+  -moz-transform: rotate(7deg);
+  -o-transform: rotate(7deg);
+  -ms-transform: rotate(7deg);
+  transform: rotate(7deg);
 }
 
 .toc a:hover {
   background-size: 100%;
   margin: 0;
-  box-shadow: 0 8px 6px -6px black;
 }
 
 .toc li[data-level="2"] a,
@@ -406,17 +467,6 @@ img.inline {
   height: 100%;
   opacity: 0.35;
   z-index: 1;
-  background: conic-gradient(
-    from 180deg at 50% 110%,
-    #dae0fb,
-    #cccefc,
-    #c5baf9,
-    #c3a5f3,
-    #c78de9,
-    #cd72da,
-    #d452c7,
-    #db1eae
-  );
 }
 
 .user-docs ul,
@@ -446,17 +496,7 @@ img.inline {
 }
 
 .sample-wrapper {
-  background: conic-gradient(
-    from 0deg at 50% -10%,
-    #db1eae,
-    #d235bb,
-    #b559d7,
-    #837aee,
-    #4392f4,
-    #00a2eb,
-    #03abe0,
-    #1eaedb
-  );
+  background: var(--primary-gradient-cone);
   height: 200px;
   border-radius: 3px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -609,17 +649,6 @@ details.item-details[open] summary ~ * {
   height: 100%;
   opacity: 0.35;
   z-index: 1;
-  background: conic-gradient(
-    from 0deg at 50% -10%,
-    #837aee,
-    #8c89f2,
-    #9798f5,
-    #a2a7f7,
-    #afb6f9,
-    #bcc4fa,
-    #cbd2fb,
-    #dae0fb
-  );
 }
 
 .redesign-site-list .description p,
