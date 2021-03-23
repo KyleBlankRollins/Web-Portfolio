@@ -156,19 +156,17 @@ a {
   background-position: 0 100%;
   background-repeat: repeat-x;
   background-size: 4px 4px;
+  padding: 0.25em 0.1em;
   color: #333333;
   text-decoration: none;
   border-radius: 3px;
-  transition: background-size 0.4s, color 0.6s, box-shadow 0.4s, padding 0.4s,
-    margin 0.4s;
+  transition: background-size 0.4s, color 0.6s, box-shadow 0.4s, padding 0.4s;
 }
 
 a:hover {
   color: #ffffff;
   background-size: 4px 50px;
   box-shadow: 0 8px 6px -6px black;
-  padding: 0 0.25em;
-  margin: 0 -0.25em;
 }
 
 /* Lists
@@ -272,6 +270,10 @@ header a.social-icon {
   color: #ffffff;
   width: 2em;
   border-radius: 3px;
+}
+
+header a.social-icon:hover {
+  background-size: 4px 60px;
 }
 
 header .social-icon svg {
