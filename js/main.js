@@ -56,7 +56,7 @@ function navToggleKeydownHandler(event) {
 function subNavClickEventHandler(event) {
   const subNav = this.parentNode.querySelector(".subnav");
 
-  if (subNav !== null) {
+  if (subNav !== null && window.screen.width < 1000) {
     event.preventDefault();
     toggleSubNav(this, subNav);
   }
@@ -142,7 +142,7 @@ function setupSubNavItem(subNavItem) {
 
   link.setAttribute("aria-expanded", "false");
   link.setAttribute("role", "button");
-  if (subNav) {
+  if (subNav && window.screen.width < 1000) {
     subNav.removeAttribute("hidden");
     subNav.setAttribute("aria-hidden", "true");
     subNav.classList.add("noshow");
@@ -160,7 +160,7 @@ function setupNavToggle(navToggle, navWrapper) {
   navToggle.setAttribute("aria-expanded", "false");
   navWrapper.classList.add("noshow");
 
-  if (window.screen.width > 768) {
+  if (window.screen.width > 1000) {
     navWrapper.classList.remove("noshow");
   }
 
