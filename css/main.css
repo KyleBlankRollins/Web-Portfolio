@@ -310,8 +310,8 @@ header .social-icon svg {
   color: var(--color-primary-action);
 }
 
-@media screen and (min-width: 100px) {
-  .nav-toggle[aria-expanded="true"] {
+@media screen and (min-width: 1000px) {
+  .has-js-loaded .nav-toggle {
     display: none;
   }
 }
@@ -379,10 +379,6 @@ header .social-icon svg {
 @media (min-width: 1000px) {
   header {
     align-items: baseline;
-  }
-
-  header.has-js-loaded .nav-toggle {
-    display: none;
   }
 
   header.has-js-loaded .nav-wrapper.noshow {
