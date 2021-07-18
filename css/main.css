@@ -411,7 +411,7 @@ header .social-icon svg {
     box-shadow: none;
     text-decoration: none;
     padding: 0.5em 1em;
-    transition: background-size 0.35s;
+    transition: background-size 0.25s;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -745,7 +745,8 @@ img.inline {
   height: 400px;
 }
 
-.sample-image-container .pending {
+/* Use as placholder image */
+/* .sample-image-container .pending {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -756,7 +757,7 @@ img.inline {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   margin: 0;
-}
+} */
 
 .sample-image {
   width: 100%;
@@ -818,7 +819,7 @@ details.item-details summary a {
   float: right;
   color: var(--color-text-inverse);
   text-align: center;
-  padding: 0 0.25em;
+  padding: 0.1em 0.25em;
   margin-right: 0.25em;
 }
 
