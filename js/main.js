@@ -12,7 +12,7 @@ let appUI = {
 (function () {
   window.addEventListener("DOMContentLoaded", (event) => {
     // Initialize UI elements
-    appUI.header = document.querySelector(".a11y-nav");
+    appUI.header = document.querySelector(".accessibility-nav");
     appUI.mainNav = document.querySelector(".nav-main");
     appUI.navWrapper = document.querySelector(".nav-wrapper");
     appUI.subNavItems = [...document.querySelectorAll(".has-subnav")];
@@ -56,7 +56,7 @@ function navToggleKeydownHandler(event) {
 function subNavClickEventHandler(event) {
   const subNav = this.parentNode.querySelector(".subnav");
 
-  if (subNav !== null && window.screen.width < 1000) {
+  if (subNav !== null && window.innerWidth < 1000) {
     event.preventDefault();
     toggleSubNav(this, subNav);
   }
@@ -127,6 +127,7 @@ function openSubNav(link, subNav) {
 }
 
 function toggleSubNav(link, subNav) {
+  console.log("toggle subnav");
   if (subNav !== null) {
     if (link.getAttribute("aria-expanded") === "true") {
       closeSubNav(link, subNav);
@@ -142,13 +143,13 @@ function setupSubNavItem(subNavItem) {
 
   link.setAttribute("aria-expanded", "false");
   link.setAttribute("role", "button");
-  if (subNav && window.screen.width < 1000) {
+
+  // Show subnav by default on screens wider than 1000px.
+  if (subNav && window.innerWidth < 1000) {
     subNav.removeAttribute("hidden");
     subNav.setAttribute("aria-hidden", "true");
     subNav.classList.add("noshow");
   }
-  // subNav.setAttribute('aria-label', link.innerText + " submenu");
-  // subNav.setAttribute('tabindex', '-1');
 }
 
 function setupNavLink(navLink) {
@@ -160,7 +161,8 @@ function setupNavToggle(navToggle, navWrapper) {
   navToggle.setAttribute("aria-expanded", "false");
   navWrapper.classList.add("noshow");
 
-  if (window.screen.width > 1000) {
+  // Show nav by default on screens wider than 1000px.
+  if (window.innerWidth > 1000) {
     navWrapper.classList.remove("noshow");
   }
 
