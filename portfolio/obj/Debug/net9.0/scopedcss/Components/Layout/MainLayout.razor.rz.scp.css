@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 main[b-e4bknzrspz] {
@@ -9,7 +10,7 @@ main[b-e4bknzrspz] {
 }
 
 .sidebar[b-e4bknzrspz] {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
 }
 
 .top-row[b-e4bknzrspz] {
@@ -21,26 +22,22 @@ main[b-e4bknzrspz] {
     align-items: center;
 }
 
-    .top-row[b-e4bknzrspz]  a, .top-row[b-e4bknzrspz]  .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
+.top-row[b-e4bknzrspz]  a, .top-row[b-e4bknzrspz]  .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #333;
+}
 
-    .top-row[b-e4bknzrspz]  a:hover, .top-row[b-e4bknzrspz]  .btn-link:hover {
-        text-decoration: underline;
-    }
-
-    .top-row[b-e4bknzrspz]  a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.top-row[b-e4bknzrspz]  a:hover, .top-row[b-e4bknzrspz]  .btn-link:hover {
+    text-decoration: underline;
+}
 
 @media (max-width: 640.98px) {
     .top-row[b-e4bknzrspz] {
         justify-content: space-between;
     }
-
+    
     .top-row[b-e4bknzrspz]  a, .top-row[b-e4bknzrspz]  .btn-link {
         margin-left: 0;
     }
@@ -64,16 +61,14 @@ main[b-e4bknzrspz] {
         z-index: 1;
     }
 
-    .top-row.auth[b-e4bknzrspz]  a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
-
     .top-row[b-e4bknzrspz], article[b-e4bknzrspz] {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+}
+
+.content[b-e4bknzrspz] {
+    padding: var(--space-lg);
 }
 
 #blazor-error-ui[b-e4bknzrspz] {
@@ -90,9 +85,9 @@ main[b-e4bknzrspz] {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss[b-e4bknzrspz] {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss[b-e4bknzrspz] {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
