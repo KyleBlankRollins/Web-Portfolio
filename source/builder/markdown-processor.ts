@@ -246,9 +246,23 @@ export class MarkdownProcessor {
       return dateB.getTime() - dateA.getTime();
     });
 
+    // Generate collection of all unique tags
+    const allTags = new Set<string>();
+    sortedPosts.forEach((post) => {
+      post.tags.forEach((tag) => {
+        allTags.add(tag);
+      });
+    });
+
+    // Sort tags alphabetically
+    const sortedTags = Array.from(allTags).sort((a, b) =>
+      a.toLowerCase().localeCompare(b.toLowerCase())
+    );
+
     const manifest = {
       posts: sortedPosts,
       totalPosts: sortedPosts.length,
+      availableTags: sortedTags,
       generatedAt: new Date().toISOString(),
     };
 
@@ -258,7 +272,7 @@ export class MarkdownProcessor {
       "utf-8"
     );
     BuildLogger.success(
-      `Generated blog manifest: ${outputPath} (${sortedPosts.length} posts)`
+      `Generated blog manifest: ${outputPath} (${sortedPosts.length} posts, ${sortedTags.length} tags)`
     );
   }
 

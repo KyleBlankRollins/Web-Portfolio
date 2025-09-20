@@ -49,16 +49,24 @@ function createProcessingMiddleware(
     const url = req.url;
     if (!url) return next();
 
+    // Handle blog-manifest.json (strip query parameters)
+    const cleanUrl = url.split("?")[0].split("#")[0];
+    if (cleanUrl === "/blog-manifest.json") {
+      return handleBlogManifestRequest(req, res, next);
+    }
+
     // Handle root index.html
-    if (url === "/" || url === "/index.html") {
+    if (cleanUrl === "/" || cleanUrl === "/index.html") {
       return handleIndexRequest(templateProcessor, req, res, next);
     }
 
     // Handle HTML files at root level (matching production build structure)
-    if (url.match(/^\/[^/]+\.html$/)) {
+    // Extract the pathname without query parameters or hash
+    const pathname = url.split("?")[0].split("#")[0];
+    if (pathname.match(/^\/[^/]+\.html$/)) {
       return handleHtmlRequest(
         templateProcessor,
-        url,
+        pathname, // Pass clean pathname to handler
         req,
         res,
         next
@@ -104,6 +112,34 @@ async function handleIndexRequest(
     }
   } else {
     next();
+  }
+}
+
+/**
+ * Handle requests for blog-manifest.json
+ */
+function handleBlogManifestRequest(_req: any, res: any, next: any) {
+  const manifestPath = path.join(
+    process.cwd(),
+    "source",
+    "site",
+    "blog-manifest.json"
+  );
+
+  if (fs.existsSync(manifestPath)) {
+    try {
+      const content = fs.readFileSync(manifestPath, "utf-8");
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Cache-Control", "no-cache");
+      res.end(content);
+    } catch (error) {
+      BuildLogger.error(`Error serving blog-manifest.json: ${error}`);
+      next(error);
+    }
+  } else {
+    res.statusCode = 404;
+    res.setHeader("Content-Type", "application/json");
+    res.end('{"error": "Blog manifest not found"}');
   }
 }
 

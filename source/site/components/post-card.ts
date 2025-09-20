@@ -148,20 +148,27 @@ class KbrPostCard extends HTMLElement {
   private attachEventListeners(): void {
     if (!this.shadowRoot) return;
 
-    // Handle tag button clicks
+    // Handle tag button clicks - navigate to blog page with tag filter
     const tagButtons = this.shadowRoot.querySelectorAll(".post-tag");
+    console.log(
+      `Found ${tagButtons.length} post-tag buttons in post-card shadow DOM`
+    );
+
     tagButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
         const tag = (e.target as HTMLElement).dataset.tag;
+        console.log(`Post tag clicked in post-card: ${tag}`);
+
         if (tag) {
-          // Dispatch custom event for parent components to handle
-          this.dispatchEvent(
-            new CustomEvent("tag-filter", {
-              detail: { tag },
-              bubbles: true,
-            })
+          // Navigate to blog page with tag filter (consistent with other tag buttons)
+          const blogUrl = new URL(
+            "/blog.html",
+            window.location.origin
           );
+          blogUrl.searchParams.set("tag", tag);
+          console.log(`Navigating to: ${blogUrl.href}`);
+          window.location.href = blogUrl.href;
         }
       });
     });

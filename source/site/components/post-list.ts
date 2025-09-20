@@ -1,9 +1,9 @@
 /**
  * Blog Post List Web Component
- * 
+ *
  * This component displays a list of blog posts with metadata from their markdown files.
  * Supports filtering by tags and pagination (5 posts per page).
- * 
+ *
  * Usage: <kbr-post-list></kbr-post-list>
  */
 
@@ -33,39 +33,62 @@ class KbrPostList extends HTMLElement {
   private isLoading: boolean = false;
 
   static get observedAttributes() {
-    return ['posts-per-page', 'filter'];
+    return ["posts-per-page", "filter"];
   }
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    
+    this.attachShadow({ mode: "open" });
+
     // Handle tag filtering events from post cards
-    this.addEventListener('tag-filter', this.handleTagFilter.bind(this) as EventListener);
+    this.addEventListener(
+      "tag-filter",
+      this.handleTagFilter.bind(this) as EventListener
+    );
   }
 
   connectedCallback() {
-    const postsPerPageAttr = this.getAttribute('posts-per-page');
+    const postsPerPageAttr = this.getAttribute("posts-per-page");
     if (postsPerPageAttr) {
       this.postsPerPage = parseInt(postsPerPageAttr, 10) || 5;
     }
-    
-    const filterAttr = this.getAttribute('filter');
+
+    const filterAttr = this.getAttribute("filter");
     if (filterAttr) {
       this.currentFilter = filterAttr;
     }
-    
+
+    // Check URL parameters for initial filter
+    this.checkUrlParameters();
+
     this.loadBlogPosts();
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  /**
+   * Check URL query parameters for tag filtering
+   */
+  private checkUrlParameters(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tagParam = urlParams.get("tag");
+
+    if (tagParam && !this.currentFilter) {
+      this.currentFilter = tagParam;
+      this.setAttribute("filter", tagParam);
+    }
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string
+  ) {
     if (oldValue === newValue) return;
-    
-    if (name === 'posts-per-page') {
+
+    if (name === "posts-per-page") {
       this.postsPerPage = parseInt(newValue, 10) || 5;
       this.currentPage = 1;
       this.renderPostList();
-    } else if (name === 'filter') {
+    } else if (name === "filter") {
       this.currentFilter = newValue;
       this.filterByTag(newValue);
     }
@@ -74,27 +97,28 @@ class KbrPostList extends HTMLElement {
   private async loadBlogPosts(): Promise<void> {
     this.isLoading = true;
     this.render();
-    
+
     try {
-      const response = await fetch('/blog-manifest.json');
+      const response = await fetch("/blog-manifest.json");
       if (!response.ok) {
-        throw new Error(`Failed to load blog posts: ${response.statusText}`);
+        throw new Error(
+          `Failed to load blog posts: ${response.statusText}`
+        );
       }
-      
+
       const manifest: BlogManifest = await response.json();
       this.posts = manifest.posts;
       this.filteredPosts = [...this.posts];
-      
+
       // Apply initial filter if set
       if (this.currentFilter) {
         this.filterByTag(this.currentFilter);
       }
-      
+
       this.isLoading = false;
       this.renderPostList();
-      
     } catch (error) {
-      console.error('Failed to load blog posts:', error);
+      console.error("Failed to load blog posts:", error);
       this.isLoading = false;
       this.renderError();
     }
@@ -102,11 +126,11 @@ class KbrPostList extends HTMLElement {
 
   private render(): void {
     if (!this.shadowRoot) return;
-    
+
     this.shadowRoot.innerHTML = `
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
-        ${this.isLoading ? this.getLoadingHTML() : ''}
+        ${this.isLoading ? this.getLoadingHTML() : ""}
       </div>
     `;
   }
@@ -116,16 +140,25 @@ class KbrPostList extends HTMLElement {
 
     const startIndex = (this.currentPage - 1) * this.postsPerPage;
     const endIndex = startIndex + this.postsPerPage;
-    const currentPosts = this.filteredPosts.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    const currentPosts = this.filteredPosts.slice(
+      startIndex,
+      endIndex
+    );
+    const totalPages = Math.ceil(
+      this.filteredPosts.length / this.postsPerPage
+    );
 
     this.shadowRoot.innerHTML = `
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
         ${this.getHeaderHTML()}
         ${this.getFilterHTML()}
-        ${currentPosts.length > 0 ? this.getPostsHTML(currentPosts) : this.getEmptyHTML()}
-        ${totalPages > 1 ? this.getPaginationHTML(totalPages) : ''}
+        ${
+          currentPosts.length > 0
+            ? this.getPostsHTML(currentPosts)
+            : this.getEmptyHTML()
+        }
+        ${totalPages > 1 ? this.getPaginationHTML(totalPages) : ""}
       </div>
     `;
 
@@ -134,7 +167,7 @@ class KbrPostList extends HTMLElement {
 
   private renderError(): void {
     if (!this.shadowRoot) return;
-    
+
     this.shadowRoot.innerHTML = `
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
@@ -157,10 +190,10 @@ class KbrPostList extends HTMLElement {
 
   private getHeaderHTML(): string {
     const totalPosts = this.filteredPosts.length;
-    const headerText = this.currentFilter 
+    const headerText = this.currentFilter
       ? `Blog posts tagged "${this.currentFilter}" (${totalPosts})`
       : `Latest blog posts (${totalPosts})`;
-      
+
     return `
       <header class="post-list-header">
         <h2>${headerText}</h2>
@@ -169,8 +202,8 @@ class KbrPostList extends HTMLElement {
   }
 
   private getFilterHTML(): string {
-    if (!this.currentFilter) return '';
-    
+    if (!this.currentFilter) return "";
+
     return `
       <div class="post-list-filter">
         <span class="filter-label">Filtered by: <strong>${this.currentFilter}</strong></span>
@@ -180,7 +213,9 @@ class KbrPostList extends HTMLElement {
   }
 
   private getPostsHTML(posts: BlogPostMetadata[]): string {
-    const postCards = posts.map(post => `
+    const postCards = posts
+      .map(
+        (post) => `
       <kbr-post-card
         title="${post.title}"
         description="${post.description}"
@@ -189,7 +224,9 @@ class KbrPostList extends HTMLElement {
         tags='${JSON.stringify(post.tags)}'
         url="${post.url}">
       </kbr-post-card>
-    `).join('');
+    `
+      )
+      .join("");
 
     return `
       <div class="post-list-grid">
@@ -199,38 +236,53 @@ class KbrPostList extends HTMLElement {
   }
 
   private getEmptyHTML(): string {
-    const message = this.currentFilter 
+    const message = this.currentFilter
       ? `No blog posts found with the tag "${this.currentFilter}".`
-      : 'No blog posts available yet.';
-      
+      : "No blog posts available yet.";
+
     return `
       <div class="post-list-empty">
         <p>${message}</p>
-        ${this.currentFilter ? '<button class="clear-filter-btn" data-action="clear-filter">View all posts</button>' : ''}
+        ${
+          this.currentFilter
+            ? '<button class="clear-filter-btn" data-action="clear-filter">View all posts</button>'
+            : ""
+        }
       </div>
     `;
   }
 
   private getPaginationHTML(totalPages: number): string {
     const pages = [];
-    
+
     // Previous button
-    const prevDisabled = this.currentPage === 1 ? 'disabled' : '';
-    pages.push(`<button class="pagination-btn" data-page="${this.currentPage - 1}" ${prevDisabled}>← Previous</button>`);
-    
+    const prevDisabled = this.currentPage === 1 ? "disabled" : "";
+    pages.push(
+      `<button class="pagination-btn" data-page="${
+        this.currentPage - 1
+      }" ${prevDisabled}>← Previous</button>`
+    );
+
     // Page numbers
     for (let i = 1; i <= totalPages; i++) {
-      const active = i === this.currentPage ? 'active' : '';
-      pages.push(`<button class="pagination-btn ${active}" data-page="${i}">${i}</button>`);
+      const active = i === this.currentPage ? "active" : "";
+      pages.push(
+        `<button class="pagination-btn ${active}" data-page="${i}">${i}</button>`
+      );
     }
-    
+
     // Next button
-    const nextDisabled = this.currentPage === totalPages ? 'disabled' : '';
-    pages.push(`<button class="pagination-btn" data-page="${this.currentPage + 1}" ${nextDisabled}>Next →</button>`);
+    const nextDisabled =
+      this.currentPage === totalPages ? "disabled" : "";
+    pages.push(
+      `<button class="pagination-btn" data-page="${
+        this.currentPage + 1
+      }" ${nextDisabled}>Next →</button>`
+    );
 
     return `
       <nav class="post-list-pagination">
-        ${pages.join('')}
+        ${pages.join("")}
       </nav>
     `;
   }
@@ -239,22 +291,56 @@ class KbrPostList extends HTMLElement {
     if (!this.shadowRoot) return;
 
     // Pagination buttons
-    const paginationButtons = this.shadowRoot.querySelectorAll('.pagination-btn[data-page]');
-    paginationButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
+    const paginationButtons = this.shadowRoot.querySelectorAll(
+      ".pagination-btn[data-page]"
+    );
+    paginationButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
-        const page = parseInt(target.dataset.page || '1', 10);
-        if (page !== this.currentPage && !target.hasAttribute('disabled')) {
+        const page = parseInt(target.dataset.page || "1", 10);
+        if (
+          page !== this.currentPage &&
+          !target.hasAttribute("disabled")
+        ) {
           this.goToPage(page);
         }
       });
     });
 
     // Clear filter buttons
-    const clearFilterButtons = this.shadowRoot.querySelectorAll('[data-action="clear-filter"]');
-    clearFilterButtons.forEach(button => {
-      button.addEventListener('click', () => {
+    const clearFilterButtons = this.shadowRoot.querySelectorAll(
+      '[data-action="clear-filter"]'
+    );
+    clearFilterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
         this.clearFilter();
+      });
+    });
+
+    // Blog tag buttons - handle tag navigation
+    const blogTagButtons =
+      this.shadowRoot.querySelectorAll(".blog-tag");
+    console.log(
+      `Found ${blogTagButtons.length} blog-tag buttons in shadow DOM`
+    );
+
+    blogTagButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = e.target as HTMLElement;
+        const tag = target.getAttribute("data-tag");
+        console.log(`Blog tag clicked: ${tag}`);
+
+        if (tag) {
+          // Navigate to blog page with tag filter
+          const blogUrl = new URL(
+            "/blog.html",
+            window.location.origin
+          );
+          blogUrl.searchParams.set("tag", tag);
+          console.log(`Navigating to: ${blogUrl.href}`);
+          window.location.href = blogUrl.href;
+        }
       });
     });
   }
@@ -272,34 +358,38 @@ class KbrPostList extends HTMLElement {
       this.clearFilter();
       return;
     }
-    
+
     this.currentFilter = tag;
     this.currentPage = 1;
-    
-    this.filteredPosts = this.posts.filter(post => 
-      post.tags.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
+
+    this.filteredPosts = this.posts.filter((post) =>
+      post.tags.some(
+        (postTag) => postTag.toLowerCase() === tag.toLowerCase()
+      )
     );
-    
+
     this.renderPostList();
-    
+
     // Update attribute to reflect current state
-    this.setAttribute('filter', tag);
+    this.setAttribute("filter", tag);
   }
 
   private clearFilter(): void {
     this.currentFilter = null;
     this.currentPage = 1;
     this.filteredPosts = [...this.posts];
-    
+
     this.renderPostList();
-    
+
     // Remove filter attribute
-    this.removeAttribute('filter');
+    this.removeAttribute("filter");
   }
 
   private goToPage(page: number): void {
-    const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
-    
+    const totalPages = Math.ceil(
+      this.filteredPosts.length / this.postsPerPage
+    );
+
     if (page >= 1 && page <= totalPages) {
       this.currentPage = page;
       this.renderPostList();
@@ -308,6 +398,6 @@ class KbrPostList extends HTMLElement {
 }
 
 // Register the custom element
-customElements.define('kbr-post-list', KbrPostList);
+customElements.define("kbr-post-list", KbrPostList);
 
 export { KbrPostList, type BlogPostMetadata };
