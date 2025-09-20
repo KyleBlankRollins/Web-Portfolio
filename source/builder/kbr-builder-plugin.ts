@@ -1,8 +1,11 @@
-import type { Plugin } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import { HtmlProcessor } from "./html-processor.js";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { FileSystemHelper } from "./helpers.js";
 import { BuildLogger } from "./helpers.js";
+import * as fs from "fs";
+import * as path from "path";
+import { marked } from "marked";
 
 /**
  * Process HTML content using the HtmlProcessor
@@ -89,6 +92,133 @@ export function kbrBuilder(): Plugin {
         `📁 Found ${htmlFiles.length} additional HTML files for processing`
       );
       BuildLogger.info(`📁 Letting Vite handle index.html naturally`);
+    },
+
+    configureServer(server: ViteDevServer) {
+      BuildLogger.info(
+        "🔧 Setting up dev server middleware for KBR Builder..."
+      );
+
+      // Add middleware to handle HTML file transformations
+      server.middlewares.use((req, res, next) => {
+        const url = req.url;
+        if (!url) return next();
+
+        // Handle root index.html
+        if (url === "/" || url === "/index.html") {
+          const indexPath = path.join(
+            server.config.root || process.cwd(),
+            "index.html"
+          );
+
+          if (fs.existsSync(indexPath)) {
+            try {
+              const content = fs.readFileSync(indexPath, "utf-8");
+              processHtmlContent(htmlProcessor, content)
+                .then((processedContent) => {
+                  res.setHeader("Content-Type", "text/html");
+                  res.setHeader("Cache-Control", "no-cache");
+                  res.end(processedContent);
+                })
+                .catch((error) => {
+                  BuildLogger.error(
+                    `Failed to process index.html: ${error}`
+                  );
+                  next(error);
+                });
+              return;
+            } catch (error) {
+              BuildLogger.error(`Error reading index.html: ${error}`);
+            }
+          }
+        }
+
+        // Handle HTML files from pages/ directory
+        if (url.match(/^\/[^/]+\.html$/)) {
+          const fileName = url.slice(1); // Remove leading slash
+          const pageFilePath = path.join(
+            server.config.root || process.cwd(),
+            "pages",
+            fileName
+          );
+
+          if (fs.existsSync(pageFilePath)) {
+            try {
+              const content = fs.readFileSync(pageFilePath, "utf-8");
+              processHtmlContent(htmlProcessor, content)
+                .then((processedContent) => {
+                  res.setHeader("Content-Type", "text/html");
+                  res.setHeader("Cache-Control", "no-cache");
+                  res.end(processedContent);
+                })
+                .catch((error) => {
+                  BuildLogger.error(
+                    `Failed to process ${fileName}: ${error}`
+                  );
+                  next(error);
+                });
+              return;
+            } catch (error) {
+              BuildLogger.error(
+                `Error reading ${pageFilePath}: ${error}`
+              );
+            }
+          }
+        }
+
+        // Handle Markdown files from content/ directory (serve as HTML)
+        if (url.match(/^\/content\/[^/]+\.html$/)) {
+          const fileName = url
+            .replace("/content/", "")
+            .replace(".html", ".md");
+          const mdFilePath = path.join(
+            server.config.root || process.cwd(),
+            "content",
+            fileName
+          );
+
+          if (fs.existsSync(mdFilePath)) {
+            try {
+              const mdContent = fs.readFileSync(mdFilePath, "utf-8");
+              // Convert markdown to HTML using marked
+              const htmlContent = marked(mdContent);
+
+              processHtmlContent(htmlProcessor, htmlContent)
+                .then((processedContent) => {
+                  res.setHeader("Content-Type", "text/html");
+                  res.setHeader("Cache-Control", "no-cache");
+                  res.end(processedContent);
+                })
+                .catch((error) => {
+                  BuildLogger.error(
+                    `Failed to process markdown ${fileName}: ${error}`
+                  );
+                  next(error);
+                });
+              return;
+            } catch (error) {
+              BuildLogger.error(
+                `Error processing markdown ${mdFilePath}: ${error}`
+              );
+            }
+          }
+        }
+
+        next();
+      });
+
+      // Watch for changes to include files and invalidate cache
+      server.ws.on("file-changed", ({ file }) => {
+        if (file.includes("/includes/")) {
+          BuildLogger.info(`🔄 Include file changed: ${file}`);
+          htmlProcessor.clearCache();
+
+          // Trigger a full page reload for include changes since they affect multiple pages
+          server.ws.send({
+            type: "full-reload",
+          });
+        }
+      });
     },
 
     async buildStart() {
