@@ -1,3 +1,4 @@
+import { basename } from "path";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { HtmlProcessor } from "./html-processor.js";
 
@@ -102,7 +103,7 @@ export class HtmlBundleProcessor {
         );
 
         // Get the output filename (flatten the directory structure)
-        const fileName = filePath.split("/").pop() || "unknown.html";
+        const fileName = basename(filePath);
 
         // Add to bundle as an asset
         emitFile({
