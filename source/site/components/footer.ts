@@ -10,4 +10,4 @@ class PageFooter extends HTMLElement {
   }
 }
 
-customElements.define("kr-page-footer", PageFooter);
+customElements.define("kbr-page-footer", PageFooter);

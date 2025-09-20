@@ -1,5 +1,7 @@
 ---
 title: "The Art and Impact of Technical Writing"
+description: "Exploring the discipline of technical writing and its crucial role in bridging technology and communication."
+keywords: "technical writing, documentation, communication, API references, user guides"
 date: "2025-09-18"
 tags: [technical writing, documentation, communication]
 ---

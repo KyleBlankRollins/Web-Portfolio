@@ -26,4 +26,4 @@ class PageHead extends HTMLElement {
   }
 }
 
-customElements.define("kr-page-head", PageHead);
+customElements.define("kbr-page-head", PageHead);

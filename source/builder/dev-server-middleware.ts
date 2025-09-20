@@ -2,25 +2,57 @@ import type { ViteDevServer } from "vite";
 import * as fs from "fs";
 import * as path from "path";
 import { marked } from "marked";
-import { HtmlProcessor } from "./html-processor.js";
+import {
+  TemplateProcessor,
+  type TemplateVariables,
+} from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 
 /**
- * Process HTML content using the HtmlProcessor
+ * Process HTML content using the TemplateProcessor
  */
 async function processHtmlContent(
-  processor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   content: string
 ): Promise<string> {
-  const lines = content.split("\n");
-  const processedLines: string[] = [];
+  // Extract metadata from HTML comments
+  const metadata = templateProcessor.extractMetadata(content);
 
-  for (const line of lines) {
-    const processedLine = await processor.processLine(line);
-    processedLines.push(processedLine);
+  // Helper function to extract title from HTML content if not in metadata
+  function extractTitleFromContent(content: string): string | null {
+    // Look for h1 tags
+    const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+    if (h1Match) {
+      return h1Match[1].replace(/<[^>]*>/g, "").trim();
+    }
+
+    // Look for title in kbr-page-head attributes (legacy)
+    const titleAttrMatch = content.match(
+      /title\s*=\s*["']([^"']*)["']/i
+    );
+    if (titleAttrMatch) {
+      return titleAttrMatch[1].trim();
+    }
+
+    return null;
   }
 
-  return processedLines.join("\n");
+  // Create template variables
+  const templateVariables: TemplateVariables = {
+    title:
+      metadata.title ||
+      extractTitleFromContent(content) ||
+      "Development Server",
+    description: metadata.description,
+    keywords: metadata.keywords,
+    additionalHead: metadata.additionalHead,
+    content: "", // This will be overridden by processTemplate
+  };
+
+  return templateProcessor.processTemplate(
+    content,
+    templateVariables
+  );
 }
 
 /**
@@ -54,21 +86,29 @@ function createBlockingMiddleware() {
 }
 
 /**
- * Creates middleware that processes HTML files with includes
+ * Creates middleware that processes HTML files with templates
  */
-function createProcessingMiddleware(htmlProcessor: HtmlProcessor) {
+function createProcessingMiddleware(
+  templateProcessor: TemplateProcessor
+) {
   return (req: any, res: any, next: any) => {
     const url = req.url;
     if (!url) return next();
 
     // Handle root index.html
     if (url === "/" || url === "/index.html") {
-      return handleIndexRequest(htmlProcessor, req, res, next);
+      return handleIndexRequest(templateProcessor, req, res, next);
     }
 
     // Handle HTML files at root level (matching production build structure)
     if (url.match(/^\/[^/]+\.html$/)) {
-      return handleHtmlRequest(htmlProcessor, url, req, res, next);
+      return handleHtmlRequest(
+        templateProcessor,
+        url,
+        req,
+        res,
+        next
+      );
     }
 
     next();
@@ -79,7 +119,7 @@ function createProcessingMiddleware(htmlProcessor: HtmlProcessor) {
  * Handle requests for the root index.html
  */
 async function handleIndexRequest(
-  htmlProcessor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   _req: any,
   res: any,
   next: any
@@ -93,7 +133,7 @@ async function handleIndexRequest(
     try {
       const content = fs.readFileSync(indexPath, "utf-8");
       const processedContent = await processHtmlContent(
-        htmlProcessor,
+        templateProcessor,
         content
       );
 
@@ -113,7 +153,7 @@ async function handleIndexRequest(
  * Handle requests for HTML files at root level
  */
 async function handleHtmlRequest(
-  htmlProcessor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   url: string,
   _req: any,
   res: any,
@@ -126,7 +166,7 @@ async function handleHtmlRequest(
   const pageFilePath = path.join(rootDir, "pages", fileName);
   if (fs.existsSync(pageFilePath)) {
     return await processAndServeFile(
-      htmlProcessor,
+      templateProcessor,
       pageFilePath,
       res,
       next
@@ -137,7 +177,7 @@ async function handleHtmlRequest(
   const contentHtmlPath = path.join(rootDir, "content", fileName);
   if (fs.existsSync(contentHtmlPath)) {
     return await processAndServeFile(
-      htmlProcessor,
+      templateProcessor,
       contentHtmlPath,
       res,
       next
@@ -149,7 +189,7 @@ async function handleHtmlRequest(
   const mdFilePath = path.join(rootDir, "content", mdFileName);
   if (fs.existsSync(mdFilePath)) {
     return await processAndServeMarkdown(
-      htmlProcessor,
+      templateProcessor,
       mdFilePath,
       res,
       next
@@ -163,7 +203,7 @@ async function handleHtmlRequest(
  * Process and serve an HTML file
  */
 async function processAndServeFile(
-  htmlProcessor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   filePath: string,
   res: any,
   next: any
@@ -171,7 +211,7 @@ async function processAndServeFile(
   try {
     const content = fs.readFileSync(filePath, "utf-8");
     const processedContent = await processHtmlContent(
-      htmlProcessor,
+      templateProcessor,
       content
     );
 
@@ -188,17 +228,31 @@ async function processAndServeFile(
  * Process and serve a Markdown file as HTML
  */
 async function processAndServeMarkdown(
-  htmlProcessor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   mdFilePath: string,
   res: any,
   next: any
 ) {
   try {
     const mdContent = fs.readFileSync(mdFilePath, "utf-8");
-    const htmlContent = marked(mdContent);
-    const processedContent = await processHtmlContent(
-      htmlProcessor,
-      htmlContent
+
+    // Extract frontmatter and convert markdown to HTML
+    const { metadata, content } =
+      templateProcessor.extractMarkdownFrontmatter(mdContent);
+    const htmlContent = marked(content);
+
+    // Create template variables
+    const templateVariables: TemplateVariables = {
+      title: metadata.title || "Development Server",
+      description: metadata.description,
+      keywords: metadata.keywords,
+      additionalHead: metadata.additionalHead,
+      content: "", // This will be overridden by processTemplate
+    };
+
+    const processedContent = templateProcessor.processTemplate(
+      htmlContent,
+      templateVariables
     );
 
     res.setHeader("Content-Type", "text/html");
@@ -213,18 +267,18 @@ async function processAndServeMarkdown(
 }
 
 /**
- * Sets up file watcher for include files
+ * Sets up file watcher for template and include files
  */
 function setupFileWatcher(
   server: ViteDevServer,
-  htmlProcessor: HtmlProcessor
+  templateProcessor: TemplateProcessor
 ) {
   server.ws.on("file-changed", ({ file }) => {
-    if (file.includes("/includes/")) {
-      BuildLogger.info(`🔄 Include file changed: ${file}`);
-      htmlProcessor.clearCache();
+    if (file.includes("/templates/") || file.includes("/includes/")) {
+      BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
+      templateProcessor.clearCache();
 
-      // Trigger a full page reload for include changes since they affect multiple pages
+      // Trigger a full page reload for template/include changes since they affect multiple pages
       server.ws.send({
         type: "full-reload",
       });
@@ -237,7 +291,7 @@ function setupFileWatcher(
  */
 export function setupDevServer(
   server: ViteDevServer,
-  htmlProcessor: HtmlProcessor
+  templateProcessor: TemplateProcessor
 ) {
   BuildLogger.info(
     "🔧 Setting up dev server middleware for KBR Builder..."
@@ -247,8 +301,10 @@ export function setupDevServer(
   server.middlewares.use(createBlockingMiddleware());
 
   // Add processing middleware second
-  server.middlewares.use(createProcessingMiddleware(htmlProcessor));
+  server.middlewares.use(
+    createProcessingMiddleware(templateProcessor)
+  );
 
   // Setup file watcher
-  setupFileWatcher(server, htmlProcessor);
+  setupFileWatcher(server, templateProcessor);
 }

@@ -1,33 +1,67 @@
 import { basename } from "path";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
-import { HtmlProcessor } from "./html-processor.js";
+import {
+  TemplateProcessor,
+  type TemplateVariables,
+} from "./template-processor.js";
 
 /**
- * Process HTML content using the HtmlProcessor
+ * Process HTML content using the TemplateProcessor instead of the old HtmlProcessor
  */
 async function processHtmlContent(
-  processor: HtmlProcessor,
+  templateProcessor: TemplateProcessor,
   content: string
 ): Promise<string> {
-  const lines = content.split("\n");
-  const processedLines: string[] = [];
+  // Extract metadata from HTML comments or existing structure
+  const metadata = templateProcessor.extractMetadata(content);
 
-  for (const line of lines) {
-    const processedLine = await processor.processLine(line);
-    processedLines.push(processedLine);
+  // Create template variables - if no title found, try to extract from content
+  const templateVariables: TemplateVariables = {
+    title:
+      metadata.title ||
+      extractTitleFromContent(content) ||
+      "Untitled",
+    description: metadata.description,
+    keywords: metadata.keywords,
+    additionalHead: metadata.additionalHead,
+    content: "", // This will be overridden by processTemplate
+  };
+
+  return templateProcessor.processTemplate(
+    content,
+    templateVariables
+  );
+}
+
+/**
+ * Helper function to extract title from HTML content if not in metadata
+ */
+function extractTitleFromContent(content: string): string | null {
+  // Look for h1 tags
+  const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+  if (h1Match) {
+    return h1Match[1].replace(/<[^>]*>/g, "").trim();
   }
 
-  return processedLines.join("\n");
+  // Look for title in kbr-page-head attributes
+  const titleAttrMatch = content.match(
+    /title\s*=\s*["']([^"']*)["']/i
+  );
+  if (titleAttrMatch) {
+    return titleAttrMatch[1].trim();
+  }
+
+  return null;
 }
 
 /**
  * Handles HTML bundle generation during build
  */
 export class HtmlBundleProcessor {
-  private htmlProcessor: HtmlProcessor;
+  private templateProcessor: TemplateProcessor;
 
-  constructor(htmlProcessor: HtmlProcessor) {
-    this.htmlProcessor = htmlProcessor;
+  constructor() {
+    this.templateProcessor = new TemplateProcessor();
   }
 
   /**
@@ -67,7 +101,7 @@ export class HtmlBundleProcessor {
       ) {
         try {
           const processedContent = await processHtmlContent(
-            this.htmlProcessor,
+            this.templateProcessor,
             htmlAsset.source
           );
 
@@ -98,7 +132,7 @@ export class HtmlBundleProcessor {
       try {
         const content = await FileSystemHelper.readFile(filePath);
         const processedContent = await processHtmlContent(
-          this.htmlProcessor,
+          this.templateProcessor,
           content
         );
 

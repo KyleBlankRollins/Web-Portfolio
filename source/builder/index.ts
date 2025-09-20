@@ -1,12 +1,11 @@
 import type { Plugin, ViteDevServer } from "vite";
-import { HtmlProcessor } from "./html-processor.js";
 import { MarkdownProcessor } from "./markdown-processor.js";
+import { TemplateProcessor } from "./template-processor.js";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 
 // Import our modular components
 import { setupDevServer } from "./dev-server-middleware.js";
 import { HtmlBundleProcessor } from "./html-bundle-processor.js";
-import { PluginConfig } from "./plugin-config.js";
 
 /**
  * Process all Markdown files in the content directory
@@ -54,10 +53,9 @@ async function processMarkdownFiles(
  */
 export function kbrBuilder(): Plugin {
   // Initialize processors and components
-  const htmlProcessor = new HtmlProcessor();
   const markdownProcessor = new MarkdownProcessor();
-  const pluginConfig = new PluginConfig();
-  const htmlBundleProcessor = new HtmlBundleProcessor(htmlProcessor);
+  const htmlBundleProcessor = new HtmlBundleProcessor();
+  const templateProcessor = new TemplateProcessor();
 
   return {
     name: "kbr-builder",
@@ -67,14 +65,29 @@ export function kbrBuilder(): Plugin {
      * Configure plugin settings and discover files
      */
     config(config, { command }) {
-      pluginConfig.setupConfig(config, command);
+      // Debug: Log Vite configuration info
+      BuildLogger.info(`🔍 Vite command: ${command}`);
+      BuildLogger.info(
+        `🔍 Vite root: ${config.root || process.cwd()}`
+      );
+
+      // Discover HTML files for processing
+      const htmlFiles = [
+        ...FileSystemHelper.findFiles("pages", [".html"]),
+        ...FileSystemHelper.findFiles("content", [".html"]),
+      ];
+
+      BuildLogger.info(
+        `📁 Found ${htmlFiles.length} additional HTML files for processing`
+      );
+      BuildLogger.info(`📁 Letting Vite handle index.html naturally`);
     },
 
     /**
      * Setup development server middleware
      */
     configureServer(server: ViteDevServer) {
-      setupDevServer(server, htmlProcessor);
+      setupDevServer(server, templateProcessor);
     },
 
     /**
