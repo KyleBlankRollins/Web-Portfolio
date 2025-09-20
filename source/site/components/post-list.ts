@@ -320,16 +320,12 @@ class KbrPostList extends HTMLElement {
     // Blog tag buttons - handle tag navigation
     const blogTagButtons =
       this.shadowRoot.querySelectorAll(".blog-tag");
-    console.log(
-      `Found ${blogTagButtons.length} blog-tag buttons in shadow DOM`
-    );
 
     blogTagButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         e.preventDefault();
         const target = e.target as HTMLElement;
         const tag = target.getAttribute("data-tag");
-        console.log(`Blog tag clicked: ${tag}`);
 
         if (tag) {
           // Navigate to blog page with tag filter
@@ -338,7 +334,6 @@ class KbrPostList extends HTMLElement {
             window.location.origin
           );
           blogUrl.searchParams.set("tag", tag);
-          console.log(`Navigating to: ${blogUrl.href}`);
           window.location.href = blogUrl.href;
         }
       });

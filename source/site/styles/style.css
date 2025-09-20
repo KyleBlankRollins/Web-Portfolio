@@ -1,28 +1,5 @@
-/* Import theme variables */
-@import './theme.css';
-
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
-  color: #212121;           /* Dark gray text for accessibility */
-  background-color: #ffffff; /* White background for light theme */
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #2d2d2d;           /* Dark gray for links (accessible contrast) */
-  text-decoration: inherit;
-}
-a:hover {
-  color: #1a1a1a;           /* Darker gray on hover */
 }
 
 /* Base styles and layout using modern CSS features */
@@ -35,8 +12,6 @@ a:hover {
 }
 
 html {
-  font-family: var(--font-family-base);
-  line-height: var(--line-height-base);
   color: var(--color-text);
   background-color: var(--color-background);
 }
@@ -47,44 +22,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  line-height: var(--line-height-tight);
-  margin-top: 0;
-  margin-bottom: var(--space-md);
-  font-weight: 600;
-}
-
-h1 {
-  font-size: var(--font-size-3xl);
-  color: var(--color-primary);
-}
-
-h2 {
-  font-size: var(--font-size-2xl);
-  color: var(--color-primary-dark);
-}
-
-h3 {
-  font-size: var(--font-size-xl);
-}
-
-p {
-  margin-top: 0;
-  margin-bottom: var(--space-md);
-}
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-  
-  &:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
-  }
 }
 
 /* Layout Components using CSS Grid */
@@ -259,10 +196,7 @@ a {
   }
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+
 
 #app {
   max-width: 1280px;
