@@ -31,6 +31,38 @@ export class MarkdownProcessor {
       gfm: true,
       breaks: false,
     });
+
+    // Configure custom renderer for automatic heading IDs
+    this.setupHeadingRenderer();
+  }
+
+  /**
+   * Setup custom renderer to automatically generate heading IDs
+   */
+  private setupHeadingRenderer(): void {
+    const renderer = new marked.Renderer();
+
+    // Override heading renderer to add IDs
+    renderer.heading = (text: string, level: number) => {
+      const headingId = this.generateAnchorId(text);
+      return `<h${level} id="${headingId}">${text}</h${level}>`;
+    };
+
+    marked.setOptions({
+      renderer: renderer,
+    });
+  }
+
+  /**
+   * Generate a URL-safe anchor ID from heading text
+   */
+  private generateAnchorId(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "") // Remove special characters
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/--+/g, "-") // Replace multiple hyphens with single
+      .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
   }
 
   /**
