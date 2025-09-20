@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { kbrBuilder } from "./source/builder/kbr-builder-plugin";
+import { kbrBuilder } from "./source/builder/index";
 
 export default defineConfig({
   root: "source/site",

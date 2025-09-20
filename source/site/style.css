@@ -1,3 +1,6 @@
+/* Import theme variables */
+@import './theme.css';
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,9 +26,6 @@ a:hover {
 }
 
 /* Base styles and layout using modern CSS features */
-
-/* Import theme variables */
-@import './theme.css';
 
 /* Base Styles */
 *,

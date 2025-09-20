@@ -3,9 +3,6 @@ import { IncludeNames } from "./types.js";
 import type { IncludeName } from "./types.js";
 import { BuildLogger } from "./helpers.js";
 
-// TODO: PICK UP HERE: Need to copy html file to dist, then process it. Make sure TypeScript/Vite don't overwrite. Need to copy so that hydrated files don't overwrite my template files.
-// Also, need to add logic for add all global includes to all HTML pages. No need to parse the page for specific include tags. Will need to have a map or object that describes where each global include should be added.
-
 /**
  * HTML Processor for replacing custom include tags with their content
  */
