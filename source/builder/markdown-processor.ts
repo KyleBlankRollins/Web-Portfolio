@@ -57,7 +57,8 @@ export class MarkdownProcessor {
     // Write the HTML content (without template - that will be applied later)
     writeFileSync(outputPath, htmlWithMetadata, "utf-8");
 
-    BuildLogger.success(`Generated HTML file: ${outputPath}`);
+    BuildLogger.success(`Markdown source: ${filePath}
+          Generated HTML: ${outputPath}`);
 
     return outputPath;
   }

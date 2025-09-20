@@ -7,11 +7,18 @@
 class KbrNavigation extends HTMLElement {
   constructor() {
     super();
+    // Create shadow DOM for style encapsulation
+    this.attachShadow({ mode: "open" });
   }
 
   connectedCallback() {
-    this.innerHTML = this.getNavigationHTML();
-    this.attachEventListeners();
+    if (this.shadowRoot) {
+      this.shadowRoot.innerHTML = `
+        <link rel="stylesheet" href="/components/navigation.css">
+        ${this.getNavigationHTML()}
+      `;
+      this.attachEventListeners();
+    }
   }
 
   private getNavigationHTML(): string {
@@ -37,11 +44,11 @@ class KbrNavigation extends HTMLElement {
   private attachEventListeners(): void {
     // Add active link highlighting based on current page
     const currentPath = window.location.pathname;
-    const navLinks = this.querySelectorAll(
+    const navLinks = this.shadowRoot?.querySelectorAll(
       ".main-nav a"
     ) as NodeListOf<HTMLAnchorElement>;
 
-    navLinks.forEach((link) => {
+    navLinks?.forEach((link) => {
       const linkPath = link.getAttribute("href");
 
       // Handle home page and exact matches
@@ -55,7 +62,7 @@ class KbrNavigation extends HTMLElement {
     });
 
     // Optional: Add mobile menu toggle if needed in the future
-    // const menuToggle = this.querySelector('.menu-toggle');
+    // const menuToggle = this.shadowRoot?.querySelector('.menu-toggle');
     // if (menuToggle) {
     //   menuToggle.addEventListener('click', this.toggleMobileMenu.bind(this));
     // }

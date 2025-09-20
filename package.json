@@ -9,7 +9,8 @@
     "build": "tsc && vite build",
     "build-site": "tsx source/builder/main.ts",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "copy-component-styles": "powershell Copy-Item source/site/components/*.css public/components/ -Force"
   },
   "devDependencies": {
     "@types/node": "^20.19.17",

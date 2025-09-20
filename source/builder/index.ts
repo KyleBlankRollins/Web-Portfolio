@@ -13,7 +13,7 @@ import { HtmlBundleProcessor } from "./html-bundle-processor.js";
 async function processMarkdownFiles(
   markdownProcessor: MarkdownProcessor
 ): Promise<void> {
-  BuildLogger.info("📝 Processing Markdown files...");
+  BuildLogger.info("🔎 Discovering Markdown files...");
 
   try {
     const contentDirectory = "source/site/content";
@@ -28,12 +28,11 @@ async function processMarkdownFiles(
     }
 
     BuildLogger.info(
-      `Found ${markdownFiles.length} Markdown files to process`
+      `📝 Processing Markdown files: ${markdownFiles.length}`
     );
 
     for (const markdownFile of markdownFiles) {
       markdownProcessor.processMarkdownFile(markdownFile);
-      BuildLogger.info(`✓ Processed Markdown: ${markdownFile}`);
     }
   } catch (error) {
     BuildLogger.error(`Failed to process Markdown files: ${error}`);
@@ -60,28 +59,6 @@ export function kbrBuilder(): Plugin {
   return {
     name: "kbr-builder",
     enforce: "post",
-
-    /**
-     * Configure plugin settings and discover files
-     */
-    config(config, { command }) {
-      // Debug: Log Vite configuration info
-      BuildLogger.info(`🔍 Vite command: ${command}`);
-      BuildLogger.info(
-        `🔍 Vite root: ${config.root || process.cwd()}`
-      );
-
-      // Discover HTML files for processing
-      const htmlFiles = [
-        ...FileSystemHelper.findFiles("pages", [".html"]),
-        ...FileSystemHelper.findFiles("content", [".html"]),
-      ];
-
-      BuildLogger.info(
-        `📁 Found ${htmlFiles.length} additional HTML files for processing`
-      );
-      BuildLogger.info(`📁 Letting Vite handle index.html naturally`);
-    },
 
     /**
      * Setup development server middleware

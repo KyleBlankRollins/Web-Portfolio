@@ -106,7 +106,6 @@ export class HtmlBundleProcessor {
           );
 
           htmlAsset.source = processedContent;
-          BuildLogger.info(`✓ Processed existing HTML: ${fileName}`);
         } catch (error) {
           BuildLogger.error(
             `Failed to process ${fileName}: ${error}`
@@ -146,7 +145,7 @@ export class HtmlBundleProcessor {
           source: processedContent,
         });
 
-        BuildLogger.info(`✓ Processed additional HTML: ${fileName}`);
+        BuildLogger.info(`✓ Transformed HTML page: ${fileName}`);
       } catch (error) {
         BuildLogger.error(`Failed to process ${filePath}: ${error}`);
         throw error;
