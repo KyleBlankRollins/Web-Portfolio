@@ -4,15 +4,6 @@ import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import type { TemplateVariables } from "./template-processor.js";
 
-/* TODO: YAML frontmatter handling
-Need to handle page rontmatter in different ways.
-title: Goes into the base template's <head> as the page title.
-description: Used in two places: 1) In the base template's <head> as the meta description. 2) In a `<kbr-post-list>` web component where each list item should use the description from a blog post's source markdown file.
-keywords: Goes into the base template's <head> as the page title.
-date: Should be inserted below the page's <h1>, which is the blog post title.
-tags: Should be inserted below the date as a list of clickable buttons. For now, the buttons should do nothing. In the future, they would lead to a collection page that includes all blog posts that share that tag.
-*/
-
 export interface BlogPostManifestEntry {
   title: string;
   description: string;

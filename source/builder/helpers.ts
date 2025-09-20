@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, readdirSync, mkdirSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 
 /**
  * Utility class for file system operations related to the build process
@@ -46,15 +46,6 @@ export class FileSystemHelper {
     }
 
     return files;
-  }
-
-  /**
-   * Ensure a directory exists, create it if it doesn't
-   */
-  public static ensureDirectory(dirPath: string): void {
-    if (!existsSync(dirPath)) {
-      mkdirSync(dirPath, { recursive: true });
-    }
   }
 
   /**

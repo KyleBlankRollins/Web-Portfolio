@@ -7,53 +7,7 @@ import {
   type TemplateVariables,
 } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
-
-/**
- * Process HTML content using the TemplateProcessor
- */
-async function processHtmlContent(
-  templateProcessor: TemplateProcessor,
-  content: string
-): Promise<string> {
-  // Extract metadata from HTML comments
-  const metadata = templateProcessor.extractMetadata(content);
-
-  // Helper function to extract title from HTML content if not in metadata
-  function extractTitleFromContent(content: string): string | null {
-    // Look for h1 tags
-    const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
-    if (h1Match) {
-      return h1Match[1].replace(/<[^>]*>/g, "").trim();
-    }
-
-    // Look for title in kbr-page-head attributes (legacy)
-    const titleAttrMatch = content.match(
-      /title\s*=\s*["']([^"']*)["']/i
-    );
-    if (titleAttrMatch) {
-      return titleAttrMatch[1].trim();
-    }
-
-    return null;
-  }
-
-  // Create template variables
-  const templateVariables: TemplateVariables = {
-    title:
-      metadata.title ||
-      extractTitleFromContent(content) ||
-      "Development Server",
-    description: metadata.description,
-    keywords: metadata.keywords,
-    additionalHead: metadata.additionalHead,
-    content: "", // This will be overridden by processTemplate
-  };
-
-  return templateProcessor.processTemplate(
-    content,
-    templateVariables
-  );
-}
+import { HtmlProcessingUtils } from "./html-utils.js";
 
 /**
  * Creates middleware that blocks direct access to source directories
@@ -132,10 +86,12 @@ async function handleIndexRequest(
   if (fs.existsSync(indexPath)) {
     try {
       const content = fs.readFileSync(indexPath, "utf-8");
-      const processedContent = await processHtmlContent(
-        templateProcessor,
-        content
-      );
+      const processedContent =
+        await HtmlProcessingUtils.processHtmlContent(
+          templateProcessor,
+          content,
+          "Development Server"
+        );
 
       res.setHeader("Content-Type", "text/html");
       res.setHeader("Cache-Control", "no-cache");
@@ -210,10 +166,11 @@ async function processAndServeFile(
 ) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
-    const processedContent = await processHtmlContent(
-      templateProcessor,
-      content
-    );
+    const processedContent =
+      await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        content
+      );
 
     res.setHeader("Content-Type", "text/html");
     res.setHeader("Cache-Control", "no-cache");
