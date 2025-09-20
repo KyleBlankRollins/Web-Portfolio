@@ -20,6 +20,18 @@ export class TemplateProcessor {
   private defaultTemplate: string = "base.html";
 
   /**
+   * Check if content is already a complete HTML document
+   */
+  public isCompleteHtmlDocument(content: string): boolean {
+    const trimmedContent = content.trim();
+    return (
+      (trimmedContent.toLowerCase().startsWith("<!doctype html>") ||
+        trimmedContent.toLowerCase().startsWith("<html")) &&
+      trimmedContent.toLowerCase().includes("</html>")
+    );
+  }
+
+  /**
    * Process content using a template with variable substitution
    */
   public processTemplate(
@@ -27,6 +39,11 @@ export class TemplateProcessor {
     variables: TemplateVariables,
     templateName: string = this.defaultTemplate
   ): string {
+    // If content is already a complete HTML document, return it as-is
+    if (this.isCompleteHtmlDocument(content)) {
+      return content;
+    }
+
     const template = this.getTemplate(templateName);
 
     // Create a complete variables object with content
