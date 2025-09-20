@@ -1,0 +1,50 @@
+<!-- title: My First Blog Post -->
+<!-- description: This is a sample blog post to test the new YAML frontmatter handling and blog post metadata features. -->
+<!-- keywords: blog, markdown, web development, test -->
+<!-- date: 2025-01-15 -->
+<!-- formattedDate: January 14, 2025 -->
+<!-- tags: web development, markdown, blogging, typescript -->
+<!-- isBlogPost: true -->
+<h1>My First Blog Post</h1>
+
+        <div class="blog-post-metadata">
+          
+        <div class="blog-post-date">
+          <time datetime="2025-01-15">January 14, 2025</time>
+        </div>
+      
+
+        <div class="blog-post-tags">
+          <span class="tags-label">Tags:</span>
+          <div class="tag-list">
+            <button class="blog-tag" data-tag="web development">web development</button><button class="blog-tag" data-tag="markdown">markdown</button><button class="blog-tag" data-tag="blogging">blogging</button><button class="blog-tag" data-tag="typescript">typescript</button>
+          </div>
+        </div>
+      
+        </div>
+      
+<p>This is a sample blog post to demonstrate the enhanced YAML frontmatter handling capabilities. The system now properly extracts and displays metadata like dates and tags.</p>
+<h2>Features Demonstrated</h2>
+<ul>
+<li><strong>Date Display</strong>: The date from frontmatter is displayed below the title</li>
+<li><strong>Tag Buttons</strong>: Tags are rendered as clickable buttons (currently non-functional)</li>
+<li><strong>Metadata Integration</strong>: All metadata is properly extracted and used in templates</li>
+<li><strong>Template Variables</strong>: The blog post uses the standard template system</li>
+</ul>
+<h2>How It Works</h2>
+<p>The markdown processor now:</p>
+<ol>
+<li>Extracts YAML frontmatter including date and tags</li>
+<li>Converts the date to a human-readable format</li>
+<li>Inserts the metadata HTML after the first h1 tag</li>
+<li>Preserves all metadata for template processing</li>
+</ol>
+<p>This creates a better blog post experience while maintaining the flexible template system.</p>
+<h2>Next Steps</h2>
+<p>Future enhancements will include:</p>
+<ul>
+<li>Making tag buttons functional (filter by tag)</li>
+<li>Creating a blog post list component</li>
+<li>Adding pagination support</li>
+<li>Implementing related posts features</li>
+</ul>

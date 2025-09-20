@@ -1,0 +1,1 @@
+- a web component to handle page-level navigation for blog posts

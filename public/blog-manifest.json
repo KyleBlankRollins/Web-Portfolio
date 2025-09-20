@@ -1,0 +1,35 @@
+{
+  "posts": [
+    {
+      "title": "The Art and Impact of Technical Writing",
+      "description": "Exploring the discipline of technical writing and its crucial role in bridging technology and communication.",
+      "date": "2025-09-18",
+      "formattedDate": "September 17, 2025",
+      "tags": [
+        "technical writing",
+        "documentation",
+        "communication"
+      ],
+      "url": "/test.html",
+      "filename": "test",
+      "keywords": "technical writing, documentation, communication, API references, user guides"
+    },
+    {
+      "title": "My First Blog Post",
+      "description": "This is a sample blog post to test the new YAML frontmatter handling and blog post metadata features.",
+      "date": "2025-01-15",
+      "formattedDate": "January 14, 2025",
+      "tags": [
+        "web development",
+        "markdown",
+        "blogging",
+        "typescript"
+      ],
+      "url": "/sample-blog-post.html",
+      "filename": "sample-blog-post",
+      "keywords": "blog, markdown, web development, test"
+    }
+  ],
+  "totalPosts": 2,
+  "generatedAt": "2025-09-20T18:43:18.633Z"
+}

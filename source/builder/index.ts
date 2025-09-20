@@ -73,6 +73,9 @@ export function kbrBuilder(): Plugin {
     async buildStart() {
       BuildLogger.info("🚀 Starting KBR Builder...");
       await processMarkdownFiles(markdownProcessor);
+
+      // Generate blog post manifest after processing all markdown files
+      markdownProcessor.generateBlogManifest();
     },
 
     /**

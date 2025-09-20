@@ -2,12 +2,34 @@ import { readFileSync, writeFileSync } from "fs";
 import { marked } from "marked";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
+import type { TemplateVariables } from "./template-processor.js";
+
+/* TODO: YAML frontmatter handling
+Need to handle page rontmatter in different ways.
+title: Goes into the base template's <head> as the page title.
+description: Used in two places: 1) In the base template's <head> as the meta description. 2) In a `<kbr-post-list>` web component where each list item should use the description from a blog post's source markdown file.
+keywords: Goes into the base template's <head> as the page title.
+date: Should be inserted below the page's <h1>, which is the blog post title.
+tags: Should be inserted below the date as a list of clickable buttons. For now, the buttons should do nothing. In the future, they would lead to a collection page that includes all blog posts that share that tag.
+*/
+
+export interface BlogPostManifestEntry {
+  title: string;
+  description: string;
+  date: string;
+  formattedDate: string;
+  tags: string[];
+  url: string;
+  filename: string;
+  keywords?: string;
+}
 
 /**
  * Processes Markdown files and converts them to HTML using templates
  */
 export class MarkdownProcessor {
   private templateProcessor: TemplateProcessor;
+  private blogPostManifest: BlogPostManifestEntry[] = [];
 
   constructor() {
     this.templateProcessor = new TemplateProcessor();
@@ -37,6 +59,18 @@ export class MarkdownProcessor {
     // Convert Markdown to HTML
     const htmlContent = marked(content);
 
+    // For blog posts, add date and tags after the first h1
+    let processedContent = htmlContent;
+    if (metadata.isBlogPost) {
+      processedContent = this.addBlogMetadataToHTML(
+        htmlContent,
+        metadata
+      );
+
+      // Add to blog post manifest
+      this.addToBlogManifest(filePath, metadata);
+    }
+
     // Create HTML content with metadata comments for later processing
     const htmlWithMetadata = [
       metadata.title ? `<!-- title: ${metadata.title} -->` : "",
@@ -46,7 +80,16 @@ export class MarkdownProcessor {
       metadata.keywords
         ? `<!-- keywords: ${metadata.keywords} -->`
         : "",
-      htmlContent,
+      // Add blog-specific metadata comments
+      metadata.date ? `<!-- date: ${metadata.date} -->` : "",
+      metadata.formattedDate
+        ? `<!-- formattedDate: ${metadata.formattedDate} -->`
+        : "",
+      metadata.tags && metadata.tags.length > 0
+        ? `<!-- tags: ${metadata.tags.join(", ")} -->`
+        : "",
+      metadata.isBlogPost ? `<!-- isBlogPost: true -->` : "",
+      processedContent,
     ]
       .filter(Boolean)
       .join("\n");
@@ -57,9 +100,149 @@ export class MarkdownProcessor {
     // Write the HTML content (without template - that will be applied later)
     writeFileSync(outputPath, htmlWithMetadata, "utf-8");
 
-    BuildLogger.success(`Markdown source: ${filePath}
-          Generated HTML: ${outputPath}`);
+    BuildLogger.success(`Generated blog post: ${outputPath}`);
 
     return outputPath;
+  }
+
+  /**
+   * Add blog metadata (date and tags) to HTML content after the first h1
+   */
+  private addBlogMetadataToHTML(
+    htmlContent: string,
+    metadata: Partial<TemplateVariables>
+  ): string {
+    // Find the first h1 tag
+    const h1Match = htmlContent.match(/(<h1[^>]*>.*?<\/h1>)/i);
+
+    if (!h1Match) {
+      // No h1 found, just add metadata at the beginning
+      return this.createBlogMetadataHTML(metadata) + htmlContent;
+    }
+
+    const h1Tag = h1Match[1];
+    const h1Index = htmlContent.indexOf(h1Tag);
+    const afterH1Index = h1Index + h1Tag.length;
+
+    // Insert blog metadata after the h1
+    const beforeH1 = htmlContent.substring(0, afterH1Index);
+    const afterH1 = htmlContent.substring(afterH1Index);
+
+    return (
+      beforeH1 +
+      "\n" +
+      this.createBlogMetadataHTML(metadata) +
+      afterH1
+    );
+  }
+
+  /**
+   * Create HTML for blog post metadata (date and tags)
+   */
+  private createBlogMetadataHTML(
+    metadata: Partial<TemplateVariables>
+  ): string {
+    const metadataParts = [];
+
+    // Add date if available
+    if (metadata.formattedDate) {
+      metadataParts.push(`
+        <div class="blog-post-date">
+          <time datetime="${metadata.date}">${metadata.formattedDate}</time>
+        </div>
+      `);
+    }
+
+    // Add tags if available
+    if (metadata.tags && metadata.tags.length > 0) {
+      const tagButtons = metadata.tags
+        .map(
+          (tag) =>
+            `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
+        )
+        .join("");
+
+      metadataParts.push(`
+        <div class="blog-post-tags">
+          <span class="tags-label">Tags:</span>
+          <div class="tag-list">
+            ${tagButtons}
+          </div>
+        </div>
+      `);
+    }
+
+    if (metadataParts.length > 0) {
+      return `
+        <div class="blog-post-metadata">
+          ${metadataParts.join("\n")}
+        </div>
+      `;
+    }
+
+    return "";
+  }
+
+  /**
+   * Add a blog post to the manifest
+   */
+  private addToBlogManifest(
+    filePath: string,
+    metadata: Partial<TemplateVariables>
+  ): void {
+    if (!metadata.isBlogPost) return;
+
+    const filename =
+      filePath.split("/").pop()?.replace(".md", "") || "untitled";
+    const url = `/${filename}.html`;
+
+    const manifestEntry: BlogPostManifestEntry = {
+      title: metadata.title || "Untitled Post",
+      description: metadata.description || "",
+      date: metadata.date || "",
+      formattedDate: metadata.formattedDate || "",
+      tags: metadata.tags || [],
+      url: url,
+      filename: filename,
+      keywords: metadata.keywords,
+    };
+
+    this.blogPostManifest.push(manifestEntry);
+  }
+
+  /**
+   * Generate and save the blog post manifest JSON file
+   */
+  public generateBlogManifest(
+    outputPath: string = "source/site/blog-manifest.json"
+  ): void {
+    // Sort blog posts by date (newest first)
+    const sortedPosts = this.blogPostManifest.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    const manifest = {
+      posts: sortedPosts,
+      totalPosts: sortedPosts.length,
+      generatedAt: new Date().toISOString(),
+    };
+
+    writeFileSync(
+      outputPath,
+      JSON.stringify(manifest, null, 2),
+      "utf-8"
+    );
+    BuildLogger.success(
+      `Generated blog manifest: ${outputPath} (${sortedPosts.length} posts)`
+    );
+  }
+
+  /**
+   * Get the current blog post manifest
+   */
+  public getBlogManifest(): BlogPostManifestEntry[] {
+    return this.blogPostManifest;
   }
 }

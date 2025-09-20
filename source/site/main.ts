@@ -1,3 +1,3 @@
 import "./components/navigation";
-// import "./components/pageHead";
-// import "./components/footer";
+import "./components/post-list";
+import "./components/post-card";

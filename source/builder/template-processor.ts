@@ -10,6 +10,11 @@ export interface TemplateVariables {
   keywords?: string;
   additionalHead?: string;
   content: string;
+  // Blog-specific metadata
+  date?: string;
+  tags?: string[];
+  formattedDate?: string; // Human-readable date format
+  isBlogPost?: boolean; // Flag to identify blog posts
 }
 
 /**
@@ -100,7 +105,7 @@ export class TemplateProcessor {
 
     // Check for YAML frontmatter
     const frontmatterMatch = markdownContent.match(
-      /^---\n(.*?)\n---\n(.*)/s
+      /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/
     );
     if (frontmatterMatch) {
       const frontmatter = frontmatterMatch[1];
@@ -127,9 +132,63 @@ export class TemplateProcessor {
           .trim()
           .replace(/^["']|["']$/g, "");
       }
+
+      // Extract blog-specific metadata
+      const dateMatch = frontmatter.match(/^date:\s*(.+)$/m);
+      if (dateMatch) {
+        const dateStr = dateMatch[1]
+          .trim()
+          .replace(/^["']|["']$/g, "");
+        metadata.date = dateStr;
+        metadata.formattedDate = this.formatDate(dateStr);
+        metadata.isBlogPost = true;
+      }
+
+      const tagsMatch = frontmatter.match(/^tags:\s*(.+)$/m);
+      if (tagsMatch) {
+        const tagsStr = tagsMatch[1].trim();
+        // Handle both array format [tag1, tag2] and comma-separated format
+        if (tagsStr.startsWith("[") && tagsStr.endsWith("]")) {
+          // Array format: [tag1, tag2, tag3]
+          metadata.tags = tagsStr
+            .slice(1, -1)
+            .split(",")
+            .map((tag) => tag.trim().replace(/^["']|["']$/g, ""))
+            .filter((tag) => tag.length > 0);
+        } else {
+          // Comma-separated format: tag1, tag2, tag3
+          metadata.tags = tagsStr
+            .split(",")
+            .map((tag) => tag.trim().replace(/^["']|["']$/g, ""))
+            .filter((tag) => tag.length > 0);
+        }
+        if (metadata.tags.length > 0) {
+          metadata.isBlogPost = true;
+        }
+      }
     }
 
     return { metadata, content };
+  }
+
+  /**
+   * Format a date string for display
+   */
+  private formatDate(dateStr: string): string {
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        return dateStr; // Return original string if date is invalid
+      }
+
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return dateStr; // Return original string if formatting fails
+    }
   }
 
   /**
