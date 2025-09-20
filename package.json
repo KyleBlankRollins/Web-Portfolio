@@ -1,15 +1,24 @@
 {
-  "name": "portfolio-typescript",
+  "name": "kyleblankrollins-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Personal portfolio website for Kyle Blank Rollins",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build-site": "tsx source/builder/main.ts",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/marked": "^6.0.0",
+    "@types/node": "^20.19.17",
+    "tsx": "^4.0.0",
     "typescript": "~5.8.3",
     "vite": "^7.1.6"
+  },
+  "dependencies": {
+    "marked": "^9.0.0"
   }
 }
