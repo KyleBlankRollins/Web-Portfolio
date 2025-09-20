@@ -49,6 +49,11 @@ export class HtmlProcessingUtils {
       keywords: metadata.keywords,
       additionalHead: metadata.additionalHead,
       content: "", // This will be overridden by processTemplate
+      // Include blog-specific metadata
+      date: metadata.date,
+      formattedDate: metadata.formattedDate,
+      tags: metadata.tags,
+      isBlogPost: metadata.isBlogPost,
     };
 
     return templateProcessor.processTemplate(

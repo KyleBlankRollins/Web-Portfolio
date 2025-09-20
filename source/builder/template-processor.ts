@@ -42,11 +42,18 @@ export class TemplateProcessor {
   public processTemplate(
     content: string,
     variables: TemplateVariables,
-    templateName: string = this.defaultTemplate
+    templateName?: string
   ): string {
     // If content is already a complete HTML document, return it as-is
     if (this.isCompleteHtmlDocument(content)) {
       return content;
+    }
+
+    // Automatically select blog post template for blog posts
+    if (!templateName) {
+      templateName = variables.isBlogPost
+        ? "blog-post.html"
+        : this.defaultTemplate;
     }
 
     const template = this.getTemplate(templateName);
@@ -88,6 +95,38 @@ export class TemplateProcessor {
     );
     if (keywordsMatch) {
       metadata.keywords = keywordsMatch[1].trim();
+    }
+
+    // Blog-specific metadata
+    const dateMatch = htmlContent.match(
+      /<!--\s*date:\s*(.+?)\s*-->/i
+    );
+    if (dateMatch) {
+      metadata.date = dateMatch[1].trim();
+    }
+
+    const formattedDateMatch = htmlContent.match(
+      /<!--\s*formattedDate:\s*(.+?)\s*-->/i
+    );
+    if (formattedDateMatch) {
+      metadata.formattedDate = formattedDateMatch[1].trim();
+    }
+
+    const tagsMatch = htmlContent.match(
+      /<!--\s*tags:\s*(.+?)\s*-->/i
+    );
+    if (tagsMatch) {
+      metadata.tags = tagsMatch[1]
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0);
+    }
+
+    const isBlogPostMatch = htmlContent.match(
+      /<!--\s*isBlogPost:\s*true\s*-->/i
+    );
+    if (isBlogPostMatch) {
+      metadata.isBlogPost = true;
     }
 
     return metadata;
