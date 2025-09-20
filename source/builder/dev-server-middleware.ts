@@ -80,7 +80,9 @@ async function handleIndexRequest(
 ) {
   const indexPath = path.join(
     process.cwd(),
-    "source/site/index.html"
+    "source",
+    "site",
+    "index.html"
   );
 
   if (fs.existsSync(indexPath)) {

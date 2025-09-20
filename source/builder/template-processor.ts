@@ -1,4 +1,5 @@
 import { readFileSync, existsSync } from "fs";
+import { join } from "path";
 import { BuildLogger } from "./helpers.js";
 
 /**
@@ -238,7 +239,12 @@ export class TemplateProcessor {
       return this.templateCache.get(templateName)!;
     }
 
-    const templatePath = `source/site/templates/${templateName}`;
+    const templatePath = join(
+      "source",
+      "site",
+      "templates",
+      templateName
+    );
 
     if (!existsSync(templatePath)) {
       throw new Error(`Template not found: ${templatePath}`);

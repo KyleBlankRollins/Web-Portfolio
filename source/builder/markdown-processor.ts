@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
+import { join, basename } from "path";
 import { marked } from "marked";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
@@ -183,8 +184,7 @@ export class MarkdownProcessor {
   ): void {
     if (!metadata.isBlogPost) return;
 
-    const filename =
-      filePath.split("/").pop()?.replace(".md", "") || "untitled";
+    const filename = basename(filePath, ".md");
     const url = `/${filename}.html`;
 
     const manifestEntry: BlogPostManifestEntry = {
@@ -205,7 +205,7 @@ export class MarkdownProcessor {
    * Generate and save the blog post manifest JSON file
    */
   public generateBlogManifest(
-    outputPath: string = "source/site/blog-manifest.json"
+    outputPath: string = join("source", "site", "blog-manifest.json")
   ): void {
     // Sort blog posts by date (newest first)
     const sortedPosts = this.blogPostManifest.sort((a, b) => {

@@ -1,4 +1,5 @@
 import type { Plugin, ViteDevServer } from "vite";
+import { join } from "path";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
@@ -16,7 +17,7 @@ async function processMarkdownFiles(
   BuildLogger.info("🔎 Discovering Markdown files...");
 
   try {
-    const contentDirectory = "source/site/content";
+    const contentDirectory = join("source", "site", "content");
     const markdownFiles = FileSystemHelper.findFiles(
       contentDirectory,
       [".md"]

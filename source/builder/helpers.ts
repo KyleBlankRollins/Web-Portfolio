@@ -1,4 +1,5 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
+import { join } from "path";
 
 /**
  * Utility class for file system operations related to the build process
@@ -14,10 +15,10 @@ export class FileSystemHelper {
     let directoryPath: string;
 
     // Avoid concatenating the path for every recursive call
-    if (directory.includes("source/site")) {
+    if (directory.includes(join("source", "site"))) {
       directoryPath = directory;
     } else {
-      directoryPath = `source/site/${directory}`;
+      directoryPath = join("source", "site", directory);
     }
 
     const files: string[] = [];
@@ -33,7 +34,7 @@ export class FileSystemHelper {
     });
 
     for (const entry of entries) {
-      const fullPath = `${directoryPath}/${entry.name}`;
+      const fullPath = join(directoryPath, entry.name);
 
       if (entry.isDirectory()) {
         files.push(...this.findFiles(fullPath, extensions));
