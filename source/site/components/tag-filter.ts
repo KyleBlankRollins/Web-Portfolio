@@ -161,145 +161,8 @@ class KbrTagFilter extends HTMLElement {
     if (!this.shadowRoot) return;
 
     this.shadowRoot.innerHTML = `
-      <style>
-        :host {
-          display: block;
-          margin-bottom: 2rem;
-        }
-
-        .tag-filter-container {
-          background: var(--bg-secondary, #f8f9fa);
-          border-radius: 8px;
-          padding: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .filter-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 1rem;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .filter-title {
-          font-weight: 600;
-          color: var(--text-primary, #333);
-          margin: 0;
-          font-size: 1rem;
-        }
-
-        .clear-filter-btn {
-          background: none;
-          border: 1px solid var(--border-color, #ddd);
-          padding: 0.25rem 0.75rem;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          color: var(--text-secondary, #666);
-          transition: all 0.2s ease;
-        }
-
-        .clear-filter-btn:hover {
-          background: var(--accent-primary, #007acc);
-          color: white;
-          border-color: var(--accent-primary, #007acc);
-        }
-
-        .clear-filter-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .tags-grid {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .tag-button {
-          background: white;
-          border: 1px solid var(--border-color, #ddd);
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          transition: all 0.2s ease;
-          color: var(--text-secondary, #666);
-        }
-
-        .tag-button:hover {
-          border-color: var(--accent-primary, #007acc);
-          color: var(--accent-primary, #007acc);
-          transform: translateY(-1px);
-        }
-
-        .tag-button.active {
-          background: var(--accent-primary, #007acc);
-          border-color: var(--accent-primary, #007acc);
-          color: white;
-        }
-
-        .loading {
-          text-align: center;
-          padding: 2rem;
-          color: var(--text-secondary, #666);
-        }
-
-        .error {
-          color: var(--error-color, #dc3545);
-          text-align: center;
-          padding: 1rem;
-          background: var(--error-bg, #f8d7da);
-          border-radius: 4px;
-        }
-
-        /* Dark theme support */
-        @media (prefers-color-scheme: dark) {
-          .tag-filter-container {
-            background: var(--bg-secondary-dark, #2a2a2a);
-          }
-          
-          .filter-title {
-            color: var(--text-primary-dark, #fff);
-          }
-          
-          .tag-button {
-            background: var(--bg-primary-dark, #1a1a1a);
-            border-color: var(--border-color-dark, #444);
-            color: var(--text-secondary-dark, #aaa);
-          }
-          
-          .tag-button:hover {
-            border-color: var(--accent-primary-dark, #4fc3f7);
-            color: var(--accent-primary-dark, #4fc3f7);
-          }
-          
-          .tag-button.active {
-            background: var(--accent-primary-dark, #4fc3f7);
-            border-color: var(--accent-primary-dark, #4fc3f7);
-          }
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-          .tag-filter-container {
-            padding: 1rem;
-          }
-          
-          .filter-header {
-            flex-direction: column;
-            align-items: stretch;
-            text-align: center;
-          }
-          
-          .tags-grid {
-            justify-content: center;
-          }
-        }
-      </style>
-
+      <link rel="stylesheet" href="/styles/component-typography.css">
+      <link rel="stylesheet" href="/components/tag-filter.css">
       <div class="tag-filter-container">
         ${this.renderContent()}
       </div>
@@ -333,7 +196,7 @@ class KbrTagFilter extends HTMLElement {
 
     return `
       <div class="filter-header">
-        <h3 class="filter-title">Filter by Tag</h3>
+        <div class="ui-label filter-title">Filter by Tag</div>
         <button 
           class="clear-filter-btn" 
           ${!this.activeTag ? "disabled" : ""}
@@ -354,16 +217,11 @@ class KbrTagFilter extends HTMLElement {
     if (!this.shadowRoot) return;
 
     this.shadowRoot.innerHTML = `
-      <style>
-        .error {
-          color: var(--error-color, #dc3545);
-          text-align: center;
-          padding: 1rem;
-          background: var(--error-bg, #f8d7da);
-          border-radius: 4px;
-        }
-      </style>
-      <div class="error">Failed to load tags. Please try again.</div>
+      <link rel="stylesheet" href="/styles/component-typography.css">
+      <link rel="stylesheet" href="/components/tag-filter.css">
+      <div class="tag-filter-container">
+        <div class="error">Failed to load tags. Please try again.</div>
+      </div>
     `;
   }
 

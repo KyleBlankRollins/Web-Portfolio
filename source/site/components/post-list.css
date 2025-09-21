@@ -2,7 +2,10 @@
  * Post List Component Styles
  * 
  * Scoped styles for the kbr-post-list web component.
+ * This file has access to all CSS custom properties from the main theme.
  */
+
+/* Host element - the <kbr-post-list> tag itself */
 
 :host {
   display: block;
@@ -23,7 +26,6 @@
 
 .post-list-header h2 {
   color: var(--color-primary, #2d2d2d);
-  font-size: var(--font-size-2xl, 2rem);
   margin: 0;
   font-weight: 600;
 }
@@ -183,10 +185,6 @@
 @media (max-width: 768px) {
   .post-list-container {
     padding: var(--space-md, 1.5rem);
-  }
-  
-  .post-list-header h2 {
-    font-size: var(--font-size-xl, 1.5rem);
   }
   
   .post-list-filter {

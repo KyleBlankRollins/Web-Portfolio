@@ -2,7 +2,10 @@
  * Post Card Component Styles
  * 
  * Scoped styles for the kbr-post-card web component.
+ * This file has access to all CSS custom properties from the main theme.
  */
+
+/* Host element - the <kbr-post-card> tag itself */
 
 :host {
   display: block;
@@ -39,8 +42,6 @@
 
 .post-card-title {
   margin: 0 0 var(--space-sm, 1rem) 0;
-  font-size: var(--font-size-xl, 1.5rem);
-  line-height: var(--line-height-tight, 1.2);
   font-weight: 600;
 }
 

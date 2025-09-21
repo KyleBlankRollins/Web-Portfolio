@@ -128,6 +128,7 @@ class KbrPostList extends HTMLElement {
     if (!this.shadowRoot) return;
 
     this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/styles/component-typography.css">
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
         ${this.isLoading ? this.getLoadingHTML() : ""}
@@ -149,6 +150,7 @@ class KbrPostList extends HTMLElement {
     );
 
     this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/styles/component-typography.css">
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
         ${this.getHeaderHTML()}
@@ -169,6 +171,7 @@ class KbrPostList extends HTMLElement {
     if (!this.shadowRoot) return;
 
     this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/styles/component-typography.css">
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
         <div class="post-list-error">

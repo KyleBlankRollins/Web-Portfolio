@@ -140,7 +140,6 @@ body {
     
     h1 {
       color: var(--color-text-inverse);
-      font-size: clamp(2rem, 5vw, var(--font-size-3xl));
       margin-bottom: var(--space-lg);
     }
     
@@ -156,27 +155,6 @@ body {
 .content-section {
   content-visibility: auto;
   contain-intrinsic-size: 500px;
-}
-
-/* Utility Classes */
-.text-center {
-  text-align: center;
-}
-
-.text-muted {
-  color: var(--color-text-muted);
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mt-lg {
-  margin-top: var(--space-lg);
-}
-
-.mb-lg {
-  margin-bottom: var(--space-lg);
 }
 
 /* Responsive Design */

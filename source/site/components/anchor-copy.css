@@ -2,8 +2,8 @@
 
 /* Anchor target highlighting */
 .anchor-highlighted {
-  background-color: var(--accent-primary-light, rgba(0, 122, 204, 0.1));
-  border-left: 4px solid var(--accent-primary, #007acc);
+  background-color: var(--color-shadow, rgba(0, 0, 0, 0.1));
+  border-left: 4px solid var(--color-accent, #4a4a4a);
   padding-left: 1rem;
   margin-left: -1.25rem;
   border-radius: 4px;
@@ -12,8 +12,8 @@
 
 @keyframes anchor-highlight-fade {
   0% {
-    background-color: var(--accent-primary-light, rgba(0, 122, 204, 0.2));
-    border-left-color: var(--accent-primary, #007acc);
+    background-color: var(--color-shadow-dark, rgba(0, 0, 0, 0.2));
+    border-left-color: var(--color-accent, #4a4a4a);
   }
   100% {
     background-color: transparent;

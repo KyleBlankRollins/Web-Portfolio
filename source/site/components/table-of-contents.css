@@ -28,7 +28,6 @@
 
 .toc-title {
   color: var(--color-primary, #2d2d2d);
-  font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 var(--space-md, 1.5rem) 0;
   padding-bottom: var(--space-sm, 1rem);
@@ -148,10 +147,6 @@
   .toc-container {
     max-height: none;
     margin-bottom: var(--space-xl, 3rem);
-  }
-  
-  .toc-title {
-    font-size: 1rem;
   }
 }
 

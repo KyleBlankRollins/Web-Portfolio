@@ -188,6 +188,10 @@ class KbrTableOfContents extends HTMLElement {
     if (!this.shadowRoot) return;
 
     // Load external CSS
+    const typographyLink = document.createElement("link");
+    typographyLink.rel = "stylesheet";
+    typographyLink.href = "/styles/component-typography.css";
+
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = "/components/table-of-contents.css";
@@ -211,6 +215,7 @@ class KbrTableOfContents extends HTMLElement {
     }
 
     this.shadowRoot.innerHTML = "";
+    this.shadowRoot.appendChild(typographyLink);
     this.shadowRoot.appendChild(styleLink);
     this.shadowRoot.appendChild(container);
   }

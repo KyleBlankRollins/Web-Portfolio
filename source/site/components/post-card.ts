@@ -78,6 +78,7 @@ class KbrPostCard extends HTMLElement {
     if (!this.shadowRoot || !this.data) return;
 
     this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/styles/component-typography.css">
       <link rel="stylesheet" href="/components/post-card.css">
       ${this.getCardHTML()}
     `;

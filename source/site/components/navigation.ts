@@ -14,6 +14,7 @@ class KbrNavigation extends HTMLElement {
   connectedCallback() {
     if (this.shadowRoot) {
       this.shadowRoot.innerHTML = `
+        <link rel="stylesheet" href="/styles/component-typography.css">
         <link rel="stylesheet" href="/components/navigation.css">
         ${this.getNavigationHTML()}
       `;
