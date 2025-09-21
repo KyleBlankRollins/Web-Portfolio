@@ -18,4 +18,3 @@ publish = "dist"
 [context.redesign-2025]
 command = "npm run build"
 publish = "dist"
-environment = { NODE_VERSION = "24.04" }
