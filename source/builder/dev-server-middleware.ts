@@ -210,9 +210,12 @@ async function processAndServeFile(
         content
       );
 
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
     res.setHeader("Content-Type", "text/html");
     res.setHeader("Cache-Control", "no-cache");
-    res.end(processedContent);
+    res.end(devContent);
   } catch (error) {
     BuildLogger.error(`Error processing ${filePath}: ${error}`);
     next(error);
@@ -279,6 +282,23 @@ function setupFileWatcher(
       });
     }
   });
+}
+
+/**
+ * Inject development assets into HTML content
+ */
+function injectDevAssets(htmlContent: string): string {
+  let modifiedContent = htmlContent;
+
+  // Inject development script before closing </body>
+  const devScript = `    <script type="module" src="main.ts"></script>`;
+
+  modifiedContent = modifiedContent.replace(
+    "</body>",
+    `${devScript}\n</body>`
+  );
+
+  return modifiedContent;
 }
 
 /**
