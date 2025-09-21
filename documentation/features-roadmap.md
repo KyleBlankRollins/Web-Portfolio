@@ -6,9 +6,9 @@
 
 Using local storage, implement a UI that allows people to select arbitray blog post content (but only blog post content) and apply one of several highlight colors. This feature is strictly limited to individual readers and their specific browser because it'll be using local storage.
 
-### Landing page post grid
+### Tag filter
 
-`post-list` should use CSS Grid to create a a two-column layout for blog posts.
+Active tag should move to the top of the tag list. When a tag is no longer the active tag, it should return to its original position.
 
 ## Infrastructure
 

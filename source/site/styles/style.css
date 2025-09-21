@@ -311,8 +311,7 @@ button:focus-visible {
 }
 
 .blog-hero h1 {
-  color: var(--color-text-inverse);
-  margin-bottom: var(--space-md);
+  display: none;
 }
 
 .blog-hero .lead {
