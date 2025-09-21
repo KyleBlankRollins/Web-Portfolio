@@ -15,6 +15,9 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    /* Decorators */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

@@ -1,3 +1,6 @@
+import { LitElement, html, css } from "lit";
+import { customElement, state, property } from "lit/decorators.js";
+
 /**
  * Blog Post List Web Component
  *
@@ -24,22 +27,232 @@ interface BlogManifest {
   generatedAt: string;
 }
 
-class KbrPostList extends HTMLElement {
-  private posts: BlogPostMetadata[] = [];
-  private filteredPosts: BlogPostMetadata[] = [];
-  private currentFilter: string | null = null;
-  private currentPage: number = 1;
-  private postsPerPage: number = 5;
-  private isLoading: boolean = false;
+@customElement("kbr-post-list")
+export class KbrPostList extends LitElement {
+  @property({ type: Number, attribute: "posts-per-page" })
+  declare postsPerPage: number;
+
+  @state()
+  private declare posts: BlogPostMetadata[];
+
+  @state()
+  private declare filteredPosts: BlogPostMetadata[];
+
+  @state()
+  private declare currentFilter: string | null;
+
+  @state()
+  private declare currentPage: number;
+
+  @state()
+  private declare isLoading: boolean;
+
   private boundHandleTagFilterChange: (event: Event) => void;
 
-  static get observedAttributes() {
-    return ["posts-per-page"];
-  }
+  static styles = css`
+    /* Host element - the <kbr-post-list> tag itself */
+    :host {
+      display: block;
+      width: 100%;
+    }
+
+    .post-list-container {
+      max-width: var(--content-max-width, 1200px);
+      margin: 0 auto;
+      padding: var(--space-lg, 2rem);
+    }
+
+    /* Header */
+    .post-list-header {
+      margin-bottom: var(--space-xl, 3rem);
+      text-align: center;
+    }
+
+    .post-list-header h2 {
+      color: var(--color-primary, #2d2d2d);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    /* Posts grid */
+    .post-list-grid {
+      display: grid;
+      gap: var(--space-xl, 3rem);
+      margin-bottom: var(--space-xl, 3rem);
+    }
+
+    /* Loading state */
+    .post-list-loading {
+      text-align: center;
+      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--color-border, #e0e0e0);
+      border-top: 3px solid var(--color-primary, #2d2d2d);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto var(--space-md, 1.5rem) auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .post-list-loading p {
+      color: var(--color-text-muted, #616161);
+      font-size: var(--font-size-lg, 1.25rem);
+    }
+
+    /* Empty state */
+    .post-list-empty {
+      text-align: center;
+      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
+      color: var(--color-text-muted, #616161);
+    }
+
+    .post-list-empty p {
+      font-size: var(--font-size-lg, 1.25rem);
+      margin-bottom: var(--space-lg, 2rem);
+    }
+
+    /* Error state */
+    .post-list-error {
+      text-align: center;
+      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
+      color: var(--color-text, #212121);
+    }
+
+    .post-list-error h2 {
+      color: var(--color-primary, #2d2d2d);
+      margin-bottom: var(--space-md, 1.5rem);
+    }
+
+    .post-list-error p {
+      color: var(--color-text-muted, #616161);
+      font-size: var(--font-size-lg, 1.25rem);
+    }
+
+    /* Pagination */
+    .post-list-pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-sm, 1rem);
+      margin-top: var(--space-xl, 3rem);
+      flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+      background: var(--color-background, #ffffff);
+      border: 1px solid var(--color-border, #e0e0e0);
+      color: var(--color-text, #212121);
+      padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast, 0.2s ease);
+      min-width: 44px;
+      text-align: center;
+    }
+
+    .pagination-btn:hover:not([disabled]) {
+      background: var(--color-background-secondary, #f8f8f8);
+      border-color: var(--color-border-dark, #bdbdbd);
+      transform: translateY(-1px);
+    }
+
+    .pagination-btn:focus {
+      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline-offset: 2px;
+    }
+
+    .pagination-btn.active {
+      background: var(--color-primary, #2d2d2d);
+      color: var(--color-text-inverse, #ffffff);
+      border-color: var(--color-primary, #2d2d2d);
+    }
+
+    .pagination-btn[disabled] {
+      background: var(--color-background-secondary, #f8f8f8);
+      color: var(--color-text-muted, #616161);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .post-list-container {
+        padding: var(--space-md, 1.5rem);
+      }
+
+      .post-list-pagination {
+        gap: var(--space-xs, 0.5rem);
+      }
+
+      .pagination-btn {
+        padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+        font-size: 0.8rem;
+        min-width: 36px;
+      }
+
+      .post-list-loading,
+      .post-list-empty,
+      .post-list-error {
+        padding: var(--space-xl, 3rem) var(--space-md, 1.5rem);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .post-list-container {
+        padding: var(--space-sm, 1rem);
+      }
+
+      .post-list-pagination {
+        flex-direction: column;
+        gap: var(--space-xs, 0.5rem);
+      }
+
+      .pagination-btn {
+        width: 100%;
+        max-width: 200px;
+      }
+    }
+
+    /* Animation preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .loading-spinner {
+        animation: none;
+      }
+
+      .pagination-btn:hover:not([disabled]) {
+        transform: none;
+      }
+
+      * {
+        transition: none !important;
+      }
+    }
+  `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
+
+    // Initialize properties
+    this.postsPerPage = 5;
+    this.posts = [];
+    this.filteredPosts = [];
+    this.currentFilter = null;
+    this.currentPage = 1;
+    this.isLoading = false;
 
     // Bind the event handler once to use with addEventListener/removeEventListener
     this.boundHandleTagFilterChange =
@@ -53,13 +266,7 @@ class KbrPostList extends HTMLElement {
   }
 
   connectedCallback() {
-    const postsPerPageAttr = this.getAttribute("posts-per-page");
-    if (postsPerPageAttr) {
-      this.postsPerPage = parseInt(postsPerPageAttr, 10) || 5;
-    }
-
-    // Removed filter attribute handling - only respond to events now
-
+    super.connectedCallback();
     this.loadBlogPosts();
 
     // Listen for tag filter changes from tag-filter components
@@ -71,6 +278,7 @@ class KbrPostList extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     // Clean up event listener to prevent memory leaks
     document.removeEventListener(
       "tag-changed",
@@ -78,27 +286,11 @@ class KbrPostList extends HTMLElement {
     );
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string,
-    newValue: string
-  ) {
-    if (oldValue === newValue) return;
-
-    if (name === "posts-per-page") {
-      this.postsPerPage = parseInt(newValue, 10) || 5;
-      this.currentPage = 1;
-      this.renderPostList();
-    }
-    // Removed filter attribute handling - only respond to events now
-  }
-
   private async loadBlogPosts(): Promise<void> {
     this.isLoading = true;
-    this.render();
 
     try {
-      const response = await fetch("/blog-manifest.json");
+      const response = await fetch("./blog-manifest.json");
       if (!response.ok) {
         throw new Error(
           `Failed to load blog posts: ${response.statusText}`
@@ -109,31 +301,24 @@ class KbrPostList extends HTMLElement {
       this.posts = manifest.posts;
       this.filteredPosts = [...this.posts];
 
-      // Don't apply initial filter - let tag-filter component handle initial state
-
       this.isLoading = false;
-      this.renderPostList();
     } catch (error) {
       console.error("Failed to load blog posts:", error);
       this.isLoading = false;
-      this.renderError();
     }
   }
 
-  private render(): void {
-    if (!this.shadowRoot) return;
-
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/post-list.css">
-      <div class="post-list-container">
-        ${this.isLoading ? this.getLoadingHTML() : ""}
-      </div>
-    `;
-  }
-
-  private renderPostList(): void {
-    if (!this.shadowRoot || this.isLoading) return;
+  render() {
+    if (this.isLoading) {
+      return html`
+        <div class="post-list-container">
+          <div class="post-list-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading blog posts...</p>
+          </div>
+        </div>
+      `;
+    }
 
     const startIndex = (this.currentPage - 1) * this.postsPerPage;
     const endIndex = startIndex + this.postsPerPage;
@@ -145,149 +330,109 @@ class KbrPostList extends HTMLElement {
       this.filteredPosts.length / this.postsPerPage
     );
 
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/post-list.css">
+    return html`
       <div class="post-list-container">
-        ${this.getHeaderHTML()}
-        ${
-          currentPosts.length > 0
-            ? this.getPostsHTML(currentPosts)
-            : this.getEmptyHTML()
-        }
-        ${totalPages > 1 ? this.getPaginationHTML(totalPages) : ""}
-      </div>
-    `;
-
-    this.attachEventListeners();
-  }
-
-  private renderError(): void {
-    if (!this.shadowRoot) return;
-
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/post-list.css">
-      <div class="post-list-container">
-        <div class="post-list-error">
-          <h2>Unable to load blog posts</h2>
-          <p>There was an error loading the blog post list. Please try again later.</p>
-        </div>
+        ${this.renderHeader()}
+        ${currentPosts.length > 0
+          ? this.renderPosts(currentPosts)
+          : this.renderEmpty()}
+        ${totalPages > 1 ? this.renderPagination(totalPages) : ""}
       </div>
     `;
   }
 
-  private getLoadingHTML(): string {
-    return `
-      <div class="post-list-loading">
-        <div class="loading-spinner"></div>
-        <p>Loading blog posts...</p>
-      </div>
-    `;
-  }
-
-  private getHeaderHTML(): string {
+  private renderHeader() {
     const totalPosts = this.filteredPosts.length;
     const headerText = this.currentFilter
       ? `Blog posts tagged "${this.currentFilter}" (${totalPosts})`
       : `Latest blog posts (${totalPosts})`;
 
-    return `
+    return html`
       <header class="post-list-header">
         <h2>${headerText}</h2>
       </header>
     `;
   }
 
-  private getPostsHTML(posts: BlogPostMetadata[]): string {
-    const postCards = posts
-      .map(
-        (post) => `
-      <kbr-post-card
-        title="${post.title}"
-        description="${post.description}"
-        date="${post.date}"
-        formatted-date="${post.formattedDate}"
-        tags='${JSON.stringify(post.tags)}'
-        url="${post.url}">
-      </kbr-post-card>
-    `
-      )
-      .join("");
-
-    return `
+  private renderPosts(posts: BlogPostMetadata[]) {
+    return html`
       <div class="post-list-grid">
-        ${postCards}
+        ${posts.map(
+          (post) =>
+            html`<kbr-post-card
+              title="${post.title}"
+              description="${post.description}"
+              date="${post.date}"
+              formatted-date="${post.formattedDate}"
+              tags="${JSON.stringify(post.tags)}"
+              url="${post.url}"
+            >
+            </kbr-post-card>`
+        )}
       </div>
     `;
   }
 
-  private getEmptyHTML(): string {
+  private renderEmpty() {
     const message = this.currentFilter
       ? `No blog posts found with the tag "${this.currentFilter}".`
       : "No blog posts available yet.";
 
-    return `
+    return html`
       <div class="post-list-empty">
         <p>${message}</p>
       </div>
     `;
   }
 
-  private getPaginationHTML(totalPages: number): string {
+  private renderPagination(totalPages: number) {
     const pages = [];
 
     // Previous button
-    const prevDisabled = this.currentPage === 1 ? "disabled" : "";
-    pages.push(
-      `<button class="pagination-btn" data-page="${
-        this.currentPage - 1
-      }" ${prevDisabled}>← Previous</button>`
-    );
+    const prevDisabled = this.currentPage === 1;
+    pages.push({
+      text: "← Previous",
+      page: this.currentPage - 1,
+      disabled: prevDisabled,
+      active: false,
+    });
 
     // Page numbers
     for (let i = 1; i <= totalPages; i++) {
-      const active = i === this.currentPage ? "active" : "";
-      pages.push(
-        `<button class="pagination-btn ${active}" data-page="${i}">${i}</button>`
-      );
+      pages.push({
+        text: i.toString(),
+        page: i,
+        disabled: false,
+        active: i === this.currentPage,
+      });
     }
 
     // Next button
-    const nextDisabled =
-      this.currentPage === totalPages ? "disabled" : "";
-    pages.push(
-      `<button class="pagination-btn" data-page="${
-        this.currentPage + 1
-      }" ${nextDisabled}>Next →</button>`
-    );
+    const nextDisabled = this.currentPage === totalPages;
+    pages.push({
+      text: "Next →",
+      page: this.currentPage + 1,
+      disabled: nextDisabled,
+      active: false,
+    });
 
-    return `
+    return html`
       <nav class="post-list-pagination">
-        ${pages.join("")}
+        ${pages.map(
+          (pageInfo) =>
+            html`<button
+              class="pagination-btn ${pageInfo.active
+                ? "active"
+                : ""}"
+              ?disabled="${pageInfo.disabled}"
+              @click="${() => this.goToPage(pageInfo.page)}"
+              data-page="${pageInfo.page}"
+            >
+              ${pageInfo.text}
+            </button>`
+        )}
       </nav>
     `;
-  }
-
-  private attachEventListeners(): void {
-    if (!this.shadowRoot) return;
-
-    // Pagination buttons
-    const paginationButtons = this.shadowRoot.querySelectorAll(
-      ".pagination-btn[data-page]"
-    );
-    paginationButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement;
-        const page = parseInt(target.dataset.page || "1", 10);
-        if (
-          page !== this.currentPage &&
-          !target.hasAttribute("disabled")
-        ) {
-          this.goToPage(page);
-        }
-      });
-    });
   }
 
   private handleTagFilter(event: Event): void {
@@ -319,8 +464,6 @@ class KbrPostList extends HTMLElement {
       this.currentPage = 1;
       this.filteredPosts = [...this.posts];
     }
-
-    this.renderPostList();
   }
 
   private goToPage(page: number): void {
@@ -330,12 +473,8 @@ class KbrPostList extends HTMLElement {
 
     if (page >= 1 && page <= totalPages) {
       this.currentPage = page;
-      this.renderPostList();
     }
   }
 }
 
-// Register the custom element
-customElements.define("kbr-post-list", KbrPostList);
-
-export { KbrPostList, type BlogPostMetadata };
+export { type BlogPostMetadata };

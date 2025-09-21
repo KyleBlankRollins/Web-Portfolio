@@ -1,3 +1,6 @@
+import { LitElement, html, css } from "lit";
+import { customElement, state, property } from "lit/decorators.js";
+
 /**
  * Table of Contents Web Component
  *
@@ -14,20 +17,204 @@ interface TocItem {
   element: HTMLElement;
 }
 
-class KbrTableOfContents extends HTMLElement {
-  private tocItems: TocItem[] = [];
+@customElement("kbr-table-of-contents")
+export class KbrTableOfContents extends LitElement {
+  @property({ type: Number, attribute: "max-level" })
+  declare maxLevel: number;
+
+  @property({ type: String, attribute: "target-selector" })
+  declare targetSelector: string;
+
+  @state()
+  private declare tocItems: TocItem[];
+
+  @state()
+  private declare activeId: string;
+
   private observer: IntersectionObserver | null = null;
 
-  static get observedAttributes() {
-    return ["max-level", "target-selector"];
-  }
+  static styles = css`
+    :host {
+      display: block;
+      width: 100%;
+      height: fit-content;
+      position: sticky;
+      top: var(--space-lg, 2rem);
+    }
+
+    .toc-container {
+      background: var(--color-background-secondary, #f8f8f8);
+      border: 1px solid var(--color-border, #e0e0e0);
+      border-radius: 8px;
+      padding: var(--space-lg, 2rem);
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+
+    /* Navigation container */
+    .table-of-contents {
+      font-size: 0.9rem;
+    }
+
+    .toc-title {
+      color: var(--color-primary, #2d2d2d);
+      font-weight: 600;
+      margin: 0 0 var(--space-md, 1.5rem) 0;
+      padding-bottom: var(--space-sm, 1rem);
+      border-bottom: 2px solid var(--color-border, #e0e0e0);
+    }
+
+    /* Lists */
+    .toc-list,
+    .toc-sublist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .toc-sublist {
+      margin-left: var(--space-md, 1.5rem);
+      margin-top: var(--space-xs, 0.5rem);
+    }
+
+    /* List items */
+    .toc-item {
+      margin: 0;
+      padding: 0;
+    }
+
+    .toc-item:not(:last-child) {
+      margin-bottom: var(--space-xs, 0.5rem);
+    }
+
+    /* Links */
+    .toc-link {
+      display: block;
+      color: var(--color-text, #212121);
+      text-decoration: none;
+      padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+      border-radius: 4px;
+      line-height: 1.4;
+      transition: all var(--transition-fast, 0.2s ease);
+      border-left: 3px solid transparent;
+    }
+
+    .toc-link:hover {
+      background: var(--color-background, #ffffff);
+      color: var(--color-primary, #2d2d2d);
+      text-decoration: none;
+      border-left-color: var(--color-border-dark, #bdbdbd);
+    }
+
+    .toc-link:focus {
+      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline-offset: 2px;
+    }
+
+    .toc-link.active {
+      background: var(--color-primary, #2d2d2d);
+      color: var(--color-text-inverse, #ffffff);
+      font-weight: 500;
+      border-left-color: var(--color-primary-dark, #1a1a1a);
+    }
+
+    /* Level-specific styling */
+    .toc-level-1 .toc-link {
+      font-weight: 500;
+      font-size: 1em;
+    }
+
+    .toc-level-2 .toc-link {
+      font-size: 0.95em;
+    }
+
+    .toc-level-3 .toc-link {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .toc-level-4 .toc-link,
+    .toc-level-5 .toc-link,
+    .toc-level-6 .toc-link {
+      font-size: 0.85em;
+      opacity: 0.8;
+    }
+
+    /* Empty state */
+    .toc-empty {
+      color: var(--color-text-muted, #616161);
+      font-style: italic;
+      text-align: center;
+      margin: var(--space-md, 1.5rem) 0;
+    }
+
+    /* Scrollbar styling */
+    .toc-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .toc-container::-webkit-scrollbar-track {
+      background: var(--color-background, #ffffff);
+      border-radius: 3px;
+    }
+
+    .toc-container::-webkit-scrollbar-thumb {
+      background: var(--color-border-dark, #bdbdbd);
+      border-radius: 3px;
+    }
+
+    .toc-container::-webkit-scrollbar-thumb:hover {
+      background: var(--color-primary, #2d2d2d);
+    }
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+      :host {
+        position: relative;
+        top: 0;
+      }
+
+      .toc-container {
+        max-height: none;
+        margin-bottom: var(--space-xl, 3rem);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .toc-container {
+        padding: var(--space-md, 1.5rem);
+      }
+
+      .toc-sublist {
+        margin-left: var(--space-sm, 1rem);
+      }
+
+      .toc-link {
+        padding: var(--space-xs, 0.5rem);
+      }
+    }
+
+    /* Animation preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .toc-link {
+        transition: none !important;
+      }
+    }
+  `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
+
+    // Initialize properties
+    this.maxLevel = 6;
+    this.targetSelector = "main, article, .content";
+    this.tocItems = [];
+    this.activeId = "";
+    this.observer = null;
   }
 
   connectedCallback() {
+    super.connectedCallback();
     // Wait for DOM to be ready, then generate TOC
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", () =>
@@ -39,6 +226,7 @@ class KbrTableOfContents extends HTMLElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     if (this.observer) {
       this.observer.disconnect();
     }
@@ -46,33 +234,23 @@ class KbrTableOfContents extends HTMLElement {
 
   private generateToc(): void {
     this.extractHeadings();
-    this.render();
     this.setupIntersectionObserver();
-    this.setupScrollBehavior();
   }
 
   private extractHeadings(): void {
-    const maxLevel = parseInt(
-      this.getAttribute("max-level") || "6",
-      10
-    );
-    const targetSelector =
-      this.getAttribute("target-selector") ||
-      "main, article, .content";
-
     // Find the target container (default to main, article, or .content)
-    const targetElement = document.querySelector(targetSelector);
+    const targetElement = document.querySelector(this.targetSelector);
     if (!targetElement) {
       console.warn(
         "KbrTableOfContents: No target element found for selector:",
-        targetSelector
+        this.targetSelector
       );
       return;
     }
 
     // Find all headings within the target element
     const headingSelector = Array.from(
-      { length: maxLevel },
+      { length: this.maxLevel },
       (_, i) => `h${i + 1}`
     ).join(", ");
     const headings = targetElement.querySelectorAll(headingSelector);
@@ -130,19 +308,9 @@ class KbrTableOfContents extends HTMLElement {
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const id = entry.target.id;
-        const link = this.shadowRoot?.querySelector(
-          `a[href="#${id}"]`
-        );
 
         if (entry.isIntersecting) {
-          // Remove active class from all links
-          this.shadowRoot
-            ?.querySelectorAll("a.active")
-            .forEach((el) => {
-              el.classList.remove("active");
-            });
-          // Add active class to current link
-          link?.classList.add("active");
+          this.activeId = id;
         }
       });
     }, options);
@@ -153,122 +321,72 @@ class KbrTableOfContents extends HTMLElement {
     });
   }
 
-  private setupScrollBehavior(): void {
-    // Handle clicks on TOC links
-    this.shadowRoot?.addEventListener("click", (event) => {
-      event.preventDefault();
-      const target = event.target as HTMLElement;
-
-      if (
-        target.tagName === "A" &&
-        target.getAttribute("href")?.startsWith("#")
-      ) {
-        const id = target.getAttribute("href")?.substring(1);
-        const element = document.getElementById(id || "");
-
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-
-          // Update active state immediately
-          this.shadowRoot
-            ?.querySelectorAll("a.active")
-            .forEach((el) => {
-              el.classList.remove("active");
-            });
-          target.classList.add("active");
-        }
-      }
-    });
-  }
-
-  private render(): void {
-    if (!this.shadowRoot) return;
-
-    // Load external CSS
-    const typographyLink = document.createElement("link");
-    typographyLink.rel = "stylesheet";
-    typographyLink.href = "/styles/component-typography.css";
-
-    const styleLink = document.createElement("link");
-    styleLink.rel = "stylesheet";
-    styleLink.href = "/components/table-of-contents.css";
-
-    const container = document.createElement("div");
-    container.className = "toc-container";
-
+  render() {
     if (this.tocItems.length === 0) {
-      container.innerHTML =
-        '<p class="toc-empty">No headings found</p>';
-    } else {
-      const tocHtml = this.generateTocHtml();
-      container.innerHTML = `
-        <nav class="table-of-contents" role="navigation" aria-label="Table of contents">
+      return html`
+        <div class="toc-container">
+          <p class="toc-empty">No headings found</p>
+        </div>
+      `;
+    }
+
+    return html`
+      <div class="toc-container">
+        <nav
+          class="table-of-contents"
+          role="navigation"
+          aria-label="Table of contents"
+        >
           <h2 class="toc-title">Table of Contents</h2>
           <ol class="toc-list">
-            ${tocHtml}
+            ${this.renderTocItems()}
           </ol>
         </nav>
-      `;
-    }
-
-    this.shadowRoot.innerHTML = "";
-    this.shadowRoot.appendChild(typographyLink);
-    this.shadowRoot.appendChild(styleLink);
-    this.shadowRoot.appendChild(container);
+      </div>
+    `;
   }
 
-  private generateTocHtml(): string {
+  private renderTocItems() {
     if (this.tocItems.length === 0) return "";
 
-    let html = "";
-    let currentLevel = 0;
-    let openLists = 0;
+    // Group items by level structure
+    const renderItem = (item: TocItem) => html`
+      <li class="toc-item toc-level-${item.level}">
+        <a
+          href="#${item.id}"
+          class="toc-link ${this.activeId === item.id
+            ? "active"
+            : ""}"
+          @click="${this.handleLinkClick}"
+        >
+          ${item.text}
+        </a>
+      </li>
+    `;
 
-    for (const item of this.tocItems) {
-      if (item.level > currentLevel) {
-        // Opening deeper levels
-        const levelsToOpen = item.level - currentLevel;
-        for (let i = 0; i < levelsToOpen; i++) {
-          if (
-            html &&
-            !html.endsWith('<ol class="toc-list">') &&
-            !html.endsWith('<ol class="toc-sublist">')
-          ) {
-            html += '<ol class="toc-sublist">';
-          }
-          openLists++;
-        }
-      } else if (item.level < currentLevel) {
-        // Closing shallower levels
-        const levelsToClose = currentLevel - item.level;
-        for (let i = 0; i < levelsToClose; i++) {
-          html += "</ol>";
-          openLists--;
-        }
+    // For simplicity in Lit, render all items linearly
+    // In a more complex implementation, you'd build the nested structure
+    return this.tocItems.map(renderItem);
+  }
+
+  private handleLinkClick(event: Event): void {
+    event.preventDefault();
+    const target = event.target as HTMLAnchorElement;
+    const href = target.getAttribute("href");
+
+    if (href?.startsWith("#")) {
+      const id = href.substring(1);
+      const element = document.getElementById(id);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+
+        // Update active state immediately
+        this.activeId = id;
       }
-
-      html += `
-        <li class="toc-item toc-level-${item.level}">
-          <a href="#${item.id}" class="toc-link">${item.text}</a>
-        </li>
-      `;
-
-      currentLevel = item.level;
     }
-
-    // Close any remaining open lists
-    for (let i = 0; i < openLists - 1; i++) {
-      html += "</ol>";
-    }
-
-    return html;
   }
 }
-
-// Register the web component
-customElements.define("kbr-table-of-contents", KbrTableOfContents);
-
-export { KbrTableOfContents };

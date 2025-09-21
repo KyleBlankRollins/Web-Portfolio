@@ -1,3 +1,6 @@
+import { LitElement, html, css } from "lit";
+import { customElement, property } from "lit/decorators.js";
+
 /**
  * Blog Post Card Web Component
  *
@@ -16,162 +19,297 @@ interface PostCardData {
   url: string;
 }
 
-class KbrPostCard extends HTMLElement {
-  private data: PostCardData | null = null;
+@customElement("kbr-post-card")
+export class KbrPostCard extends LitElement {
+  @property({ type: String }) declare title: string;
+  @property({ type: String }) declare description: string;
+  @property({ type: String }) declare date: string;
+  @property({ type: String, attribute: "formatted-date" })
+  declare formattedDate: string;
+  @property({ type: String }) declare tags: string;
+  @property({ type: String }) declare url: string;
 
-  static get observedAttributes() {
-    return [
-      "title",
-      "description",
-      "date",
-      "formatted-date",
-      "tags",
-      "url",
-    ];
-  }
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
-
-  connectedCallback() {
-    this.updateData();
-    this.render();
-  }
-
-  attributeChangedCallback() {
-    if (this.shadowRoot) {
-      this.updateData();
-      this.render();
-    }
-  }
-
-  private updateData(): void {
-    const tagsAttr = this.getAttribute("tags") || "[]";
-    let tags: string[] = [];
-
+  private get parsedTags(): string[] {
     try {
-      tags = JSON.parse(tagsAttr);
+      return JSON.parse(this.tags || "[]");
     } catch {
       // Fallback to comma-separated parsing
-      tags = tagsAttr
+      return (this.tags || "")
         .split(",")
         .map((tag) => tag.trim())
         .filter((tag) => tag);
     }
-
-    this.data = {
-      title: this.getAttribute("title") || "Untitled Post",
-      description: this.getAttribute("description") || "",
-      date: this.getAttribute("date") || "",
-      formattedDate:
-        this.getAttribute("formatted-date") ||
-        this.getAttribute("date") ||
-        "",
-      tags: tags,
-      url: this.getAttribute("url") || "#",
-    };
   }
 
-  private render(): void {
-    if (!this.shadowRoot || !this.data) return;
-
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/post-card.css">
-      ${this.getCardHTML()}
-    `;
-
-    // Add event listeners for tag buttons
-    this.attachEventListeners();
+  private get displayDate(): string {
+    return this.formattedDate || this.date || "";
   }
 
-  private getCardHTML(): string {
-    if (!this.data) return "";
+  private get displayTitle(): string {
+    return this.title || "Untitled Post";
+  }
 
-    const { title, description, formattedDate, date, tags, url } =
-      this.data;
+  private get displayUrl(): string {
+    return this.url || "#";
+  }
 
-    return `
+  static styles = css`
+    /* Host element - the <kbr-post-card> tag itself */
+    :host {
+      display: block;
+      margin-bottom: var(--space-lg, 2rem);
+    }
+
+    .post-card {
+      background: var(--color-background, #ffffff);
+      border: 1px solid var(--color-border, #e0e0e0);
+      border-radius: 12px;
+      padding: var(--space-lg, 2rem);
+      transition: all var(--transition-normal, 0.3s ease);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card:hover {
+      box-shadow: 0 8px 25px var(--color-shadow, rgba(0, 0, 0, 0.12));
+      transform: translateY(-2px);
+      border-color: var(--color-border-dark, #bdbdbd);
+    }
+
+    .post-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* Header section */
+    .post-card-header {
+      margin-bottom: var(--space-md, 1.5rem);
+    }
+
+    .post-card-title {
+      margin: 0 0 var(--space-sm, 1rem) 0;
+      font-weight: 600;
+    }
+
+    .post-title-link {
+      color: var(--color-primary, #2d2d2d);
+      text-decoration: none;
+      transition: color var(--transition-fast, 0.2s ease);
+    }
+
+    .post-title-link:hover {
+      color: var(--color-primary-dark, #1a1a1a);
+      text-decoration: underline;
+    }
+
+    .post-title-link:focus {
+      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .post-card-date {
+      margin-bottom: var(--space-xs, 0.5rem);
+    }
+
+    .post-card-date time {
+      color: var(--color-text-muted, #616161);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* Description section */
+    .post-card-description {
+      margin-bottom: var(--space-md, 1.5rem);
+      flex-grow: 1;
+    }
+
+    .post-card-description p {
+      color: var(--color-text, #212121);
+      line-height: var(--line-height-base, 1.6);
+      margin: 0;
+    }
+
+    /* Tags section */
+    .post-card-tags {
+      margin-bottom: var(--space-md, 1.5rem);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs, 0.5rem);
+    }
+
+    .post-tag {
+      background-color: var(--color-background-secondary, #f8f8f8);
+      border: 1px solid var(--color-border, #e0e0e0);
+      color: var(--color-text, #212121);
+      padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+      border-radius: 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast, 0.2s ease);
+      text-decoration: none;
+    }
+
+    .post-tag:hover {
+      background-color: var(--color-accent, #4a4a4a);
+      color: var(--color-text-inverse, #ffffff);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.12));
+    }
+
+    .post-tag:focus {
+      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline-offset: 2px;
+    }
+
+    /* Footer section */
+    .post-card-footer {
+      margin-top: auto;
+      padding-top: var(--space-sm, 1rem);
+      border-top: 1px solid var(--color-border, #e0e0e0);
+    }
+
+    .read-more-link {
+      color: var(--color-primary, #2d2d2d);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all var(--transition-fast, 0.2s ease);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs, 0.5rem);
+    }
+
+    .read-more-link:hover {
+      color: var(--color-primary-dark, #1a1a1a);
+      transform: translateX(4px);
+    }
+
+    .read-more-link:focus {
+      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .post-card {
+        padding: var(--space-md, 1.5rem);
+      }
+
+      .post-card-title {
+        font-size: var(--font-size-lg, 1.25rem);
+      }
+
+      .tag-list {
+        gap: var(--space-xs, 0.5rem);
+      }
+
+      .post-tag {
+        font-size: 0.7rem;
+        padding: calc(var(--space-xs, 0.5rem) * 0.8)
+          var(--space-xs, 0.5rem);
+      }
+    }
+
+    /* Animation preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .post-card,
+      .post-title-link,
+      .post-tag,
+      .read-more-link {
+        transition: none;
+      }
+
+      .post-card:hover {
+        transform: none;
+      }
+
+      .post-tag:hover {
+        transform: none;
+      }
+
+      .read-more-link:hover {
+        transform: none;
+      }
+    }
+  `;
+
+  render() {
+    return html`
       <article class="post-card">
         <div class="post-card-content">
           <header class="post-card-header">
             <h3 class="post-card-title">
-              <a href="${url}" class="post-title-link">${title}</a>
+              <a href="${this.displayUrl}" class="post-title-link"
+                >${this.displayTitle}</a
+              >
             </h3>
-            ${
-              formattedDate
-                ? `
-              <div class="post-card-date">
-                <time datetime="${date}">${formattedDate}</time>
-              </div>
-            `
-                : ""
-            }
+            ${this.displayDate
+              ? html`
+                  <div class="post-card-date">
+                    <time datetime="${this.date || ""}"
+                      >${this.displayDate}</time
+                    >
+                  </div>
+                `
+              : ""}
           </header>
 
-          ${
-            description
-              ? `
-            <div class="post-card-description">
-              <p>${description}</p>
-            </div>
-          `
-              : ""
-          }
-
-          ${
-            tags.length > 0
-              ? `
-            <div class="post-card-tags">
-              <div class="tag-list">
-                ${tags
-                  .map(
-                    (tag) =>
-                      `<button class="post-tag" data-tag="${tag}">${tag}</button>`
-                  )
-                  .join("")}
-              </div>
-            </div>
-          `
-              : ""
-          }
+          ${this.description
+            ? html`
+                <div class="post-card-description">
+                  <p>${this.description}</p>
+                </div>
+              `
+            : ""}
+          ${this.parsedTags.length > 0
+            ? html`
+                <div class="post-card-tags">
+                  <div class="tag-list">
+                    ${this.parsedTags.map(
+                      (tag) =>
+                        html`<button
+                          class="post-tag"
+                          data-tag="${tag}"
+                          @click="${this.handleTagClick}"
+                        >
+                          ${tag}
+                        </button>`
+                    )}
+                  </div>
+                </div>
+              `
+            : ""}
 
           <footer class="post-card-footer">
-            <a href="${url}" class="read-more-link">Read more →</a>
+            <a href="${this.displayUrl}" class="read-more-link"
+              >Read more →</a
+            >
           </footer>
         </div>
       </article>
     `;
   }
 
-  private attachEventListeners(): void {
-    if (!this.shadowRoot) return;
+  private handleTagClick(e: Event): void {
+    e.preventDefault();
+    const target = e.target as HTMLElement;
+    const tag = target.dataset.tag;
 
-    // Handle tag button clicks - navigate to blog page with tag filter
-    const tagButtons = this.shadowRoot.querySelectorAll(".post-tag");
-
-    tagButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        const tag = (e.target as HTMLElement).dataset.tag;
-
-        if (tag) {
-          // Navigate to blog page with tag filter (consistent with other tag buttons)
-          const blogUrl = new URL(
-            "/blog.html",
-            window.location.origin
-          );
-          blogUrl.searchParams.set("tag", tag);
-          window.location.href = blogUrl.href;
-        }
-      });
-    });
+    if (tag) {
+      // Navigate to blog page with tag filter (consistent with other tag buttons)
+      const blogUrl = new URL("/blog.html", window.location.origin);
+      blogUrl.searchParams.set("tag", tag);
+      window.location.href = blogUrl.href;
+    }
   }
 }
 
-// Register the custom element
-customElements.define("kbr-post-card", KbrPostCard);
-
-export { KbrPostCard, type PostCardData };
+export { type PostCardData };

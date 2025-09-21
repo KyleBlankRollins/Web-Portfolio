@@ -1,3 +1,6 @@
+import { LitElement, html, css } from "lit";
+import { customElement, state, property } from "lit/decorators.js";
+
 /**
  * Blog Tag Filter Web Component
  *
@@ -15,44 +18,250 @@ interface BlogManifest {
   generatedAt: string;
 }
 
-class KbrTagFilter extends HTMLElement {
-  private tagsWithCounts: { tag: string; count: number }[] = [];
-  private activeTag: string | null = null;
-  private isLoading: boolean = false;
-  private visibleTagCount: number = 5;
-  private isExpanded: boolean = false;
+@customElement("kbr-tag-filter")
+export default class KbrTagFilter extends LitElement {
+  @property({ type: String, attribute: "active-tag" })
+  declare activeTag: string | null;
 
-  static get observedAttributes() {
-    return ["active-tag"];
-  }
+  @state()
+  private declare tagsWithCounts: { tag: string; count: number }[];
+
+  @state()
+  private declare isLoading: boolean;
+
+  @state()
+  private declare visibleTagCount: number;
+
+  @state()
+  private declare isExpanded: boolean;
+
+  static styles = css`
+    /* Host element - the <kbr-tag-filter> tag itself */
+    :host {
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .tag-filter-container {
+      background: var(--bg-secondary, #f8f9fa);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-title {
+      font-weight: 600;
+      color: var(--text-primary, #333);
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .clear-filter-btn {
+      background: none;
+      border: 1px solid var(--border-color, #ddd);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #666);
+      transition: all 0.2s ease;
+    }
+
+    .clear-filter-btn:hover {
+      background: var(--accent-primary, #007acc);
+      color: white;
+      border-color: var(--accent-primary, #007acc);
+    }
+
+    .clear-filter-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag-button {
+      background: white;
+      border: 1px solid var(--border-color, #ddd);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      color: var(--text-secondary, #666);
+    }
+
+    .tag-button:hover {
+      border-color: var(--accent-primary, #007acc);
+      color: var(--accent-primary, #007acc);
+      transform: translateY(-1px);
+    }
+
+    .tag-button.active {
+      background: var(--accent-primary, #007acc);
+      border-color: var(--accent-primary, #007acc);
+      color: white;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary, #666);
+    }
+
+    .error {
+      color: var(--error-color, #dc3545);
+      text-align: center;
+      padding: 1rem;
+      background: var(--error-bg, #f8d7da);
+      border-radius: 4px;
+    }
+
+    /* Tag count styles */
+    .tag-count {
+      opacity: 0.7;
+      font-weight: normal;
+      margin-left: 0.25rem;
+    }
+
+    .tag-button.active .tag-count {
+      opacity: 1;
+      font-weight: 500;
+    }
+
+    /* Expand/collapse controls */
+    .expand-controls {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .expand-tags-btn {
+      background: none;
+      border: 1px solid var(--border-color, #ddd);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      color: var(--text-secondary, #666);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .expand-tags-btn:hover {
+      border-color: var(--accent-primary, #007acc);
+      color: var(--accent-primary, #007acc);
+      background: var(--bg-primary, #fff);
+    }
+
+    .expand-tags-btn:focus {
+      outline: 2px solid var(--accent-primary, #007acc);
+      outline-offset: 2px;
+    }
+
+    /* Dark theme support */
+    @media (prefers-color-scheme: dark) {
+      .tag-filter-container {
+        background: var(--bg-secondary-dark, #2a2a2a);
+      }
+
+      .filter-title {
+        color: var(--text-primary-dark, #fff);
+      }
+
+      .tag-button {
+        background: var(--bg-primary-dark, #1a1a1a);
+        border-color: var(--border-color-dark, #444);
+        color: var(--text-secondary-dark, #aaa);
+      }
+
+      .tag-button:hover {
+        border-color: var(--accent-primary-dark, #4fc3f7);
+        color: var(--accent-primary-dark, #4fc3f7);
+      }
+
+      .tag-button.active {
+        background: var(--accent-primary-dark, #4fc3f7);
+        border-color: var(--accent-primary-dark, #4fc3f7);
+      }
+
+      .expand-tags-btn {
+        border-color: var(--border-color-dark, #444);
+        color: var(--text-secondary-dark, #aaa);
+      }
+
+      .expand-tags-btn:hover {
+        border-color: var(--accent-primary-dark, #4fc3f7);
+        color: var(--accent-primary-dark, #4fc3f7);
+        background: var(--bg-primary-dark, #1a1a1a);
+      }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .tag-filter-container {
+        padding: 1rem;
+      }
+
+      .filter-header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+
+      .tags-grid {
+        justify-content: center;
+      }
+    }
+  `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
+
+    // Initialize properties
+    this.activeTag = null;
+    this.tagsWithCounts = [];
+    this.isLoading = false;
+    this.visibleTagCount = 5;
+    this.isExpanded = false;
   }
 
   connectedCallback() {
+    super.connectedCallback();
     this.loadAvailableTags();
-
-    // Don't check URL parameters immediately - do it after tags are loaded
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string,
-    newValue: string
-  ) {
-    if (oldValue === newValue) return;
+  updated(changedProperties: Map<PropertyKey, unknown>) {
+    super.updated(changedProperties);
 
-    if (name != "active-tag") return;
-
-    // Update internal state to match the attribute
-    this.activeTag = newValue || null;
-
-    // Only re-render if the component is fully loaded
-    if (!this.isLoading && this.tagsWithCounts.length > 0) {
-      this.renderWithEvents();
+    if (
+      changedProperties.has("activeTag") &&
+      !this.isLoading &&
+      this.tagsWithCounts.length > 0
+    ) {
+      // Property change handling is automatic with Lit's reactive update cycle
+      this.requestUpdate();
     }
+  }
+
+  firstUpdated() {
+    // Check for URL parameters after first render
+    this.checkUrlParameters();
   }
 
   /**
@@ -65,7 +274,6 @@ class KbrTagFilter extends HTMLElement {
     if (tagParam) {
       // Set both the internal state and the attribute
       this.activeTag = tagParam;
-      this.setAttribute("active-tag", tagParam);
 
       // Use a small delay to ensure other components are ready
       setTimeout(() => {
@@ -79,11 +287,10 @@ class KbrTagFilter extends HTMLElement {
    */
   private async loadAvailableTags(): Promise<void> {
     this.isLoading = true;
-    this.render();
 
     try {
-      // Use absolute URL for manifest
-      const manifestUrl = `${window.location.origin}/blog-manifest.json`;
+      // Use relative URL for manifest
+      const manifestUrl = `./blog-manifest.json`;
 
       const response = await fetch(manifestUrl);
       if (!response.ok) {
@@ -93,18 +300,86 @@ class KbrTagFilter extends HTMLElement {
       }
 
       const manifest: BlogManifest = await response.json();
-
       this.tagsWithCounts = manifest.tagsWithCounts || [];
-
       this.isLoading = false;
-      this.renderWithEvents();
 
       // Check for URL parameter after tags are loaded and rendered
       this.checkUrlParameters();
     } catch (error) {
       console.error("Failed to load available tags:", error);
       this.isLoading = false;
-      this.renderError();
+    }
+  }
+
+  render() {
+    if (this.isLoading) {
+      return html`
+        <div class="tag-filter-container">
+          <div class="loading">Loading tags...</div>
+        </div>
+      `;
+    }
+
+    if (this.tagsWithCounts.length === 0) {
+      return html`
+        <div class="tag-filter-container">
+          <div class="error">
+            No tags found. Make sure blog posts have tags defined.
+          </div>
+        </div>
+      `;
+    }
+
+    // Determine how many tags to show
+    const tagsToShow = this.isExpanded
+      ? this.tagsWithCounts
+      : this.tagsWithCounts.slice(0, this.visibleTagCount);
+
+    return html`
+      <div class="tag-filter-container">
+        <div class="filter-header">
+          <div class="ui-label filter-title">Filter by Tag</div>
+        </div>
+        <div class="tags-grid">
+          ${tagsToShow.map(
+            ({ tag, count }) =>
+              html`<button
+                class="tag-button ${this.activeTag === tag
+                  ? "active"
+                  : ""}"
+                @click="${() => this.handleTagClick(tag)}"
+                data-tag="${tag}"
+              >
+                ${tag} <span class="tag-count">(${count})</span>
+              </button>`
+          )}
+        </div>
+        ${this.tagsWithCounts.length > this.visibleTagCount
+          ? html`<div class="expand-controls">
+              ${this.renderExpandButton()}
+            </div>`
+          : ""}
+      </div>
+    `;
+  }
+
+  private renderExpandButton() {
+    if (this.isExpanded) {
+      return html`<button
+        class="expand-tags-btn"
+        @click="${this.collapseTags}"
+      >
+        Less tags
+      </button>`;
+    } else {
+      const remaining =
+        this.tagsWithCounts.length - this.visibleTagCount;
+      return html`<button
+        class="expand-tags-btn"
+        @click="${this.expandTags}"
+      >
+        More tags (+${remaining})
+      </button>`;
     }
   }
 
@@ -134,9 +409,6 @@ class KbrTagFilter extends HTMLElement {
 
     // Notify post list component
     this.notifyPostList(tag);
-
-    // Set the attribute (this will trigger attributeChangedCallback which handles rendering)
-    this.setAttribute("active-tag", tag);
   }
 
   /**
@@ -152,9 +424,6 @@ class KbrTagFilter extends HTMLElement {
 
     // Notify post list component
     this.notifyPostList(null);
-
-    // Remove the attribute (this will trigger attributeChangedCallback which handles rendering)
-    this.removeAttribute("active-tag");
   }
 
   /**
@@ -169,139 +438,6 @@ class KbrTagFilter extends HTMLElement {
         composed: true, // This allows the event to cross shadow DOM boundaries
       })
     );
-
-    // Don't manipulate attributes to avoid recursion - let the event system handle it
-  }
-
-  /**
-   * Render the component
-   */
-  private render(): void {
-    if (!this.shadowRoot) return;
-
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/tag-filter.css">
-      <div class="tag-filter-container">
-        ${this.renderContent()}
-      </div>
-    `;
-  }
-
-  /**
-   * Render the main content
-   */
-  private renderContent(): string {
-    if (this.isLoading) {
-      return '<div class="loading">Loading tags...</div>';
-    }
-
-    if (this.tagsWithCounts.length === 0) {
-      return '<div class="error">No tags found. Make sure blog posts have tags defined.</div>';
-    }
-
-    // Determine how many tags to show
-    const tagsToShow = this.isExpanded
-      ? this.tagsWithCounts
-      : this.tagsWithCounts.slice(0, this.visibleTagCount);
-
-    const tagButtons = tagsToShow
-      .map(
-        ({ tag, count }) => `
-        <button 
-          class="tag-button ${this.activeTag === tag ? "active" : ""}"
-          data-tag="${tag}"
-        >
-          ${tag} <span class="tag-count">(${count})</span>
-        </button>
-      `
-      )
-      .join("");
-
-    // Show more/less button logic
-    let expandButton = "";
-    if (this.tagsWithCounts.length > this.visibleTagCount) {
-      if (this.isExpanded) {
-        expandButton = `<button class="expand-tags-btn" data-action="collapse-tags">Less tags</button>`;
-      } else {
-        const remaining =
-          this.tagsWithCounts.length - this.visibleTagCount;
-        expandButton = `<button class="expand-tags-btn" data-action="expand-tags">More tags (+${remaining})</button>`;
-      }
-    }
-
-    return `
-      <div class="filter-header">
-        <div class="ui-label filter-title">Filter by Tag</div>
-      </div>
-      <div class="tags-grid">
-        ${tagButtons}
-      </div>
-      ${
-        expandButton
-          ? `<div class="expand-controls">${expandButton}</div>`
-          : ""
-      }
-    `;
-  }
-
-  /**
-   * Render error state
-   */
-  private renderError(): void {
-    if (!this.shadowRoot) return;
-
-    this.shadowRoot.innerHTML = `
-      <link rel="stylesheet" href="/styles/component-typography.css">
-      <link rel="stylesheet" href="/components/tag-filter.css">
-      <div class="tag-filter-container">
-        <div class="error">Failed to load tags. Please try again.</div>
-      </div>
-    `;
-  }
-
-  /**
-   * Add event listeners after rendering
-   */
-  private addEventListeners(): void {
-    if (!this.shadowRoot) return;
-
-    // Tag button clicks
-    const tagButtons =
-      this.shadowRoot.querySelectorAll(".tag-button");
-    tagButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        // Get the button element even if span was clicked
-        const target = (e.target as HTMLElement).closest(
-          ".tag-button"
-        ) as HTMLElement;
-        if (target) {
-          const tag = target.getAttribute("data-tag");
-          if (tag) {
-            this.handleTagClick(tag);
-          }
-        }
-      });
-    });
-
-    // Expand/collapse button
-    const expandButton = this.shadowRoot.querySelector(
-      ".expand-tags-btn"
-    );
-    if (expandButton) {
-      expandButton.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement;
-        const action = target.getAttribute("data-action");
-        if (action === "expand-tags") {
-          this.expandTags();
-        } else if (action === "collapse-tags") {
-          this.collapseTags();
-        }
-      });
-    }
   }
 
   /**
@@ -309,7 +445,6 @@ class KbrTagFilter extends HTMLElement {
    */
   private expandTags(): void {
     this.isExpanded = true;
-    this.renderWithEvents();
   }
 
   /**
@@ -317,22 +452,5 @@ class KbrTagFilter extends HTMLElement {
    */
   private collapseTags(): void {
     this.isExpanded = false;
-    this.renderWithEvents();
-  }
-
-  /**
-   * Render the component with event listeners
-   */
-  private renderWithEvents(): void {
-    this.render();
-    // Use requestAnimationFrame for better timing
-    requestAnimationFrame(() => {
-      this.addEventListeners();
-    });
   }
 }
-
-// Register the custom element
-customElements.define("kbr-tag-filter", KbrTagFilter);
-
-export default KbrTagFilter;
