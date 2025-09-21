@@ -21,3 +21,9 @@ If possible, the builder or Vite should bundle all of the CSS files for the site
 ### Lit HTML and Lit Element
 
 Consider migrating to Lit HTML and Lit Element.
+
+## Netlify
+
+### Deploys
+
+Make sure that the site can deploy to production and that deploy previews work.
