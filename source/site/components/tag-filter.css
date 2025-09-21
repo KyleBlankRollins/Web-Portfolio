@@ -142,3 +142,61 @@
     justify-content: center;
   }
 }
+
+/* Tag count styles */
+.tag-count {
+  opacity: 0.7;
+  font-weight: normal;
+  margin-left: 0.25rem;
+}
+
+.tag-button.active .tag-count {
+  opacity: 1;
+  font-weight: 500;
+}
+
+/* Expand/collapse controls */
+.expand-controls {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.expand-tags-btn {
+  background: none;
+  border: 1px solid var(--border-color, #ddd);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: var(--text-secondary, #666);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.expand-tags-btn:hover {
+  border-color: var(--accent-primary, #007acc);
+  color: var(--accent-primary, #007acc);
+  background: var(--bg-primary, #fff);
+}
+
+.expand-tags-btn:focus {
+  outline: 2px solid var(--accent-primary, #007acc);
+  outline-offset: 2px;
+}
+
+/* Dark theme for new elements */
+@media (prefers-color-scheme: dark) {
+  .expand-tags-btn {
+    border-color: var(--border-color-dark, #444);
+    color: var(--text-secondary-dark, #aaa);
+  }
+  
+  .expand-tags-btn:hover {
+    border-color: var(--accent-primary-dark, #4fc3f7);
+    color: var(--accent-primary-dark, #4fc3f7);
+    background: var(--bg-primary-dark, #1a1a1a);
+  }
+}

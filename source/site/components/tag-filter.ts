@@ -11,13 +11,16 @@ interface BlogManifest {
   posts: any[];
   totalPosts: number;
   availableTags: string[];
+  tagsWithCounts: { tag: string; count: number }[];
   generatedAt: string;
 }
 
 class KbrTagFilter extends HTMLElement {
-  private availableTags: string[] = [];
+  private tagsWithCounts: { tag: string; count: number }[] = [];
   private activeTag: string | null = null;
   private isLoading: boolean = false;
+  private visibleTagCount: number = 5;
+  private isExpanded: boolean = false;
 
   static get observedAttributes() {
     return ["active-tag"];
@@ -31,8 +34,7 @@ class KbrTagFilter extends HTMLElement {
   connectedCallback() {
     this.loadAvailableTags();
 
-    // Check for URL parameter on initial load
-    this.checkUrlParameters();
+    // Don't check URL parameters immediately - do it after tags are loaded
   }
 
   attributeChangedCallback(
@@ -42,8 +44,13 @@ class KbrTagFilter extends HTMLElement {
   ) {
     if (oldValue === newValue) return;
 
-    if (name === "active-tag") {
-      this.activeTag = newValue;
+    if (name != "active-tag") return;
+
+    // Update internal state to match the attribute
+    this.activeTag = newValue || null;
+
+    // Only re-render if the component is fully loaded
+    if (!this.isLoading && this.tagsWithCounts.length > 0) {
       this.renderWithEvents();
     }
   }
@@ -56,8 +63,14 @@ class KbrTagFilter extends HTMLElement {
     const tagParam = urlParams.get("tag");
 
     if (tagParam) {
+      // Set both the internal state and the attribute
       this.activeTag = tagParam;
-      this.notifyPostList(tagParam);
+      this.setAttribute("active-tag", tagParam);
+
+      // Use a small delay to ensure other components are ready
+      setTimeout(() => {
+        this.notifyPostList(tagParam);
+      }, 50);
     }
   }
 
@@ -81,10 +94,13 @@ class KbrTagFilter extends HTMLElement {
 
       const manifest: BlogManifest = await response.json();
 
-      this.availableTags = manifest.availableTags || [];
+      this.tagsWithCounts = manifest.tagsWithCounts || [];
 
       this.isLoading = false;
       this.renderWithEvents();
+
+      // Check for URL parameter after tags are loaded and rendered
+      this.checkUrlParameters();
     } catch (error) {
       console.error("Failed to load available tags:", error);
       this.isLoading = false;
@@ -96,10 +112,11 @@ class KbrTagFilter extends HTMLElement {
    * Handle tag filter selection
    */
   private handleTagClick(tag: string): void {
-    // Toggle tag selection
+    // Toggle tag selection - if same tag is clicked, clear filter
     if (this.activeTag === tag) {
       this.clearFilter();
     } else {
+      // Clear any existing filter and set new tag
       this.setActiveTag(tag);
     }
   }
@@ -109,7 +126,6 @@ class KbrTagFilter extends HTMLElement {
    */
   private setActiveTag(tag: string): void {
     this.activeTag = tag;
-    this.setAttribute("active-tag", tag);
 
     // Update URL without page reload
     const url = new URL(window.location.href);
@@ -119,7 +135,8 @@ class KbrTagFilter extends HTMLElement {
     // Notify post list component
     this.notifyPostList(tag);
 
-    this.renderWithEvents();
+    // Set the attribute (this will trigger attributeChangedCallback which handles rendering)
+    this.setAttribute("active-tag", tag);
   }
 
   /**
@@ -127,7 +144,6 @@ class KbrTagFilter extends HTMLElement {
    */
   private clearFilter(): void {
     this.activeTag = null;
-    this.removeAttribute("active-tag");
 
     // Remove tag from URL
     const url = new URL(window.location.href);
@@ -137,21 +153,24 @@ class KbrTagFilter extends HTMLElement {
     // Notify post list component
     this.notifyPostList(null);
 
-    this.renderWithEvents();
+    // Remove the attribute (this will trigger attributeChangedCallback which handles rendering)
+    this.removeAttribute("active-tag");
   }
 
   /**
    * Notify the post list component of filter changes
    */
   private notifyPostList(tag: string | null): void {
-    const postListElement = document.querySelector("kbr-post-list");
-    if (postListElement) {
-      if (tag) {
-        postListElement.setAttribute("filter", tag);
-      } else {
-        postListElement.removeAttribute("filter");
-      }
-    }
+    // Dispatch custom event that bubbles up to parent components
+    this.dispatchEvent(
+      new CustomEvent("tag-changed", {
+        detail: { tag },
+        bubbles: true,
+        composed: true, // This allows the event to cross shadow DOM boundaries
+      })
+    );
+
+    // Don't manipulate attributes to avoid recursion - let the event system handle it
   }
 
   /**
@@ -177,36 +196,52 @@ class KbrTagFilter extends HTMLElement {
       return '<div class="loading">Loading tags...</div>';
     }
 
-    if (this.availableTags.length === 0) {
+    if (this.tagsWithCounts.length === 0) {
       return '<div class="error">No tags found. Make sure blog posts have tags defined.</div>';
     }
 
-    const tagButtons = this.availableTags
+    // Determine how many tags to show
+    const tagsToShow = this.isExpanded
+      ? this.tagsWithCounts
+      : this.tagsWithCounts.slice(0, this.visibleTagCount);
+
+    const tagButtons = tagsToShow
       .map(
-        (tag) => `
+        ({ tag, count }) => `
         <button 
           class="tag-button ${this.activeTag === tag ? "active" : ""}"
           data-tag="${tag}"
         >
-          ${tag}
+          ${tag} <span class="tag-count">(${count})</span>
         </button>
       `
       )
       .join("");
 
+    // Show more/less button logic
+    let expandButton = "";
+    if (this.tagsWithCounts.length > this.visibleTagCount) {
+      if (this.isExpanded) {
+        expandButton = `<button class="expand-tags-btn" data-action="collapse-tags">Less tags</button>`;
+      } else {
+        const remaining =
+          this.tagsWithCounts.length - this.visibleTagCount;
+        expandButton = `<button class="expand-tags-btn" data-action="expand-tags">More tags (+${remaining})</button>`;
+      }
+    }
+
     return `
       <div class="filter-header">
         <div class="ui-label filter-title">Filter by Tag</div>
-        <button 
-          class="clear-filter-btn" 
-          ${!this.activeTag ? "disabled" : ""}
-        >
-          Clear Filter
-        </button>
       </div>
       <div class="tags-grid">
         ${tagButtons}
       </div>
+      ${
+        expandButton
+          ? `<div class="expand-controls">${expandButton}</div>`
+          : ""
+      }
     `;
   }
 
@@ -236,23 +271,53 @@ class KbrTagFilter extends HTMLElement {
       this.shadowRoot.querySelectorAll(".tag-button");
     tagButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement;
-        const tag = target.getAttribute("data-tag");
-        if (tag) {
-          this.handleTagClick(tag);
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Get the button element even if span was clicked
+        const target = (e.target as HTMLElement).closest(
+          ".tag-button"
+        ) as HTMLElement;
+        if (target) {
+          const tag = target.getAttribute("data-tag");
+          if (tag) {
+            this.handleTagClick(tag);
+          }
         }
       });
     });
 
-    // Clear filter button
-    const clearButton = this.shadowRoot.querySelector(
-      ".clear-filter-btn"
+    // Expand/collapse button
+    const expandButton = this.shadowRoot.querySelector(
+      ".expand-tags-btn"
     );
-    if (clearButton) {
-      clearButton.addEventListener("click", () => {
-        this.clearFilter();
+    if (expandButton) {
+      expandButton.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const action = target.getAttribute("data-action");
+        if (action === "expand-tags") {
+          this.expandTags();
+        } else if (action === "collapse-tags") {
+          this.collapseTags();
+        }
       });
     }
+  }
+
+  /**
+   * Expand to show more tags
+   */
+  private expandTags(): void {
+    this.isExpanded = true;
+    this.renderWithEvents();
+  }
+
+  /**
+   * Collapse to show fewer tags
+   */
+  private collapseTags(): void {
+    this.isExpanded = false;
+    this.renderWithEvents();
   }
 
   /**
@@ -260,10 +325,10 @@ class KbrTagFilter extends HTMLElement {
    */
   private renderWithEvents(): void {
     this.render();
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
+    // Use requestAnimationFrame for better timing
+    requestAnimationFrame(() => {
       this.addEventListeners();
-    }, 10);
+    });
   }
 }
 

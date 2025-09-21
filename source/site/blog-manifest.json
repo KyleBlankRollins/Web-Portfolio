@@ -56,5 +56,47 @@
     "typography",
     "web development"
   ],
-  "generatedAt": "2025-09-21T02:28:13.763Z"
+  "tagsWithCounts": [
+    {
+      "tag": "blogging",
+      "count": 1
+    },
+    {
+      "tag": "communication",
+      "count": 1
+    },
+    {
+      "tag": "design",
+      "count": 1
+    },
+    {
+      "tag": "documentation",
+      "count": 1
+    },
+    {
+      "tag": "markdown",
+      "count": 1
+    },
+    {
+      "tag": "technical writing",
+      "count": 1
+    },
+    {
+      "tag": "testing",
+      "count": 1
+    },
+    {
+      "tag": "typescript",
+      "count": 1
+    },
+    {
+      "tag": "typography",
+      "count": 1
+    },
+    {
+      "tag": "web development",
+      "count": 1
+    }
+  ],
+  "generatedAt": "2025-09-21T03:36:52.299Z"
 }

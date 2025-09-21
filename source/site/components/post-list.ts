@@ -31,14 +31,19 @@ class KbrPostList extends HTMLElement {
   private currentPage: number = 1;
   private postsPerPage: number = 5;
   private isLoading: boolean = false;
+  private boundHandleTagFilterChange: (event: Event) => void;
 
   static get observedAttributes() {
-    return ["posts-per-page", "filter"];
+    return ["posts-per-page"];
   }
 
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+
+    // Bind the event handler once to use with addEventListener/removeEventListener
+    this.boundHandleTagFilterChange =
+      this.handleTagFilterChange.bind(this);
 
     // Handle tag filtering events from post cards
     this.addEventListener(
@@ -53,28 +58,24 @@ class KbrPostList extends HTMLElement {
       this.postsPerPage = parseInt(postsPerPageAttr, 10) || 5;
     }
 
-    const filterAttr = this.getAttribute("filter");
-    if (filterAttr) {
-      this.currentFilter = filterAttr;
-    }
-
-    // Check URL parameters for initial filter
-    this.checkUrlParameters();
+    // Removed filter attribute handling - only respond to events now
 
     this.loadBlogPosts();
+
+    // Listen for tag filter changes from tag-filter components
+    // Listen on document since the event bubbles up from tag-filter
+    document.addEventListener(
+      "tag-changed",
+      this.boundHandleTagFilterChange
+    );
   }
 
-  /**
-   * Check URL query parameters for tag filtering
-   */
-  private checkUrlParameters(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tagParam = urlParams.get("tag");
-
-    if (tagParam && !this.currentFilter) {
-      this.currentFilter = tagParam;
-      this.setAttribute("filter", tagParam);
-    }
+  disconnectedCallback() {
+    // Clean up event listener to prevent memory leaks
+    document.removeEventListener(
+      "tag-changed",
+      this.boundHandleTagFilterChange
+    );
   }
 
   attributeChangedCallback(
@@ -88,10 +89,8 @@ class KbrPostList extends HTMLElement {
       this.postsPerPage = parseInt(newValue, 10) || 5;
       this.currentPage = 1;
       this.renderPostList();
-    } else if (name === "filter") {
-      this.currentFilter = newValue;
-      this.filterByTag(newValue);
     }
+    // Removed filter attribute handling - only respond to events now
   }
 
   private async loadBlogPosts(): Promise<void> {
@@ -110,10 +109,7 @@ class KbrPostList extends HTMLElement {
       this.posts = manifest.posts;
       this.filteredPosts = [...this.posts];
 
-      // Apply initial filter if set
-      if (this.currentFilter) {
-        this.filterByTag(this.currentFilter);
-      }
+      // Don't apply initial filter - let tag-filter component handle initial state
 
       this.isLoading = false;
       this.renderPostList();
@@ -154,7 +150,6 @@ class KbrPostList extends HTMLElement {
       <link rel="stylesheet" href="/components/post-list.css">
       <div class="post-list-container">
         ${this.getHeaderHTML()}
-        ${this.getFilterHTML()}
         ${
           currentPosts.length > 0
             ? this.getPostsHTML(currentPosts)
@@ -204,17 +199,6 @@ class KbrPostList extends HTMLElement {
     `;
   }
 
-  private getFilterHTML(): string {
-    if (!this.currentFilter) return "";
-
-    return `
-      <div class="post-list-filter">
-        <span class="filter-label">Filtered by: <strong>${this.currentFilter}</strong></span>
-        <button class="clear-filter-btn" data-action="clear-filter">Clear filter</button>
-      </div>
-    `;
-  }
-
   private getPostsHTML(posts: BlogPostMetadata[]): string {
     const postCards = posts
       .map(
@@ -246,11 +230,6 @@ class KbrPostList extends HTMLElement {
     return `
       <div class="post-list-empty">
         <p>${message}</p>
-        ${
-          this.currentFilter
-            ? '<button class="clear-filter-btn" data-action="clear-filter">View all posts</button>'
-            : ""
-        }
       </div>
     `;
   }
@@ -309,78 +288,39 @@ class KbrPostList extends HTMLElement {
         }
       });
     });
-
-    // Clear filter buttons
-    const clearFilterButtons = this.shadowRoot.querySelectorAll(
-      '[data-action="clear-filter"]'
-    );
-    clearFilterButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        this.clearFilter();
-      });
-    });
-
-    // Blog tag buttons - handle tag navigation
-    const blogTagButtons =
-      this.shadowRoot.querySelectorAll(".blog-tag");
-
-    blogTagButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        const target = e.target as HTMLElement;
-        const tag = target.getAttribute("data-tag");
-
-        if (tag) {
-          // Navigate to blog page with tag filter
-          const blogUrl = new URL(
-            "/blog.html",
-            window.location.origin
-          );
-          blogUrl.searchParams.set("tag", tag);
-          window.location.href = blogUrl.href;
-        }
-      });
-    });
   }
 
   private handleTagFilter(event: Event): void {
     const customEvent = event as CustomEvent;
     const tag = customEvent.detail?.tag;
     if (tag) {
-      this.filterByTag(tag);
+      // Use the same logic as handleTagFilterChange
+      this.handleTagFilterChange(event);
     }
   }
 
-  private filterByTag(tag: string): void {
-    if (!tag) {
-      this.clearFilter();
-      return;
+  private handleTagFilterChange(event: Event): void {
+    const customEvent = event as CustomEvent;
+    const tag = customEvent.detail?.tag;
+
+    if (tag) {
+      // Update internal state without triggering attribute change
+      this.currentFilter = tag;
+      this.currentPage = 1;
+
+      this.filteredPosts = this.posts.filter((post) =>
+        post.tags.some(
+          (postTag) => postTag.toLowerCase() === tag.toLowerCase()
+        )
+      );
+    } else {
+      // Clear filter without triggering attribute change
+      this.currentFilter = null;
+      this.currentPage = 1;
+      this.filteredPosts = [...this.posts];
     }
 
-    this.currentFilter = tag;
-    this.currentPage = 1;
-
-    this.filteredPosts = this.posts.filter((post) =>
-      post.tags.some(
-        (postTag) => postTag.toLowerCase() === tag.toLowerCase()
-      )
-    );
-
     this.renderPostList();
-
-    // Update attribute to reflect current state
-    this.setAttribute("filter", tag);
-  }
-
-  private clearFilter(): void {
-    this.currentFilter = null;
-    this.currentPage = 1;
-    this.filteredPosts = [...this.posts];
-
-    this.renderPostList();
-
-    // Remove filter attribute
-    this.removeAttribute("filter");
   }
 
   private goToPage(page: number): void {

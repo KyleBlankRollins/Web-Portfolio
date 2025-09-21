@@ -246,23 +246,32 @@ export class MarkdownProcessor {
       return dateB.getTime() - dateA.getTime();
     });
 
-    // Generate collection of all unique tags
-    const allTags = new Set<string>();
+    // Generate collection of all unique tags with counts
+    const tagCounts = new Map<string, number>();
     sortedPosts.forEach((post) => {
       post.tags.forEach((tag) => {
-        allTags.add(tag);
+        tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
       });
     });
 
-    // Sort tags alphabetically
-    const sortedTags = Array.from(allTags).sort((a, b) =>
-      a.toLowerCase().localeCompare(b.toLowerCase())
-    );
+    // Convert to array of objects with tag and count, sorted by count descending, then alphabetically
+    const tagsWithCounts = Array.from(tagCounts.entries())
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => {
+        if (b.count !== a.count) {
+          return b.count - a.count; // Sort by count descending
+        }
+        return a.tag.toLowerCase().localeCompare(b.tag.toLowerCase()); // Then alphabetically
+      });
+
+    // Keep the simple array for backward compatibility
+    const sortedTags = tagsWithCounts.map((item) => item.tag);
 
     const manifest = {
       posts: sortedPosts,
       totalPosts: sortedPosts.length,
       availableTags: sortedTags,
+      tagsWithCounts: tagsWithCounts,
       generatedAt: new Date().toISOString(),
     };
 
