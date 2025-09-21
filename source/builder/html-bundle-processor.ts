@@ -21,17 +21,42 @@ export class HtmlBundleProcessor {
     try {
       BuildLogger.info("📄 Processing HTML files with includes...");
 
+      // Extract asset information from the bundle
+      const assets = this.extractAssets(bundle);
+
       // First, process any HTML files that Vite already added to the bundle
       await this.processExistingHtmlFiles(bundle);
 
       // Then, manually process and add HTML files from pages/ and content/
-      await this.processAdditionalHtmlFiles(emitFile);
+      await this.processAdditionalHtmlFiles(emitFile, assets);
 
       BuildLogger.success("🎉 KBR Builder completed successfully!");
     } catch (error) {
       BuildLogger.error(`HTML bundle processing failed: ${error}`);
       throw error;
     }
+  }
+
+  /**
+   * Extract CSS and JS assets from the bundle
+   */
+  private extractAssets(bundle: any): {
+    css: string[];
+    js: string[];
+  } {
+    const assets = { css: [] as string[], js: [] as string[] };
+
+    for (const fileName of Object.keys(bundle)) {
+      if (fileName.startsWith("assets/")) {
+        if (fileName.endsWith(".css")) {
+          assets.css.push(`./${fileName}`);
+        } else if (fileName.endsWith(".js")) {
+          assets.js.push(`./${fileName}`);
+        }
+      }
+    }
+
+    return assets;
   }
 
   /**
@@ -71,7 +96,8 @@ export class HtmlBundleProcessor {
    * Process and add HTML files from pages/ and content/ directories
    */
   private async processAdditionalHtmlFiles(
-    emitFile: any
+    emitFile: any,
+    assets: { css: string[]; js: string[] }
   ): Promise<void> {
     const additionalHtmlFiles = [
       ...FileSystemHelper.findFiles("pages", [".html"]),
@@ -84,7 +110,9 @@ export class HtmlBundleProcessor {
         const processedContent =
           await HtmlProcessingUtils.processHtmlContent(
             this.templateProcessor,
-            content
+            content,
+            "Untitled",
+            assets
           );
 
         // Get the output filename (flatten the directory structure)

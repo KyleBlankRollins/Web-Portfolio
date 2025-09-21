@@ -34,7 +34,8 @@ export class HtmlProcessingUtils {
   static async processHtmlContent(
     templateProcessor: TemplateProcessor,
     content: string,
-    defaultTitle: string = "Untitled"
+    defaultTitle: string = "Untitled",
+    assets?: { css: string[]; js: string[] }
   ): Promise<string> {
     // Extract metadata from HTML comments or existing structure
     const metadata = templateProcessor.extractMetadata(content);
@@ -56,9 +57,58 @@ export class HtmlProcessingUtils {
       isBlogPost: metadata.isBlogPost,
     };
 
-    return templateProcessor.processTemplate(
+    const processedContent = templateProcessor.processTemplate(
       content,
       templateVariables
     );
+
+    // Inject assets if provided (for non-index HTML files)
+    if (assets) {
+      return this.injectAssets(processedContent, assets);
+    }
+
+    return processedContent;
+  }
+
+  /**
+   * Inject CSS and JS assets into HTML content
+   */
+  static injectAssets(
+    htmlContent: string,
+    assets: { css: string[]; js: string[] }
+  ): string {
+    let modifiedContent = htmlContent;
+
+    // Inject CSS links before closing </head>
+    if (assets.css.length > 0) {
+      const cssLinks = assets.css
+        .map(
+          (href) =>
+            `    <link rel="stylesheet" crossorigin href="${href}">`
+        )
+        .join("\n");
+
+      modifiedContent = modifiedContent.replace(
+        "</head>",
+        `${cssLinks}\n</head>`
+      );
+    }
+
+    // Inject JS scripts before closing </body>
+    if (assets.js.length > 0) {
+      const jsScripts = assets.js
+        .map(
+          (src) =>
+            `    <script type="module" crossorigin src="${src}"></script>`
+        )
+        .join("\n");
+
+      modifiedContent = modifiedContent.replace(
+        "</body>",
+        `${jsScripts}\n</body>`
+      );
+    }
+
+    return modifiedContent;
   }
 }
