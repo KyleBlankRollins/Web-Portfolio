@@ -24,6 +24,9 @@ export class HtmlBundleProcessor {
       // Extract asset information from the bundle
       const assets = this.extractAssets(bundle);
 
+      // Copy blog manifest file to output
+      await this.copyBlogManifest(emitFile);
+
       // First, process any HTML files that Vite already added to the bundle
       await this.processExistingHtmlFiles(bundle);
 
@@ -130,6 +133,30 @@ export class HtmlBundleProcessor {
         BuildLogger.error(`Failed to process ${filePath}: ${error}`);
         throw error;
       }
+    }
+  }
+
+  /**
+   * Copy blog manifest file to output directory
+   */
+  private async copyBlogManifest(emitFile: any): Promise<void> {
+    try {
+      const manifestPath = "source/site/blog-manifest.json";
+      const content = readFileSync(manifestPath, "utf-8");
+
+      // Add to bundle as an asset
+      emitFile({
+        type: "asset",
+        fileName: "blog-manifest.json",
+        source: content,
+      });
+
+      BuildLogger.info("✓ Copied blog-manifest.json to output");
+    } catch (error) {
+      BuildLogger.error(
+        `Failed to copy blog-manifest.json: ${error}`
+      );
+      throw error;
     }
   }
 }
