@@ -272,7 +272,6 @@ export class MarkdownProcessor {
       totalPosts: sortedPosts.length,
       availableTags: sortedTags,
       tagsWithCounts: tagsWithCounts,
-      generatedAt: new Date().toISOString(),
     };
 
     writeFileSync(

@@ -20,7 +20,8 @@ async function processMarkdownFiles(
     const contentDirectory = join("source", "site", "content");
     const markdownFiles = FileSystemHelper.findFiles(
       contentDirectory,
-      [".md"]
+      [".md"],
+      ["__drafts"] // Exclude drafts directory from production build
     );
 
     if (markdownFiles.length === 0) {

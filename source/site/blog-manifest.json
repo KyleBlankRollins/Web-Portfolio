@@ -14,20 +14,6 @@
       "filename": "typograph-test"
     },
     {
-      "title": "The Art and Impact of Technical Writing",
-      "description": "Exploring the discipline of technical writing and its crucial role in bridging technology and communication.",
-      "date": "2025-09-18",
-      "formattedDate": "September 17, 2025",
-      "tags": [
-        "technical writing",
-        "documentation",
-        "communication"
-      ],
-      "url": "/test.html",
-      "filename": "test",
-      "keywords": "technical writing, documentation, communication, API references, user guides"
-    },
-    {
       "title": "My First Blog Post",
       "description": "This is a sample blog post to test the new YAML frontmatter handling and blog post metadata features.",
       "date": "2025-01-15",
@@ -43,14 +29,11 @@
       "keywords": "blog, markdown, web development, test"
     }
   ],
-  "totalPosts": 3,
+  "totalPosts": 2,
   "availableTags": [
     "blogging",
-    "communication",
     "design",
-    "documentation",
     "markdown",
-    "technical writing",
     "testing",
     "typescript",
     "typography",
@@ -62,23 +45,11 @@
       "count": 1
     },
     {
-      "tag": "communication",
-      "count": 1
-    },
-    {
       "tag": "design",
       "count": 1
     },
     {
-      "tag": "documentation",
-      "count": 1
-    },
-    {
       "tag": "markdown",
-      "count": 1
-    },
-    {
-      "tag": "technical writing",
       "count": 1
     },
     {
@@ -97,6 +68,5 @@
       "tag": "web development",
       "count": 1
     }
-  ],
-  "generatedAt": "2025-09-21T18:17:04.253Z"
+  ]
 }

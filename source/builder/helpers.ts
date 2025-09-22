@@ -10,7 +10,8 @@ export class FileSystemHelper {
    */
   public static findFiles(
     directory: string,
-    extensions: string[]
+    extensions: string[],
+    excludeDirectories: string[] = []
   ): string[] {
     let directoryPath: string;
 
@@ -37,7 +38,16 @@ export class FileSystemHelper {
       const fullPath = join(directoryPath, entry.name);
 
       if (entry.isDirectory()) {
-        files.push(...this.findFiles(fullPath, extensions));
+        // Skip excluded directories
+        if (excludeDirectories.includes(entry.name)) {
+          BuildLogger.info(
+            `Skipping excluded directory: ${entry.name}`
+          );
+          continue;
+        }
+        files.push(
+          ...this.findFiles(fullPath, extensions, excludeDirectories)
+        );
       } else if (
         entry.isFile() &&
         extensions.some((ext) => entry.name.endsWith(ext))
