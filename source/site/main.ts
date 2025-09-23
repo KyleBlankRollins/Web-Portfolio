@@ -8,6 +8,8 @@ import "./components/post-card";
 import "./components/table-of-contents";
 import "./components/anchor-copy";
 import "./components/tag-filter";
+import "./components/timeline";
+import "./components/timeline-entry";
 
 // Global tag navigation for individual blog post pages (main DOM)
 function setupGlobalTagNavigation() {

@@ -237,7 +237,7 @@ export class MarkdownProcessor {
    * Generate and save the blog post manifest JSON file
    */
   public generateBlogManifest(
-    outputPath: string = join("source", "site", "blog-manifest.json")
+    outputPath: string = join("public", "data", "blog-manifest.json")
   ): void {
     // Sort blog posts by date (newest first)
     const sortedPosts = this.blogPostManifest.sort((a, b) => {

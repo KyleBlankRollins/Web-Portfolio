@@ -11,10 +11,41 @@ Each component uses:
 - **TypeScript file** (`.ts`) - Contains the web component class and logic
 - **CSS file** (`.css`) - Contains scoped styles for the component
 
-### Navigation Component Example
+### Available Components
 
-- `navigation.ts` - The web component class
-- `navigation.css` - Scoped styles with full access to theme variables
+#### Blog Components
+
+- `post-list.ts/css` - Displays a list of blog posts with filtering
+- `post-card.ts/css` - Individual blog post card
+- `tag-filter.ts/css` - Tag filtering for blog posts
+
+#### Navigation & UI
+
+- `navigation.ts/css` - Site navigation component
+- `table-of-contents.ts/css` - Auto-generated TOC for blog posts
+- `anchor-copy.ts/css` - Copy-to-clipboard for heading anchors
+
+#### Career Timeline
+
+- `timeline.ts/css` - Main timeline component that loads and displays career data
+- `timeline-entry.ts/css` - Individual job/position entry in the timeline
+
+### Timeline Components Example
+
+The timeline components work together to display career history:
+
+```html
+<!-- Main timeline component -->
+<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
+
+<!-- Individual entries are created automatically -->
+<kbr-timeline-entry
+  company="MongoDB"
+  title="Documentation Team Lead"
+  skills='["Team Management", "CI/CD"]'
+>
+</kbr-timeline-entry>
+```
 
 ## Workflow
 

@@ -290,7 +290,7 @@ export class KbrPostList extends LitElement {
     this.isLoading = true;
 
     try {
-      const response = await fetch("./blog-manifest.json");
+      const response = await fetch("/data/blog-manifest.json");
       if (!response.ok) {
         throw new Error(
           `Failed to load blog posts: ${response.statusText}`

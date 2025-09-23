@@ -51,7 +51,7 @@ function createProcessingMiddleware(
 
     // Handle blog-manifest.json (strip query parameters)
     const cleanUrl = url.split("?")[0].split("#")[0];
-    if (cleanUrl === "/blog-manifest.json") {
+    if (cleanUrl === "/data/blog-manifest.json") {
       return handleBlogManifestRequest(req, res, next);
     }
 
@@ -121,8 +121,8 @@ async function handleIndexRequest(
 function handleBlogManifestRequest(_req: any, res: any, next: any) {
   const manifestPath = path.join(
     process.cwd(),
-    "source",
-    "site",
+    "public",
+    "data",
     "blog-manifest.json"
   );
 

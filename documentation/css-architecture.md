@@ -2,36 +2,46 @@
 
 ## Overview
 
-This document outlines the CSS architecture strategy for the KBR Portfolio site, including how we handle Shadow DOM constraints, typography systems, and development server CSS management.
+This document outlines the CSS architecture strategy for the KBR Portfolio site, including how we handle Shadow DOM constraints with Lit Element components, typography systems, and development server CSS management.
 
 ## Architecture Philosophy
 
 The site uses a **hybrid CSS architecture** that combines:
 
 - Global styles for document-level layout and theming
-- Component-scoped styles for web components using Shadow DOM
+- Embedded component styles using Lit's `css` tagged template literals
 - A centralized design token system for consistency
-- Shadow DOM-compatible typography distribution
+- Strategic use of programmatic style injection for components that manipulate external DOM
 
 ## File Structure
 
 ```
+public/
+├── data/
+│   └── experience-data.json    # Career timeline data (served at /data/)
+├── styles/                     # Static CSS files copied during build
+├── components/                 # Legacy component CSS (if any remain)
+└── fonts/                      # Web fonts and typography assets
+
 source/site/styles/
 ├── theme.css                    # Design tokens and CSS custom properties
 ├── typography.css               # Font-face declarations and global typography
-├── component-typography.css     # Shadow DOM compatible typography styles
 ├── style.css                    # Global layout, base styles, and utilities
 ├── blog-post.css               # Blog post specific styles
 └── index.css                   # Entry point that imports other styles
 
 source/site/components/
-├── navigation.css              # Navigation component styles
-├── post-list.css              # Post list component styles
-├── post-card.css              # Post card component styles
-├── tag-filter.css             # Tag filter component styles
-├── table-of-contents.css      # Table of contents component styles
-└── anchor-copy.css            # Anchor copy functionality styles
+├── navigation.ts               # Lit component with embedded CSS
+├── post-list.ts               # Lit component with embedded CSS
+├── post-card.ts               # Lit component with embedded CSS
+├── tag-filter.ts              # Lit component with embedded CSS
+├── table-of-contents.ts       # Lit component with embedded CSS
+├── anchor-copy.ts             # Lit component with programmatic style injection
+├── timeline.ts                # Lit component with embedded CSS
+└── timeline-entry.ts          # Lit component with embedded CSS
 ```
+
+**Note**: Data files are now properly located in the `public/` directory for static asset serving, separate from source code.
 
 ## Layer Hierarchy
 
@@ -77,23 +87,9 @@ source/site/components/
 - Baseline grid typography scaling
 - Font rendering optimizations
 
-**Shadow DOM Limitation**: Cannot be directly imported into Shadow DOM due to `@font-face` declarations and global selectors.
+**Component Integration**: Fonts defined here are inherited by Lit components through CSS custom properties.
 
-### 3. Component Typography Layer (`component-typography.css`)
-
-**Purpose**: Shadow DOM compatible typography styles
-
-**Contains**:
-
-- Heading styles (h1-h5) without global selectors
-- Typography utilities (`.text-center`, `.text-muted`, etc.)
-- Link styling
-- Code and preformatted text styling
-- Loading and error state typography
-
-**Key Design Decision**: Excludes `@font-face` declarations and global selectors that don't work in Shadow DOM contexts.
-
-### 4. Global Layout Layer (`style.css`)
+### 3. Global Layout Layer (`style.css`)
 
 **Purpose**: Base layout, utilities, and document-level components
 
@@ -106,62 +102,176 @@ source/site/components/
 - Responsive design rules
 - Performance optimizations (content-visibility)
 
-### 5. Component Style Layer
+### 4. Component Style Layer (Lit Embedded CSS)
 
-**Purpose**: Component-specific styling for web components
+**Purpose**: Component-specific styling embedded within Lit components
 
 **Architecture Pattern**:
-Each web component follows this pattern:
+Each Lit component includes its styles using the `css` tagged template literal:
 
 ```typescript
-// In component TypeScript file
-this.shadowRoot.innerHTML = `
-  <link rel="stylesheet" href="/styles/component-typography.css">
-  <link rel="stylesheet" href="/components/component-name.css">
-  <div class="component-container">
-    <!-- Component HTML -->
-  </div>
+import { LitElement, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
+
+@customElement("my-component")
+export class MyComponent extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      color: var(--color-text);
+    }
+
+    .component-element {
+      background: var(--color-background);
+      padding: var(--space-md);
+    }
+  `;
+
+  render() {
+    return html`<div class="component-element">Content</div>`;
+  }
+}
+```
+
+## Lit Element Shadow DOM Strategy
+
+### The Lit Advantage
+
+Lit Element provides an elegant solution for Shadow DOM styling challenges:
+
+- **Embedded CSS**: Styles are defined using the `css` tagged template literal within the component
+- **Automatic Scoping**: Shadow DOM isolation is handled automatically
+- **Design Token Access**: CSS custom properties from `:root` are accessible
+- **No External Files**: Eliminates the need for separate CSS files and complex loading patterns
+
+### Component Architecture Patterns
+
+#### 1. Standard Lit Component
+
+Most components use embedded CSS with design token integration:
+
+```typescript
+import { LitElement, html, css } from "lit";
+
+@customElement("kbr-timeline")
+export class KbrTimeline extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      position: relative;
+    }
+
+    .timeline-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-title {
+      font-size: 2.5rem;
+      color: var(--color-text);
+      font-family: var(--font-family-heading);
+    }
+
+    /* All component styles embedded here */
+  `;
+
+  render() {
+    return html`
+      <div class="timeline-header">
+        <h2 class="timeline-title">Career Timeline</h2>
+      </div>
+    `;
+  }
+}
+```
+
+#### 2. External DOM Manipulation Components
+
+Components like `anchor-copy` that need to style elements outside their Shadow DOM use programmatic style injection:
+
+```typescript
+@customElement("kbr-anchor-copy")
+export class KbrAnchorCopy extends LitElement {
+  static styles = css`
+    :host {
+      display: contents; /* Component itself is invisible */
+    }
+  `;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.injectGlobalStyles();
+  }
+
+  private injectGlobalStyles(): void {
+    const styleId = "kbr-anchor-copy-styles";
+    if (document.getElementById(styleId)) return;
+
+    const style = document.createElement("style");
+    style.id = styleId;
+    style.textContent = `
+      /* Styles for elements outside Shadow DOM */
+      .anchor-highlighted {
+        background-color: var(--color-shadow);
+        border-left: 4px solid var(--color-accent);
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+```
+
+### Design Token Integration
+
+#### How CSS Custom Properties Work with Lit
+
+CSS custom properties defined in `:root` are automatically accessible within Lit component Shadow DOM:
+
+```css
+/* In theme.css - available globally */
+:root {
+  --color-primary: #2d2d2d;
+  --color-background: #ffffff;
+  --font-family-base: "valkyrie_b", sans-serif;
+  --space-md: 1.5rem;
+}
+```
+
+```typescript
+// In Lit component - can access global tokens
+static styles = css`
+  :host {
+    color: var(--color-primary);
+    background: var(--color-background);
+    font-family: var(--font-family-base);
+    padding: var(--space-md);
+  }
 `;
 ```
 
-## Shadow DOM Strategy
+#### Font Inheritance Strategy
 
-### The Problem
-
-Shadow DOM creates style isolation, which prevents:
-
-- Global styles from affecting component internals
-- `@font-face` declarations from being inherited properly
-- CSS custom properties work, but not when defined in imported stylesheets
-
-### Our Solution
-
-#### 1. Direct Link Loading
-
-Instead of CSS `@import`, we load stylesheets as separate `<link>` tags:
-
-```typescript
-// ❌ This doesn't work reliably in Shadow DOM
-`<style>@import url("../styles/typography.css");</style>`// ✅ This works consistently
-`<link rel="stylesheet" href="/styles/component-typography.css">`;
-```
-
-#### 2. Typography Distribution
-
-- **Global document**: Uses `typography.css` with full font definitions
-- **Shadow DOM components**: Use `component-typography.css` without `@font-face`
-- **Font inheritance**: Fonts are inherited from the global context
-
-#### 3. Design Token Access
-
-CSS custom properties defined in `:root` are accessible within Shadow DOM, enabling consistent theming:
+1. **Global Fonts**: Defined in `typography.css` with `@font-face` declarations
+2. **Component Access**: Fonts are inherited through CSS custom properties
+3. **Fallback Fonts**: Always include system font fallbacks
 
 ```css
-/* Works in both global and Shadow DOM contexts */
-.component {
-  color: var(--color-primary);
-  background: var(--color-background);
+/* Global typography.css */
+:root {
+  --font-family-base: "valkyrie_b", system-ui, sans-serif;
+  --font-family-heading: "valkyrie_b_caps", system-ui, sans-serif;
 }
+
+/* Component styles */
+static styles = css`
+  h1 {
+    font-family: var(--font-family-heading);
+  }
+
+  p {
+    font-family: var(--font-family-base);
+  }
+`;
 ```
 
 ## Development Server CSS Handling
@@ -195,131 +305,320 @@ The custom build system integrates with CSS handling:
 
 ## Performance Considerations
 
-### 1. CSS Loading Strategy
+### 1. Lit CSS Benefits
 
-- **Critical CSS**: Inlined in HTML for above-the-fold content
-- **Component CSS**: Loaded on-demand when components initialize
-- **Font Loading**: Uses `font-display: swap` for better perceived performance
+- **Build-time Optimization**: Lit's `css` tagged template literals are optimized during build
+- **No Network Requests**: Embedded CSS eliminates separate HTTP requests for component styles
+- **Tree Shaking**: Unused CSS within components can be eliminated
+- **Shadow DOM Scoping**: Automatic style encapsulation prevents style conflicts
 
 ### 2. Bundle Optimization
 
-- **Tree Shaking**: Unused CSS classes are removed during build
-- **Minification**: CSS is compressed and optimized
-- **Caching**: Content-based hashing enables long-term caching
+- **Component Bundling**: CSS is bundled with component JavaScript
+- **Minification**: CSS within `css` template literals is compressed during build
+- **Caching**: Component code and styles are cached together as single modules
 
 ### 3. Runtime Performance
 
-- **CSS Custom Properties**: Used instead of CSS-in-JS for better performance
-- **Content Visibility**: Applied to large content sections for rendering optimization
-- **Container Queries**: Enable component-level responsive design without global media queries
+- **No External Style Loading**: Components render immediately with embedded styles
+- **CSS Custom Properties**: Efficient theming through CSS variables
+- **Container Queries**: Component-level responsive design without global media queries
 
 ## Best Practices
 
-### 1. Component Styling
+### 1. Lit Component Styling
 
-```css
-/* Use :host for the component root */
-:host {
-  display: block;
-  container-type: inline-size;
-}
+```typescript
+@customElement("my-component")
+export class MyComponent extends LitElement {
+  static styles = css`
+    /* Always start with :host styles */
+    :host {
+      display: block;
+      container-type: inline-size;
+    }
 
-/* Scope all styles to component */
-.component-class {
-  /* styles */
-}
+    /* Use design tokens with fallbacks */
+    .component-element {
+      color: var(--color-text, #212121);
+      background: var(--color-background, #ffffff);
+      font-family: var(--font-family-base, system-ui, sans-serif);
+    }
 
-/* Use design tokens consistently */
-.component-element {
-  color: var(--color-text);
-  background: var(--color-background);
+    /* Scope all styles to avoid conflicts */
+    .header {
+      font-size: var(--font-size-lg);
+    }
+
+    /* Use container queries for responsive components */
+    @container (max-width: 768px) {
+      .header {
+        font-size: var(--font-size-base);
+      }
+    }
+  `;
 }
 ```
 
 ### 2. Typography in Components
 
 ```typescript
-// Always load typography first
-this.shadowRoot.innerHTML = `
-  <link rel="stylesheet" href="/styles/component-typography.css">
-  <link rel="stylesheet" href="/components/my-component.css">
-  <!-- component content -->
+static styles = css`
+  /* Inherit fonts from global context */
+  h1, h2, h3 {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold, 700);
+  }
+
+  p, span, div {
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base, 1.5);
+  }
+
+  /* Use consistent typography scale */
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .body {
+    font-size: var(--font-size-base);
+  }
 `;
 ```
 
-### 3. Color Usage
+### 3. Design Token Usage
 
-```css
-/* Always use design tokens with fallbacks */
-.element {
-  color: var(--color-primary, #2d2d2d);
-  background: var(--color-background, #ffffff);
-}
+```typescript
+static styles = css`
+  /* Always provide fallback values */
+  .element {
+    color: var(--color-primary, #2d2d2d);
+    background: var(--color-background, #ffffff);
+    padding: var(--space-md, 1.5rem);
+  }
 
-/* Leverage CSS custom property inheritance */
-.themed-component {
-  color: var(--color-text); /* Inherits from :root */
-}
+  /* Use semantic tokens when available */
+  .error {
+    color: var(--color-error, #e53e3e);
+    background: var(--color-error-background, #fed7d7);
+  }
+
+  /* Leverage inheritance for consistency */
+  .themed-content {
+    color: var(--color-text); /* No fallback needed for inherited properties */
+  }
+`;
 ```
 
 ## Common Patterns
 
 ### 1. Loading States
 
-```css
-.loading {
-  color: var(--color-text-muted);
-  text-align: center;
-  font-style: italic;
-}
+```typescript
+static styles = css`
+  .loading {
+    color: var(--color-text-muted, #718096);
+    text-align: center;
+    font-style: italic;
+    animation: pulse 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+`;
 ```
 
 ### 2. Error States
 
-```css
-.error {
-  color: var(--color-text-muted);
-  text-align: center;
-  font-weight: 500;
-}
+```typescript
+static styles = css`
+  .error {
+    color: var(--color-error, #e53e3e);
+    background: var(--color-error-background, #fed7d7);
+    border: 1px solid var(--color-error-border, #feb2b2);
+    padding: var(--space-md);
+    border-radius: var(--border-radius, 4px);
+    text-align: center;
+    font-weight: 500;
+  }
+`;
 ```
 
 ### 3. Responsive Components
 
-```css
-/* Use container queries for component-level responsiveness */
-@container (max-width: 768px) {
-  .component-grid {
-    grid-template-columns: 1fr;
+```typescript
+static styles = css`
+  :host {
+    container-type: inline-size;
   }
-}
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* Use container queries for component-level responsiveness */
+  @container (max-width: 768px) {
+    .component-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+  }
+`;
+```
+
+### 4. Interactive Elements
+
+```typescript
+static styles = css`
+  .button {
+    background: var(--color-primary);
+    color: var(--color-background);
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition-normal, 0.2s ease);
+  }
+
+  .button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .button:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+`;
 ```
 
 ## Troubleshooting
 
-### Typography Not Applying in Components
+### Styles Not Applying in Components
 
-**Problem**: Headings or text styling not applying in web components
-**Solution**: Ensure `component-typography.css` is loaded via `<link>` tag, not `@import`
+**Problem**: CSS styles defined in `static styles` not applying to component elements
+**Solution**: Ensure styles are defined using the `css` tagged template literal, not regular strings
+
+```typescript
+// ❌ Incorrect
+static styles = `
+  .element { color: red; }
+`;
+
+// ✅ Correct
+static styles = css`
+  .element { color: red; }
+`;
+```
 
 ### Design Tokens Not Working
 
-**Problem**: CSS custom properties not accessible in Shadow DOM
-**Solution**: Verify tokens are defined in `:root` in `theme.css` and properly referenced
+**Problem**: CSS custom properties not accessible in component Shadow DOM
+**Solution**: Verify tokens are defined in `:root` in global CSS files (not in Shadow DOM contexts)
+
+```css
+/* ✅ Correct - in global theme.css */
+:root {
+  --color-primary: #2d2d2d;
+}
+
+/* ❌ Incorrect - in component Shadow DOM */
+:host {
+  --color-primary: #2d2d2d; /* Only accessible to this component */
+}
+```
 
 ### Font Loading Issues
 
-**Problem**: Fonts not displaying correctly in components
-**Solution**: Fonts are loaded globally via `typography.css`; ensure component inherits font-family from CSS custom properties
+**Problem**: Custom fonts not displaying in components
+**Solution**: Ensure fonts are defined globally and referenced through CSS custom properties
+
+```css
+/* Global typography.css */
+:root {
+  --font-family-base: "valkyrie_b", system-ui, sans-serif;
+}
+
+/* Component */
+static styles = css`
+  :host {
+    font-family: var(--font-family-base);
+  }
+`;
+```
+
+### External DOM Styling
+
+**Problem**: Need to style elements outside the component's Shadow DOM
+**Solution**: Use programmatic style injection like the `anchor-copy` component
+
+```typescript
+private injectGlobalStyles(): void {
+  const styleId = 'my-component-global-styles';
+  if (document.getElementById(styleId)) return;
+
+  const style = document.createElement('style');
+  style.id = styleId;
+  style.textContent = `/* Global styles */`;
+  document.head.appendChild(style);
+}
+```
 
 ## Migration Notes
 
-When adding new components:
+### From External CSS to Lit Embedded Styles
 
-1. Create component-specific CSS file in `/components/`
-2. Load `component-typography.css` via `<link>` tag
-3. Use design tokens from `theme.css`
-4. Follow Shadow DOM style loading pattern
-5. Test typography inheritance and theming
+When migrating components from external CSS files to Lit embedded styles:
 
-This architecture provides a scalable, maintainable CSS system that works seamlessly with modern web components and Shadow DOM constraints while maintaining design consistency and performance.
+1. **Convert CSS to `css` tagged template literal**:
+
+   ```typescript
+   // Old approach
+   this.shadowRoot.innerHTML = `
+     <link rel="stylesheet" href="/components/my-component.css">
+   `;
+
+   // New approach
+   static styles = css`
+     /* All component styles here */
+   `;
+   ```
+
+2. **Update design token references**:
+
+   - All `var(--token-name)` references work the same way
+   - Add fallback values for better resilience
+   - Remove any `@import` statements (not needed)
+
+3. **Remove external CSS files**:
+
+   - Delete the corresponding `.css` file
+   - Remove any imports from global CSS files
+   - Update component documentation
+
+4. **Test component functionality**:
+   - Verify all styles apply correctly
+   - Check responsive design with container queries
+   - Ensure design tokens work as expected
+
+### When Adding New Components
+
+1. Create TypeScript file with Lit component class
+2. Define styles using `static styles = css\`...\``
+3. Use design tokens from global `theme.css`
+4. Import component in `main.ts`
+5. No separate CSS files needed
+
+### Benefits of Migration
+
+- **Simplified Architecture**: No external CSS files to manage
+- **Better Performance**: No additional HTTP requests for styles
+- **Improved Developer Experience**: Styles and logic in one file
+- **Automatic Scoping**: Shadow DOM isolation built-in
+- **Better Tree Shaking**: Unused styles can be eliminated
+
+This architecture provides a modern, maintainable CSS system that leverages Lit Element's strengths while maintaining design consistency and performance optimization.

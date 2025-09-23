@@ -290,7 +290,7 @@ export default class KbrTagFilter extends LitElement {
 
     try {
       // Use relative URL for manifest
-      const manifestUrl = `./blog-manifest.json`;
+      const manifestUrl = `/data/blog-manifest.json`;
 
       const response = await fetch(manifestUrl);
       if (!response.ok) {
