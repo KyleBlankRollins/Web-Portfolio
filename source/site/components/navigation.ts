@@ -218,6 +218,13 @@ export class KbrNavigation extends LitElement {
                   >Portfolio</a
                 >
               </li>
+              <li>
+                <a
+                  href="/career.html"
+                  class="${this.getLinkClass("/career.html")}"
+                  >Career</a
+                >
+              </li>
             </ul>
           </nav>
         </div>

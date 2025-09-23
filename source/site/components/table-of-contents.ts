@@ -7,7 +7,14 @@ import { customElement, state, property } from "lit/decorators.js";
  * Automatically generates a navigation table of contents from headings (h1-h6)
  * in the page content. Used for blog posts to provide easy navigation.
  *
- * Usage: <kbr-table-of-contents></kbr-table-of-contents>
+ * Usage:
+ *   <kbr-table-of-contents></kbr-table-of-contents>
+ *   <kbr-table-of-contents min-level="1" max-level="3"></kbr-table-of-contents>
+ *
+ * Properties:
+ *   - min-level: Minimum heading level to include (default: 2)
+ *   - max-level: Maximum heading level to include (default: 6)
+ *   - target-selector: CSS selector for the content container (default: "main, article, .content")
  */
 
 interface TocItem {
@@ -19,6 +26,9 @@ interface TocItem {
 
 @customElement("kbr-table-of-contents")
 export class KbrTableOfContents extends LitElement {
+  @property({ type: Number, attribute: "min-level" })
+  declare minLevel: number;
+
   @property({ type: Number, attribute: "max-level" })
   declare maxLevel: number;
 
@@ -38,8 +48,6 @@ export class KbrTableOfContents extends LitElement {
       display: block;
       width: 100%;
       height: fit-content;
-      position: sticky;
-      top: var(--space-lg, 2rem);
     }
 
     .toc-container {
@@ -206,7 +214,8 @@ export class KbrTableOfContents extends LitElement {
     super();
 
     // Initialize properties
-    this.maxLevel = 6;
+    this.minLevel = 2; // Default: start from h2
+    this.maxLevel = 6; // Default: include up to h6
     this.targetSelector = "main, article, .content";
     this.tocItems = [];
     this.activeId = "";
@@ -248,11 +257,12 @@ export class KbrTableOfContents extends LitElement {
       return;
     }
 
-    // Find all headings within the target element
-    const headingSelector = Array.from(
-      { length: this.maxLevel },
-      (_, i) => `h${i + 1}`
-    ).join(", ");
+    // Build heading selector based on min and max levels
+    const headingLevels = Array.from(
+      { length: this.maxLevel - this.minLevel + 1 },
+      (_, i) => `h${this.minLevel + i}`
+    );
+    const headingSelector = headingLevels.join(", ");
     const headings = targetElement.querySelectorAll(headingSelector);
 
     this.tocItems = [];
@@ -269,17 +279,15 @@ export class KbrTableOfContents extends LitElement {
         element.id = id;
       }
 
-      // Omit H1s from TOC
-      if (level == 1) {
-        return;
+      // Include all headings within the specified range
+      if (level >= this.minLevel && level <= this.maxLevel) {
+        this.tocItems.push({
+          id,
+          text,
+          level,
+          element,
+        });
       }
-
-      this.tocItems.push({
-        id,
-        text,
-        level,
-        element,
-      });
     });
   }
 

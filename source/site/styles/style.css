@@ -149,6 +149,38 @@ body {
   }
 }
 
+/* Portfolio Page Styles */
+.portfolio-toc {
+  margin: var(--space-xl) 0;
+}
+
+@media (min-width: 1200px) {
+  .portfolio-toc {
+    position: fixed;
+    top: calc(80px + var(--space-lg));  /* Navigation height + spacing */
+    right: var(--space-lg);
+    width: 280px;
+    max-width: 280px;
+    margin: 0;
+    z-index: 100;  /* Ensure it's above other content */
+  }
+  
+  /* Add right margin to main content when TOC is fixed */
+  body:has(.portfolio-toc) main {
+    margin-right: 300px;
+    max-width: calc(100% - 300px);
+  }
+}
+
+@media (max-width: 1199px) {
+  .portfolio-toc {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--space-xl);
+  }
+}
+
 /* Navigation Component */
 .navigation {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);

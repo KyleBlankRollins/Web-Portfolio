@@ -22,6 +22,11 @@
   min-width: 0; /* Prevent grid overflow */
 }
 
+.blog-toc-sidebar kbr-table-of-contents {
+  position: sticky;
+  top: var(--space-lg, 2rem);
+}
+
 /* Blog post content area */
 .blog-post-content {
   grid-area: content;
