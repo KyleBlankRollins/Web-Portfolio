@@ -14,7 +14,7 @@
   <aside class="portfolio-toc">
     <kbr-table-of-contents
       min-level="2"
-      max-level="3"
+      max-level="4"
     ></kbr-table-of-contents>
   </aside>
 
@@ -172,6 +172,307 @@
           fundamentals with contemporary techniques.
         </p>
       </article>
+    </div>
+  </section>
+
+  <section class="web-projects">
+    <h2>Web Projects</h2>
+    <p>
+      I'm always looking for an excuse to further my design and
+      functional skills on the web. I don't always have the time to
+      pursue projects (let alone finish them), but I typically learn a
+      lot along the way.
+    </p>
+    <p>
+      Below, you'll see the projects I've completed. I plan to add
+      more experimental things at a later date.
+    </p>
+
+    <div class="projects-section">
+      <h3>Redesigns</h3>
+      <div class="projects-grid grid one-column">
+        <article class="project-card card">
+          <div class="project-header">
+            <h4>3M HIS Support Website</h4>
+            <a href="https://support.3mhis.com/" class="project-link"
+              >Visit Site →</a
+            >
+          </div>
+          <div class="project-image-container">
+            <img
+              src="/images/sites/support-site-before.png"
+              alt="3M HIS Support website before and after redesign"
+              class="project-image"
+            />
+          </div>
+          <div class="project-content">
+            <div class="project-features">
+              <h5>Key Features</h5>
+              <ul>
+                <li>
+                  <strong>Streamlined navigation.</strong> It's much
+                  easier for users to navigate and find what they're
+                  looking for.
+                </li>
+                <li>
+                  <strong>Visual hierarchy.</strong> Use of
+                  iconography, vertical placement, size, and color
+                  helps users better parse the site's more important
+                  aspects.
+                </li>
+              </ul>
+            </div>
+            <div class="project-description">
+              <p>
+                I worked with the support organization's web team to
+                update the look and feel of our support website.
+              </p>
+              <p>
+                It was much harder than it seems, as we were working
+                with an Oracle knowledgebase tool that doesn't like to
+                expose its inner workings.
+              </p>
+              <p>
+                We were able to get around most of the issues by
+                writing custom JavaScript and overwriting default CSS
+                styles. We also trimmed as much as possible from what
+                the tool shipped by default. All in all, despite the
+                custom logic and styles, the site performs better than
+                it did before the redesign and ships less code.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h3>Greenfield Projects</h3>
+      <div class="projects-grid grid one-column">
+        <article class="project-card card">
+          <div class="project-header">
+            <h4>Webhelp Next</h4>
+          </div>
+          <div class="project-image-container">
+            <img
+              src="/images/sites/wx/webhelp-next-cover.png"
+              alt="Webhelp Next application interface"
+              class="project-image"
+            />
+          </div>
+          <div class="project-content">
+            <div class="project-features">
+              <h5>Key Features</h5>
+              <ul>
+                <li>
+                  <strong>Announcements.</strong> Create announcements
+                  in Author-it and show them on the library's home
+                  page.
+                </li>
+                <li>
+                  <strong>Tutorials.</strong> Define select topics
+                  from Author-it in a sequential manner to guide users
+                  through specific task flows. This helps bring
+                  attention to workflows that may be buried in dense
+                  table of contents.
+                </li>
+                <li>
+                  <strong>Role-based filtering.</strong> Filter the
+                  table of contents based on roles that are defined in
+                  Author-it at a topic level.
+                </li>
+              </ul>
+            </div>
+            <div class="project-description">
+              <p>
+                Webhelp Next was a JavaScript single-page application
+                (SPA) that understands custom transformed content from
+                Author-it.
+              </p>
+              <p>
+                The 3M HIS Technical Communications team uses
+                Author-it to create and maintain documentation. In
+                2019, Author-it announced their intent to retire the
+                SPA output the team had been using for product
+                libraries.
+              </p>
+              <p>
+                The proposed alternative didn't satisfy us. So, I set
+                out to build our own SPA that could understand
+                Author-it output on a deep level, yet only include the
+                features customers needed. Enter Webhelp Next.
+              </p>
+              <p>
+                <strong>Tools.</strong> Webhelp Next was built with
+                Vue CLI. The content it consumes is transformed from
+                XML to HTML via a custom XSLT file.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card card">
+          <div class="project-header">
+            <h4>Doc Dashboard</h4>
+          </div>
+          <div class="project-image-container">
+            <img
+              src="/images/sites/overview_dark.png"
+              alt="Analytics page for Doc Dashboard showing the types of analytics available"
+              class="project-image"
+            />
+          </div>
+          <div class="project-content">
+            <div class="project-features">
+              <h5>Key Features</h5>
+              <ul>
+                <li>
+                  <strong>Metrics and internal sharing.</strong> In
+                  comparison to Google Analytics itself, Doc Dashboard
+                  is quite easy to use. More importantly, it's
+                  extremely easy to share within the company. Just
+                  copy a report's URL and send it to interested
+                  stakeholders.
+                </li>
+                <li>
+                  <strong>Analytics reports.</strong> Doc Dashboard
+                  has many reports that focus on specific data - and
+                  actions users can take based on that data. Each
+                  report processes the Google Analytics data
+                  independently to ensure it's reliable and usable.
+                </li>
+                <li>
+                  <strong>Plotly.js charts.</strong> Several types of
+                  charts visually present the report data. These
+                  charts are most often intentionally simple. The goal
+                  is to show concrete, actionable information.
+                </li>
+              </ul>
+            </div>
+            <div class="project-description">
+              <p>
+                Doc Dashboard v2.0 is a complete re-build of the first
+                version. I completely re-worked the data structures to
+                be innately flexible and expandable.
+              </p>
+              <p>
+                The original version only collated and analyzed Google
+                Analytics data for 3M Health Information Systems'
+                online help. v2.0 serves as more of a hub, adding
+                information from PDF documents and support content.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card card">
+          <div class="project-header">
+            <h4>DoK Compare</h4>
+            <a
+              href="https://dok-compare.kyleblankrollins.com/#/"
+              class="project-link"
+              >Visit Site →</a
+            >
+          </div>
+          <div class="project-image-container">
+            <img
+              src="/images/sites/dok-compare.png"
+              alt="Home page for the DoK Compare website"
+              class="project-image"
+            />
+          </div>
+          <div class="project-content">
+            <div class="project-features">
+              <h5>Key Features</h5>
+              <ul>
+                <li>
+                  <strong>Unit statistics.</strong> Every unit in
+                  Homeworld: Deserts of Kharak has a stats sheet. DoK
+                  Compare makes it easy to visualize those stats and
+                  see how different units stack up against each other.
+                </li>
+                <li>
+                  <strong>Dynamic value calculations.</strong> DoK
+                  Compare automatically calculates the difference in
+                  stat values, then indicates whether each units'
+                  stats are higher, lower, or equal.
+                </li>
+                <li>
+                  <strong>Responsive design.</strong> While small
+                  screens aren't ideal for comparing datasets, DoK
+                  Compare can shrink to a single-column view that
+                  maintains a usable format.
+                </li>
+              </ul>
+            </div>
+            <div class="project-description">
+              <p>
+                DoK Compare is based on the real-time strategy game
+                Homeworld: Deserts of Kharak. It allows users to view
+                unit statistics side-by-side.
+              </p>
+              <p>
+                The statistics comparison updates dynamically as new
+                units are selected.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card card">
+          <div class="project-header">
+            <h4>The Canney Valley</h4>
+            <a
+              href="https://the-canney-valley.kyleblankrollins.com/"
+              class="project-link"
+              >Visit Site →</a
+            >
+          </div>
+          <div class="project-image-container">
+            <img
+              src="/images/sites/the_canney_valley.png"
+              alt="The home page of The Canney Valley"
+              class="project-image"
+            />
+          </div>
+          <div class="project-content">
+            <div class="project-features">
+              <h5>Key Features</h5>
+              <ul>
+                <li>
+                  <strong>Gridsome GraphQL layer.</strong> The GraphQL
+                  data layer in Gridsome makes all sorts of
+                  interesting things possible. For example, creating
+                  lists of posts that share a tag or a series. And
+                  none of it requires a server - it's all done during
+                  the build process.
+                </li>
+                <li>
+                  <strong>Dynamic navigation.</strong> The navigation
+                  throughout The Canney Valley updates based on the
+                  most recent posts.
+                </li>
+                <li>
+                  <strong>Responsive design.</strong> The Canney
+                  Valley is mobile-friendly and can be viewed
+                  comfortably at nearly all screen sizes.
+                </li>
+              </ul>
+            </div>
+            <div class="project-description">
+              <p>
+                The Canney Valley (TCV) is where I publish technical
+                tutorials and share my thoughts on life.
+                Unfortunately, it hasn't gotten the attention it
+                deserves in terms of content. Some day, I'll get to
+                writing more.
+              </p>
+              <p>
+                TCV is built with Gridsome, which is a static site
+                generator that uses GraphQL and Vue.js.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 </main>

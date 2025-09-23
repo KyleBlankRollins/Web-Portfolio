@@ -55,8 +55,9 @@ export class KbrTableOfContents extends LitElement {
       border: 1px solid var(--color-border, #e0e0e0);
       border-radius: 8px;
       padding: var(--space-lg, 2rem);
-      max-height: calc(100vh - 4rem);
+      max-height: min(calc(100vh - 8rem), 600px);
       overflow-y: auto;
+      overflow-x: hidden;
     }
 
     /* Navigation container */
@@ -126,26 +127,40 @@ export class KbrTableOfContents extends LitElement {
       border-left-color: var(--color-primary-dark, #1a1a1a);
     }
 
-    /* Level-specific styling */
+    /* Level-specific styling with progressive indentation */
     .toc-level-1 .toc-link {
       font-weight: 500;
       font-size: 1em;
+      padding-left: var(--space-sm, 1rem);
     }
 
     .toc-level-2 .toc-link {
       font-size: 0.95em;
+      padding-left: var(--space-sm, 1rem);
     }
 
     .toc-level-3 .toc-link {
       font-size: 0.9em;
       opacity: 0.9;
+      padding-left: calc(var(--space-sm, 1rem) + 0.5rem);
     }
 
-    .toc-level-4 .toc-link,
-    .toc-level-5 .toc-link,
-    .toc-level-6 .toc-link {
+    .toc-level-4 .toc-link {
       font-size: 0.85em;
       opacity: 0.8;
+      padding-left: calc(var(--space-sm, 1rem) + 1rem);
+    }
+
+    .toc-level-5 .toc-link {
+      font-size: 0.8em;
+      opacity: 0.75;
+      padding-left: calc(var(--space-sm, 1rem) + 1.5rem);
+    }
+
+    .toc-level-6 .toc-link {
+      font-size: 0.75em;
+      opacity: 0.7;
+      padding-left: calc(var(--space-sm, 1rem) + 2rem);
     }
 
     /* Empty state */
@@ -183,7 +198,7 @@ export class KbrTableOfContents extends LitElement {
       }
 
       .toc-container {
-        max-height: none;
+        max-height: min(calc(100vh - 6rem), 400px);
         margin-bottom: var(--space-xl, 3rem);
       }
     }
@@ -191,10 +206,28 @@ export class KbrTableOfContents extends LitElement {
     @media (max-width: 768px) {
       .toc-container {
         padding: var(--space-md, 1.5rem);
+        max-height: min(calc(100vh - 4rem), 300px);
       }
 
       .toc-sublist {
         margin-left: var(--space-sm, 1rem);
+      }
+
+      /* Reduce indentation on mobile for better space usage */
+      .toc-level-3 .toc-link {
+        padding-left: calc(var(--space-sm, 1rem) + 0.25rem);
+      }
+
+      .toc-level-4 .toc-link {
+        padding-left: calc(var(--space-sm, 1rem) + 0.5rem);
+      }
+
+      .toc-level-5 .toc-link {
+        padding-left: calc(var(--space-sm, 1rem) + 0.75rem);
+      }
+
+      .toc-level-6 .toc-link {
+        padding-left: calc(var(--space-sm, 1rem) + 1rem);
       }
 
       .toc-link {
