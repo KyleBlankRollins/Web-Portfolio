@@ -77,6 +77,78 @@ body {
   }
 }
 
+/* Sample Card Styles */
+.samples-section {
+  margin-top: var(--space-xl);
+  
+  h3 {
+    margin-bottom: var(--space-lg);
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: var(--space-sm);
+  }
+}
+
+.sample-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  .sample-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: var(--space-md);
+    background: var(--color-background-secondary);
+  }
+  
+  .sample-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+  
+  .sample-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    h4 {
+      margin-bottom: var(--space-sm);
+      font-size: var(--font-size-lg);
+      color: var(--color-primary);
+      line-height: 1.3;
+    }
+    
+    p {
+      margin-bottom: var(--space-md);
+      color: var(--color-text-muted);
+      flex: 1;
+    }
+  }
+  
+  .sample-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+    margin-top: auto;
+    
+    &:hover {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  }
+  
+  &:hover .sample-image {
+    transform: scale(1.05);
+  }
+}
+
 /* Navigation Component */
 .navigation {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
