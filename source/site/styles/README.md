@@ -32,17 +32,58 @@ source/site/styles/
 └── index.css                   # Entry point that imports other styles
 
 source/site/components/
-├── navigation.ts               # Lit component with shared + embedded CSS
-├── post-list.ts               # Lit component with shared + embedded CSS
-├── post-card.ts               # Lit component with shared + embedded CSS
-├── tag-filter.ts              # Lit component with shared + embedded CSS
-├── table-of-contents.ts       # Lit component with shared + embedded CSS
-├── anchor-copy.ts             # Lit component with programmatic style injection
-├── timeline.ts                # Lit component with shared + embedded CSS
-└── timeline-entry.ts          # Lit component with shared + embedded CSS
+├── README.md                   # Component documentation
+├── anchor-copy.ts             # Simple component with programmatic style injection
+├── navigation/
+│   ├── navigation.ts          # Lit component logic
+│   └── navigation-styles.ts   # Dedicated component styles
+├── post-card/
+│   ├── post-card.ts           # Lit component logic
+│   └── post-card-styles.ts    # Dedicated component styles
+├── post-list/
+│   ├── post-list.ts           # Lit component logic
+│   └── post-list-styles.ts    # Dedicated component styles
+├── table-of-contents/
+│   ├── table-of-contents.ts   # Lit component logic
+│   └── table-of-contents-styles.ts # Dedicated component styles
+├── tag-filter/
+│   ├── tag-filter.ts          # Lit component logic
+│   └── tag-filter-styles.ts   # Dedicated component styles
+├── timeline/
+│   ├── timeline.ts            # Lit component logic
+│   └── timeline-styles.ts     # Dedicated component styles
+└── timeline-entry/
+    ├── timeline-entry.ts      # Lit component logic
+    └── timeline-entry-styles.ts # Dedicated component styles
 ```
 
 **Note**: Data files are now properly located in the `public/` directory for static asset serving, separate from source code.
+
+## Component Organization Conventions
+
+### Directory Structure
+
+Each complex component gets its own directory under `source/site/components/`:
+
+```
+source/site/components/
+├── component-name/
+│   ├── component-name.ts          # Component logic and template
+│   └── component-name-styles.ts   # Component-specific styles
+└── simple-component.ts            # Simple components may remain as single files
+```
+
+### File Naming Conventions
+
+- **Component Logic**: `kebab-case-name.ts` (matches the custom element name)
+- **Component Styles**: `kebab-case-name-styles.ts` (same name with `-styles` suffix)
+- **Style Export**: Export should be `camelCaseName + 'Styles'` (e.g., `tagFilterStyles`)
+
+### Import Patterns
+
+- **Shared Styles**: Import from `../../styles/shared-styles.js`
+- **Component Styles**: Import from `./component-name-styles.js`
+- **Import Order**: Shared styles first, then component styles
 
 ## Layer Hierarchy
 
@@ -146,37 +187,55 @@ export const buttonStyles = css`
 `;
 ```
 
-### 5. Component Style Layer (Lit Embedded CSS)
+### 5. Component Style Layer (Dedicated Style Files)
 
-**Purpose**: Component-specific styling embedded within Lit components
+**Purpose**: Component-specific styling in dedicated TypeScript files alongside component logic
 
 **Architecture Pattern**:
-Each Lit component imports shared styles and combines them with component-specific styles:
+Each Lit component has its styles defined in a separate `*-styles.ts` file, which is then imported and combined with shared styles:
+
+**Component Styles File** (`my-component-styles.ts`):
 
 ```typescript
-import { LitElement, html, css } from "lit";
+import { css } from "lit";
+
+export const myComponentStyles = css`
+  :host {
+    display: block;
+    color: var(--color-text);
+  }
+
+  .component-element {
+    background: var(--color-background);
+    padding: var(--space-md);
+  }
+
+  .component-header {
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* All component-specific styles here */
+`;
+```
+
+**Component Logic File** (`my-component.ts`):
+
+```typescript
+import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
+import { myComponentStyles } from "./my-component-styles.js";
 import {
   typographyStyles,
   buttonStyles,
-} from "../styles/shared-styles.js";
+} from "../../styles/shared-styles.js";
 
 @customElement("my-component")
 export class MyComponent extends LitElement {
   static styles = [
     typographyStyles,
     buttonStyles,
-    css`
-      :host {
-        display: block;
-        color: var(--color-text);
-      }
-
-      .component-element {
-        background: var(--color-background);
-        padding: var(--space-md);
-      }
-    `,
+    myComponentStyles, // Component styles imported from dedicated file
   ];
 
   render() {
@@ -198,17 +257,52 @@ Lit Element provides an elegant solution for Shadow DOM styling challenges:
 
 ### Component Architecture Patterns
 
-#### 1. Standard Lit Component with Shared Styles
+#### 1. Complex Components with Dedicated Style Files
 
-Most components use shared styles combined with component-specific CSS:
+Most components use dedicated style files that are imported alongside shared styles:
+
+**Component Styles** (`timeline-styles.ts`):
 
 ```typescript
-import { LitElement, html, css } from "lit";
+import { css } from "lit";
+
+export const timelineStyles = css`
+  :host {
+    display: block;
+    position: relative;
+  }
+
+  .timeline-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .timeline-title {
+    /* Uses heading scale from typographyStyles */
+    color: var(--color-text);
+  }
+
+  .timeline-container {
+    position: relative;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+  }
+
+  /* All component-specific styles defined here */
+`;
+```
+
+**Component Logic** (`timeline.ts`):
+
+```typescript
+import { LitElement, html } from "lit";
+import { customElement } from "lit/decorators.js";
+import { timelineStyles } from "./timeline-styles.js";
 import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
-} from "../styles/shared-styles.js";
+} from "../../styles/shared-styles.js";
 
 @customElement("kbr-timeline")
 export class KbrTimeline extends LitElement {
@@ -216,24 +310,7 @@ export class KbrTimeline extends LitElement {
     typographyStyles,
     buttonStyles,
     layoutStyles,
-    css`
-      :host {
-        display: block;
-        position: relative;
-      }
-
-      .timeline-header {
-        text-align: center;
-        margin-bottom: var(--space-xl);
-      }
-
-      .timeline-title {
-        /* Uses heading scale from typographyStyles */
-        color: var(--color-text);
-      }
-
-      /* Component-specific styles only */
-    `,
+    timelineStyles, // Component styles from dedicated file
   ];
 
   render() {
@@ -246,7 +323,27 @@ export class KbrTimeline extends LitElement {
 }
 ```
 
-#### 2. External DOM Manipulation Components
+#### 2. Simple Components with Inline Styles
+
+Simple components like `anchor-copy` may still use inline styles when the styling is minimal:
+
+```typescript
+import { LitElement, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
+
+@customElement("kbr-anchor-copy")
+export class KbrAnchorCopy extends LitElement {
+  static styles = css`
+    :host {
+      display: contents; /* Component itself is invisible */
+    }
+  `;
+
+  // Simple components with minimal styling don't need dedicated files
+}
+```
+
+#### 3. External DOM Manipulation Components
 
 Components like `anchor-copy` that need to style elements outside their Shadow DOM use programmatic style injection:
 
@@ -449,14 +546,58 @@ This approach ensures design system integrity and makes token-related issues imm
 
 ## Best Practices
 
-### 1. Shared Styles Component Pattern
+### 1. Dedicated Component Style Files Pattern
+
+**Component Styles File** (`my-component-styles.ts`):
 
 ```typescript
+import { css } from "lit";
+
+export const myComponentStyles = css`
+  /* Always start with :host styles */
+  :host {
+    display: block;
+    container-type: inline-size;
+  }
+
+  /* Use design tokens WITHOUT fallbacks */
+  .component-element {
+    color: var(--color-text);
+    background: var(--color-background);
+    font-family: var(--font-family-base);
+  }
+
+  /* Scope all styles to avoid conflicts */
+  .header {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Use container queries for responsive components */
+  @container (max-width: 768px) {
+    .header {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  /* All component-specific styles organized here */
+  .content-section {
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+  }
+`;
+```
+
+**Component Logic File** (`my-component.ts`):
+
+```typescript
+import { LitElement, html } from "lit";
+import { customElement } from "lit/decorators.js";
+import { myComponentStyles } from "./my-component-styles.js";
 import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
-} from "../styles/shared-styles.js";
+} from "../../styles/shared-styles.js";
 
 @customElement("my-component")
 export class MyComponent extends LitElement {
@@ -464,33 +605,17 @@ export class MyComponent extends LitElement {
     typographyStyles,
     buttonStyles,
     layoutStyles,
-    css`
-      /* Always start with :host styles */
-      :host {
-        display: block;
-        container-type: inline-size;
-      }
-
-      /* Use design tokens WITHOUT fallbacks */
-      .component-element {
-        color: var(--color-text);
-        background: var(--color-background);
-        font-family: var(--font-family-base);
-      }
-
-      /* Scope all styles to avoid conflicts */
-      .header {
-        font-size: var(--font-size-lg);
-      }
-
-      /* Use container queries for responsive components */
-      @container (max-width: 768px) {
-        .header {
-          font-size: var(--font-size-base);
-        }
-      }
-    `,
+    myComponentStyles, // Import dedicated component styles
   ];
+
+  render() {
+    return html`
+      <div class="component-element">
+        <header class="header">Component Title</header>
+        <section class="content-section">Content</section>
+      </div>
+    `;
+  }
 }
 ```
 
@@ -680,20 +805,33 @@ static styles = css`
 
 ```typescript
 // ❌ Incorrect - missing shared styles import
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
+import { componentStyles } from "./component-styles.js";
 
-static styles = css`
-  .btn { /* Duplicating button styles */ }
-`;
+static styles = [componentStyles]; // Missing shared styles
 
 // ✅ Correct - import and use shared styles
-import { typographyStyles, buttonStyles } from "../styles/shared-styles.js";
+import { typographyStyles, buttonStyles } from "../../styles/shared-styles.js";
+import { componentStyles } from "./component-styles.js";
 
 static styles = [
   typographyStyles,
   buttonStyles,
-  css`/* Component-specific styles only */`
+  componentStyles, // Component styles come after shared styles
 ];
+```
+
+### Incorrect Style File Import Path
+
+**Problem**: Component styles not loading or build errors about missing files
+**Solution**: Ensure correct relative path to component style file
+
+```typescript
+// ❌ Incorrect - wrong import path
+import { componentStyles } from "../component-styles.js"; // Looking in parent directory
+
+// ✅ Correct - import from same directory
+import { componentStyles } from "./component-styles.js"; // Same directory as component
 ```
 
 ### Font Loading Issues
@@ -779,12 +917,24 @@ When migrating components to the new shared styles system:
 
 ### When Adding New Components
 
-1. Create TypeScript file with Lit component class
-2. Import appropriate shared style modules
-3. Define styles using `static styles = [sharedStyles..., css\`...\`]`
-4. Use design tokens from global `theme.css` WITHOUT fallbacks
-5. Import component in `main.ts`
-6. No separate CSS files needed
+1. **Create component directory**: `source/site/components/my-component/`
+2. **Create component styles file**: `my-component-styles.ts` with exported `css` template
+3. **Create component logic file**: `my-component.ts` with Lit component class
+4. **Import styles**: Import both shared styles and component styles
+5. **Use design tokens**: Reference tokens from global `theme.css` WITHOUT fallbacks
+6. **Register component**: Import component in `main.ts`
+7. **Follow file structure**: Keep related files organized in component directory
+
+### Benefits of Dedicated Component Style Files
+
+- **Separation of Concerns**: Component logic and styling are cleanly separated
+- **Better Code Organization**: Related files are grouped in component directories
+- **Enhanced Readability**: Component files focus on logic without style clutter
+- **Easier Maintenance**: Styles can be updated independently from component logic
+- **Improved Collaboration**: Developers can work on styles and logic separately
+- **Better IDE Support**: Syntax highlighting and IntelliSense work better in dedicated files
+- **Reusability**: Style files could potentially be shared between similar components
+- **Cleaner Diffs**: Changes to styles and logic show up in separate files
 
 ### Benefits of Shared Styles Architecture
 
@@ -797,4 +947,6 @@ When migrating components to the new shared styles system:
 - **Automatic Scoping**: Shadow DOM isolation built-in
 - **Better Tree Shaking**: Unused style modules can be eliminated
 
-This architecture provides a modern, maintainable CSS system that leverages Lit Element's strengths while maintaining design consistency and performance optimization.
+### Combined Architecture Benefits
+
+This architecture provides a modern, maintainable CSS system that leverages Lit Element's strengths while maintaining design consistency and performance optimization. The combination of shared styles for consistency and dedicated component style files for organization creates an optimal developer experience and maintainable codebase.
