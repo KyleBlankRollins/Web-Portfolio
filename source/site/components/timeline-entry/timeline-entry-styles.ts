@@ -75,7 +75,7 @@ export const timelineEntryStyles = css`
   .skill-tag {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: var(--color-background-secondary);
+    background: var(--color-background);
     color: white;
     border-radius: 1rem;
     font-size: 0.75rem;

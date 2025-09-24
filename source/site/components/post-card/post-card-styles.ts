@@ -13,7 +13,6 @@ export const postCardStyles = css`
     border-radius: 12px;
     padding: var(--space-lg);
     transition: all var(--transition-normal);
-    height: 100%;
     display: flex;
     flex-direction: column;
   }

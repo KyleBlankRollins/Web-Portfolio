@@ -10,6 +10,7 @@ export const postListStyles = css`
   .post-list-container {
     max-width: var(--content-max-width);
     margin: 0 auto;
+    margin-top: calc(var(--space-lg) * -1);
     padding: var(--space-lg);
   }
 
@@ -143,6 +144,7 @@ export const postListStyles = css`
   @media (max-width: 768px) {
     .post-list-container {
       padding: var(--space-md);
+      margin-top: calc(var(--space-md) * -1);
     }
 
     .post-list-pagination {
@@ -164,6 +166,7 @@ export const postListStyles = css`
 
   @media (max-width: 480px) {
     .post-list-container {
+      margin-top: calc(var(--space-sm) * -1);
       padding: var(--space-sm);
     }
 
