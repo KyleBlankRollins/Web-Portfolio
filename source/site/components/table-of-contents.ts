@@ -48,13 +48,15 @@ export class KbrTableOfContents extends LitElement {
       display: block;
       width: 100%;
       height: fit-content;
+      position: sticky;
+      top: var(--space-lg);
     }
 
     .toc-container {
       background: var(--color-background-secondary);
       border: 1px solid var(--color-border);
       border-radius: 8px;
-      padding: var(--space-lg, 2rem);
+      padding: var(--space-lg);
       max-height: min(calc(100vh - 8rem), 600px);
       overflow-y: auto;
       overflow-x: hidden;

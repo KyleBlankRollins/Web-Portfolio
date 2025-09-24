@@ -124,6 +124,12 @@ export class KbrTimeline extends LitElement {
       opacity: 0.8;
     }
 
+    .company-name {
+      a {
+        color: var(--color-primary);
+      }
+    }
+
     .company-positions {
       position: relative;
       margin-bottom: 2rem;
@@ -327,16 +333,6 @@ export class KbrTimeline extends LitElement {
             target-selector=".timeline"
           >
           </kbr-table-of-contents>
-        </div>
-
-        <div class="timeline-header">
-          <h2 class="timeline-title" id="career-timeline">
-            Career Timeline
-          </h2>
-          <p class="timeline-subtitle">
-            My professional journey in technical writing,
-            documentation, and software development
-          </p>
         </div>
 
         <div class="timeline-content">
