@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
+import { typographyStyles } from "../styles/shared-styles.js";
 
 /**
  * Table of Contents Web Component
@@ -43,207 +44,203 @@ export class KbrTableOfContents extends LitElement {
 
   private observer: IntersectionObserver | null = null;
 
-  static styles = css`
-    :host {
-      display: block;
-      width: 100%;
-      height: fit-content;
-      position: sticky;
-      top: var(--space-lg);
-    }
-
-    .toc-container {
-      background: var(--color-background-secondary);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: var(--space-lg);
-      max-height: min(calc(100vh - 8rem), 600px);
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-
-    /* Navigation container */
-    .table-of-contents {
-      font-size: 0.9rem;
-    }
-
-    .toc-title {
-      color: var(--color-primary);
-      font-weight: 600;
-      margin: 0 0 var(--space-md) 0;
-      padding-bottom: var(--space-sm);
-      border-bottom: 2px solid var(--color-border);
-    }
-
-    /* Lists */
-    .toc-list,
-    .toc-sublist {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .toc-sublist {
-      margin-left: var(--space-md);
-      margin-top: var(--space-xs);
-    }
-
-    /* List items */
-    .toc-item {
-      margin: 0;
-      padding: 0;
-    }
-
-    .toc-item:not(:last-child) {
-      margin-bottom: var(--space-xs);
-    }
-
-    /* Links */
-    .toc-link {
-      display: block;
-      color: var(--color-text);
-      text-decoration: none;
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: 4px;
-      line-height: 1.4;
-      transition: all var(--transition-fast);
-      border-left: 3px solid transparent;
-    }
-
-    .toc-link:hover {
-      background: var(--color-background);
-      color: var(--color-primary);
-      text-decoration: none;
-      border-left-color: var(--color-border-dark);
-    }
-
-    .toc-link:focus {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 2px;
-    }
-
-    .toc-link.active {
-      background: var(--color-primary);
-      color: var(--color-text-inverse);
-      font-weight: 500;
-      border-left-color: var(--color-primary-dark);
-    }
-
-    /* Level-specific styling with progressive indentation */
-    .toc-level-1 .toc-link {
-      font-weight: 500;
-      font-size: 1em;
-      padding-left: var(--space-sm);
-    }
-
-    .toc-level-2 .toc-link {
-      font-size: 0.95em;
-      padding-left: var(--space-sm);
-    }
-
-    .toc-level-3 .toc-link {
-      font-size: 0.9em;
-      opacity: 0.9;
-      padding-left: calc(var(--space-sm) + 0.5rem);
-    }
-
-    .toc-level-4 .toc-link {
-      font-size: 0.85em;
-      opacity: 0.8;
-      padding-left: calc(var(--space-sm) + 1rem);
-    }
-
-    .toc-level-5 .toc-link {
-      font-size: 0.8em;
-      opacity: 0.75;
-      padding-left: calc(var(--space-sm) + 1.5rem);
-    }
-
-    .toc-level-6 .toc-link {
-      font-size: 0.75em;
-      opacity: 0.7;
-      padding-left: calc(var(--space-sm) + 2rem);
-    }
-
-    /* Empty state */
-    .toc-empty {
-      color: var(--color-text-muted);
-      font-style: italic;
-      text-align: center;
-      margin: var(--space-md) 0;
-    }
-
-    /* Scrollbar styling */
-    .toc-container::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .toc-container::-webkit-scrollbar-track {
-      background: var(--color-background);
-      border-radius: 3px;
-    }
-
-    .toc-container::-webkit-scrollbar-thumb {
-      background: var(--color-border-dark);
-      border-radius: 3px;
-    }
-
-    .toc-container::-webkit-scrollbar-thumb:hover {
-      background: var(--color-primary);
-    }
-
-    /* Responsive design */
-    @media (max-width: 1024px) {
+  static styles = [
+    typographyStyles,
+    css`
       :host {
-        position: relative;
-        top: 0;
+        display: block;
+        width: 100%;
+        height: fit-content;
+        position: sticky;
+        top: var(--space-lg);
       }
 
       .toc-container {
-        max-height: min(calc(100vh - 6rem), 400px);
-        margin-bottom: var(--space-xl);
+        background: var(--color-background-secondary);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: var(--space-lg);
+        max-height: min(calc(100vh - 8rem), 600px);
+        overflow-y: auto;
+        overflow-x: hidden;
       }
-    }
 
-    @media (max-width: 768px) {
-      .toc-container {
-        padding: var(--space-md);
-        max-height: min(calc(100vh - 4rem), 300px);
+      /* Navigation container - uses base typography from shared styles */
+      .table-of-contents {
+        font-size: 1rem;
+        line-height: 1.2777778rem;
+      }
+
+      /* Lists */
+      .toc-list,
+      .toc-sublist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
       }
 
       .toc-sublist {
-        margin-left: var(--space-sm);
+        margin-left: var(--space-md);
+        margin-top: var(--space-xs);
       }
 
-      /* Reduce indentation on mobile for better space usage */
+      /* List items */
+      .toc-item {
+        margin: 0;
+        padding: 0;
+      }
+
+      .toc-item:not(:last-child) {
+        margin-bottom: var(--space-xs);
+      }
+
+      /* Links */
+      .toc-link {
+        display: block;
+        color: var(--color-text);
+        text-decoration: none;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: 4px;
+        line-height: 1.4;
+        transition: all var(--transition-fast);
+        border-left: 3px solid transparent;
+      }
+
+      .toc-link:hover {
+        background: var(--color-background);
+        color: var(--color-primary);
+        text-decoration: none;
+        border-left-color: var(--color-border-dark);
+      }
+
+      .toc-link:focus {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      .toc-link.active {
+        background: var(--color-primary);
+        color: var(--color-text-inverse);
+        font-weight: 500;
+        border-left-color: var(--color-primary-dark);
+      }
+
+      /* Level-specific styling with progressive indentation */
+      .toc-level-1 .toc-link {
+        font-weight: 500;
+        font-size: 1em;
+        padding-left: var(--space-sm);
+      }
+
+      .toc-level-2 .toc-link {
+        font-size: 0.95em;
+        padding-left: var(--space-sm);
+      }
+
       .toc-level-3 .toc-link {
-        padding-left: calc(var(--space-sm) + 0.25rem);
-      }
-
-      .toc-level-4 .toc-link {
+        font-size: 0.9em;
+        opacity: 0.9;
         padding-left: calc(var(--space-sm) + 0.5rem);
       }
 
-      .toc-level-5 .toc-link {
-        padding-left: calc(var(--space-sm) + 0.75rem);
-      }
-
-      .toc-level-6 .toc-link {
+      .toc-level-4 .toc-link {
+        font-size: 0.85em;
+        opacity: 0.8;
         padding-left: calc(var(--space-sm) + 1rem);
       }
 
-      .toc-link {
-        padding: var(--space-xs);
+      .toc-level-5 .toc-link {
+        font-size: 0.8em;
+        opacity: 0.75;
+        padding-left: calc(var(--space-sm) + 1.5rem);
       }
-    }
 
-    /* Animation preferences */
-    @media (prefers-reduced-motion: reduce) {
-      .toc-link {
-        transition: none !important;
+      .toc-level-6 .toc-link {
+        font-size: 0.75em;
+        opacity: 0.7;
+        padding-left: calc(var(--space-sm) + 2rem);
       }
-    }
-  `;
+
+      /* Empty state */
+      .toc-empty {
+        color: var(--color-text-muted);
+        font-style: italic;
+        text-align: center;
+        margin: var(--space-md) 0;
+      }
+
+      /* Scrollbar styling */
+      .toc-container::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .toc-container::-webkit-scrollbar-track {
+        background: var(--color-background);
+        border-radius: 3px;
+      }
+
+      .toc-container::-webkit-scrollbar-thumb {
+        background: var(--color-border-dark);
+        border-radius: 3px;
+      }
+
+      .toc-container::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1024px) {
+        :host {
+          position: relative;
+          top: 0;
+        }
+
+        .toc-container {
+          max-height: min(calc(100vh - 6rem), 400px);
+          margin-bottom: var(--space-xl);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .toc-container {
+          padding: var(--space-md);
+          max-height: min(calc(100vh - 4rem), 300px);
+        }
+
+        .toc-sublist {
+          margin-left: var(--space-sm);
+        }
+
+        /* Reduce indentation on mobile for better space usage */
+        .toc-level-3 .toc-link {
+          padding-left: calc(var(--space-sm) + 0.25rem);
+        }
+
+        .toc-level-4 .toc-link {
+          padding-left: calc(var(--space-sm) + 0.5rem);
+        }
+
+        .toc-level-5 .toc-link {
+          padding-left: calc(var(--space-sm) + 0.75rem);
+        }
+
+        .toc-level-6 .toc-link {
+          padding-left: calc(var(--space-sm) + 1rem);
+        }
+
+        .toc-link {
+          padding: var(--space-xs);
+        }
+      }
+
+      /* Animation preferences */
+      @media (prefers-reduced-motion: reduce) {
+        .toc-link {
+          transition: none !important;
+        }
+      }
+    `,
+  ];
 
   constructor() {
     super();
@@ -414,7 +411,6 @@ export class KbrTableOfContents extends LitElement {
           role="navigation"
           aria-label="Table of contents"
         >
-          <h2 class="toc-title">Table of Contents</h2>
           <ol class="toc-list">
             ${this.renderTocItems()}
           </ol>
@@ -431,7 +427,7 @@ export class KbrTableOfContents extends LitElement {
       <li class="toc-item toc-level-${item.level}">
         <a
           href="#${item.id}"
-          class="toc-link ${this.activeId === item.id
+          class="toc-link ui-label ${this.activeId === item.id
             ? "active"
             : ""}"
           @click="${this.handleLinkClick}"

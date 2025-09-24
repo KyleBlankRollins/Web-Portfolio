@@ -1,5 +1,10 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import {
+  typographyStyles,
+  buttonStyles,
+  layoutStyles,
+} from "../styles/shared-styles.js";
 
 /**
  * Timeline Entry Web Component
@@ -26,115 +31,120 @@ export class KbrTimelineEntry extends LitElement {
   @property({ type: String }) declare description: string;
   @property({ type: String }) declare skills: string; // JSON string of skills array
 
-  static styles = css`
-    :host {
-      display: block;
-      position: relative;
-      margin-bottom: 2rem;
-    }
-
-    .timeline-entry {
-      background: var(--color-bg-secondary);
-      border-radius: 8px;
-      padding: 1.5rem;
-      border: 1px solid var(--color-border);
-      transition: all 0.2s ease;
-    }
-
-    .timeline-entry:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .entry-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-      gap: 1rem;
-    }
-
-    .entry-title {
-      flex: 1;
-    }
-
-    .job-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--color-text);
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    .entry-meta {
-      text-align: right;
-      font-size: 0.875rem;
-      color: var(--color-text-muted);
-      line-height: 1.4;
-    }
-
-    .date-range {
-      font-weight: 500;
-      color: var(--color-text);
-    }
-
-    .duration,
-    .employment-type,
-    .location {
-      display: block;
-      margin-top: 0.25rem;
-    }
-
-    .description {
-      margin-bottom: 1rem;
-      color: var(--color-text);
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-tag {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      background: var(--color-background-secondary);
-      color: white;
-      border-radius: 1rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.025em;
-      transition: background-color 0.2s ease;
-    }
-
-    @media (max-width: 768px) {
+  static styles = [
+    typographyStyles,
+    buttonStyles,
+    layoutStyles,
+    css`
       :host {
-        margin-bottom: 1.5rem;
+        display: block;
+        position: relative;
+        margin-bottom: 2rem;
       }
 
       .timeline-entry {
-        padding: 1rem;
+        background: var(--color-background-secondary);
+        border-radius: 8px;
+        padding: 1.5rem;
+        border: 1px solid var(--color-border);
+        transition: all 0.2s ease;
+      }
+
+      .timeline-entry:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       .entry-header {
-        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
         align-items: flex-start;
-        gap: 0.5rem;
+        margin-bottom: 1rem;
+        gap: 1rem;
       }
 
-      .entry-meta {
-        text-align: left;
+      .entry-title {
+        flex: 1;
       }
 
       .job-title {
-        font-size: 1.125rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+        line-height: 1.3;
       }
-    }
-  `;
+
+      .entry-meta {
+        text-align: right;
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+      }
+
+      .date-range {
+        font-weight: 500;
+        color: var(--color-text);
+      }
+
+      .duration,
+      .employment-type,
+      .location {
+        display: block;
+        margin-top: 0.25rem;
+      }
+
+      .description {
+        margin-bottom: 1rem;
+        color: var(--color-text);
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: var(--color-background-secondary);
+        color: white;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        transition: background-color 0.2s ease;
+      }
+
+      @media (max-width: 768px) {
+        :host {
+          margin-bottom: 1.5rem;
+        }
+
+        .timeline-entry {
+          padding: 1rem;
+        }
+
+        .entry-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .entry-meta {
+          text-align: left;
+        }
+
+        .job-title {
+          font-size: 1.125rem;
+        }
+      }
+    `,
+  ];
 
   private get parsedSkills(): string[] {
     try {

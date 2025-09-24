@@ -21,3 +21,7 @@ If possible, the builder or Vite should bundle all of the CSS files for the site
 ### Table of Contents
 
 Needs a scroll indicator that tells people if there are TOC entries above or below that are hidden from view.
+
+### Styles
+
+Double check all styles that should be injected and shared in component shadow DOM. Ensure that they exist in the shared styles module. Ensure that styles aren't defined in multiple places.

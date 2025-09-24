@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
+import { typographyStyles } from "../styles/shared-styles.js";
 
 /**
  * Web component that adds copy-to-clipboard buttons for heading anchors
@@ -20,157 +21,152 @@ export default class AnchorCopyComponent extends LitElement {
     </svg>
   `;
 
-  static styles = css`
-    :host {
-      display: contents;
-    }
-
-    /* Global styles for anchor functionality */
-    :host-context(body) .anchor-highlighted {
-      background-color: var(--color-shadow);
-      border-left: 4px solid var(--color-accent);
-      padding-left: 1rem;
-      margin-left: -1.25rem;
-      border-radius: 4px;
-      animation: anchor-highlight-fade 3s ease-out forwards;
-    }
-
-    @keyframes anchor-highlight-fade {
-      0% {
-        background-color: var(--color-shadow-dark);
-        border-left-color: var(--color-accent);
+  static styles = [
+    typographyStyles,
+    css`
+      :host {
+        display: contents;
       }
-      100% {
-        background-color: transparent;
-        border-left-color: transparent;
-      }
+    `,
+  ];
+
+  /**
+   * Inject global styles for anchor functionality. Can't use static style because this component needs to affect elements outside of its shadow DOM.
+   */
+  private injectGlobalStyles(): void {
+    // Check if styles are already injected
+    if (document.querySelector("#anchor-copy-styles")) {
+      return;
     }
 
-    :host-context(body) .heading-with-anchor {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    :host-context(body) .anchor-copy-btn {
-      opacity: 0;
-      background: none;
-      border: none;
-      padding: 0.25rem;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    :host-context(body) .anchor-copy-btn:hover {
-      color: var(--accent-primary);
-      background-color: var(--bg-secondary);
-      transform: scale(1.1);
-    }
-
-    :host-context(body) .anchor-copy-btn:active {
-      transform: scale(0.95);
-    }
-
-    :host-context(body) .anchor-copy-btn.copied {
-      color: var(--success-color);
-    }
-
-    /* Show button on heading hover */
-    :host-context(body) .heading-with-anchor:hover .anchor-copy-btn {
-      opacity: 1;
-    }
-
-    /* Always show on focus for accessibility */
-    :host-context(body) .anchor-copy-btn:focus {
-      opacity: 1;
-      outline: 2px solid var(--accent-primary);
-      outline-offset: 2px;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      :host-context(body) .anchor-copy-btn {
-        opacity: 1; /* Always visible on mobile */
-        position: static;
-        margin-left: auto;
-      }
-
-      :host-context(body) .heading-with-anchor {
-        flex-wrap: wrap;
-      }
-    }
-
-    /* Dark theme support */
-    @media (prefers-color-scheme: dark) {
-      :host-context(body) .anchor-copy-btn {
-        color: var(--text-secondary-dark);
-      }
-
-      :host-context(body) .anchor-copy-btn:hover {
-        color: var(--accent-primary-dark);
-        background-color: var(--bg-secondary-dark);
-      }
-
-      :host-context(body) .anchor-highlighted {
-        background-color: var(--accent-primary-light-dark);
-        border-left-color: var(--accent-primary-dark);
+    const styleSheet = document.createElement("style");
+    styleSheet.id = "anchor-copy-styles";
+    styleSheet.textContent = `
+      /* Global styles for anchor functionality */
+      .anchor-highlighted {
+        background-color: var(--color-background-secondary);
+        border-left: 4px solid var(--color-primary);
+        padding-left: 1rem;
+        margin-left: -1.25rem;
+        border-radius: 4px;
+        animation: anchor-highlight-fade 3s ease-out forwards;
       }
 
       @keyframes anchor-highlight-fade {
         0% {
-          background-color: var(--accent-primary-light-dark);
-          border-left-color: var(--accent-primary-dark);
+          background-color: var(--color-background-secondary);
+          border-left-color: var(--color-primary);
         }
         100% {
           background-color: transparent;
           border-left-color: transparent;
         }
       }
-    }
 
-    /* Ensure headings inside wrapper maintain their styling */
-    :host-context(body) .heading-with-anchor h1,
-    :host-context(body) .heading-with-anchor h2,
-    :host-context(body) .heading-with-anchor h3,
-    :host-context(body) .heading-with-anchor h4,
-    :host-context(body) .heading-with-anchor h5,
-    :host-context(body) .heading-with-anchor h6 {
-      margin: 0;
-      flex: 1;
-    }
+      .heading-with-anchor {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
 
-    /* Smooth scroll to anchors */
-    :host-context(html) {
-      scroll-behavior: smooth;
-    }
+      .anchor-copy-btn {
+        /* Base button styles */
+        opacity: 0;
+        background: transparent;
+        border: 1px solid transparent;
+        padding: var(--space-xs);
+        border-radius: 4px;
+        cursor: pointer;
+        color: var(--color-text-muted);
+        transition: all var(--transition-fast);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        font-family: inherit;
+        user-select: none;
+      }
 
-    /* Add some padding for anchor scroll targets */
-    :host-context(body) .heading-with-anchor[id]::before,
-    :host-context(body) h1[id]::before,
-    :host-context(body) h2[id]::before,
-    :host-context(body) h3[id]::before,
-    :host-context(body) h4[id]::before,
-    :host-context(body) h5[id]::before,
-    :host-context(body) h6[id]::before {
-      content: "";
-      display: block;
-      height: 80px; /* Adjust based on your header height */
-      margin-top: -80px;
-      visibility: hidden;
-    }
-  `;
+      .anchor-copy-btn:hover {
+        color: var(--color-primary);
+        background-color: var(--color-background-secondary);
+        transform: scale(1.1);
+      }
+
+      .anchor-copy-btn:active {
+        transform: scale(0.95);
+      }
+
+      .anchor-copy-btn.copied {
+        color: var(--color-success);
+      }
+
+      /* Show button on heading hover */
+      .heading-with-anchor:hover .anchor-copy-btn {
+        opacity: 1;
+      }
+
+      /* Always show on focus for accessibility */
+      .anchor-copy-btn:focus {
+        opacity: 1;
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .anchor-copy-btn {
+          opacity: 1; /* Always visible on mobile */
+          position: static;
+          margin-left: auto;
+        }
+
+        .heading-with-anchor {
+          flex-wrap: wrap;
+        }
+      }
+
+      /* Ensure headings inside wrapper maintain their styling */
+      .heading-with-anchor h1,
+      .heading-with-anchor h2,
+      .heading-with-anchor h3,
+      .heading-with-anchor h4,
+      .heading-with-anchor h5,
+      .heading-with-anchor h6 {
+        margin: 0;
+        flex: 1;
+      }
+
+      /* Smooth scroll to anchors */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Add some padding for anchor scroll targets */
+      .heading-with-anchor[id]::before,
+      h1[id]::before,
+      h2[id]::before,
+      h3[id]::before,
+      h4[id]::before,
+      h5[id]::before,
+      h6[id]::before {
+        content: "";
+        display: block;
+        height: 80px; /* Adjust based on your header height */
+        margin-top: -80px;
+        visibility: hidden;
+      }
+    `;
+
+    document.head.appendChild(styleSheet);
+  }
 
   connectedCallback() {
     super.connectedCallback();
+    this.injectGlobalStyles();
     this.setupAnchorButtons();
     this.highlightAnchorTarget();
   }

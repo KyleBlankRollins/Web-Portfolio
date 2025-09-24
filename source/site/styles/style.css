@@ -24,6 +24,10 @@ body {
   flex-direction: column;
 }
 
+.page-content {
+  margin: var(--space-2xl) var(--space-lg);
+}
+
 /* Layout Components using CSS Grid */
 .container {
   max-width: var(--content-max-width);
@@ -338,16 +342,16 @@ body {
     position: fixed;
     top: calc(80px + var(--space-lg));  /* Navigation height + spacing */
     right: var(--space-lg);
-    width: 280px;
-    max-width: 280px;
+    width: 340px;
+    max-width: 340px;
     margin: 0;
     z-index: 100;  /* Ensure it's above other content */
   }
   
   /* Add right margin to main content when TOC is fixed */
   body:has(.portfolio-toc) main {
-    margin-right: 300px;
-    max-width: calc(100% - 300px);
+    margin-right: 400px;
+    max-width: calc(100% - 500px);
   }
 }
 

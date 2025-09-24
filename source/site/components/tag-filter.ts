@@ -1,5 +1,10 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
+import {
+  typographyStyles,
+  buttonStyles,
+  layoutStyles,
+} from "../styles/shared-styles.js";
 
 /**
  * Blog Tag Filter Web Component
@@ -35,200 +40,205 @@ export default class KbrTagFilter extends LitElement {
   @state()
   private declare isExpanded: boolean;
 
-  static styles = css`
-    /* Host element - the <kbr-tag-filter> tag itself */
-    :host {
-      display: block;
-      margin-bottom: 2rem;
-    }
+  static styles = [
+    typographyStyles,
+    buttonStyles,
+    layoutStyles,
+    css`
+      /* Host element - the <kbr-tag-filter> tag itself */
+      :host {
+        display: block;
+        margin-bottom: 2rem;
+      }
 
-    .tag-filter-container {
-      background: var(--bg-secondary, #f8f9fa);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .filter-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .filter-title {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .clear-filter-btn {
-      background: none;
-      border: 1px solid var(--border-color);
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      transition: all 0.2s ease;
-    }
-
-    .clear-filter-btn:hover {
-      background: var(--accent-primary);
-      color: white;
-      border-color: var(--accent-primary);
-    }
-
-    .clear-filter-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .tags-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag-button {
-      background: white;
-      border: 1px solid var(--border-color);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
-      color: var(--text-secondary);
-    }
-
-    .tag-button:hover {
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
-      transform: translateY(-1px);
-    }
-
-    .tag-button.active {
-      background: var(--accent-primary);
-      border-color: var(--accent-primary);
-      color: white;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-secondary);
-    }
-
-    .error {
-      color: var(--error-color);
-      text-align: center;
-      padding: 1rem;
-      background: var(--error-bg);
-      border-radius: 4px;
-    }
-
-    /* Tag count styles */
-    .tag-count {
-      opacity: 0.7;
-      font-weight: normal;
-      margin-left: 0.25rem;
-    }
-
-    .tag-button.active .tag-count {
-      opacity: 1;
-      font-weight: 500;
-    }
-
-    /* Expand/collapse controls */
-    .expand-controls {
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    .expand-tags-btn {
-      background: none;
-      border: 1px solid var(--border-color);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .expand-tags-btn:hover {
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
-      background: var(--bg-primary);
-    }
-
-    .expand-tags-btn:focus {
-      outline: 2px solid var(--accent-primary);
-      outline-offset: 2px;
-    }
-
-    /* Dark theme support */
-    @media (prefers-color-scheme: dark) {
       .tag-filter-container {
-        background: var(--bg-secondary-dark);
-      }
-
-      .filter-title {
-        color: var(--text-primary-dark);
-      }
-
-      .tag-button {
-        background: var(--bg-primary-dark);
-        border-color: var(--border-color-dark);
-        color: var(--text-secondary-dark);
-      }
-
-      .tag-button:hover {
-        border-color: var(--accent-primary-dark);
-        color: var(--accent-primary-dark);
-      }
-
-      .tag-button.active {
-        background: var(--accent-primary-dark);
-        border-color: var(--accent-primary-dark);
-      }
-
-      .expand-tags-btn {
-        border-color: var(--border-color-dark);
-        color: var(--text-secondary-dark);
-      }
-
-      .expand-tags-btn:hover {
-        border-color: var(--accent-primary-dark);
-        color: var(--accent-primary-dark);
-        background: var(--bg-primary-dark);
-      }
-    }
-
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-      .tag-filter-container {
-        padding: 1rem;
+        background: var(--color-background-secondary);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
       }
 
       .filter-header {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .filter-title {
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .clear-filter-btn {
+        background: none;
+        border: 1px solid var(--border-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        color: var(--color-text);
+        transition: all 0.2s ease;
+      }
+
+      .clear-filter-btn:hover {
+        background: var(--accent-primary);
+        color: white;
+        border-color: var(--accent-primary);
+      }
+
+      .clear-filter-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .tags-grid {
-        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
       }
-    }
-  `;
+
+      .tag-button {
+        background: white;
+        border: 1px solid var(--border-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        color: var(--color-text);
+      }
+
+      .tag-button:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        transform: translateY(-1px);
+      }
+
+      .tag-button.active {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        color: white;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+        color: var(--color-text);
+      }
+
+      .error {
+        color: var(--error-color);
+        text-align: center;
+        padding: 1rem;
+        background: var(--error-bg);
+        border-radius: 4px;
+      }
+
+      /* Tag count styles */
+      .tag-count {
+        opacity: 0.7;
+        font-weight: normal;
+        margin-left: 0.25rem;
+      }
+
+      .tag-button.active .tag-count {
+        opacity: 1;
+        font-weight: 500;
+      }
+
+      /* Expand/collapse controls */
+      .expand-controls {
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .expand-tags-btn {
+        background: none;
+        border: 1px solid var(--border-color);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        color: var(--color-text);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .expand-tags-btn:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        background: var(--color-background);
+      }
+
+      .expand-tags-btn:focus {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+      }
+
+      /* Dark theme support */
+      @media (prefers-color-scheme: dark) {
+        .tag-filter-container {
+          background: var(--color-background-secondary);
+        }
+
+        .filter-title {
+          color: var(--color-text);
+        }
+
+        .tag-button {
+          background: var(--color-background);
+          border-color: var(--border-color-dark);
+          color: var(--color-text);
+        }
+
+        .tag-button:hover {
+          border-color: var(--accent-primary-dark);
+          color: var(--accent-primary-dark);
+        }
+
+        .tag-button.active {
+          background: var(--accent-primary-dark);
+          border-color: var(--accent-primary-dark);
+        }
+
+        .expand-tags-btn {
+          border-color: var(--border-color-dark);
+          color: var(--color-text);
+        }
+
+        .expand-tags-btn:hover {
+          border-color: var(--accent-primary-dark);
+          color: var(--accent-primary-dark);
+          background: var(--color-background);
+        }
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .tag-filter-container {
+          padding: 1rem;
+        }
+
+        .filter-header {
+          flex-direction: column;
+          align-items: stretch;
+          text-align: center;
+        }
+
+        .tags-grid {
+          justify-content: center;
+        }
+      }
+    `,
+  ];
 
   constructor() {
     super();

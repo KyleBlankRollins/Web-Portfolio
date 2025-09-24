@@ -8,7 +8,7 @@
 /* Blog post layout container */
 .blog-post-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 350px 1fr;
   grid-template-areas: "sidebar content";
   gap: var(--space-xl);
   max-width: var(--content-max-width);
