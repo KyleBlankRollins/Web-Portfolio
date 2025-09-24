@@ -42,13 +42,13 @@ Break CSS into its own file for each componetn. Again. Need to use Lit's css met
 
 ## Home page
 
-[ ] Create a more compelling introduction
-[ ] Have nav cards overlay the transition from the hero section to the rest of the page
-[ ] Improve nav card layout
+[x] Create a more compelling introduction
+[x] Have nav cards overlay the transition from the hero section to the rest of the page
+[x] Improve nav card layout
 
 ## Site design
 
-[ ] Identify which icons from [SystemUIcons](https://www.systemuicons.com/) I want to use and download the SVGs to use across the site
+[x] Identify which icons from [SystemUIcons](https://www.systemuicons.com/) I want to use and download the SVGs to use across the site
 [ ] Define theme colors
 [ ] Apply theme colors throughout the site
 [ ] Test both light and dark themes for cohesion and accessbility

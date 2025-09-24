@@ -14,7 +14,3 @@ publish = "/"
 [context.DoK-Compare]
 command = "vue-cli-service-build"
 publish = "dist"
-
-[context.redesign-2025]
-command = "npm run build"
-publish = "dist"

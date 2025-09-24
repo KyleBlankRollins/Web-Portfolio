@@ -11,6 +11,7 @@ import "./components/tag-filter/tag-filter";
 import "./components/timeline/timeline";
 import "./components/timeline-entry/timeline-entry";
 import "./components/icon/icon";
+import "./components/image-lightbox/image-lightbox";
 
 // Global tag navigation for individual blog post pages (main DOM)
 function setupGlobalTagNavigation() {
