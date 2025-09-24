@@ -2,14 +2,14 @@
 import "./styles/index.css";
 
 // Import components
-import "./components/navigation";
-import "./components/post-list";
-import "./components/post-card";
-import "./components/table-of-contents";
+import "./components/navigation/navigation";
+import "./components/post-list/post-list";
+import "./components/post-card/post-card";
+import "./components/table-of-contents/table-of-contents";
 import "./components/anchor-copy";
-import "./components/tag-filter";
-import "./components/timeline";
-import "./components/timeline-entry";
+import "./components/tag-filter/tag-filter";
+import "./components/timeline/timeline";
+import "./components/timeline-entry/timeline-entry";
 
 // Global tag navigation for individual blog post pages (main DOM)
 function setupGlobalTagNavigation() {

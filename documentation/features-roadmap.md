@@ -18,6 +18,10 @@ If possible, the builder or Vite should bundle all of the CSS files for the site
 
 ## Components
 
-### Styles
+### Table of contents and tag filter
 
-Double check all styles that should be injected and shared in component shadow DOM. Ensure that they exist in the shared styles module. Ensure that styles aren't defined in multiple places.
+Break it up.
+
+### CSS
+
+Break CSS into its own file for each componetn. Again. Need to use Lit's css method and export.

@@ -1,10 +1,11 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
+import { tagFilterStyles } from "./tag-filter-styles.js";
 import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
-} from "../styles/shared-styles.js";
+} from "../../styles/shared-styles.js";
 
 /**
  * Blog Tag Filter Web Component
@@ -40,173 +41,20 @@ export default class KbrTagFilter extends LitElement {
   @state()
   private declare isExpanded: boolean;
 
+  @state()
+  private declare orderedTags: { tag: string; count: number }[];
+
+  @state()
+  private declare animatingTags: Set<string>;
+
+  private originalTagsOrder: { tag: string; count: number }[] = [];
+  private previousActiveTag: string | null = null;
+
   static styles = [
     typographyStyles,
     buttonStyles,
     layoutStyles,
-    css`
-      /* Host element - the <kbr-tag-filter> tag itself */
-      :host {
-        display: block;
-        margin-bottom: 2rem;
-      }
-
-      .tag-filter-container {
-        background: var(--color-background-secondary);
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .filter-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .filter-title {
-        font-weight: 600;
-        color: var(--color-text);
-        margin: 0;
-        font-size: 1rem;
-      }
-
-      .clear-filter-btn {
-        background: none;
-        border: 1px solid var(--border-color);
-        padding: 0.25rem 0.75rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.875rem;
-        color: var(--color-text);
-        transition: all 0.2s ease;
-      }
-
-      .clear-filter-btn:hover {
-        background: var(--accent-primary);
-        color: white;
-        border-color: var(--accent-primary);
-      }
-
-      .clear-filter-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      .tags-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      /* Tag button styles now use shared .tag-button class */
-
-      .loading {
-        text-align: center;
-        padding: 2rem;
-        color: var(--color-text);
-      }
-
-      .error {
-        color: var(--error-color);
-        text-align: center;
-        padding: 1rem;
-        background: var(--error-bg);
-        border-radius: 4px;
-      }
-
-      /* Tag count styles now use shared .tag-count class */
-
-      /* Expand/collapse controls */
-      .expand-controls {
-        margin-top: 1rem;
-        text-align: center;
-      }
-
-      .expand-tags-btn {
-        background: none;
-        border: 1px solid var(--border-color);
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        color: var(--color-text);
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-      }
-
-      .expand-tags-btn:hover {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        background: var(--color-background);
-      }
-
-      .expand-tags-btn:focus {
-        outline: 2px solid var(--accent-primary);
-        outline-offset: 2px;
-      }
-
-      /* Dark theme support */
-      @media (prefers-color-scheme: dark) {
-        .tag-filter-container {
-          background: var(--color-background-secondary);
-        }
-
-        .filter-title {
-          color: var(--color-text);
-        }
-
-        .tag-button {
-          background: var(--color-background);
-          border-color: var(--border-color-dark);
-          color: var(--color-text);
-        }
-
-        .tag-button:hover {
-          border-color: var(--accent-primary-dark);
-          color: var(--accent-primary-dark);
-        }
-
-        .tag-button.active {
-          background: var(--accent-primary-dark);
-          border-color: var(--accent-primary-dark);
-        }
-
-        .expand-tags-btn {
-          border-color: var(--border-color-dark);
-          color: var(--color-text);
-        }
-
-        .expand-tags-btn:hover {
-          border-color: var(--accent-primary-dark);
-          color: var(--accent-primary-dark);
-          background: var(--color-background);
-        }
-      }
-
-      /* Mobile responsive */
-      @media (max-width: 768px) {
-        .tag-filter-container {
-          padding: 1rem;
-        }
-
-        .filter-header {
-          flex-direction: column;
-          align-items: stretch;
-          text-align: center;
-        }
-
-        .tags-grid {
-          justify-content: center;
-        }
-      }
-    `,
+    tagFilterStyles,
   ];
 
   constructor() {
@@ -218,6 +66,10 @@ export default class KbrTagFilter extends LitElement {
     this.isLoading = false;
     this.visibleTagCount = 5;
     this.isExpanded = false;
+    this.orderedTags = [];
+    this.originalTagsOrder = [];
+    this.animatingTags = new Set();
+    this.previousActiveTag = null;
   }
 
   connectedCallback() {
@@ -233,8 +85,8 @@ export default class KbrTagFilter extends LitElement {
       !this.isLoading &&
       this.tagsWithCounts.length > 0
     ) {
-      // Property change handling is automatic with Lit's reactive update cycle
-      this.requestUpdate();
+      // Update tag order when active tag changes
+      this.updateTagOrder();
     }
   }
 
@@ -280,6 +132,11 @@ export default class KbrTagFilter extends LitElement {
 
       const manifest: BlogManifest = await response.json();
       this.tagsWithCounts = manifest.tagsWithCounts || [];
+
+      // Store original order and initialize ordered tags
+      this.originalTagsOrder = [...this.tagsWithCounts];
+      this.updateTagOrder();
+
       this.isLoading = false;
 
       // Check for URL parameter after tags are loaded and rendered
@@ -287,6 +144,56 @@ export default class KbrTagFilter extends LitElement {
     } catch (error) {
       console.error("Failed to load available tags:", error);
       this.isLoading = false;
+    }
+  }
+
+  private updateTagOrder(): void {
+    // Determine which tags need animation
+    const newActiveTag = this.activeTag;
+    const oldActiveTag = this.previousActiveTag;
+
+    // Clear any existing animations
+    this.animatingTags.clear();
+
+    // Add animations for tags that are changing position
+    if (oldActiveTag && oldActiveTag !== newActiveTag) {
+      this.animatingTags.add(oldActiveTag);
+    }
+    if (newActiveTag && newActiveTag !== oldActiveTag) {
+      this.animatingTags.add(newActiveTag);
+    }
+
+    // Update the tag order immediately for layout
+    if (!this.activeTag) {
+      // No active tag, use original order
+      this.orderedTags = [...this.originalTagsOrder];
+    } else {
+      // Find the active tag and move it to the top
+      const activeTagData = this.originalTagsOrder.find(
+        (tagData) => tagData.tag === this.activeTag
+      );
+
+      if (activeTagData) {
+        // Create new order with active tag first, then remaining tags in original order
+        const remainingTags = this.originalTagsOrder.filter(
+          (tagData) => tagData.tag !== this.activeTag
+        );
+        this.orderedTags = [activeTagData, ...remainingTags];
+      } else {
+        // Active tag not found, use original order
+        this.orderedTags = [...this.originalTagsOrder];
+      }
+    }
+
+    // Update previous active tag for next animation
+    this.previousActiveTag = this.activeTag;
+
+    // Clear animations after animation duration
+    if (this.animatingTags.size > 0) {
+      setTimeout(() => {
+        this.animatingTags.clear();
+        this.requestUpdate();
+      }, 600); // Match animation duration
     }
   }
 
@@ -309,10 +216,14 @@ export default class KbrTagFilter extends LitElement {
       `;
     }
 
-    // Determine how many tags to show
+    // Determine how many tags to show from ordered tags (fallback to empty array)
+    const orderedTagsToUse =
+      this.orderedTags.length > 0
+        ? this.orderedTags
+        : this.tagsWithCounts;
     const tagsToShow = this.isExpanded
-      ? this.tagsWithCounts
-      : this.tagsWithCounts.slice(0, this.visibleTagCount);
+      ? orderedTagsToUse
+      : orderedTagsToUse.slice(0, this.visibleTagCount);
 
     return html`
       <div class="tag-filter-container">
@@ -320,20 +231,39 @@ export default class KbrTagFilter extends LitElement {
           <div class="ui-label filter-title">Filter by Tag</div>
         </div>
         <div class="tags-grid">
-          ${tagsToShow.map(
-            ({ tag, count }) =>
-              html`<button
-                class="tag-button ${this.activeTag === tag
-                  ? "active"
-                  : ""}"
-                @click="${() => this.handleTagClick(tag)}"
-                data-tag="${tag}"
-              >
-                ${tag} <span class="tag-count">(${count})</span>
-              </button>`
-          )}
+          ${tagsToShow.map(({ tag, count }) => {
+            const isActive = this.activeTag === tag;
+            const isAnimating = this.animatingTags.has(tag);
+            const wasActive =
+              this.previousActiveTag === tag && !isActive;
+
+            let animationClass = "";
+            if (isAnimating) {
+              if (isActive) {
+                animationClass = "moving-to-top";
+              } else if (wasActive) {
+                animationClass = "moving-from-top";
+              }
+            }
+
+            return html`<button
+              class="tag-button ${isActive
+                ? "active"
+                : ""} ${animationClass} ${isAnimating
+                ? "animating"
+                : ""}"
+              @click="${() => this.handleTagClick(tag)}"
+              @keydown="${(e: KeyboardEvent) =>
+                this.handleTagKeydown(e, tag)}"
+              data-tag="${tag}"
+              tabindex="0"
+              aria-pressed="${isActive}"
+            >
+              ${tag} <span class="tag-count">(${count})</span>
+            </button>`;
+          })}
         </div>
-        ${this.tagsWithCounts.length > this.visibleTagCount
+        ${orderedTagsToUse.length > this.visibleTagCount
           ? html`<div class="expand-controls">
               ${this.renderExpandButton()}
             </div>`
@@ -375,6 +305,14 @@ export default class KbrTagFilter extends LitElement {
     }
   }
 
+  private handleTagKeydown(e: KeyboardEvent, tag: string): void {
+    // Handle Enter and Space key presses
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.handleTagClick(tag);
+    }
+  }
+
   /**
    * Set active tag and update URL
    */
@@ -388,6 +326,25 @@ export default class KbrTagFilter extends LitElement {
 
     // Notify post list component
     this.notifyPostList(tag);
+
+    // Focus the active tag after animation completes
+    this.focusActiveTag(tag);
+  }
+
+  /**
+   * Focus the active tag button after reordering animation
+   */
+  private focusActiveTag(tag: string): void {
+    // Wait for the reordering animation and DOM update to complete
+    setTimeout(() => {
+      const tagButton = this.shadowRoot?.querySelector(
+        `button[data-tag="${tag}"]`
+      ) as HTMLButtonElement;
+
+      if (tagButton) {
+        tagButton.focus();
+      }
+    }, 650); // Slightly longer than animation duration (600ms) to ensure completion
   }
 
   /**
