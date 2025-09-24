@@ -28,17 +28,18 @@ source/site/styles/
 ├── typography.css               # Font-face declarations and global typography
 ├── style.css                    # Global layout, base styles, and utilities
 ├── blog-post.css               # Blog post specific styles
+├── shared-styles.ts            # Shared style modules for web components
 └── index.css                   # Entry point that imports other styles
 
 source/site/components/
-├── navigation.ts               # Lit component with embedded CSS
-├── post-list.ts               # Lit component with embedded CSS
-├── post-card.ts               # Lit component with embedded CSS
-├── tag-filter.ts              # Lit component with embedded CSS
-├── table-of-contents.ts       # Lit component with embedded CSS
+├── navigation.ts               # Lit component with shared + embedded CSS
+├── post-list.ts               # Lit component with shared + embedded CSS
+├── post-card.ts               # Lit component with shared + embedded CSS
+├── tag-filter.ts              # Lit component with shared + embedded CSS
+├── table-of-contents.ts       # Lit component with shared + embedded CSS
 ├── anchor-copy.ts             # Lit component with programmatic style injection
-├── timeline.ts                # Lit component with embedded CSS
-└── timeline-entry.ts          # Lit component with embedded CSS
+├── timeline.ts                # Lit component with shared + embedded CSS
+└── timeline-entry.ts          # Lit component with shared + embedded CSS
 ```
 
 **Note**: Data files are now properly located in the `public/` directory for static asset serving, separate from source code.
@@ -102,30 +103,81 @@ source/site/components/
 - Responsive design rules
 - Performance optimizations (content-visibility)
 
-### 4. Component Style Layer (Lit Embedded CSS)
+### 4. Shared Style Layer (`shared-styles.ts`)
+
+**Purpose**: Reusable style modules that can be imported across web components
+
+**Contains**:
+
+- Typography system (fonts, scales, weights)
+- Button styles (variants, sizes, states)
+- Layout utilities (container, card, flex)
+- Form styles (inputs, labels, validation)
+
+**Architecture Pattern**:
+Shared styles are defined as exportable CSS modules:
+
+```typescript
+import { css } from "lit";
+
+export const typographyStyles = css`
+  :host {
+    font-family: var(--font-family-base);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  .heading-h1 {
+    font-size: 2.6666667rem;
+    line-height: 3.8333333rem;
+    font-weight: 700;
+  }
+`;
+
+export const buttonStyles = css`
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 4px;
+    font-family: inherit;
+  }
+`;
+```
+
+### 5. Component Style Layer (Lit Embedded CSS)
 
 **Purpose**: Component-specific styling embedded within Lit components
 
 **Architecture Pattern**:
-Each Lit component includes its styles using the `css` tagged template literal:
+Each Lit component imports shared styles and combines them with component-specific styles:
 
 ```typescript
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
+import {
+  typographyStyles,
+  buttonStyles,
+} from "../styles/shared-styles.js";
 
 @customElement("my-component")
 export class MyComponent extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      color: var(--color-text);
-    }
+  static styles = [
+    typographyStyles,
+    buttonStyles,
+    css`
+      :host {
+        display: block;
+        color: var(--color-text);
+      }
 
-    .component-element {
-      background: var(--color-background);
-      padding: var(--space-md);
-    }
-  `;
+      .component-element {
+        background: var(--color-background);
+        padding: var(--space-md);
+      }
+    `,
+  ];
 
   render() {
     return html`<div class="component-element">Content</div>`;
@@ -146,39 +198,48 @@ Lit Element provides an elegant solution for Shadow DOM styling challenges:
 
 ### Component Architecture Patterns
 
-#### 1. Standard Lit Component
+#### 1. Standard Lit Component with Shared Styles
 
-Most components use embedded CSS with design token integration:
+Most components use shared styles combined with component-specific CSS:
 
 ```typescript
 import { LitElement, html, css } from "lit";
+import {
+  typographyStyles,
+  buttonStyles,
+  layoutStyles,
+} from "../styles/shared-styles.js";
 
 @customElement("kbr-timeline")
 export class KbrTimeline extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      position: relative;
-    }
+  static styles = [
+    typographyStyles,
+    buttonStyles,
+    layoutStyles,
+    css`
+      :host {
+        display: block;
+        position: relative;
+      }
 
-    .timeline-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
+      .timeline-header {
+        text-align: center;
+        margin-bottom: var(--space-xl);
+      }
 
-    .timeline-title {
-      font-size: 2.5rem;
-      color: var(--color-text);
-      font-family: var(--font-family-heading);
-    }
+      .timeline-title {
+        /* Uses heading scale from typographyStyles */
+        color: var(--color-text);
+      }
 
-    /* All component styles embedded here */
-  `;
+      /* Component-specific styles only */
+    `,
+  ];
 
   render() {
     return html`
       <div class="timeline-header">
-        <h2 class="timeline-title">Career Timeline</h2>
+        <h2 class="timeline-title heading-h2">Career Timeline</h2>
       </div>
     `;
   }
@@ -303,14 +364,76 @@ The custom build system integrates with CSS handling:
 // Component CSS files are made available at /components/*.css
 ```
 
+## Design Token Philosophy
+
+### No Fallback Values in CSS Custom Properties
+
+**Critical Rule**: CSS custom properties (design tokens) should **never** include fallback values in `var()` functions.
+
+**Why No Fallbacks**:
+
+- Fallbacks bypass the design token system
+- They hide missing or incorrect token definitions
+- They create inconsistency in the design system
+- They make debugging token issues more difficult
+
+**Correct Approach**:
+
+```css
+/* ✅ Correct - No fallback values */
+.element {
+  color: var(--color-primary);
+  background: var(--color-background);
+  padding: var(--space-md);
+  font-family: var(--font-family-base);
+}
+```
+
+**Incorrect Approach**:
+
+```css
+/* ❌ Incorrect - Fallback values bypass design system */
+.element {
+  color: var(--color-primary, #2d2d2d);
+  background: var(--color-background, #ffffff);
+  padding: var(--space-md, 1.5rem);
+  font-family: var(--font-family-base, sans-serif);
+}
+```
+
+**Exception**: Fallbacks are acceptable only for progressive enhancement or experimental features:
+
+```css
+/* ✅ Acceptable - Feature detection */
+.element {
+  background: var(--color-background);
+  backdrop-filter: var(
+    --backdrop-blur,
+    none
+  ); /* Experimental feature */
+}
+```
+
+**Problem Resolution Strategy**:
+If a CSS custom property doesn't resolve:
+
+1. **Check Token Definition**: Ensure the token is defined in `theme.css`
+2. **Verify Token Name**: Check for typos in the property name
+3. **Validate Inheritance**: Ensure tokens are defined in `:root` scope
+4. **Fix the Root Cause**: Don't mask the issue with fallbacks
+
+This approach ensures design system integrity and makes token-related issues immediately visible during development.
+
 ## Performance Considerations
 
-### 1. Lit CSS Benefits
+### 1. Shared Styles Benefits
 
+- **Single Source of Truth**: Styles defined once in `shared-styles.ts`, reused across components
 - **Build-time Optimization**: Lit's `css` tagged template literals are optimized during build
 - **No Network Requests**: Embedded CSS eliminates separate HTTP requests for component styles
-- **Tree Shaking**: Unused CSS within components can be eliminated
+- **Tree Shaking**: Unused styles can be eliminated at the module level
 - **Shadow DOM Scoping**: Automatic style encapsulation prevents style conflicts
+- **Type Safety**: TypeScript ensures correct imports and usage patterns
 
 ### 2. Bundle Optimization
 
@@ -326,37 +449,48 @@ The custom build system integrates with CSS handling:
 
 ## Best Practices
 
-### 1. Lit Component Styling
+### 1. Shared Styles Component Pattern
 
 ```typescript
+import {
+  typographyStyles,
+  buttonStyles,
+  layoutStyles,
+} from "../styles/shared-styles.js";
+
 @customElement("my-component")
 export class MyComponent extends LitElement {
-  static styles = css`
-    /* Always start with :host styles */
-    :host {
-      display: block;
-      container-type: inline-size;
-    }
-
-    /* Use design tokens with fallbacks */
-    .component-element {
-      color: var(--color-text, #212121);
-      background: var(--color-background, #ffffff);
-      font-family: var(--font-family-base, system-ui, sans-serif);
-    }
-
-    /* Scope all styles to avoid conflicts */
-    .header {
-      font-size: var(--font-size-lg);
-    }
-
-    /* Use container queries for responsive components */
-    @container (max-width: 768px) {
-      .header {
-        font-size: var(--font-size-base);
+  static styles = [
+    typographyStyles,
+    buttonStyles,
+    layoutStyles,
+    css`
+      /* Always start with :host styles */
+      :host {
+        display: block;
+        container-type: inline-size;
       }
-    }
-  `;
+
+      /* Use design tokens WITHOUT fallbacks */
+      .component-element {
+        color: var(--color-text);
+        background: var(--color-background);
+        font-family: var(--font-family-base);
+      }
+
+      /* Scope all styles to avoid conflicts */
+      .header {
+        font-size: var(--font-size-lg);
+      }
+
+      /* Use container queries for responsive components */
+      @container (max-width: 768px) {
+        .header {
+          font-size: var(--font-size-base);
+        }
+      }
+    `,
+  ];
 }
 ```
 
@@ -389,25 +523,32 @@ static styles = css`
 ### 3. Design Token Usage
 
 ```typescript
-static styles = css`
-  /* Always provide fallback values */
-  .element {
-    color: var(--color-primary, #2d2d2d);
-    background: var(--color-background, #ffffff);
-    padding: var(--space-md, 1.5rem);
-  }
+static styles = [
+  typographyStyles, // Import shared typography
+  css`
+    /* Never provide fallback values */
+    .element {
+      color: var(--color-primary);
+      background: var(--color-background);
+      padding: var(--space-md);
+    }
 
-  /* Use semantic tokens when available */
-  .error {
-    color: var(--color-error, #e53e3e);
-    background: var(--color-error-background, #fed7d7);
-  }
+    /* Use semantic tokens consistently */
+    .error {
+      color: var(--color-error);
+      background: var(--color-error-background);
+    }
 
-  /* Leverage inheritance for consistency */
-  .themed-content {
-    color: var(--color-text); /* No fallback needed for inherited properties */
-  }
-`;
+    /* Leverage shared typography classes */
+    .title {
+      /* Use typography class instead of custom styles */
+    }
+
+    .content {
+      color: var(--color-text);
+    }
+  `
+];
 ```
 
 ## Common Patterns
@@ -532,6 +673,29 @@ static styles = css`
 }
 ```
 
+### Missing Shared Styles
+
+**Problem**: Typography or button styles not applying in components
+**Solution**: Ensure shared style modules are imported and included in the styles array
+
+```typescript
+// ❌ Incorrect - missing shared styles import
+import { LitElement, html, css } from "lit";
+
+static styles = css`
+  .btn { /* Duplicating button styles */ }
+`;
+
+// ✅ Correct - import and use shared styles
+import { typographyStyles, buttonStyles } from "../styles/shared-styles.js";
+
+static styles = [
+  typographyStyles,
+  buttonStyles,
+  css`/* Component-specific styles only */`
+];
+```
+
 ### Font Loading Issues
 
 **Problem**: Custom fonts not displaying in components
@@ -570,55 +734,67 @@ private injectGlobalStyles(): void {
 
 ## Migration Notes
 
-### From External CSS to Lit Embedded Styles
+### From External CSS to Shared Styles Architecture
 
-When migrating components from external CSS files to Lit embedded styles:
+When migrating components to the new shared styles system:
 
-1. **Convert CSS to `css` tagged template literal**:
+1. **Import shared style modules**:
 
    ```typescript
-   // Old approach
-   this.shadowRoot.innerHTML = `
-     <link rel="stylesheet" href="/components/my-component.css">
-   `;
+   // New approach with shared styles
+   import { typographyStyles, buttonStyles, layoutStyles } from "../styles/shared-styles.js";
 
-   // New approach
-   static styles = css`
-     /* All component styles here */
-   `;
+   static styles = [
+     typographyStyles,
+     buttonStyles,
+     layoutStyles,
+     css`/* Component-specific styles only */`
+   ];
    ```
 
-2. **Update design token references**:
+2. **Remove duplicate styles**:
 
-   - All `var(--token-name)` references work the same way
-   - Add fallback values for better resilience
-   - Remove any `@import` statements (not needed)
+   - Delete typography definitions (use shared `typographyStyles`)
+   - Remove button styles (use shared `buttonStyles`)
+   - Remove layout utilities (use shared `layoutStyles`)
+   - Keep only component-specific styles in the `css` template
 
-3. **Remove external CSS files**:
+3. **Update design token references**:
+
+   - Remove ALL fallback values from `var()` functions
+   - Ensure tokens are properly defined in `theme.css`
+   - Use shared typography classes instead of custom font styles
+
+4. **Remove external CSS files**:
 
    - Delete the corresponding `.css` file
    - Remove any imports from global CSS files
    - Update component documentation
 
-4. **Test component functionality**:
+5. **Test component functionality**:
    - Verify all styles apply correctly
-   - Check responsive design with container queries
-   - Ensure design tokens work as expected
+   - Check that shared styles work as expected
+   - Ensure no fallback values are being used
+   - Test responsive design with container queries
 
 ### When Adding New Components
 
 1. Create TypeScript file with Lit component class
-2. Define styles using `static styles = css\`...\``
-3. Use design tokens from global `theme.css`
-4. Import component in `main.ts`
-5. No separate CSS files needed
+2. Import appropriate shared style modules
+3. Define styles using `static styles = [sharedStyles..., css\`...\`]`
+4. Use design tokens from global `theme.css` WITHOUT fallbacks
+5. Import component in `main.ts`
+6. No separate CSS files needed
 
-### Benefits of Migration
+### Benefits of Shared Styles Architecture
 
-- **Simplified Architecture**: No external CSS files to manage
-- **Better Performance**: No additional HTTP requests for styles
-- **Improved Developer Experience**: Styles and logic in one file
+- **Design Consistency**: All components use the same typography, buttons, and layouts
+- **DRY Principle**: Styles defined once, reused everywhere
+- **Easy Maintenance**: Update shared styles to change all components
+- **Better Performance**: Shared styles are bundled efficiently
+- **Type Safety**: TypeScript ensures correct style imports
+- **Improved Developer Experience**: Less code duplication
 - **Automatic Scoping**: Shadow DOM isolation built-in
-- **Better Tree Shaking**: Unused styles can be eliminated
+- **Better Tree Shaking**: Unused style modules can be eliminated
 
 This architecture provides a modern, maintainable CSS system that leverages Lit Element's strengths while maintaining design consistency and performance optimization.

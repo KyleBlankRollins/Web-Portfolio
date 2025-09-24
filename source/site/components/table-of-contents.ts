@@ -42,7 +42,14 @@ export class KbrTableOfContents extends LitElement {
   @state()
   private declare activeId: string;
 
+  @state()
+  private declare showTopIndicator: boolean;
+
+  @state()
+  private declare showBottomIndicator: boolean;
+
   private observer: IntersectionObserver | null = null;
+  private tocContainer: HTMLElement | null = null;
 
   static styles = [
     typographyStyles,
@@ -55,14 +62,78 @@ export class KbrTableOfContents extends LitElement {
         top: var(--space-lg);
       }
 
-      .toc-container {
+      .toc-wrapper {
+        position: relative;
         background: var(--color-background-secondary);
         border: 1px solid var(--color-border);
         border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .toc-container {
         padding: var(--space-lg);
         max-height: min(calc(100vh - 8rem), 600px);
         overflow-y: auto;
         overflow-x: hidden;
+      }
+
+      /* Scroll Indicators */
+      .scroll-indicator {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(
+          transparent,
+          var(--color-background-secondary)
+        );
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scroll-indicator.visible {
+        opacity: 1;
+      }
+
+      .scroll-indicator-top {
+        top: 0;
+        background: linear-gradient(
+          var(--color-background-secondary),
+          transparent
+        );
+        border-radius: 8px 8px 0 0;
+      }
+
+      .scroll-indicator-bottom {
+        bottom: 0;
+        background: linear-gradient(
+          transparent,
+          var(--color-background-secondary)
+        );
+        border-radius: 0 0 8px 8px;
+      }
+
+      .scroll-indicator-icon {
+        width: 32px;
+        height: 32px;
+        color: var(--color-text-muted);
+        opacity: 0.7;
+        animation: scroll-pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes scroll-pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.8;
+        }
       }
 
       /* Navigation container - uses base typography from shared styles */
@@ -252,6 +323,9 @@ export class KbrTableOfContents extends LitElement {
     this.tocItems = [];
     this.activeId = "";
     this.observer = null;
+    this.showTopIndicator = false;
+    this.showBottomIndicator = false;
+    this.tocContainer = null;
   }
 
   connectedCallback() {
@@ -266,10 +340,49 @@ export class KbrTableOfContents extends LitElement {
     }
   }
 
+  firstUpdated(changedProperties: Map<PropertyKey, unknown>) {
+    super.firstUpdated(changedProperties);
+    this.tocContainer = this.shadowRoot?.querySelector(
+      ".toc-container"
+    ) as HTMLElement;
+    if (this.tocContainer) {
+      this.tocContainer.addEventListener(
+        "scroll",
+        this.handleScroll.bind(this)
+      );
+      // Initial check for scroll indicators
+      this.updateScrollIndicators();
+    }
+  }
+
+  private handleScroll(): void {
+    this.updateScrollIndicators();
+  }
+
+  private updateScrollIndicators(): void {
+    if (!this.tocContainer) return;
+
+    const { scrollTop, scrollHeight, clientHeight } =
+      this.tocContainer;
+
+    // Show top indicator if scrolled down
+    this.showTopIndicator = scrollTop > 10;
+
+    // Show bottom indicator if there's more content below
+    this.showBottomIndicator =
+      scrollTop < scrollHeight - clientHeight - 10;
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     if (this.observer) {
       this.observer.disconnect();
+    }
+    if (this.tocContainer) {
+      this.tocContainer.removeEventListener(
+        "scroll",
+        this.handleScroll.bind(this)
+      );
     }
   }
 
@@ -293,6 +406,11 @@ export class KbrTableOfContents extends LitElement {
     console.log("TOC: Filtered to TOC items:", this.tocItems);
     this.setupIntersectionObserver();
     this.requestUpdate(); // Trigger re-render
+
+    // Update scroll indicators after re-render
+    this.updateComplete.then(() => {
+      this.updateScrollIndicators();
+    });
   }
 
   private extractHeadings(): void {
@@ -355,6 +473,11 @@ export class KbrTableOfContents extends LitElement {
         });
       }
     });
+
+    // Update scroll indicators after extracting headings
+    this.updateComplete.then(() => {
+      this.updateScrollIndicators();
+    });
   }
 
   private generateId(text: string, index: number): string {
@@ -398,23 +521,63 @@ export class KbrTableOfContents extends LitElement {
   render() {
     if (this.tocItems.length === 0) {
       return html`
-        <div class="toc-container">
-          <p class="toc-empty">No headings found</p>
+        <div class="toc-wrapper">
+          <div class="toc-container">
+            <p class="toc-empty">No headings found</p>
+          </div>
         </div>
       `;
     }
 
     return html`
-      <div class="toc-container">
-        <nav
-          class="table-of-contents"
-          role="navigation"
-          aria-label="Table of contents"
+      <div class="toc-wrapper">
+        <!-- Top scroll indicator -->
+        <div
+          class="scroll-indicator scroll-indicator-top ${this
+            .showTopIndicator
+            ? "visible"
+            : ""}"
         >
-          <ol class="toc-list">
-            ${this.renderTocItems()}
-          </ol>
-        </nav>
+          <svg
+            class="scroll-indicator-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="18,15 12,9 6,15"></polyline>
+          </svg>
+        </div>
+
+        <div class="toc-container" @scroll="${this.handleScroll}">
+          <nav
+            class="table-of-contents"
+            role="navigation"
+            aria-label="Table of contents"
+          >
+            <ol class="toc-list">
+              ${this.renderTocItems()}
+            </ol>
+          </nav>
+        </div>
+
+        <!-- Bottom scroll indicator -->
+        <div
+          class="scroll-indicator scroll-indicator-bottom ${this
+            .showBottomIndicator
+            ? "visible"
+            : ""}"
+        >
+          <svg
+            class="scroll-indicator-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="6,9 12,15 18,9"></polyline>
+          </svg>
+        </div>
       </div>
     `;
   }
