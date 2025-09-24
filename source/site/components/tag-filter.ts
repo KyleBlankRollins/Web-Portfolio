@@ -102,28 +102,7 @@ export default class KbrTagFilter extends LitElement {
         gap: 0.5rem;
       }
 
-      .tag-button {
-        background: white;
-        border: 1px solid var(--border-color);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-        color: var(--color-text);
-      }
-
-      .tag-button:hover {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        transform: translateY(-1px);
-      }
-
-      .tag-button.active {
-        background: var(--accent-primary);
-        border-color: var(--accent-primary);
-        color: white;
-      }
+      /* Tag button styles now use shared .tag-button class */
 
       .loading {
         text-align: center;
@@ -139,17 +118,7 @@ export default class KbrTagFilter extends LitElement {
         border-radius: 4px;
       }
 
-      /* Tag count styles */
-      .tag-count {
-        opacity: 0.7;
-        font-weight: normal;
-        margin-left: 0.25rem;
-      }
-
-      .tag-button.active .tag-count {
-        opacity: 1;
-        font-weight: 500;
-      }
+      /* Tag count styles now use shared .tag-count class */
 
       /* Expand/collapse controls */
       .expand-controls {

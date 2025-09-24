@@ -203,6 +203,81 @@ export const buttonStyles = css`
     padding: var(--space-md) var(--space-lg);
     font-size: 1.1111111rem;
   }
+
+  /* Navigation Link Styles */
+  .nav-link {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    position: relative;
+  }
+
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav-link:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+  }
+
+  /* Tag Button Styles */
+  .tag-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-button:hover {
+    background: var(--color-background-secondary);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .tag-button:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .tag-button.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+
+  .tag-button .tag-count {
+    background: var(--color-background-secondary);
+    color: var(--color-text-muted);
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .tag-button.active .tag-count {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-text-inverse);
+  }
 `;
 
 /**

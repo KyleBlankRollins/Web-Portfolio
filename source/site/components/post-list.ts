@@ -86,7 +86,7 @@ export class KbrPostList extends LitElement {
       /* Posts grid */
       .post-list-grid {
         display: grid;
-        gap: var(--space-xl, 3rem);
+        gap: var(--space-xl);
         margin-bottom: var(--space-xl);
       }
 

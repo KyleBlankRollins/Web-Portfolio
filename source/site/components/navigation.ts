@@ -34,7 +34,7 @@ export class KbrNavigation extends LitElement {
           var(--color-primary) 0%,
           var(--color-accent) 100%
         );
-        padding: var(--space-md, 1.5rem) 0;
+        padding: var(--space-md) 0;
         box-shadow: 0 2px 4px var(--color-shadow);
         position: relative;
       }
@@ -84,25 +84,15 @@ export class KbrNavigation extends LitElement {
 
       .main-nav a {
         color: var(--color-text-inverse);
-        text-decoration: none;
-        font-weight: 500;
-        padding: var(--space-xs) var(--space-sm);
-        border-radius: 6px;
-        transition: all var(--transition-fast);
-        position: relative;
         display: block;
+        transform: translateY(0);
+        box-shadow: none;
+        transition: all var(--transition-fast);
       }
 
       .main-nav a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
         transform: translateY(-1px);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      }
-
-      /* Active link styling */
-      .main-nav a.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        font-weight: 600;
       }
 
       .main-nav a.active::after {
@@ -217,21 +207,25 @@ export class KbrNavigation extends LitElement {
               <li>
                 <a
                   href="/blog.html"
-                  class="${this.getLinkClass("/blog.html")}"
+                  class="nav-link ${this.getLinkClass("/blog.html")}"
                   >Blog</a
                 >
               </li>
               <li>
                 <a
                   href="/portfolio.html"
-                  class="${this.getLinkClass("/portfolio.html")}"
+                  class="nav-link ${this.getLinkClass(
+                    "/portfolio.html"
+                  )}"
                   >Portfolio</a
                 >
               </li>
               <li>
                 <a
                   href="/career.html"
-                  class="${this.getLinkClass("/career.html")}"
+                  class="nav-link ${this.getLinkClass(
+                    "/career.html"
+                  )}"
                   >Career</a
                 >
               </li>

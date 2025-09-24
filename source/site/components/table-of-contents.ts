@@ -1,6 +1,10 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
-import { typographyStyles } from "../styles/shared-styles.js";
+import {
+  typographyStyles,
+  buttonStyles,
+  layoutStyles,
+} from "../styles/shared-styles.js";
 
 /**
  * Table of Contents Web Component
@@ -50,9 +54,12 @@ export class KbrTableOfContents extends LitElement {
 
   private observer: IntersectionObserver | null = null;
   private tocContainer: HTMLElement | null = null;
+  private previousActiveId: string = "";
 
   static styles = [
     typographyStyles,
+    buttonStyles,
+    layoutStyles,
     css`
       :host {
         display: block;
@@ -326,6 +333,7 @@ export class KbrTableOfContents extends LitElement {
     this.showTopIndicator = false;
     this.showBottomIndicator = false;
     this.tocContainer = null;
+    this.previousActiveId = "";
   }
 
   connectedCallback() {
@@ -355,6 +363,19 @@ export class KbrTableOfContents extends LitElement {
     }
   }
 
+  updated(changedProperties: Map<PropertyKey, unknown>) {
+    super.updated(changedProperties);
+
+    // If activeId changed, scroll to make it visible
+    if (
+      changedProperties.has("activeId") &&
+      this.activeId !== this.previousActiveId
+    ) {
+      this.scrollActiveEntryIntoView();
+      this.previousActiveId = this.activeId;
+    }
+  }
+
   private handleScroll(): void {
     this.updateScrollIndicators();
   }
@@ -371,6 +392,47 @@ export class KbrTableOfContents extends LitElement {
     // Show bottom indicator if there's more content below
     this.showBottomIndicator =
       scrollTop < scrollHeight - clientHeight - 10;
+  }
+
+  private scrollActiveEntryIntoView(): void {
+    if (!this.tocContainer || !this.activeId) return;
+
+    // Find the active TOC link element
+    const activeLink = this.shadowRoot?.querySelector(
+      `.toc-link[href="#${this.activeId}"]`
+    ) as HTMLElement;
+
+    if (!activeLink) return;
+
+    // Check if the active link is already in view
+    const containerRect = this.tocContainer.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+
+    // Calculate relative positions within the container
+    const linkTop =
+      linkRect.top - containerRect.top + this.tocContainer.scrollTop;
+    const linkBottom = linkTop + linkRect.height;
+    const containerTop = this.tocContainer.scrollTop;
+    const containerBottom =
+      containerTop + this.tocContainer.clientHeight;
+
+    // Add some padding to ensure the item isn't right at the edge
+    const padding = 20;
+
+    // Check if we need to scroll
+    if (linkTop < containerTop + padding) {
+      // Link is above the visible area, scroll up
+      this.tocContainer.scrollTo({
+        top: linkTop - padding,
+        behavior: "smooth",
+      });
+    } else if (linkBottom > containerBottom - padding) {
+      // Link is below the visible area, scroll down
+      this.tocContainer.scrollTo({
+        top: linkBottom - this.tocContainer.clientHeight + padding,
+        behavior: "smooth",
+      });
+    }
   }
 
   disconnectedCallback() {

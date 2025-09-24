@@ -66,14 +66,14 @@ export class KbrPostCard extends LitElement {
       /* Host element - the <kbr-post-card> tag itself */
       :host {
         display: block;
-        margin-bottom: var(--space-lg, 2rem);
+        margin-bottom: var(--space-lg);
       }
 
       .post-card {
         background: var(--color-background);
         border: 1px solid var(--color-border);
         border-radius: 12px;
-        padding: var(--space-lg, 2rem);
+        padding: var(--space-lg);
         transition: all var(--transition-normal);
         height: 100%;
         display: flex;
@@ -136,7 +136,7 @@ export class KbrPostCard extends LitElement {
       }
 
       .post-card-description p {
-        color: var(--color-text, #212121);
+        color: var(--color-text);
         line-height: var(--line-height-base);
         margin: 0;
       }
@@ -149,7 +149,7 @@ export class KbrPostCard extends LitElement {
       .tag-list {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--space-xs, 0.5rem);
+        gap: var(--space-xs);
       }
 
       .post-tag {
