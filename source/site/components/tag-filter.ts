@@ -60,26 +60,26 @@ export default class KbrTagFilter extends LitElement {
 
     .filter-title {
       font-weight: 600;
-      color: var(--text-primary, #333);
+      color: var(--text-primary);
       margin: 0;
       font-size: 1rem;
     }
 
     .clear-filter-btn {
       background: none;
-      border: 1px solid var(--border-color, #ddd);
+      border: 1px solid var(--border-color);
       padding: 0.25rem 0.75rem;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.875rem;
-      color: var(--text-secondary, #666);
+      color: var(--text-secondary);
       transition: all 0.2s ease;
     }
 
     .clear-filter-btn:hover {
-      background: var(--accent-primary, #007acc);
+      background: var(--accent-primary);
       color: white;
-      border-color: var(--accent-primary, #007acc);
+      border-color: var(--accent-primary);
     }
 
     .clear-filter-btn:disabled {
@@ -95,38 +95,38 @@ export default class KbrTagFilter extends LitElement {
 
     .tag-button {
       background: white;
-      border: 1px solid var(--border-color, #ddd);
+      border: 1px solid var(--border-color);
       padding: 0.5rem 1rem;
       border-radius: 20px;
       cursor: pointer;
       font-size: 0.875rem;
       transition: all 0.2s ease;
-      color: var(--text-secondary, #666);
+      color: var(--text-secondary);
     }
 
     .tag-button:hover {
-      border-color: var(--accent-primary, #007acc);
-      color: var(--accent-primary, #007acc);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
       transform: translateY(-1px);
     }
 
     .tag-button.active {
-      background: var(--accent-primary, #007acc);
-      border-color: var(--accent-primary, #007acc);
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
       color: white;
     }
 
     .loading {
       text-align: center;
       padding: 2rem;
-      color: var(--text-secondary, #666);
+      color: var(--text-secondary);
     }
 
     .error {
-      color: var(--error-color, #dc3545);
+      color: var(--error-color);
       text-align: center;
       padding: 1rem;
-      background: var(--error-bg, #f8d7da);
+      background: var(--error-bg);
       border-radius: 4px;
     }
 
@@ -150,10 +150,10 @@ export default class KbrTagFilter extends LitElement {
 
     .expand-tags-btn {
       background: none;
-      border: 1px solid var(--border-color, #ddd);
+      border: 1px solid var(--border-color);
       padding: 0.5rem 1rem;
       border-radius: 6px;
-      color: var(--text-secondary, #666);
+      color: var(--text-secondary);
       font-size: 0.875rem;
       font-weight: 500;
       cursor: pointer;
@@ -164,51 +164,51 @@ export default class KbrTagFilter extends LitElement {
     }
 
     .expand-tags-btn:hover {
-      border-color: var(--accent-primary, #007acc);
-      color: var(--accent-primary, #007acc);
-      background: var(--bg-primary, #fff);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background: var(--bg-primary);
     }
 
     .expand-tags-btn:focus {
-      outline: 2px solid var(--accent-primary, #007acc);
+      outline: 2px solid var(--accent-primary);
       outline-offset: 2px;
     }
 
     /* Dark theme support */
     @media (prefers-color-scheme: dark) {
       .tag-filter-container {
-        background: var(--bg-secondary-dark, #2a2a2a);
+        background: var(--bg-secondary-dark);
       }
 
       .filter-title {
-        color: var(--text-primary-dark, #fff);
+        color: var(--text-primary-dark);
       }
 
       .tag-button {
-        background: var(--bg-primary-dark, #1a1a1a);
-        border-color: var(--border-color-dark, #444);
-        color: var(--text-secondary-dark, #aaa);
+        background: var(--bg-primary-dark);
+        border-color: var(--border-color-dark);
+        color: var(--text-secondary-dark);
       }
 
       .tag-button:hover {
-        border-color: var(--accent-primary-dark, #4fc3f7);
-        color: var(--accent-primary-dark, #4fc3f7);
+        border-color: var(--accent-primary-dark);
+        color: var(--accent-primary-dark);
       }
 
       .tag-button.active {
-        background: var(--accent-primary-dark, #4fc3f7);
-        border-color: var(--accent-primary-dark, #4fc3f7);
+        background: var(--accent-primary-dark);
+        border-color: var(--accent-primary-dark);
       }
 
       .expand-tags-btn {
-        border-color: var(--border-color-dark, #444);
-        color: var(--text-secondary-dark, #aaa);
+        border-color: var(--border-color-dark);
+        color: var(--text-secondary-dark);
       }
 
       .expand-tags-btn:hover {
-        border-color: var(--accent-primary-dark, #4fc3f7);
-        color: var(--accent-primary-dark, #4fc3f7);
-        background: var(--bg-primary-dark, #1a1a1a);
+        border-color: var(--accent-primary-dark);
+        color: var(--accent-primary-dark);
+        background: var(--bg-primary-dark);
       }
     }
 

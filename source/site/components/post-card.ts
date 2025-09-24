@@ -61,20 +61,20 @@ export class KbrPostCard extends LitElement {
     }
 
     .post-card {
-      background: var(--color-background, #ffffff);
-      border: 1px solid var(--color-border, #e0e0e0);
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
       border-radius: 12px;
       padding: var(--space-lg, 2rem);
-      transition: all var(--transition-normal, 0.3s ease);
+      transition: all var(--transition-normal);
       height: 100%;
       display: flex;
       flex-direction: column;
     }
 
     .post-card:hover {
-      box-shadow: 0 8px 25px var(--color-shadow, rgba(0, 0, 0, 0.12));
+      box-shadow: 0 8px 25px var(--color-shadow);
       transform: translateY(-2px);
-      border-color: var(--color-border-dark, #bdbdbd);
+      border-color: var(--color-border-dark);
     }
 
     .post-card-content {
@@ -85,56 +85,56 @@ export class KbrPostCard extends LitElement {
 
     /* Header section */
     .post-card-header {
-      margin-bottom: var(--space-md, 1.5rem);
+      margin-bottom: var(--space-md);
     }
 
     .post-card-title {
-      margin: 0 0 var(--space-sm, 1rem) 0;
+      margin: 0 0 var(--space-sm) 0;
       font-weight: 600;
     }
 
     .post-title-link {
-      color: var(--color-primary, #2d2d2d);
+      color: var(--color-primary);
       text-decoration: none;
-      transition: color var(--transition-fast, 0.2s ease);
+      transition: color var(--transition-fast);
     }
 
     .post-title-link:hover {
-      color: var(--color-primary-dark, #1a1a1a);
+      color: var(--color-primary-dark);
       text-decoration: underline;
     }
 
     .post-title-link:focus {
-      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
       border-radius: 4px;
     }
 
     .post-card-date {
-      margin-bottom: var(--space-xs, 0.5rem);
+      margin-bottom: var(--space-xs);
     }
 
     .post-card-date time {
-      color: var(--color-text-muted, #616161);
+      color: var(--color-text-muted);
       font-size: 0.9rem;
       font-style: italic;
     }
 
     /* Description section */
     .post-card-description {
-      margin-bottom: var(--space-md, 1.5rem);
+      margin-bottom: var(--space-md);
       flex-grow: 1;
     }
 
     .post-card-description p {
       color: var(--color-text, #212121);
-      line-height: var(--line-height-base, 1.6);
+      line-height: var(--line-height-base);
       margin: 0;
     }
 
     /* Tags section */
     .post-card-tags {
-      margin-bottom: var(--space-md, 1.5rem);
+      margin-bottom: var(--space-md);
     }
 
     .tag-list {
@@ -144,55 +144,55 @@ export class KbrPostCard extends LitElement {
     }
 
     .post-tag {
-      background-color: var(--color-background-secondary, #f8f8f8);
-      border: 1px solid var(--color-border, #e0e0e0);
-      color: var(--color-text, #212121);
-      padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+      background-color: var(--color-background-secondary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: var(--space-xs) var(--space-sm);
       border-radius: 14px;
       font-size: 0.75rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       text-decoration: none;
     }
 
     .post-tag:hover {
-      background-color: var(--color-accent, #4a4a4a);
-      color: var(--color-text-inverse, #ffffff);
+      background-color: var(--color-accent);
+      color: var(--color-text-inverse);
       transform: translateY(-1px);
-      box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.12));
+      box-shadow: 0 2px 4px var(--color-shadow);
     }
 
     .post-tag:focus {
-      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
 
     /* Footer section */
     .post-card-footer {
       margin-top: auto;
-      padding-top: var(--space-sm, 1rem);
-      border-top: 1px solid var(--color-border, #e0e0e0);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border);
     }
 
     .read-more-link {
-      color: var(--color-primary, #2d2d2d);
+      color: var(--color-primary);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.9rem;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       display: inline-flex;
       align-items: center;
-      gap: var(--space-xs, 0.5rem);
+      gap: var(--space-xs);
     }
 
     .read-more-link:hover {
-      color: var(--color-primary-dark, #1a1a1a);
+      color: var(--color-primary-dark);
       transform: translateX(4px);
     }
 
     .read-more-link:focus {
-      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
       border-radius: 4px;
     }
@@ -200,21 +200,20 @@ export class KbrPostCard extends LitElement {
     /* Responsive design */
     @media (max-width: 768px) {
       .post-card {
-        padding: var(--space-md, 1.5rem);
+        padding: var(--space-md);
       }
 
       .post-card-title {
-        font-size: var(--font-size-lg, 1.25rem);
+        font-size: var(--font-size-lg);
       }
 
       .tag-list {
-        gap: var(--space-xs, 0.5rem);
+        gap: var(--space-xs);
       }
 
       .post-tag {
         font-size: 0.7rem;
-        padding: calc(var(--space-xs, 0.5rem) * 0.8)
-          var(--space-xs, 0.5rem);
+        padding: calc(var(--space-xs) * 0.8) var(--space-xs);
       }
     }
 

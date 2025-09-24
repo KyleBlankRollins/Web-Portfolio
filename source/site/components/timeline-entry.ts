@@ -7,14 +7,11 @@ import { customElement, property } from "lit/decorators.js";
  * A component for displaying individual job positions in a career timeline.
  * Used by kbr-timeline component.
  *
- * Usage: <kbr-timeline-entry company="..." title="..." description="..." skills='["skill1", "skill2"]'></kbr-timeline-entry>
+ * Usage: <kbr-timeline-entry title="..." description="..." skills='["skill1", "skill2"]'></kbr-timeline-entry>
  */
 
 @customElement("kbr-timeline-entry")
 export class KbrTimelineEntry extends LitElement {
-  @property({ type: String }) declare company: string;
-  @property({ type: String, attribute: "company-website" })
-  declare companyWebsite: string;
   @property({ type: String }) declare title: string;
   @property({ type: String, attribute: "start-date" })
   declare startDate: string;
@@ -34,41 +31,13 @@ export class KbrTimelineEntry extends LitElement {
       display: block;
       position: relative;
       margin-bottom: 2rem;
-      padding-left: 2rem;
-    }
-
-    :host::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--color-primary, #007acc);
-      opacity: 0.3;
-    }
-
-    :host::after {
-      content: "";
-      position: absolute;
-      left: -4px;
-      top: 1rem;
-      width: 10px;
-      height: 10px;
-      background: var(--color-primary, #007acc);
-      border-radius: 50%;
-      border: 2px solid var(--color-bg, white);
-    }
-
-    :host(:last-child)::before {
-      bottom: calc(100% - 2rem);
     }
 
     .timeline-entry {
-      background: var(--color-bg-secondary, #f8f9fa);
+      background: var(--color-bg-secondary);
       border-radius: 8px;
       padding: 1.5rem;
-      border: 1px solid var(--color-border, #e1e5e9);
+      border: 1px solid var(--color-border);
       transition: all 0.2s ease;
     }
 
@@ -92,33 +61,21 @@ export class KbrTimelineEntry extends LitElement {
     .job-title {
       font-size: 1.25rem;
       font-weight: 600;
-      color: var(--color-text, #2d3748);
-      margin: 0 0 0.25rem 0;
+      color: var(--color-text);
+      margin: 0;
       line-height: 1.3;
-    }
-
-    .company-name {
-      font-size: 1rem;
-      color: var(--color-primary, #007acc);
-      font-weight: 500;
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .company-name:hover {
-      opacity: 0.8;
     }
 
     .entry-meta {
       text-align: right;
       font-size: 0.875rem;
-      color: var(--color-text-muted, #718096);
+      color: var(--color-text-muted);
       line-height: 1.4;
     }
 
     .date-range {
       font-weight: 500;
-      color: var(--color-text, #2d3748);
+      color: var(--color-text);
     }
 
     .duration,
@@ -130,7 +87,7 @@ export class KbrTimelineEntry extends LitElement {
 
     .description {
       margin-bottom: 1rem;
-      color: var(--color-text, #2d3748);
+      color: var(--color-text);
       line-height: 1.6;
       white-space: pre-line;
     }
@@ -144,7 +101,7 @@ export class KbrTimelineEntry extends LitElement {
     .skill-tag {
       display: inline-block;
       padding: 0.25rem 0.75rem;
-      background: var(--color-primary, #007acc);
+      background: var(--color-background-secondary);
       color: white;
       border-radius: 1rem;
       font-size: 0.75rem;
@@ -154,13 +111,8 @@ export class KbrTimelineEntry extends LitElement {
       transition: background-color 0.2s ease;
     }
 
-    .skill-tag:hover {
-      background: var(--color-primary-dark, #005a9e);
-    }
-
     @media (max-width: 768px) {
       :host {
-        padding-left: 1.5rem;
         margin-bottom: 1.5rem;
       }
 
@@ -195,10 +147,10 @@ export class KbrTimelineEntry extends LitElement {
   private formatDescription(description: string): string {
     if (!description) return "";
 
-    // Replace \\n with actual newlines for proper display
-    return description
-      .replace(/\\\\n/g, "\\n")
-      .replace(/\\n/g, "\\n");
+    // Replace escaped characters with actual characters
+    // \n -> newlines (works with white-space: pre-line CSS)
+    // \" -> actual quote characters
+    return description.replace(/\\n/g, "\n").replace(/\\"/g, '"');
   }
 
   render() {
@@ -212,17 +164,6 @@ export class KbrTimelineEntry extends LitElement {
         <div class="entry-header">
           <div class="entry-title">
             <h3 class="job-title">${this.title}</h3>
-            ${this.companyWebsite
-              ? html`<a
-                  href="${this.companyWebsite}"
-                  class="company-name"
-                  target="_blank"
-                  rel="noopener"
-                  >${this.company}</a
-                >`
-              : html`<span class="company-name"
-                  >${this.company}</span
-                >`}
           </div>
           <div class="entry-meta">
             <div class="date-range">${this.dateRange}</div>

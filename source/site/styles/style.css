@@ -77,6 +77,34 @@ body {
   }
 }
 
+/* Navigation Card Styles - fix for anchor color inheritance */
+.nav-card {
+  color: var(--color-text);
+  text-decoration: none;
+  
+  &, &:visited {
+    color: var(--color-text);
+  }
+  
+  &:hover, &:focus {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  /* Ensure all child elements use appropriate colors, not anchor defaults */
+  * {
+    color: inherit;
+  }
+  
+  h2 {
+    color: var(--color-primary);
+  }
+  
+  p {
+    color: var(--color-text-muted);
+  }
+}
+
 /* Sample Card Styles */
 .samples-section {
   margin-top: var(--space-xl);

@@ -265,7 +265,7 @@ async function processAndServeMarkdown(
 }
 
 /**
- * Sets up file watcher for template and include files
+ * Sets up file watcher for template, include, and page files
  */
 function setupFileWatcher(
   server: ViteDevServer,
@@ -277,6 +277,14 @@ function setupFileWatcher(
       templateProcessor.clearCache();
 
       // Trigger a full page reload for template/include changes since they affect multiple pages
+      server.ws.send({
+        type: "full-reload",
+      });
+    } else if (file.includes("/pages/") && file.endsWith(".html")) {
+      BuildLogger.info(`🔄 Page file changed: ${file}`);
+      templateProcessor.clearCache();
+
+      // Trigger a full page reload for page changes
       server.ws.send({
         type: "full-reload",
       });

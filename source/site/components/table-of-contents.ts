@@ -51,8 +51,8 @@ export class KbrTableOfContents extends LitElement {
     }
 
     .toc-container {
-      background: var(--color-background-secondary, #f8f8f8);
-      border: 1px solid var(--color-border, #e0e0e0);
+      background: var(--color-background-secondary);
+      border: 1px solid var(--color-border);
       border-radius: 8px;
       padding: var(--space-lg, 2rem);
       max-height: min(calc(100vh - 8rem), 600px);
@@ -66,11 +66,11 @@ export class KbrTableOfContents extends LitElement {
     }
 
     .toc-title {
-      color: var(--color-primary, #2d2d2d);
+      color: var(--color-primary);
       font-weight: 600;
-      margin: 0 0 var(--space-md, 1.5rem) 0;
-      padding-bottom: var(--space-sm, 1rem);
-      border-bottom: 2px solid var(--color-border, #e0e0e0);
+      margin: 0 0 var(--space-md) 0;
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--color-border);
     }
 
     /* Lists */
@@ -82,8 +82,8 @@ export class KbrTableOfContents extends LitElement {
     }
 
     .toc-sublist {
-      margin-left: var(--space-md, 1.5rem);
-      margin-top: var(--space-xs, 0.5rem);
+      margin-left: var(--space-md);
+      margin-top: var(--space-xs);
     }
 
     /* List items */
@@ -93,82 +93,82 @@ export class KbrTableOfContents extends LitElement {
     }
 
     .toc-item:not(:last-child) {
-      margin-bottom: var(--space-xs, 0.5rem);
+      margin-bottom: var(--space-xs);
     }
 
     /* Links */
     .toc-link {
       display: block;
-      color: var(--color-text, #212121);
+      color: var(--color-text);
       text-decoration: none;
-      padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+      padding: var(--space-xs) var(--space-sm);
       border-radius: 4px;
       line-height: 1.4;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       border-left: 3px solid transparent;
     }
 
     .toc-link:hover {
-      background: var(--color-background, #ffffff);
-      color: var(--color-primary, #2d2d2d);
+      background: var(--color-background);
+      color: var(--color-primary);
       text-decoration: none;
-      border-left-color: var(--color-border-dark, #bdbdbd);
+      border-left-color: var(--color-border-dark);
     }
 
     .toc-link:focus {
-      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
 
     .toc-link.active {
-      background: var(--color-primary, #2d2d2d);
-      color: var(--color-text-inverse, #ffffff);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
       font-weight: 500;
-      border-left-color: var(--color-primary-dark, #1a1a1a);
+      border-left-color: var(--color-primary-dark);
     }
 
     /* Level-specific styling with progressive indentation */
     .toc-level-1 .toc-link {
       font-weight: 500;
       font-size: 1em;
-      padding-left: var(--space-sm, 1rem);
+      padding-left: var(--space-sm);
     }
 
     .toc-level-2 .toc-link {
       font-size: 0.95em;
-      padding-left: var(--space-sm, 1rem);
+      padding-left: var(--space-sm);
     }
 
     .toc-level-3 .toc-link {
       font-size: 0.9em;
       opacity: 0.9;
-      padding-left: calc(var(--space-sm, 1rem) + 0.5rem);
+      padding-left: calc(var(--space-sm) + 0.5rem);
     }
 
     .toc-level-4 .toc-link {
       font-size: 0.85em;
       opacity: 0.8;
-      padding-left: calc(var(--space-sm, 1rem) + 1rem);
+      padding-left: calc(var(--space-sm) + 1rem);
     }
 
     .toc-level-5 .toc-link {
       font-size: 0.8em;
       opacity: 0.75;
-      padding-left: calc(var(--space-sm, 1rem) + 1.5rem);
+      padding-left: calc(var(--space-sm) + 1.5rem);
     }
 
     .toc-level-6 .toc-link {
       font-size: 0.75em;
       opacity: 0.7;
-      padding-left: calc(var(--space-sm, 1rem) + 2rem);
+      padding-left: calc(var(--space-sm) + 2rem);
     }
 
     /* Empty state */
     .toc-empty {
-      color: var(--color-text-muted, #616161);
+      color: var(--color-text-muted);
       font-style: italic;
       text-align: center;
-      margin: var(--space-md, 1.5rem) 0;
+      margin: var(--space-md) 0;
     }
 
     /* Scrollbar styling */
@@ -177,17 +177,17 @@ export class KbrTableOfContents extends LitElement {
     }
 
     .toc-container::-webkit-scrollbar-track {
-      background: var(--color-background, #ffffff);
+      background: var(--color-background);
       border-radius: 3px;
     }
 
     .toc-container::-webkit-scrollbar-thumb {
-      background: var(--color-border-dark, #bdbdbd);
+      background: var(--color-border-dark);
       border-radius: 3px;
     }
 
     .toc-container::-webkit-scrollbar-thumb:hover {
-      background: var(--color-primary, #2d2d2d);
+      background: var(--color-primary);
     }
 
     /* Responsive design */
@@ -199,39 +199,39 @@ export class KbrTableOfContents extends LitElement {
 
       .toc-container {
         max-height: min(calc(100vh - 6rem), 400px);
-        margin-bottom: var(--space-xl, 3rem);
+        margin-bottom: var(--space-xl);
       }
     }
 
     @media (max-width: 768px) {
       .toc-container {
-        padding: var(--space-md, 1.5rem);
+        padding: var(--space-md);
         max-height: min(calc(100vh - 4rem), 300px);
       }
 
       .toc-sublist {
-        margin-left: var(--space-sm, 1rem);
+        margin-left: var(--space-sm);
       }
 
       /* Reduce indentation on mobile for better space usage */
       .toc-level-3 .toc-link {
-        padding-left: calc(var(--space-sm, 1rem) + 0.25rem);
+        padding-left: calc(var(--space-sm) + 0.25rem);
       }
 
       .toc-level-4 .toc-link {
-        padding-left: calc(var(--space-sm, 1rem) + 0.5rem);
+        padding-left: calc(var(--space-sm) + 0.5rem);
       }
 
       .toc-level-5 .toc-link {
-        padding-left: calc(var(--space-sm, 1rem) + 0.75rem);
+        padding-left: calc(var(--space-sm) + 0.75rem);
       }
 
       .toc-level-6 .toc-link {
-        padding-left: calc(var(--space-sm, 1rem) + 1rem);
+        padding-left: calc(var(--space-sm) + 1rem);
       }
 
       .toc-link {
-        padding: var(--space-xs, 0.5rem);
+        padding: var(--space-xs);
       }
     }
 
@@ -279,9 +279,42 @@ export class KbrTableOfContents extends LitElement {
     this.setupIntersectionObserver();
   }
 
+  // Public method to trigger TOC regeneration (used by parent components)
+  public regenerateToc(): void {
+    this.generateToc();
+  }
+
+  // Public method to update TOC with heading data directly
+  public updateWithHeadings(headings: TocItem[]): void {
+    console.log("TOC: Updating with headings data:", headings);
+    this.tocItems = headings.filter(
+      (item) =>
+        item.level >= this.minLevel && item.level <= this.maxLevel
+    );
+    console.log("TOC: Filtered to TOC items:", this.tocItems);
+    this.setupIntersectionObserver();
+    this.requestUpdate(); // Trigger re-render
+  }
+
   private extractHeadings(): void {
-    // Find the target container (default to main, article, or .content)
-    const targetElement = document.querySelector(this.targetSelector);
+    let targetElement;
+    let headings: NodeList;
+
+    // Special handling for kbr-timeline component
+    if (this.targetSelector === ".timeline") {
+      // Find the timeline component in the document
+      const timelineElement = document.querySelector("kbr-timeline");
+
+      if (timelineElement && timelineElement.shadowRoot) {
+        // Search within the timeline's shadow DOM
+        targetElement =
+          timelineElement.shadowRoot.querySelector(".timeline");
+      }
+    } else {
+      // Find the target container (default to main, article, or .content)
+      targetElement = document.querySelector(this.targetSelector);
+    }
+
     if (!targetElement) {
       console.warn(
         "KbrTableOfContents: No target element found for selector:",
@@ -296,7 +329,8 @@ export class KbrTableOfContents extends LitElement {
       (_, i) => `h${this.minLevel + i}`
     );
     const headingSelector = headingLevels.join(", ");
-    const headings = targetElement.querySelectorAll(headingSelector);
+
+    headings = targetElement.querySelectorAll(headingSelector);
 
     this.tocItems = [];
 
@@ -417,16 +451,21 @@ export class KbrTableOfContents extends LitElement {
 
     if (href?.startsWith("#")) {
       const id = href.substring(1);
-      const element = document.getElementById(id);
 
-      if (element) {
-        element.scrollIntoView({
+      // Find the heading in our TOC items (which have the actual element references)
+      const tocItem = this.tocItems.find((item) => item.id === id);
+
+      if (tocItem && tocItem.element) {
+        tocItem.element.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
 
         // Update active state immediately
         this.activeId = id;
+
+        // Update URL hash
+        window.history.replaceState(null, "", `#${id}`);
       }
     }
   }

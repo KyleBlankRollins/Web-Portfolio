@@ -26,15 +26,15 @@ export class KbrNavigation extends LitElement {
         var(--color-accent) 100%
       );
       padding: var(--space-md, 1.5rem) 0;
-      box-shadow: 0 2px 4px var(--color-shadow, rgba(0, 0, 0, 0.12));
+      box-shadow: 0 2px 4px var(--color-shadow);
       position: relative;
     }
 
     /* Header content container */
     .header-content {
-      max-width: var(--content-max-width, 1200px);
+      max-width: var(--content-max-width);
       margin: 0 auto;
-      padding: 0 var(--space-md, 1.5rem);
+      padding: 0 var(--space-md);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -47,11 +47,11 @@ export class KbrNavigation extends LitElement {
         "JetBrains Mono",
         monospace
       );
-      font-size: var(--font-size-lg, 1.25rem);
+      font-size: var(--font-size-lg);
       font-weight: bold;
-      color: var(--color-text-inverse, #ffffff);
+      color: var(--color-text-inverse);
       text-decoration: none;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       letter-spacing: 0.1em;
     }
 
@@ -66,7 +66,7 @@ export class KbrNavigation extends LitElement {
       list-style: none;
       margin: 0;
       padding: 0;
-      gap: var(--space-lg, 2rem);
+      gap: var(--space-lg);
     }
 
     .main-nav li {
@@ -74,12 +74,12 @@ export class KbrNavigation extends LitElement {
     }
 
     .main-nav a {
-      color: var(--color-text-inverse, #ffffff);
+      color: var(--color-text-inverse);
       text-decoration: none;
       font-weight: 500;
-      padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+      padding: var(--space-xs) var(--space-sm);
       border-radius: 6px;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       position: relative;
       display: block;
     }
@@ -104,7 +104,7 @@ export class KbrNavigation extends LitElement {
       transform: translateX(-50%);
       width: 20px;
       height: 2px;
-      background-color: var(--color-text-inverse, #ffffff);
+      background-color: var(--color-text-inverse);
       border-radius: 1px;
       opacity: 0.9;
     }
@@ -119,20 +119,20 @@ export class KbrNavigation extends LitElement {
     /* Responsive design */
     @media (max-width: 768px) {
       .header-content {
-        padding: 0 var(--space-sm, 1rem);
-        gap: var(--space-sm, 1rem);
+        padding: 0 var(--space-sm);
+        gap: var(--space-sm);
       }
 
       .logo a {
-        font-size: var(--font-size-base, 1rem);
+        font-size: var(--font-size-base);
       }
 
       .main-nav ul {
-        gap: var(--space-md, 1.5rem);
+        gap: var(--space-md);
       }
 
       .main-nav a {
-        padding: var(--space-xs, 0.5rem);
+        padding: var(--space-xs);
         font-size: 0.9rem;
       }
     }
@@ -140,18 +140,18 @@ export class KbrNavigation extends LitElement {
     @media (max-width: 480px) {
       .header-content {
         flex-direction: column;
-        gap: var(--space-sm, 1rem);
+        gap: var(--space-sm);
         text-align: center;
       }
 
       .main-nav ul {
-        gap: var(--space-sm, 1rem);
+        gap: var(--space-sm);
         flex-wrap: wrap;
         justify-content: center;
       }
 
       .main-nav a {
-        padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+        padding: var(--space-xs) var(--space-sm);
         font-size: 0.85rem;
       }
     }
@@ -159,7 +159,7 @@ export class KbrNavigation extends LitElement {
     /* Animation for better user experience */
     @media (prefers-reduced-motion: no-preference) {
       .main-nav a {
-        transition: all var(--transition-normal, 0.3s ease);
+        transition: all var(--transition-normal);
       }
 
       .main-nav a:hover {

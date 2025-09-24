@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
 import "./timeline-entry.js";
+import "./table-of-contents.js";
 
 /**
  * Career Timeline Web Component
@@ -35,12 +36,6 @@ export class KbrTimeline extends LitElement {
   @property({ type: String, attribute: "data-url" })
   declare dataUrl: string;
 
-  @property({ type: Boolean, attribute: "show-company-skills" })
-  declare showCompanySkills: boolean;
-
-  @property({ type: String })
-  declare filter: string;
-
   @state()
   private declare experienceData: CompanyData[];
 
@@ -50,9 +45,6 @@ export class KbrTimeline extends LitElement {
   @state()
   private declare error: string | null;
 
-  @state()
-  private declare allSkills: string[];
-
   static styles = css`
     :host {
       display: block;
@@ -60,12 +52,20 @@ export class KbrTimeline extends LitElement {
     }
 
     .timeline {
-      position: relative;
-      max-width: 800px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      grid-template-areas: "sidebar content";
+      gap: var(--space-xl);
+      max-width: var(--content-max-width);
       margin: 0 auto;
+      padding: var(--space-lg);
+      min-height: calc(
+        100vh - 80px
+      ); /* Account for navigation height */
     }
 
     .timeline-header {
+      grid-area: content;
       text-align: center;
       margin-bottom: 3rem;
     }
@@ -73,113 +73,104 @@ export class KbrTimeline extends LitElement {
     .timeline-title {
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--color-text, #2d3748);
+      color: var(--color-text);
       margin: 0 0 1rem 0;
       line-height: 1.2;
     }
 
     .timeline-subtitle {
       font-size: 1.125rem;
-      color: var(--color-text-muted, #718096);
+      color: var(--color-text-muted);
       margin: 0;
       line-height: 1.5;
     }
 
-    .timeline-filters {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
+    .timeline-sidebar {
+      grid-area: sidebar;
+      min-width: 0; /* Prevent grid overflow */
     }
 
-    .filter-input {
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--color-border, #e1e5e9);
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      background: var(--color-bg, white);
-      color: var(--color-text, #2d3748);
-    }
-
-    .filter-input:focus {
-      outline: none;
-      border-color: var(--color-primary, #007acc);
-      box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
-    }
-
-    .skills-summary {
-      background: var(--color-bg-secondary, #f8f9fa);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid var(--color-border, #e1e5e9);
-    }
-
-    .skills-summary h3 {
-      margin: 0 0 1rem 0;
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--color-text, #2d3748);
-    }
-
-    .skills-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-cloud-tag {
-      padding: 0.375rem 0.75rem;
-      background: var(--color-primary, #007acc);
-      color: white;
-      border-radius: 1rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.025em;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: none;
-    }
-
-    .skill-cloud-tag:hover {
-      background: var(--color-primary-dark, #005a9e);
-      transform: translateY(-1px);
-    }
-
-    .skill-cloud-tag.active {
-      background: var(--color-accent, #ff6b6b);
+    .timeline-sidebar kbr-table-of-contents {
+      position: sticky;
+      top: var(--space-lg);
     }
 
     .timeline-content {
+      grid-area: content;
       position: relative;
+      min-width: 0; /* Prevent grid overflow */
+    }
+
+    .company-group {
+      margin-bottom: 3rem;
+    }
+
+    .company-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .company-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .company-name:hover {
+      opacity: 0.8;
+    }
+
+    .company-positions {
+      position: relative;
+      margin-bottom: 2rem;
+      padding: 1rem 1.5rem 1rem 2rem;
     }
 
     .loading {
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--color-text-muted, #718096);
+      color: var(--color-text-muted);
     }
 
     .error {
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--color-error, #e53e3e);
-      background: var(--color-error-bg, #fed7d7);
+      color: var(--color-error);
+      background: var(--color-error-background);
       border-radius: 0.5rem;
-      border: 1px solid var(--color-error, #e53e3e);
+      border: 1px solid var(--color-error);
     }
 
-    .no-results {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--color-text-muted, #718096);
-      font-style: italic;
+    @media (max-width: 1024px) {
+      .timeline {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "sidebar"
+          "content";
+        gap: var(--space-lg);
+        padding: var(--space-md);
+      }
+
+      .timeline-sidebar {
+        order: 1;
+      }
+
+      .timeline-header,
+      .timeline-content {
+        order: 2;
+      }
     }
 
     @media (max-width: 768px) {
+      .timeline {
+        padding: var(--space-sm);
+        gap: var(--space-md);
+      }
+
       .timeline-title {
         font-size: 2rem;
       }
@@ -188,14 +179,17 @@ export class KbrTimeline extends LitElement {
         font-size: 1rem;
       }
 
-      .timeline-filters {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.75rem;
+      .company-header {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
       }
 
-      .skills-summary {
-        padding: 1rem;
+      .company-name {
+        font-size: 1.25rem;
+      }
+
+      .company-group {
+        margin-bottom: 2rem;
       }
     }
   `;
@@ -203,17 +197,32 @@ export class KbrTimeline extends LitElement {
   constructor() {
     super();
     this.dataUrl = "/data/experience-data.json";
-    this.showCompanySkills = false;
-    this.filter = "";
     this.experienceData = [];
     this.isLoading = false;
     this.error = null;
-    this.allSkills = [];
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.loadExperienceData();
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    super.updated(changedProperties);
+    console.log(
+      "Timeline: Updated called with changes:",
+      Array.from(changedProperties.keys())
+    );
+
+    // Update TOC when data has loaded
+    if (
+      changedProperties.has("experienceData") &&
+      this.experienceData.length > 0
+    ) {
+      console.log("Timeline: Experience data loaded, updating TOC");
+      // Use setTimeout to ensure DOM is updated
+      setTimeout(() => this.updateTableOfContents(), 0);
+    }
   }
 
   private async loadExperienceData() {
@@ -230,7 +239,6 @@ export class KbrTimeline extends LitElement {
 
       const data: CompanyData[] = await response.json();
       this.experienceData = data;
-      this.extractAllSkills();
     } catch (error) {
       console.error("Error loading experience data:", error);
       this.error =
@@ -242,102 +250,51 @@ export class KbrTimeline extends LitElement {
     }
   }
 
-  private extractAllSkills() {
-    const skillsSet = new Set<string>();
-
-    this.experienceData.forEach((company) => {
-      // Add company-level skills
-      if (company.skills) {
-        company.skills.forEach((skill) => skillsSet.add(skill));
-      }
-
-      // Add position-level skills
-      company.positions.forEach((position) => {
-        if (position.skills) {
-          position.skills.forEach((skill) => skillsSet.add(skill));
-        }
-      });
-    });
-
-    this.allSkills = Array.from(skillsSet).sort();
+  private generateCompanyId(companyName: string): string {
+    // Create a URL-friendly ID from the company name
+    return companyName
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "") // Remove special characters
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/--+/g, "-") // Replace multiple hyphens with single
+      .trim();
   }
 
-  private getFilteredPositions() {
-    if (!this.filter) {
-      return this.getAllPositions();
-    }
+  private updateTableOfContents(): void {
+    console.log("Timeline: Updating table of contents...");
 
-    const filterLower = this.filter.toLowerCase();
-    const filteredCompanies: CompanyData[] = [];
+    // Create heading data from our content
+    const headingsData = [
+      {
+        id: "career-timeline",
+        text: "Career Timeline",
+        level: 2,
+        element: this.shadowRoot?.querySelector(
+          ".timeline-title"
+        ) as HTMLElement,
+      },
+      ...this.experienceData.map((company) => ({
+        id: this.generateCompanyId(company.company),
+        text: company.company,
+        level: 3,
+        element: this.shadowRoot?.querySelector(
+          `#${this.generateCompanyId(company.company)}`
+        ) as HTMLElement,
+      })),
+    ].filter((item) => item.element);
 
-    this.experienceData.forEach((company) => {
-      const matchingPositions = company.positions.filter(
-        (position) => {
-          // Check title, company name, description, or skills
-          const matchesTitle = position.title
-            .toLowerCase()
-            .includes(filterLower);
-          const matchesCompany = company.company
-            .toLowerCase()
-            .includes(filterLower);
-          const matchesDescription = position.description
-            .toLowerCase()
-            .includes(filterLower);
-          const matchesSkills = position.skills?.some((skill) =>
-            skill.toLowerCase().includes(filterLower)
-          );
-          const matchesCompanySkills = company.skills?.some((skill) =>
-            skill.toLowerCase().includes(filterLower)
-          );
+    console.log("Timeline: Generated headings data:", headingsData);
 
-          return (
-            matchesTitle ||
-            matchesCompany ||
-            matchesDescription ||
-            matchesSkills ||
-            matchesCompanySkills
-          );
-        }
-      );
+    // Find the TOC component in our shadow DOM
+    const tocComponent = this.shadowRoot?.querySelector(
+      "kbr-table-of-contents"
+    ) as any;
+    console.log("Timeline: Found TOC component:", tocComponent);
 
-      if (matchingPositions.length > 0) {
-        filteredCompanies.push({
-          ...company,
-          positions: matchingPositions,
-        });
-      }
-    });
-
-    return filteredCompanies;
-  }
-
-  private getAllPositions() {
-    return this.experienceData;
-  }
-
-  private handleFilterInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.filter = target.value;
-  }
-
-  private handleSkillClick(skill: string) {
-    this.filter = skill;
-    // Update the filter input
-    const filterInput = this.shadowRoot?.querySelector(
-      ".filter-input"
-    ) as HTMLInputElement;
-    if (filterInput) {
-      filterInput.value = skill;
-    }
-  }
-
-  private clearFilter() {
-    this.filter = "";
-    const filterInput = this.shadowRoot?.querySelector(
-      ".filter-input"
-    ) as HTMLInputElement;
-    if (filterInput) {
-      filterInput.value = "";
+    if (tocComponent) {
+      // Pass the headings data directly to the TOC
+      tocComponent.updateWithHeadings(headingsData);
+      console.log("Timeline: Updated TOC with headings");
     }
   }
 
@@ -361,95 +318,68 @@ export class KbrTimeline extends LitElement {
       `;
     }
 
-    const filteredPositions = this.getFilteredPositions();
-    const hasResults =
-      filteredPositions.length > 0 &&
-      filteredPositions.some(
-        (company) => company.positions.length > 0
-      );
-
     return html`
       <div class="timeline">
+        <div class="timeline-sidebar">
+          <kbr-table-of-contents
+            min-level="2"
+            max-level="3"
+            target-selector=".timeline"
+          >
+          </kbr-table-of-contents>
+        </div>
+
         <div class="timeline-header">
-          <h2 class="timeline-title">Career Timeline</h2>
+          <h2 class="timeline-title" id="career-timeline">
+            Career Timeline
+          </h2>
           <p class="timeline-subtitle">
             My professional journey in technical writing,
             documentation, and software development
           </p>
         </div>
 
-        <div class="timeline-filters">
-          <input
-            type="text"
-            class="filter-input"
-            placeholder="Filter by company, role, or skill..."
-            .value=${this.filter}
-            @input=${this.handleFilterInput}
-          />
-          ${this.filter
-            ? html`
-                <button
-                  class="skill-cloud-tag"
-                  @click=${this.clearFilter}
-                  title="Clear filter"
-                >
-                  ✕ Clear
-                </button>
-              `
-            : ""}
-        </div>
-
-        ${this.allSkills.length > 0
-          ? html`
-              <div class="skills-summary">
-                <h3>Skills & Technologies</h3>
-                <div class="skills-cloud">
-                  ${this.allSkills.map(
-                    (skill) => html`
-                      <button
-                        class="skill-cloud-tag ${this.filter === skill
-                          ? "active"
-                          : ""}"
-                        @click=${() => this.handleSkillClick(skill)}
-                        title="Filter by ${skill}"
-                      >
-                        ${skill}
-                      </button>
+        <div class="timeline-content">
+          ${this.experienceData.map((company) => {
+            const companyId = this.generateCompanyId(company.company);
+            return html`
+              <div class="company-group">
+                <div class="company-header">
+                  ${company.companyWebsite
+                    ? html`<h3 class="company-name" id="${companyId}">
+                        <a
+                          href="${company.companyWebsite}"
+                          target="_blank"
+                          rel="noopener"
+                          >${company.company}</a
+                        >
+                      </h3>`
+                    : html`<h3 class="company-name" id="${companyId}">
+                        ${company.company}
+                      </h3>`}
+                </div>
+                <div class="company-positions">
+                  ${company.positions.map(
+                    (position) => html`
+                      <kbr-timeline-entry
+                        title=${position.title}
+                        start-date=${position.startDate}
+                        end-date=${position.endDate}
+                        date-range=${position.dateRange}
+                        duration=${position.duration}
+                        location=${position.location}
+                        employment-type=${position.employmentType}
+                        description=${position.description}
+                        skills=${JSON.stringify(
+                          position.skills || []
+                        )}
+                      ></kbr-timeline-entry>
                     `
                   )}
                 </div>
               </div>
-            `
-          : ""}
-
-        <div class="timeline-content">
-          ${!hasResults
-            ? html`
-                <div class="no-results">
-                  No positions found matching "${this.filter}". Try a
-                  different search term.
-                </div>
-              `
-            : ""}
-          ${filteredPositions.map((company) =>
-            company.positions.map(
-              (position) => html`
-                <kbr-timeline-entry
-                  company=${company.company}
-                  company-website=${company.companyWebsite || ""}
-                  title=${position.title}
-                  start-date=${position.startDate}
-                  end-date=${position.endDate}
-                  date-range=${position.dateRange}
-                  duration=${position.duration}
-                  location=${position.location}
-                  employment-type=${position.employmentType}
-                  description=${position.description}
-                  skills=${JSON.stringify(position.skills || [])}
-                ></kbr-timeline-entry>
-              `
-            )
-          )}
+            `;
+          })}
         </div>
       </div>
     `;

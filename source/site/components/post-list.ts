@@ -57,19 +57,19 @@ export class KbrPostList extends LitElement {
     }
 
     .post-list-container {
-      max-width: var(--content-max-width, 1200px);
+      max-width: var(--content-max-width);
       margin: 0 auto;
-      padding: var(--space-lg, 2rem);
+      padding: var(--space-lg);
     }
 
     /* Header */
     .post-list-header {
-      margin-bottom: var(--space-xl, 3rem);
+      margin-bottom: var(--space-xl);
       text-align: center;
     }
 
     .post-list-header h2 {
-      color: var(--color-primary, #2d2d2d);
+      color: var(--color-primary);
       margin: 0;
       font-weight: 600;
     }
@@ -78,23 +78,23 @@ export class KbrPostList extends LitElement {
     .post-list-grid {
       display: grid;
       gap: var(--space-xl, 3rem);
-      margin-bottom: var(--space-xl, 3rem);
+      margin-bottom: var(--space-xl);
     }
 
     /* Loading state */
     .post-list-loading {
       text-align: center;
-      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
+      padding: var(--space-2xl) var(--space-lg);
     }
 
     .loading-spinner {
       width: 40px;
       height: 40px;
-      border: 3px solid var(--color-border, #e0e0e0);
-      border-top: 3px solid var(--color-primary, #2d2d2d);
+      border: 3px solid var(--color-border);
+      border-top: 3px solid var(--color-primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 0 auto var(--space-md, 1.5rem) auto;
+      margin: 0 auto var(--space-md) auto;
     }
 
     @keyframes spin {
@@ -107,37 +107,37 @@ export class KbrPostList extends LitElement {
     }
 
     .post-list-loading p {
-      color: var(--color-text-muted, #616161);
-      font-size: var(--font-size-lg, 1.25rem);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-lg);
     }
 
     /* Empty state */
     .post-list-empty {
       text-align: center;
-      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
-      color: var(--color-text-muted, #616161);
+      padding: var(--space-2xl) var(--space-lg);
+      color: var(--color-text-muted);
     }
 
     .post-list-empty p {
-      font-size: var(--font-size-lg, 1.25rem);
-      margin-bottom: var(--space-lg, 2rem);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-lg);
     }
 
     /* Error state */
     .post-list-error {
       text-align: center;
-      padding: var(--space-2xl, 4rem) var(--space-lg, 2rem);
-      color: var(--color-text, #212121);
+      padding: var(--space-2xl) var(--space-lg);
+      color: var(--color-text);
     }
 
     .post-list-error h2 {
-      color: var(--color-primary, #2d2d2d);
-      margin-bottom: var(--space-md, 1.5rem);
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
     }
 
     .post-list-error p {
-      color: var(--color-text-muted, #616161);
-      font-size: var(--font-size-lg, 1.25rem);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-lg);
     }
 
     /* Pagination */
@@ -145,45 +145,45 @@ export class KbrPostList extends LitElement {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: var(--space-sm, 1rem);
-      margin-top: var(--space-xl, 3rem);
+      gap: var(--space-sm);
+      margin-top: var(--space-xl);
       flex-wrap: wrap;
     }
 
     .pagination-btn {
-      background: var(--color-background, #ffffff);
-      border: 1px solid var(--color-border, #e0e0e0);
-      color: var(--color-text, #212121);
-      padding: var(--space-sm, 1rem) var(--space-md, 1.5rem);
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: var(--space-sm) var(--space-md);
       border-radius: 6px;
       font-size: 0.9rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all var(--transition-fast, 0.2s ease);
+      transition: all var(--transition-fast);
       min-width: 44px;
       text-align: center;
     }
 
     .pagination-btn:hover:not([disabled]) {
-      background: var(--color-background-secondary, #f8f8f8);
-      border-color: var(--color-border-dark, #bdbdbd);
+      background: var(--color-background-secondary);
+      border-color: var(--color-border-dark);
       transform: translateY(-1px);
     }
 
     .pagination-btn:focus {
-      outline: 2px solid var(--color-accent, #4a4a4a);
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
     }
 
     .pagination-btn.active {
-      background: var(--color-primary, #2d2d2d);
-      color: var(--color-text-inverse, #ffffff);
-      border-color: var(--color-primary, #2d2d2d);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-color: var(--color-primary);
     }
 
     .pagination-btn[disabled] {
-      background: var(--color-background-secondary, #f8f8f8);
-      color: var(--color-text-muted, #616161);
+      background: var(--color-background-secondary);
+      color: var(--color-text-muted);
       cursor: not-allowed;
       opacity: 0.6;
     }
@@ -191,15 +191,15 @@ export class KbrPostList extends LitElement {
     /* Responsive design */
     @media (max-width: 768px) {
       .post-list-container {
-        padding: var(--space-md, 1.5rem);
+        padding: var(--space-md);
       }
 
       .post-list-pagination {
-        gap: var(--space-xs, 0.5rem);
+        gap: var(--space-xs);
       }
 
       .pagination-btn {
-        padding: var(--space-xs, 0.5rem) var(--space-sm, 1rem);
+        padding: var(--space-xs) var(--space-sm);
         font-size: 0.8rem;
         min-width: 36px;
       }
@@ -207,18 +207,18 @@ export class KbrPostList extends LitElement {
       .post-list-loading,
       .post-list-empty,
       .post-list-error {
-        padding: var(--space-xl, 3rem) var(--space-md, 1.5rem);
+        padding: var(--space-xl) var(--space-md);
       }
     }
 
     @media (max-width: 480px) {
       .post-list-container {
-        padding: var(--space-sm, 1rem);
+        padding: var(--space-sm);
       }
 
       .post-list-pagination {
         flex-direction: column;
-        gap: var(--space-xs, 0.5rem);
+        gap: var(--space-xs);
       }
 
       .pagination-btn {

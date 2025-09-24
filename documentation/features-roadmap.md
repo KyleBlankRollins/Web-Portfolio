@@ -16,14 +16,8 @@ Active tag should move to the top of the tag list. When a tag is no longer the a
 
 If possible, the builder or Vite should bundle all of the CSS files for the site to make everything as performant and data saving as possible. Need to look at modern approaches to this, as I'm not sure what the best practice is here now.
 
-## Stack
+## Components
 
-### Lit HTML and Lit Element
+### Table of Contents
 
-Consider migrating to Lit HTML and Lit Element.
-
-## Netlify
-
-### Deploys
-
-Make sure that the site can deploy to production and that deploy previews work.
+Needs a scroll indicator that tells people if there are TOC entries above or below that are hidden from view.

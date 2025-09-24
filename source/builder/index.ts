@@ -70,6 +70,42 @@ export function kbrBuilder(): Plugin {
     },
 
     /**
+     * Handle hot updates for custom file types
+     */
+    handleHotUpdate({ file, server }) {
+      if (file.includes("/pages/") && file.endsWith(".html")) {
+        BuildLogger.info(`🔄 Page file changed: ${file}`);
+        templateProcessor.clearCache();
+
+        // Trigger full reload for page changes
+        server.ws.send({
+          type: "full-reload",
+        });
+
+        // Return empty array to prevent default handling
+        return [];
+      }
+
+      if (
+        file.includes("/templates/") ||
+        file.includes("/includes/")
+      ) {
+        BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
+        templateProcessor.clearCache();
+
+        // Trigger full reload for template/include changes
+        server.ws.send({
+          type: "full-reload",
+        });
+
+        return [];
+      }
+
+      // Let Vite handle other file types normally
+      return undefined;
+    },
+
+    /**
      * Process Markdown files at build start
      */
     async buildStart() {
