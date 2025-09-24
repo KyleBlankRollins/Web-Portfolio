@@ -84,6 +84,7 @@ body {
   .card-icon {
     margin-right: 1em;
     font-size: var(--font-size-lg);
+    color: var(--color-text);
   }
   
   .card-content {

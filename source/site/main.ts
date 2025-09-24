@@ -10,6 +10,7 @@ import "./components/anchor-copy";
 import "./components/tag-filter/tag-filter";
 import "./components/timeline/timeline";
 import "./components/timeline-entry/timeline-entry";
+import "./components/icon/icon";
 
 // Global tag navigation for individual blog post pages (main DOM)
 function setupGlobalTagNavigation() {
