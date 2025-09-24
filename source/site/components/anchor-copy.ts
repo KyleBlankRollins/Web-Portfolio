@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { typographyStyles } from "../styles/shared-styles.js";
+import "./icon/icon.js";
 
 /**
  * Web component that adds copy-to-clipboard buttons for heading anchors
@@ -8,19 +9,6 @@ import { typographyStyles } from "../styles/shared-styles.js";
  */
 @customElement("kbr-anchor-copy")
 export default class AnchorCopyComponent extends LitElement {
-  private checkIcon = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20,6 9,17 4,12"></polyline>
-    </svg>
-  `;
-
-  private linkIcon = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-    </svg>
-  `;
-
   static styles = [
     typographyStyles,
     css`
@@ -263,7 +251,13 @@ export default class AnchorCopyComponent extends LitElement {
   private createCopyButton(headingId: string): HTMLButtonElement {
     const button = document.createElement("button");
     button.className = "anchor-copy-btn";
-    button.innerHTML = this.linkIcon;
+
+    // Create and append the link icon
+    const linkIcon = document.createElement("kbr-icon");
+    linkIcon.setAttribute("name", "link");
+    linkIcon.setAttribute("classes", "icon-xl");
+    button.appendChild(linkIcon);
+
     button.title = "Copy link to this section";
     button.setAttribute(
       "aria-label",
@@ -291,16 +285,18 @@ export default class AnchorCopyComponent extends LitElement {
     try {
       await navigator.clipboard.writeText(url);
 
-      // Show success feedback
-      const originalContent = button.innerHTML;
-      button.innerHTML = this.checkIcon;
-      button.classList.add("copied");
+      // Show success feedback by replacing the icon
+      const linkIcon = button.querySelector("kbr-icon");
+      if (linkIcon) {
+        linkIcon.setAttribute("name", "checkbox_checked");
+        button.classList.add("copied");
 
-      // Reset after 2 seconds
-      setTimeout(() => {
-        button.innerHTML = originalContent;
-        button.classList.remove("copied");
-      }, 2000);
+        // Reset after 2 seconds
+        setTimeout(() => {
+          linkIcon.setAttribute("name", "link");
+          button.classList.remove("copied");
+        }, 2000);
+      }
     } catch (err) {
       console.error("Failed to copy link:", err);
 
@@ -329,15 +325,17 @@ export default class AnchorCopyComponent extends LitElement {
     try {
       document.execCommand("copy");
 
-      // Show success feedback
-      const originalContent = button.innerHTML;
-      button.innerHTML = this.checkIcon;
-      button.classList.add("copied");
+      // Show success feedback by replacing the icon
+      const linkIcon = button.querySelector("kbr-icon");
+      if (linkIcon) {
+        linkIcon.setAttribute("name", "checkbox_checked");
+        button.classList.add("copied");
 
-      setTimeout(() => {
-        button.innerHTML = originalContent;
-        button.classList.remove("copied");
-      }, 2000);
+        setTimeout(() => {
+          linkIcon.setAttribute("name", "link");
+          button.classList.remove("copied");
+        }, 2000);
+      }
     } catch (err) {
       console.error("Fallback copy failed:", err);
     }
