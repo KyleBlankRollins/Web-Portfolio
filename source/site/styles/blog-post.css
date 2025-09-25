@@ -36,7 +36,7 @@
   border-left: 4px solid var(--color-primary);
   padding: var(--space-lg);
   font-style: italic;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 .blog-post-content code {
@@ -71,7 +71,7 @@
 }
 
 .blog-post-date time {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 

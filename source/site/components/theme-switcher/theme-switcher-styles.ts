@@ -20,11 +20,7 @@ export const themeSwitcherStyles = css`
     box-shadow: 0 4px 12px var(--color-shadow);
     min-width: 240px;
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
-  }
-
-  [data-color-scheme="dark"] .theme-switcher {
-    background: rgba(30, 41, 59, 0.95);
+    background: var(--color-background-secondary);
   }
 
   .theme-controls {
@@ -52,7 +48,7 @@ export const themeSwitcherStyles = css`
     padding: var(--input-padding-y) var(--input-padding-x);
     border: var(--input-border-width) solid var(--color-border);
     border-radius: var(--input-border-radius);
-    background: var(--color-surface);
+    background: var(--color-background-secondary);
     color: var(--color-text);
     font-size: var(--font-size-sm);
     font-family: inherit;

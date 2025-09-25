@@ -461,6 +461,68 @@ The custom build system integrates with CSS handling:
 // Component CSS files are made available at /components/*.css
 ```
 
+## Theme System
+
+The portfolio uses a comprehensive theme system built on CSS custom properties, providing flexible theming with accessibility-first design principles.
+
+### Architecture Overview
+
+- **Theme Properties**: Standardized system with 280+ semantic CSS custom properties
+- **Multiple Themes**: Base grayscale theme and nature-inspired Canney Valley theme
+- **Light/Dark Mode**: Automatic system preference detection with manual override
+- **Accessibility**: WCAG AA compliant with high contrast support
+- **Persistence**: localStorage-based theme preference memory
+
+### Key Features
+
+```css
+/* Themes use semantic property names */
+[data-theme="base"] {
+  --color-primary: #2d2d2d;
+  --color-text: #212529;
+  --color-background: #ffffff;
+}
+
+/* Automatic dark mode variants */
+[data-theme="base"][data-color-scheme="dark"] {
+  --color-primary: #e2e8f0;
+  --color-text: #f8fafc;
+  --color-background: #0f172a;
+}
+```
+
+### Component Integration
+
+Lit Element components automatically inherit theme properties:
+
+```typescript
+static styles = css`
+  :host {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .primary-button {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+`;
+```
+
+### Theme Switcher Component
+
+The `<kbr-theme-switcher>` component provides:
+
+- Fixed bottom-left positioning with glass morphism design
+- System preference detection and localStorage persistence
+- Accessible keyboard navigation and screen reader support
+- Live theme switching without page reload
+
+### Detailed Documentation
+
+For comprehensive theming documentation, see: **[Theme System README](./themes/README.md)**
+
 ## Design Token Philosophy
 
 ### No Fallback Values in CSS Custom Properties

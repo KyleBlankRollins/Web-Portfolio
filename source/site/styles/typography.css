@@ -132,7 +132,7 @@ src: url('/fonts/valkyrie_b_caps_bold.woff2') format('woff2');
 
 /* Typography Scale & Baseline Grid */
 html, .root {
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-primary);
   font-size: 18px;
   line-height: 23px;
   /* Apply font optimizations to html element */
@@ -144,7 +144,7 @@ html, .root {
 
 /* Article/content specific typography - not global body */
 .article {
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-primary);
   font-size: 1rem;
   line-height: 1.2777778rem;
   margin: auto;
@@ -224,7 +224,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-hover);
   text-decoration: underline;
 }
 

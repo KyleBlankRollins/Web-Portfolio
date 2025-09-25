@@ -83,7 +83,7 @@ body {
   }
   
   .card-content {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
   
   p {
@@ -117,7 +117,7 @@ body {
   }
   
   p {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 }
 
@@ -168,7 +168,7 @@ body {
     
     p {
       margin-bottom: var(--space-md);
-      color: var(--color-text-muted);
+      color: var(--color-text-secondary);
       flex: 1;
     }
   }
@@ -545,10 +545,6 @@ body {
   padding: 2em;
 }
 
-.read-the-docs {
-  color: var(--color-text-muted); /* Use consistent muted text color */
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -556,7 +552,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--color-primary-dark);
+  background-color: var(--color-primary);
   color: var(--color-text-inverse);
   cursor: pointer;
   transition: border-color 0.25s;
@@ -584,7 +580,7 @@ button:focus-visible {
 }
 
 .blog-post-date time {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   font-style: italic;
 }
@@ -597,7 +593,7 @@ button:focus-visible {
 }
 
 .tags-label {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
 }

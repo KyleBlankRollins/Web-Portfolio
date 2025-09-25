@@ -6,7 +6,7 @@
 [data-theme="canney-valley"] {
   /* Theme Metadata */
   --theme-name: "Canney Valley";
-  --theme-version: "2.0.0";
+  --theme-version: "1.0.0";
   --theme-author: "Kyle Blank Rollins";
   
   /* Primary Colors - Forest green */
@@ -52,9 +52,6 @@
   --color-background: #f4f5f2;
   --color-background-secondary: #eef0ec;
   --color-background-tertiary: #e8eae6;
-  --color-surface: #ffffff;
-  --color-surface-hover: #f8f9f7;
-  --color-surface-active: #f0f2ef;
   
   /* Text Colors - High contrast on light backgrounds */
   --color-text: #263238;
@@ -74,6 +71,16 @@
   --color-shadow: rgba(38, 50, 56, 0.1);
   --color-shadow-strong: rgba(38, 50, 56, 0.15);
   --color-shadow-dark: rgba(38, 50, 56, 0.25);
+  
+  /* Gradient Properties - Nature-inspired gradients */
+  --gradient-primary: linear-gradient(90deg, #66ab68 2%, #96687f 50%, #263238 98%);
+  --gradient-primary-light: linear-gradient(90deg, 
+    rgba(102, 171, 104, 0.2) 2%, 
+    rgba(150, 104, 127, 0.2) 50%, 
+    rgba(38, 50, 56, 0.2) 98%
+  );
+  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
 }
 
 /* Canney Valley Dark Mode - Deep forest night theme */
@@ -121,19 +128,16 @@
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-shadow-strong: rgba(0, 0, 0, 0.6);
   --color-shadow-dark: rgba(0, 0, 0, 0.8);
-}
-
-/* Gradient Classes - Preserved from original design */
-[data-theme="canney-valley"] .gradient-bar {
-  background: linear-gradient(90deg, #66ab68 2%, #96687f 50%, #263238 98%);
-}
-
-[data-theme="canney-valley"] .gradient-bar-light {
-  background: linear-gradient(90deg, 
-    rgba(102, 171, 104, 0.2) 2%, 
-    rgba(150, 104, 127, 0.2) 50%, 
+  
+  /* Gradient Properties - Dark forest gradients */
+  --gradient-primary: linear-gradient(90deg, #81c784 2%, #cab3bf 50%, #263238 98%);
+  --gradient-primary-light: linear-gradient(90deg, 
+    rgba(129, 199, 132, 0.2) 2%, 
+    rgba(202, 179, 191, 0.2) 50%, 
     rgba(38, 50, 56, 0.2) 98%
   );
+  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
 }
 
 

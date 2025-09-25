@@ -222,10 +222,6 @@ body {
   padding: 2em;
 }
 
-.read-the-docs {
-  color: var(--color-text-muted); /* Use consistent muted text color */
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
