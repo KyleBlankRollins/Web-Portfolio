@@ -1,5 +1,11 @@
 /* Main CSS entry point for hot reload support */
-@import './theme.css';
+
+/* Theme System */
+@import './themes/theme-properties.css';   /* Base theme properties and system */
+@import './themes/base-theme.css';         /* Default base theme */  
+@import './themes/theme-canney-valley.css'; /* Canney Valley theme */
+
+/* Site Styles */
 @import './typography.css'; 
 @import './style.css';
 @import './blog-post.css';

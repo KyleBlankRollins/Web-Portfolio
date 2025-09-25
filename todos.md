@@ -28,6 +28,10 @@ Break it up.
 
 Break CSS into its own file for each componetn. Again. Need to use Lit's css method and export.
 
+## Index page
+
+[ ] Refactor build system to include index.html in template processing. index.html should probably use the base template.
+
 ## Career Page
 
 [ ] Add job description for MongoDB team lead
