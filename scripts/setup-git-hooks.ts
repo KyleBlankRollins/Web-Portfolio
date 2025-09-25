@@ -1,7 +1,9 @@
 #!/usr/bin/env tsx
 
 /**
- * Git hooks generator for the Web Portfolio project
+ * Git hooks # Run TypeScript linting script for staged files
+lint_output=$(npm run lint:prose:staged --silent 2>&1)
+vale_exit_code=$?e Web Portfolio project
  *
  * This script generates git hooks and installs them in the .git/hooks directory.
  * It ensures hooks are executable and properly configured for the project.
@@ -48,27 +50,13 @@ fi
 echo "Linting files:"
 echo "$staged_md_files"
 
-# Run Vale on staged files (only if they exist)
-# Using --no-exit to prevent blocking commits, but show warnings
-existing_files=""
-for file in $staged_md_files; do
-    if [ -f "$file" ]; then
-        existing_files="$existing_files $file"
-    fi
-done
-
-if [ -z "$existing_files" ]; then
-    echo "No existing staged Markdown files to lint."
-    exit 0
-fi
-
-vale_output=$(echo "$existing_files" | xargs vale --no-exit 2>&1)
+# Run TypeScript linting script for staged files
+lint_output=$(npm run lint:prose:staged --silent 2>&1)
 vale_exit_code=$?
 
 if [ $vale_exit_code -ne 0 ]; then
     echo ""
-    echo "⚠️  Vale found issues in your Markdown files:"
-    echo "$vale_output"
+    echo "$lint_output"
     echo ""
     echo "You can fix these issues or commit anyway."
     echo "To skip this check, use: git commit --no-verify"
@@ -88,7 +76,7 @@ if [ $vale_exit_code -ne 0 ]; then
             ;;
     esac
 else
-    echo "✅ Vale linting passed!"
+    echo "$lint_output"
 fi
 
 exit 0`;

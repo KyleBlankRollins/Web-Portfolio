@@ -35,23 +35,41 @@ Vale only runs on Markdown files in:
 #### Manual linting
 
 ```bash
-# Lint all blog content
+# Lint all Markdown blog content
 npm run lint:prose
 
-# Lint only drafts
+# Lint only changed files (useful during development)
+npm run lint:prose:changed
+
+# Lint only Markdown drafts
 npm run lint:prose:drafts
 
-# Lint with line format output
-npm run lint:prose:fix
+# Lint only staged files (pre-commit check)
+npm run lint:prose:staged
+
+# Verbose output with debugging info
+npm run lint:prose:verbose
 ```
+
+#### Advanced usage
+
+The linting system is powered by a TypeScript script (`scripts/lint-prose.ts`) that provides intelligent file discovery and flexible linting options:
+
+- **Smart file discovery**: Automatically finds relevant Markdown files
+- **Git integration**: Can lint only changed, staged, or specific file sets
+- **Flexible scoping**: Target all content, drafts only, or specific patterns
+- **Enhanced reporting**: Colorized output with progress indicators
+- **CLI flexibility**: Mix and match options (e.g., `--drafts-only --verbose`)
 
 #### Automatic linting
 
-Vale runs automatically during git commits via a pre-commit hook. If issues are found:
+Vale runs automatically during git commits via a TypeScript-powered pre-commit hook that intelligently lints only staged Markdown files. If issues are found:
 
-- You'll see the linting results
-- You can choose to fix issues or commit anyway
-- Use `git commit --no-verify` to skip linting
+- You'll see colorized linting results for only the files you're committing
+- The commit proceeds normally (linting is informational, not blocking)
+- Use `git commit --no-verify` to skip linting entirely
+
+The git hooks are version-controlled and automatically installed via `npm install` using the TypeScript generator in `scripts/setup-git-hooks.ts`.
 
 ### Vale rules
 
