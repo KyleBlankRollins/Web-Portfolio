@@ -1,0 +1,9 @@
+# Blog-specific rejected terms
+# Add terms you want to avoid using
+# One term per line
+
+# Avoid overly casual language in technical writing
+gonna
+wanna
+kinda
+sorta

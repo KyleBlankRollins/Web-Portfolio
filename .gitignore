@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Vale linting cache
+.vale/styles/
+
+# Generated git hooks (managed by scripts/setup-git-hooks.ts)
+.git/hooks/pre-commit

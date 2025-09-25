@@ -18,16 +18,6 @@ If possible, the builder or Vite should bundle all of the CSS files for the site
 
 Set up Vale linting for blog post content in `.md` files.
 
-## Components
-
-### Table of contents and tag filter
-
-Break it up.
-
-### CSS
-
-Break CSS into its own file for each componetn. Again. Need to use Lit's css method and export.
-
 ## Index page
 
 [ ] Refactor build system to include index.html in template processing. index.html should probably use the base template.

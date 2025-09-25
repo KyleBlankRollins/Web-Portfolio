@@ -10,7 +10,12 @@
     "build-site": "tsx source/builder/main.ts",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "copy-component-styles": "shx cp source/site/components/*.css public/components/"
+    "copy-component-styles": "shx cp source/site/components/*.css public/components/",
+    "lint:prose": "vale source/site/content",
+    "lint:prose:drafts": "vale source/site/content/__drafts",
+    "lint:prose:fix": "vale --config=.vale.ini source/site/content --ext=.md --output=line",
+    "setup-hooks": "tsx scripts/setup-git-hooks.ts",
+    "postinstall": "npm run setup-hooks"
   },
   "devDependencies": {
     "@types/node": "^20.19.17",

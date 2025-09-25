@@ -1,0 +1,63 @@
+# Blog-specific accepted terms
+# Add technical terms, proper nouns, and domain-specific words here
+# One term per line
+
+# Technical terms
+API
+CSS
+HTML
+JavaScript
+TypeScript
+JSON
+URL
+URLs
+HTTP
+HTTPS
+CLI
+npm
+GitHub
+VS Code
+Markdown
+frontend
+backend
+fullstack
+Vue.js
+React
+Node.js
+MongoDB
+SQL
+NoSQL
+frontmatter
+onboarding
+blockquote
+Blockquotes
+Preformatted
+preformatted
+monospace
+Monospace
+Unstyled
+
+# Fonts and typography
+Plex
+IBM
+
+# Personal/Brand terms
+Kyle
+Rollins
+KyleBlankRollins
+kyleblankrollins.com
+KBR
+SME
+SMEs
+LLM
+
+# Common tech abbreviations
+UI
+UX
+DOM
+CDN
+SDK
+IDE
+FOIT
+FOUT
+CLS
