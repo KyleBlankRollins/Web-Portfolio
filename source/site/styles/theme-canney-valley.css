@@ -1,0 +1,30 @@
+.gradient-bar {
+	background: #66ab68;
+	background: -webkit-gradient(linear,left top,right top,color-stop(2%,#66ab68),color-stop(50%,#96687f),color-stop(98%,#263238));
+	background: linear-gradient(90deg,#66ab68 2%,#96687f 50%,#263238 98%);
+}
+
+.gradient-bar-bg-light {
+	background: #66ab68;
+	background: -webkit-gradient(linear,left top,right top,color-stop(2%,rgba(102,171,104,.2)),color-stop(50%,rgba(150,104,127,.2)),color-stop(98%,rgba(38,50,56,.2)));
+	background: linear-gradient(90deg,rgba(102,171,104,.2) 2%,rgba(150,104,127,.2) 50%,rgba(38,50,56,.2) 98%);
+}
+
+:root {
+  --primary: #66AB68;
+  --primary-light: #b2d5b3;
+  --secondary: #263238;
+  --secondary-light: #839097;
+  --callout: #96687f;
+  --callout-light: #cab3bf;
+  --white: #f4f5f2;
+  --black: #000000;
+  --button-success: #a8cfa9;
+  --button-primary: #28313a;
+  --button-info: #68b96b;
+  --button-warning: #e5a933;
+  --button-danger: #f44336;
+  --button-default: #999999;
+}
+
+
