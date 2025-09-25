@@ -43,7 +43,7 @@ export const timelineEntryStyles = css`
   .entry-meta {
     text-align: right;
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     line-height: 1.4;
   }
 

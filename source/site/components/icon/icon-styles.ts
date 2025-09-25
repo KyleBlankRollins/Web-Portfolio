@@ -58,6 +58,6 @@ export const iconStyles = css`
 
   /* Error state */
   :host(.error) svg {
-    color: var(--color-error, #ef4444);
+    color: var(--color-error);
   }
 `;

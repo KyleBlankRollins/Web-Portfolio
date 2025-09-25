@@ -20,7 +20,7 @@ export const postCardStyles = css`
   .post-card:hover {
     box-shadow: 0 8px 25px var(--color-shadow);
     transform: translateY(-2px);
-    border-color: var(--color-border-dark);
+    border-color: var(--color-border-strong);
   }
 
   .post-card-content {
@@ -46,7 +46,7 @@ export const postCardStyles = css`
   }
 
   .post-title-link:hover {
-    color: var(--color-primary-dark);
+    color: var(--color-primary-hover);
     text-decoration: underline;
   }
 
@@ -61,7 +61,7 @@ export const postCardStyles = css`
   }
 
   .post-card-date time {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: 0.9rem;
     font-style: italic;
   }
@@ -74,7 +74,7 @@ export const postCardStyles = css`
 
   .post-card-description p {
     color: var(--color-text);
-    line-height: var(--line-height-base);
+    line-height: var(--line-height-normal);
     margin: 0;
   }
 
@@ -133,7 +133,7 @@ export const postCardStyles = css`
   }
 
   .read-more-link:hover {
-    color: var(--color-primary-dark);
+    color: var(--color-primary-hover);
     transform: translateX(4px);
   }
 

@@ -59,7 +59,7 @@ export const postListStyles = css`
   }
 
   .post-list-loading p {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-lg);
   }
 
@@ -67,7 +67,7 @@ export const postListStyles = css`
   .post-list-empty {
     text-align: center;
     padding: var(--space-2xl) var(--space-lg);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   .post-list-empty p {
@@ -88,7 +88,7 @@ export const postListStyles = css`
   }
 
   .post-list-error p {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-lg);
   }
 
@@ -135,7 +135,7 @@ export const postListStyles = css`
 
   .pagination-btn[disabled] {
     background: var(--color-background-secondary);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     cursor: not-allowed;
     opacity: 0.6;
   }

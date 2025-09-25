@@ -30,7 +30,7 @@ export const navigationStyles = css`
 
   /* Logo styling */
   .logo a {
-    font-family: var(--font-family-mono, "JetBrains Mono", monospace);
+    font-family: var(--font-family-mono);
     font-size: var(--font-size-lg);
     font-weight: bold;
     color: var(--color-text-inverse);

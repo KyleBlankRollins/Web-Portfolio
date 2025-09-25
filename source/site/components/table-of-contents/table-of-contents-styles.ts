@@ -68,7 +68,7 @@ export const tableOfContentsStyles = css`
   .scroll-indicator-icon {
     width: 32px;
     height: 32px;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     opacity: 0.7;
     animation: scroll-pulse 2s ease-in-out infinite;
   }
@@ -128,7 +128,7 @@ export const tableOfContentsStyles = css`
     background: var(--color-background);
     color: var(--color-primary);
     text-decoration: none;
-    border-left-color: var(--color-border-dark);
+    border-left-color: var(--color-border-strong);
   }
 
   .toc-link:focus {
@@ -181,7 +181,7 @@ export const tableOfContentsStyles = css`
 
   /* Empty state */
   .toc-empty {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-style: italic;
     text-align: center;
     margin: var(--space-md) 0;
@@ -198,7 +198,7 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-container::-webkit-scrollbar-thumb {
-    background: var(--color-border-dark);
+    background: var(--color-border-strong);
     border-radius: 3px;
   }
 

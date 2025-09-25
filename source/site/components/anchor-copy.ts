@@ -66,7 +66,7 @@ export default class AnchorCopyComponent extends LitElement {
         padding: var(--space-xs);
         border-radius: 4px;
         cursor: pointer;
-        color: var(--color-text-muted);
+        color: var(--color-text-secondary);
         transition: all var(--transition-fast);
         display: inline-flex;
         align-items: center;

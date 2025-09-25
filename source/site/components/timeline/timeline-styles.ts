@@ -35,7 +35,7 @@ export const timelineStyles = css`
 
   .timeline-subtitle {
     font-size: 1.125rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.5;
   }
@@ -94,14 +94,14 @@ export const timelineStyles = css`
   .loading {
     text-align: center;
     padding: 3rem 1rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   .error {
     text-align: center;
     padding: 3rem 1rem;
     color: var(--color-error);
-    background: var(--color-error-background);
+    background: var(--color-error-subtle);
     border-radius: 0.5rem;
     border: 1px solid var(--color-error);
   }

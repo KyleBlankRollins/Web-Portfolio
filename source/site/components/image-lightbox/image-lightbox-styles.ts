@@ -161,7 +161,7 @@ export const imageLightboxStyles = css`
     align-items: center;
     justify-content: center;
     min-height: 200px;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   /* Error state */
@@ -170,7 +170,7 @@ export const imageLightboxStyles = css`
     align-items: center;
     justify-content: center;
     min-height: 200px;
-    color: var(--color-error, #ef4444);
+    color: var(--color-error);
     text-align: center;
     padding: var(--space-md);
   }

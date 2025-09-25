@@ -79,13 +79,12 @@ export const tagFilterStyles = css`
   /* Enhanced focus styles for tag buttons */
   .tag-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.3);
+    box-shadow: var(--shadow-focus);
     z-index: 3;
   }
 
   .tag-button.active:focus {
-    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.4),
-      0 4px 16px rgba(var(--accent-primary-rgb), 0.2);
+    box-shadow: var(--shadow-focus), var(--shadow-md);
   }
 
   /* Focus styles during animation */
@@ -95,8 +94,7 @@ export const tagFilterStyles = css`
   }
 
   .tag-button.moving-to-top:focus {
-    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.5),
-      0 8px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-focus), var(--shadow-lg);
     animation: moveToTopFocused 0.6s cubic-bezier(0.4, 0, 0.2, 1)
       forwards;
   }
@@ -104,38 +102,33 @@ export const tagFilterStyles = css`
   @keyframes moveToTopFocused {
     0% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.3),
-        0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-focus), var(--shadow-xs);
     }
     25% {
       transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.5),
-        0 6px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-focus), var(--shadow-md);
     }
     50% {
       transform: scale(1.05) translateY(-4px);
-      box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.6),
-        0 8px 25px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-focus), var(--shadow-lg);
     }
     75% {
       transform: scale(1.02) translateY(-1px);
-      box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.5),
-        0 4px 15px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-focus), var(--shadow-sm);
     }
     100% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-focus), var(--shadow-xs);
     }
   }
 
   @keyframes activeTagPulse {
     0%,
     100% {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-xs);
     }
     50% {
-      box-shadow: 0 4px 16px rgba(var(--accent-primary-rgb), 0.3);
+      box-shadow: var(--shadow-md);
     }
   }
   .tag-button.animating {
@@ -153,47 +146,47 @@ export const tagFilterStyles = css`
   @keyframes moveToTop {
     0% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-xs);
       opacity: 1;
     }
     25% {
       transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-md);
     }
     50% {
       transform: scale(1.05) translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-lg);
     }
     75% {
       transform: scale(1.02) translateY(-1px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-sm);
     }
     100% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-xs);
     }
   }
 
   @keyframes moveFromTop {
     0% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-xs);
     }
     25% {
       transform: scale(0.95) translateY(1px);
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-xs);
     }
     50% {
       transform: scale(0.98) translateY(0);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-xs);
     }
     75% {
       transform: scale(1.01) translateY(-1px);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-xs);
     }
     100% {
       transform: scale(1) translateY(0);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-xs);
     }
   }
 
@@ -206,10 +199,10 @@ export const tagFilterStyles = css`
   }
 
   .error {
-    color: var(--error-color);
+    color: var(--color-error);
     text-align: center;
     padding: 1rem;
-    background: var(--error-bg);
+    background: var(--color-error-subtle);
     border-radius: 4px;
   }
 
