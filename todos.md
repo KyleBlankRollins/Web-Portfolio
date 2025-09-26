@@ -18,10 +18,6 @@ Create a logger utility class that can be used for scripts. Should handle all co
 
 If possible, the builder or Vite should bundle all of the CSS files for the site to make everything as performant and data saving as possible. Need to look at modern approaches to this, as I'm not sure what the best practice is here now.
 
-## Index page
-
-[ ] Refactor build system to include index.html in template processing. index.html should probably use the base template.
-
 ## Career Page
 
 [ ] Add job description for MongoDB team lead

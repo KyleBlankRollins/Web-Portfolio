@@ -37,14 +37,15 @@ export class HtmlProcessingUtils {
     defaultTitle: string = "Untitled",
     assets?: { css: string[]; js: string[] }
   ): Promise<string> {
-    // Extract metadata from HTML comments or existing structure
-    const metadata = templateProcessor.extractMetadata(content);
+    // Extract metadata from HTML comments and get cleaned content
+    const { metadata, content: cleanedContent } =
+      templateProcessor.extractMetadata(content);
 
     // Create template variables - if no title found, try to extract from content
     const templateVariables: TemplateVariables = {
       title:
         metadata.title ||
-        this.extractTitleFromContent(content) ||
+        this.extractTitleFromContent(cleanedContent) ||
         defaultTitle,
       description: metadata.description,
       keywords: metadata.keywords,
@@ -58,7 +59,7 @@ export class HtmlProcessingUtils {
     };
 
     const processedContent = templateProcessor.processTemplate(
-      content,
+      cleanedContent,
       templateVariables
     );
 

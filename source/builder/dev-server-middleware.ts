@@ -103,9 +103,12 @@ async function handleIndexRequest(
           "Development Server"
         );
 
+      // Inject development assets (consistent with other HTML handlers)
+      const devContent = injectDevAssets(processedContent);
+
       res.setHeader("Content-Type", "text/html");
       res.setHeader("Cache-Control", "no-cache");
-      res.end(processedContent);
+      res.end(devContent);
     } catch (error) {
       BuildLogger.error(`Error processing index.html: ${error}`);
       next(error);
@@ -253,9 +256,12 @@ async function processAndServeMarkdown(
       templateVariables
     );
 
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
     res.setHeader("Content-Type", "text/html");
     res.setHeader("Cache-Control", "no-cache");
-    res.end(processedContent);
+    res.end(devContent);
   } catch (error) {
     BuildLogger.error(
       `Error processing markdown ${mdFilePath}: ${error}`

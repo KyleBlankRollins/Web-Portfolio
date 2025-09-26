@@ -70,18 +70,22 @@ export class TemplateProcessor {
 
   /**
    * Extract metadata from HTML content (looking for comments or meta tags)
+   * Returns both the extracted metadata and the content with metadata comments removed
    */
-  public extractMetadata(
-    htmlContent: string
-  ): Partial<TemplateVariables> {
+  public extractMetadata(htmlContent: string): {
+    metadata: Partial<TemplateVariables>;
+    content: string;
+  } {
     const metadata: Partial<TemplateVariables> = {};
+    let content = htmlContent;
 
-    // Look for HTML meta comments
+    // Look for HTML meta comments and remove them from content
     const titleMatch = htmlContent.match(
       /<!--\s*title:\s*(.+?)\s*-->/i
     );
     if (titleMatch) {
       metadata.title = titleMatch[1].trim();
+      content = content.replace(titleMatch[0], "");
     }
 
     const descMatch = htmlContent.match(
@@ -89,6 +93,7 @@ export class TemplateProcessor {
     );
     if (descMatch) {
       metadata.description = descMatch[1].trim();
+      content = content.replace(descMatch[0], "");
     }
 
     const keywordsMatch = htmlContent.match(
@@ -96,6 +101,7 @@ export class TemplateProcessor {
     );
     if (keywordsMatch) {
       metadata.keywords = keywordsMatch[1].trim();
+      content = content.replace(keywordsMatch[0], "");
     }
 
     // Blog-specific metadata
@@ -104,6 +110,7 @@ export class TemplateProcessor {
     );
     if (dateMatch) {
       metadata.date = dateMatch[1].trim();
+      content = content.replace(dateMatch[0], "");
     }
 
     const formattedDateMatch = htmlContent.match(
@@ -111,6 +118,7 @@ export class TemplateProcessor {
     );
     if (formattedDateMatch) {
       metadata.formattedDate = formattedDateMatch[1].trim();
+      content = content.replace(formattedDateMatch[0], "");
     }
 
     const tagsMatch = htmlContent.match(
@@ -121,6 +129,7 @@ export class TemplateProcessor {
         .split(",")
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0);
+      content = content.replace(tagsMatch[0], "");
     }
 
     const isBlogPostMatch = htmlContent.match(
@@ -128,9 +137,21 @@ export class TemplateProcessor {
     );
     if (isBlogPostMatch) {
       metadata.isBlogPost = true;
+      content = content.replace(isBlogPostMatch[0], "");
     }
 
-    return metadata;
+    // Also remove template comment if present
+    const templateMatch = htmlContent.match(
+      /<!--\s*template:\s*(.+?)\s*-->/i
+    );
+    if (templateMatch) {
+      content = content.replace(templateMatch[0], "");
+    }
+
+    // Clean up any extra whitespace/newlines at the beginning
+    content = content.replace(/^\s+/, "");
+
+    return { metadata, content };
   }
 
   /**

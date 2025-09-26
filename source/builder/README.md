@@ -125,7 +125,121 @@ keywords: "optional, seo, keywords"
 4. **Asset Injection**: Automatically inject discovered assets into templates
 5. **Bundle Generation**: Output final static files to `dist/`
 
-### 5. Blog System
+### 5. Asset Injection System
+
+**Purpose**: Coordinate CSS and JavaScript asset injection between Vite's bundling system and the KBR Builder's template processing
+
+**Critical Design Challenge**:
+
+The KBR Builder processes HTML files through a template system, which can interfere with Vite's ability to detect entry points and properly bundle assets. This system addresses the dual requirements of:
+
+1. **Template-based HTML processing** for consistent layouts and variable substitution
+2. **Vite entry point detection** for proper CSS/JS bundling and injection
+
+**Development vs Production Asset Handling**:
+
+#### Development Server Asset Injection
+
+**Mechanism**: The dev server middleware (`dev-server-middleware.ts`) handles asset injection using Vite's built-in development asset resolution.
+
+**Process**:
+
+1. HTML requests are intercepted by the middleware
+2. Files are processed through the template system
+3. `injectDevAssets()` function automatically injects Vite's development assets:
+   - `<script type="module">` tags for hot module replacement
+   - CSS imports through JavaScript modules
+   - Development-time asset resolution
+
+**Key Implementation**:
+
+```typescript
+// Development asset injection
+const processedHtml = await this.templateProcessor.processTemplate(
+  templateName,
+  variables
+);
+return injectDevAssets(processedHtml); // Injects Vite dev assets
+```
+
+**Assets Injected**:
+
+- `/main.ts` entry point as ES module
+- Hot reload client code
+- CSS imports through JS modules
+- Development-time source maps
+
+#### Production Build Asset Injection
+
+**Mechanism**: Production builds require special handling to ensure Vite can detect entry points while maintaining template processing.
+
+**Entry Point Detection Strategy**:
+
+- **Template-based files** (like `index.html`) include a `<script type="module" src="/main.ts"></script>` tag
+- This tag **must be present in the source file** for Vite to detect the entry point during build
+- The template system preserves this tag during processing
+- Vite processes the entry point and generates bundled assets with hashed filenames
+
+**Production Build Process**:
+
+1. **Entry Point Detection**: Vite scans processed HTML files for `<script>` tags
+2. **Asset Bundling**: Vite bundles CSS/JS into hashed files (e.g., `index-ABC123.js`, `index-DEF456.css`)
+3. **Asset Discovery**: `HtmlBundleProcessor` extracts bundled assets from Vite's bundle object
+4. **Asset Injection**: Bundled assets are automatically injected into all HTML templates
+
+**Key Implementation**:
+
+```typescript
+// Extract assets from Vite bundle
+const cssFiles = Object.keys(bundle).filter((file) =>
+  file.endsWith(".css")
+);
+const jsFiles = Object.keys(bundle).filter((file) =>
+  file.endsWith(".js")
+);
+
+// Inject into all processed HTML
+const finalHtml = injectProductionAssets(processedHtml, {
+  cssFiles,
+  jsFiles,
+});
+```
+
+**Critical Requirements for Entry Point Detection**:
+
+1. **Source File Script Tag**: Template-based HTML files **must** include the entry point script tag:
+
+   ```html
+   <!-- In source/site/index.html -->
+   <script type="module" src="/main.ts"></script>
+   ```
+
+2. **Template Preservation**: The template system **must not** remove or relocate this script tag during processing
+
+3. **Build Order**: Template processing happens **after** Vite's initial bundle analysis but **before** final asset injection
+
+**Template vs Entry Point Balance**:
+
+The system successfully balances these competing requirements:
+
+- **Templates**: `base.html` and other templates do **not** contain script tags (to avoid duplication)
+- **Entry Points**: Only files that serve as Vite entry points (like `index.html`) contain script tags
+- **Asset Injection**: Production builds automatically inject bundled assets into **all** processed HTML files, regardless of whether they originally contained script tags
+
+**Troubleshooting Asset Injection**:
+
+**Development Issues**:
+
+- **No CSS/JS loading**: Check that `injectDevAssets()` is being called in middleware
+- **Hot reload not working**: Verify Vite dev server is properly configured with middleware
+
+**Production Issues**:
+
+- **No bundled assets generated**: Ensure entry point files contain `<script type="module" src="/main.ts"></script>`
+- **Assets not injected**: Check that `HtmlBundleProcessor` is discovering assets from Vite bundle
+- **Build shows "✓ 1 modules transformed"**: Indicates Vite cannot detect entry point - verify script tag placement
+
+### 6. Blog System
 
 **Purpose**: Automated blog post management with tag filtering and manifest generation
 
@@ -352,13 +466,49 @@ graph TD
 - Extract metadata from HTML comments
 - Handle template inheritance
 - Manage template cache invalidation
+- Clean metadata comments from processed content
 
 **Key Methods**:
 
 - `processTemplate()` - Apply template with variables
-- `extractMetadata()` - Parse HTML metadata
+- `extractMetadata()` - Parse HTML metadata and return cleaned content
 - `loadTemplate()` - Load template from filesystem
 - `clearCache()` - Invalidate template cache
+
+**Enhanced Metadata Processing**:
+
+The `extractMetadata()` method has been enhanced to return both extracted metadata and cleaned content:
+
+```typescript
+public extractMetadata(htmlContent: string): {
+  metadata: Record<string, string>;
+  content: string;
+}
+```
+
+**Key Features**:
+
+- **Dual Return**: Returns both metadata object and content with comments removed
+- **Comment Removal**: Automatically strips metadata comments from content to prevent duplication
+- **Template Integration**: Cleaned content is used in template processing to avoid showing metadata comments in final HTML
+
+**Metadata Comment Format**:
+
+```html
+<!-- title: Page Title -->
+<!-- description: Page description for SEO -->
+<!-- keywords: seo, keywords, comma separated -->
+<!-- template: custom-template.html -->
+
+<!-- Content starts here - comments above are stripped -->
+<section class="hero">...</section>
+```
+
+This enhancement ensures that:
+
+1. Metadata is properly extracted for template variable substitution
+2. Metadata comments don't appear in the final rendered HTML
+3. Content remains clean and properly formatted
 
 ### DevServerMiddleware
 
@@ -714,6 +864,33 @@ npm run lint:prose --all      # All files
 - Check all Markdown files have valid frontmatter
 - Verify all referenced templates exist
 - Ensure no circular template dependencies
+
+**Asset Injection Issues**:
+
+**Development Server - No CSS/JS Loading**:
+
+- Verify `injectDevAssets()` is being called in dev server middleware
+- Check that processed HTML includes proper Vite script tags
+- Ensure Vite dev server configuration includes correct middleware setup
+
+**Production Build - No Bundled Assets Generated** (shows "✓ 1 modules transformed"):
+
+- **Root Cause**: Vite cannot detect entry point for bundling
+- **Solution**: Ensure template-based HTML files include script tag: `<script type="module" src="/main.ts"></script>`
+- **Key Files**: Especially `source/site/index.html` which serves as main entry point
+- **Verification**: Check that build output shows "✓ XX modules transformed" (where XX > 1)
+
+**Production Build - Assets Generated But Not Injected**:
+
+- Check `HtmlBundleProcessor` is discovering assets from Vite bundle
+- Verify asset extraction logic in `generateBundle` hook
+- Confirm final HTML includes `<link>` and `<script>` tags for bundled assets
+
+**Template vs Entry Point Conflicts**:
+
+- **Issue**: Template system processing interferes with Vite entry point detection
+- **Solution**: Place script tags in source files (not templates) that serve as Vite entry points
+- **Pattern**: Use `base.html` template for structure, but keep entry point scripts in actual page files
 
 ### Performance Issues
 
