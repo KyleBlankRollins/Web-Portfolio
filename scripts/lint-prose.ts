@@ -41,7 +41,6 @@ const colors = {
 interface LintOptions {
   changedOnly?: boolean;
   draftsOnly?: boolean;
-  staged?: boolean;
   verbose?: boolean;
   format?: "default" | "line" | "json";
   help?: boolean;
@@ -73,7 +72,6 @@ ${colors.cyan}Usage:${colors.reset}
 ${colors.cyan}Options:${colors.reset}
   --changed-only    Only lint files that have been modified (git status)
   --drafts-only     Only lint files in the __drafts directory
-  --staged          Only lint staged files (for git hooks)
   --verbose         Show detailed output and file processing info
   --format FORMAT   Output format: default, line, json (default: default)
   --help           Show this help message
@@ -82,7 +80,7 @@ ${colors.cyan}Examples:${colors.reset}
   tsx scripts/lint-prose.ts                    # Lint all content
   tsx scripts/lint-prose.ts --changed-only     # Only changed files
   tsx scripts/lint-prose.ts --drafts-only      # Only drafts
-  tsx scripts/lint-prose.ts --staged --verbose # Staged files with verbose output
+  tsx scripts/lint-prose.ts --verbose          # All files with verbose output
 
 ${colors.cyan}NPM Scripts:${colors.reset}
   npm run lint:prose          # Lint all content
@@ -106,9 +104,6 @@ function parseArgs(): LintOptions {
       case "--drafts-only":
         options.draftsOnly = true;
         break;
-      case "--staged":
-        options.staged = true;
-        break;
       case "--verbose":
         options.verbose = true;
         break;
@@ -128,11 +123,14 @@ function parseArgs(): LintOptions {
 /**
  * Get list of changed files using git
  */
-async function getChangedFiles(staged = false): Promise<string[]> {
+async function getChangedFiles(): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    const gitArgs = staged
-      ? ["diff", "--cached", "--name-only", "--diff-filter=ACM"]
-      : ["diff", "--name-only", "HEAD", "--diff-filter=ACM"];
+    const gitArgs = [
+      "diff",
+      "--name-only",
+      "HEAD",
+      "--diff-filter=ACM",
+    ];
 
     const git = spawn("git", gitArgs, { cwd: PROJECT_ROOT });
     let output = "";
@@ -176,12 +174,9 @@ async function discoverFiles(
 ): Promise<string[]> {
   let files: string[] = [];
 
-  if (options.staged) {
-    // For git hooks - only staged files
-    files = await getChangedFiles(true);
-  } else if (options.changedOnly) {
+  if (options.changedOnly) {
     // Only files that have been modified
-    files = await getChangedFiles(false);
+    files = await getChangedFiles();
   } else if (options.draftsOnly) {
     // Only files in the drafts directory
     const pattern = join(DRAFTS_DIR, "**/*.md");

@@ -458,7 +458,7 @@ The custom build system integrates with CSS handling:
 ```typescript
 // In dev-server-middleware.ts
 // CSS files are served with proper MIME types and HMR support
-// Component CSS files are made available at /components/*.css
+// Lit components use embedded styles via static styles property
 ```
 
 ## Theme System

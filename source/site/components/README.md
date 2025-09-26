@@ -55,12 +55,7 @@ The timeline components work together to display career history:
 - CSS files have full access to all theme variables from `theme.css`
 - Styles are scoped to the component via Shadow DOM
 
-### 2. Building
-
-- Run `npm run copy-component-styles` to copy CSS files to `public/components/`
-- Or the build process will automatically include files from `public/`
-
-### 3. Styling Benefits
+### 2. Styling Benefits
 
 - ✅ **Style Encapsulation**: Shadow DOM prevents style leakage
 - ✅ **Theme Integration**: Full access to CSS custom properties
@@ -96,20 +91,29 @@ All CSS custom properties from `theme.css` are available:
 
 ## Component Structure
 
-```typescript
-class MyComponent extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
+All components now use Lit Element with embedded styles:
 
-  connectedCallback() {
-    if (this.shadowRoot) {
-      this.shadowRoot.innerHTML = `
-        <link rel="stylesheet" href="/components/my-component.css">
-        ${this.getHTML()}
-      `;
+```typescript
+import { LitElement, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
+
+@customElement("my-component")
+export class MyComponent extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      /* CSS custom properties from theme.css are available */
+      color: var(--color-text);
+      font-family: var(--font-family-base);
     }
+  `;
+
+  render() {
+    return html`
+      <div class="content">
+        <!-- Component template -->
+      </div>
+    `;
   }
 }
 ```
