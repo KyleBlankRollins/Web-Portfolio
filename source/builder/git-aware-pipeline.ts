@@ -74,7 +74,9 @@ export class GitAwareBuildPipeline {
     }
 
     const changedHtml = this.getChangedHtmlFiles();
-    return changedHtml.length > 0;
+    const missingHtml = this.getMissingHtmlFiles();
+    
+    return changedHtml.length > 0 || missingHtml.length > 0;
   }
 
   /**
@@ -89,6 +91,67 @@ export class GitAwareBuildPipeline {
       }
     }
     return this._changedHtmlFiles;
+  }
+
+  /**
+   * Get HTML files that are missing from /dist directory
+   * This ensures we process HTML files even in git-aware mode if they're missing from output
+   */
+  getMissingHtmlFiles(): string[] {
+    const distDir = "dist";
+    const pagesDir = "source/site/pages";
+    const blogManifestPath = "public/data/blog-manifest.json";
+    
+    try {
+      const fs = require("fs");
+      const path = require("path");
+      
+      // Get expected HTML files from pages directory
+      const expectedFiles = new Set<string>();
+      
+      // Add index.html (always expected)
+      expectedFiles.add("index.html");
+      
+      // Add pages from source/site/pages
+      if (fs.existsSync(pagesDir)) {
+        const pageFiles = fs.readdirSync(pagesDir)
+          .filter((file: string) => file.endsWith(".html"));
+        pageFiles.forEach((file: string) => expectedFiles.add(file));
+      }
+      
+      // Add blog posts from manifest
+      if (fs.existsSync(blogManifestPath)) {
+        const manifest = JSON.parse(fs.readFileSync(blogManifestPath, "utf8"));
+        manifest.posts?.forEach((post: any) => {
+          const filename = post.url?.startsWith("/") ? post.url.slice(1) : post.url;
+          if (filename) expectedFiles.add(filename);
+        });
+      }
+      
+      // Check which files are missing from /dist
+      const missingFiles: string[] = [];
+      if (fs.existsSync(distDir)) {
+        expectedFiles.forEach(file => {
+          const distPath = path.join(distDir, file);
+          if (!fs.existsSync(distPath)) {
+            missingFiles.push(file);
+          }
+        });
+      } else {
+        // If /dist doesn't exist, all files are missing
+        missingFiles.push(...Array.from(expectedFiles));
+      }
+      
+      if (missingFiles.length > 0) {
+        BuildLogger.info(`📄 Found ${missingFiles.length} missing HTML files in /dist:`);
+        missingFiles.forEach(file => BuildLogger.info(`   - ${file}`));
+      }
+      
+      return missingFiles;
+    } catch (error) {
+      BuildLogger.error(`Failed to check for missing HTML files: ${error}`);
+      return [];
+    }
   }
 
   /**

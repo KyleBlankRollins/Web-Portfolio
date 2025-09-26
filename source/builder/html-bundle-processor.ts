@@ -104,7 +104,7 @@ export class HtmlBundleProcessor {
 
   /**
    * Process and add HTML files from pages/ and public/ directories
-   * Can be git-aware to only process changed files for better performance
+   * Pages are always processed, public/ can be git-aware for better performance
    */
   private async processAdditionalHtmlFiles(
     emitFile: any,
@@ -113,34 +113,33 @@ export class HtmlBundleProcessor {
   ): Promise<void> {
     let additionalHtmlFiles: string[] = [];
 
-    // Check if git-aware mode is enabled and we're in a git repository
+    // Always process all HTML files from pages/ directory
+    const pagesFiles = FileSystemHelper.findFiles("pages", [".html"]);
+    additionalHtmlFiles.push(...pagesFiles);
+
+    // For public/ directory files, use git-aware logic if enabled
     if (
       options.gitAware &&
       !options.forceAll &&
       GitUtils.isGitRepository()
     ) {
-      // Get changed HTML files (excludes /public directory as those are generated files)
-      const changedHtmlFiles = GitUtils.getChangedHtmlFiles();
-
-      if (changedHtmlFiles.length === 0) {
-        BuildLogger.info(
-          "⚡ No changed HTML files detected - skipping HTML processing"
+      // Get changed HTML files from public/ directory only
+      const changedPublicFiles =
+        GitUtils.getChangedHtmlFiles().filter((file) =>
+          file.includes("/public/")
         );
-        return;
-      }
 
-      // Add only the changed source HTML files
-      additionalHtmlFiles = [...changedHtmlFiles];
+      additionalHtmlFiles.push(...changedPublicFiles);
 
       BuildLogger.info(
-        `⚡ Git-aware mode: processing ${additionalHtmlFiles.length} changed HTML files`
+        `⚡ Git-aware mode: processing ${pagesFiles.length} pages files + ${changedPublicFiles.length} changed public files`
       );
     } else {
-      // Process all HTML files (original behavior)
-      additionalHtmlFiles = [
-        ...FileSystemHelper.findFiles("pages", [".html"]),
-        ...FileSystemHelper.findFiles("public", [".html"]),
-      ];
+      // Process all HTML files from public/ directory too
+      const publicFiles = FileSystemHelper.findFiles("public", [
+        ".html",
+      ]);
+      additionalHtmlFiles.push(...publicFiles);
 
       if (options.gitAware && options.forceAll) {
         BuildLogger.info(
