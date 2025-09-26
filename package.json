@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:git-aware": "GIT_AWARE=true vite",
     "build": "tsc && vite build",
+    "build:git-aware": "tsc && GIT_AWARE=true vite build",
+    "build:force-all": "tsc && GIT_AWARE=true FORCE_ALL=true vite build",
     "build-site": "tsx source/builder/main.ts",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
@@ -16,6 +19,8 @@
     "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
     "lint:prose:staged": "tsx scripts/lint-prose.ts --staged",
     "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose",
+    "clean:public": "tsx scripts/clean-public.ts",
+    "clean:public:dry-run": "tsx scripts/clean-public.ts --dry-run",
     "setup-hooks": "tsx scripts/setup-git-hooks.ts",
     "postinstall": "npm run setup-hooks"
   },

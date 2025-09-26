@@ -10,6 +10,10 @@ Using local storage, implement a UI that allows people to select arbitray blog p
 
 ## Infrastructure
 
+### Logger
+
+Create a logger utility class that can be used for scripts. Should handle all console output, including colors. BuildLogger should be incorporated into this class.
+
 ### CSS bundling
 
 If possible, the builder or Vite should bundle all of the CSS files for the site to make everything as performant and data saving as possible. Need to look at modern approaches to this, as I'm not sure what the best practice is here now.

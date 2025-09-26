@@ -3,26 +3,60 @@ import { join } from "path";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
+import { GitAwareBuildPipeline } from "./git-aware-pipeline.js";
 
 // Import our modular components
 import { setupDevServer } from "./dev-server-middleware.js";
 import { HtmlBundleProcessor } from "./html-bundle-processor.js";
 
 /**
- * Process all Markdown files in the content directory
+ * Configuration options for the KBR Builder
+ */
+export interface KBRBuilderOptions {
+  /** Enable git-aware building to only process changed markdown files */
+  gitAware?: boolean;
+  /** Base branch to compare against when using git-aware mode */
+  baseBranch?: string;
+  /** Force processing of all files regardless of git status */
+  forceAll?: boolean;
+}
+
+/**
+ * Process Markdown files in the content directory
+ * Uses the git-aware pipeline to determine what files to process
  */
 async function processMarkdownFiles(
-  markdownProcessor: MarkdownProcessor
+  markdownProcessor: MarkdownProcessor,
+  pipeline: GitAwareBuildPipeline
 ): Promise<void> {
   BuildLogger.info("🔎 Discovering Markdown files...");
 
   try {
+    if (!pipeline.shouldProcessMarkdown()) {
+      BuildLogger.info(
+        "⚡ No changed markdown files detected - skipping processing"
+      );
+      return;
+    }
+
     const contentDirectory = join("source", "site", "content");
-    const markdownFiles = FileSystemHelper.findFiles(
-      contentDirectory,
-      [".md"],
-      ["__drafts"] // Exclude drafts directory from production build
-    );
+    let markdownFiles: string[] = [];
+
+    // Get changed files if in git-aware mode, otherwise process all
+    const changedMarkdownFiles = pipeline.getChangedMarkdownFiles();
+    if (changedMarkdownFiles.length > 0) {
+      markdownFiles = changedMarkdownFiles;
+      BuildLogger.info(
+        `⚡ Git-aware mode: processing ${markdownFiles.length} changed files`
+      );
+    } else {
+      // Process all markdown files (non-git-aware mode)
+      markdownFiles = FileSystemHelper.findFiles(
+        contentDirectory,
+        [".md"],
+        ["__drafts"] // Exclude drafts directory from production build
+      );
+    }
 
     if (markdownFiles.length === 0) {
       BuildLogger.info("No Markdown files found");
@@ -52,11 +86,22 @@ async function processMarkdownFiles(
  * - MarkdownBuildProcessor: Handles Markdown to HTML conversion during build
  * - HtmlBundleProcessor: Handles HTML processing and bundle generation
  */
-export function kbrBuilder(): Plugin {
+export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
   // Initialize processors and components
   const markdownProcessor = new MarkdownProcessor();
   const htmlBundleProcessor = new HtmlBundleProcessor();
   const templateProcessor = new TemplateProcessor();
+
+  // Set default options
+  const builderOptions: KBRBuilderOptions = {
+    gitAware: false,
+    baseBranch: "main",
+    forceAll: false,
+    ...options,
+  };
+
+  // Initialize the git-aware pipeline
+  const pipeline = new GitAwareBuildPipeline(builderOptions);
 
   return {
     name: "kbr-builder",
@@ -110,10 +155,21 @@ export function kbrBuilder(): Plugin {
      */
     async buildStart() {
       BuildLogger.info("🚀 Starting KBR Builder...");
-      await processMarkdownFiles(markdownProcessor);
 
-      // Generate blog post manifest after processing all markdown files
-      markdownProcessor.generateBlogManifest();
+      // Log the build strategy
+      pipeline.logBuildStrategy();
+
+      // Process markdown files using the git-aware pipeline
+      await processMarkdownFiles(markdownProcessor, pipeline);
+
+      // Generate blog post manifest only if needed
+      if (pipeline.shouldGenerateBlogManifest()) {
+        markdownProcessor.generateBlogManifest();
+      } else {
+        BuildLogger.info(
+          "⚡ No markdown changes detected - skipping blog manifest generation"
+        );
+      }
     },
 
     /**
@@ -122,7 +178,8 @@ export function kbrBuilder(): Plugin {
     async generateBundle(_options, bundle) {
       await htmlBundleProcessor.processBundle(
         bundle,
-        this.emitFile.bind(this)
+        this.emitFile.bind(this),
+        builderOptions
       );
     },
   };

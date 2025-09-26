@@ -118,8 +118,9 @@ export class MarkdownProcessor {
       .filter(Boolean)
       .join("\n");
 
-    // Generate output file path (same location, .html extension)
-    const outputPath = filePath.replace(/\.md$/, ".html");
+    // Generate output file path in public directory to mirror production structure
+    const fileName = basename(filePath).replace(/\.md$/, ".html");
+    const outputPath = join("public", fileName);
 
     // Write the HTML content (without template - that will be applied later)
     writeFileSync(outputPath, htmlWithMetadata, "utf-8");

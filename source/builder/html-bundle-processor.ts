@@ -3,6 +3,8 @@ import { readFileSync } from "fs";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
+import { GitUtils } from "./git-utils.js";
+import type { KBRBuilderOptions } from "./index.js";
 
 /**
  * Handles HTML bundle generation during build
@@ -17,7 +19,11 @@ export class HtmlBundleProcessor {
   /**
    * Process HTML files in the Vite bundle
    */
-  async processBundle(bundle: any, emitFile: any): Promise<void> {
+  async processBundle(
+    bundle: any,
+    emitFile: any,
+    options: KBRBuilderOptions = {}
+  ): Promise<void> {
     try {
       BuildLogger.info("📄 Processing HTML files with includes...");
 
@@ -28,7 +34,11 @@ export class HtmlBundleProcessor {
       await this.processExistingHtmlFiles(bundle);
 
       // Then, manually process and add HTML files from pages/ and content/
-      await this.processAdditionalHtmlFiles(emitFile, assets);
+      await this.processAdditionalHtmlFiles(
+        emitFile,
+        assets,
+        options
+      );
 
       BuildLogger.success("🎉 KBR Builder completed successfully!");
     } catch (error) {
@@ -93,16 +103,59 @@ export class HtmlBundleProcessor {
   }
 
   /**
-   * Process and add HTML files from pages/ and content/ directories
+   * Process and add HTML files from pages/ and public/ directories
+   * Can be git-aware to only process changed files for better performance
    */
   private async processAdditionalHtmlFiles(
     emitFile: any,
-    assets: { css: string[]; js: string[] }
+    assets: { css: string[]; js: string[] },
+    options: KBRBuilderOptions = {}
   ): Promise<void> {
-    const additionalHtmlFiles = [
-      ...FileSystemHelper.findFiles("pages", [".html"]),
-      ...FileSystemHelper.findFiles("content", [".html"]),
-    ];
+    let additionalHtmlFiles: string[] = [];
+
+    // Check if git-aware mode is enabled and we're in a git repository
+    if (
+      options.gitAware &&
+      !options.forceAll &&
+      GitUtils.isGitRepository()
+    ) {
+      // Get changed HTML files (excludes /public directory as those are generated files)
+      const changedHtmlFiles = GitUtils.getChangedHtmlFiles();
+
+      if (changedHtmlFiles.length === 0) {
+        BuildLogger.info(
+          "⚡ No changed HTML files detected - skipping HTML processing"
+        );
+        return;
+      }
+
+      // Add only the changed source HTML files
+      additionalHtmlFiles = [...changedHtmlFiles];
+
+      BuildLogger.info(
+        `⚡ Git-aware mode: processing ${additionalHtmlFiles.length} changed HTML files`
+      );
+    } else {
+      // Process all HTML files (original behavior)
+      additionalHtmlFiles = [
+        ...FileSystemHelper.findFiles("pages", [".html"]),
+        ...FileSystemHelper.findFiles("public", [".html"]),
+      ];
+
+      if (options.gitAware && options.forceAll) {
+        BuildLogger.info(
+          "🔧 Git-aware mode with --force-all: processing all HTML files"
+        );
+      } else if (!GitUtils.isGitRepository()) {
+        BuildLogger.info(
+          "📝 Not a git repository: processing all HTML files"
+        );
+      } else {
+        BuildLogger.info(
+          "📝 Standard mode: processing all HTML files"
+        );
+      }
+    }
 
     for (const filePath of additionalHtmlFiles) {
       try {

@@ -167,12 +167,12 @@ async function handleHtmlRequest(
     );
   }
 
-  // Try content/ directory for converted HTML
-  const contentHtmlPath = path.join(rootDir, "content", fileName);
-  if (fs.existsSync(contentHtmlPath)) {
+  // Try public/ directory for converted HTML from markdown
+  const publicHtmlPath = path.join(process.cwd(), "public", fileName);
+  if (fs.existsSync(publicHtmlPath)) {
     return await processAndServeFile(
       templateProcessor,
-      contentHtmlPath,
+      publicHtmlPath,
       res,
       next
     );

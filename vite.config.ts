@@ -20,5 +20,10 @@ export default defineConfig({
   css: {
     devSourcemap: true,
   },
-  plugins: [kbrBuilder()],
+  plugins: [
+    kbrBuilder({
+      gitAware: process.env.GIT_AWARE === "true",
+      forceAll: process.env.FORCE_ALL === "true",
+    }),
+  ],
 });
