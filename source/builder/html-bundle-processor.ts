@@ -1,5 +1,5 @@
-import { basename } from "path";
-import { readFileSync } from "fs";
+import { basename, join } from "path";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
@@ -117,29 +117,39 @@ export class HtmlBundleProcessor {
     const pagesFiles = FileSystemHelper.findFiles("pages", [".html"]);
     additionalHtmlFiles.push(...pagesFiles);
 
-    // For public/ directory files, use git-aware logic if enabled
+    // For public/ directory files, always process blog posts + use git-aware logic for others
+    const allPublicFiles = this.findPublicHtmlFiles();
+
     if (
       options.gitAware &&
       !options.forceAll &&
       GitUtils.isGitRepository()
     ) {
+      // Always include blog posts (files with isBlogPost metadata)
+      const blogPosts = this.filterBlogPosts(allPublicFiles);
+
       // Get changed HTML files from public/ directory only
       const changedPublicFiles =
         GitUtils.getChangedHtmlFiles().filter((file) =>
           file.includes("/public/")
         );
 
-      additionalHtmlFiles.push(...changedPublicFiles);
+      // Combine blog posts with changed files (remove duplicates)
+      const publicFilesToProcess = [
+        ...blogPosts,
+        ...changedPublicFiles.filter(
+          (file) => !blogPosts.includes(file)
+        ),
+      ];
+
+      additionalHtmlFiles.push(...publicFilesToProcess);
 
       BuildLogger.info(
-        `⚡ Git-aware mode: processing ${pagesFiles.length} pages files + ${changedPublicFiles.length} changed public files`
+        `⚡ Git-aware mode: processing ${pagesFiles.length} pages files + ${blogPosts.length} blog posts + ${changedPublicFiles.length} changed public files`
       );
     } else {
-      // Process all HTML files from public/ directory too
-      const publicFiles = FileSystemHelper.findFiles("public", [
-        ".html",
-      ]);
-      additionalHtmlFiles.push(...publicFiles);
+      // Process all HTML files from public/ directory
+      additionalHtmlFiles.push(...allPublicFiles);
 
       if (options.gitAware && options.forceAll) {
         BuildLogger.info(
@@ -183,5 +193,53 @@ export class HtmlBundleProcessor {
         throw error;
       }
     }
+  }
+
+  /**
+   * Find HTML files in the root public/ directory
+   */
+  private findPublicHtmlFiles(): string[] {
+    const publicDir = "public";
+    const files: string[] = [];
+
+    if (!existsSync(publicDir)) {
+      return files;
+    }
+
+    const entries = readdirSync(publicDir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.isFile() && entry.name.endsWith(".html")) {
+        files.push(join(publicDir, entry.name));
+      }
+    }
+
+    return files;
+  }
+
+  /**
+   * Filter HTML files to identify blog posts (files with isBlogPost metadata)
+   */
+  private filterBlogPosts(htmlFiles: string[]): string[] {
+    const blogPosts: string[] = [];
+
+    for (const filePath of htmlFiles) {
+      try {
+        const content = readFileSync(filePath, "utf-8");
+        const { metadata } =
+          this.templateProcessor.extractMetadata(content);
+
+        if (metadata.isBlogPost) {
+          blogPosts.push(filePath);
+        }
+      } catch (error) {
+        // Skip files that can't be read
+        BuildLogger.error(
+          `Failed to check blog post status for ${filePath}: ${error}`
+        );
+      }
+    }
+
+    return blogPosts;
   }
 }
