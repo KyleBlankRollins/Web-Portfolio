@@ -286,12 +286,17 @@ export class KbrTableOfContents extends LitElement {
 
   private generateId(text: string, index: number): string {
     // Create a URL-friendly ID from the heading text
-    const baseId = text
+    let baseId = text
       .toLowerCase()
       .replace(/[^\w\s-]/g, "") // Remove non-word chars except spaces and hyphens
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/-+/g, "-") // Replace multiple hyphens with single
       .trim();
+
+    // Ensure ID starts with a letter (CSS requirement)
+    if (baseId && /^[0-9]/.test(baseId)) {
+      baseId = `heading-${baseId}`;
+    }
 
     return baseId || `heading-${index}`;
   }

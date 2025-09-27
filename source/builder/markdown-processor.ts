@@ -143,12 +143,19 @@ export class MarkdownProcessor {
    * Generate a URL-safe anchor ID from heading text
    */
   private generateAnchorId(text: string): string {
-    return text
+    let id = text
       .toLowerCase()
       .replace(/[^\w\s-]/g, "") // Remove special characters
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/--+/g, "-") // Replace multiple hyphens with single
       .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+
+    // Ensure ID starts with a letter (CSS requirement)
+    if (id && /^[0-9]/.test(id)) {
+      id = `heading-${id}`;
+    }
+
+    return id;
   }
 
   /**
@@ -336,7 +343,7 @@ export class MarkdownProcessor {
     if (metadata.formattedDate) {
       return `
         <div class="blog-post-metadata">
-          <div class="blog-post-date">
+          <div>
             <time datetime="${metadata.date}">${metadata.formattedDate}</time>
           </div>
         </div>

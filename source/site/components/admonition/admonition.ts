@@ -83,7 +83,10 @@ export class KbrAdmonition extends LitElement {
           ? html`
               <!-- Header layout -->
               <div class="admonition-header">
-                <kbr-icon name="${config.icon}"></kbr-icon>
+                <kbr-icon
+                  name="${config.icon}"
+                  size="1.5rem"
+                ></kbr-icon>
                 <strong>${this.admonitionTitle}</strong>
               </div>
               <div class="admonition-content">
@@ -93,7 +96,10 @@ export class KbrAdmonition extends LitElement {
           : html`
               <!-- Compact layout -->
               <div class="admonition-icon">
-                <kbr-icon name="${config.icon}"></kbr-icon>
+                <kbr-icon
+                  name="${config.icon}"
+                  size="1.5rem"
+                ></kbr-icon>
               </div>
               <div class="admonition-content">
                 <slot></slot>

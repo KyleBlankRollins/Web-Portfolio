@@ -107,17 +107,21 @@ export const admonitionStyles = css`
 
   /* Caution styling - red theme */
   .admonition-caution {
-    border-left-color: var(--color-danger);
-    background-color: var(--color-danger-subtle);
+    border-left-color: var(--color-error);
+    background-color: var(--color-error-subtle);
+  }
+
+  .admonition-caution .admonition-content {
+    color: var(--color-text);
   }
 
   .admonition-caution .admonition-header,
   .admonition-caution.compact .admonition-icon {
-    color: var(--color-danger);
+    color: var(--color-error);
   }
 
   .admonition-caution kbr-icon {
-    color: var(--color-danger);
+    color: var(--color-error);
   }
 
   /* Typography adjustments */

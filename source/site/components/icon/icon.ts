@@ -18,6 +18,8 @@ const AVAILABLE_ICONS = [
   "filter_circle",
   "hierarchy",
   "link",
+  "warning_hex",
+  "warning_triangle",
   "projector",
   "terminal",
 ];

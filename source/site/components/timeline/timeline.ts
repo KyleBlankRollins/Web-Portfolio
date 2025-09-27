@@ -112,12 +112,19 @@ export class KbrTimeline extends LitElement {
 
   private generateCompanyId(companyName: string): string {
     // Create a URL-friendly ID from the company name
-    return companyName
+    let id = companyName
       .toLowerCase()
       .replace(/[^\w\s-]/g, "") // Remove special characters
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/--+/g, "-") // Replace multiple hyphens with single
       .trim();
+
+    // Ensure ID starts with a letter (CSS requirement)
+    if (id && /^[0-9]/.test(id)) {
+      id = `company-${id}`;
+    }
+
+    return id || "company";
   }
 
   private updateTableOfContents(): void {
@@ -187,7 +194,7 @@ export class KbrTimeline extends LitElement {
           ${this.experienceData.map((company) => {
             const companyId = this.generateCompanyId(company.company);
             return html`
-              <div class="company-group">
+              <div>
                 <div class="company-header">
                   ${company.companyWebsite
                     ? html`<h2 class="company-name" id="${companyId}">

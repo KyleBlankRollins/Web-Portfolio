@@ -56,20 +56,16 @@ export const timelineStyles = css`
     min-width: 0; /* Prevent grid overflow */
   }
 
-  .company-group {
-    margin-bottom: 3rem;
-  }
-
   .company-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2rem;
   }
 
   .company-name {
     font-size: 1.5rem;
     font-weight: 600;
+    margin-top: 0;
     color: var(--color-primary);
     text-decoration: none;
     transition: opacity 0.2s ease;
@@ -87,7 +83,6 @@ export const timelineStyles = css`
 
   .company-positions {
     position: relative;
-    margin-bottom: 2rem;
     padding: 1rem 1.5rem 1rem 2rem;
   }
 
@@ -147,10 +142,6 @@ export const timelineStyles = css`
 
     .company-name {
       font-size: 1.25rem;
-    }
-
-    .company-group {
-      margin-bottom: 2rem;
     }
   }
 `;
