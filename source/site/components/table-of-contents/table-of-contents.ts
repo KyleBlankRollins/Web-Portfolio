@@ -204,12 +204,10 @@ export class KbrTableOfContents extends LitElement {
 
   // Public method to update TOC with heading data directly
   public updateWithHeadings(headings: TocItem[]): void {
-    console.log("TOC: Updating with headings data:", headings);
     this.tocItems = headings.filter(
       (item) =>
         item.level >= this.minLevel && item.level <= this.maxLevel
     );
-    console.log("TOC: Filtered to TOC items:", this.tocItems);
     this.setupIntersectionObserver();
     this.requestUpdate(); // Trigger re-render
 

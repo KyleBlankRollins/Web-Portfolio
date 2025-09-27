@@ -51,7 +51,7 @@ function createProcessingMiddleware(
     const url = req.url;
     if (!url) return next();
 
-    // Handle blog-manifest.json (strip query parameters)
+    // Handle data API requests (strip query parameters)
     const cleanUrl = url.split("?")[0].split("#")[0];
     if (cleanUrl === "/data/blog-manifest.json") {
       return handleBlogManifestRequest(
@@ -60,6 +60,10 @@ function createProcessingMiddleware(
         next,
         markdownProcessor
       );
+    }
+
+    if (cleanUrl === "/data/theme-manifest.json") {
+      return handleThemeManifestRequest(req, res, next);
     }
 
     // Handle root index.html
@@ -147,6 +151,37 @@ function handleBlogManifestRequest(
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
     res.end('{"error": "Failed to generate blog manifest"}');
+  }
+}
+
+/**
+ * Handle requests for theme-manifest.json
+ */
+function handleThemeManifestRequest(_req: any, res: any, _next: any) {
+  try {
+    // Import and process themes
+    const { ThemeProcessor } = require("./theme-processor.js");
+    const themesDir = path.join(
+      process.cwd(),
+      "source",
+      "site",
+      "styles",
+      "themes"
+    );
+    const themeProcessor = new ThemeProcessor(themesDir);
+
+    // Process themes and generate manifest
+    themeProcessor.processThemes();
+    const manifestJson = themeProcessor.generateThemeManifestJson();
+
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(manifestJson);
+  } catch (error) {
+    BuildLogger.error(`Error serving theme-manifest.json: ${error}`);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end('{"error": "Failed to generate theme manifest"}');
   }
 }
 

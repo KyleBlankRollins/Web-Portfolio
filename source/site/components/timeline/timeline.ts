@@ -75,17 +75,11 @@ export class KbrTimeline extends LitElement {
 
   updated(changedProperties: Map<string | number | symbol, unknown>) {
     super.updated(changedProperties);
-    console.log(
-      "Timeline: Updated called with changes:",
-      Array.from(changedProperties.keys())
-    );
-
     // Update TOC when data has loaded
     if (
       changedProperties.has("experienceData") &&
       this.experienceData.length > 0
     ) {
-      console.log("Timeline: Experience data loaded, updating TOC");
       // Use setTimeout to ensure DOM is updated
       setTimeout(() => this.updateTableOfContents(), 0);
     }
@@ -127,8 +121,6 @@ export class KbrTimeline extends LitElement {
   }
 
   private updateTableOfContents(): void {
-    console.log("Timeline: Updating table of contents...");
-
     // Create heading data from our content
     const headingsData = [
       {
@@ -149,18 +141,14 @@ export class KbrTimeline extends LitElement {
       })),
     ].filter((item) => item.element);
 
-    console.log("Timeline: Generated headings data:", headingsData);
-
     // Find the TOC component in our shadow DOM
     const tocComponent = this.shadowRoot?.querySelector(
       "kbr-table-of-contents"
     ) as any;
-    console.log("Timeline: Found TOC component:", tocComponent);
 
     if (tocComponent) {
       // Pass the headings data directly to the TOC
       tocComponent.updateWithHeadings(headingsData);
-      console.log("Timeline: Updated TOC with headings");
     }
   }
 

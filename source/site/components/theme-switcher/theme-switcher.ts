@@ -1,12 +1,16 @@
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { themeSwitcherStyles } from "./theme-switcher-styles.js";
+import type { ThemeConfig } from "../../theme-config.js";
 
 /**
  * Theme Switcher Component
  *
  * Provides UI for switching between themes and color schemes (light/dark mode).
  * Persists user preferences in localStorage and applies them to the document.
+ *
+ * Themes should be configured programmatically via the themes property or
+ * through the theme-config module.
  *
  * @example
  * ```html
@@ -17,16 +21,6 @@ import { themeSwitcherStyles } from "./theme-switcher-styles.js";
  * - theme-changed: Fired when theme or color scheme changes
  * - theme-loaded: Fired when saved theme is loaded from localStorage
  */
-
-interface ThemeConfig {
-  name: string;
-  id: string;
-  colors: {
-    primary: string;
-    accent: string;
-    secondary: string;
-  };
-}
 
 @customElement("kbr-theme-switcher")
 export class KbrThemeSwitcher extends LitElement {
@@ -51,12 +45,6 @@ export class KbrThemeSwitcher extends LitElement {
   declare currentColorScheme: "light" | "dark";
 
   /**
-   * Whether to show theme preview swatches
-   */
-  @property({ type: Boolean, attribute: "show-preview" })
-  declare showPreview: boolean;
-
-  /**
    * Whether the theme switcher is collapsed
    */
   @state()
@@ -70,36 +58,17 @@ export class KbrThemeSwitcher extends LitElement {
     colorScheme: "kbr-color-scheme",
   };
 
+  constructor() {
+    super();
+
+    // Initialize other properties with minimal defaults
+    this.currentTheme = "";
+    this.currentColorScheme = "light";
+    this.isCollapsed = true;
+  }
+
   connectedCallback() {
     super.connectedCallback();
-
-    // Initialize default themes if none provided
-    if (!this.themes) {
-      this.themes = [
-        {
-          name: "Basic Blue",
-          id: "base",
-          colors: {
-            primary: "#2d2d2d",
-            accent: "#2563eb",
-            secondary: "#4a4a4a",
-          },
-        },
-        {
-          name: "Canney Valley",
-          id: "canney-valley",
-          colors: {
-            primary: "#66ab68",
-            accent: "#96687f",
-            secondary: "#263238",
-          },
-        },
-      ];
-    }
-
-    // Initialize properties
-    if (this.showPreview === undefined) this.showPreview = true;
-    if (this.isCollapsed === undefined) this.isCollapsed = true; // Collapsed by default
 
     // Load saved preferences
     this.loadSavedTheme();
@@ -226,26 +195,12 @@ export class KbrThemeSwitcher extends LitElement {
    * Handle color scheme toggle
    */
   private handleColorSchemeToggle(event: Event) {
-    console.log("Toggle clicked!", event);
-    console.log("Current scheme:", this.currentColorScheme);
-
     this.currentColorScheme =
       this.currentColorScheme === "light" ? "dark" : "light";
-
-    console.log("New scheme:", this.currentColorScheme);
 
     this.applyTheme();
     this.saveThemePreferences();
     this.dispatchChangeEvent();
-  }
-
-  /**
-   * Get current theme configuration
-   */
-  private getCurrentThemeConfig(): ThemeConfig | undefined {
-    return this.themes.find(
-      (theme) => theme.id === this.currentTheme
-    );
   }
 
   /**
@@ -274,7 +229,16 @@ export class KbrThemeSwitcher extends LitElement {
   }
 
   render() {
-    const currentThemeConfig = this.getCurrentThemeConfig();
+    // Don't render if themes haven't been configured yet
+    if (
+      !this.themes ||
+      !Array.isArray(this.themes) ||
+      this.themes.length === 0
+    ) {
+      return html`<div class="theme-switcher loading">
+        Loading themes...
+      </div>`;
+    }
 
     return html`
       <div
@@ -327,34 +291,7 @@ export class KbrThemeSwitcher extends LitElement {
                     )}
                   </select>
                 </div>
-                <!-- Theme Preview -->
-                ${this.showPreview && currentThemeConfig
-                  ? html`
-                      <div
-                        class="theme-preview"
-                        title="Theme colors preview"
-                      >
-                        <div
-                          class="color-swatch swatch-primary"
-                          style="background-color: ${currentThemeConfig
-                            .colors.primary}"
-                          title="Primary color"
-                        ></div>
-                        <div
-                          class="color-swatch swatch-accent"
-                          style="background-color: ${currentThemeConfig
-                            .colors.accent}"
-                          title="Accent color"
-                        ></div>
-                        <div
-                          class="color-swatch swatch-secondary"
-                          style="background-color: ${currentThemeConfig
-                            .colors.secondary}"
-                          title="Secondary color"
-                        ></div>
-                      </div>
-                    `
-                  : ""}
+                <!-- Theme Preview - Removed color swatches, themes are CSS-only -->
 
                 <!-- Color Scheme Toggle -->
                 <div class="color-scheme-toggle">

@@ -1,8 +1,9 @@
-import { basename } from "path";
+import { basename, join } from "path";
 import { readFileSync } from "fs";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
+import { ThemeProcessor } from "./theme-processor.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
 
 /**
@@ -198,6 +199,36 @@ export class HtmlBundleProcessor {
     const manifest = JSON.parse(manifestJson);
     BuildLogger.info(
       `✓ Emitted blog manifest: data/blog-manifest.json (${manifest.totalPosts} posts, ${manifest.availableTags.length} tags)`
+    );
+
+    // Process and emit theme manifest
+    await this.processAndEmitThemeManifest(emitFile);
+  }
+
+  /**
+   * Process themes and emit theme manifest
+   */
+  private async processAndEmitThemeManifest(
+    emitFile: any
+  ): Promise<void> {
+    const themesDir = join("source", "site", "styles", "themes");
+    const themeProcessor = new ThemeProcessor(themesDir);
+
+    // Process all theme files
+    themeProcessor.processThemes();
+
+    // Generate and emit theme manifest
+    const themeManifestJson =
+      themeProcessor.generateThemeManifestJson();
+    emitFile({
+      type: "asset",
+      fileName: "data/theme-manifest.json",
+      source: themeManifestJson,
+    });
+
+    const themeManifest = JSON.parse(themeManifestJson);
+    BuildLogger.info(
+      `✓ Emitted theme manifest: data/theme-manifest.json (${themeManifest.totalThemes} themes)`
     );
   }
 }

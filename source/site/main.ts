@@ -13,6 +13,10 @@ import "./components/timeline-entry/timeline-entry";
 import "./components/icon/icon";
 import "./components/image-lightbox/image-lightbox";
 import "./components/theme-switcher/theme-switcher";
+import { configureThemeSwitcher } from "./theme-config";
+
+// Configure theme switcher with available themes
+configureThemeSwitcher();
 
 // Global tag navigation for individual blog post pages (main DOM)
 function setupGlobalTagNavigation() {
