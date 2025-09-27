@@ -7,14 +7,10 @@
 
 [build]
 
-publish = "/"
+publish = "/dist"
 
 # Specific branch context: Deploys from this branch
 # will take these settings and override their current ones.
 [context.DoK-Compare]
 command = "vue-cli-service-build"
-publish = "dist"
-
-[context.redesign-2025]
-command = "npm run build"
 publish = "dist"
