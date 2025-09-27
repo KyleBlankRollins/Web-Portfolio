@@ -152,6 +152,48 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Remove JavaScript-style comments from markdown content before processing.
+   * Only removes comments that appear outside of code blocks - preserves comments within fenced code blocks.
+   *
+   * Handles:
+   * - Line comments: // comment (at start of line)
+   * - Block comments: CSS/JS block comments (standalone on their own lines)
+   */
+  private stripComments(content: string): string {
+    // Split content by code blocks to preserve comments inside them
+    const codeBlockPattern = /```[\s\S]*?```/g;
+    const codeBlocks: string[] = [];
+    let processed = content;
+
+    // Extract code blocks and replace with placeholders
+    processed = processed.replace(codeBlockPattern, (match) => {
+      const placeholder = `__CODE_BLOCK_${codeBlocks.length}__`;
+      codeBlocks.push(match);
+      return placeholder;
+    });
+
+    // Now strip comments from non-code-block content
+    // Remove standalone line comments (// at start of line, optionally with whitespace)
+    processed = processed.replace(/^\s*\/\/.*$/gm, "");
+
+    // Remove CSS/JS style block comments (/* ... */) that appear standalone on their own lines
+    processed = processed.replace(/^\s*\/\*[\s\S]*?\*\/\s*$/gm, "");
+
+    // Restore code blocks
+    codeBlocks.forEach((codeBlock, index) => {
+      processed = processed.replace(
+        `__CODE_BLOCK_${index}__`,
+        codeBlock
+      );
+    });
+
+    // Clean up any resulting multiple consecutive newlines
+    processed = processed.replace(/\n\s*\n\s*\n/g, "\n\n");
+
+    return processed;
+  }
+
+  /**
    * Preprocess admonitions to handle markdown content within HTML tags.
    * Extracts content inside kbr-admonition tags, processes it with marked.parseInline(),
    * and preserves the component's HTML attributes unchanged.
@@ -190,8 +232,13 @@ export class MarkdownProcessor {
         markdownContent
       );
 
+    // Strip comments from the markdown content
+    const commentFreeContent = this.stripComments(content);
+
     // Preprocess admonitions to handle markdown within HTML tags
-    const preprocessedContent = this.preprocessAdmonitions(content);
+    const preprocessedContent = this.preprocessAdmonitions(
+      commentFreeContent
+    );
 
     // Convert Markdown to HTML
     const htmlContent = marked(preprocessedContent);

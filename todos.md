@@ -4,11 +4,6 @@ This is a list of things that I need or want to do to improve `kyleblankrollins.
 
 ## Blog
 
-### Posts
-
-[x] Add code example component (Phase 1 & 2 complete: Visual polish + Syntax highlighting)
-[ ] Don't transform markdown code comments into HTML
-
 ### Layout
 
 Move tags to be above TOC
@@ -35,9 +30,6 @@ Need to make sure that the site is accessible for everyone.
 
 ### Create code example component
 
-- Make code examples wrap
-- Make code examples prettier
-- Add code example syntax highligting
 - Add input and output option
 
 ### Admonitions
