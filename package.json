@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/node": "^20.19.17",
+    "@types/prismjs": "^1.26.5",
     "glob": "^11.0.3",
     "tsx": "^4.0.0",
     "typescript": "~5.8.3",
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "lit": "^3.3.1",
-    "marked": "^9.0.0"
+    "marked": "^9.0.0",
+    "prismjs": "^1.30.0"
   }
 }

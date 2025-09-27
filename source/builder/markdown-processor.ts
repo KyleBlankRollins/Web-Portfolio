@@ -1,9 +1,26 @@
 import { readFileSync } from "fs";
 import { basename } from "path";
 import { marked } from "marked";
+import Prism from "prismjs";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import type { TemplateVariables } from "./template-processor.js";
+
+// Import common languages for Prism
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-tsx";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-scss";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-markdown";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-shell-session";
+import "prismjs/components/prism-sql";
+import "prismjs/components/prism-python";
+import "prismjs/components/prism-yaml";
+import "prismjs/components/prism-diff";
 
 export interface BlogPostManifestEntry {
   title: string;
@@ -39,14 +56,14 @@ export class MarkdownProcessor {
       breaks: false,
     });
 
-    // Configure custom renderer for automatic heading IDs
-    this.setupHeadingRenderer();
+    // Configure custom renderer for automatic heading IDs and syntax highlighting
+    this.setupCustomRenderer();
   }
 
   /**
-   * Setup custom renderer to automatically generate heading IDs
+   * Setup custom renderer for headings and code blocks with syntax highlighting
    */
-  private setupHeadingRenderer(): void {
+  private setupCustomRenderer(): void {
     const renderer = new marked.Renderer();
 
     // Override heading renderer to add IDs
@@ -55,9 +72,71 @@ export class MarkdownProcessor {
       return `<h${level} id="${headingId}">${text}</h${level}>`;
     };
 
+    // Override code renderer to add syntax highlighting
+    renderer.code = (code: string, language: string | undefined) => {
+      // Handle language aliases and fallbacks
+      const lang = this.normalizeLanguage(language);
+
+      if (lang && Prism.languages[lang]) {
+        try {
+          const highlighted = Prism.highlight(
+            code,
+            Prism.languages[lang],
+            lang
+          );
+          return `<pre class="language-${lang}"><code class="language-${lang}">${highlighted}</code></pre>`;
+        } catch (error) {
+          BuildLogger.warn(
+            `Failed to highlight code block with language '${lang}': ${error}`
+          );
+          // Fall back to plain code block
+        }
+      }
+
+      // Default behavior for unsupported languages or errors
+      const escapedCode = this.escapeHtml(code);
+      const langClass = lang ? ` class="language-${lang}"` : "";
+      return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
+    };
+
     marked.setOptions({
       renderer: renderer,
     });
+  }
+
+  /**
+   * Normalize language aliases to Prism language identifiers
+   */
+  private normalizeLanguage(
+    language: string | undefined
+  ): string | undefined {
+    if (!language) return undefined;
+
+    const lang = language.toLowerCase();
+    const aliases: Record<string, string> = {
+      js: "javascript",
+      ts: "typescript",
+      sh: "bash",
+      shell: "bash",
+      yml: "yaml",
+      json5: "json",
+      md: "markdown",
+      py: "python",
+    };
+
+    return aliases[lang] || lang;
+  }
+
+  /**
+   * Escape HTML characters in code
+   */
+  private escapeHtml(code: string): string {
+    return code
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   /**

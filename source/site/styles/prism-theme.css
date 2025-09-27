@@ -1,0 +1,217 @@
+/**
+ * Prism.js Syntax Highlighting Styles
+ * 
+ * Custom theme that integrates with the KBR Portfolio design system.
+ * Based on VS Code's default theme with theme-aware variations.
+ */
+
+/* Base code styling - integrates with existing blog-post.css */
+.blog-post-content pre[class*="language-"] {
+  /* Inherit enhanced styling from blog-post.css */
+  position: relative;
+}
+
+.blog-post-content code[class*="language-"] {
+  color: var(--color-text);
+  font-family: var(--font-family-mono);
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Prism token color definitions - using theme system */
+:root {
+  /* Light mode Prism colors (using theme tokens) */
+  --prism-comment: var(--color-text-tertiary, #6a737d);
+  --prism-punctuation: var(--color-text-secondary, #586069);
+  --prism-property: var(--color-danger, #d73a49);
+  --prism-string: var(--color-success, #28a745);
+  --prism-operator: var(--color-warning, #e36209);
+  --prism-keyword: var(--color-primary, #0366d6);
+  --prism-function: var(--color-accent, #6f42c1);
+  --prism-variable: var(--color-warning, #e36209);
+}
+
+/* Dark mode Prism color overrides */
+[data-color-scheme="dark"] {
+  --prism-comment: #8b949e;
+  --prism-punctuation: #c9d1d9;
+  --prism-property: #ff7b72;
+  --prism-string: #7ee787;
+  --prism-operator: #ffa657;
+  --prism-keyword: #79c0ff;
+  --prism-function: #d2a8ff;
+  --prism-variable: #ffa657;
+}
+
+/* Token colors - using CSS custom properties */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--prism-comment);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--prism-punctuation);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--prism-property);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--prism-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--prism-operator);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--prism-keyword);
+  font-weight: 500;
+}
+
+.token.function,
+.token.class-name {
+  color: var(--prism-function);
+  font-weight: 500;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--prism-variable);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* Language-specific enhancements */
+.token.namespace {
+  opacity: 0.7;
+}
+
+/* Language-specific color overrides using CSS custom properties */
+.language-json .token.property {
+  color: var(--prism-keyword);
+}
+
+.language-json .token.string {
+  color: var(--prism-string);
+}
+
+.language-css .token.selector {
+  color: var(--prism-function);
+}
+
+.language-css .token.property {
+  color: var(--prism-keyword);
+}
+
+.language-javascript .token.template-string,
+.language-typescript .token.template-string {
+  color: var(--prism-string);
+}
+
+.language-javascript .token.template-punctuation,
+.language-typescript .token.template-punctuation {
+  color: var(--prism-property);
+}
+
+.language-bash .token.function {
+  color: var(--prism-keyword);
+}
+
+.language-bash .token.parameter {
+  color: var(--color-text);
+}
+
+/* Language badges for different languages */
+.blog-post-content pre.language-javascript::before { content: "JS"; }
+.blog-post-content pre.language-typescript::before { content: "TS"; }
+.blog-post-content pre.language-css::before { content: "CSS"; }
+.blog-post-content pre.language-scss::before { content: "SCSS"; }
+.blog-post-content pre.language-json::before { content: "JSON"; }
+.blog-post-content pre.language-bash::before { content: "BASH"; }
+.blog-post-content pre.language-shell::before { content: "SHELL"; }
+.blog-post-content pre.language-python::before { content: "PYTHON"; }
+.blog-post-content pre.language-yaml::before { content: "YAML"; }
+.blog-post-content pre.language-markdown::before { content: "MD"; }
+.blog-post-content pre.language-sql::before { content: "SQL"; }
+.blog-post-content pre.language-jsx::before { content: "JSX"; }
+.blog-post-content pre.language-tsx::before { content: "TSX"; }
+.blog-post-content pre.language-diff::before { content: "DIFF"; }
+
+/* Language badge styling */
+.blog-post-content pre[class*="language-"]::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-background-tertiary, rgba(0, 0, 0, 0.1));
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0 8px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  font-family: var(--font-family-heading);
+}
+
+.blog-post-content pre[class*="language-"]:hover::before {
+  opacity: 0.9;
+}
+
+/* Hide language badge for generic language classes */
+.blog-post-content pre.language-none::before,
+.blog-post-content pre.language-text::before,
+.blog-post-content pre.language-plain::before {
+  display: none;
+}
+
+/* Dark mode adjustments for language badges */
+[data-color-scheme="dark"] .blog-post-content pre[class*="language-"]::before {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-color-scheme="dark"] .blog-post-content pre[class*="language-"]:hover::before {
+  color: rgba(255, 255, 255, 0.95);
+}

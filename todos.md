@@ -6,9 +6,7 @@ This is a list of things that I need or want to do to improve `kyleblankrollins.
 
 ### Posts
 
-[ ] Add tl;dr component
-[ ] Add post primary image component
-[ ] Add code example component
+[x] Add code example component (Phase 1 & 2 complete: Visual polish + Syntax highlighting)
 [ ] Don't transform markdown code comments into HTML
 
 ### Layout
@@ -25,9 +23,13 @@ Using local storage, implement a UI that allows people to select arbitray blog p
 
 Create a logger utility class that can be used for scripts. Should handle all console output, including colors. BuildLogger should be incorporated into this class.
 
-### CSS bundling
+### Performance optimization
 
 If possible, the builder or Vite should bundle all of the CSS files for the site to make everything as performant and data saving as possible. Need to look at modern approaches to this, as I'm not sure what the best practice is here now.
+
+### Accessibility optimization
+
+Need to make sure that the site is accessible for everyone.
 
 ## Components
 
@@ -38,9 +40,17 @@ If possible, the builder or Vite should bundle all of the CSS files for the site
 - Add code example syntax highligting
 - Add input and output option
 
-### Theme switcher
+### Admonitions
 
-In the theme switcher's `connectedCallback`, we seem to be bypassing the actual themes with fallbacks. Need to figure out why the themes aren't working and the fallbacks are executed.
+Fix the styles. Make icons bigger, use the right colors for the different types, tweak visual appearance. Shouldn't take up full width if it doesn't need to.
+
+### Procedure
+
+Add a procedure component that handles rendering ordered lists in blog posts. Could also look into adding some form of progressive disclosure through state.
+
+### Procedure code context builder
+
+As readers scroll a procedure, add step code examples to a larger code box to the side. By the end of the procedure, should have a larger, more contextful code example.
 
 ## Credits page
 

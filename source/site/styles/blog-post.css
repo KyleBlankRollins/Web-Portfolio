@@ -47,29 +47,134 @@
   color: var(--color-text-secondary);
 }
 
+/* Inline code styling */
 .blog-post-content code {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  padding: 0.2em 0.4em;
+  padding: 0.2em 0.5em;
   font-family: var(--font-family-mono);
-  font-size: 0.9em;
+  font-size: 0.875em;
   color: var(--color-primary);
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
 }
 
+.blog-post-content code:hover {
+  background: var(--color-background-tertiary, var(--color-background-secondary));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Code block container styling */
 .blog-post-content pre {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: var(--space-lg);
+  border-radius: 8px;
+  padding: var(--space-lg) var(--space-xl);
+  margin: var(--space-lg) 0;
   overflow-x: auto;
+  position: relative;
+  
+  /* Enhanced shadow for elevation */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  
+  /* Improved typography */
+  line-height: 1.6;
+  font-size: 0.9rem;
+  
+  /* Smooth transitions */
+  transition: all 0.3s ease;
 }
 
+.blog-post-content pre:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Code inside pre blocks */
 .blog-post-content pre code {
   background: none;
   border: none;
   padding: 0;
-  font-size: 0.9rem;
+  font-size: inherit;
+  color: var(--color-text);
+  box-shadow: none;
+  font-weight: 400;
+  transition: none;
+}
+
+.blog-post-content pre code:hover {
+  background: none;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Scrollbar styling for code blocks */
+.blog-post-content pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.blog-post-content pre::-webkit-scrollbar-track {
+  background: var(--color-background-tertiary, rgba(0, 0, 0, 0.05));
+  border-radius: 4px;
+}
+
+.blog-post-content pre::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.blog-post-content pre::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* Enhanced theme-aware styling for better contrast */
+@media (prefers-color-scheme: dark) {
+  .blog-post-content pre {
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .blog-post-content pre:hover {
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+  
+  .blog-post-content code {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .blog-post-content code:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Focus states for accessibility */
+.blog-post-content pre:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Better mobile experience */
+@media (max-width: 768px) {
+  .blog-post-content pre {
+    padding: var(--space-md) var(--space-lg);
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  
+  .blog-post-content pre:hover {
+    transform: none; /* Reduce motion on mobile */
+  }
 }
 
 /* Blog post metadata - visual styling only */
