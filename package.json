@@ -1,0 +1,34 @@
+{
+  "name": "kyleblankrollins-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal portfolio website for Kyle Blank Rollins",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:git-aware": "GIT_AWARE=true vite",
+    "build": "tsc && vite build",
+    "build:analyze": "tsc && ANALYZE=true vite build",
+    "build:git-aware": "tsc && GIT_AWARE=true vite build",
+    "preview": "vite preview",
+    "lint:prose": "tsx scripts/lint-prose.ts --changed-only",
+    "lint:prose:all": "tsx scripts/lint-prose.ts",
+    "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
+    "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.19.17",
+    "@types/prismjs": "^1.26.5",
+    "glob": "^11.0.3",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "tsx": "^4.0.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.6"
+  },
+  "dependencies": {
+    "lit": "^3.3.1",
+    "marked": "^9.0.0",
+    "prismjs": "^1.30.0"
+  }
+}

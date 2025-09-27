@@ -1,0 +1,331 @@
+/**
+ * Theme System Documentation
+ * 
+ * This file defines the complete set of CSS custom properties that all themes must implement.
+ * Each theme should provide values for these properties in both light and dark mode variants.
+ * 
+ * Usage:
+ * - Import this file in your main CSS
+ * - Create theme files that override these properties
+ * - Use data-theme and data-color-scheme attributes to switch themes
+ * 
+ * Structure:
+ * - Base properties (inherited by all themes)
+ * - Color system (semantic color tokens)
+ * - Typography scale
+ * - Spacing system
+ * - Layout dimensions
+ * - Component tokens
+ * - Animation values
+ * - Accessibility features
+ */
+
+:root {
+  /* ==========================================================================
+     THEME METADATA
+     ========================================================================== */
+  
+  --theme-name: "Default";
+  --theme-version: "1.0.0";
+  --theme-author: "Kyle Blank Rollins";
+  
+  /* ==========================================================================
+     COLOR SYSTEM - SEMANTIC TOKENS
+     All colors must meet WCAG AA contrast requirements (4.5:1 for normal text)
+     ========================================================================== */
+  
+  /* Primary Colors - Main brand colors */
+  --color-primary: #2d2d2d;           /* Primary brand color */
+  --color-primary-hover: #1a1a1a;     /* Primary hover state */
+  --color-primary-active: #000000;    /* Primary active/pressed state */
+  --color-primary-subtle: #f5f5f5;    /* Subtle primary background */
+  
+  /* Secondary Colors - Supporting brand colors */
+  --color-secondary: #4a4a4a;         /* Secondary brand color */
+  --color-secondary-hover: #616161;   /* Secondary hover state */
+  --color-secondary-active: #757575;  /* Secondary active state */
+  --color-secondary-subtle: #f8f8f8;  /* Subtle secondary background */
+  
+  /* Accent Colors - Highlight and emphasis */
+  --color-accent: #0066cc;            /* Accent color for links, CTAs */
+  --color-accent-hover: #0052a3;      /* Accent hover state */
+  --color-accent-active: #004080;     /* Accent active state */
+  --color-accent-subtle: #e6f2ff;     /* Subtle accent background */
+  
+  /* Semantic Colors - Status and feedback */
+  --color-success: #22c55e;           /* Success states */
+  --color-success-hover: #16a34a;     /* Success hover */
+  --color-success-subtle: #dcfce7;    /* Success background */
+  
+  --color-warning: #f59e0b;           /* Warning states */
+  --color-warning-hover: #d97706;     /* Warning hover */
+  --color-warning-subtle: #fef3c7;    /* Warning background */
+  
+  --color-error: #ef4444;             /* Error states */
+  --color-error-hover: #dc2626;       /* Error hover */
+  --color-error-subtle: #fecaca;      /* Error background */
+  
+  --color-info: #3b82f6;              /* Info states */
+  --color-info-hover: #2563eb;        /* Info hover */
+  --color-info-subtle: #dbeafe;       /* Info background */
+  
+  /* Surface Colors - Backgrounds and containers */
+  --color-background: #ffffff;         /* Main page background */
+  --color-background-secondary: #f8f9fa; /* Secondary backgrounds */
+  --color-background-tertiary: #e9ecef;  /* Tertiary backgrounds */
+  --color-surface: #ffffff;           /* Card/container surfaces */
+  --color-surface-hover: #f8f9fa;     /* Surface hover states */
+  --color-surface-active: #e9ecef;    /* Surface active states */
+  
+  /* Text Colors - Typography */
+  --color-text: #212529;              /* Primary text color */
+  --color-text-secondary: #6c757d;    /* Secondary text */
+  --color-text-tertiary: #adb5bd;     /* Tertiary text (captions, etc.) */
+  --color-text-inverse: #ffffff;      /* Text on dark backgrounds */
+  --color-text-disabled: #ced4da;     /* Disabled text */
+  
+  /* Border Colors - Dividers and outlines */
+  --color-border: #dee2e6;            /* Default borders */
+  --color-border-secondary: #e9ecef;  /* Subtle borders */
+  --color-border-strong: #adb5bd;     /* Emphasis borders */
+  --color-border-interactive: #0066cc; /* Interactive element borders */
+  
+  /* Shadow Colors - Depth and elevation */
+  --color-shadow-light: rgba(0, 0, 0, 0.05);   /* Light shadow */
+  --color-shadow: rgba(0, 0, 0, 0.1);          /* Default shadow */
+  --color-shadow-strong: rgba(0, 0, 0, 0.15);  /* Strong shadow */
+  --color-shadow-dark: rgba(0, 0, 0, 0.25);    /* Dark shadow */
+  
+  /* ==========================================================================
+     TYPOGRAPHY SYSTEM
+     ========================================================================== */
+  
+  /* Font Families */
+  --font-family-primary: 'valkyrie_b', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-heading: 'valkyrie_b_caps', 'IBM Plex Sans', serif;
+  --font-family-mono: 'IBM Plex Mono', 'Cascadia Code', Monaco, monospace;
+  
+  /* Font Sizes - Fluid typography scale */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-md: 1.125rem;    /* 18px */
+  --font-size-lg: 1.25rem;     /* 20px */
+  --font-size-xl: 1.5rem;      /* 24px */
+  --font-size-2xl: 2rem;       /* 32px */
+  --font-size-3xl: 2.5rem;     /* 40px */
+  --font-size-4xl: 3rem;       /* 48px */
+  --font-size-5xl: 3.5rem;     /* 56px */
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* ==========================================================================
+     SPACING SYSTEM - Consistent spacing scale
+     ========================================================================== */
+  
+  --space-0: 0;
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+  --space-32: 8rem;      /* 128px */
+  
+  /* Semantic Spacing Aliases */
+  --space-xs: var(--space-2);
+  --space-sm: var(--space-4);
+  --space-md: var(--space-6);
+  --space-lg: var(--space-8);
+  --space-xl: var(--space-12);
+  --space-2xl: var(--space-16);
+  
+  /* ==========================================================================
+     LAYOUT SYSTEM
+     ========================================================================== */
+  
+  --content-max-width: 1200px;
+  --content-narrow: 800px;
+  --content-wide: 1600px;
+  --sidebar-width: 280px;
+  --header-height: 80px;
+  --footer-height: 120px;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* ==========================================================================
+     COMPONENT TOKENS - Specific component styling
+     ========================================================================== */
+  
+  /* Buttons */
+  --button-padding-x: var(--space-6);
+  --button-padding-y: var(--space-3);
+  --button-border-radius: var(--radius);
+  --button-font-weight: var(--font-weight-medium);
+  
+  /* Cards */
+  --card-padding: var(--space-6);
+  --card-border-radius: var(--radius-lg);
+  --card-shadow: var(--color-shadow);
+  
+  /* Forms */
+  --input-padding-x: var(--space-4);
+  --input-padding-y: var(--space-3);
+  --input-border-radius: var(--radius);
+  --input-border-width: 1px;
+  
+  /* Navigation */
+  --nav-link-padding-x: var(--space-4);
+  --nav-link-padding-y: var(--space-2);
+  
+  /* ==========================================================================
+     ANIMATION SYSTEM
+     ========================================================================== */
+  
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+  
+  --easing-ease: ease;
+  --easing-ease-in: ease-in;
+  --easing-ease-out: ease-out;
+  --easing-ease-in-out: ease-in-out;
+  
+  /* Transition Shortcuts */
+  --transition-fast: var(--duration-fast) var(--easing-ease);
+  --transition-normal: var(--duration-normal) var(--easing-ease);
+  --transition-slow: var(--duration-slow) var(--easing-ease);
+  
+  /* ==========================================================================
+     ACCESSIBILITY FEATURES
+     ========================================================================== */
+  
+  /* Focus States */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-accent);
+  --focus-ring-style: solid;
+  
+  /* Reduced Motion Support */
+  --animation-duration: var(--duration-normal);
+  --animation-easing: var(--easing-ease);
+}
+
+/* ==========================================================================
+   DARK MODE OVERRIDES
+   Applied when [data-color-scheme="dark"] is present
+   ========================================================================== */
+
+[data-color-scheme="dark"] {
+  /* Surface Colors - Inverted hierarchy */
+  --color-background: #0f172a;
+  --color-background-secondary: #1e293b;
+  --color-background-tertiary: #334155;
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  --color-surface-active: #475569;
+  
+  /* Text Colors - High contrast for dark backgrounds */
+  --color-text: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #0f172a;
+  --color-text-disabled: #64748b;
+  
+  /* Border Colors */
+  --color-border: #334155;
+  --color-border-secondary: #475569;
+  --color-border-strong: #64748b;
+  
+  /* Primary Colors - Adjusted for dark mode */
+  --color-primary: #e2e8f0;
+  --color-primary-hover: #f8fafc;
+  --color-primary-active: #ffffff;
+  --color-primary-subtle: #334155;
+  
+  /* Secondary Colors */
+  --color-secondary: #94a3b8;
+  --color-secondary-hover: #cbd5e1;
+  --color-secondary-active: #e2e8f0;
+  --color-secondary-subtle: #1e293b;
+  
+  /* Accent Colors - Brighter for dark backgrounds */
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-accent-active: #93c5fd;
+  --color-accent-subtle: #1e3a8a;
+  
+  /* Semantic Colors - Dark mode variants */
+  --color-success: #10b981;
+  --color-success-hover: #34d399;
+  --color-success-subtle: #064e3b;
+  
+  --color-warning: #f59e0b;
+  --color-warning-hover: #fbbf24;
+  --color-warning-subtle: #78350f;
+  
+  --color-error: #f87171;
+  --color-error-hover: #fca5a5;
+  --color-error-subtle: #7f1d1d;
+  
+  --color-info: #60a5fa;
+  --color-info-hover: #93c5fd;
+  --color-info-subtle: #1e3a8a;
+  
+  /* Shadow Colors - More subtle in dark mode */
+  --color-shadow-light: rgba(0, 0, 0, 0.3);
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-shadow-strong: rgba(0, 0, 0, 0.6);
+  --color-shadow-dark: rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   REDUCED MOTION SUPPORT
+   Respects user's motion preferences
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animation-duration: 0ms;
+    --transition-fast: none;
+    --transition-normal: none;
+    --transition-slow: none;
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST SUPPORT
+   Enhanced contrast for accessibility
+   ========================================================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: var(--color-text);
+    --color-border-secondary: var(--color-text-secondary);
+    --focus-ring-width: 3px;
+  }
+}

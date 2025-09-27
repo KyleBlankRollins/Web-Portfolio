@@ -1,0 +1,226 @@
+/**
+ * Typography System
+ * 
+ * Complete typography setup including:
+ * - Font-face definitions for IBM Plex Sans & Mono
+ * - Baseline grid typography scaling
+ * - Font rendering optimizations
+ */
+
+/* IBM Plex Sans Family */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* IBM Plex Mono Family */
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Valkyrie B */
+@font-face {
+font-family: valkyrie_b;
+font-style: normal;
+font-weight: normal;
+font-stretch: normal;
+font-display: auto;
+src: url('/fonts/valkyrie_b_regular.woff2') format('woff2');
+}
+
+@font-face {
+font-family: valkyrie_b;
+font-style: italic;
+font-weight: normal;
+font-stretch: normal;
+font-display: auto;
+src: url('/fonts/valkyrie_b_italic.woff2') format('woff2');
+}
+
+@font-face {
+font-family: valkyrie_b;
+font-style: normal;
+font-weight: bold;
+font-stretch: normal;
+font-display: auto;
+src: url('/fonts/valkyrie_b_bold.woff2') format('woff2');
+}
+
+/* Valkyrie B Caps*/
+
+@font-face {
+font-family: valkyrie_b_caps;
+font-style: normal;
+font-weight: normal;
+font-stretch: normal;
+font-display: auto;
+src: url('/fonts/valkyrie_b_caps_regular.woff2') format('woff2');
+}
+
+@font-face {
+font-family: valkyrie_b_caps;
+font-style: normal;
+font-weight: bold;
+font-stretch: normal;
+font-display: auto;
+src: url('/fonts/valkyrie_b_caps_bold.woff2') format('woff2');
+}
+
+/* Typography Scale & Baseline Grid */
+html, .root {
+  font-family: var(--font-family-primary);
+  font-size: 18px;
+  line-height: 23px;
+  /* Apply font optimizations to html element */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Article/content specific typography - not global body */
+.article {
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  line-height: 1.2777778rem;
+  margin: auto;
+}
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-family-heading);
+}
+h1, .h1
+ {
+  font-size: 3rem;
+  line-height: 3.63rem;
+  margin-top: 0;
+  margin-bottom: 1.81rem;
+}
+h2, .h2
+ {
+  font-size: 2rem;
+  line-height: 2.95rem; 
+  margin-top: 0.98rem;
+  margin-bottom: 0.98rem;
+}
+h3, .h3
+ {
+  font-size: 1.6111111rem;
+  line-height: 2.5555556rem;
+  margin-top: 1.2777778rem;
+  margin-bottom: 0rem;
+}
+h4, .h4
+ {
+  font-size: 1rem;
+  line-height: 1.2777778rem;
+  margin-top: 1.2777778rem;
+  margin-bottom: 0rem;
+}
+h5, .h5
+ {
+  font-size: 1rem;
+  line-height: 1.2777778rem;
+  margin-top: 1.2777778rem;
+  margin-bottom: 0rem;
+}
+p, ul, ol, pre, table, blockquote {
+  margin-top: 0rem;
+  margin-bottom: 1.2777778rem;
+}
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+}
+
+/* Let's make sure all's aligned */
+hr, .hr {
+  border: 1px solid;
+  margin: -1px 0;
+}
+b, i, strong, em, small, code {
+  line-height: 0;
+}
+sub, sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+
+/* Link Typography */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* UI Typography */
+.ui-label {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-base);
+}

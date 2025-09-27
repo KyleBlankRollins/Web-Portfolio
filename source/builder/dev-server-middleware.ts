@@ -1,0 +1,411 @@
+import type { ViteDevServer } from "vite";
+import * as fs from "fs";
+import * as path from "path";
+import { marked } from "marked";
+import {
+  TemplateProcessor,
+  type TemplateVariables,
+} from "./template-processor.js";
+import { BuildLogger } from "./helpers.js";
+import { HtmlProcessingUtils } from "./html-utils.js";
+import type { MarkdownProcessor } from "./markdown-processor.js";
+
+/**
+ * Creates middleware that blocks direct access to source directories
+ */
+function createBlockingMiddleware() {
+  return (req: any, res: any, next: any) => {
+    const url = req.url;
+    if (!url) return next();
+
+    // Block direct access to pages/ and content/ directories
+    if (url.startsWith("/pages/") || url.startsWith("/content/")) {
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "text/html");
+      res.end(`
+        <!DOCTYPE html>
+        <html>
+          <head><title>404 - Not Found</title></head>
+          <body>
+            <h1>404 - Not Found</h1>
+            <p>The requested resource was not found.</p>
+            <p><a href="/">Return to home</a></p>
+          </body>
+        </html>
+      `);
+      return;
+    }
+
+    next();
+  };
+}
+
+/**
+ * Creates middleware that processes HTML files with templates
+ */
+function createProcessingMiddleware(
+  templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor
+) {
+  return (req: any, res: any, next: any) => {
+    const url = req.url;
+    if (!url) return next();
+
+    // Handle data API requests (strip query parameters)
+    const cleanUrl = url.split("?")[0].split("#")[0];
+    if (cleanUrl === "/data/blog-manifest.json") {
+      return handleBlogManifestRequest(
+        req,
+        res,
+        next,
+        markdownProcessor
+      );
+    }
+
+    if (cleanUrl === "/data/theme-manifest.json") {
+      return handleThemeManifestRequest(req, res, next);
+    }
+
+    // Handle root index.html
+    if (cleanUrl === "/" || cleanUrl === "/index.html") {
+      return handleIndexRequest(templateProcessor, req, res, next);
+    }
+
+    // Handle HTML files at root level (matching production build structure)
+    // Extract the pathname without query parameters or hash
+    const pathname = url.split("?")[0].split("#")[0];
+    if (pathname.match(/^\/[^/]+\.html$/)) {
+      return handleHtmlRequest(
+        templateProcessor,
+        markdownProcessor,
+        pathname, // Pass clean pathname to handler
+        req,
+        res,
+        next
+      );
+    }
+
+    next();
+  };
+}
+
+/**
+ * Handle requests for the root index.html
+ */
+async function handleIndexRequest(
+  templateProcessor: TemplateProcessor,
+  _req: any,
+  res: any,
+  next: any
+) {
+  const indexPath = path.join(
+    process.cwd(),
+    "source",
+    "site",
+    "index.html"
+  );
+
+  if (fs.existsSync(indexPath)) {
+    try {
+      const content = fs.readFileSync(indexPath, "utf-8");
+      const processedContent =
+        await HtmlProcessingUtils.processHtmlContent(
+          templateProcessor,
+          content,
+          "Development Server"
+        );
+
+      // Inject development assets (consistent with other HTML handlers)
+      const devContent = injectDevAssets(processedContent);
+
+      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Cache-Control", "no-cache");
+      res.end(devContent);
+    } catch (error) {
+      BuildLogger.error(`Error processing index.html: ${error}`);
+      next(error);
+    }
+  } else {
+    next();
+  }
+}
+
+/**
+ * Handle requests for blog-manifest.json
+ */
+function handleBlogManifestRequest(
+  _req: any,
+  res: any,
+  _next: any,
+  markdownProcessor: MarkdownProcessor
+) {
+  try {
+    // Generate the blog manifest from the markdown processor
+    const manifestJson = markdownProcessor.generateBlogManifestJson();
+
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(manifestJson);
+  } catch (error) {
+    BuildLogger.error(`Error serving blog-manifest.json: ${error}`);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end('{"error": "Failed to generate blog manifest"}');
+  }
+}
+
+/**
+ * Handle requests for theme-manifest.json
+ */
+function handleThemeManifestRequest(_req: any, res: any, _next: any) {
+  try {
+    // Import and process themes
+    const { ThemeProcessor } = require("./theme-processor.js");
+    const themesDir = path.join(
+      process.cwd(),
+      "source",
+      "site",
+      "styles",
+      "themes"
+    );
+    const themeProcessor = new ThemeProcessor(themesDir);
+
+    // Process themes and generate manifest
+    themeProcessor.processThemes();
+    const manifestJson = themeProcessor.generateThemeManifestJson();
+
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(manifestJson);
+  } catch (error) {
+    BuildLogger.error(`Error serving theme-manifest.json: ${error}`);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end('{"error": "Failed to generate theme manifest"}');
+  }
+}
+
+/**
+ * Handle requests for HTML files at root level
+ */
+async function handleHtmlRequest(
+  templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor,
+  url: string,
+  _req: any,
+  res: any,
+  next: any
+) {
+  const fileName = url.slice(1); // Remove leading slash
+  const rootDir = path.join(process.cwd(), "source/site");
+
+  // First, check if this is a generated HTML file from markdown processor
+  const generatedFile = markdownProcessor.getGeneratedFile(fileName);
+  if (generatedFile) {
+    return await processAndServeGeneratedFile(
+      templateProcessor,
+      generatedFile,
+      res,
+      next
+    );
+  }
+
+  // Try pages/ directory
+  const pageFilePath = path.join(rootDir, "pages", fileName);
+  if (fs.existsSync(pageFilePath)) {
+    return await processAndServeFile(
+      templateProcessor,
+      pageFilePath,
+      res,
+      next
+    );
+  }
+
+  // Finally, check for corresponding .md file in content/ directory
+  const mdFileName = fileName.replace(".html", ".md");
+  const mdFilePath = path.join(rootDir, "content", mdFileName);
+  if (fs.existsSync(mdFilePath)) {
+    return await processAndServeMarkdown(
+      templateProcessor,
+      mdFilePath,
+      res,
+      next
+    );
+  }
+
+  next();
+}
+
+/**
+ * Process and serve a generated HTML file from memory
+ */
+async function processAndServeGeneratedFile(
+  templateProcessor: TemplateProcessor,
+  generatedFile: any,
+  res: any,
+  next: any
+) {
+  try {
+    const processedContent =
+      await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        generatedFile.content,
+        generatedFile.metadata.title || "Generated Content"
+      );
+
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(devContent);
+  } catch (error) {
+    BuildLogger.error(
+      `Error processing generated file ${generatedFile.filename}: ${error}`
+    );
+    next(error);
+  }
+}
+
+/**
+ * Process and serve an HTML file
+ */
+async function processAndServeFile(
+  templateProcessor: TemplateProcessor,
+  filePath: string,
+  res: any,
+  next: any
+) {
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
+    const processedContent =
+      await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        content
+      );
+
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(devContent);
+  } catch (error) {
+    BuildLogger.error(`Error processing ${filePath}: ${error}`);
+    next(error);
+  }
+}
+
+/**
+ * Process and serve a Markdown file as HTML
+ */
+async function processAndServeMarkdown(
+  templateProcessor: TemplateProcessor,
+  mdFilePath: string,
+  res: any,
+  next: any
+) {
+  try {
+    const mdContent = fs.readFileSync(mdFilePath, "utf-8");
+
+    // Extract frontmatter and convert markdown to HTML
+    const { metadata, content } =
+      templateProcessor.extractMarkdownFrontmatter(mdContent);
+    const htmlContent = marked(content);
+
+    // Create template variables
+    const templateVariables: TemplateVariables = {
+      title: metadata.title || "Development Server",
+      description: metadata.description,
+      keywords: metadata.keywords,
+      additionalHead: metadata.additionalHead,
+      content: "", // This will be overridden by processTemplate
+    };
+
+    const processedContent = templateProcessor.processTemplate(
+      htmlContent,
+      templateVariables
+    );
+
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(devContent);
+  } catch (error) {
+    BuildLogger.error(
+      `Error processing markdown ${mdFilePath}: ${error}`
+    );
+    next(error);
+  }
+}
+
+/**
+ * Sets up file watcher for template, include, and page files
+ */
+function setupFileWatcher(
+  server: ViteDevServer,
+  templateProcessor: TemplateProcessor
+) {
+  server.ws.on("file-changed", ({ file }) => {
+    if (file.includes("/templates/") || file.includes("/includes/")) {
+      BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
+      templateProcessor.clearCache();
+
+      // Trigger a full page reload for template/include changes since they affect multiple pages
+      server.ws.send({
+        type: "full-reload",
+      });
+    } else if (file.includes("/pages/") && file.endsWith(".html")) {
+      BuildLogger.info(`🔄 Page file changed: ${file}`);
+      templateProcessor.clearCache();
+
+      // Trigger a full page reload for page changes
+      server.ws.send({
+        type: "full-reload",
+      });
+    }
+  });
+}
+
+/**
+ * Inject development assets into HTML content
+ */
+function injectDevAssets(htmlContent: string): string {
+  let modifiedContent = htmlContent;
+
+  // Inject development script before closing </body>
+  const devScript = `    <script type="module" src="main.ts"></script>`;
+
+  modifiedContent = modifiedContent.replace(
+    "</body>",
+    `${devScript}\n</body>`
+  );
+
+  return modifiedContent;
+}
+
+/**
+ * Main dev server setup function
+ */
+export function setupDevServer(
+  server: ViteDevServer,
+  templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor
+) {
+  BuildLogger.info(
+    "🔧 Setting up dev server middleware for KBR Builder..."
+  );
+
+  // Add blocking middleware first
+  server.middlewares.use(createBlockingMiddleware());
+
+  // Add processing middleware second
+  server.middlewares.use(
+    createProcessingMiddleware(templateProcessor, markdownProcessor)
+  );
+
+  // Setup file watcher
+  setupFileWatcher(server, templateProcessor);
+}
