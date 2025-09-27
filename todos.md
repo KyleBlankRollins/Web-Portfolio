@@ -59,3 +59,7 @@ Create a new credits page that lists the technology used to build the site. Note
 
 [ ] Improve page layout. Consider using masonry layout.
 [ ] Add more interesting visual elements to separate sections.
+
+## Mobile optimizations
+
+Therea are many layout optimizations needed for mobile devices.
