@@ -63,8 +63,6 @@ export class ThemeProcessor {
         );
       }
     }
-
-    BuildLogger.info(`✓ Processed ${this.themes.length} themes`);
   }
 
   /**

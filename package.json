@@ -12,9 +12,7 @@
     "lint:prose": "tsx scripts/lint-prose.ts --changed-only",
     "lint:prose:all": "tsx scripts/lint-prose.ts",
     "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
-    "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose",
-    "clean:public": "tsx scripts/clean-public.ts",
-    "clean:public:dry-run": "tsx scripts/clean-public.ts --dry-run"
+    "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
