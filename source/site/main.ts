@@ -13,6 +13,7 @@ import "./components/timeline-entry/timeline-entry";
 import "./components/icon/icon";
 import "./components/image-lightbox/image-lightbox";
 import "./components/theme-switcher/theme-switcher";
+import "./components/admonition/admonition";
 import { configureThemeSwitcher } from "./theme-config";
 
 // Configure theme switcher with available themes

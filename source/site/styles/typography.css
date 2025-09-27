@@ -209,7 +209,7 @@ sub {
 
 /* Link Typography */
 a {
-  color: var(--color-primary);
+  color: var(--color-accent);
   text-decoration: none;
   transition: color var(--transition-fast);
 }

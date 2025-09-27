@@ -6,8 +6,6 @@ This is a list of things that I need or want to do to improve `kyleblankrollins.
 
 ### Posts
 
-[ ] Fix inline anchor styles. They're currently impossible to see unless you hover over them.
-[ ] Add admonition web components
 [ ] Add tl;dr component
 [ ] Add post primary image component
 [ ] Add code example component

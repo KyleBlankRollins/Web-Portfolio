@@ -8,7 +8,9 @@ tags: [technical writing, research, LLM]
 
 # LLM as SME
 
+<kbr-admonition type="note">
 tl;dr: skip to [Example workflow](#example-workflow).
+</kbr-admonition>
 
 Interacting with subject matter experts (SMEs) is a primary responsibility for most technical writers. Even if you happen to be an SME in a product or domain, you should have another SME validate your information and review documentation you write.
 
@@ -26,8 +28,9 @@ In this post, I'll talk about:
 
 I'll also provide an [example workflow](#example-workflow) that you can adapt to your process.
 
-> [!CAUTION]
-> Before you start using NotebookLM or any other LLM or AI tool, you should make sure that you won't be breaking any company policies. Even if NotebookLM is allowed by company policy, you may need to look closely and the various level of confidentiality the policy defines. Your company may determine that certain types of documents should not be used with AI tools.
+<kbr-admonition type="caution" title="Check your company's AI policy">
+Before you start using NotebookLM or any other LLM or AI tool, you should make sure that you won't be breaking any company policies. Even if NotebookLM is allowed by company policy, you may need to look closely and the various level of confidentiality the policy defines. Your company may determine that certain types of documents should not be used with AI tools.
+</kbr-admonition>
 
 ## NotebookLM set up for this post
 
@@ -49,8 +52,9 @@ I don't claim to be an expert on LLM prompts and getting them to provide the bes
 
 When NotebookLM has access to enough resources related to your project, it can synthesize information and create some useful artefacts.
 
-> [!IMPORTANT]
-> Never trust and always verify LLM output.
+<kbr-admonition type="important">
+Never trust and always verify LLM output.
+</kbr-admonition>
 
 ### Simulate an SME
 

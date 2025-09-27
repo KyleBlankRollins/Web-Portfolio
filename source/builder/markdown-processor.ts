@@ -73,6 +73,30 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Preprocess admonitions to handle markdown content within HTML tags.
+   * Extracts content inside kbr-admonition tags, processes it with marked.parseInline(),
+   * and preserves the component's HTML attributes unchanged.
+   */
+  private preprocessAdmonitions(content: string): string {
+    const admonitionPattern =
+      /<kbr-admonition([^>]*)>([\s\S]*?)<\/kbr-admonition>/g;
+
+    return content.replace(
+      admonitionPattern,
+      (_, attributes, innerContent) => {
+        // Trim whitespace from inner content
+        const trimmedContent = innerContent.trim();
+
+        // Process markdown content with parseInline to avoid wrapping in <p> tags
+        const processedContent = marked.parseInline(trimmedContent);
+
+        // Return admonition with processed content, preserving original attributes
+        return `\n\n<kbr-admonition${attributes}>${processedContent}</kbr-admonition>\n\n`;
+      }
+    );
+  }
+
+  /**
    * Process a single Markdown file and convert it to HTML content (without template)
    * The template will be applied later by the HtmlBundleProcessor
    */
@@ -87,8 +111,11 @@ export class MarkdownProcessor {
         markdownContent
       );
 
+    // Preprocess admonitions to handle markdown within HTML tags
+    const preprocessedContent = this.preprocessAdmonitions(content);
+
     // Convert Markdown to HTML
-    const htmlContent = marked(content);
+    const htmlContent = marked(preprocessedContent);
 
     // For blog posts, add date and tags after the first h1
     let processedContent = htmlContent;
