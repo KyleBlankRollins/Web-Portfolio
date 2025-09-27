@@ -4,9 +4,7 @@ This file contains a list of blog posts I would like to write but haven't comple
 
 ## Planned
 
-- LLM as SME
 - Meeting SMEs where they are
-- Rule of thirds
 - Docs and code examples in an LLM world
 - Code example philosophy
 - The promotion paradox (do work outside of team, etc)
@@ -16,8 +14,9 @@ This file contains a list of blog posts I would like to write but haven't comple
 
 ## In progress
 
-- Typography test page
+- Rule of thirds
+- LLM as SME
 
 ## Done
 
-Nothing completed yet.
+- Typography test page

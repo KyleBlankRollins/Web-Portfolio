@@ -71,7 +71,7 @@ export class KbrThemeSwitcher extends LitElement {
     if (!this.themes) {
       this.themes = [
         {
-          name: "Base Grayscale",
+          name: "Basic Blue",
           id: "base",
           colors: {
             primary: "#2d2d2d",

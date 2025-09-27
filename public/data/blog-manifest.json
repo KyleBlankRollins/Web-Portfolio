@@ -3,8 +3,8 @@
     {
       "title": "What Typography on KBR Looks Like",
       "description": "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website.",
-      "date": "2025-09-20",
-      "formattedDate": "September 19, 2025",
+      "date": "2025-09-26",
+      "formattedDate": "September 25, 2025",
       "tags": [
         "design",
         "typography",
@@ -14,42 +14,44 @@
       "filename": "typography-test"
     },
     {
-      "title": "My First Blog Post",
-      "description": "This is a sample blog post to test the new YAML frontmatter handling and blog post metadata features.",
-      "date": "2025-01-15",
-      "formattedDate": "January 14, 2025",
+      "title": "LLM as SME",
+      "description": "While an LLM can't replace a truly knowledgeable human, its a better tool than not having an SME at all.",
+      "date": "2025-09-25",
+      "formattedDate": "September 24, 2025",
       "tags": [
-        "web development",
-        "markdown",
-        "blogging",
-        "typescript"
+        "technical writing",
+        "research",
+        "LLM"
       ],
-      "url": "/sample-blog-post.html",
-      "filename": "sample-blog-post",
-      "keywords": "blog, markdown, web development, test"
+      "url": "/lllm-as-sme.html",
+      "filename": "lllm-as-sme",
+      "keywords": "technical writing, documentation, research, process, AI, LLM"
     }
   ],
   "totalPosts": 2,
   "availableTags": [
-    "blogging",
     "design",
-    "markdown",
+    "LLM",
+    "research",
+    "technical writing",
     "testing",
-    "typescript",
-    "typography",
-    "web development"
+    "typography"
   ],
   "tagsWithCounts": [
-    {
-      "tag": "blogging",
-      "count": 1
-    },
     {
       "tag": "design",
       "count": 1
     },
     {
-      "tag": "markdown",
+      "tag": "LLM",
+      "count": 1
+    },
+    {
+      "tag": "research",
+      "count": 1
+    },
+    {
+      "tag": "technical writing",
       "count": 1
     },
     {
@@ -57,15 +59,7 @@
       "count": 1
     },
     {
-      "tag": "typescript",
-      "count": 1
-    },
-    {
       "tag": "typography",
-      "count": 1
-    },
-    {
-      "tag": "web development",
       "count": 1
     }
   ]

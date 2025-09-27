@@ -1,19 +1,19 @@
 ---
 title: "What Typography on KBR Looks Like"
 description: "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website."
-date: "2025-09-20"
+date: "2025-09-26"
 tags: ["design", "typography", "testing"]
 ---
 
 # What Typography on KBR Looks Like
 
-This is a comprehensive typography test post to showcase all the different font styles, weights, and text formatting options available on the KBR website. This post demonstrates the IBM Plex Sans and IBM Plex Mono font families in action.
+This is a comprehensive typography test post to showcase all the different font styles, weights, and text formatting options available on the KBR website. This post demonstrates the **Valkyrie B** serif font family for body text and headings, along with **IBM Plex Mono** for code snippets.
 
 ## Heading Level 2: Font Weights and Styles
 
-This paragraph demonstrates **regular body text** using IBM Plex Sans at font-weight 400. This is what most content on the site will look like. It should be _highly readable_ and comfortable for extended reading sessions.
+This paragraph demonstrates **regular body text** using Valkyrie B at font-weight 400. This serif font provides excellent readability and gives the site a more distinctive, editorial feel compared to typical sans-serif web fonts. It should be _highly readable_ and comfortable for extended reading sessions.
 
-Here's some text with **bold formatting** (font-weight 700) and _italic formatting_ (font-style italic) mixed within a paragraph. You can also combine them for **_bold italic text_** to see how that renders.
+Here's some text with **bold formatting** (font-weight 700) and _italic formatting_ (font-style italic) mixed within a paragraph. You can also combine them for **_bold italic text_** to see how that renders with the Valkyrie serif family.
 
 ### Heading Level 3: Code and Monospace Text
 
@@ -52,15 +52,13 @@ Typography isn't just about individual letters—it's about how text flows and c
 
 ##### Heading Level 5: Different Font Weights
 
-Let's test the various font weights available in IBM Plex Sans:
+Let's test the various font weights available in Valkyrie B:
 
-**Font Weight 100 (Thin):** This text should appear very thin and light.
+**Font Weight 400 (Regular):** This is the standard body text weight for Valkyrie B.
 
-**Font Weight 400 (Regular):** This is the standard body text weight.
+**Font Weight 700 (Bold):** This text is bold and should have significant visual weight in the serif style.
 
-**Font Weight 500 (Medium):** This text has a medium weight, slightly heavier than regular.
-
-**Font Weight 700 (Bold):** This text is bold and should have significant visual weight.
+Note that headings use **Valkyrie B Caps**, a small-caps variant of the Valkyrie family that provides distinctive heading styling.
 
 ###### Heading Level 6: Special Typography Elements
 
@@ -77,18 +75,24 @@ Here's a paragraph with a [link to test link styling](#) embedded within the tex
 Here's a larger code example to test monospace typography:
 
 ```css
-/* CSS using IBM Plex Mono */
+/* CSS using the current typography system */
 .typography-test {
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-family: "valkyrie_b", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  color: var(--text-primary);
+  color: var(--color-text);
+}
+
+.heading-example {
+  font-family: "valkyrie_b_caps", "IBM Plex Sans", serif;
+  font-weight: 400; /* Valkyrie B Caps uses regular weight for headings */
 }
 
 .code-block {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Mono", "Cascadia Code", Monaco, monospace;
   font-weight: 400;
-  background: var(--bg-code);
+  background: var(--color-surface-secondary);
   padding: 1rem;
   border-radius: 0.5rem;
 }
@@ -102,67 +106,88 @@ This section combines multiple typography elements to test how they work togethe
 
 When analyzing the **performance impact** of custom fonts, several key metrics emerge:
 
-1. **FOIT (Flash of Invisible Text):** Using `font-display: swap` minimizes this
-2. **FOUT (Flash of Unstyled Text):** Brief appearance of system fonts before custom fonts load
-3. **CLS (Cumulative Layout Shift):** Proper font metrics reduce layout shifting
+1. **FOIT (Flash of Invisible Text):** Using `font-display: auto` for Valkyrie fonts allows optimal loading behavior
+2. **FOUT (Flash of Unstyled Text):** Graceful fallback to system fonts during load
+3. **CLS (Cumulative Layout Shift):** Proper font metrics and fallback selection reduce layout shifting
 
-_Key insight:_ The IBM Plex font family was chosen because it has excellent `font-display: swap` behavior and similar metrics to system fonts.
+_Key insight:_ The **Valkyrie B** serif font family was chosen to give the site a distinctive editorial feel, while **IBM Plex Mono** provides excellent code readability. The system includes comprehensive fallbacks to system fonts.
 
 #### Technical Implementation
 
-The implementation uses separate font files for each weight:
+The implementation uses separate font files for each family and weight:
 
 ```html
-<!-- Preload critical fonts -->
+<!-- Critical font preloading would include -->
 <link
   rel="preload"
-  href="/fonts/IBMPlexSans-Regular.woff2"
+  href="/fonts/valkyrie_b_regular.woff2"
   as="font"
   type="font/woff2"
   crossorigin
 />
 <link
   rel="preload"
-  href="/fonts/IBMPlexSans-Bold.woff2"
+  href="/fonts/valkyrie_b_caps_regular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/IBMPlexMono-Regular.woff2"
   as="font"
   type="font/woff2"
   crossorigin
 />
 ```
 
-**Benefits of this approach:**
+**Benefits of this typography system:**
 
-- Precise weight control
-- No font synthesis
-- Optimal file sizes
-- Better rendering quality
+- **Distinctive serif character** for body text
+- **Small-caps headings** for editorial hierarchy
+- **Excellent code readability** with IBM Plex Mono
+- **Comprehensive fallback system** to system fonts
+- **Optimal file sizes** with targeted font loading
 
 ## Table Typography Test
 
-| Element   | Font Family   | Weight     | Use Case             |
-| --------- | ------------- | ---------- | -------------------- |
-| Body Text | IBM Plex Sans | 400        | Primary content      |
-| Headings  | IBM Plex Sans | 700        | Section titles       |
-| Code      | IBM Plex Mono | 400        | Technical content    |
-| Emphasis  | IBM Plex Sans | 700        | **Important points** |
-| Citations | IBM Plex Sans | 400 italic | _References_         |
+| Element   | Font Family     | Weight | Use Case             |
+| --------- | --------------- | ------ | -------------------- |
+| Body Text | Valkyrie B      | 400    | Primary content      |
+| Headings  | Valkyrie B Caps | 400    | Section titles       |
+| Bold Text | Valkyrie B      | 700    | **Important points** |
+| Italics   | Valkyrie B      | 400    | _References_         |
+| Code      | IBM Plex Mono   | 400    | Technical content    |
 
 ## Final Typography Notes
 
 This comprehensive test demonstrates:
 
-- All six heading levels (H1-H6)
-- Regular, medium, and bold font weights
+- All six heading levels (H1-H6) using Valkyrie B Caps
+- Regular and bold font weights in Valkyrie B serif
 - Italic and regular font styles
-- Inline code using monospace font
+- Inline code using IBM Plex Mono
 - Code blocks with syntax highlighting
 - Lists (ordered and unordered)
 - Blockquotes and special formatting
 - Links and interactive elements
 - Mixed content scenarios
 
-The typography system should create clear visual hierarchy while maintaining excellent readability across all content types.
+The typography system creates a distinctive editorial feel with serif body text, small-caps headings, and excellent code readability. The Valkyrie B font family gives the site character while maintaining excellent readability across all content types.
+
+## Font Family Overview
+
+**Primary Typography:**
+
+- **Body Text:** Valkyrie B (serif) - Creates distinctive, editorial character
+- **Headings:** Valkyrie B Caps (small-caps serif) - Elegant hierarchy
+- **Code:** IBM Plex Mono - Superior technical readability
+
+**Fallback System:**
+
+- Valkyrie B → system serif → system sans-serif
+- IBM Plex Mono → Cascadia Code → Monaco → system monospace
 
 ---
 
-_This test post was generated on September 20, 2025, to validate the complete typography system on the KBR website._
+_This test post was updated on September 26, 2025, to reflect the current Valkyrie B + IBM Plex Mono typography system on the KBR website._

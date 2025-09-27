@@ -8,7 +8,7 @@ The KBR Portfolio theme system provides a flexible, accessible, and maintainable
 
 ### Core Files
 
-- **`theme-properties.css`** - Master theme property definitions and documentation
+- **`properties.css`** - Master theme property definitions and documentation
 - **`base-theme.css`** - Default grayscale theme implementation
 - **`theme-canney-valley.css`** - Nature-inspired theme based on original design
 - **`theme-switcher.ts`** - Web component for theme selection
@@ -39,7 +39,7 @@ Each theme follows a standardized property structure with 280+ semantic CSS cust
 
 ### 1. Theme Property Foundation
 
-The `theme-properties.css` file serves as the master reference, defining all available CSS custom properties with detailed documentation:
+The `properties.css` file serves as the master reference, defining all available CSS custom properties with detailed documentation:
 
 ```css
 /**
@@ -300,7 +300,7 @@ Use the base theme as a template:
   --theme-version: "1.0.0";
   --theme-author: "Your Name";
 
-  /* Implement all required properties from theme-properties.css */
+  /* Implement all required properties from properties.css */
   --color-primary: #yourcolor;
   /* ... all other properties ... */
 }
@@ -396,7 +396,7 @@ document.addEventListener("theme-changed", (event) => {
 
 - Check that `data-theme` attribute is set on `<html>` element
 - Verify theme CSS file is imported and loaded
-- Ensure property names match theme-properties.css exactly
+- Ensure property names match properties.css exactly
 
 **Colors not updating:**
 
@@ -419,7 +419,7 @@ document.addEventListener("theme-changed", (event) => {
 ### Debugging Tips
 
 1. **Inspect CSS Properties**: Use browser dev tools to check computed values
-2. **Validate Theme Structure**: Compare against theme-properties.css
+2. **Validate Theme Structure**: Compare against properties.css
 3. **Test Color Schemes**: Switch between light/dark modes
 4. **Check localStorage**: Verify theme persistence data
 5. **Validate Accessibility**: Use accessibility audit tools
@@ -438,7 +438,7 @@ document.addEventListener("theme-changed", (event) => {
 
 The theme system is designed for extensibility:
 
-- **Custom Properties**: Add new semantic properties to theme-properties.css
+- **Custom Properties**: Add new semantic properties to properties.css
 - **Theme Variants**: Create seasonal or event-specific themes
 - **Component Themes**: Component-specific theming extensions
 - **Dynamic Theming**: API-driven theme generation
