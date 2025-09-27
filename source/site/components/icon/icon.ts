@@ -18,6 +18,7 @@ const AVAILABLE_ICONS = [
   "filter_circle",
   "hierarchy",
   "link",
+  "projector",
   "terminal",
 ];
 
