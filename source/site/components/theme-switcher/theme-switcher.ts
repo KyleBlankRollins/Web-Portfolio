@@ -194,7 +194,7 @@ export class KbrThemeSwitcher extends LitElement {
   /**
    * Handle color scheme toggle
    */
-  private handleColorSchemeToggle(event: Event) {
+  private handleColorSchemeToggle() {
     this.currentColorScheme =
       this.currentColorScheme === "light" ? "dark" : "light";
 
