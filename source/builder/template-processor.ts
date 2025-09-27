@@ -16,6 +16,7 @@ export interface TemplateVariables {
   tags?: string[];
   formattedDate?: string; // Human-readable date format
   isBlogPost?: boolean; // Flag to identify blog posts
+  tagsHtml?: string; // Rendered tags HTML for sidebar
 }
 
 /**

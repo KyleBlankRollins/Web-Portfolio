@@ -111,7 +111,7 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
      * Setup development server middleware
      */
     configureServer(server: ViteDevServer) {
-      setupDevServer(server, templateProcessor);
+      setupDevServer(server, templateProcessor, markdownProcessor);
     },
 
     /**
@@ -179,7 +179,7 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
       await htmlBundleProcessor.processBundle(
         bundle,
         this.emitFile.bind(this),
-        builderOptions
+        markdownProcessor // Pass the processor for accessing generated files
       );
     },
   };

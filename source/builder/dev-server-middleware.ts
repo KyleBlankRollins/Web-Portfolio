@@ -8,6 +8,7 @@ import {
 } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
+import type { MarkdownProcessor } from "./markdown-processor.js";
 
 /**
  * Creates middleware that blocks direct access to source directories
@@ -43,7 +44,8 @@ function createBlockingMiddleware() {
  * Creates middleware that processes HTML files with templates
  */
 function createProcessingMiddleware(
-  templateProcessor: TemplateProcessor
+  templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor
 ) {
   return (req: any, res: any, next: any) => {
     const url = req.url;
@@ -52,7 +54,12 @@ function createProcessingMiddleware(
     // Handle blog-manifest.json (strip query parameters)
     const cleanUrl = url.split("?")[0].split("#")[0];
     if (cleanUrl === "/data/blog-manifest.json") {
-      return handleBlogManifestRequest(req, res, next);
+      return handleBlogManifestRequest(
+        req,
+        res,
+        next,
+        markdownProcessor
+      );
     }
 
     // Handle root index.html
@@ -66,6 +73,7 @@ function createProcessingMiddleware(
     if (pathname.match(/^\/[^/]+\.html$/)) {
       return handleHtmlRequest(
         templateProcessor,
+        markdownProcessor,
         pathname, // Pass clean pathname to handler
         req,
         res,
@@ -121,28 +129,24 @@ async function handleIndexRequest(
 /**
  * Handle requests for blog-manifest.json
  */
-function handleBlogManifestRequest(_req: any, res: any, next: any) {
-  const manifestPath = path.join(
-    process.cwd(),
-    "public",
-    "data",
-    "blog-manifest.json"
-  );
+function handleBlogManifestRequest(
+  _req: any,
+  res: any,
+  _next: any,
+  markdownProcessor: MarkdownProcessor
+) {
+  try {
+    // Generate the blog manifest from the markdown processor
+    const manifestJson = markdownProcessor.generateBlogManifestJson();
 
-  if (fs.existsSync(manifestPath)) {
-    try {
-      const content = fs.readFileSync(manifestPath, "utf-8");
-      res.setHeader("Content-Type", "application/json");
-      res.setHeader("Cache-Control", "no-cache");
-      res.end(content);
-    } catch (error) {
-      BuildLogger.error(`Error serving blog-manifest.json: ${error}`);
-      next(error);
-    }
-  } else {
-    res.statusCode = 404;
     res.setHeader("Content-Type", "application/json");
-    res.end('{"error": "Blog manifest not found"}');
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(manifestJson);
+  } catch (error) {
+    BuildLogger.error(`Error serving blog-manifest.json: ${error}`);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end('{"error": "Failed to generate blog manifest"}');
   }
 }
 
@@ -151,6 +155,7 @@ function handleBlogManifestRequest(_req: any, res: any, next: any) {
  */
 async function handleHtmlRequest(
   templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor,
   url: string,
   _req: any,
   res: any,
@@ -159,23 +164,23 @@ async function handleHtmlRequest(
   const fileName = url.slice(1); // Remove leading slash
   const rootDir = path.join(process.cwd(), "source/site");
 
-  // Try pages/ directory first
-  const pageFilePath = path.join(rootDir, "pages", fileName);
-  if (fs.existsSync(pageFilePath)) {
-    return await processAndServeFile(
+  // First, check if this is a generated HTML file from markdown processor
+  const generatedFile = markdownProcessor.getGeneratedFile(fileName);
+  if (generatedFile) {
+    return await processAndServeGeneratedFile(
       templateProcessor,
-      pageFilePath,
+      generatedFile,
       res,
       next
     );
   }
 
-  // Try public/ directory for converted HTML from markdown
-  const publicHtmlPath = path.join(process.cwd(), "public", fileName);
-  if (fs.existsSync(publicHtmlPath)) {
+  // Try pages/ directory
+  const pageFilePath = path.join(rootDir, "pages", fileName);
+  if (fs.existsSync(pageFilePath)) {
     return await processAndServeFile(
       templateProcessor,
-      publicHtmlPath,
+      pageFilePath,
       res,
       next
     );
@@ -194,6 +199,37 @@ async function handleHtmlRequest(
   }
 
   next();
+}
+
+/**
+ * Process and serve a generated HTML file from memory
+ */
+async function processAndServeGeneratedFile(
+  templateProcessor: TemplateProcessor,
+  generatedFile: any,
+  res: any,
+  next: any
+) {
+  try {
+    const processedContent =
+      await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        generatedFile.content,
+        generatedFile.metadata.title || "Generated Content"
+      );
+
+    // Inject development assets
+    const devContent = injectDevAssets(processedContent);
+
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "no-cache");
+    res.end(devContent);
+  } catch (error) {
+    BuildLogger.error(
+      `Error processing generated file ${generatedFile.filename}: ${error}`
+    );
+    next(error);
+  }
 }
 
 /**
@@ -320,7 +356,8 @@ function injectDevAssets(htmlContent: string): string {
  */
 export function setupDevServer(
   server: ViteDevServer,
-  templateProcessor: TemplateProcessor
+  templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor
 ) {
   BuildLogger.info(
     "🔧 Setting up dev server middleware for KBR Builder..."
@@ -331,7 +368,7 @@ export function setupDevServer(
 
   // Add processing middleware second
   server.middlewares.use(
-    createProcessingMiddleware(templateProcessor)
+    createProcessingMiddleware(templateProcessor, markdownProcessor)
   );
 
   // Setup file watcher

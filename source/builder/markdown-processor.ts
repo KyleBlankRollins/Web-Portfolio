@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync } from "fs";
-import { join, basename } from "path";
+import { readFileSync } from "fs";
+import { basename } from "path";
 import { marked } from "marked";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
@@ -16,12 +16,19 @@ export interface BlogPostManifestEntry {
   keywords?: string;
 }
 
+export interface GeneratedHtmlFile {
+  filename: string;
+  content: string;
+  metadata: Partial<TemplateVariables>;
+}
+
 /**
  * Processes Markdown files and converts them to HTML using templates
  */
 export class MarkdownProcessor {
   private templateProcessor: TemplateProcessor;
   private blogPostManifest: BlogPostManifestEntry[] = [];
+  private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
     this.templateProcessor = new TemplateProcessor();
@@ -118,16 +125,21 @@ export class MarkdownProcessor {
       .filter(Boolean)
       .join("\n");
 
-    // Generate output file path in public directory to mirror production structure
+    // Generate filename and store in memory instead of writing to disk
     const fileName = basename(filePath).replace(/\.md$/, ".html");
-    const outputPath = join("public", fileName);
 
-    // Write the HTML content (without template - that will be applied later)
-    writeFileSync(outputPath, htmlWithMetadata, "utf-8");
+    // Store the generated file in memory
+    this.generatedFiles.set(fileName, {
+      filename: fileName,
+      content: htmlWithMetadata,
+      metadata: metadata,
+    });
 
-    BuildLogger.success(`Generated blog post: ${outputPath}`);
+    BuildLogger.success(
+      `Generated blog post: ${fileName} (stored in memory)`
+    );
 
-    return outputPath;
+    return fileName;
   }
 
   /**
@@ -162,45 +174,18 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Create HTML for blog post metadata (date and tags)
+   * Create HTML for blog post metadata (date only - tags moved to sidebar)
    */
   private createBlogMetadataHTML(
     metadata: Partial<TemplateVariables>
   ): string {
-    const metadataParts = [];
-
-    // Add date if available
+    // Only add date - tags will be handled in the template sidebar
     if (metadata.formattedDate) {
-      metadataParts.push(`
-        <div class="blog-post-date">
-          <time datetime="${metadata.date}">${metadata.formattedDate}</time>
-        </div>
-      `);
-    }
-
-    // Add tags if available
-    if (metadata.tags && metadata.tags.length > 0) {
-      const tagButtons = metadata.tags
-        .map(
-          (tag) =>
-            `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
-        )
-        .join("");
-
-      metadataParts.push(`
-        <div class="blog-post-tags">
-          <span class="tags-label">Tags:</span>
-          <div class="tag-list">
-            ${tagButtons}
-          </div>
-        </div>
-      `);
-    }
-
-    if (metadataParts.length > 0) {
       return `
         <div class="blog-post-metadata">
-          ${metadataParts.join("\n")}
+          <div class="blog-post-date">
+            <time datetime="${metadata.date}">${metadata.formattedDate}</time>
+          </div>
         </div>
       `;
     }
@@ -235,11 +220,9 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Generate and save the blog post manifest JSON file
+   * Generate the blog post manifest (no longer saves to disk)
    */
-  public generateBlogManifest(
-    outputPath: string = join("public", "data", "blog-manifest.json")
-  ): void {
+  public generateBlogManifest(): void {
     // Sort blog posts by date (newest first)
     const sortedPosts = this.blogPostManifest.sort((a, b) => {
       const dateA = new Date(a.date);
@@ -268,20 +251,9 @@ export class MarkdownProcessor {
     // Keep the simple array for backward compatibility
     const sortedTags = tagsWithCounts.map((item) => item.tag);
 
-    const manifest = {
-      posts: sortedPosts,
-      totalPosts: sortedPosts.length,
-      availableTags: sortedTags,
-      tagsWithCounts: tagsWithCounts,
-    };
-
-    writeFileSync(
-      outputPath,
-      JSON.stringify(manifest, null, 2),
-      "utf-8"
-    );
+    // Note: We no longer write to disk here - the manifest will be emitted via generateBundle
     BuildLogger.success(
-      `Generated blog manifest: ${outputPath} (${sortedPosts.length} posts, ${sortedTags.length} tags)`
+      `Generated blog manifest data (${sortedPosts.length} posts, ${sortedTags.length} tags)`
     );
   }
 
@@ -290,5 +262,62 @@ export class MarkdownProcessor {
    */
   public getBlogManifest(): BlogPostManifestEntry[] {
     return this.blogPostManifest;
+  }
+
+  /**
+   * Get all generated HTML files from memory
+   */
+  public getGeneratedFiles(): Map<string, GeneratedHtmlFile> {
+    return this.generatedFiles;
+  }
+
+  /**
+   * Get a specific generated file by filename
+   */
+  public getGeneratedFile(
+    filename: string
+  ): GeneratedHtmlFile | undefined {
+    return this.generatedFiles.get(filename);
+  }
+
+  /**
+   * Clear all generated files from memory
+   */
+  public clearGeneratedFiles(): void {
+    this.generatedFiles.clear();
+  }
+
+  /**
+   * Generate blog manifest as JSON string (for emitting to bundle)
+   */
+  public generateBlogManifestJson(): string {
+    // Sort posts by date (newest first)
+    const sortedPosts = this.blogPostManifest.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
+    // Create tags with post counts
+    const tagCounts = new Map<string, number>();
+    this.blogPostManifest.forEach((post) => {
+      post.tags.forEach((tag) => {
+        tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+      });
+    });
+
+    const tagsWithCounts = Array.from(tagCounts.entries())
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count);
+
+    // Keep the simple array for backward compatibility
+    const sortedTags = tagsWithCounts.map((item) => item.tag);
+
+    const manifest = {
+      posts: sortedPosts,
+      totalPosts: sortedPosts.length,
+      availableTags: sortedTags,
+      tagsWithCounts: tagsWithCounts,
+    };
+
+    return JSON.stringify(manifest, null, 2);
   }
 }

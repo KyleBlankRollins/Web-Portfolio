@@ -56,6 +56,8 @@ export class HtmlProcessingUtils {
       formattedDate: metadata.formattedDate,
       tags: metadata.tags,
       isBlogPost: metadata.isBlogPost,
+      // Generate tags HTML for sidebar
+      tagsHtml: this.generateTagsHtml(metadata.tags),
     };
 
     const processedContent = templateProcessor.processTemplate(
@@ -111,5 +113,30 @@ export class HtmlProcessingUtils {
     }
 
     return modifiedContent;
+  }
+
+  /**
+   * Generate HTML for blog post tags
+   */
+  static generateTagsHtml(tags?: string[]): string {
+    if (!tags || tags.length === 0) {
+      return "";
+    }
+
+    const tagButtons = tags
+      .map(
+        (tag) =>
+          `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
+      )
+      .join("");
+
+    return `
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          ${tagButtons}
+        </div>
+      </div>
+    `;
   }
 }

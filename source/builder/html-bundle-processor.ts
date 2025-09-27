@@ -1,10 +1,9 @@
-import { basename, join } from "path";
-import { readFileSync, existsSync, readdirSync } from "fs";
+import { basename } from "path";
+import { readFileSync } from "fs";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
-import { GitUtils } from "./git-utils.js";
-import type { KBRBuilderOptions } from "./index.js";
+import type { MarkdownProcessor } from "./markdown-processor.js";
 
 /**
  * Handles HTML bundle generation during build
@@ -22,7 +21,7 @@ export class HtmlBundleProcessor {
   async processBundle(
     bundle: any,
     emitFile: any,
-    options: KBRBuilderOptions = {}
+    markdownProcessor?: MarkdownProcessor
   ): Promise<void> {
     try {
       BuildLogger.info("📄 Processing HTML files with includes...");
@@ -30,15 +29,20 @@ export class HtmlBundleProcessor {
       // Extract asset information from the bundle
       const assets = this.extractAssets(bundle);
 
+      // First, emit generated HTML files from markdown processor if available
+      if (markdownProcessor) {
+        await this.emitGeneratedFiles(
+          emitFile,
+          assets,
+          markdownProcessor
+        );
+      }
+
       // First, process any HTML files that Vite already added to the bundle
       await this.processExistingHtmlFiles(bundle);
 
-      // Then, manually process and add HTML files from pages/ and content/
-      await this.processAdditionalHtmlFiles(
-        emitFile,
-        assets,
-        options
-      );
+      // Then, manually process and add HTML files from pages/ directory
+      await this.processAdditionalHtmlFiles(emitFile, assets);
 
       BuildLogger.success("🎉 KBR Builder completed successfully!");
     } catch (error) {
@@ -108,65 +112,17 @@ export class HtmlBundleProcessor {
    */
   private async processAdditionalHtmlFiles(
     emitFile: any,
-    assets: { css: string[]; js: string[] },
-    options: KBRBuilderOptions = {}
+    assets: { css: string[]; js: string[] }
   ): Promise<void> {
-    let additionalHtmlFiles: string[] = [];
-
-    // Always process all HTML files from pages/ directory
+    // Only process HTML files from pages/ directory now
+    // Generated HTML files are handled by emitGeneratedFiles()
     const pagesFiles = FileSystemHelper.findFiles("pages", [".html"]);
-    additionalHtmlFiles.push(...pagesFiles);
 
-    // For public/ directory files, always process blog posts + use git-aware logic for others
-    const allPublicFiles = this.findPublicHtmlFiles();
+    BuildLogger.info(
+      `� Processing ${pagesFiles.length} pages HTML files`
+    );
 
-    if (
-      options.gitAware &&
-      !options.forceAll &&
-      GitUtils.isGitRepository()
-    ) {
-      // Always include blog posts (files with isBlogPost metadata)
-      const blogPosts = this.filterBlogPosts(allPublicFiles);
-
-      // Get changed HTML files from public/ directory only
-      const changedPublicFiles =
-        GitUtils.getChangedHtmlFiles().filter((file) =>
-          file.includes("/public/")
-        );
-
-      // Combine blog posts with changed files (remove duplicates)
-      const publicFilesToProcess = [
-        ...blogPosts,
-        ...changedPublicFiles.filter(
-          (file) => !blogPosts.includes(file)
-        ),
-      ];
-
-      additionalHtmlFiles.push(...publicFilesToProcess);
-
-      BuildLogger.info(
-        `⚡ Git-aware mode: processing ${pagesFiles.length} pages files + ${blogPosts.length} blog posts + ${changedPublicFiles.length} changed public files`
-      );
-    } else {
-      // Process all HTML files from public/ directory
-      additionalHtmlFiles.push(...allPublicFiles);
-
-      if (options.gitAware && options.forceAll) {
-        BuildLogger.info(
-          "🔧 Git-aware mode with --force-all: processing all HTML files"
-        );
-      } else if (!GitUtils.isGitRepository()) {
-        BuildLogger.info(
-          "📝 Not a git repository: processing all HTML files"
-        );
-      } else {
-        BuildLogger.info(
-          "📝 Standard mode: processing all HTML files"
-        );
-      }
-    }
-
-    for (const filePath of additionalHtmlFiles) {
+    for (const filePath of pagesFiles) {
       try {
         const content = readFileSync(filePath, "utf-8");
         const processedContent =
@@ -196,50 +152,52 @@ export class HtmlBundleProcessor {
   }
 
   /**
-   * Find HTML files in the root public/ directory
+   * Emit generated HTML files and blog manifest from MarkdownProcessor
    */
-  private findPublicHtmlFiles(): string[] {
-    const publicDir = "public";
-    const files: string[] = [];
+  private async emitGeneratedFiles(
+    emitFile: any,
+    assets: { css: string[]; js: string[] },
+    markdownProcessor: MarkdownProcessor
+  ): Promise<void> {
+    // Emit generated HTML files
+    const generatedFiles = markdownProcessor.getGeneratedFiles();
 
-    if (!existsSync(publicDir)) {
-      return files;
-    }
-
-    const entries = readdirSync(publicDir, { withFileTypes: true });
-
-    for (const entry of entries) {
-      if (entry.isFile() && entry.name.endsWith(".html")) {
-        files.push(join(publicDir, entry.name));
-      }
-    }
-
-    return files;
-  }
-
-  /**
-   * Filter HTML files to identify blog posts (files with isBlogPost metadata)
-   */
-  private filterBlogPosts(htmlFiles: string[]): string[] {
-    const blogPosts: string[] = [];
-
-    for (const filePath of htmlFiles) {
+    for (const [filename, fileData] of generatedFiles) {
       try {
-        const content = readFileSync(filePath, "utf-8");
-        const { metadata } =
-          this.templateProcessor.extractMetadata(content);
+        const processedContent =
+          await HtmlProcessingUtils.processHtmlContent(
+            this.templateProcessor,
+            fileData.content,
+            fileData.metadata.title || "Untitled",
+            assets
+          );
 
-        if (metadata.isBlogPost) {
-          blogPosts.push(filePath);
-        }
+        emitFile({
+          type: "asset",
+          fileName: filename,
+          source: processedContent,
+        });
+
+        BuildLogger.info(`✓ Emitted generated HTML: ${filename}`);
       } catch (error) {
-        // Skip files that can't be read
         BuildLogger.error(
-          `Failed to check blog post status for ${filePath}: ${error}`
+          `Failed to emit generated file ${filename}: ${error}`
         );
+        throw error;
       }
     }
 
-    return blogPosts;
+    // Emit blog manifest
+    const manifestJson = markdownProcessor.generateBlogManifestJson();
+    emitFile({
+      type: "asset",
+      fileName: "data/blog-manifest.json",
+      source: manifestJson,
+    });
+
+    const manifest = JSON.parse(manifestJson);
+    BuildLogger.info(
+      `✓ Emitted blog manifest: data/blog-manifest.json (${manifest.totalPosts} posts, ${manifest.availableTags.length} tags)`
+    );
   }
 }

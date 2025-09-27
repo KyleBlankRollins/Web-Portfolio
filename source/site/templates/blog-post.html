@@ -22,7 +22,10 @@
 
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
-        <kbr-table-of-contents></kbr-table-of-contents>
+        <div class="blog-toc-sticky-container">
+          <kbr-table-of-contents></kbr-table-of-contents>
+          {{#tagsHtml}} {{{tagsHtml}}} {{/tagsHtml}}
+        </div>
       </aside>
 
       <article class="blog-post-content">

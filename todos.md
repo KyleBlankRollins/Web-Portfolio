@@ -13,7 +13,9 @@ This is a list of things that I need or want to do to improve `kyleblankrollins.
 [ ] Add code example component
 [ ] Don't transform markdown code comments into HTML
 
-##
+### Layout
+
+Move tags to be above TOC
 
 ### Blog post persistent highlighting
 

@@ -2,7 +2,7 @@
 title: "LLM as SME"
 description: "While an LLM can't replace a truly knowledgeable human, its a better tool than not having an SME at all."
 keywords: "technical writing, documentation, research, process, AI, LLM"
-date: "2025-09-25"
+date: "2025-09-26"
 tags: [technical writing, research, LLM]
 ---
 
