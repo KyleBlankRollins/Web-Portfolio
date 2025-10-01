@@ -15,12 +15,22 @@ import type {
  * - Post title
  * - Another post title
  *
- * Sections map to statuses:
- * - "Planned" -> planned
- * - "In Progress" / "Researching" / etc -> respective status
- * - "Done" -> published
- * - "Discarded" -> discarded
+ * Valid section headings and their corresponding statuses are defined in VALID_SECTIONS.
  */
+
+/**
+ * Valid section headings in backlog.md and their corresponding PostStatus values
+ */
+const VALID_SECTIONS: Record<string, PostStatus> = {
+  Planned: "planned",
+  Researching: "researching",
+  Outlining: "outlining",
+  Writing: "writing",
+  Editing: "editing",
+  Published: "published",
+  Discarded: "discarded",
+};
+
 export class BacklogParser {
   private backlogPath: string;
 
@@ -63,7 +73,7 @@ export class BacklogParser {
     const lines = content.split("\n");
 
     let currentSection = "";
-    let currentStatus: PostStatus = "planned";
+    let currentStatus: PostStatus | null = null;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -76,7 +86,8 @@ export class BacklogParser {
       }
 
       // Detect list items (- Post title)
-      if (line.startsWith("-")) {
+      // Only parse list items if we're inside a valid section
+      if (line.startsWith("-") && currentStatus !== null) {
         const title = line.replace(/^-\s+/, "").trim();
         if (title) {
           const post: PostMetadata = {
@@ -95,26 +106,25 @@ export class BacklogParser {
 
   /**
    * Map section name to post status
+   * Validates against allowed section headings and logs warnings for unexpected sections
+   * Returns null for invalid sections to signal they should be skipped
    */
-  private sectionToStatus(section: string): PostStatus {
-    const normalized = section.toLowerCase();
+  private sectionToStatus(section: string): PostStatus | null {
+    // Check if section exactly matches a valid section heading
+    if (section in VALID_SECTIONS) {
+      return VALID_SECTIONS[section];
+    }
 
-    if (normalized.includes("progress")) return "writing";
-    if (normalized.includes("research")) return "researching";
-    if (normalized.includes("outline")) return "outlining";
-    if (normalized.includes("edit")) return "editing";
-    if (
-      normalized.includes("done") ||
-      normalized.includes("published")
-    )
-      return "published";
-    if (
-      normalized.includes("discard") ||
-      normalized.includes("abandon")
-    )
-      return "discarded";
+    // Section is not valid - log a warning
+    console.warn(
+      `Admin: Unexpected section heading "${section}" in backlog.md. ` +
+        `Valid sections are: ${Object.keys(VALID_SECTIONS).join(
+          ", "
+        )}. ` +
+        `Posts under this section will be ignored.`
+    );
 
-    return "planned"; // Default
+    return null; // Return null to signal invalid section
   }
 
   /**

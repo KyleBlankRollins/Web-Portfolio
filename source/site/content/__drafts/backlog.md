@@ -1,6 +1,16 @@
 # Post backlog and status
 
-This file contains a list of blog posts I would like to write but haven't completed yet. This is also where I'll track progress on posts. For now, I'll keep it simple with different sections of this doc: Planned, In progress, and Done.
+This file contains a list of blog posts I would like to write but haven't completed yet. This is also where I'll track progress on posts.
+
+Valid section headings (must match exactly):
+
+- Planned
+- Researching
+- Outlining
+- Writing
+- Editing
+- Published
+- Discarded
 
 ## Planned
 
@@ -13,11 +23,11 @@ This file contains a list of blog posts I would like to write but haven't comple
 - Inbox zero and only necessary tabs
 - Intentional work patters - shut the computer down
 
-## In progress
+## Researching
 
 - Rule of thirds
 
-## Done
+## Published
 
 - Typography test page
 - LLM as SME
