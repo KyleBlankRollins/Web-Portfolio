@@ -6,7 +6,24 @@ import type { PostStatus } from "../types/post-metadata.js";
  *
  * Updates backlog.md while preserving formatting and structure.
  * Handles moving posts between sections, updating metadata, and adding new posts.
+ *
+ * IMPORTANT: Section headings must match VALID_SECTIONS in backlog-parser.ts exactly.
  */
+
+/**
+ * Map PostStatus to section heading names
+ * These MUST match the VALID_SECTIONS constant in backlog-parser.ts
+ */
+const STATUS_TO_SECTION: Record<PostStatus, string> = {
+  planned: "Planned",
+  researching: "Researching",
+  outlining: "Outlining",
+  writing: "Writing",
+  editing: "Editing",
+  published: "Published",
+  discarded: "Discarded",
+};
+
 export class BacklogWriter {
   private backlogPath: string;
 
@@ -110,26 +127,10 @@ export class BacklogWriter {
 
   /**
    * Map status to section name
+   * Uses STATUS_TO_SECTION constant which must match VALID_SECTIONS in backlog-parser.ts
    */
   private statusToSectionName(status: PostStatus): string {
-    switch (status) {
-      case "planned":
-        return "Planned";
-      case "researching":
-        return "Researching";
-      case "outlining":
-        return "Outlining";
-      case "writing":
-        return "In progress";
-      case "editing":
-        return "Editing";
-      case "published":
-        return "Done";
-      case "discarded":
-        return "Discarded";
-      default:
-        return "Planned";
-    }
+    return STATUS_TO_SECTION[status] || "Planned";
   }
 
   /**

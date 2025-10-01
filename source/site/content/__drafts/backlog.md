@@ -25,9 +25,17 @@ Valid section headings (must match exactly):
 
 ## Researching
 
+## Outlining
+
+## Writing
+
+## Editing
+
 - Rule of thirds
 
 ## Published
 
 - Typography test page
 - LLM as SME
+
+## Discarded
