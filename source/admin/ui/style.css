@@ -1,0 +1,49 @@
+/**
+ * Admin UI Styles
+ */
+
+.posts-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.status-message {
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.kanban-placeholder {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  background: #fafafa;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+}
+
+.kanban-placeholder p {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.kanban-placeholder p:first-child {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+code {
+  background: #f5f5f5;
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.875em;
+}

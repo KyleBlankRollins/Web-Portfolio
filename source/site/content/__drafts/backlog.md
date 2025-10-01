@@ -4,6 +4,7 @@ This file contains a list of blog posts I would like to write but haven't comple
 
 ## Planned
 
+- Navigating a product deprecation
 - Meeting SMEs where they are
 - Docs and code examples in an LLM world
 - Code example philosophy
@@ -15,8 +16,8 @@ This file contains a list of blog posts I would like to write but haven't comple
 ## In progress
 
 - Rule of thirds
-- LLM as SME
 
 ## Done
 
 - Typography test page
+- LLM as SME

@@ -4,10 +4,6 @@ This is a list of things that I need or want to do to improve `kyleblankrollins.
 
 ## Blog
 
-### Layout
-
-Move tags to be above TOC
-
 ### Blog post persistent highlighting
 
 Using local storage, implement a UI that allows people to select arbitray blog post content (but only blog post content) and apply one of several highlight colors. This feature is strictly limited to individual readers and their specific browser because it'll be using local storage.
