@@ -6,10 +6,10 @@
 
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { adminShellStyles } from "./admin-shell.styles.js";
-import "./admin-navigation.js";
-import "../pages/manage-posts-page.js";
-import "../pages/reports-page.js";
+import { adminShellStyles } from "./admin-shell-styles.js";
+import "../admin-navigation/admin-navigation.js";
+import "../../pages/manage-posts-page.js";
+import "../../pages/reports-page.js";
 
 @customElement("admin-shell")
 export class AdminShell extends LitElement {

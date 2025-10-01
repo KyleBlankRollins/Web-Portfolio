@@ -89,60 +89,6 @@ export const kanbanBoardStyles = css`
     line-height: 1.5;
   }
 
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background: white;
-    border-bottom: 1px solid #e0e0e0;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
-
-  .toolbar-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .toolbar-right {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: #666;
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #4caf50;
-  }
-
-  .status-dot.syncing {
-    background: #ff9800;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-  }
-
   .action-button {
     padding: 0.5rem 1rem;
     border: 1px solid #e0e0e0;
@@ -160,18 +106,5 @@ export const kanbanBoardStyles = css`
 
   .action-button:active {
     transform: scale(0.98);
-  }
-
-  .stats {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.875rem;
-    color: #666;
-  }
-
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
   }
 `;

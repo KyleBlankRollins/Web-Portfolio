@@ -6,7 +6,7 @@
 
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { adminNavigationStyles } from "./admin-navigation.styles.js";
+import { adminNavigationStyles } from "./admin-navigation-styles.js";
 
 export interface NavItem {
   id: string;
@@ -48,9 +48,7 @@ export class AdminNavigation extends LitElement {
         ${NAV_ITEMS.map(
           (item) => html`
             <button
-              class="nav-item ${this.activePage === item.id
-                ? "active"
-                : ""}"
+              class="nav-item ${this.activePage === item.id ? "active" : ""}"
               @click=${() => this.handleNavClick(item.id)}
             >
               <span class="nav-icon">${item.icon}</span>

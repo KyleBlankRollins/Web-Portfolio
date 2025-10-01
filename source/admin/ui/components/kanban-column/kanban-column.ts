@@ -7,12 +7,9 @@
 
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import type {
-  PostMetadata,
-  PostStatus,
-} from "../../types/post-metadata.js";
-import "./post-card.js";
-import { kanbanColumnStyles } from "./kanban-column.styles.js";
+import type { PostMetadata, PostStatus } from "../../../types/post-metadata.js";
+import "../post-card/post-card.js";
+import { kanbanColumnStyles } from "./kanban-column-styles.js";
 
 @customElement("admin-kanban-column")
 export class AdminKanbanColumn extends LitElement {
@@ -103,11 +100,7 @@ export class AdminKanbanColumn extends LitElement {
 
         <div class="column-body ${isEmpty ? "empty" : ""}">
           ${isEmpty
-            ? html`
-                <div class="empty-message">
-                  No posts in this stage
-                </div>
-              `
+            ? html` <div class="empty-message">No posts in this stage</div> `
             : this.posts.map(
                 (post) => html`
                   <admin-post-card .post=${post}></admin-post-card>

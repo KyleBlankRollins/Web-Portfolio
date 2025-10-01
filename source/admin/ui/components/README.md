@@ -227,6 +227,116 @@ admin-shell (Main app container)
 
 - `dragging: boolean` - Visual state while being dragged
 
+---
+
+### 7. `completed-posts-section`
+
+**Files:**
+
+- `completed-posts-section.ts` - Component logic
+- `completed-posts-section.styles.ts` - Component styles
+
+**Purpose:** Displays published blog posts in a searchable and sortable list.
+
+**Responsibilities:**
+
+- Shows all posts with "published" status
+- Provides search functionality (searches title and notes)
+- Provides sorting (by title or publish date, ascending/descending)
+- Makes posts draggable back to Kanban board
+- Displays post count
+
+**Props:**
+
+- None (uses `setPosts()` method)
+
+**Methods:**
+
+- `setPosts(posts: PostMetadata[])` - Update the list of posts to display
+
+**Events Dispatched:**
+
+- `post-drag-start` - When user starts dragging a post
+  ```typescript
+  detail: {
+    post: PostMetadata;
+  }
+  ```
+- `post-drag-end` - When dragging ends
+
+**State:**
+
+- `posts: PostMetadata[]` - All published posts
+- `filteredPosts: PostMetadata[]` - Posts after filtering/sorting
+- `searchQuery: string` - Current search query
+- `sortOption: SortOption` - Current sort method
+- `draggingPost: PostMetadata | null` - Post currently being dragged
+
+**Features:**
+
+- Real-time search filtering
+- Multiple sort options (title A-Z/Z-A, date newest/oldest)
+- Drag-and-drop back to workflow
+- Post count badge
+- Empty state message
+
+---
+
+### 8. `discarded-posts-section`
+
+**Files:**
+
+- `discarded-posts-section.ts` - Component logic
+- `discarded-posts-section.styles.ts` - Component styles
+
+**Purpose:** Drop zone for discarding posts and displays discarded posts with reasons.
+
+**Responsibilities:**
+
+- Acts as drop zone for posts being discarded
+- Shows modal to collect discard reason
+- Displays all discarded posts with their discard reasons
+- Prevents dragging posts out (permanent discard)
+- Shows visual feedback during drag-over
+
+**Props:**
+
+- None (uses `setPosts()` method)
+
+**Methods:**
+
+- `setPosts(posts: PostMetadata[])` - Update the list of discarded posts
+
+**Events Dispatched:**
+
+- `post-discard` - When user confirms discarding a post
+  ```typescript
+  detail: {
+    post: PostMetadata;
+    reason: string;
+  }
+  ```
+
+**State:**
+
+- `posts: PostMetadata[]` - All discarded posts
+- `isDragOver: boolean` - Visual state during drag operations
+- `showModal: boolean` - Modal visibility
+- `pendingPost: PostMetadata | null` - Post waiting to be discarded
+- `discardReason: string` - User-entered discard reason
+
+**Features:**
+
+- Drop zone with visual feedback
+- Modal dialog for discard reason (required)
+- Displays discard reasons for all posts
+- Post count badge
+- Keyboard shortcuts (Escape to cancel, Cmd/Ctrl+Enter to confirm)
+- Empty state message
+- Cannot drag posts out (permanent state)
+
+---
+
 ## Styling Approach
 
 Each component has its own `.styles.ts` file that exports Lit's `css` tagged template:
@@ -264,13 +374,11 @@ The admin UI uses a simple event-driven routing system without external dependen
 ### How It Works
 
 1. **Navigation Component**: Displays page links in the sidebar
-
    - Each page has an ID, label, and icon
    - Clicking a link dispatches a `page-change` CustomEvent
    - Active page is visually highlighted
 
 2. **Shell Component**: Manages routing
-
    - Listens for `page-change` events
    - Updates `activePage` state
    - Sets `?active` attribute on the active page component
@@ -291,7 +399,7 @@ To add a new page:
 3. Import the page component in `admin-shell.ts`
 4. Add the page element in `admin-shell.ts` render method:
    ```html
-   <new-page ?active=${this.activePage === "new-page"}></new-page>
+   <new-page ?active="${this.activePage" ="" ="" ="new-page" }></new-page>
    ```
 
 ## Data Flow

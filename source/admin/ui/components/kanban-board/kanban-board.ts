@@ -7,12 +7,9 @@
 
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import type {
-  PostMetadata,
-  PostStatus,
-} from "../../types/post-metadata.js";
-import "./kanban-column.js";
-import { kanbanBoardStyles } from "./kanban-board.styles.js";
+import type { PostMetadata, PostStatus } from "../../../types/post-metadata.js";
+import "../kanban-column/kanban-column.js";
+import { kanbanBoardStyles } from "./kanban-board-styles.js";
 
 const API_BASE = "http://localhost:4000";
 
@@ -28,8 +25,6 @@ const COLUMNS: ColumnConfig[] = [
   { status: "outlining", title: "Outlining", icon: "📝" },
   { status: "writing", title: "Writing", icon: "✍️" },
   { status: "editing", title: "Editing", icon: "✏️" },
-  { status: "published", title: "Published", icon: "✅" },
-  { status: "discarded", title: "Discarded", icon: "🗑️" },
 ];
 
 @customElement("admin-kanban-board")
@@ -42,9 +37,6 @@ export class AdminKanbanBoard extends LitElement {
 
   @state()
   private error: string | null = null;
-
-  @state()
-  private syncing = false;
 
   static styles = kanbanBoardStyles;
 
@@ -70,8 +62,7 @@ export class AdminKanbanBoard extends LitElement {
 
       this.posts = data.data || [];
     } catch (err) {
-      this.error =
-        err instanceof Error ? err.message : "Unknown error";
+      this.error = err instanceof Error ? err.message : "Unknown error";
       console.error("Failed to load posts:", err);
     } finally {
       this.loading = false;
@@ -84,9 +75,7 @@ export class AdminKanbanBoard extends LitElement {
   private async handleStatusChange(e: CustomEvent) {
     const { postId, oldStatus, newStatus } = e.detail;
 
-    console.log(
-      `Moving post ${postId} from ${oldStatus} to ${newStatus}`
-    );
+    console.log(`Moving post ${postId} from ${oldStatus} to ${newStatus}`);
 
     // Optimistically update the UI
     const postIndex = this.posts.findIndex((p) => p.id === postId);
@@ -97,17 +86,12 @@ export class AdminKanbanBoard extends LitElement {
       p.id === postId ? { ...p, status: newStatus } : p
     );
 
-    this.syncing = true;
-
     try {
-      const response = await fetch(
-        `${API_BASE}/api/posts/${postId}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus }),
-        }
-      );
+      const response = await fetch(`${API_BASE}/api/posts/${postId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
       const data = await response.json();
 
@@ -121,19 +105,8 @@ export class AdminKanbanBoard extends LitElement {
       // Revert the optimistic update
       this.posts = oldPosts;
       this.error =
-        err instanceof Error
-          ? err.message
-          : "Failed to update post status";
-    } finally {
-      this.syncing = false;
+        err instanceof Error ? err.message : "Failed to update post status";
     }
-  }
-
-  /**
-   * Refresh posts from the server
-   */
-  private handleRefresh() {
-    this.loadPosts();
   }
 
   /**
@@ -160,7 +133,7 @@ export class AdminKanbanBoard extends LitElement {
           <div class="error-message">${this.error}</div>
           <button
             class="action-button"
-            @click=${this.handleRefresh}
+            @click=${this.loadPosts}
             style="margin-top: 1rem;"
           >
             Try Again
@@ -169,38 +142,8 @@ export class AdminKanbanBoard extends LitElement {
       `;
     }
 
-    const totalPosts = this.posts.length;
-    const publishedCount = this.posts.filter(
-      (p) => p.status === "published"
-    ).length;
-
     return html`
-      <div class="toolbar">
-        <div class="toolbar-left">
-          <div class="status-indicator">
-            <span
-              class="status-dot ${this.syncing ? "syncing" : ""}"
-            ></span>
-            ${this.syncing ? "Syncing..." : "Connected"}
-          </div>
-          <div class="stats">
-            <span class="stat-item">📊 ${totalPosts} total</span>
-            <span class="stat-item"
-              >✅ ${publishedCount} published</span
-            >
-          </div>
-        </div>
-        <div class="toolbar-right">
-          <button class="action-button" @click=${this.handleRefresh}>
-            🔄 Refresh
-          </button>
-        </div>
-      </div>
-
-      <div
-        class="kanban-board"
-        @post-status-change=${this.handleStatusChange}
-      >
+      <div class="kanban-board" @post-status-change=${this.handleStatusChange}>
         ${COLUMNS.map(
           (column) => html`
             <admin-kanban-column

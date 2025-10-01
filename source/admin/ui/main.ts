@@ -6,7 +6,7 @@
  */
 
 import "./style.css";
-import "./components/admin-shell.js";
+import "./components/admin-shell/admin-shell.js";
 
 /**
  * Initialize the admin UI

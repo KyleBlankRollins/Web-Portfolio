@@ -7,8 +7,8 @@
 
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import type { PostMetadata } from "../../types/post-metadata.js";
-import { postCardStyles } from "./post-card.styles.js";
+import type { PostMetadata } from "../../../types/post-metadata.js";
+import { postCardStyles } from "./post-card-styles.js";
 
 @customElement("admin-post-card")
 export class AdminPostCard extends LitElement {
@@ -24,10 +24,7 @@ export class AdminPostCard extends LitElement {
     this.dragging = true;
     if (e.dataTransfer) {
       e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData(
-        "application/json",
-        JSON.stringify(this.post)
-      );
+      e.dataTransfer.setData("application/json", JSON.stringify(this.post));
       e.dataTransfer.setData("text/plain", this.post.id);
     }
 
@@ -85,8 +82,8 @@ export class AdminPostCard extends LitElement {
                   ${post.priority === "high"
                     ? "🔥"
                     : post.priority === "medium"
-                    ? "⚡"
-                    : "📌"}
+                      ? "⚡"
+                      : "📌"}
                   ${post.priority}
                 </span>
               `
@@ -103,9 +100,7 @@ export class AdminPostCard extends LitElement {
         ${post.tags && post.tags.length > 0
           ? html`
               <div class="post-tags">
-                ${post.tags.map(
-                  (tag) => html`<span class="tag">${tag}</span>`
-                )}
+                ${post.tags.map((tag) => html`<span class="tag">${tag}</span>`)}
               </div>
             `
           : ""}
