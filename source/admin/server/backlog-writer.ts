@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as prettier from "prettier";
 import type { PostStatus } from "../types/post-metadata.js";
 
 /**
@@ -6,6 +7,7 @@ import type { PostStatus } from "../types/post-metadata.js";
  *
  * Updates backlog.md while preserving formatting and structure.
  * Handles moving posts between sections, updating metadata, and adding new posts.
+ * Uses Prettier to format the markdown file after making changes.
  *
  * IMPORTANT: Section headings must match VALID_SECTIONS in backlog-parser.ts exactly.
  */
@@ -32,9 +34,30 @@ export class BacklogWriter {
   }
 
   /**
+   * Format the backlog file using Prettier
+   */
+  private async formatBacklogFile(): Promise<void> {
+    try {
+      const content = fs.readFileSync(this.backlogPath, "utf-8");
+      const formatted = await prettier.format(content, {
+        parser: "markdown",
+        filepath: this.backlogPath,
+      });
+      fs.writeFileSync(this.backlogPath, formatted, "utf-8");
+      console.log("Admin: Formatted backlog.md with Prettier");
+    } catch (error) {
+      console.error("Admin: Failed to format backlog.md", error);
+      // Don't throw - formatting is optional
+    }
+  }
+
+  /**
    * Update a post's status by moving it to the appropriate section
    */
-  updatePostStatus(postId: string, newStatus: PostStatus): boolean {
+  async updatePostStatus(
+    postId: string,
+    newStatus: PostStatus
+  ): Promise<boolean> {
     try {
       const content = fs.readFileSync(this.backlogPath, "utf-8");
       const lines = content.split("\n");
@@ -70,6 +93,10 @@ export class BacklogWriter {
       );
 
       fs.writeFileSync(this.backlogPath, newContent, "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
       console.log(`Admin: Moved post "${postTitle}" to ${newStatus}`);
       return true;
     } catch (error) {
@@ -112,10 +139,7 @@ export class BacklogWriter {
 
     // Find where to insert (after section header, skip blank lines)
     let insertIndex = sectionIndex + 1;
-    while (
-      insertIndex < lines.length &&
-      lines[insertIndex].trim() === ""
-    ) {
+    while (insertIndex < lines.length && lines[insertIndex].trim() === "") {
       insertIndex++;
     }
 
@@ -148,15 +172,18 @@ export class BacklogWriter {
   /**
    * Add a new post to backlog
    */
-  addPost(title: string, status: PostStatus = "planned"): boolean {
+  async addPost(
+    title: string,
+    status: PostStatus = "planned"
+  ): Promise<boolean> {
     try {
       const content = fs.readFileSync(this.backlogPath, "utf-8");
-      const newContent = this.addPostToSection(
-        content,
-        title,
-        status
-      );
+      const newContent = this.addPostToSection(content, title, status);
       fs.writeFileSync(this.backlogPath, newContent, "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
       console.log(`Admin: Added new post "${title}" to ${status}`);
       return true;
     } catch (error) {
@@ -168,7 +195,7 @@ export class BacklogWriter {
   /**
    * Remove a post from backlog (used for discarding)
    */
-  removePost(postId: string): boolean {
+  async removePost(postId: string): Promise<boolean> {
     try {
       const content = fs.readFileSync(this.backlogPath, "utf-8");
       const lines = content.split("\n");
@@ -183,11 +210,11 @@ export class BacklogWriter {
         return true;
       });
 
-      fs.writeFileSync(
-        this.backlogPath,
-        filteredLines.join("\n"),
-        "utf-8"
-      );
+      fs.writeFileSync(this.backlogPath, filteredLines.join("\n"), "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
       console.log(`Admin: Removed post ${postId}`);
       return true;
     } catch (error) {

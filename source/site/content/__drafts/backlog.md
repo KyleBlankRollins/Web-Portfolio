@@ -25,13 +25,13 @@ Valid section headings (must match exactly):
 
 ## Researching
 
+- Rule of thirds
+
 ## Outlining
 
 ## Writing
 
 ## Editing
-
-- Rule of thirds
 
 ## Published
 

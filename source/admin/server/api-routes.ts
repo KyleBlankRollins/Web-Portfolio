@@ -1,10 +1,7 @@
 import express, { type Request, type Response } from "express";
 import { BacklogParser } from "./backlog-parser.js";
 import { BacklogWriter } from "./backlog-writer.js";
-import type {
-  ApiResponse,
-  UpdatePostRequest,
-} from "../types/post-metadata.js";
+import type { ApiResponse, UpdatePostRequest } from "../types/post-metadata.js";
 
 /**
  * Setup API routes for the admin server
@@ -30,8 +27,7 @@ export function setupApiRoutes(
       console.error("API Error: Failed to get posts", error);
       const response: ApiResponse<null> = {
         success: false,
-        error:
-          error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : "Unknown error",
       };
       res.status(500).json(response);
     }
@@ -41,14 +37,14 @@ export function setupApiRoutes(
    * PATCH /api/posts/:id
    * Update a post's metadata
    */
-  app.patch("/api/posts/:id", (req: Request, res: Response) => {
+  app.patch("/api/posts/:id", async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const updates: UpdatePostRequest = req.body;
 
       // For now, we only support status updates
       if (updates.status) {
-        const success = writer.updatePostStatus(id, updates.status);
+        const success = await writer.updatePostStatus(id, updates.status);
 
         if (success) {
           const response: ApiResponse<{ id: string }> = {
@@ -74,8 +70,7 @@ export function setupApiRoutes(
       console.error("API Error: Failed to update post", error);
       const response: ApiResponse<null> = {
         success: false,
-        error:
-          error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : "Unknown error",
       };
       res.status(500).json(response);
     }
@@ -85,7 +80,7 @@ export function setupApiRoutes(
    * POST /api/posts
    * Create a new post
    */
-  app.post("/api/posts", (req: Request, res: Response) => {
+  app.post("/api/posts", async (req: Request, res: Response) => {
     try {
       const { title, status = "planned" } = req.body;
 
@@ -98,7 +93,7 @@ export function setupApiRoutes(
         return;
       }
 
-      const success = writer.addPost(title, status);
+      const success = await writer.addPost(title, status);
 
       if (success) {
         const response: ApiResponse<{ title: string }> = {
@@ -117,8 +112,7 @@ export function setupApiRoutes(
       console.error("API Error: Failed to create post", error);
       const response: ApiResponse<null> = {
         success: false,
-        error:
-          error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : "Unknown error",
       };
       res.status(500).json(response);
     }
@@ -128,10 +122,10 @@ export function setupApiRoutes(
    * DELETE /api/posts/:id
    * Remove a post from backlog
    */
-  app.delete("/api/posts/:id", (req: Request, res: Response) => {
+  app.delete("/api/posts/:id", async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const success = writer.removePost(id);
+      const success = await writer.removePost(id);
 
       if (success) {
         const response: ApiResponse<{ id: string }> = {
@@ -150,8 +144,7 @@ export function setupApiRoutes(
       console.error("API Error: Failed to remove post", error);
       const response: ApiResponse<null> = {
         success: false,
-        error:
-          error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : "Unknown error",
       };
       res.status(500).json(response);
     }
