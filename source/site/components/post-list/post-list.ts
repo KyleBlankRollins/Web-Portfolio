@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
-import { postListStyles } from "./post-list-styles.js";
+import { postListStyles } from "./post-list.style.js";
 
 import {
   typographyStyles,
@@ -40,19 +40,19 @@ export class KbrPostList extends LitElement {
   declare postsPerPage: number;
 
   @state()
-  private declare posts: BlogPostMetadata[];
+  declare private posts: BlogPostMetadata[];
 
   @state()
-  private declare filteredPosts: BlogPostMetadata[];
+  declare private filteredPosts: BlogPostMetadata[];
 
   @state()
-  private declare currentFilter: string | null;
+  declare private currentFilter: string | null;
 
   @state()
-  private declare currentPage: number;
+  declare private currentPage: number;
 
   @state()
-  private declare isLoading: boolean;
+  declare private isLoading: boolean;
 
   private boundHandleTagFilterChange: (event: Event) => void;
 
@@ -75,8 +75,7 @@ export class KbrPostList extends LitElement {
     this.isLoading = false;
 
     // Bind the event handler once to use with addEventListener/removeEventListener
-    this.boundHandleTagFilterChange =
-      this.handleTagFilterChange.bind(this);
+    this.boundHandleTagFilterChange = this.handleTagFilterChange.bind(this);
 
     // Handle tag filtering events from post cards
     this.addEventListener(
@@ -91,10 +90,7 @@ export class KbrPostList extends LitElement {
 
     // Listen for tag filter changes from tag-filter components
     // Listen on document since the event bubbles up from tag-filter
-    document.addEventListener(
-      "tag-changed",
-      this.boundHandleTagFilterChange
-    );
+    document.addEventListener("tag-changed", this.boundHandleTagFilterChange);
   }
 
   disconnectedCallback() {
@@ -112,9 +108,7 @@ export class KbrPostList extends LitElement {
     try {
       const response = await fetch("/data/blog-manifest.json");
       if (!response.ok) {
-        throw new Error(
-          `Failed to load blog posts: ${response.statusText}`
-        );
+        throw new Error(`Failed to load blog posts: ${response.statusText}`);
       }
 
       const manifest: BlogManifest = await response.json();
@@ -142,13 +136,8 @@ export class KbrPostList extends LitElement {
 
     const startIndex = (this.currentPage - 1) * this.postsPerPage;
     const endIndex = startIndex + this.postsPerPage;
-    const currentPosts = this.filteredPosts.slice(
-      startIndex,
-      endIndex
-    );
-    const totalPages = Math.ceil(
-      this.filteredPosts.length / this.postsPerPage
-    );
+    const currentPosts = this.filteredPosts.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
 
     return html`
       <div class="post-list-container">
@@ -241,9 +230,7 @@ export class KbrPostList extends LitElement {
         ${pages.map(
           (pageInfo) =>
             html`<button
-              class="pagination-btn ${pageInfo.active
-                ? "active"
-                : ""}"
+              class="pagination-btn ${pageInfo.active ? "active" : ""}"
               ?disabled="${pageInfo.disabled}"
               @click="${() => this.goToPage(pageInfo.page)}"
               data-page="${pageInfo.page}"
@@ -274,9 +261,7 @@ export class KbrPostList extends LitElement {
       this.currentPage = 1;
 
       this.filteredPosts = this.posts.filter((post) =>
-        post.tags.some(
-          (postTag) => postTag.toLowerCase() === tag.toLowerCase()
-        )
+        post.tags.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())
       );
     } else {
       // Clear filter without triggering attribute change
@@ -287,9 +272,7 @@ export class KbrPostList extends LitElement {
   }
 
   private goToPage(page: number): void {
-    const totalPages = Math.ceil(
-      this.filteredPosts.length / this.postsPerPage
-    );
+    const totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
 
     if (page >= 1 && page <= totalPages) {
       this.currentPage = page;

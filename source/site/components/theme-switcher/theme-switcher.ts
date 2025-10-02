@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { themeSwitcherStyles } from "./theme-switcher-styles.js";
+import { themeSwitcherStyles } from "./theme-switcher.style.js";
 import type { ThemeConfig } from "../../theme-config.js";
 
 /**
@@ -123,9 +123,7 @@ export class KbrThemeSwitcher extends LitElement {
    * Listen for system color scheme changes
    */
   private setupSystemColorSchemeListener() {
-    const mediaQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
     mediaQuery.addEventListener("change", (e) => {
       // Only update if user hasn't explicitly set a preference
@@ -235,41 +233,25 @@ export class KbrThemeSwitcher extends LitElement {
       !Array.isArray(this.themes) ||
       this.themes.length === 0
     ) {
-      return html`<div class="theme-switcher loading">
-        Loading themes...
-      </div>`;
+      return html`<div class="theme-switcher loading">Loading themes...</div>`;
     }
 
     return html`
       <div
-        class="theme-switcher ${this.isCollapsed
-          ? "collapsed"
-          : "expanded"}"
+        class="theme-switcher ${this.isCollapsed ? "collapsed" : "expanded"}"
       >
         ${this.isCollapsed
           ? html`
               <!-- Collapsed State -->
-              <div
-                class="collapsed-trigger"
-                @click=${this.handleToggle}
-              >
-                <kbr-icon
-                  name="projector"
-                  classes="trigger-icon"
-                ></kbr-icon>
+              <div class="collapsed-trigger" @click=${this.handleToggle}>
+                <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
                 <span class="trigger-text">Themes</span>
               </div>
             `
           : html`
               <!-- Expanded State -->
-              <div
-                class="expanded-header"
-                @click=${this.handleToggle}
-              >
-                <kbr-icon
-                  name="projector"
-                  classes="trigger-icon"
-                ></kbr-icon>
+              <div class="expanded-header" @click=${this.handleToggle}>
+                <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
                 <span class="trigger-text">Themes</span>
               </div>
               <div class="theme-controls">
@@ -284,9 +266,7 @@ export class KbrThemeSwitcher extends LitElement {
                   >
                     ${this.themes.map(
                       (theme) => html`
-                        <option value=${theme.id}>
-                          ${theme.name}
-                        </option>
+                        <option value=${theme.id}>${theme.name}</option>
                       `
                     )}
                   </select>

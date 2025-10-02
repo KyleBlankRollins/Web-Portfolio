@@ -1,6 +1,6 @@
 import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { imageLightboxStyles } from "./image-lightbox-styles.js";
+import { imageLightboxStyles } from "./image-lightbox.style.js";
 
 /**
  * Image Lightbox Component
@@ -49,19 +49,19 @@ export class KbrImageLightbox extends LitElement {
    * Modal open state
    */
   @state()
-  private declare isModalOpen: boolean;
+  declare private isModalOpen: boolean;
 
   /**
    * Loading state
    */
   @state()
-  private declare isLoading: boolean;
+  declare private isLoading: boolean;
 
   /**
    * Error state
    */
   @state()
-  private declare hasError: boolean;
+  declare private hasError: boolean;
 
   connectedCallback() {
     super.connectedCallback();
@@ -227,11 +227,7 @@ export class KbrImageLightbox extends LitElement {
         </button>
 
         <div class="modal-content" @click=${this.stopPropagation}>
-          <img
-            class="modal-image"
-            src="${this.src}"
-            alt="${this.alt}"
-          />
+          <img class="modal-image" src="${this.src}" alt="${this.alt}" />
 
           ${this.caption
             ? html` <div class="modal-caption">${this.caption}</div> `

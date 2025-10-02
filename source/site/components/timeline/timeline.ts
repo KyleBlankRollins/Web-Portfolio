@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
-import { timelineStyles } from "./timeline-styles.js";
+import { timelineStyles } from "./timeline.style.js";
 import {
   typographyStyles,
   buttonStyles,
@@ -45,13 +45,13 @@ export class KbrTimeline extends LitElement {
   declare dataUrl: string;
 
   @state()
-  private declare experienceData: CompanyData[];
+  declare private experienceData: CompanyData[];
 
   @state()
-  private declare isLoading: boolean;
+  declare private isLoading: boolean;
 
   @state()
-  private declare error: string | null;
+  declare private error: string | null;
 
   static styles = [
     typographyStyles,
@@ -92,9 +92,7 @@ export class KbrTimeline extends LitElement {
     try {
       const response = await fetch(this.dataUrl);
       if (!response.ok) {
-        throw new Error(
-          `Failed to load experience data: ${response.status}`
-        );
+        throw new Error(`Failed to load experience data: ${response.status}`);
       }
 
       const data: CompanyData[] = await response.json();
@@ -102,9 +100,7 @@ export class KbrTimeline extends LitElement {
     } catch (error) {
       console.error("Error loading experience data:", error);
       this.error =
-        error instanceof Error
-          ? error.message
-          : "Unknown error occurred";
+        error instanceof Error ? error.message : "Unknown error occurred";
     } finally {
       this.isLoading = false;
     }
@@ -221,9 +217,7 @@ export class KbrTimeline extends LitElement {
                         location=${position.location}
                         employment-type=${position.employmentType}
                         description=${position.description}
-                        skills=${JSON.stringify(
-                          position.skills || []
-                        )}
+                        skills=${JSON.stringify(position.skills || [])}
                       ></kbr-timeline-entry>
                     `
                   )}

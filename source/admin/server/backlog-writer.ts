@@ -1,0 +1,225 @@
+import * as fs from "fs";
+import * as prettier from "prettier";
+import type { PostStatus } from "../types/post-metadata.js";
+
+/**
+ * Backlog Writer
+ *
+ * Updates backlog.md while preserving formatting and structure.
+ * Handles moving posts between sections, updating metadata, and adding new posts.
+ * Uses Prettier to format the markdown file after making changes.
+ *
+ * IMPORTANT: Section headings must match VALID_SECTIONS in backlog-parser.ts exactly.
+ */
+
+/**
+ * Map PostStatus to section heading names
+ * These MUST match the VALID_SECTIONS constant in backlog-parser.ts
+ */
+const STATUS_TO_SECTION: Record<PostStatus, string> = {
+  planned: "Planned",
+  researching: "Researching",
+  outlining: "Outlining",
+  writing: "Writing",
+  editing: "Editing",
+  published: "Published",
+  discarded: "Discarded",
+};
+
+export class BacklogWriter {
+  private backlogPath: string;
+
+  constructor(backlogPath: string) {
+    this.backlogPath = backlogPath;
+  }
+
+  /**
+   * Format the backlog file using Prettier
+   */
+  private async formatBacklogFile(): Promise<void> {
+    try {
+      const content = fs.readFileSync(this.backlogPath, "utf-8");
+      const formatted = await prettier.format(content, {
+        parser: "markdown",
+        filepath: this.backlogPath,
+      });
+      fs.writeFileSync(this.backlogPath, formatted, "utf-8");
+      console.log("Admin: Formatted backlog.md with Prettier");
+    } catch (error) {
+      console.error("Admin: Failed to format backlog.md", error);
+      // Don't throw - formatting is optional
+    }
+  }
+
+  /**
+   * Update a post's status by moving it to the appropriate section
+   */
+  async updatePostStatus(
+    postId: string,
+    newStatus: PostStatus
+  ): Promise<boolean> {
+    try {
+      const content = fs.readFileSync(this.backlogPath, "utf-8");
+      const lines = content.split("\n");
+
+      // Find and remove the post from its current location
+      let postTitle: string | null = null;
+      const filteredLines: string[] = [];
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith("-")) {
+          const title = trimmed.replace(/^-\s+/, "").trim();
+          const id = this.titleToId(title);
+
+          if (id === postId) {
+            postTitle = title;
+            continue; // Skip this line (remove post)
+          }
+        }
+        filteredLines.push(line);
+      }
+
+      if (!postTitle) {
+        console.warn(`Admin: Post ${postId} not found in backlog`);
+        return false;
+      }
+
+      // Add post to new section
+      const newContent = this.addPostToSection(
+        filteredLines.join("\n"),
+        postTitle,
+        newStatus
+      );
+
+      fs.writeFileSync(this.backlogPath, newContent, "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
+      console.log(`Admin: Moved post "${postTitle}" to ${newStatus}`);
+      return true;
+    } catch (error) {
+      console.error("Admin: Failed to update post status", error);
+      return false;
+    }
+  }
+
+  /**
+   * Add a post to a specific section
+   */
+  private addPostToSection(
+    content: string,
+    postTitle: string,
+    status: PostStatus
+  ): string {
+    const lines = content.split("\n");
+    const sectionName = this.statusToSectionName(status);
+    const sectionHeader = `## ${sectionName}`;
+
+    // Find the target section
+    let sectionIndex = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+
+      if (line === sectionHeader) {
+        sectionIndex = i;
+        break;
+      }
+    }
+
+    // If section not found, create it
+    if (sectionIndex === -1) {
+      lines.push("");
+      lines.push(sectionHeader);
+      lines.push("");
+      sectionIndex = lines.length - 2;
+    }
+
+    // Find where to insert (after section header, skip blank lines)
+    let insertIndex = sectionIndex + 1;
+    while (insertIndex < lines.length && lines[insertIndex].trim() === "") {
+      insertIndex++;
+    }
+
+    // Insert the post
+    lines.splice(insertIndex, 0, `- ${postTitle}`);
+
+    return lines.join("\n");
+  }
+
+  /**
+   * Map status to section name
+   * Uses STATUS_TO_SECTION constant which must match VALID_SECTIONS in backlog-parser.ts
+   */
+  private statusToSectionName(status: PostStatus): string {
+    return STATUS_TO_SECTION[status] || "Planned";
+  }
+
+  /**
+   * Convert post title to ID (must match parser logic)
+   */
+  private titleToId(title: string): string {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .trim();
+  }
+
+  /**
+   * Add a new post to backlog
+   */
+  async addPost(
+    title: string,
+    status: PostStatus = "planned"
+  ): Promise<boolean> {
+    try {
+      const content = fs.readFileSync(this.backlogPath, "utf-8");
+      const newContent = this.addPostToSection(content, title, status);
+      fs.writeFileSync(this.backlogPath, newContent, "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
+      console.log(`Admin: Added new post "${title}" to ${status}`);
+      return true;
+    } catch (error) {
+      console.error("Admin: Failed to add post", error);
+      return false;
+    }
+  }
+
+  /**
+   * Remove a post from backlog (used for discarding)
+   */
+  async removePost(postId: string): Promise<boolean> {
+    try {
+      const content = fs.readFileSync(this.backlogPath, "utf-8");
+      const lines = content.split("\n");
+
+      const filteredLines = lines.filter((line) => {
+        const trimmed = line.trim();
+        if (trimmed.startsWith("-")) {
+          const title = trimmed.replace(/^-\s+/, "").trim();
+          const id = this.titleToId(title);
+          return id !== postId;
+        }
+        return true;
+      });
+
+      fs.writeFileSync(this.backlogPath, filteredLines.join("\n"), "utf-8");
+
+      // Format the file with Prettier
+      await this.formatBacklogFile();
+
+      console.log(`Admin: Removed post ${postId}`);
+      return true;
+    } catch (error) {
+      console.error("Admin: Failed to remove post", error);
+      return false;
+    }
+  }
+}

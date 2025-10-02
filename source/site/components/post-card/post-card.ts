@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { postCardStyles } from "./post-card-styles.js";
+import { postCardStyles } from "./post-card.style.js";
 import {
   typographyStyles,
   buttonStyles,
@@ -114,9 +114,7 @@ export class KbrPostCard extends LitElement {
             : ""}
 
           <footer class="post-card-footer">
-            <a href="${this.displayUrl}" class="read-more-link"
-              >Read more →</a
-            >
+            <a href="${this.displayUrl}" class="read-more-link">Read more →</a>
           </footer>
         </div>
       </article>

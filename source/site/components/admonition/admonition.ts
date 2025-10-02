@@ -1,7 +1,7 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { typographyStyles } from "../../styles/shared-styles.js";
-import { admonitionStyles } from "./admonition-styles.js";
+import { admonitionStyles } from "./admonition.style.js";
 import "../icon/icon.js";
 
 /**
@@ -64,9 +64,7 @@ export class KbrAdmonition extends LitElement {
   }
 
   private hasTitle(): boolean {
-    return Boolean(
-      this.admonitionTitle && this.admonitionTitle.trim()
-    );
+    return Boolean(this.admonitionTitle && this.admonitionTitle.trim());
   }
 
   render() {
@@ -74,19 +72,12 @@ export class KbrAdmonition extends LitElement {
     const hasTitle = this.hasTitle();
 
     return html`
-      <div
-        class="admonition ${config.class} ${hasTitle
-          ? ""
-          : "compact"}"
-      >
+      <div class="admonition ${config.class} ${hasTitle ? "" : "compact"}">
         ${hasTitle
           ? html`
               <!-- Header layout -->
               <div class="admonition-header">
-                <kbr-icon
-                  name="${config.icon}"
-                  size="1.5rem"
-                ></kbr-icon>
+                <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
                 <strong>${this.admonitionTitle}</strong>
               </div>
               <div class="admonition-content">
@@ -96,10 +87,7 @@ export class KbrAdmonition extends LitElement {
           : html`
               <!-- Compact layout -->
               <div class="admonition-icon">
-                <kbr-icon
-                  name="${config.icon}"
-                  size="1.5rem"
-                ></kbr-icon>
+                <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
               </div>
               <div class="admonition-content">
                 <slot></slot>

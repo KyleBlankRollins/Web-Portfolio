@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { navigationStyles } from "./navigation-styles.js";
+import { navigationStyles } from "./navigation.style.js";
 import {
   typographyStyles,
   buttonStyles,
@@ -16,7 +16,7 @@ import {
 @customElement("kbr-navigation")
 export class KbrNavigation extends LitElement {
   @state()
-  private declare currentPath: string;
+  declare private currentPath: string;
 
   static styles = [
     typographyStyles,
@@ -50,18 +50,14 @@ export class KbrNavigation extends LitElement {
               <li>
                 <a
                   href="/portfolio.html"
-                  class="nav-link ${this.getLinkClass(
-                    "/portfolio.html"
-                  )}"
+                  class="nav-link ${this.getLinkClass("/portfolio.html")}"
                   >Portfolio</a
                 >
               </li>
               <li>
                 <a
                   href="/career.html"
-                  class="nav-link ${this.getLinkClass(
-                    "/career.html"
-                  )}"
+                  class="nav-link ${this.getLinkClass("/career.html")}"
                   >Career</a
                 >
               </li>

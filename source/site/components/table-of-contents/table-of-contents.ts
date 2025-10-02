@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, state, property } from "lit/decorators.js";
-import { tableOfContentsStyles } from "./table-of-contents-styles.js";
+import { tableOfContentsStyles } from "./table-of-contents.style.js";
 import {
   typographyStyles,
   buttonStyles,
@@ -42,16 +42,16 @@ export class KbrTableOfContents extends LitElement {
   declare targetSelector: string;
 
   @state()
-  private declare tocItems: TocItem[];
+  declare private tocItems: TocItem[];
 
   @state()
-  private declare activeId: string;
+  declare private activeId: string;
 
   @state()
-  private declare showTopIndicator: boolean;
+  declare private showTopIndicator: boolean;
 
   @state()
-  private declare showBottomIndicator: boolean;
+  declare private showBottomIndicator: boolean;
 
   private observer: IntersectionObserver | null = null;
   private tocContainer: HTMLElement | null = null;
@@ -84,9 +84,7 @@ export class KbrTableOfContents extends LitElement {
     super.connectedCallback();
     // Wait for DOM to be ready, then generate TOC
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () =>
-        this.generateToc()
-      );
+      document.addEventListener("DOMContentLoaded", () => this.generateToc());
     } else {
       this.generateToc();
     }
@@ -127,15 +125,13 @@ export class KbrTableOfContents extends LitElement {
   private updateScrollIndicators(): void {
     if (!this.tocContainer) return;
 
-    const { scrollTop, scrollHeight, clientHeight } =
-      this.tocContainer;
+    const { scrollTop, scrollHeight, clientHeight } = this.tocContainer;
 
     // Show top indicator if scrolled down
     this.showTopIndicator = scrollTop > 10;
 
     // Show bottom indicator if there's more content below
-    this.showBottomIndicator =
-      scrollTop < scrollHeight - clientHeight - 10;
+    this.showBottomIndicator = scrollTop < scrollHeight - clientHeight - 10;
   }
 
   private scrollActiveEntryIntoView(): void {
@@ -157,8 +153,7 @@ export class KbrTableOfContents extends LitElement {
       linkRect.top - containerRect.top + this.tocContainer.scrollTop;
     const linkBottom = linkTop + linkRect.height;
     const containerTop = this.tocContainer.scrollTop;
-    const containerBottom =
-      containerTop + this.tocContainer.clientHeight;
+    const containerBottom = containerTop + this.tocContainer.clientHeight;
 
     // Add some padding to ensure the item isn't right at the edge
     const padding = 20;
@@ -205,8 +200,7 @@ export class KbrTableOfContents extends LitElement {
   // Public method to update TOC with heading data directly
   public updateWithHeadings(headings: TocItem[]): void {
     this.tocItems = headings.filter(
-      (item) =>
-        item.level >= this.minLevel && item.level <= this.maxLevel
+      (item) => item.level >= this.minLevel && item.level <= this.maxLevel
     );
     this.setupIntersectionObserver();
     this.requestUpdate(); // Trigger re-render
@@ -228,8 +222,7 @@ export class KbrTableOfContents extends LitElement {
 
       if (timelineElement && timelineElement.shadowRoot) {
         // Search within the timeline's shadow DOM
-        targetElement =
-          timelineElement.shadowRoot.querySelector(".timeline");
+        targetElement = timelineElement.shadowRoot.querySelector(".timeline");
       }
     } else {
       // Find the target container (default to main, article, or .content)
@@ -342,8 +335,7 @@ export class KbrTableOfContents extends LitElement {
       <div class="toc-wrapper">
         <!-- Top scroll indicator -->
         <div
-          class="scroll-indicator scroll-indicator-top ${this
-            .showTopIndicator
+          class="scroll-indicator scroll-indicator-top ${this.showTopIndicator
             ? "visible"
             : ""}"
         >
@@ -399,9 +391,7 @@ export class KbrTableOfContents extends LitElement {
       <li class="toc-item toc-level-${item.level}">
         <a
           href="#${item.id}"
-          class="toc-link ui-label ${this.activeId === item.id
-            ? "active"
-            : ""}"
+          class="toc-link ui-label ${this.activeId === item.id ? "active" : ""}"
           @click="${this.handleLinkClick}"
         >
           ${item.text}
