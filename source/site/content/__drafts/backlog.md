@@ -14,6 +14,8 @@ Valid section headings (must match exactly):
 
 ## Planned
 
+- Using agentic workflows to build stuff quickly (like a blog post admin server and UI)
+- Dealing with ambiguity (or choice is bad and artificial limitation is helpful)
 - Navigating a product deprecation
 - Meeting SMEs where they are
 - Docs and code examples in an LLM world
@@ -21,17 +23,18 @@ Valid section headings (must match exactly):
 - The promotion paradox (do work outside of team, etc)
 - Strategies for scaling yourself
 - Inbox zero and only necessary tabs
-- Intentional work patters - shut the computer down
 
 ## Researching
 
-- Rule of thirds
+- Intentional work patterns - shut the computer down
 
 ## Outlining
 
 ## Writing
 
 ## Editing
+
+- Rule of thirds
 
 ## Published
 
