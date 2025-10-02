@@ -36,25 +36,25 @@ source/site/components/
 ├── anchor-copy.ts             # Simple component with programmatic style injection
 ├── navigation/
 │   ├── navigation.ts          # Lit component logic
-│   └── navigation-styles.ts   # Dedicated component styles
+│   └── navigation.style.ts    # Dedicated component styles
 ├── post-card/
 │   ├── post-card.ts           # Lit component logic
-│   └── post-card-styles.ts    # Dedicated component styles
+│   └── post-card.style.ts     # Dedicated component styles
 ├── post-list/
 │   ├── post-list.ts           # Lit component logic
-│   └── post-list-styles.ts    # Dedicated component styles
+│   └── post-list.style.ts     # Dedicated component styles
 ├── table-of-contents/
 │   ├── table-of-contents.ts   # Lit component logic
-│   └── table-of-contents-styles.ts # Dedicated component styles
+│   └── table-of-contents.style.ts # Dedicated component styles
 ├── tag-filter/
 │   ├── tag-filter.ts          # Lit component logic
-│   └── tag-filter-styles.ts   # Dedicated component styles
+│   └── tag-filter.style.ts    # Dedicated component styles
 ├── timeline/
 │   ├── timeline.ts            # Lit component logic
-│   └── timeline-styles.ts     # Dedicated component styles
+│   └── timeline.style.ts      # Dedicated component styles
 └── timeline-entry/
     ├── timeline-entry.ts      # Lit component logic
-    └── timeline-entry-styles.ts # Dedicated component styles
+    └── timeline-entry.style.ts # Dedicated component styles
 ```
 
 **Note**: Data files are now properly located in the `public/` directory for static asset serving, separate from source code.
@@ -68,21 +68,21 @@ Each complex component gets its own directory under `source/site/components/`:
 ```
 source/site/components/
 ├── component-name/
-│   ├── component-name.ts          # Component logic and template
-│   └── component-name-styles.ts   # Component-specific styles
-└── simple-component.ts            # Simple components may remain as single files
+│   ├── component-name.ts       # Component logic and template
+│   └── component-name.style.ts # Component-specific styles
+└── simple-component.ts         # Simple components may remain as single files
 ```
 
 ### File Naming Conventions
 
 - **Component Logic**: `kebab-case-name.ts` (matches the custom element name)
-- **Component Styles**: `kebab-case-name-styles.ts` (same name with `-styles` suffix)
+- **Component Styles**: `kebab-case-name.style.ts` (same name with `.style` suffix)
 - **Style Export**: Export should be `camelCaseName + 'Styles'` (e.g., `tagFilterStyles`)
 
 ### Import Patterns
 
 - **Shared Styles**: Import from `../../styles/shared-styles.js`
-- **Component Styles**: Import from `./component-name-styles.js`
+- **Component Styles**: Import from `./component-name.style.js`
 - **Import Order**: Shared styles first, then component styles
 
 ## Layer Hierarchy
@@ -192,9 +192,9 @@ export const buttonStyles = css`
 **Purpose**: Component-specific styling in dedicated TypeScript files alongside component logic
 
 **Architecture Pattern**:
-Each Lit component has its styles defined in a separate `*-styles.ts` file, which is then imported and combined with shared styles:
+Each Lit component has its styles defined in a separate `*.style.ts` file, which is then imported and combined with shared styles:
 
-**Component Styles File** (`my-component-styles.ts`):
+**Component Styles File** (`my-component.style.ts`):
 
 ```typescript
 import { css } from "lit";
@@ -224,11 +224,8 @@ export const myComponentStyles = css`
 ```typescript
 import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { myComponentStyles } from "./my-component-styles.js";
-import {
-  typographyStyles,
-  buttonStyles,
-} from "../../styles/shared-styles.js";
+import { myComponentStyles } from "./my-component.style.js";
+import { typographyStyles, buttonStyles } from "../../styles/shared-styles.js";
 
 @customElement("my-component")
 export class MyComponent extends LitElement {
@@ -261,7 +258,7 @@ Lit Element provides an elegant solution for Shadow DOM styling challenges:
 
 Most components use dedicated style files that are imported alongside shared styles:
 
-**Component Styles** (`timeline-styles.ts`):
+**Component Styles** (`timeline.style.ts`):
 
 ```typescript
 import { css } from "lit";
@@ -566,10 +563,7 @@ For comprehensive theming documentation, see: **[Theme System README](./themes/R
 /* ✅ Acceptable - Feature detection */
 .element {
   background: var(--color-background);
-  backdrop-filter: var(
-    --backdrop-blur,
-    none
-  ); /* Experimental feature */
+  backdrop-filter: var(--backdrop-blur, none); /* Experimental feature */
 }
 ```
 
@@ -610,7 +604,7 @@ This approach ensures design system integrity and makes token-related issues imm
 
 ### 1. Dedicated Component Style Files Pattern
 
-**Component Styles File** (`my-component-styles.ts`):
+**Component Styles File** (`my-component.style.ts`):
 
 ```typescript
 import { css } from "lit";
@@ -953,20 +947,17 @@ When migrating components to the new shared styles system:
    ```
 
 2. **Remove duplicate styles**:
-
    - Delete typography definitions (use shared `typographyStyles`)
    - Remove button styles (use shared `buttonStyles`)
    - Remove layout utilities (use shared `layoutStyles`)
    - Keep only component-specific styles in the `css` template
 
 3. **Update design token references**:
-
    - Remove ALL fallback values from `var()` functions
    - Ensure tokens are properly defined in `theme.css`
    - Use shared typography classes instead of custom font styles
 
 4. **Remove external CSS files**:
-
    - Delete the corresponding `.css` file
    - Remove any imports from global CSS files
    - Update component documentation
@@ -980,7 +971,7 @@ When migrating components to the new shared styles system:
 ### When Adding New Components
 
 1. **Create component directory**: `source/site/components/my-component/`
-2. **Create component styles file**: `my-component-styles.ts` with exported `css` template
+2. **Create component styles file**: `my-component.style.ts` with exported `css` template
 3. **Create component logic file**: `my-component.ts` with Lit component class
 4. **Import styles**: Import both shared styles and component styles
 5. **Use design tokens**: Reference tokens from global `theme.css` WITHOUT fallbacks

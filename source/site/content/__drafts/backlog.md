@@ -34,10 +34,9 @@ Valid section headings (must match exactly):
 
 ## Editing
 
-- Rule of thirds
-
 ## Published
 
+- Rule of thirds
 - Typography test page
 - LLM as SME
 

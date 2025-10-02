@@ -110,6 +110,49 @@ export class AdminKanbanBoard extends LitElement {
   }
 
   /**
+   * Handle post publish from the publish button
+   */
+  private async handlePublish(e: CustomEvent) {
+    const { post } = e.detail;
+
+    console.log(`Publishing post ${post.id}: ${post.title}`);
+
+    // Ensure the post is in editing status
+    if (post.status !== "editing") {
+      console.warn("Can only publish posts from 'editing' status");
+      return;
+    }
+
+    const oldPosts = [...this.posts];
+    // Optimistically update the UI - remove from kanban board
+    this.posts = this.posts.map((p) =>
+      p.id === post.id ? { ...p, status: "published" as PostStatus } : p
+    );
+
+    try {
+      const response = await fetch(`${API_BASE}/api/posts/${post.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "published" }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || "Failed to publish post");
+      }
+
+      console.log("✅ Post published successfully");
+    } catch (err) {
+      console.error("Failed to publish post:", err);
+      // Revert the optimistic update
+      this.posts = oldPosts;
+      this.error =
+        err instanceof Error ? err.message : "Failed to publish post";
+    }
+  }
+
+  /**
    * Get posts for a specific status
    */
   private getPostsForStatus(status: PostStatus): PostMetadata[] {
@@ -143,7 +186,11 @@ export class AdminKanbanBoard extends LitElement {
     }
 
     return html`
-      <div class="kanban-board" @post-status-change=${this.handleStatusChange}>
+      <div
+        class="kanban-board"
+        @post-status-change=${this.handleStatusChange}
+        @post-publish=${this.handlePublish}
+      >
         ${COLUMNS.map(
           (column) => html`
             <admin-kanban-column

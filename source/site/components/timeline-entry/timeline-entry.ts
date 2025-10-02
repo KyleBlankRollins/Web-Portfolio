@@ -1,12 +1,11 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-timelineEntryStyles;
 import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
 } from "../../styles/shared-styles.js";
-import { timelineEntryStyles } from "./timeline-entry-styles.js";
+import { timelineEntryStyles } from "./timeline-entry.style.js";
 
 /**
  * Timeline Entry Web Component
@@ -59,9 +58,7 @@ export class KbrTimelineEntry extends LitElement {
 
   render() {
     const skills = this.parsedSkills;
-    const formattedDescription = this.formatDescription(
-      this.description
-    );
+    const formattedDescription = this.formatDescription(this.description);
 
     return html`
       <div class="timeline-entry">
@@ -78,17 +75,13 @@ export class KbrTimelineEntry extends LitElement {
         </div>
 
         ${formattedDescription
-          ? html`
-              <div class="description">${formattedDescription}</div>
-            `
+          ? html` <div class="description">${formattedDescription}</div> `
           : ""}
         ${skills.length > 0
           ? html`
               <div class="skills">
                 ${skills.map(
-                  (skill) => html`
-                    <span class="skill-tag">${skill}</span>
-                  `
+                  (skill) => html` <span class="skill-tag">${skill}</span> `
                 )}
               </div>
             `

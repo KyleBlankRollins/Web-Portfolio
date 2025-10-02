@@ -59,6 +59,22 @@ export class AdminPostCard extends LitElement {
     });
   }
 
+  private handlePublish(e: Event) {
+    e.stopPropagation(); // Prevent drag events from firing
+
+    this.dispatchEvent(
+      new CustomEvent("post-publish", {
+        detail: { post: this.post },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  private get showPublishButton(): boolean {
+    return this.post.status === "editing";
+  }
+
   render() {
     const { post } = this;
 
@@ -102,6 +118,17 @@ export class AdminPostCard extends LitElement {
               <div class="post-tags">
                 ${post.tags.map((tag) => html`<span class="tag">${tag}</span>`)}
               </div>
+            `
+          : ""}
+        ${this.showPublishButton
+          ? html`
+              <button
+                class="publish-button"
+                @click=${this.handlePublish}
+                title="Mark as published"
+              >
+                ✓ Publish
+              </button>
             `
           : ""}
       </div>

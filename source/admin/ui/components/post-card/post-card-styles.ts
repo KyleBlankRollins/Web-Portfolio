@@ -124,4 +124,33 @@ export const postCardStyles = css`
     color: #3f51b5;
     border-radius: 3px;
   }
+
+  .publish-button {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .publish-button:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+  }
+
+  .publish-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(76, 175, 80, 0.3);
+  }
 `;

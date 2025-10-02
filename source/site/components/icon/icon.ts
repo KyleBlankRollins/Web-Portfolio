@@ -1,7 +1,7 @@
 import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { iconStyles } from "./icon-styles.js";
+import { iconStyles } from "./icon.style.js";
 
 /**
  * Available icon names (matches files in assets/icons/)
@@ -62,19 +62,19 @@ export class KbrIcon extends LitElement {
    * Internal state for SVG content
    */
   @state()
-  private declare svgContent: string;
+  declare private svgContent: string;
 
   /**
    * Loading state
    */
   @state()
-  private declare isLoading: boolean;
+  declare private isLoading: boolean;
 
   /**
    * Error state
    */
   @state()
-  private declare hasError: boolean;
+  declare private hasError: boolean;
 
   connectedCallback() {
     super.connectedCallback();
@@ -107,19 +107,14 @@ export class KbrIcon extends LitElement {
     // Remove all existing classes except component classes
     const existingClasses = Array.from(this.classList);
     existingClasses.forEach((className) => {
-      if (
-        !className.startsWith("hydrated") &&
-        className !== "kbr-icon"
-      ) {
+      if (!className.startsWith("hydrated") && className !== "kbr-icon") {
         this.classList.remove(className);
       }
     });
 
     // Add new classes
     if (this.classes) {
-      const classArray = this.classes
-        .split(" ")
-        .filter((cls) => cls.trim());
+      const classArray = this.classes.split(" ").filter((cls) => cls.trim());
       classArray.forEach((className) => {
         this.classList.add(className);
       });
@@ -249,13 +244,7 @@ export class KbrIcon extends LitElement {
     if (this.isLoading) {
       return html`
         <svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-          <circle
-            cx="10.5"
-            cy="10.5"
-            r="2"
-            fill="currentColor"
-            opacity="0.5"
-          />
+          <circle cx="10.5" cy="10.5" r="2" fill="currentColor" opacity="0.5" />
         </svg>
       `;
     }
