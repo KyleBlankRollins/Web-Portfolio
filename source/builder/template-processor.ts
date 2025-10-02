@@ -81,34 +81,26 @@ export class TemplateProcessor {
     let content = htmlContent;
 
     // Look for HTML meta comments and remove them from content
-    const titleMatch = htmlContent.match(
-      /<!--\s*title:\s*(.+?)\s*-->/i
-    );
+    const titleMatch = htmlContent.match(/<!--\s*title:\s*(.+?)\s*-->/i);
     if (titleMatch) {
       metadata.title = titleMatch[1].trim();
       content = content.replace(titleMatch[0], "");
     }
 
-    const descMatch = htmlContent.match(
-      /<!--\s*description:\s*(.+?)\s*-->/i
-    );
+    const descMatch = htmlContent.match(/<!--\s*description:\s*(.+?)\s*-->/i);
     if (descMatch) {
       metadata.description = descMatch[1].trim();
       content = content.replace(descMatch[0], "");
     }
 
-    const keywordsMatch = htmlContent.match(
-      /<!--\s*keywords:\s*(.+?)\s*-->/i
-    );
+    const keywordsMatch = htmlContent.match(/<!--\s*keywords:\s*(.+?)\s*-->/i);
     if (keywordsMatch) {
       metadata.keywords = keywordsMatch[1].trim();
       content = content.replace(keywordsMatch[0], "");
     }
 
     // Blog-specific metadata
-    const dateMatch = htmlContent.match(
-      /<!--\s*date:\s*(.+?)\s*-->/i
-    );
+    const dateMatch = htmlContent.match(/<!--\s*date:\s*(.+?)\s*-->/i);
     if (dateMatch) {
       metadata.date = dateMatch[1].trim();
       content = content.replace(dateMatch[0], "");
@@ -122,9 +114,7 @@ export class TemplateProcessor {
       content = content.replace(formattedDateMatch[0], "");
     }
 
-    const tagsMatch = htmlContent.match(
-      /<!--\s*tags:\s*(.+?)\s*-->/i
-    );
+    const tagsMatch = htmlContent.match(/<!--\s*tags:\s*(.+?)\s*-->/i);
     if (tagsMatch) {
       metadata.tags = tagsMatch[1]
         .split(",")
@@ -142,9 +132,7 @@ export class TemplateProcessor {
     }
 
     // Also remove template comment if present
-    const templateMatch = htmlContent.match(
-      /<!--\s*template:\s*(.+?)\s*-->/i
-    );
+    const templateMatch = htmlContent.match(/<!--\s*template:\s*(.+?)\s*-->/i);
     if (templateMatch) {
       content = content.replace(templateMatch[0], "");
     }
@@ -176,31 +164,23 @@ export class TemplateProcessor {
       // Parse simple YAML-like frontmatter
       const titleMatch = frontmatter.match(/^title:\s*(.+)$/m);
       if (titleMatch) {
-        metadata.title = titleMatch[1]
-          .trim()
-          .replace(/^["']|["']$/g, "");
+        metadata.title = titleMatch[1].trim().replace(/^["']|["']$/g, "");
       }
 
       const descMatch = frontmatter.match(/^description:\s*(.+)$/m);
       if (descMatch) {
-        metadata.description = descMatch[1]
-          .trim()
-          .replace(/^["']|["']$/g, "");
+        metadata.description = descMatch[1].trim().replace(/^["']|["']$/g, "");
       }
 
       const keywordsMatch = frontmatter.match(/^keywords:\s*(.+)$/m);
       if (keywordsMatch) {
-        metadata.keywords = keywordsMatch[1]
-          .trim()
-          .replace(/^["']|["']$/g, "");
+        metadata.keywords = keywordsMatch[1].trim().replace(/^["']|["']$/g, "");
       }
 
       // Extract blog-specific metadata
       const dateMatch = frontmatter.match(/^date:\s*(.+)$/m);
       if (dateMatch) {
-        const dateStr = dateMatch[1]
-          .trim()
-          .replace(/^["']|["']$/g, "");
+        const dateStr = dateMatch[1].trim().replace(/^["']|["']$/g, "");
         metadata.date = dateStr;
         metadata.formattedDate = this.formatDate(dateStr);
         metadata.isBlogPost = true;
@@ -235,9 +215,26 @@ export class TemplateProcessor {
 
   /**
    * Format a date string for display
+   * Parses YYYY-MM-DD format and creates date in local timezone to avoid day-off errors
    */
   private formatDate(dateStr: string): string {
     try {
+      // Parse YYYY-MM-DD format to avoid timezone issues
+      const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (match) {
+        const year = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10) - 1; // Month is 0-indexed
+        const day = parseInt(match[3], 10);
+        const date = new Date(year, month, day);
+
+        return date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
+
+      // Fallback for other date formats
       const date = new Date(dateStr);
       if (isNaN(date.getTime())) {
         return dateStr; // Return original string if date is invalid
@@ -261,12 +258,7 @@ export class TemplateProcessor {
       return this.templateCache.get(templateName)!;
     }
 
-    const templatePath = join(
-      "source",
-      "site",
-      "templates",
-      templateName
-    );
+    const templatePath = join("source", "site", "templates", templateName);
 
     if (!existsSync(templatePath)) {
       throw new Error(`Template not found: ${templatePath}`);
@@ -310,10 +302,7 @@ export class TemplateProcessor {
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
     Object.entries(variables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        const tripleRegex = new RegExp(
-          `\\{\\{\\{${key}\\}\\}\\}`,
-          "g"
-        );
+        const tripleRegex = new RegExp(`\\{\\{\\{${key}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
       }
     });
