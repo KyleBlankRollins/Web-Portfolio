@@ -16,7 +16,7 @@ export const postListStyles = css`
 
   /* Header */
   .post-list-header {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-md);
     text-align: center;
   }
 

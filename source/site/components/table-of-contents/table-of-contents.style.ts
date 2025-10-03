@@ -17,6 +17,48 @@ export const tableOfContentsStyles = css`
     overflow: hidden;
   }
 
+  /* Toggle button for mobile */
+  .toc-toggle {
+    display: none; /* Hidden by default on desktop */
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-background-secondary);
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-align: left;
+    transition: background-color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toc-toggle:hover {
+    background: var(--color-background-tertiary);
+  }
+
+  .toc-toggle-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition-fast);
+  }
+
+  .toc-toggle-icon.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .toc-toggle-icon.expanded {
+    transform: rotate(0deg);
+  }
+
+  .toc-content {
+    position: relative;
+  }
+
   .toc-container {
     padding: var(--space-lg);
     max-height: min(calc(100vh - 8rem), 600px);
@@ -30,10 +72,7 @@ export const tableOfContentsStyles = css`
     left: 0;
     right: 0;
     height: 20px;
-    background: linear-gradient(
-      transparent,
-      var(--color-background-secondary)
-    );
+    background: linear-gradient(transparent, var(--color-background-secondary));
     pointer-events: none;
     opacity: 0;
     transition: opacity var(--transition-normal);
@@ -49,19 +88,13 @@ export const tableOfContentsStyles = css`
 
   .scroll-indicator-top {
     top: 0;
-    background: linear-gradient(
-      var(--color-background-secondary),
-      transparent
-    );
+    background: linear-gradient(var(--color-background-secondary), transparent);
     border-radius: 8px 8px 0 0;
   }
 
   .scroll-indicator-bottom {
     bottom: 0;
-    background: linear-gradient(
-      transparent,
-      var(--color-background-secondary)
-    );
+    background: linear-gradient(transparent, var(--color-background-secondary));
     border-radius: 0 0 8px 8px;
   }
 
@@ -125,8 +158,8 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-link:hover {
-    background: var(--color-background);
-    color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-accent-hover);
     text-decoration: none;
     border-left-color: var(--color-border-strong);
   }
@@ -138,7 +171,6 @@ export const tableOfContentsStyles = css`
 
   .toc-link.active {
     background: var(--color-primary);
-    color: var(--color-text-inverse);
     font-weight: 500;
     border-left-color: var(--color-primary-dark);
   }
@@ -219,10 +251,41 @@ export const tableOfContentsStyles = css`
     }
   }
 
+  /* Mobile collapse/expand functionality */
   @media (max-width: 768px) {
+    :host {
+      position: sticky;
+      top: var(--space-sm);
+      z-index: 100;
+    }
+
+    .toc-toggle {
+      display: flex; /* Show toggle button on mobile */
+    }
+
+    .toc-wrapper.collapsed .toc-content {
+      display: none;
+    }
+
+    .toc-wrapper.expanded .toc-content {
+      display: block;
+    }
+
+    .toc-content.hidden {
+      display: none;
+    }
+
+    .toc-content.visible {
+      display: block;
+    }
+
     .toc-container {
       padding: var(--space-md);
-      max-height: min(calc(100vh - 4rem), 300px);
+      max-height: min(calc(100vh - 10rem), 300px);
+    }
+
+    .scroll-indicator-top {
+      top: 48px; /* Account for toggle button height */
     }
 
     .toc-sublist {

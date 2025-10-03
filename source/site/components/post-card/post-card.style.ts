@@ -40,13 +40,11 @@ export const postCardStyles = css`
   }
 
   .post-title-link {
-    color: var(--color-primary);
     text-decoration: none;
     transition: color var(--transition-fast);
   }
 
   .post-title-link:hover {
-    color: var(--color-primary-hover);
     text-decoration: underline;
   }
 
@@ -122,7 +120,7 @@ export const postCardStyles = css`
   }
 
   .read-more-link {
-    color: var(--color-primary);
+    color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9rem;
@@ -133,7 +131,6 @@ export const postCardStyles = css`
   }
 
   .read-more-link:hover {
-    color: var(--color-primary-hover);
     transform: translateX(4px);
   }
 
@@ -145,12 +142,35 @@ export const postCardStyles = css`
 
   /* Responsive design */
   @media (max-width: 768px) {
+    :host {
+      margin-bottom: var(--space-md); /* Reduced from var(--space-lg) */
+    }
+
     .post-card {
-      padding: var(--space-md);
+      padding: var(--space-sm); /* Reduced from var(--space-md) */
+      border-radius: var(--radius-md);
+    }
+
+    .post-card-header {
+      margin-bottom: var(--space-sm); /* Reduced */
     }
 
     .post-card-title {
       font-size: var(--font-size-lg);
+      margin-bottom: var(--space-xs); /* Tighter */
+    }
+
+    .post-card-description {
+      margin-bottom: var(--space-sm); /* Reduced */
+    }
+
+    .post-card-description p {
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
+    }
+
+    .post-card-tags {
+      margin-bottom: var(--space-sm); /* Reduced */
     }
 
     .tag-list {
@@ -160,6 +180,14 @@ export const postCardStyles = css`
     .post-tag {
       font-size: 0.7rem;
       padding: calc(var(--space-xs) * 0.8) var(--space-xs);
+    }
+
+    .post-card-footer {
+      padding-top: var(--space-xs); /* Reduced */
+    }
+
+    .read-more-link {
+      font-size: var(--font-size-sm);
     }
   }
 

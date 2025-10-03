@@ -1,29 +1,29 @@
-/* Base Theme - Accessible Grayscale 
+/* Base Theme - Accessible Blue
  * Uses the standardized theme properties system
  * Provides clean, professional grayscale aesthetic
  */
 
 [data-theme="base"] {
   /* Theme Metadata */
-  --theme-name: "Base Grayscale";
+  --theme-name: "Basic Blue";
   --theme-version: "1.0.0";
   
-  /* Primary Colors - Professional grayscale */
-  --color-primary: #2d2d2d;
-  --color-primary-hover: #1a1a1a;
-  --color-primary-active: #000000;
-  --color-primary-subtle: #f5f5f5;
+  /* Primary Colors - Light blue-gray for light mode backgrounds */
+  --color-primary: #e2e8f0;
+  --color-primary-hover: #cbd5e1;
+  --color-primary-active: #94a3b8;
+  --color-primary-subtle: #f8fafc;
   
-  /* Secondary Colors */
-  --color-secondary: #4a4a4a;
-  --color-secondary-hover: #616161;
-  --color-secondary-active: #757575;
-  --color-secondary-subtle: #f8f8f8;
+  /* Secondary Colors - Medium blue-gray */
+  --color-secondary: #94a3b8;
+  --color-secondary-hover: #64748b;
+  --color-secondary-active: #475569;
+  --color-secondary-subtle: #f1f5f9;
   
-  /* Accent Colors - Subtle blue accent */
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-accent-active: #1e40af;
+  /* Accent Colors - Bright blue accent for light backgrounds */
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-accent-active: #1d4ed8;
   --color-accent-subtle: #eff6ff;
   
   /* Semantic Colors - Status and feedback */
@@ -51,18 +51,18 @@
   --color-surface-hover: #f8f9fa;
   --color-surface-active: #e9ecef;
   
-  /* Text Colors - High contrast grayscale */
-  --color-text: #212529;
-  --color-text-secondary: #6c757d;
-  --color-text-tertiary: #adb5bd;
-  --color-text-inverse: #ffffff;
-  --color-text-disabled: #ced4da;
+  /* Text Colors - Dark text for light backgrounds */
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748b;
+  --color-text-inverse: #f8fafc;
+  --color-text-disabled: #94a3b8;
   
   /* Border Colors */
-  --color-border: #dee2e6;
-  --color-border-secondary: #e9ecef;
-  --color-border-strong: #adb5bd;
-  --color-border-interactive: #2563eb;
+  --color-border: #e2e8f0;
+  --color-border-secondary: #f1f5f9;
+  --color-border-strong: #cbd5e1;
+  --color-border-interactive: #3b82f6;
   
   /* Shadow Colors */
   --color-shadow-light: rgba(0, 0, 0, 0.05);
@@ -70,12 +70,12 @@
   --color-shadow-strong: rgba(0, 0, 0, 0.15);
   --color-shadow-dark: rgba(0, 0, 0, 0.25);
   
-  /* Gradient Properties - Base grayscale gradients */
-  --gradient-primary: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+  /* Gradient Properties - Light gradients for light mode */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   --gradient-primary-light: linear-gradient(90deg, 
-    rgba(45, 45, 45, 0.1) 0%, 
-    rgba(74, 74, 74, 0.1) 50%, 
-    rgba(37, 99, 235, 0.1) 100%
+    rgba(226, 232, 240, 0.1) 0%, 
+    rgba(148, 163, 184, 0.1) 50%, 
+    rgba(59, 130, 246, 0.1) 100%
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
@@ -91,29 +91,29 @@
   --color-surface-hover: #334155;
   --color-surface-active: #475569;
   
-  /* Text Colors - High contrast for dark */
+  /* Text Colors - Light text for dark backgrounds */
   --color-text: #f8fafc;
   --color-text-secondary: #cbd5e1;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #0f172a;
   --color-text-disabled: #64748b;
   
-  /* Primary Colors - Lighter for dark mode */
-  --color-primary: #e2e8f0;
-  --color-primary-hover: #f8fafc;
-  --color-primary-active: #ffffff;
+  /* Primary Colors - Dark slate for dark mode backgrounds */
+  --color-primary: #1e293b;
+  --color-primary-hover: #0f172a;
+  --color-primary-active: #020617;
   --color-primary-subtle: #334155;
   
-  /* Secondary Colors */
-  --color-secondary: #94a3b8;
-  --color-secondary-hover: #cbd5e1;
-  --color-secondary-active: #e2e8f0;
+  /* Secondary Colors - Dark gray-blue */
+  --color-secondary: #334155;
+  --color-secondary-hover: #475569;
+  --color-secondary-active: #64748b;
   --color-secondary-subtle: #1e293b;
   
-  /* Accent Colors - Brighter for dark backgrounds */
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-accent-active: #93c5fd;
+  /* Accent Colors - Deeper blue for dark backgrounds */
+  --color-accent: #1e40af;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-active: #2563eb;
   --color-accent-subtle: #1e3a8a;
   
   /* Semantic Colors - Dark mode variants */
@@ -138,18 +138,18 @@
   --color-border-secondary: #475569;
   --color-border-strong: #64748b;
   
-  /* Shadow Colors - More subtle */
+  /* Shadow Colors - More subtle for dark mode */
   --color-shadow-light: rgba(0, 0, 0, 0.3);
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-shadow-strong: rgba(0, 0, 0, 0.6);
   --color-shadow-dark: rgba(0, 0, 0, 0.8);
   
-  /* Gradient Properties - Dark mode gradients */
-  --gradient-primary: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+  /* Gradient Properties - Dark gradients for dark mode */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   --gradient-primary-light: linear-gradient(90deg, 
-    rgba(226, 232, 240, 0.1) 0%, 
-    rgba(148, 163, 184, 0.1) 50%, 
-    rgba(59, 130, 246, 0.1) 100%
+    rgba(30, 41, 59, 0.1) 0%, 
+    rgba(51, 65, 85, 0.1) 50%, 
+    rgba(30, 64, 175, 0.1) 100%
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);

@@ -8,11 +8,7 @@ export const navigationStyles = css`
 
   /* Main navigation header */
   .site-header {
-    background: linear-gradient(
-      135deg,
-      var(--color-primary) 0%,
-      var(--color-accent) 100%
-    );
+    background: transparent; /* No background - rely on page-level gradient */
     padding: var(--space-md) 0;
     box-shadow: 0 2px 4px var(--color-shadow);
     position: relative;
@@ -33,7 +29,7 @@ export const navigationStyles = css`
     font-family: var(--font-family-mono);
     font-size: var(--font-size-lg);
     font-weight: bold;
-    color: var(--color-text-inverse);
+    color: var(--color-text);
     text-decoration: none;
     transition: all var(--transition-fast);
     letter-spacing: 0.1em;
@@ -58,7 +54,7 @@ export const navigationStyles = css`
   }
 
   .main-nav a {
-    color: var(--color-text-inverse);
+    color: var(--color-text);
     display: block;
     transform: translateY(0);
     box-shadow: none;

@@ -209,18 +209,45 @@ sub {
 
 /* Link Typography */
 a {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+  color: var(--color-text);
+  transition: all var(--transition-normal);
 }
 
 a:hover {
-  color: var(--color-primary-hover);
-  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* UI Typography */
 .ui-label {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
+}
+
+/* Mobile Typography Adjustments */
+@media (max-width: 768px) {
+  /* Reduce H1/H2 font sizes while maintaining hierarchy */
+  h1, .h1 {
+    font-size: 2.25rem; /* Reduced from 3rem */
+    line-height: 2.3rem; /* Reduced from 3.63rem */
+    margin-bottom: 1.2rem; /* Slightly reduced */
+  }
+
+  h2, .h2 {
+    font-size: 1.5rem; /* Reduced from 2rem */
+    line-height: 1.6rem; /* Reduced from 2.95rem */
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  h3, .h3 {
+    font-size: 1.3rem;
+    line-height: 1.4rem; /* Reduced from 2.5555556rem */
+    margin-top: 1rem;
+  }
+
+  h4, .h4,
+  h5, .h5 {
+    line-height: 1.1rem; /* Slightly reduced from 1.2777778rem */
+    margin-top: 1rem;
+  }
 }
