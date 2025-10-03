@@ -64,7 +64,7 @@ export const timelineStyles = css`
     font-size: 1.5rem;
     font-weight: 600;
     margin-top: 0;
-    color: var(--color-primary);
+    color: var(--color-text);
     text-decoration: none;
     transition: opacity 0.2s ease;
   }
@@ -75,7 +75,7 @@ export const timelineStyles = css`
 
   .company-name {
     a {
-      color: var(--color-primary);
+      color: var(--color-text);
     }
   }
 

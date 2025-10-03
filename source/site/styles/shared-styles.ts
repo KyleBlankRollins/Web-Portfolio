@@ -105,7 +105,7 @@ export const typographyStyles = css`
 
   /* Link Typography */
   a {
-    color: var(--color-primary);
+    color: var(--color-text);
     text-decoration: none;
     transition: color var(--transition-fast);
   }

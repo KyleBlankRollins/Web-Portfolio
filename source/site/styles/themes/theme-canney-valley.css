@@ -9,22 +9,22 @@
   --theme-version: "1.0.0";
   --theme-author: "Kyle Blank Rollins";
   
-  /* Primary Colors - Forest green */
-  --color-primary: #66ab68;
-  --color-primary-hover: #5a9a5c;
-  --color-primary-active: #4d8850;
-  --color-primary-subtle: #f0f8f0;
+  /* Primary Colors - Bright green for light mode backgrounds */
+  --color-primary: #81c784;
+  --color-primary-hover: #66bb6a;
+  --color-primary-active: #4caf50;
+  --color-primary-subtle: #e8f5e9;
   
-  /* Secondary Colors - Deep slate */
-  --color-secondary: #263238;
-  --color-secondary-hover: #37474f;
-  --color-secondary-active: #455a64;
-  --color-secondary-subtle: #eceff1;
+  /* Secondary Colors - Light gray-green */
+  --color-secondary: #a5d6a7;
+  --color-secondary-hover: #81c784;
+  --color-secondary-active: #66bb6a;
+  --color-secondary-subtle: #f1f8e9;
   
-  /* Accent Colors - Warm purple */
-  --color-accent: #96687f;
-  --color-accent-hover: #a8759c;
-  --color-accent-active: #b983a0;
+  /* Accent Colors - Soft purple for light backgrounds */
+  --color-accent: #cab3bf;
+  --color-accent-hover: #b39dac;
+  --color-accent-active: #9c8799;
   --color-accent-subtle: #faf7f9;
   
   /* Semantic Colors - Nature-inspired */
@@ -53,7 +53,7 @@
   --color-background-secondary: #eef0ec;
   --color-background-tertiary: #e8eae6;
   
-  /* Text Colors - High contrast on light backgrounds */
+  /* Text Colors - Dark text for light backgrounds */
   --color-text: #263238;
   --color-text-secondary: #546e7a;
   --color-text-tertiary: #78909c;
@@ -61,10 +61,10 @@
   --color-text-disabled: #b0bec5;
   
   /* Border Colors - Subtle natural tones */
-  --color-border: #cfd8dc;
-  --color-border-secondary: #e0e7ea;
-  --color-border-strong: #90a4ae;
-  --color-border-interactive: #96687f;
+  --color-border: #c8e6c9;
+  --color-border-secondary: #e8f5e9;
+  --color-border-strong: #81c784;
+  --color-border-interactive: #cab3bf;
   
   /* Shadow Colors - Warm shadows */
   --color-shadow-light: rgba(38, 50, 56, 0.05);
@@ -72,12 +72,12 @@
   --color-shadow-strong: rgba(38, 50, 56, 0.15);
   --color-shadow-dark: rgba(38, 50, 56, 0.25);
   
-  /* Gradient Properties - Nature-inspired gradients */
-  --gradient-primary: linear-gradient(90deg, #66ab68 2%, #96687f 50%, #263238 98%);
+  /* Gradient Properties - Light nature gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   --gradient-primary-light: linear-gradient(90deg, 
-    rgba(102, 171, 104, 0.2) 2%, 
-    rgba(150, 104, 127, 0.2) 50%, 
-    rgba(38, 50, 56, 0.2) 98%
+    rgba(129, 199, 132, 0.2) 2%, 
+    rgba(202, 179, 191, 0.2) 50%, 
+    rgba(165, 214, 167, 0.2) 98%
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
@@ -100,23 +100,23 @@
   --color-text-inverse: #263238;
   --color-text-disabled: #546e7a;
   
-  /* Primary Colors - Brighter green for dark mode */
-  --color-primary: #81c784;
-  --color-primary-hover: #a5d6a7;
-  --color-primary-active: #c8e6c9;
-  --color-primary-subtle: #2e7d32;
+  /* Primary Colors - Dark forest green for dark mode backgrounds */
+  --color-primary: #2e7d32;
+  --color-primary-hover: #1b5e20;
+  --color-primary-active: #0d3d14;
+  --color-primary-subtle: #4caf50;
   
-  /* Secondary Colors - Lighter slate */
-  --color-secondary: #78909c;
-  --color-secondary-hover: #90a4ae;
-  --color-secondary-active: #b0bec5;
+  /* Secondary Colors - Deep slate */
+  --color-secondary: #263238;
+  --color-secondary-hover: #37474f;
+  --color-secondary-active: #455a64;
   --color-secondary-subtle: #37474f;
   
-  /* Accent Colors - Brighter purple */
-  --color-accent: #cab3bf;
-  --color-accent-hover: #d7c4d0;
-  --color-accent-active: #e4d5e0;
-  --color-accent-subtle: #4a2c37;
+  /* Accent Colors - Deep warm purple for dark backgrounds */
+  --color-accent: #6d4c5a;
+  --color-accent-hover: #4a2c37;
+  --color-accent-active: #2d1a23;
+  --color-accent-subtle: #96687f;
   
   /* Border Colors */
   --color-border: #455a64;
@@ -130,10 +130,10 @@
   --color-shadow-dark: rgba(0, 0, 0, 0.8);
   
   /* Gradient Properties - Dark forest gradients */
-  --gradient-primary: linear-gradient(90deg, #81c784 2%, #cab3bf 50%, #263238 98%);
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   --gradient-primary-light: linear-gradient(90deg, 
-    rgba(129, 199, 132, 0.2) 2%, 
-    rgba(202, 179, 191, 0.2) 50%, 
+    rgba(46, 125, 50, 0.2) 2%, 
+    rgba(109, 76, 90, 0.2) 50%, 
     rgba(38, 50, 56, 0.2) 98%
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);

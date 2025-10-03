@@ -158,8 +158,8 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-link:hover {
-    background: var(--color-background);
-    color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-accent-hover);
     text-decoration: none;
     border-left-color: var(--color-border-strong);
   }
@@ -171,7 +171,6 @@ export const tableOfContentsStyles = css`
 
   .toc-link.active {
     background: var(--color-primary);
-    color: var(--color-text-inverse);
     font-weight: 500;
     border-left-color: var(--color-primary-dark);
   }

@@ -209,14 +209,12 @@ sub {
 
 /* Link Typography */
 a {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+  color: var(--color-text);
+  transition: all var(--transition-normal);
 }
 
 a:hover {
-  color: var(--color-primary-hover);
-  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* UI Typography */

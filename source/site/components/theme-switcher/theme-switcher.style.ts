@@ -86,7 +86,7 @@ export const themeSwitcherStyles = css`
   /* Icon and text styling */
   .trigger-icon {
     font-size: 1.2em;
-    color: var(--color-primary);
+    color: var(--color-text);
   }
 
   .trigger-text {
