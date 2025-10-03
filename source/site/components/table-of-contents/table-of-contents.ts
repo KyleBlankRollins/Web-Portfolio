@@ -53,9 +53,13 @@ export class KbrTableOfContents extends LitElement {
   @state()
   declare private showBottomIndicator: boolean;
 
+  @state()
+  declare private isCollapsed: boolean;
+
   private observer: IntersectionObserver | null = null;
   private tocContainer: HTMLElement | null = null;
   private previousActiveId: string = "";
+  private mediaQuery: MediaQueryList | null = null;
 
   static styles = [
     typographyStyles,
@@ -78,10 +82,22 @@ export class KbrTableOfContents extends LitElement {
     this.showBottomIndicator = false;
     this.tocContainer = null;
     this.previousActiveId = "";
+    this.isCollapsed = false;
+    this.mediaQuery = null;
   }
 
   connectedCallback() {
     super.connectedCallback();
+
+    // Set up media query for mobile detection
+    this.mediaQuery = window.matchMedia("(max-width: 768px)");
+    this.isCollapsed = this.mediaQuery.matches; // Start collapsed on mobile
+
+    // Listen for viewport changes
+    this.mediaQuery.addEventListener("change", (e) => {
+      this.isCollapsed = e.matches; // Collapse/expand based on viewport
+    });
+
     // Wait for DOM to be ready, then generate TOC
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", () => this.generateToc());
@@ -172,6 +188,10 @@ export class KbrTableOfContents extends LitElement {
         behavior: "smooth",
       });
     }
+  }
+
+  private toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   disconnectedCallback() {
@@ -332,45 +352,21 @@ export class KbrTableOfContents extends LitElement {
     }
 
     return html`
-      <div class="toc-wrapper">
-        <!-- Top scroll indicator -->
-        <div
-          class="scroll-indicator scroll-indicator-top ${this.showTopIndicator
-            ? "visible"
-            : ""}"
+      <div class="toc-wrapper ${this.isCollapsed ? "collapsed" : "expanded"}">
+        <!-- Collapse/Expand Header (always visible on mobile) -->
+        <button
+          class="toc-toggle"
+          @click="${this.toggleCollapse}"
+          aria-expanded="${!this.isCollapsed}"
+          aria-label="${this.isCollapsed
+            ? "Expand"
+            : "Collapse"} table of contents"
         >
+          <span class="toc-toggle-text">Table of Contents</span>
           <svg
-            class="scroll-indicator-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <polyline points="18,15 12,9 6,15"></polyline>
-          </svg>
-        </div>
-
-        <div class="toc-container" @scroll="${this.handleScroll}">
-          <nav
-            class="table-of-contents"
-            role="navigation"
-            aria-label="Table of contents"
-          >
-            <ol class="toc-list">
-              ${this.renderTocItems()}
-            </ol>
-          </nav>
-        </div>
-
-        <!-- Bottom scroll indicator -->
-        <div
-          class="scroll-indicator scroll-indicator-bottom ${this
-            .showBottomIndicator
-            ? "visible"
-            : ""}"
-        >
-          <svg
-            class="scroll-indicator-icon"
+            class="toc-toggle-icon ${this.isCollapsed
+              ? "collapsed"
+              : "expanded"}"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -378,6 +374,56 @@ export class KbrTableOfContents extends LitElement {
           >
             <polyline points="6,9 12,15 18,9"></polyline>
           </svg>
+        </button>
+
+        <!-- TOC Content (hidden when collapsed on mobile) -->
+        <div class="toc-content ${this.isCollapsed ? "hidden" : "visible"}">
+          <!-- Top scroll indicator -->
+          <div
+            class="scroll-indicator scroll-indicator-top ${this.showTopIndicator
+              ? "visible"
+              : ""}"
+          >
+            <svg
+              class="scroll-indicator-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="18,15 12,9 6,15"></polyline>
+            </svg>
+          </div>
+
+          <div class="toc-container" @scroll="${this.handleScroll}">
+            <nav
+              class="table-of-contents"
+              role="navigation"
+              aria-label="Table of contents"
+            >
+              <ol class="toc-list">
+                ${this.renderTocItems()}
+              </ol>
+            </nav>
+          </div>
+
+          <!-- Bottom scroll indicator -->
+          <div
+            class="scroll-indicator scroll-indicator-bottom ${this
+              .showBottomIndicator
+              ? "visible"
+              : ""}"
+          >
+            <svg
+              class="scroll-indicator-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </div>
         </div>
       </div>
     `;

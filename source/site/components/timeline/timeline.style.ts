@@ -14,9 +14,7 @@ export const timelineStyles = css`
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: var(--space-lg);
-    min-height: calc(
-      100vh - 80px
-    ); /* Account for navigation height */
+    min-height: calc(100vh - 80px); /* Account for navigation height */
   }
 
   .timeline-header {
@@ -123,7 +121,7 @@ export const timelineStyles = css`
 
   @media (max-width: 768px) {
     .timeline {
-      padding: var(--space-sm);
+      padding: 0; /* Remove all horizontal padding */
       gap: var(--space-md);
     }
 
@@ -136,12 +134,17 @@ export const timelineStyles = css`
     }
 
     .company-header {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
+      padding: 0 var(--space-sm);
+      margin-bottom: 0;
     }
 
     .company-name {
       font-size: 1.25rem;
+      margin-bottom: var(--space-xs); /* Add tight bottom margin */
+    }
+
+    .company-positions {
+      padding: var(--space-sm);
     }
   }
 `;

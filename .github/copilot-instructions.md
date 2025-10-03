@@ -158,7 +158,19 @@ Import from `source/site/styles/shared-styles.ts`:
 
 All components must be imported in `source/site/main.ts` to be available globally.
 
-## CSS Architecture
+## CSS Architecture and Style
+
+### No fallbacks
+
+Never use fallback values with `var()`. Every `var()` should use a custom property that is defined in a CSS theme file. Fallback values prevent us from using theme values. If a custom property doesn't work, we need to fix that instead of relying on fallback values that are hard to debug.
+
+If no appropriate theme file exists, ask whether you should create one.
+
+### Color definitions and use
+
+All CSS rules that use a color value should use a custom property that's defined in a theme file. There should never be one-off color declarations.
+
+If no appropriate theme file exists, ask whether you should create one.
 
 ### Hybrid Approach
 

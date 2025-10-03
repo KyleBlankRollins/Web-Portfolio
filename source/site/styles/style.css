@@ -394,6 +394,16 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* Reduce horizontal margins to maximize screen space on mobile */
+  .page-content {
+    margin: 0 0.2em;
+    margin-bottom: 2em;
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
   .project-card {
     .project-header {
       flex-direction: column;
@@ -405,13 +415,35 @@ body {
       }
     }
     
+    /* Hide images on mobile to save space */
     .project-image-container {
-      height: auto;
-      margin-bottom: var(--space-md);
+      display: none;
+    }
+    
+    .project-info {
+      margin-left: 0; /* Remove left margin when image is hidden */
     }
     
     .project-content {
       gap: var(--space-md);
+    }
+
+    .project-features {
+      h5 {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-xs);
+      }
+
+      ul li {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-xs);
+        padding-left: var(--space-sm);
+      }
+    }
+
+    .project-description p {
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-sm);
     }
   }
   
@@ -512,6 +544,7 @@ body {
   
   .hero {
     padding: var(--space-xl) 0;
+    margin: -0.2em;
   }
   
   .container {
@@ -683,7 +716,7 @@ button:focus-visible {
 
 @media (max-width: 768px) {
   .blog-content {
-    padding: 0 var(--space-sm);
+    padding: 0;
   }
   
   .blog-layout {
@@ -699,16 +732,50 @@ button:focus-visible {
   .blog-posts {
     order: 1;
   }
+
+  /* Portfolio sample cards: stack images above content on mobile */
+  .grid.two-columns {
+    gap: var(--space-md);
+  }
+
+  .sample-card {
+    .sample-image-container {
+      height: 150px; /* Reduce image height on mobile */
+      margin-bottom: var(--space-sm);
+    }
+
+    .sample-content {
+      h4 {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-xs);
+      }
+
+      p {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-sm);
+      }
+    }
+  }
+
+  /* Portfolio project cards: reduce padding */
+  .project-card {
+    padding: var(--space-md);
+  }
 }
 
 .cards-container {
   display: flex;
   justify-content: center;
   margin-top: calc(var(--space-2xl) * -1);
-  /* max-width: 1200px; */
 }
 
 .cards {
   width: 100%;
   max-width: 1200px;
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    margin-top: var(--space-md);
+  }
 }

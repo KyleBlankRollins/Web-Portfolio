@@ -154,7 +154,7 @@ export class KbrPostList extends LitElement {
     const totalPosts = this.filteredPosts.length;
     const headerText = this.currentFilter
       ? `Blog posts tagged "${this.currentFilter}" (${totalPosts})`
-      : `Latest blog posts (${totalPosts})`;
+      : "";
 
     return html`
       <header class="post-list-header">

@@ -87,17 +87,19 @@ export const timelineEntryStyles = css`
 
   @media (max-width: 768px) {
     :host {
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--space-md);
     }
 
     .timeline-entry {
-      padding: 1rem;
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
     }
 
     .entry-header {
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
     }
 
     .entry-meta {
@@ -106,6 +108,20 @@ export const timelineEntryStyles = css`
 
     .job-title {
       font-size: 1.125rem;
+    }
+
+    .description {
+      margin-bottom: var(--space-sm);
+      font-size: var(--font-size-sm);
+    }
+
+    .skills {
+      gap: var(--space-xs);
+    }
+
+    .skill-tag {
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
     }
   }
 `;

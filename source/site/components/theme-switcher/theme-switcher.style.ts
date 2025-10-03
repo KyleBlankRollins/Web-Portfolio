@@ -79,8 +79,7 @@ export const themeSwitcherStyles = css`
 
   .expanded-header:hover {
     background: var(--color-background-tertiary);
-    margin: 0 calc(-1 * var(--space-4)) var(--space-3)
-      calc(-1 * var(--space-4));
+    margin: 0 calc(-1 * var(--space-4)) var(--space-3) calc(-1 * var(--space-4));
     padding: var(--space-2) var(--space-4);
   }
 
@@ -211,8 +210,7 @@ export const themeSwitcherStyles = css`
   }
 
   .toggle-input:focus + .toggle-track {
-    outline: var(--focus-ring-width) var(--focus-ring-style)
-      var(--color-accent);
+    outline: var(--focus-ring-width) var(--focus-ring-style) var(--color-accent);
     outline-offset: var(--focus-ring-offset);
   }
 
@@ -247,7 +245,7 @@ export const themeSwitcherStyles = css`
   }
 
   /* Mobile adjustments for bottom-centered layout */
-  @media (max-width: 479px) {
+  @media (max-width: 768px) {
     :host {
       max-width: 100%;
       padding: 0 var(--space-sm);
@@ -258,13 +256,44 @@ export const themeSwitcherStyles = css`
       border-radius: var(--radius-md) var(--radius-md) 0 0;
     }
 
+    /* Force vertical layout on mobile */
+    .theme-controls {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .theme-select,
+    .color-scheme-toggle {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .theme-dropdown {
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .theme-select label,
+    .color-scheme-toggle label {
+      min-width: 80px;
+      font-size: var(--font-size-sm);
+    }
+
+    .theme-preview {
+      margin-left: 0;
+      flex: 0 0 auto;
+    }
+  }
+
+  @media (max-width: 479px) {
     .theme-preview {
       display: none; /* Hide preview on very small screens */
     }
 
     .theme-select label,
     .color-scheme-toggle label {
-      min-width: 36px;
+      min-width: 60px;
       font-size: var(--font-size-xs);
     }
   }

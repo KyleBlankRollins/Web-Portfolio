@@ -107,13 +107,11 @@ export default class AnchorCopyComponent extends LitElement {
       /* Responsive adjustments */
       @media (max-width: 768px) {
         .anchor-copy-btn {
-          opacity: 1; /* Always visible on mobile */
-          position: static;
-          margin-left: auto;
+          display: none; /* Hide completely on mobile to save horizontal space */
         }
 
         .heading-with-anchor {
-          flex-wrap: wrap;
+          gap: 0; /* Remove gap since button is hidden */
         }
       }
 
@@ -169,11 +167,8 @@ export default class AnchorCopyComponent extends LitElement {
    */
   private setupAnchorButtons(): void {
     // Look for headings in the main article content
-    const article =
-      document.querySelector(".blog-post-content") || document;
-    const headings = article.querySelectorAll(
-      "h1, h2, h3, h4, h5, h6"
-    );
+    const article = document.querySelector(".blog-post-content") || document;
+    const headings = article.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     headings.forEach((heading) => {
       this.processHeading(heading as HTMLHeadingElement);
@@ -259,10 +254,7 @@ export default class AnchorCopyComponent extends LitElement {
     button.appendChild(linkIcon);
 
     button.title = "Copy link to this section";
-    button.setAttribute(
-      "aria-label",
-      `Copy link to ${headingId} section`
-    );
+    button.setAttribute("aria-label", `Copy link to ${headingId} section`);
 
     // Add click handler
     button.addEventListener("click", async (e) => {
