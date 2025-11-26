@@ -2,9 +2,21 @@
 
 This directory contains custom GitHub Copilot agents designed to streamline your blog writing workflow. Each agent is a specialist that handles a specific stage of the content creation process.
 
+## ✨ Handoffs Feature
+
+These agents use **handoffs** - a powerful feature that creates guided sequential workflows. After a chat response completes, handoff buttons appear that let you transition to the next agent with relevant context and a pre-filled prompt. This creates a seamless pipeline from research → outline → draft → editing.
+
+**Requirements:**
+
+- VS Code 1.106 or later (released November 2024)
+- GitHub Copilot extension
+- Agent files use `.agent.md` extension (not just `.md`)
+
 ## Available Agents
 
-### @research-agent
+**Note:** All agent files now use the `.agent.md` extension as per VS Code specifications. Each agent includes **handoffs** - buttons that appear after responses to guide you to the next step in your workflow.
+
+### @research_agent
 
 **Purpose:** Gathers and synthesizes information for blog post topics  
 **Use when:** Starting a new post, need sources and supporting evidence  
@@ -114,6 +126,49 @@ Outlining in the backlog.
 @backlog-agent I have 3 posts stuck in "Outlining" for over a month.
 What should I do?
 ```
+
+---
+
+---
+
+## Using Handoffs for Seamless Workflows
+
+Each agent includes **handoff buttons** that appear after completing a response. These create a guided workflow where you can transition from one agent to the next with a single click, carrying context forward.
+
+### The Complete Blog Post Workflow
+
+```
+@backlog_agent (check status)
+    ↓ "Start Research" button
+@research_agent (gather sources)
+    ↓ "Create Outline" button
+@outline_agent (structure post)
+    ↓ "Write Draft" or "Generate Examples" button
+@draft_agent (write prose)
+    ↓ "Add Examples" or "Edit Draft" button
+@editor_agent (refine & polish)
+    ↓ "Update Backlog" button
+@backlog_agent (mark published)
+```
+
+### Handoff Benefits
+
+- **No copy/paste needed** - Context automatically flows to next agent
+- **Pre-filled prompts** - Suggested next actions reduce decision fatigue
+- **Maintain momentum** - Stay in flow state through entire process
+- **Flexible paths** - Choose which handoff makes sense for your current needs
+
+### Example: Research to Draft
+
+1. Start: `@research_agent Research intentional work patterns for remote workers`
+2. Agent provides sources and insights
+3. Click **"Create Outline"** button → switches to `@outline_agent` with context
+4. Agent creates structured outline
+5. Click **"Write Draft"** button → switches to `@draft_agent` with outline
+6. Agent writes first draft
+7. Continue clicking handoffs until post is complete
+
+You're in control at each step - review before moving forward, or take a different path if needed.
 
 ---
 
