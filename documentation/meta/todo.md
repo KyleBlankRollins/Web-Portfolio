@@ -1,0 +1,3 @@
+- Add tests for every component
+- TOC component: fix expand/collapse
+- Add background to content to improve readability

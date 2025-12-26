@@ -4,7 +4,7 @@ import { marked } from "marked";
 import Prism from "prismjs";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
-import type { TemplateVariables } from "./template-processor.js";
+import type { TemplateVariables, SeriesInfo } from "./template-processor.js";
 
 // Import common languages for Prism
 import "prismjs/components/prism-javascript";
@@ -31,6 +31,7 @@ export interface BlogPostManifestEntry {
   url: string;
   filename: string;
   keywords?: string;
+  series?: SeriesInfo;
 }
 
 export interface GeneratedHtmlFile {
@@ -107,9 +108,7 @@ export class MarkdownProcessor {
   /**
    * Normalize language aliases to Prism language identifiers
    */
-  private normalizeLanguage(
-    language: string | undefined
-  ): string | undefined {
+  private normalizeLanguage(language: string | undefined): string | undefined {
     if (!language) return undefined;
 
     const lang = language.toLowerCase();
@@ -188,10 +187,7 @@ export class MarkdownProcessor {
 
     // Restore code blocks
     codeBlocks.forEach((codeBlock, index) => {
-      processed = processed.replace(
-        `__CODE_BLOCK_${index}__`,
-        codeBlock
-      );
+      processed = processed.replace(`__CODE_BLOCK_${index}__`, codeBlock);
     });
 
     // Clean up any resulting multiple consecutive newlines
@@ -209,19 +205,16 @@ export class MarkdownProcessor {
     const admonitionPattern =
       /<kbr-admonition([^>]*)>([\s\S]*?)<\/kbr-admonition>/g;
 
-    return content.replace(
-      admonitionPattern,
-      (_, attributes, innerContent) => {
-        // Trim whitespace from inner content
-        const trimmedContent = innerContent.trim();
+    return content.replace(admonitionPattern, (_, attributes, innerContent) => {
+      // Trim whitespace from inner content
+      const trimmedContent = innerContent.trim();
 
-        // Process markdown content with parseInline to avoid wrapping in <p> tags
-        const processedContent = marked.parseInline(trimmedContent);
+      // Process markdown content with parseInline to avoid wrapping in <p> tags
+      const processedContent = marked.parseInline(trimmedContent);
 
-        // Return admonition with processed content, preserving original attributes
-        return `\n\n<kbr-admonition${attributes}>${processedContent}</kbr-admonition>\n\n`;
-      }
-    );
+      // Return admonition with processed content, preserving original attributes
+      return `\n\n<kbr-admonition${attributes}>${processedContent}</kbr-admonition>\n\n`;
+    });
   }
 
   /**
@@ -235,17 +228,13 @@ export class MarkdownProcessor {
 
     // Extract frontmatter metadata and content
     const { metadata, content } =
-      this.templateProcessor.extractMarkdownFrontmatter(
-        markdownContent
-      );
+      this.templateProcessor.extractMarkdownFrontmatter(markdownContent);
 
     // Strip comments from the markdown content
     const commentFreeContent = this.stripComments(content);
 
     // Preprocess admonitions to handle markdown within HTML tags
-    const preprocessedContent = this.preprocessAdmonitions(
-      commentFreeContent
-    );
+    const preprocessedContent = this.preprocessAdmonitions(commentFreeContent);
 
     // Convert Markdown to HTML
     const htmlContent = marked(preprocessedContent);
@@ -253,10 +242,7 @@ export class MarkdownProcessor {
     // For blog posts, add date and tags after the first h1
     let processedContent = htmlContent;
     if (metadata.isBlogPost) {
-      processedContent = this.addBlogMetadataToHTML(
-        htmlContent,
-        metadata
-      );
+      processedContent = this.addBlogMetadataToHTML(htmlContent, metadata);
 
       // Add to blog post manifest
       this.addToBlogManifest(filePath, metadata);
@@ -268,9 +254,7 @@ export class MarkdownProcessor {
       metadata.description
         ? `<!-- description: ${metadata.description} -->`
         : "",
-      metadata.keywords
-        ? `<!-- keywords: ${metadata.keywords} -->`
-        : "",
+      metadata.keywords ? `<!-- keywords: ${metadata.keywords} -->` : "",
       // Add blog-specific metadata comments
       metadata.date ? `<!-- date: ${metadata.date} -->` : "",
       metadata.formattedDate
@@ -280,6 +264,13 @@ export class MarkdownProcessor {
         ? `<!-- tags: ${metadata.tags.join(", ")} -->`
         : "",
       metadata.isBlogPost ? `<!-- isBlogPost: true -->` : "",
+      // Add series metadata comments if present
+      metadata.series?.name
+        ? `<!-- series.name: ${metadata.series.name} -->`
+        : "",
+      metadata.series?.part
+        ? `<!-- series.part: ${metadata.series.part} -->`
+        : "",
       processedContent,
     ]
       .filter(Boolean)
@@ -295,9 +286,7 @@ export class MarkdownProcessor {
       metadata: metadata,
     });
 
-    BuildLogger.success(
-      `Generated blog post: ${fileName} (stored in memory)`
-    );
+    BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
     return fileName;
   }
@@ -325,20 +314,13 @@ export class MarkdownProcessor {
     const beforeH1 = htmlContent.substring(0, afterH1Index);
     const afterH1 = htmlContent.substring(afterH1Index);
 
-    return (
-      beforeH1 +
-      "\n" +
-      this.createBlogMetadataHTML(metadata) +
-      afterH1
-    );
+    return beforeH1 + "\n" + this.createBlogMetadataHTML(metadata) + afterH1;
   }
 
   /**
    * Create HTML for blog post metadata (date only - tags moved to sidebar)
    */
-  private createBlogMetadataHTML(
-    metadata: Partial<TemplateVariables>
-  ): string {
+  private createBlogMetadataHTML(metadata: Partial<TemplateVariables>): string {
     // Only add date - tags will be handled in the template sidebar
     if (metadata.formattedDate) {
       return `
@@ -376,6 +358,11 @@ export class MarkdownProcessor {
       keywords: metadata.keywords,
     };
 
+    // Add series data if present
+    if (metadata.series) {
+      manifestEntry.series = metadata.series;
+    }
+
     this.blogPostManifest.push(manifestEntry);
   }
 
@@ -383,6 +370,9 @@ export class MarkdownProcessor {
    * Generate the blog post manifest (no longer saves to disk)
    */
   public generateBlogManifest(): void {
+    // Validate series data before generating manifest
+    this.validateSeriesData();
+
     // Sort blog posts by date (newest first)
     const sortedPosts = this.blogPostManifest.sort((a, b) => {
       const dateA = new Date(a.date);
@@ -418,6 +408,61 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Validate series data for consistency
+   */
+  private validateSeriesData(): void {
+    // Group posts by series name
+    const seriesMap = new Map<string, BlogPostManifestEntry[]>();
+
+    this.blogPostManifest.forEach((post) => {
+      if (post.series) {
+        const seriesName = post.series.name;
+        if (!seriesMap.has(seriesName)) {
+          seriesMap.set(seriesName, []);
+        }
+        seriesMap.get(seriesName)!.push(post);
+      }
+    });
+
+    // Validate each series
+    seriesMap.forEach((posts, seriesName) => {
+      const parts = posts.map((p) => p.series!.part);
+      const sortedParts = [...parts].sort((a, b) => a - b);
+
+      // Check for duplicate part numbers
+      const duplicates = parts.filter(
+        (part, index) => parts.indexOf(part) !== index
+      );
+      if (duplicates.length > 0) {
+        const duplicatePosts = posts.filter((p) =>
+          duplicates.includes(p.series!.part)
+        );
+        BuildLogger.error(
+          `Duplicate part numbers in series "${seriesName}": ${duplicates.join(", ")}`
+        );
+        duplicatePosts.forEach((post) => {
+          BuildLogger.error(`  - "${post.title}" (part ${post.series!.part})`);
+        });
+        throw new Error(
+          `Series "${seriesName}" has duplicate part numbers. Each part must be unique.`
+        );
+      }
+
+      // Check for non-sequential parts (warning only)
+      const hasGaps = sortedParts.some((part, index) => {
+        if (index === 0) return false;
+        return part !== sortedParts[index - 1] + 1;
+      });
+      if (hasGaps) {
+        BuildLogger.warn(
+          `Series "${seriesName}" has non-sequential part numbers: ${sortedParts.join(", ")}`
+        );
+        BuildLogger.warn(`  This is allowed but may indicate missing posts.`);
+      }
+    });
+  }
+
+  /**
    * Get the current blog post manifest
    */
   public getBlogManifest(): BlogPostManifestEntry[] {
@@ -434,9 +479,7 @@ export class MarkdownProcessor {
   /**
    * Get a specific generated file by filename
    */
-  public getGeneratedFile(
-    filename: string
-  ): GeneratedHtmlFile | undefined {
+  public getGeneratedFile(filename: string): GeneratedHtmlFile | undefined {
     return this.generatedFiles.get(filename);
   }
 

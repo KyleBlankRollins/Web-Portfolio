@@ -18,9 +18,7 @@ export class HtmlProcessingUtils {
     }
 
     // Look for title in kbr-page-head attributes
-    const titleAttrMatch = content.match(
-      /title\s*=\s*["']([^"']*)["']/i
-    );
+    const titleAttrMatch = content.match(/title\s*=\s*["']([^"']*)["']/i);
     if (titleAttrMatch) {
       return titleAttrMatch[1].trim();
     }
@@ -56,6 +54,7 @@ export class HtmlProcessingUtils {
       formattedDate: metadata.formattedDate,
       tags: metadata.tags,
       isBlogPost: metadata.isBlogPost,
+      series: metadata.series, // Include series metadata
       // Generate tags HTML for sidebar
       tagsHtml: this.generateTagsHtml(metadata.tags),
     };
@@ -85,10 +84,7 @@ export class HtmlProcessingUtils {
     // Inject CSS links before closing </head>
     if (assets.css.length > 0) {
       const cssLinks = assets.css
-        .map(
-          (href) =>
-            `    <link rel="stylesheet" crossorigin href="${href}">`
-        )
+        .map((href) => `    <link rel="stylesheet" crossorigin href="${href}">`)
         .join("\n");
 
       modifiedContent = modifiedContent.replace(
@@ -125,8 +121,7 @@ export class HtmlProcessingUtils {
 
     const tagButtons = tags
       .map(
-        (tag) =>
-          `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
+        (tag) => `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
       )
       .join("");
 

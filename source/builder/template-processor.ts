@@ -3,6 +3,14 @@ import { join } from "path";
 import { BuildLogger } from "./helpers.js";
 
 /**
+ * Series information for blog posts
+ */
+export interface SeriesInfo {
+  name: string;
+  part: number;
+}
+
+/**
  * Interface for template variables
  */
 export interface TemplateVariables {
@@ -17,6 +25,7 @@ export interface TemplateVariables {
   formattedDate?: string; // Human-readable date format
   isBlogPost?: boolean; // Flag to identify blog posts
   tagsHtml?: string; // Rendered tags HTML for sidebar
+  series?: SeriesInfo; // Optional series information
 }
 
 /**
@@ -131,6 +140,23 @@ export class TemplateProcessor {
       content = content.replace(isBlogPostMatch[0], "");
     }
 
+    // Series metadata
+    const seriesNameMatch = htmlContent.match(
+      /<!--\s*series\.name:\s*(.+?)\s*-->/i
+    );
+    const seriesPartMatch = htmlContent.match(
+      /<!--\s*series\.part:\s*(.+?)\s*-->/i
+    );
+    if (seriesNameMatch && seriesPartMatch) {
+      const partNum = parseInt(seriesPartMatch[1].trim(), 10);
+      metadata.series = {
+        name: seriesNameMatch[1].trim(),
+        part: partNum,
+      };
+      content = content.replace(seriesNameMatch[0], "");
+      content = content.replace(seriesPartMatch[0], "");
+    }
+
     // Also remove template comment if present
     const templateMatch = htmlContent.match(/<!--\s*template:\s*(.+?)\s*-->/i);
     if (templateMatch) {
@@ -208,6 +234,37 @@ export class TemplateProcessor {
           metadata.isBlogPost = true;
         }
       }
+
+      // Extract series metadata (optional)
+      const seriesMatch = frontmatter.match(/^series:\s*$/m);
+      if (seriesMatch) {
+        // Multi-line series object format
+        const seriesNameMatch = frontmatter.match(/^\s+name:\s*(.+)$/m);
+        const seriesPartMatch = frontmatter.match(/^\s+part:\s*(.+)$/m);
+
+        if (seriesNameMatch && seriesPartMatch) {
+          const seriesName = seriesNameMatch[1]
+            .trim()
+            .replace(/^["']|["']$/g, "");
+          const partStr = seriesPartMatch[1].trim().replace(/^["']|["']$/g, "");
+          const partNum = parseInt(partStr, 10);
+
+          // Validate part number
+          if (isNaN(partNum) || partNum <= 0) {
+            BuildLogger.error(
+              `Invalid series part number "${partStr}" - must be a positive integer`
+            );
+            throw new Error(
+              `Invalid series part number: ${partStr}. Part must be a positive integer.`
+            );
+          }
+
+          metadata.series = {
+            name: seriesName,
+            part: partNum,
+          };
+        }
+      }
     }
 
     return { metadata, content };
@@ -280,6 +337,9 @@ export class TemplateProcessor {
   ): string {
     let result = template;
 
+    // Flatten nested objects for dot notation support
+    const flatVariables = this.flattenObject(variables);
+
     // Handle conditional sections ({{#variable}}...{{/variable}})
     Object.entries(variables).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== "") {
@@ -300,7 +360,7 @@ export class TemplateProcessor {
     });
 
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
-    Object.entries(variables).forEach(([key, value]) => {
+    Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         const tripleRegex = new RegExp(`\\{\\{\\{${key}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
@@ -308,7 +368,7 @@ export class TemplateProcessor {
     });
 
     // Handle double-brace variables (escaped: {{variable}})
-    Object.entries(variables).forEach(([key, value]) => {
+    Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         const doubleRegex = new RegExp(`\\{\\{${key}\\}\\}`, "g");
         // Basic HTML escaping
@@ -326,6 +386,32 @@ export class TemplateProcessor {
     result = result.replace(/\{\{\{?\w+\}?\}\}/g, "");
 
     return result;
+  }
+
+  /**
+   * Flatten nested object properties for dot notation support
+   * e.g., { series: { name: "Test" } } becomes { "series.name": "Test" }
+   */
+  private flattenObject(obj: any, prefix: string = ""): Record<string, any> {
+    const flattened: Record<string, any> = {};
+
+    Object.entries(obj).forEach(([key, value]) => {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+
+      if (
+        value !== null &&
+        typeof value === "object" &&
+        !Array.isArray(value)
+      ) {
+        // Recursively flatten nested objects
+        Object.assign(flattened, this.flattenObject(value, fullKey));
+      } else {
+        // Add both the original key and the flattened key
+        flattened[fullKey] = value;
+      }
+    });
+
+    return flattened;
   }
 
   /**
