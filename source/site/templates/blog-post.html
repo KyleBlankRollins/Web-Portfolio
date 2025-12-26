@@ -32,7 +32,10 @@
       </aside>
 
       <article class="blog-post-content">
-        {{{content}}}
+        {{{content}}} {{#citationsHtml}}
+        <div class="blog-citations-container">{{{citationsHtml}}}</div>
+        {{/citationsHtml}}
+
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
     </main>

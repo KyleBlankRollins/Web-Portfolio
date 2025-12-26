@@ -55,6 +55,7 @@ export class HtmlProcessingUtils {
       tags: metadata.tags,
       isBlogPost: metadata.isBlogPost,
       series: metadata.series, // Include series metadata
+      citationsHtml: metadata.citationsHtml, // Include citations HTML
       // Generate tags HTML for sidebar
       tagsHtml: this.generateTagsHtml(metadata.tags),
     };

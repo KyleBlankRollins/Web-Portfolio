@@ -11,6 +11,17 @@ export interface SeriesInfo {
 }
 
 /**
+ * Citation information for blog posts
+ */
+export interface Citation {
+  id: string;
+  title: string;
+  author: string;
+  url?: string; // Optional: link to official site or article
+  purchaseUrl?: string; // Optional: link to buy the book/resource
+}
+
+/**
  * Interface for template variables
  */
 export interface TemplateVariables {
@@ -26,6 +37,8 @@ export interface TemplateVariables {
   isBlogPost?: boolean; // Flag to identify blog posts
   tagsHtml?: string; // Rendered tags HTML for sidebar
   series?: SeriesInfo; // Optional series information
+  citations?: Citation[]; // Optional citations array
+  citationsHtml?: string; // Rendered citations HTML for footnotes section
 }
 
 /**
@@ -157,6 +170,18 @@ export class TemplateProcessor {
       content = content.replace(seriesPartMatch[0], "");
     }
 
+    // Citations HTML
+    const citationsHtmlMatch = htmlContent.match(
+      /<!--\s*citationsHtml:\s*([\s\S]*?)\s*-->/i
+    );
+    if (citationsHtmlMatch) {
+      // Unescape the HTML comment escaping
+      metadata.citationsHtml = citationsHtmlMatch[1]
+        .trim()
+        .replace(/&#45;&#45;/g, "--");
+      content = content.replace(citationsHtmlMatch[0], "");
+    }
+
     // Also remove template comment if present
     const templateMatch = htmlContent.match(/<!--\s*template:\s*(.+?)\s*-->/i);
     if (templateMatch) {
@@ -265,9 +290,103 @@ export class TemplateProcessor {
           };
         }
       }
+
+      // Extract citations metadata (optional)
+      const citationsMatch = frontmatter.match(/^citations:\s*$/m);
+      if (citationsMatch) {
+        metadata.citations = this.parseCitations(frontmatter);
+      }
     }
 
     return { metadata, content };
+  }
+
+  /**
+   * Parse citations array from frontmatter
+   */
+  private parseCitations(frontmatter: string): Citation[] {
+    const citations: Citation[] = [];
+    const citationIdRegex = /^\s+- id:\s*(.+)$/gm;
+    let match;
+
+    while ((match = citationIdRegex.exec(frontmatter)) !== null) {
+      const startIndex = match.index;
+      // Find the next citation or end of frontmatter
+      const nextMatch = citationIdRegex.exec(frontmatter);
+      const endIndex = nextMatch ? nextMatch.index : frontmatter.length;
+      citationIdRegex.lastIndex = nextMatch
+        ? nextMatch.index
+        : frontmatter.length;
+
+      const citationBlock = frontmatter.substring(startIndex, endIndex);
+
+      const id = match[1].trim().replace(/^["']|["']$/g, "");
+      const titleMatch = citationBlock.match(/^\s+title:\s*(.+)$/m);
+      const authorMatch = citationBlock.match(/^\s+author:\s*(.+)$/m);
+      const urlMatch = citationBlock.match(/^\s+url:\s*(.+)$/m);
+      const purchaseUrlMatch = citationBlock.match(/^\s+purchaseUrl:\s*(.+)$/m);
+
+      // Validate required fields
+      if (!titleMatch || !authorMatch) {
+        BuildLogger.error(
+          `Citation "${id}" is missing required fields (title and author must be present)`
+        );
+        throw new Error(
+          `Invalid citation: "${id}". Both title and author are required.`
+        );
+      }
+
+      // Validate ID format (lowercase alphanumeric with hyphens)
+      if (!/^[a-z0-9-]+$/.test(id)) {
+        const suggestedId = id.toLowerCase().replace(/[^a-z0-9-]/g, "-");
+        BuildLogger.error(
+          `Invalid citation ID "${id}" - must be lowercase alphanumeric with hyphens. Suggested: "${suggestedId}"`
+        );
+        throw new Error(
+          `Invalid citation ID: "${id}". IDs must be lowercase alphanumeric with hyphens only.`
+        );
+      }
+
+      const citation: Citation = {
+        id,
+        title: titleMatch[1].trim().replace(/^["']|["']$/g, ""),
+        author: authorMatch[1].trim().replace(/^["']|["']$/g, ""),
+      };
+
+      if (urlMatch) {
+        citation.url = urlMatch[1].trim().replace(/^["']|["']$/g, "");
+      }
+
+      if (purchaseUrlMatch) {
+        citation.purchaseUrl = purchaseUrlMatch[1]
+          .trim()
+          .replace(/^["']|["']$/g, "");
+      }
+
+      citations.push(citation);
+    }
+
+    // Check for duplicate IDs
+    const idCounts = new Map<string, number>();
+    citations.forEach((citation) => {
+      const count = (idCounts.get(citation.id) || 0) + 1;
+      idCounts.set(citation.id, count);
+    });
+
+    const duplicates = Array.from(idCounts.entries())
+      .filter(([_, count]) => count > 1)
+      .map(([id, _]) => id);
+
+    if (duplicates.length > 0) {
+      BuildLogger.error(
+        `Duplicate citation IDs found: ${duplicates.join(", ")}`
+      );
+      throw new Error(
+        `Duplicate citation IDs: ${duplicates.join(", ")}. Each citation must have a unique ID.`
+      );
+    }
+
+    return citations;
   }
 
   /**

@@ -29,10 +29,32 @@ After I recognized how disruptive this was, my partner and I had a simple conver
 
 Everyone's personal situation is different. This means that when you work from home, your personal life gets mixed with your work life more or less than it does for others. The more mixed up it is, the more difficult it will be to disentangle the two.
 
+Physical separation helps. If you can dedicate a room (or even just a corner) exclusively to work, do it. Cal Newport argues in _Deep Work_ that knowledge workers need the ability to focus without distraction on cognitively demanding tasks. Having a specific place that your brain associates with this kind of focused work makes it easier to get into that mode. When you leave that space, you leave work behind. This works in reverse too: your household members start to recognize that when you're in that space, you're doing deep work that shouldn't be interrupted.
+
+If a dedicated space isn't possible, other markers can help. Some remote workers change their clothes when they start work, even if it's just switching from pajamas to jeans. Others use noise-canceling headphones as a visual signal that they're unavailable.
+
+Time boundaries matter as much as physical ones. Set specific work hours and communicate them clearly to your household. Even when you're not in meetings, you're still working.
+
 ### Having difficult conversations
 
-.
+Sometime, the people you live with won't understand why you need these boundaries, even after you've explained them. They might take it personally or see your boundaries as rejection. This is where you need to have difficult conversations.
+
+These conversations work better when you frame them around your needs rather than their behavior. Instead of "You keep interrupting me," try "I need uninterrupted focus time to do my job well." Instead of "Stop bothering me during work hours," try "I want to be fully present when we spend time together, which means I need to protect my work time."
+
+You might also need to explain what your work actually involves. Your partner might not realize that answering a quick question actually costs you 15-30 minutes of refocusing time. Newport calls this "attention residue" - when you switch from Task A to Task B, your attention doesn't immediately follow. A residue of your attention remains stuck thinking about the original task. This residue gets especially thick if your work on Task A was unbounded and of low intensity before you switched. Help them understand that knowledge work requires sustained concentration, not just being physically present at a computer.
+
+If people don't respect your boundaries after you've had these conversations, you may need to address them more directly. This doesn't make you a bad partner, parent, or roommate. It makes you someone who takes their professional commitments seriously. And ultimately, maintaining your income and career growth benefits everyone in your household.
 
 ## The curse of flexibility
 
-When you theoretically have the flexibility to do things, you often feel like that means you're morally obligated to do them. But if doing them endangers your source of income, it's a bad move.
+Working from home gives you an amazing amount of flexibility. Theoretically, you _could_ both pick up and drop off your kids from school. You _could_ meal prep, do the laundry, go grocery shopping, or any of the million other things that make up life outside of work. And it's incredibly tempting to do all it. And you may even feel like you're morally obligated to.
+
+But you have to be careful about what you agree to do during your typical work hours. As a knowledge worker, your time and focus are your most important resources. You can't do everything. Using your time and focus on daily household things means you can't use them for work.
+
+The problem isn't just about time. It's also about energy. Your peak cognitive hours are limited. If you spend your morning mental clarity on meal prep or organizing the garage, you're left doing complex technical work when your brain is already drained. You might have spent eight hours "at work," but only three of them were during your actual high-performance window.
+
+Newport distinguishes between deep work (professional activities performed in a state of distraction-free concentration) and shallow work (non-cognitively demanding tasks often performed while distracted). The problem with doing household tasks during your peak hours isn't just that they take time. They train your brain to crave distraction. Every time you break focus to throw in a load of laundry or check on dinner, you make it harder to sustain the deep work that actually moves your career forward. Save household tasks for when your brain needs a break anyway, not when you should be tackling your most challenging work.
+
+This can create a guilt cycle that's hard to escape. You feel guilty for ignoring household tasks during work hours. Then you feel guilty for not being fully focused at work because you're thinking about those tasks. You end up doing neither thing well. Breaking this cycle requires accepting an uncomfortable truth: you can't optimize for everything simultaneously. During work hours, your job gets priority. After work hours, your household gets priority. Trying to blend them means both suffer.
+
+I'll never advocate for putting everything you have into work. Life is more than work. But most people need the income from work to keep life running in a way that they're comfortable with. Don't let the flexibility of remote work affect your performance at work.

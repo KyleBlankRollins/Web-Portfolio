@@ -4,7 +4,11 @@ import { marked } from "marked";
 import Prism from "prismjs";
 import { BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
-import type { TemplateVariables, SeriesInfo } from "./template-processor.js";
+import type {
+  TemplateVariables,
+  SeriesInfo,
+  Citation,
+} from "./template-processor.js";
 
 // Import common languages for Prism
 import "prismjs/components/prism-javascript";
@@ -230,6 +234,167 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Process citation references in markdown content.
+   * Finds [^id] patterns and replaces them with numbered superscript links.
+   * Returns processed content and generates citations HTML section.
+   */
+  private processCitations(
+    content: string,
+    citations: Citation[] | undefined,
+    filePath: string
+  ): { content: string; citationsHtml: string | undefined } {
+    if (!citations || citations.length === 0) {
+      return { content, citationsHtml: undefined };
+    }
+
+    // Track citation usage: Map<citationId, { number, positions }>
+    const citationUsage = new Map<
+      string,
+      { number: number; positions: number[] }
+    >();
+    const citationPattern = /\[\^([a-z0-9-]+)\]/g;
+    let citationNumber = 0;
+    let match;
+
+    // First pass: find all citations and assign numbers in order of first appearance
+    const matches: Array<{ id: string; index: number }> = [];
+
+    while ((match = citationPattern.exec(content)) !== null) {
+      const citationId = match[1];
+      matches.push({ id: citationId, index: match.index });
+
+      if (!citationUsage.has(citationId)) {
+        // Verify citation exists in frontmatter
+        const citation = citations.find((c) => c.id === citationId);
+        if (!citation) {
+          BuildLogger.error(
+            `Citation reference [^${citationId}] not found in frontmatter of ${filePath}`
+          );
+          throw new Error(
+            `Undefined citation reference: [^${citationId}] in ${filePath}`
+          );
+        }
+
+        citationNumber++;
+        citationUsage.set(citationId, {
+          number: citationNumber,
+          positions: [],
+        });
+      }
+
+      citationUsage.get(citationId)!.positions.push(match.index);
+    }
+
+    // Check for unused citations
+    const usedCitationIds = new Set(citationUsage.keys());
+    const unusedCitations = citations.filter((c) => !usedCitationIds.has(c.id));
+
+    if (unusedCitations.length > 0) {
+      BuildLogger.warn(
+        `Unused citations in ${filePath}: ${unusedCitations.map((c) => c.id).join(", ")}`
+      );
+    }
+
+    // Second pass: replace citations with numbered superscript links
+    let processedContent = content;
+
+    // Process matches in reverse order to preserve indices
+    for (let i = matches.length - 1; i >= 0; i--) {
+      const { id, index } = matches[i];
+      const usage = citationUsage.get(id)!;
+      const refNumber = usage.number;
+      const positionIndex = usage.positions.indexOf(index);
+
+      // Create unique ID for back-reference if there are multiple refs to same citation
+      const backRefId =
+        usage.positions.length > 1
+          ? `citation-ref-${id}-${positionIndex + 1}`
+          : `citation-ref-${id}`;
+
+      const replacement = `<sup id="${backRefId}"><a href="#citation-${id}" class="citation-ref">[${refNumber}]</a></sup>`;
+
+      // Calculate the exact position to replace
+      const beforeCitation = processedContent.substring(0, index);
+      const afterCitation = processedContent.substring(
+        index + `[^${id}]`.length
+      );
+      processedContent = beforeCitation + replacement + afterCitation;
+    }
+
+    // Generate citations HTML section
+    const citationsHtml = this.generateCitationsHtml(citations, citationUsage);
+
+    return { content: processedContent, citationsHtml };
+  }
+
+  /**
+   * Generate HTML for the citations/footnotes section
+   */
+  private generateCitationsHtml(
+    citations: Citation[],
+    citationUsage: Map<string, { number: number; positions: number[] }>
+  ): string {
+    // Filter to only used citations and sort by number
+    const usedCitations = Array.from(citationUsage.entries())
+      .map(([id, usage]) => ({
+        citation: citations.find((c) => c.id === id)!,
+        number: usage.number,
+        positions: usage.positions,
+      }))
+      .sort((a, b) => a.number - b.number);
+
+    if (usedCitations.length === 0) {
+      return "";
+    }
+
+    const citationItems = usedCitations
+      .map(({ citation, positions }) => {
+        const links: string[] = [];
+
+        if (citation.url) {
+          links.push(
+            `<a href="${citation.url}" target="_blank" rel="noopener noreferrer">Website</a>`
+          );
+        }
+
+        if (citation.purchaseUrl) {
+          links.push(
+            `<a href="${citation.purchaseUrl}" target="_blank" rel="noopener noreferrer">Purchase</a>`
+          );
+        }
+
+        const linksHtml =
+          links.length > 0
+            ? ` <span class="citation-links">${links.join('<span class="citation-separator"> | </span>')}</span>`
+            : "";
+
+        // Generate back-reference links
+        const backRefs =
+          positions.length > 1
+            ? positions
+                .map((_, idx) => {
+                  const backRefId = `citation-ref-${citation.id}-${idx + 1}`;
+                  return `<a href="#${backRefId}" class="citation-backref">↩</a>`;
+                })
+                .join(" ")
+            : `<a href="#citation-ref-${citation.id}" class="citation-backref">↩</a>`;
+
+        return `    <li id="citation-${citation.id}">
+      <em>${citation.title}</em> by ${citation.author}${linksHtml}
+      <span class="citation-backrefs"> ${backRefs}</span>
+    </li>`;
+      })
+      .join("\n");
+
+    return `<section class="citations">
+  <h2>References</h2>
+  <ol class="citations-list">
+${citationItems}
+  </ol>
+</section>`;
+  }
+
+  /**
    * Process a single Markdown file and convert it to HTML content (without template)
    * The template will be applied later by the HtmlBundleProcessor
    */
@@ -245,8 +410,19 @@ export class MarkdownProcessor {
     // Strip comments from the markdown content
     const commentFreeContent = this.stripComments(content);
 
+    // Process citations before markdown conversion (work on markdown, not HTML)
+    const { content: citationProcessedContent, citationsHtml } =
+      this.processCitations(commentFreeContent, metadata.citations, filePath);
+
+    // Store citationsHtml in metadata for later template rendering
+    if (citationsHtml) {
+      metadata.citationsHtml = citationsHtml;
+    }
+
     // Preprocess admonitions to handle markdown within HTML tags
-    const preprocessedContent = this.preprocessAdmonitions(commentFreeContent);
+    const preprocessedContent = this.preprocessAdmonitions(
+      citationProcessedContent
+    );
 
     // Convert Markdown to HTML
     const htmlContent = marked(preprocessedContent);
@@ -283,6 +459,10 @@ export class MarkdownProcessor {
       metadata.series?.part
         ? `<!-- series.part: ${metadata.series.part} -->`
         : "",
+      // Add citations HTML as metadata comment
+      metadata.citationsHtml
+        ? `<!-- citationsHtml: ${this.escapeHtmlComment(metadata.citationsHtml)} -->`
+        : "",
       processedContent,
     ]
       .filter(Boolean)
@@ -301,6 +481,13 @@ export class MarkdownProcessor {
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
     return fileName;
+  }
+
+  /**
+   * Escape HTML content for use in HTML comments
+   */
+  private escapeHtmlComment(html: string): string {
+    return html.replace(/--/g, "&#45;&#45;");
   }
 
   /**
