@@ -2,7 +2,7 @@
 title: "Intentional Work Patterns"
 description: "Build intentional habits to prevent chaos from controlling your work or seeping into your personal life."
 keywords: "habits, intentionality, remote work"
-date: "2025-10-01"
+date: "2025-12-26"
 tags: [habits, intentionality, remote work]
 series:
   name: "Intentional Work Patterns"
