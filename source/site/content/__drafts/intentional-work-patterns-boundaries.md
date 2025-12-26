@@ -1,6 +1,6 @@
 ---
 title: "Intentional Work Patterns - Boundaries"
-description: ""
+description: "Practical strategies for protecting your time and energy"
 keywords: "productivity, boundaries, remote work"
 date: "2025-12-26"
 tags: [habits, intentionality, remote work]
@@ -9,7 +9,7 @@ series:
   part: 2
 ---
 
-# Intentional Work Patterns
+# Intentional Work Patterns - Boundaries
 
 ## Setting boundaries
 

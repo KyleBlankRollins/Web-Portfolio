@@ -6,8 +6,6 @@ date: "2025-09-26"
 tags: [technical writing, research, LLM]
 ---
 
-# LLM as SME
-
 <kbr-admonition type="note">
 tl;dr: skip to [Example workflow](#example-workflow).
 </kbr-admonition>

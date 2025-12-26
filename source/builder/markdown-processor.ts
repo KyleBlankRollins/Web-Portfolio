@@ -239,10 +239,10 @@ export class MarkdownProcessor {
     // Convert Markdown to HTML
     const htmlContent = marked(preprocessedContent);
 
-    // For blog posts, add date and tags after the first h1
+    // For blog posts, inject title as H1 and add metadata
     let processedContent = htmlContent;
     if (metadata.isBlogPost) {
-      processedContent = this.addBlogMetadataToHTML(htmlContent, metadata);
+      processedContent = this.injectTitleAndMetadata(htmlContent, metadata);
 
       // Add to blog post manifest
       this.addToBlogManifest(filePath, metadata);
@@ -292,29 +292,32 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Add blog metadata (date and tags) to HTML content after the first h1
+   * Inject title as H1 and add blog metadata below it.
+   * If the content already starts with an H1, it will be used instead of the frontmatter title.
    */
-  private addBlogMetadataToHTML(
+  private injectTitleAndMetadata(
     htmlContent: string,
     metadata: Partial<TemplateVariables>
   ): string {
-    // Find the first h1 tag
-    const h1Match = htmlContent.match(/(<h1[^>]*>.*?<\/h1>)/i);
+    const title = metadata.title || "Untitled Post";
+    const titleId = this.generateAnchorId(title);
+    const titleH1 = `<h1 id="${titleId}">${title}</h1>`;
+    const metadataHTML = this.createBlogMetadataHTML(metadata);
 
-    if (!h1Match) {
-      // No h1 found, just add metadata at the beginning
-      return this.createBlogMetadataHTML(metadata) + htmlContent;
+    // Check if content already has an H1 at the start (after whitespace)
+    const h1Match = htmlContent.trim().match(/^(<h1[^>]*>.*?<\/h1>)/i);
+
+    if (h1Match) {
+      // Content has an H1, use it instead of injecting title from frontmatter
+      const existingH1 = h1Match[1];
+      const afterH1Index = htmlContent.indexOf(existingH1) + existingH1.length;
+      const afterH1 = htmlContent.substring(afterH1Index);
+
+      return existingH1 + "\n" + metadataHTML + afterH1;
     }
 
-    const h1Tag = h1Match[1];
-    const h1Index = htmlContent.indexOf(h1Tag);
-    const afterH1Index = h1Index + h1Tag.length;
-
-    // Insert blog metadata after the h1
-    const beforeH1 = htmlContent.substring(0, afterH1Index);
-    const afterH1 = htmlContent.substring(afterH1Index);
-
-    return beforeH1 + "\n" + this.createBlogMetadataHTML(metadata) + afterH1;
+    // No H1 found, inject title from frontmatter
+    return titleH1 + "\n" + metadataHTML + htmlContent;
   }
 
   /**
