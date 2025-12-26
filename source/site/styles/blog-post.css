@@ -36,8 +36,6 @@
   grid-area: content;
   min-width: 0; /* Prevent grid overflow */
   max-width: none;
-  border-radius: var(--space-xs);
-  padding: var(--space-sm);
 }
 
 /* Special blog post elements that need layout/visual styling */
