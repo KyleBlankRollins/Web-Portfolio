@@ -73,6 +73,18 @@ export class MarkdownProcessor {
       return `<h${level} id="${headingId}">${text}</h${level}>`;
     };
 
+    // Override link renderer to transform .md to .html
+    renderer.link = (
+      href: string,
+      title: string | null | undefined,
+      text: string
+    ) => {
+      // Transform .md links to .html
+      const transformedHref = href.replace(/\.md$/, ".html");
+      const titleAttr = title ? ` title="${title}"` : "";
+      return `<a href="${transformedHref}"${titleAttr}>${text}</a>`;
+    };
+
     // Override code renderer to add syntax highlighting
     renderer.code = (code: string, language: string | undefined) => {
       // Handle language aliases and fallbacks

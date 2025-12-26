@@ -59,6 +59,14 @@ export const tableOfContentsStyles = css`
     position: relative;
   }
 
+  .toc-content.hidden {
+    display: none;
+  }
+
+  .toc-content.visible {
+    display: block;
+  }
+
   .toc-container {
     padding: var(--space-lg);
     max-height: min(calc(100vh - 8rem), 600px);

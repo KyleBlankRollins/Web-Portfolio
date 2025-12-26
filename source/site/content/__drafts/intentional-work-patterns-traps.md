@@ -9,8 +9,6 @@ series:
   part: 2
 ---
 
-# Intentional Work Patterns - Traps
-
 - Just another 5 minutes
 - I don't need to take a long lunch - don't need breaks
 - I did a few chores, I should work longer to make up for it

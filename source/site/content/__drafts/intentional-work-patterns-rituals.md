@@ -9,6 +9,4 @@ series:
   part: 3
 ---
 
-# Intentional Work Patterns - Rituals
-
 - Enforce work life and personal life boundaries

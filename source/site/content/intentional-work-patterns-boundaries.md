@@ -9,8 +9,6 @@ series:
   part: 2
 ---
 
-# Intentional Work Patterns - Boundaries
-
 ## Setting boundaries
 
 If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn't so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you're setting them: you're creating a social contract that allows you and those around you to communicate what's important.

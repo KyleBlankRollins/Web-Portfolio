@@ -9,7 +9,5 @@ series:
   part: 4
 ---
 
-# Intentional Work Patterns - Spaces
-
 - If possible, find a dedicated work space in your home
 - Make it a space that's comfortable and encourages focus

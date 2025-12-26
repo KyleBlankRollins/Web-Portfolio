@@ -6,8 +6,6 @@ date: "2025-10-04"
 tags: [code examples, advice, technical writing]
 ---
 
-# Practical Advice for Code Examples in Software Documentation
-
 - What is a code example
 - Why use code examples?
 - When to use code examples?

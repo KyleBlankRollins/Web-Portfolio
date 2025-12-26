@@ -129,27 +129,30 @@ export class KbrPostSeries extends LitElement {
 
   private renderHeader() {
     const total = this.seriesPosts.length;
-    const expandIcon = this.isExpanded ? "▲" : "▼";
 
     return html`
-      <div class="series-header" @click="${this.toggleExpanded}">
+      <button
+        class="series-toggle"
+        @click="${this.toggleExpanded}"
+        aria-expanded="${this.isExpanded}"
+        aria-label="${this.isExpanded ? "Collapse" : "Expand"} series"
+      >
         <div class="series-info">
           <h3 class="series-name">${this.seriesName}</h3>
           <p class="series-position">Part ${this.currentPart} of ${total}</p>
         </div>
-        <button
-          class="expand-button"
-          aria-label="${this.isExpanded ? "Collapse" : "Expand"} series"
-          @click="${(e: Event) => {
-            e.stopPropagation();
-            this.toggleExpanded();
-          }}"
+        <svg
+          class="series-toggle-icon ${this.isExpanded
+            ? "expanded"
+            : "collapsed"}"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
         >
-          <span class="expand-icon ${this.isExpanded ? "expanded" : ""}">
-            ${expandIcon}
-          </span>
-        </button>
-      </div>
+          <polyline points="6,9 12,15 18,9"></polyline>
+        </svg>
+      </button>
     `;
   }
 

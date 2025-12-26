@@ -13,13 +13,24 @@ export const postSeriesStyles = css`
     background-color: var(--color-surface, #fff);
   }
 
-  .series-header {
+  .series-toggle {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: var(--space-sm, 0.5rem);
     cursor: pointer;
     user-select: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  .series-toggle:hover {
+    opacity: 0.8;
   }
 
   .series-info {
@@ -40,30 +51,20 @@ export const postSeriesStyles = css`
     margin: 0;
   }
 
-  .expand-button {
-    padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
-    background: transparent;
-    border: 1px solid var(--color-border, #ccc);
-    border-radius: var(--border-radius-sm, 4px);
-    cursor: pointer;
-    color: var(--color-text, #000);
-    font-size: var(--font-size-sm, 0.875rem);
-    transition: all var(--transition-fast, 0.15s) ease;
+  .series-toggle-icon {
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
-  }
-
-  .expand-button:hover {
-    background-color: var(--color-surface-hover, #f5f5f5);
-    border-color: var(--color-border-hover, #999);
-  }
-
-  .expand-icon {
-    display: inline-block;
     transition: transform var(--transition-fast, 0.15s) ease;
+    color: var(--color-text-secondary, #666);
   }
 
-  .expand-icon.expanded {
-    transform: rotate(180deg);
+  .series-toggle-icon.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .series-toggle-icon.expanded {
+    transform: rotate(0deg);
   }
 
   .series-content {

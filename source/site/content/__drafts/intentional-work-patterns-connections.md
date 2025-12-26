@@ -9,8 +9,6 @@ series:
   part: 5
 ---
 
-# Intentional Work Patterns - Connections
-
 - Be the one to reach out. Remote relationships require more work and effort. They don't just happen. Ask for colleagues to introduce you to other people in the company.
 - Schedule dedicated social time with teams and individuals
 - Schedule focus time on your calendar
