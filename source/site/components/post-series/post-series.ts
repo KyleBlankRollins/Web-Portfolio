@@ -165,19 +165,19 @@ export class KbrPostSeries extends LitElement {
         ${prevPost
           ? html`
               <a href="${prevPost.url}" class="nav-button">
-                ← Previous: ${prevPost.title}
+                <span class="nav-text">${prevPost.title}</span>
+                <span class="nav-arrow">←</span>
               </a>
             `
-          : html`
-              <button class="nav-button" disabled>← No previous post</button>
-            `}
+          : ""}
         ${nextPost
           ? html`
               <a href="${nextPost.url}" class="nav-button">
-                Next: ${nextPost.title} →
+                <span class="nav-text">${nextPost.title}</span>
+                <span class="nav-arrow">→</span>
               </a>
             `
-          : html` <button class="nav-button" disabled>No next post →</button> `}
+          : ""}
       </div>
     `;
   }

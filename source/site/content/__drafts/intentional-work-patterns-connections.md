@@ -1,6 +1,6 @@
 ---
 title: "Intentional Work Patterns - Connections"
-description: "Staying visible and connected in distributed teamss"
+description: "Staying visible and connected in distributed teams"
 keywords: "habits, intentionality, remote work"
 date: "2025-12-26"
 tags: [habits, intentionality, remote work]

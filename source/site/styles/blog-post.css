@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 350px 1fr;
   grid-template-areas: "sidebar content";
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-lg);
@@ -36,6 +36,8 @@
   grid-area: content;
   min-width: 0; /* Prevent grid overflow */
   max-width: none;
+  border-radius: var(--space-xs);
+  padding: var(--space-sm);
 }
 
 /* Special blog post elements that need layout/visual styling */
@@ -278,15 +280,12 @@
 
 /* Citations section container */
 .blog-citations-container {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-xl);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
   border-top: 2px solid var(--color-border);
 }
 
 /* Citations section */
-.citations {
-  color: var(--color-text-secondary);
-}
 
 .citations h2 {
   font-size: var(--font-size-lg);
@@ -302,7 +301,7 @@
 }
 
 .citations-list li {
-  margin-bottom: var(--space-md);
+  /* margin-bottom: var(--space-md); */
   line-height: 1.6;
   padding-left: var(--space-xs);
 }
@@ -325,7 +324,7 @@
 }
 
 .citations a {
-  color: var(--color-primary);
+  color: var(--color-text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
   transition: all var(--transition-fast);

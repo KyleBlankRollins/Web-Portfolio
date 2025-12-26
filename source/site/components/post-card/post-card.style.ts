@@ -31,11 +31,11 @@ export const postCardStyles = css`
 
   /* Header section */
   .post-card-header {
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 
   .post-card-title {
-    margin: 0 0 var(--space-sm) 0;
+    margin: 0;
     font-weight: 600;
   }
 

@@ -10,7 +10,7 @@ tags: [code examples, advice, technical writing]
 - Why use code examples?
 - When to use code examples?
 - Code example best practices
-  - Use diecrete files for code examples
+  - Use discrete files for code examples
   - Test code examples, ideally in a continuous way
   - Automate code example file handling - never copy/paste
   - Avoid manipulating code examples when possible. What is tested should resemble the final output as much as possible.

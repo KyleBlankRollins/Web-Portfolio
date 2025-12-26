@@ -13,7 +13,7 @@ export const tableOfContentsStyles = css`
     position: relative;
     background: var(--color-background-secondary);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--space-xs);
     overflow: hidden;
   }
 
@@ -68,7 +68,7 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-container {
-    padding: var(--space-lg);
+    margin: var(--space-xs);
     max-height: min(calc(100vh - 8rem), 600px);
     overflow-y: auto;
     overflow-x: hidden;

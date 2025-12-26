@@ -19,8 +19,6 @@ citations:
     url: "https://www.ics.uci.edu/~gmark/chi08-mark.pdf"
 ---
 
-## Setting boundaries
-
 If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn't so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you're setting them: you're creating a social contract that allows you and those around you to communicate what's important.
 
 In the context of working from home, your work is likely the most important thing you'll be doing from 9 to 5 (or whatever your regular work pattern looks like). Yes, family is important and you should make yourself available for emergencies. But you need to set boundaries around when you can be interrupted. Otherwise, people will interfere with your ability to do your job and, ultimately, bring home money.
@@ -29,7 +27,7 @@ Setting boundaries at home can be more difficult than it is in an office. The pe
 
 Sticking to them is the hardest part. Being consistent and reinforcing those boundaries over time is a major test of willpower. There will be many small things that seem reasonable to make exceptions for. But you can't let yourself do that. Because then the people around you will see that your boundaries are permeable - liable to change. And, through no malicious intent on their part, they'll continue to erode those boundaries until you're back where you started: with no boundaries.
 
-### Boundary setting example
+## Boundary setting example
 
 My partner enjoys checking on me throughout the day. It's one of the ways she shows that she cares. She also knows that I love our two cats. So, she started bringing a cat with her and getting me to engage with her and the cat. I did like this, but it also frustrated me because I was usually focused on a task at work. After they left, it would take me some time to gather all of the context that I dropped to talk with them.
 

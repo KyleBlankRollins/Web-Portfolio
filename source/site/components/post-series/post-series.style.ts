@@ -3,14 +3,14 @@ import { css } from "lit";
 export const postSeriesStyles = css`
   :host {
     display: block;
-    margin-bottom: var(--space-lg, 2rem);
+    margin-bottom: var(--space-lg);
   }
 
   .series-container {
-    border: 1px solid var(--color-border, #ccc);
-    border-radius: var(--border-radius-md, 8px);
-    padding: var(--space-md, 1rem);
-    background-color: var(--color-surface, #fff);
+    border: 1px solid var(--color-border);
+    border-radius: var(--space-xs);
+    padding: var(--space-sm);
+    background-color: var(--color-surface);
   }
 
   .series-toggle {
@@ -18,7 +18,7 @@ export const postSeriesStyles = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--space-sm, 0.5rem);
+    gap: var(--space-sm);
     cursor: pointer;
     user-select: none;
     background: transparent;
@@ -40,14 +40,14 @@ export const postSeriesStyles = css`
 
   .series-name {
     font-weight: 600;
-    font-size: var(--font-size-base, 1rem);
-    color: var(--color-text, #000);
-    margin: 0 0 var(--space-xs, 0.25rem) 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs) 0;
   }
 
   .series-position {
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-secondary, #666);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
     margin: 0;
   }
 
@@ -55,8 +55,8 @@ export const postSeriesStyles = css`
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-    transition: transform var(--transition-fast, 0.15s) ease;
-    color: var(--color-text-secondary, #666);
+    transition: transform var(--transition-fast) ease;
+    color: var(--color-text-secondary);
   }
 
   .series-toggle-icon.collapsed {
@@ -68,9 +68,9 @@ export const postSeriesStyles = css`
   }
 
   .series-content {
-    margin-top: var(--space-md, 1rem);
-    padding-top: var(--space-md, 1rem);
-    border-top: 1px solid var(--color-border, #ccc);
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
   }
 
   .series-content.collapsed {
@@ -79,27 +79,49 @@ export const postSeriesStyles = css`
 
   .series-navigation {
     display: flex;
-    gap: var(--space-sm, 0.5rem);
-    margin-bottom: var(--space-md, 1rem);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   .nav-button {
     flex: 1;
-    padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #ccc);
-    border-radius: var(--border-radius-sm, 4px);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--space-sm);
     cursor: pointer;
-    color: var(--color-text, #000);
-    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
     text-decoration: none;
     text-align: center;
-    transition: all var(--transition-fast, 0.15s) ease;
+    transition: all var(--transition-fast) ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+  }
+
+  .nav-text {
+    display: block;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-arrow {
+    display: block;
+    font-size: var(--font-size-lg);
+    opacity: 0.7;
+    margin-top: var(--space-xs);
   }
 
   .nav-button:hover:not(:disabled) {
-    background-color: var(--color-surface-hover, #f5f5f5);
-    border-color: var(--color-border-hover, #999);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+  }
+
+  .nav-button:hover:not(:disabled) .nav-arrow {
+    opacity: 1;
   }
 
   .nav-button:disabled {
@@ -114,28 +136,28 @@ export const postSeriesStyles = css`
   }
 
   .series-item {
-    margin-bottom: var(--space-sm, 0.5rem);
+    margin-bottom: var(--space-sm);
   }
 
   .series-link {
     display: block;
-    padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #ccc);
-    border-radius: var(--border-radius-sm, 4px);
-    color: var(--color-text, #000);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--space-sm);
+    color: var(--color-text);
     text-decoration: none;
-    transition: all var(--transition-fast, 0.15s) ease;
+    transition: all var(--transition-fast) ease;
   }
 
   .series-link:hover {
-    background-color: var(--color-surface-hover, #f5f5f5);
-    border-color: var(--color-border-hover, #999);
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
   }
 
   .series-link.current {
-    background-color: var(--color-primary-light, #e3f2fd);
-    border-color: var(--color-primary, #2196f3);
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
     font-weight: 600;
   }
 
@@ -143,20 +165,16 @@ export const postSeriesStyles = css`
     display: inline-block;
     min-width: 4ch;
     font-weight: 600;
-    color: var(--color-text-secondary, #666);
-  }
-
-  .series-link.current .part-number {
-    color: var(--color-primary, #2196f3);
+    color: var(--color-text-secondary);
   }
 
   .post-title {
-    color: var(--color-text, #000);
+    color: var(--color-text);
   }
 
   .error-message {
-    color: var(--color-error, #d32f2f);
-    font-size: var(--font-size-sm, 0.875rem);
-    margin: var(--space-sm, 0.5rem) 0;
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    margin: var(--space-sm) 0;
   }
 `;

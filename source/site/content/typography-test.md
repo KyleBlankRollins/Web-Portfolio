@@ -1,6 +1,6 @@
 ---
 title: "What Typography on KBR Looks Like"
-description: "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website."
+description: "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website"
 date: "2025-09-24"
 tags: ["design", "typography", "testing"]
 ---

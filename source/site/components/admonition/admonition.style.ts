@@ -3,13 +3,13 @@ import { css } from "lit";
 export const admonitionStyles = css`
   :host {
     display: block;
-    margin: var(--space-lg, 1.5rem) 0;
+    margin: var(--space-lg) 0;
   }
 
   .admonition {
-    border-radius: var(--border-radius-md, 8px);
+    border-radius: var(--space-xs);
     border-left: 4px solid;
-    padding: var(--space-md, 1rem);
+    padding: var(--space-md);
     background-color: var(--color-background-secondary);
     position: relative;
     overflow: hidden;
@@ -19,7 +19,7 @@ export const admonitionStyles = css`
   .admonition.compact {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-sm, 0.75rem);
+    gap: var(--space-sm);
   }
 
   .admonition.compact .admonition-icon {
@@ -35,14 +35,14 @@ export const admonitionStyles = css`
   .admonition-header {
     display: flex;
     align-items: center;
-    gap: var(--space-xs, 0.5rem);
-    margin-bottom: var(--space-sm, 0.75rem);
-    font-weight: var(--font-weight-medium, 500);
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-weight-medium);
   }
 
   .admonition-content {
     color: var(--color-text-secondary);
-    line-height: var(--line-height-relaxed, 1.6);
+    line-height: var(--line-height-relaxed);
   }
 
   /* Note styling - blue theme */
@@ -135,14 +135,14 @@ export const admonitionStyles = css`
 
   .admonition-content ::slotted(ul),
   .admonition-content ::slotted(ol) {
-    margin: var(--space-sm, 0.75rem) 0;
-    padding-left: var(--space-lg, 1.5rem);
+    margin: var(--space-sm) 0;
+    padding-left: var(--space-lg);
   }
 
   .admonition-content ::slotted(code) {
     background-color: var(--color-background);
     padding: 0.125rem 0.25rem;
-    border-radius: var(--border-radius-sm, 4px);
+    border-radius: var(--space-sm);
     font-size: 0.875em;
   }
 `;
