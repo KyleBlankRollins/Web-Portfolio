@@ -81,7 +81,7 @@
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
 
   /* Glass/Frosted Surface Properties */
-  --glass-background: rgba(255, 255, 255, 0.25);
+  --glass-background: rgba(248, 249, 250, 0.25);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-blur: 24px;
 }
@@ -167,7 +167,7 @@
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
 
   /* Glass/Frosted Surface Properties */
-  --glass-background: rgba(255, 255, 255, 0.05);
+  --glass-background: rgba(30, 41, 59, 0.15);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: 12px;
 }

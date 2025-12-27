@@ -605,65 +605,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Dark mode is handled in theme.css with prefers-color-scheme */
-
-/* Blog Post Metadata Styles */
-.blog-post-metadata {
-  margin: var(--space-sm) 0 var(--space-lg) 0;
-  padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.blog-post-date time {
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-.blog-post-tags {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.tags-label {
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.tag-list {
-  display: flex;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-}
-
-.blog-tag {
-  background-color: var(--color-background-secondary);
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: 16px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-decoration: none;
-}
-
-.blog-tag:hover {
-  background-color: var(--color-accent);
-  color: var(--color-text-inverse);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px var(--color-shadow);
-}
-
-.blog-tag:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
 /* Responsive adjustments for blog metadata */
 @media (max-width: 768px) {
   .blog-post-tags {

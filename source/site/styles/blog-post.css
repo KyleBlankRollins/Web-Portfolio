@@ -179,8 +179,10 @@
 
 /* Blog post metadata - visual styling only */
 .blog-post-metadata {
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-text-secondary);
   padding: 0 0 var(--space-sm) 0;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .blog-post-date time {
