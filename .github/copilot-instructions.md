@@ -20,15 +20,28 @@ This is a modern portfolio website built with **Vite + TypeScript + Lit Element 
 
 ### 2. KBR Builder (`source/builder/`)
 
-A custom Vite plugin that acts as a static site generator:
+A custom Vite plugin that acts as a static site generator with a modular architecture:
 
 - **Entry point**: `source/builder/index.ts` - orchestrates all processing
-- **Core processors**:
-  - `markdown-processor.ts` - Converts `.md` to `.html` with frontmatter → JSON manifest
-  - `template-processor.ts` - HTML templating with `{{variable}}` syntax
+- **Processors** (thin orchestrators):
+  - `markdown-processor.ts` - Orchestrates markdown conversion (delegates to modules)
+  - `template-processor.ts` - Orchestrates HTML templating (delegates to modules)
   - `html-bundle-processor.ts` - Production build HTML processing
   - `dev-server-middleware.ts` - Dev server routing and live reload
   - `git-aware-pipeline.ts` - Intelligent change detection for incremental builds
+
+- **Processing Modules** (`source/builder/modules/`):
+  - `html-utils.ts` - HTML escaping and manipulation utilities
+  - `citation-processor.ts` - Citation parsing and footnote generation
+  - `frontmatter-parser.ts` - YAML frontmatter extraction
+  - `markdown-renderer.ts` - Marked.js configuration with custom renderers
+  - `content-preprocessor.ts` - Content transformation before rendering
+  - `blog-manifest.ts` - Blog manifest building and validation
+  - `metadata-extractor.ts` - HTML comment metadata extraction
+  - `template-engine.ts` - Template loading and variable substitution
+  - `index.ts` - Barrel export for all modules
+
+**Architecture Pattern**: Processors are thin orchestrators (~100-250 lines) that coordinate interactions between focused, single-responsibility modules. Each module can be tested and maintained independently.
 
 ### 3. Admin System (`source/admin/`)
 
@@ -212,7 +225,12 @@ The builder supports incremental builds via `GitAwareBuildPipeline`:
 ### Blog Post Processing
 
 1. Markdown in `source/site/content/*.md` (with frontmatter)
-2. → `MarkdownProcessor` converts to HTML + extracts metadata
+2. → `MarkdownProcessor` orchestrates processing:
+   - `FrontmatterParser` extracts metadata
+   - `ContentPreprocessor` strips comments and preprocesses admonitions
+   - `CitationProcessor` handles citations
+   - `MarkdownRenderer` converts to HTML
+   - `BlogManifestBuilder` adds to manifest
 3. → Generated files: `public/blog-post-title.html` + `public/data/blog-manifest.json`
 4. → `blog-manifest.json` consumed by `<kbr-post-list>` component
 5. → Production: Files copied to `dist/`
@@ -224,6 +242,16 @@ The builder supports incremental builds via `GitAwareBuildPipeline`:
 3. → Admin UI (Lit components) displays Kanban board
 4. → Updates via API → `backlog-writer.ts` updates markdown file
 5. → Markdown remains single source of truth
+
+### Modifying the Builder
+
+- **Adding new features**: Create a new module in `source/builder/modules/` following single-responsibility principle
+- **Modifying processing logic**: Update the appropriate module, not the processor
+- **Processor changes**: Only modify processors for orchestration logic
+- Builder changes require TypeScript compilation: `npm run build`
+- Test with `npm run dev` after changes
+- Check `source/builder/README.md` for architecture details
+- Each module should be independently testable
 
 ## Key Files to Reference
 
