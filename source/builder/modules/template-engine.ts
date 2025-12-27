@@ -11,17 +11,11 @@ import { escapeHtmlAttribute } from "./html-utils.js";
 /**
  * Template variables structure
  *
- * Allows primitive values and nested template variable objects
- * while preserving type safety.
+ * Allows any value type for maximum flexibility.
+ * The actual structure is defined in template-processor.ts
  */
-export type TemplateVariableValue =
-  | string
-  | number
-  | boolean
-  | TemplateVariables;
-
 export interface TemplateVariables {
-  [key: string]: TemplateVariableValue;
+  [key: string]: any;
 }
 
 /**
