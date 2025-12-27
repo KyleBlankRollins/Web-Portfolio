@@ -129,6 +129,7 @@ export class KbrPostSeries extends LitElement {
 
   private renderHeader() {
     const total = this.seriesPosts.length;
+    const positionText = `Post ${this.currentPart + 1} of ${total}`;
 
     return html`
       <button
@@ -139,7 +140,7 @@ export class KbrPostSeries extends LitElement {
       >
         <div class="series-info">
           <h3 class="series-name">${this.seriesName}</h3>
-          <p class="series-position">Part ${this.currentPart} of ${total}</p>
+          <p class="series-position">${positionText}</p>
         </div>
         <svg
           class="series-toggle-icon ${this.isExpanded
@@ -194,7 +195,11 @@ export class KbrPostSeries extends LitElement {
                   ? "current"
                   : ""}"
               >
-                <span class="part-number">Part ${post.series?.part}:</span>
+                <span class="part-number"
+                  >${post.series?.part === 0
+                    ? "Series Summary:"
+                    : `Part ${post.series?.part}:`}</span
+                >
                 <span class="post-title">${post.title}</span>
               </a>
             </li>

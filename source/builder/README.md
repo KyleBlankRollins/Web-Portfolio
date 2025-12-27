@@ -60,8 +60,6 @@ content only if variable exists ```html
 <main>{{{content}}}</main>
 ````
 
-````
-
 ### 2. Markdown Processing
 
 **Purpose**: Convert Markdown files to HTML with frontmatter support and blog manifest generation
@@ -84,11 +82,10 @@ date: "2024-01-15"
 tags: ["web-dev", "typescript", "vite"]
 keywords: "optional, seo, keywords"
 ---
-
 Your markdown content starts here.
 ```
 
-**Note**: The title from frontmatter is automatically injected as an H1 heading at the top of your post. You don't need to duplicate it in the markdown content. The first heading in your content should be H2 (`##`).`
+**Note**: The title from frontmatter is automatically injected as an H1 heading at the top of your post. You don't need to duplicate it in the markdown content. The first heading in your content should be H2 (`##`).
 
 **Output Locations**:
 
@@ -193,12 +190,8 @@ return injectDevAssets(processedHtml); // Injects Vite dev assets
 
 ```typescript
 // Extract assets from Vite bundle
-const cssFiles = Object.keys(bundle).filter((file) =>
-  file.endsWith(".css")
-);
-const jsFiles = Object.keys(bundle).filter((file) =>
-  file.endsWith(".js")
-);
+const cssFiles = Object.keys(bundle).filter((file) => file.endsWith(".css"));
+const jsFiles = Object.keys(bundle).filter((file) => file.endsWith(".js"));
 
 // Inject into all processed HTML
 const finalHtml = injectProductionAssets(processedHtml, {
@@ -935,5 +928,4 @@ The modular design allows for easy extension and maintenance:
 - Easy to test individual components
 - Straightforward to add new features
 
-This architecture provides a solid foundation for a modern static site generator while maintaining the flexibility and performance benefits of Vite's development experience.
-````
+This architecture provides a solid foundation for a modern static site generator while

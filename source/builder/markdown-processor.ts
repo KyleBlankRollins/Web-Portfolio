@@ -295,11 +295,13 @@ export class MarkdownProcessor {
       );
     }
 
-    // Second pass: replace citations with numbered superscript links
-    let processedContent = content;
+    // Second pass: build new content by replacing citations with numbered superscript links
+    // Use a segment-based approach to avoid index invalidation issues
+    const segments: string[] = [];
+    let lastIndex = 0;
 
-    // Process matches in reverse order to preserve indices
-    for (let i = matches.length - 1; i >= 0; i--) {
+    // Process matches in forward order, building segments
+    for (let i = 0; i < matches.length; i++) {
       const { id, index } = matches[i];
       const usage = citationUsage.get(id)!;
       const refNumber = usage.number;
@@ -313,13 +315,19 @@ export class MarkdownProcessor {
 
       const replacement = `<sup id="${backRefId}"><a href="#citation-${id}" class="citation-ref">[${refNumber}]</a></sup>`;
 
-      // Calculate the exact position to replace
-      const beforeCitation = processedContent.substring(0, index);
-      const afterCitation = processedContent.substring(
-        index + `[^${id}]`.length
-      );
-      processedContent = beforeCitation + replacement + afterCitation;
+      // Add the content before this citation
+      segments.push(content.substring(lastIndex, index));
+      // Add the replacement
+      segments.push(replacement);
+      // Update lastIndex to after this citation
+      lastIndex = index + `[^${id}]`.length;
     }
+
+    // Add any remaining content after the last citation
+    segments.push(content.substring(lastIndex));
+
+    // Join all segments to create the final processed content
+    const processedContent = segments.join("");
 
     // Generate citations HTML section
     const citationsHtml = this.generateCitationsHtml(citations, citationUsage);
@@ -456,7 +464,7 @@ ${citationItems}
       metadata.series?.name
         ? `<!-- series.name: ${metadata.series.name} -->`
         : "",
-      metadata.series?.part
+      metadata.series?.part !== undefined
         ? `<!-- series.part: ${metadata.series.part} -->`
         : "",
       // Add citations HTML as metadata comment

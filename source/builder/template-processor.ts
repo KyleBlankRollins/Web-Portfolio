@@ -274,13 +274,13 @@ export class TemplateProcessor {
           const partStr = seriesPartMatch[1].trim().replace(/^["']|["']$/g, "");
           const partNum = parseInt(partStr, 10);
 
-          // Validate part number
-          if (isNaN(partNum) || partNum <= 0) {
+          // Validate part number (0 is valid for series intro/summary posts)
+          if (isNaN(partNum) || partNum < 0) {
             BuildLogger.error(
-              `Invalid series part number "${partStr}" - must be a positive integer`
+              `Invalid series part number "${partStr}" - must be a non-negative integer`
             );
             throw new Error(
-              `Invalid series part number: ${partStr}. Part must be a positive integer.`
+              `Invalid series part number: ${partStr}. Part must be a non-negative integer (0 for series intro).`
             );
           }
 
@@ -307,16 +307,20 @@ export class TemplateProcessor {
   private parseCitations(frontmatter: string): Citation[] {
     const citations: Citation[] = [];
     const citationIdRegex = /^\s+- id:\s*(.+)$/gm;
-    let match;
 
-    while ((match = citationIdRegex.exec(frontmatter)) !== null) {
-      const startIndex = match.index;
-      // Find the next citation or end of frontmatter
-      const nextMatch = citationIdRegex.exec(frontmatter);
-      const endIndex = nextMatch ? nextMatch.index : frontmatter.length;
-      citationIdRegex.lastIndex = nextMatch
-        ? nextMatch.index
-        : frontmatter.length;
+    // Collect all matches first
+    const matches = Array.from(frontmatter.matchAll(citationIdRegex));
+
+    if (matches.length === 0) {
+      return citations;
+    }
+
+    // Process each match with proper boundaries
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      const startIndex = match.index!;
+      const endIndex =
+        i < matches.length - 1 ? matches[i + 1].index! : frontmatter.length;
 
       const citationBlock = frontmatter.substring(startIndex, endIndex);
 

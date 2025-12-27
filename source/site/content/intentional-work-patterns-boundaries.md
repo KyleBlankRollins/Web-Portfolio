@@ -6,7 +6,7 @@ date: "2025-12-26"
 tags: [boundaries, intentionality, remote work]
 series:
   name: "Intentional Work Patterns"
-  part: 2
+  part: 1
 citations:
   - id: deep-work
     title: "Deep Work: Rules for Focused Success in a Distracted World"
