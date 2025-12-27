@@ -79,6 +79,11 @@
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+
+  /* Glass/Frosted Surface Properties */
+  --glass-background: rgba(248, 249, 250, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 24px;
 }
 
 /* Base Theme Dark Mode */
@@ -92,7 +97,7 @@
   --color-surface-active: #475569;
   
   /* Text Colors - Light text for dark backgrounds */
-  --color-text: #f8fafc;
+  --color-text: #e2e8f0;
   --color-text-secondary: #cbd5e1;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #0f172a;
@@ -143,6 +148,13 @@
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-shadow-strong: rgba(0, 0, 0, 0.6);
   --color-shadow-dark: rgba(0, 0, 0, 0.8);
+
+  /* Typography - Increased font weight for better readability in dark mode */
+  --font-weight-normal: 450;
+  --font-size-base: 1.0625rem;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.7;
+  --letter-spacing-normal: 0.01em;
   
   /* Gradient Properties - Dark gradients for dark mode */
   --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
@@ -153,6 +165,11 @@
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+
+  /* Glass/Frosted Surface Properties */
+  --glass-background: rgba(30, 41, 59, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 12px;
 }
 
 /* Gradient Utility Classes - Available in all themes */
@@ -170,5 +187,18 @@
 
 .gradient-surface {
   background: var(--gradient-surface);
+}
+
+/* Glass/Frosted Surface Utility */
+.glass-surface {
+  background: var(--glass-background);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--space-xs);
+  padding: var(--space-sm);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.05);
 }
 

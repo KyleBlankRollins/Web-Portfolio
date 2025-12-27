@@ -81,6 +81,11 @@
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+
+  /* Glass/Frosted Surface Properties */
+  --glass-background: rgba(238, 240, 236, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 24px;
 }
 
 /* Canney Valley Dark Mode - Deep forest night theme */
@@ -138,6 +143,11 @@
   );
   --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
   --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+
+  /* Glass/Frosted Surface Properties */
+  --glass-background: rgba(38, 50, 56, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 12px;
 }
 
 

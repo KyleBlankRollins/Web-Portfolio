@@ -1,12 +1,10 @@
 ---
 title: "The P&G Rule of Thirds"
-description: "How to adapt Sid Meier's Rule of Thirds to professional development and goal setting."
+description: "How to adapt Sid Meier's Rule of Thirds to professional development and goal setting"
 keywords: "professional growth, goal setting, rule of thirds"
 date: "2025-10-01"
 tags: [professional growth, goal setting, rule of thirds]
 ---
-
-# The P&G Rule of Thirds
 
 <kbr-admonition type="note">
 tl;dr: The [personal growth rule of thirds](#the-personal-growth-rule-of-thirds) is a tool that helps define goals.

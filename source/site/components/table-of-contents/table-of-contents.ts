@@ -342,13 +342,7 @@ export class KbrTableOfContents extends LitElement {
 
   render() {
     if (this.tocItems.length === 0) {
-      return html`
-        <div class="toc-wrapper">
-          <div class="toc-container">
-            <p class="toc-empty">No headings found</p>
-          </div>
-        </div>
-      `;
+      return html``;
     }
 
     return html`

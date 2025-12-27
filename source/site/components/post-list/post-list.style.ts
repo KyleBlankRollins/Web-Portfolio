@@ -29,7 +29,6 @@ export const postListStyles = css`
   /* Posts grid */
   .post-list-grid {
     display: grid;
-    gap: var(--space-xl);
     margin-bottom: var(--space-xl);
   }
 

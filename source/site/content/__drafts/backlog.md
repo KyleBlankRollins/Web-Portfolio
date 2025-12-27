@@ -19,7 +19,6 @@ Valid section headings (must match exactly):
 - Navigating a product deprecation
 - Meeting SMEs where they are
 - Docs and code examples in an LLM world
-- Code example philosophy
 - The promotion paradox (do work outside of team, etc)
 - Strategies for scaling yourself
 - Inbox zero and only necessary tabs
@@ -27,6 +26,8 @@ Valid section headings (must match exactly):
 ## Researching
 
 - Intentional work patterns - shut the computer down
+- Code example philosophy
+- Settings, character creation, and software docs
 
 ## Outlining
 

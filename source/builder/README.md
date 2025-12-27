@@ -45,12 +45,11 @@ source/builder/
 **Variable Substitution**:
 
 ````html
-**Template Syntax**: The system supports three types of template
-syntax: 1. **Escaped Variables**: `{{variable}}` - HTML-escaped
-content (safe for text) 2. **Unescaped Variables**: `{{{variable}}}` -
-Raw HTML content (for HTML injection) 3. **Conditional Sections**:
-`{{#variable}}...{{/variable}}` - Show content only if variable exists
-```html
+**Template Syntax**: The system supports three types of template syntax: 1.
+**Escaped Variables**: `{{variable}}` - HTML-escaped content (safe for text) 2.
+**Unescaped Variables**: `{{{variable}}}` - Raw HTML content (for HTML
+injection) 3. **Conditional Sections**: `{{#variable}}...{{/variable}}` - Show
+content only if variable exists ```html
 <!-- In template files -->
 <title>{{title}}</title>
 {{#description}}
@@ -59,8 +58,6 @@ Raw HTML content (for HTML injection) 3. **Conditional Sections**:
 <meta name="keywords" content="{{keywords}}" />
 {{/keywords}}
 <main>{{{content}}}</main>
-````
-
 ````
 
 ### 2. Markdown Processing
@@ -85,8 +82,10 @@ date: "2024-01-15"
 tags: ["web-dev", "typescript", "vite"]
 keywords: "optional, seo, keywords"
 ---
-# Your Markdown Content Here
-````
+Your markdown content starts here.
+```
+
+**Note**: The title from frontmatter is automatically injected as an H1 heading at the top of your post. You don't need to duplicate it in the markdown content. The first heading in your content should be H2 (`##`).
 
 **Output Locations**:
 
@@ -191,12 +190,8 @@ return injectDevAssets(processedHtml); // Injects Vite dev assets
 
 ```typescript
 // Extract assets from Vite bundle
-const cssFiles = Object.keys(bundle).filter((file) =>
-  file.endsWith(".css")
-);
-const jsFiles = Object.keys(bundle).filter((file) =>
-  file.endsWith(".js")
-);
+const cssFiles = Object.keys(bundle).filter((file) => file.endsWith(".css"));
+const jsFiles = Object.keys(bundle).filter((file) => file.endsWith(".js"));
 
 // Inject into all processed HTML
 const finalHtml = injectProductionAssets(processedHtml, {
@@ -933,4 +928,4 @@ The modular design allows for easy extension and maintenance:
 - Easy to test individual components
 - Straightforward to add new features
 
-This architecture provides a solid foundation for a modern static site generator while maintaining the flexibility and performance benefits of Vite's development experience.
+This architecture provides a solid foundation for a modern static site generator while

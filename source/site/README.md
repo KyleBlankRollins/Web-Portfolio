@@ -61,8 +61,8 @@ source/site/
 <section class="about-hero">
   <h1>About Me</h1>
   <p class="lead">
-    I'm a technical writer and developer passionate about creating
-    clear, user-focused documentation and web experiences.
+    I'm a technical writer and developer passionate about creating clear,
+    user-focused documentation and web experiences.
   </p>
 </section>
 
@@ -83,10 +83,7 @@ source/site/
 </section>
 
 <!-- Include table of contents component -->
-<kbr-table-of-contents
-  min-level="2"
-  max-level="4"
-></kbr-table-of-contents>
+<kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
 
 <!-- Include timeline component -->
 <kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
@@ -112,9 +109,9 @@ tags: ["web-dev", "typescript", "tutorials"]
 keywords: "optional, seo, keywords"
 ---
 
-# Your Blog Post Title
-
 Your introduction paragraph goes here. This will be used as a preview on the blog listing page.
+
+**Note:** The title from your frontmatter is automatically injected as an H1 heading at the top of your post. You don't need to (and shouldn't) duplicate it in the markdown content.
 
 ## Section Heading
 
@@ -223,10 +220,7 @@ Automatically included in templates.
 
 ```html
 <kbr-table-of-contents></kbr-table-of-contents>
-<kbr-table-of-contents
-  min-level="2"
-  max-level="4"
-></kbr-table-of-contents>
+<kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
 ```
 
 Automatically generates navigation from page headings.

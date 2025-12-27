@@ -141,7 +141,7 @@ export class KbrPostList extends LitElement {
 
     return html`
       <div class="post-list-container">
-        ${this.renderHeader()}
+        ${this.currentFilter ? this.renderHeader() : ""}
         ${currentPosts.length > 0
           ? this.renderPosts(currentPosts)
           : this.renderEmpty()}

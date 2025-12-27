@@ -3,6 +3,25 @@ import { join } from "path";
 import { BuildLogger } from "./helpers.js";
 
 /**
+ * Series information for blog posts
+ */
+export interface SeriesInfo {
+  name: string;
+  part: number;
+}
+
+/**
+ * Citation information for blog posts
+ */
+export interface Citation {
+  id: string;
+  title: string;
+  author: string;
+  url?: string; // Optional: link to official site or article
+  purchaseUrl?: string; // Optional: link to buy the book/resource
+}
+
+/**
  * Interface for template variables
  */
 export interface TemplateVariables {
@@ -17,6 +36,9 @@ export interface TemplateVariables {
   formattedDate?: string; // Human-readable date format
   isBlogPost?: boolean; // Flag to identify blog posts
   tagsHtml?: string; // Rendered tags HTML for sidebar
+  series?: SeriesInfo; // Optional series information
+  citations?: Citation[]; // Optional citations array
+  citationsHtml?: string; // Rendered citations HTML for footnotes section
 }
 
 /**
@@ -131,6 +153,35 @@ export class TemplateProcessor {
       content = content.replace(isBlogPostMatch[0], "");
     }
 
+    // Series metadata
+    const seriesNameMatch = htmlContent.match(
+      /<!--\s*series\.name:\s*(.+?)\s*-->/i
+    );
+    const seriesPartMatch = htmlContent.match(
+      /<!--\s*series\.part:\s*(.+?)\s*-->/i
+    );
+    if (seriesNameMatch && seriesPartMatch) {
+      const partNum = parseInt(seriesPartMatch[1].trim(), 10);
+      metadata.series = {
+        name: seriesNameMatch[1].trim(),
+        part: partNum,
+      };
+      content = content.replace(seriesNameMatch[0], "");
+      content = content.replace(seriesPartMatch[0], "");
+    }
+
+    // Citations HTML
+    const citationsHtmlMatch = htmlContent.match(
+      /<!--\s*citationsHtml:\s*([\s\S]*?)\s*-->/i
+    );
+    if (citationsHtmlMatch) {
+      // Unescape the HTML comment escaping
+      metadata.citationsHtml = citationsHtmlMatch[1]
+        .trim()
+        .replace(/&#45;&#45;/g, "--");
+      content = content.replace(citationsHtmlMatch[0], "");
+    }
+
     // Also remove template comment if present
     const templateMatch = htmlContent.match(/<!--\s*template:\s*(.+?)\s*-->/i);
     if (templateMatch) {
@@ -208,9 +259,138 @@ export class TemplateProcessor {
           metadata.isBlogPost = true;
         }
       }
+
+      // Extract series metadata (optional)
+      const seriesMatch = frontmatter.match(/^series:\s*$/m);
+      if (seriesMatch) {
+        // Multi-line series object format
+        const seriesNameMatch = frontmatter.match(/^\s+name:\s*(.+)$/m);
+        const seriesPartMatch = frontmatter.match(/^\s+part:\s*(.+)$/m);
+
+        if (seriesNameMatch && seriesPartMatch) {
+          const seriesName = seriesNameMatch[1]
+            .trim()
+            .replace(/^["']|["']$/g, "");
+          const partStr = seriesPartMatch[1].trim().replace(/^["']|["']$/g, "");
+          const partNum = parseInt(partStr, 10);
+
+          // Validate part number (0 is valid for series intro/summary posts)
+          if (isNaN(partNum) || partNum < 0) {
+            BuildLogger.error(
+              `Invalid series part number "${partStr}" - must be a non-negative integer`
+            );
+            throw new Error(
+              `Invalid series part number: ${partStr}. Part must be a non-negative integer (0 for series intro).`
+            );
+          }
+
+          metadata.series = {
+            name: seriesName,
+            part: partNum,
+          };
+        }
+      }
+
+      // Extract citations metadata (optional)
+      const citationsMatch = frontmatter.match(/^citations:\s*$/m);
+      if (citationsMatch) {
+        metadata.citations = this.parseCitations(frontmatter);
+      }
     }
 
     return { metadata, content };
+  }
+
+  /**
+   * Parse citations array from frontmatter
+   */
+  private parseCitations(frontmatter: string): Citation[] {
+    const citations: Citation[] = [];
+    const citationIdRegex = /^\s+- id:\s*(.+)$/gm;
+
+    // Collect all matches first
+    const matches = Array.from(frontmatter.matchAll(citationIdRegex));
+
+    if (matches.length === 0) {
+      return citations;
+    }
+
+    // Process each match with proper boundaries
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      const startIndex = match.index!;
+      const endIndex =
+        i < matches.length - 1 ? matches[i + 1].index! : frontmatter.length;
+
+      const citationBlock = frontmatter.substring(startIndex, endIndex);
+
+      const id = match[1].trim().replace(/^["']|["']$/g, "");
+      const titleMatch = citationBlock.match(/^\s+title:\s*(.+)$/m);
+      const authorMatch = citationBlock.match(/^\s+author:\s*(.+)$/m);
+      const urlMatch = citationBlock.match(/^\s+url:\s*(.+)$/m);
+      const purchaseUrlMatch = citationBlock.match(/^\s+purchaseUrl:\s*(.+)$/m);
+
+      // Validate required fields
+      if (!titleMatch || !authorMatch) {
+        BuildLogger.error(
+          `Citation "${id}" is missing required fields (title and author must be present)`
+        );
+        throw new Error(
+          `Invalid citation: "${id}". Both title and author are required.`
+        );
+      }
+
+      // Validate ID format (lowercase alphanumeric with hyphens)
+      if (!/^[a-z0-9-]+$/.test(id)) {
+        const suggestedId = id.toLowerCase().replace(/[^a-z0-9-]/g, "-");
+        BuildLogger.error(
+          `Invalid citation ID "${id}" - must be lowercase alphanumeric with hyphens. Suggested: "${suggestedId}"`
+        );
+        throw new Error(
+          `Invalid citation ID: "${id}". IDs must be lowercase alphanumeric with hyphens only.`
+        );
+      }
+
+      const citation: Citation = {
+        id,
+        title: titleMatch[1].trim().replace(/^["']|["']$/g, ""),
+        author: authorMatch[1].trim().replace(/^["']|["']$/g, ""),
+      };
+
+      if (urlMatch) {
+        citation.url = urlMatch[1].trim().replace(/^["']|["']$/g, "");
+      }
+
+      if (purchaseUrlMatch) {
+        citation.purchaseUrl = purchaseUrlMatch[1]
+          .trim()
+          .replace(/^["']|["']$/g, "");
+      }
+
+      citations.push(citation);
+    }
+
+    // Check for duplicate IDs
+    const idCounts = new Map<string, number>();
+    citations.forEach((citation) => {
+      const count = (idCounts.get(citation.id) || 0) + 1;
+      idCounts.set(citation.id, count);
+    });
+
+    const duplicates = Array.from(idCounts.entries())
+      .filter(([_, count]) => count > 1)
+      .map(([id, _]) => id);
+
+    if (duplicates.length > 0) {
+      BuildLogger.error(
+        `Duplicate citation IDs found: ${duplicates.join(", ")}`
+      );
+      throw new Error(
+        `Duplicate citation IDs: ${duplicates.join(", ")}. Each citation must have a unique ID.`
+      );
+    }
+
+    return citations;
   }
 
   /**
@@ -280,6 +460,9 @@ export class TemplateProcessor {
   ): string {
     let result = template;
 
+    // Flatten nested objects for dot notation support
+    const flatVariables = this.flattenObject(variables);
+
     // Handle conditional sections ({{#variable}}...{{/variable}})
     Object.entries(variables).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== "") {
@@ -300,7 +483,7 @@ export class TemplateProcessor {
     });
 
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
-    Object.entries(variables).forEach(([key, value]) => {
+    Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         const tripleRegex = new RegExp(`\\{\\{\\{${key}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
@@ -308,7 +491,7 @@ export class TemplateProcessor {
     });
 
     // Handle double-brace variables (escaped: {{variable}})
-    Object.entries(variables).forEach(([key, value]) => {
+    Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         const doubleRegex = new RegExp(`\\{\\{${key}\\}\\}`, "g");
         // Basic HTML escaping
@@ -326,6 +509,32 @@ export class TemplateProcessor {
     result = result.replace(/\{\{\{?\w+\}?\}\}/g, "");
 
     return result;
+  }
+
+  /**
+   * Flatten nested object properties for dot notation support
+   * e.g., { series: { name: "Test" } } becomes { "series.name": "Test" }
+   */
+  private flattenObject(obj: any, prefix: string = ""): Record<string, any> {
+    const flattened: Record<string, any> = {};
+
+    Object.entries(obj).forEach(([key, value]) => {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+
+      if (
+        value !== null &&
+        typeof value === "object" &&
+        !Array.isArray(value)
+      ) {
+        // Recursively flatten nested objects
+        Object.assign(flattened, this.flattenObject(value, fullKey));
+      } else {
+        // Add both the original key and the flattened key
+        flattened[fullKey] = value;
+      }
+    });
+
+    return flattened;
   }
 
   /**

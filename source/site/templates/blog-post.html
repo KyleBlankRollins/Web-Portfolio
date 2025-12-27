@@ -1,18 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
     {{#description}}
     <meta name="description" content="{{description}}" />
     {{/description}} {{#keywords}}
     <meta name="keywords" content="{{keywords}}" />
-    {{/keywords}} {{#additionalHead}} {{{additionalHead}}}
-    {{/additionalHead}}
+    {{/keywords}} {{#additionalHead}} {{{additionalHead}}} {{/additionalHead}}
   </head>
 
   <body>
@@ -23,13 +19,23 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
+          {{#series}}
+          <kbr-post-series
+            series-name="{{series.name}}"
+            current-part="{{series.part}}"
+          >
+          </kbr-post-series>
+          {{/series}}
           <kbr-table-of-contents></kbr-table-of-contents>
           {{#tagsHtml}} {{{tagsHtml}}} {{/tagsHtml}}
         </div>
       </aside>
 
-      <article class="blog-post-content">
-        {{{content}}}
+      <article class="blog-post-content glass-surface">
+        {{{content}}} {{#citationsHtml}}
+        <div class="blog-citations-container">{{{citationsHtml}}}</div>
+        {{/citationsHtml}}
+
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
     </main>
