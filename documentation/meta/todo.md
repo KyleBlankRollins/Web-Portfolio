@@ -1,5 +1,4 @@
 - Add tests for every component
-- Add background to content to improve readability
 - Expand/collapse: add nice animations
 - Expand/collapse: refactor everything to a standardized component so that look, feel, and behavior is always consistent no matter where expand/collapse is used
-- Break markdown processor and HTML processor into modules
+- Add a series component to blog cards on the main blog page or add a filter for series
