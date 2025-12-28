@@ -63,7 +63,7 @@ export class MarkdownRenderer {
     // Override heading renderer to add IDs
     renderer.heading = (text: string, level: number) => {
       const headingId = this.generateAnchorId(text);
-      return `<h${level} id="${headingId}">${text}</h${level}>`;
+      return `<h${level} id="${escapeHtmlAttribute(headingId)}">${text}</h${level}>`;
     };
 
     // Override link renderer to transform .md to .html
@@ -81,7 +81,7 @@ export class MarkdownRenderer {
     renderer.code = (code: string, language: string | undefined) => {
       if (!this.syntaxHighlighting) {
         const escapedCode = escapeHtml(code);
-        const langClass = language ? ` class="language-${language}"` : "";
+        const langClass = language ? ` class="language-${escapeHtmlAttribute(language)}"` : "";
         return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
       }
 
@@ -94,7 +94,8 @@ export class MarkdownRenderer {
             Prism.languages[lang],
             lang
           );
-          return `<pre class="language-${lang}"><code class="language-${lang}">${highlighted}</code></pre>`;
+          const escapedLang = escapeHtmlAttribute(lang);
+          return `<pre class="language-${escapedLang}"><code class="language-${escapedLang}">${highlighted}</code></pre>`;
         } catch (error) {
           console.error(`Error highlighting ${lang}:`, error);
         }
@@ -102,7 +103,7 @@ export class MarkdownRenderer {
 
       // Default behavior for unsupported languages or errors
       const escapedCode = escapeHtml(code);
-      const langClass = lang ? ` class="language-${lang}"` : "";
+      const langClass = lang ? ` class="language-${escapeHtmlAttribute(lang)}"` : "";
       return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
     };
 

@@ -5,8 +5,8 @@
 
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { BuildLogger } from "../helpers.js";
-import { escapeHtmlAttribute } from "./html-utils.js";
+import { BuildLogger, StringHelper } from "../helpers.js";
+import { escapeHtml } from "./html-utils.js";
 
 /**
  * Template variables structure
@@ -84,17 +84,18 @@ export class TemplateEngine {
 
     // Handle conditional sections ({{#variable}}...{{/variable}})
     Object.entries(variables).forEach(([key, value]) => {
+      const escapedKey = StringHelper.escapeRegex(key);
       if (value !== undefined && value !== null && value !== "") {
         // Replace conditional blocks with content
         const conditionalRegex = new RegExp(
-          `\\{\\{#${key}\\}\\}([\\s\\S]*?)\\{\\{/${key}\\}\\}`,
+          `\\{\\{#${escapedKey}\\}\\}([\\s\\S]*?)\\{\\{/${escapedKey}\\}\\}`,
           "g"
         );
         result = result.replace(conditionalRegex, "$1");
       } else {
         // Remove conditional blocks if variable is empty
         const conditionalRegex = new RegExp(
-          `\\{\\{#${key}\\}\\}[\\s\\S]*?\\{\\{/${key}\\}\\}`,
+          `\\{\\{#${escapedKey}\\}\\}[\\s\\S]*?\\{\\{/${escapedKey}\\}\\}`,
           "g"
         );
         result = result.replace(conditionalRegex, "");
@@ -104,7 +105,8 @@ export class TemplateEngine {
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
     Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        const tripleRegex = new RegExp(`\\{\\{\\{${key}\\}\\}\\}`, "g");
+        const escapedKey = StringHelper.escapeRegex(key);
+        const tripleRegex = new RegExp(`\\{\\{\\{${escapedKey}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
       }
     });
@@ -112,8 +114,9 @@ export class TemplateEngine {
     // Handle double-brace variables (escaped: {{variable}})
     Object.entries(flatVariables).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        const doubleRegex = new RegExp(`\\{\\{${key}\\}\\}`, "g");
-        const escapedValue = escapeHtmlAttribute(String(value));
+        const escapedKey = StringHelper.escapeRegex(key);
+        const doubleRegex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, "g");
+        const escapedValue = escapeHtml(String(value));
         result = result.replace(doubleRegex, escapedValue);
       }
     });

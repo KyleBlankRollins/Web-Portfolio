@@ -4,7 +4,7 @@
  */
 
 import { BuildLogger } from "../helpers.js";
-import { escapeHtmlComment } from "./html-utils.js";
+import { escapeHtmlComment, escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
 
 /**
  * Citation metadata structure
@@ -224,13 +224,13 @@ export class CitationProcessor {
 
         if (citation.url) {
           links.push(
-            `<a href="${citation.url}" target="_blank" rel="noopener">View</a>`
+            `<a href="${escapeHtmlAttribute(citation.url)}" target="_blank" rel="noopener">View</a>`
           );
         }
 
         if (citation.purchaseUrl) {
           links.push(
-            `<a href="${citation.purchaseUrl}" target="_blank" rel="noopener">Buy</a>`
+            `<a href="${escapeHtmlAttribute(citation.purchaseUrl)}" target="_blank" rel="noopener">Buy</a>`
           );
         }
 
@@ -251,7 +251,7 @@ export class CitationProcessor {
             : `<a href="#citation-ref-${citation.id}" class="citation-backref">↩</a>`;
 
         return `    <li id="citation-${citation.id}">
-      <em>${citation.title}</em> by ${citation.author}${linksHtml}
+      <em>${escapeHtml(citation.title)}</em> by ${escapeHtml(citation.author)}${linksHtml}
       <span class="citation-backrefs"> ${backRefs}</span>
     </li>`;
       })

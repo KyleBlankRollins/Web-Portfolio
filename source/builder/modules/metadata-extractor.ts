@@ -3,6 +3,7 @@
  * Extracts metadata from HTML comments in processed files
  */
 
+import { StringHelper } from "../helpers.js";
 import { unescapeHtmlComment } from "./html-utils.js";
 import type { SeriesInfo } from "./frontmatter-parser.js";
 
@@ -142,7 +143,8 @@ export class MetadataExtractor {
    * Extract specific metadata by comment pattern
    */
   public extractComment(htmlContent: string, key: string): string | undefined {
-    const regex = new RegExp(`<!--\\s*${key}:\\s*(.+?)\\s*-->`, "i");
+    const escapedKey = StringHelper.escapeRegex(key);
+    const regex = new RegExp(`<!--\\s*${escapedKey}:\\s*(.+?)\\s*-->`, "i");
     const match = htmlContent.match(regex);
     return match ? match[1].trim() : undefined;
   }

@@ -67,7 +67,7 @@ export class BlogManifestBuilder {
     this.validateSeries();
 
     // Sort posts by date (newest first)
-    const sortedPosts = this.posts.sort((a, b) => {
+    const sortedPosts = [...this.posts].sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       return dateB.getTime() - dateA.getTime();
