@@ -89,3 +89,15 @@ export class BuildLogger {
     console.log(`${this.logPrefix} ✓ ${message}`);
   }
 }
+
+/**
+ * String utility functions for the build process
+ */
+export class StringHelper {
+  /**
+   * Escape regex special characters in a string
+   */
+  public static escapeRegex(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+}

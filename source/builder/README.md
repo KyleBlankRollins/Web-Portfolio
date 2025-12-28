@@ -6,21 +6,125 @@ The KBR Builder is a comprehensive custom Vite plugin designed specifically for 
 
 ## Architecture
 
-The builder is implemented as a modular Vite plugin with the following core components:
+The builder is implemented as a modular Vite plugin with the following structure:
 
 ```
 source/builder/
 ├── index.ts                    # Main plugin entry point and orchestration
 ├── dev-server-middleware.ts    # Development server routing and live processing
-├── markdown-processor.ts       # Markdown to HTML conversion and blog manifest
-├── template-processor.ts       # HTML templating engine with variable substitution
+├── markdown-processor.ts       # Markdown orchestrator (uses modules)
+├── template-processor.ts       # Template orchestrator (uses modules)
 ├── html-bundle-processor.ts    # Production build HTML processing
-├── html-utils.ts              # Shared HTML processing utilities
 ├── git-aware-pipeline.ts       # Git-aware build coordination and file detection
 ├── git-utils.ts               # Git repository utilities and change detection
 ├── helpers.ts                  # File system utilities and logging
-└── types.ts                   # TypeScript type definitions
+├── types.ts                   # TypeScript type definitions
+└── modules/                    # Focused, reusable processing modules
+    ├── index.ts                # Barrel export for all modules
+    ├── html-utils.ts           # HTML escaping and manipulation utilities
+    ├── citation-processor.ts   # Citation parsing and footnote generation
+    ├── frontmatter-parser.ts   # YAML frontmatter extraction and parsing
+    ├── markdown-renderer.ts    # Marked.js configuration with custom renderers
+    ├── content-preprocessor.ts # Content transformation before rendering
+    ├── blog-manifest.ts        # Blog manifest building and validation
+    ├── metadata-extractor.ts   # HTML comment metadata extraction
+    └── template-engine.ts      # Template loading and variable substitution
 ```
+
+### Modular Design
+
+The builder follows a **modular architecture** where complex processors (markdown and template) delegate to focused, single-responsibility modules:
+
+- **Processors** (`markdown-processor.ts`, `template-processor.ts`): Thin orchestrators that coordinate module interactions
+- **Modules** (`modules/`): Reusable, testable components with clear boundaries
+- **Shared utilities**: Common functionality used across multiple modules
+
+This design enables:
+
+- **Better testability**: Each module can be tested independently
+- **Code reusability**: Modules used by multiple processors
+- **Easier maintenance**: Smaller files with focused responsibilities
+- **Improved organization**: Clear separation of concerns
+
+## Processing Modules
+
+The `modules/` directory contains focused, reusable components that handle specific aspects of content processing:
+
+### Shared Utilities
+
+#### html-utils.ts
+
+Pure utility functions for HTML manipulation:
+
+- `escapeHtml()` - Escape HTML characters for safe display
+- `escapeHtmlAttribute()` - Escape text for use in HTML attributes (XSS prevention)
+- `escapeHtmlComment()` / `unescapeHtmlComment()` - Handle `--` in HTML comments
+
+#### citation-processor.ts
+
+Citation parsing and footnote generation:
+
+- Parse citations from YAML frontmatter
+- Process `[^id]` references in content → superscript links
+- Generate HTML for citations/footnotes section
+- Validate citation IDs and detect duplicates/unused citations
+
+#### frontmatter-parser.ts
+
+YAML frontmatter extraction and parsing:
+
+- Extract frontmatter from markdown files
+- Parse metadata fields (title, description, date, tags, series)
+- Format dates with timezone handling
+- Parse series information for multi-part blog posts
+
+### Markdown Processing Modules
+
+#### markdown-renderer.ts
+
+Marked.js configuration with custom renderers:
+
+- Custom heading renderer (auto-generates IDs for anchor links)
+- Custom link renderer (transforms `.md` → `.html`, XSS protection)
+- Custom code renderer (Prism.js syntax highlighting)
+- Language normalization for code blocks
+
+#### content-preprocessor.ts
+
+Content transformation before rendering:
+
+- `stripComments()` - Remove JS/CSS comments (preserves code block comments)
+- `preprocessAdmonitions()` - Process markdown inside `<kbr-admonition>` tags
+
+#### blog-manifest.ts
+
+Blog manifest building and validation:
+
+- Add posts to manifest with metadata
+- Sort posts by date (newest first)
+- Aggregate tags with counts
+- Validate series (check for duplicates, detect gaps in part numbers)
+- Generate JSON manifest output
+
+### Template Processing Modules
+
+#### metadata-extractor.ts
+
+Extract metadata from HTML comments:
+
+- Parse `<!-- key: value -->` comments
+- Extract blog-specific metadata (date, tags, series)
+- Remove metadata comments from content
+- Support for multi-line values
+
+#### template-engine.ts
+
+Template loading and variable substitution:
+
+- Load templates with caching
+- Variable substitution: `{{var}}` (escaped), `{{{var}}}` (unescaped), `{{#var}}...{{/var}}` (conditional)
+- Flatten objects for dot notation support (`user.name`)
+- Detect complete HTML documents
 
 ## Core Features
 

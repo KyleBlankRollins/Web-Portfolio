@@ -25,9 +25,12 @@ Valid section headings (must match exactly):
 
 ## Researching
 
-- Intentional work patterns - shut the computer down
 - Code example philosophy
 - Settings, character creation, and software docs
+- Intentional work patterns - connections
+- Intentional work patterns - rituals
+- Intentional work patterns - spaces
+- Intentional work patterns - traps
 
 ## Outlining
 
@@ -37,6 +40,8 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- Intentional work patterns - boundaries
+- Intentional work patterns
 - Rule of thirds
 - Typography test page
 - LLM as SME
