@@ -31,6 +31,7 @@ Valid section headings (must match exactly):
 - Intentional work patterns - rituals
 - Intentional work patterns - spaces
 - Intentional work patterns - traps
+- Signposting for AI Agents
 
 ## Outlining
 
