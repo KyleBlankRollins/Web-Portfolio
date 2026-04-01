@@ -2,8 +2,17 @@
 title: "Technical Storytelling and Drift at Machine Speed"
 description: "Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this."
 keywords: "technical writing, AI agents, documentation, natural language, product interface"
-date: "2026-03-23"
+date: "2026-03-31"
 tags: [technical writing, AI, documentation]
+citations:
+  - id: openai-codex
+    title: "Introducing Codex"
+    author: "OpenAI"
+    url: "https://openai.com/index/introducing-codex/"
+  - id: zencoder-docs
+    title: "How to improve technical documentation with generative AI"
+    author: "Andrew Filev"
+    url: "https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html"
 ---
 
 <kbr-admonition type="note">
@@ -46,7 +55,7 @@ Documentation has always been an interface between a product and its users. It's
 
 What's changed is that documentation is now also an interface between a product and automated systems. When an AI agent integrates with your product, the quality of your docs directly affects how well that integration works. Your product docs are the story you're telling to agents about what your product does and how it works. If that story is incomplete, ambiguous, or hard to access, the agent builds on a flawed understanding. Poor docs don't only frustrate users anymore. They degrade the performance of every agent-assisted workflow that depends on them.
 
-There's an emerging business case here. OpenAI noted that Codex's performance depends heavily on the quality of documentation and context it has access to.[^1] Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.[^2] You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.
+There's an emerging business case here. OpenAI noted that Codex's performance depends heavily on the quality of documentation and context it has access to.[^openai-codex] Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.[^zencoder-docs] You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.
 
 This matters because it changes the conversation about documentation resources. For a long time, the case for investing in docs has been abstract: better user experience, fewer support tickets, improved onboarding. These are real benefits, but they're hard to attribute to revenue in ways that move budgets.
 
@@ -65,7 +74,3 @@ This isn't a call to panic or to overhaul how you work. It's more of an observat
 And here's where the storytelling comes back in. Technical writers need to tell this story to the people who control resources. Not the story about oral tradition and grain counting, but the one about what's happening right now: that documentation is a critical interface between your products and the AI systems your customers are already using. That the people who maintain that interface, the ones who have spent years learning to make natural language precise and actionable, are the single best gateway most companies have for model training and agentic workflows.
 
 That's a story worth telling clearly.
-
-[^1]: OpenAI noted in their Codex documentation that agent performance is closely tied to the quality and completeness of available documentation and project context. [Introducing Codex](https://openai.com/index/introducing-codex/)
-
-[^2]: Andrew Filev, CEO of Zencoder, claimed that AI coding agents with well-structured documentation access showed roughly 3x productivity gains. [How to improve technical documentation with generative AI](https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html)
