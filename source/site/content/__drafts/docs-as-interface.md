@@ -1,82 +1,71 @@
 ---
 title: "Docs Are a Product Interface"
-description: ""
-keywords: "technical writing"
+description: "AI agents have made documentation more important than ever. This is the moment technical writers are uniquely positioned for."
+keywords: "technical writing, AI agents, documentation, natural language, product interface"
 date: "2026-03-23"
-tags: [technical writing]
+tags: [technical writing, AI, documentation]
 ---
 
-## Premise
+<kbr-admonition type="note">
+**tl;dr:** Documentation has always been an interface between a product and its users. Now it's also an interface between a product and automated systems. The skills that technical writers have been building for years, precision, audience awareness, knowing what to leave out, are exactly what this new audience requires.
+</kbr-admonition>
 
-Technical Writers need a rallying cry. They need something that will help tech industry leaders understand that they already have people who are perfectly positioned to transition their companies into an AI agent world.
+## Stories as technology
 
-Establishing documentation as a product interface can do just that. And it's not something that can be automated. The information needs to be maintained. Writing skill files and agent files also needs the skills of trained technical writers.
+Storytelling is one of humanity's oldest knowledge systems. Long before people were writing things down, oral tradition was how communities preserved and transmitted what mattered. How to find water. Which plants would kill you. Who wronged whom three generations back.
 
-## Question
+It worked, but stories drift. Every retelling introduces small changes. The teller interprets, omits, adapts for the audience. Details shift to fit the moment. Over time, the story serves the culture more than it serves the facts.
 
-I work in technical documentation in the software industry as a lead technical writer and engineer.
+That's a feature when the goal is cohesion and shared identity. It's a problem when the goal is accuracy. Particularly repeatable accuracy over time.
 
-I'm trying to work out my thoughts on the importance of technical documentation in an AI world where agentic workflows are part of how software is built.
+Writing wasn't invented to fix the drift. The earliest writing systems, developed independently at least four times across different civilizations, weren't attempts to preserve stories more faithfully. They were invented to count grain, label goods, and track debts. Bureaucracy, not literature. The Sumerians weren't worried about narrative drift. They were worried about who owed what to whom.
 
-Documentation has always been a somewhat underrated product interface with a human audience. Technical writers have served robot audiences for SEO purposes, but only to give human audiences a better experience.
+But precision turned out to be writing's superpower. Once you could pin information down in a form that didn't change with each reading, you could build contracts, laws, and shared records that held up over time and distance. The knowledge didn't drift anymore.
 
-Now, AI agents are a primary audience. And technical documentation has become a more important product interface than ever.
+Technical writing is the discipline that took that superpower seriously: not just fixing words in place, but doing so with deliberate attention to clarity, structure, and audience. It is, when done well, the practice of removing ambiguity from language so that a reader can act on what they read without guessing.
 
-A separate but related thought is that technical documentation has become a programming language. Natural language is the input for AI agents. This makes well-crafted documentation extremely valuable.
+That skill set matters more than it ever has.
 
-The imprecise nature of natural language is exactly what technical writers focus on. So, they're able to craft the best product interface for AI agents.
+## The consequences of drift are worse
 
-Are these ideas sound? Is there research to back these ideas up?
+AI coding agents, tools like Codex, GitHub Copilot, and others, now consume documentation directly. Not as reference material that a person reads and interprets, but as runtime instructions that inform what the agent does next. Your API docs, configuration guides, and error messages aren't just being read. They're being parsed and acted on at super human speed and potentially at scale.
 
-## Response
+This is a meaningful shift. When a human encounters ambiguous documentation, they use judgment to fill in the gaps. They check Stack Overflow, ask a colleague, or make a reasonable guess based on experience. They might get it wrong, but they'll usually notice when something feels off.
 
-These are compelling ideas, Kyle, and they hang together well logically. Let me search for research and industry discussion that speaks to these claims.Your ideas are sound, and what's striking is how quickly the industry discourse has caught up to exactly these claims. Let me walk through each one.
+When an agent encounters ambiguous documentation, or can't access your docs, it doesn't hesitate. It acts confidently on whatever interpretation it arrives at. And if the docs are unclear, it may act confidently on the wrong interpretation, which results in the agent running very quickly in the wrong direction. This is expensive in many ways.
 
-**Documentation as a primary AI interface — yes, and the evidence is mounting.**
+For example, if your documentation site is not agent friendly, agents may not be able to find the information they're looking for. In that case, agents fall back on model training data, which, if you're lucky, will lead them to stale URLs or information sources that you don't control. If you're not lucky, the agent will rely solely on training data, which is guaranteed to be outdated if your company's products move with any real speed.
 
-InfoWorld reports that GenAI coding assistants and AI agents now consume documentation to improve their relevance and accuracy, making this a new audience that devops teams need to explicitly consider. Andrew Filev of Zencoder is quoted making a strong version of this claim: when every code change is documented, AI agents can understand not just what the code does but why it was written that way, transforming AI from a coding assistant into a knowledgeable team member. He goes further, asserting that LLMs work three times better with detailed documentation because they can understand context, constraints, and intentions.
+Another example: A vague sentence about authentication flow in your API docs might confuse a human for ten minutes. That same sentence, consumed by an agent helping a developer build an integration, could produce broken code that gets committed and deployed before anyone notices. The ambiguity compounds because the agent doesn't flag uncertainty the way a person would.
 
-OpenAI's own Codex launch page states plainly that, like human developers, Codex agents perform best when provided with configured dev environments, reliable testing setups, and clear documentation. That's the maker of one of the most prominent coding agents explicitly naming documentation quality as a performance factor.
+The skills that matter for this audience aren't creativity or flair. They're precision, audience awareness, and knowing what to leave out. These are the core skills of technical writing. Technical writers are still storytellers, but they tell stories designed to reduce drift over time rather than accumulate it. That's always been the job. AI agents are another audience where the consequences of ambiguity are more severe.
 
-And the 2026 trends reporting from Document360 frames this shift well: by 2025, the companies that succeeded were the ones treating documentation as an adaptive system — metadata-rich, consistently updated, and chunkable for LLMs.
+## Docs are a product interface
 
-**Documentation as a programming language — this idea has real traction.**
+Documentation has always been an interface between a product and its users. It's how someone figures out what a product can do, how to use it, and what to do when something goes wrong. In that sense, it has always been part of the product experience.
 
-This is perhaps your most provocative claim, and it's being articulated independently by several people. An ODSC piece argues that natural language serves as the fundamental communication medium throughout AI agent architecture, functioning as the primary interface between all components of the system, and that since LLMs inherently process and generate natural language, it becomes the native "programming language" for AI agents.
+What's changed is that documentation is now also an interface between a product and automated systems. When an AI agent integrates with your product, the quality of your docs directly affects how well that integration works. Your product docs are the story you're telling to agents about what your product does and how it works. If that story is incomplete, ambiguous, or hard to access, the agent builds on a flawed understanding. Poor docs don't only frustrate users anymore. They degrade the performance of every agent-assisted workflow that depends on them.
 
-Waleed Kadous (formerly at Canva, Uber, Google) wrote a piece titled "Natural Language is Now Code" making essentially your exact argument: with AI agents writing our code, natural language has become the new high-level programming language, but we're still treating documentation like an afterthought. He describes how documents describing context and goals now drive the creation of code, much like C++ once drove assembly generation. He even created an INSTALL.md file written for AI agents to interpret rather than humans — natural language has become executable, and we need to bring the same rigor to documentation that we once reserved for code.
+There's a business case here that's starting to become visible. OpenAI noted that Codex's performance depends heavily on the quality of documentation and context it has access to.[^1] Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.[^2] You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.
 
-The academic world is exploring this too. Researchers behind the AIOS Compiler / CoRE framework proposed a system that takes LLMs as interpreters to process and execute instructions in natural language, enabling agent programming in natural language, arguing this follows the historical trend of programming languages toward increased usability and democracy.
+This matters because it changes the conversation about documentation resources. For a long time, the case for investing in docs has been somewhat abstract: better user experience, fewer support tickets, improved onboarding. These are real benefits, but they're hard to quantify in ways that move budgets.
 
-**Technical writers as the right people for this — the strongest part of your argument.**
+The new framing is more concrete. Documentation is a programmatic interface. Its quality has measurable downstream effects on agent performance, developer productivity, and integration reliability. That's a case you can make in terms that product and engineering leadership understand, because it connects docs to outcomes they're already tracking.
 
-This is where I think your framing adds something the existing discourse mostly misses. Most of the industry conversation focuses on AI _generating_ documentation or on developers writing context files (CLAUDE.md, AGENTS.md, .cursorrules). But research from Packmind found that the hard part isn't writing these agent context files — it's keeping them accurate, because vagueness, missing feedback loops, contradictions, and drift quietly degrade agent performance. Those are precisely the problems technical writers are trained to solve: consistency, precision, maintenance, audience awareness.
+For technical writers, this is an opportunity to advocate for the resources that documentation teams have always needed: headcount, cross-team relationships, and input into product decisions early enough to actually influence them. Not because the work has changed, but because the stakes have become more visible.
 
-Biel.ai's guide on optimizing docs for AI agents reinforces this, noting that AI performs better with focused, essential content than comprehensive but diluted documentation, and that too much content creates noise that confuses LLM-based retrieval systems. The discipline of knowing what to include and exclude, writing for a specific audience's comprehension model, managing ambiguity — that's the technical writing skill set.
+## The audience changed
 
-A JetBrains survey of 481 developers across 71 countries found that "lack of context understanding" was among the top barriers to AI adoption, which directly relates to documentation quality.
+If you're a technical writer, you've spent your career managing the imprecision of natural language. Choosing the right word, cutting the unnecessary sentence, structuring information so that someone can find what they need and act on it without second-guessing.
 
-**Where you could sharpen the argument:**
+That's still the job. The audience just got bigger, and part of it is now automated. The fundamentals haven't changed, but the consequences of getting it wrong, or right, have.
 
-A few threads worth pulling on as you develop this further. First, the llms.txt movement — even though zero major LLM providers have officially committed to using the standard, the mere existence of this initiative (and the fact that Anthropic specifically requested llms.txt and llms-full.txt for their documentation) validates that the industry recognizes documentation needs to be structured for machine consumption.
+This isn't a call to panic or to overhaul how you work. It's more of an observation: the thing you've been doing all along turns out to be exactly what this moment requires.
 
-Second, Model Context Protocol (MCP) is relevant to your argument. Through MCP, tools and their functionalities are made available to agents and described in natural language, enabling the LLM to understand what actions it can take. This is literally natural language as an interface definition — and writing good tool descriptions is a documentation problem.
+And here's where the storytelling comes back in. Technical writers need to tell this story to the people who control resources. Not the story about oral tradition and grain counting, but the one about what's happening right now: that documentation is the primary interface between your products and the AI systems your customers are already using. That the people who maintain that interface, the ones who have spent years learning to make natural language precise and actionable, are the single best gateway most companies have for model training and agentic workflows.
 
-Third, the METR study on AI developer productivity found something interesting: AI capabilities may be comparatively lower in settings with very high quality standards, or with many implicit requirements relating to documentation, testing coverage, or linting/formatting. This suggests that the gap between what agents can do and what organizations need is partly a documentation gap — implicit knowledge that hasn't been made explicit.
+That's a story worth telling clearly.
 
-Your core thesis holds up well: documentation has shifted from describing software for humans to _instructing_ software via natural language, and the people best equipped to craft that instruction layer are technical writers who've spent their careers managing the imprecision of natural language. The research and industry commentary are converging on this view, even if no single paper has stated it as cleanly as you have.
+[^1]: OpenAI noted in their Codex documentation that agent performance is closely tied to the quality and completeness of available documentation and project context.
 
-## References
-
-- The Importance of Natural Language in Building AI Agents: https://odsc.medium.com/the-importance-of-natural-language-in-building-ai-agents-0c118cf2bccb
-- Natural Language is Now Code: https://waleedk.medium.com/natural-language-is-now-code-35e9b3379d42
-- AIOS Compiler: LLM as Interpreter for Natural Language Programming and Flow Programming of AI Agents: https://arxiv.org/html/2405.06907v2
-- Writing AI coding agent context files is easy. Keeping them accurate isn’t.: https://packmind.com/evaluate-context-ai-coding-agent/
-- Practical tips to optimize technical documentation for LLMs, AI agents, and chatbots: https://biel.ai/blog/optimizing-docs-for-ai-agents-complete-guide
-- Why Your AI Agents Need Contextual Documentation: https://hyperdev.matsuoka.com/p/why-your-ai-agents-need-contextual
-- Is llms.txt Dead? The Current State of Adoption in 2025: https://llms-txt.io/blog/is-llms-txt-dead
-- The Complete Guide to llms.txt: Should You Care About This AI Standard?: https://getpublii.com/blog/llms-txt-complete-guide.html
-- The Importance of Natural Language in Building AI Agents: https://opendatascience.com/the-importance-of-natural-language-in-building-ai-agents/
-- AI Documentation Trends Every Team Must Prepare for in 2026: https://document360.com/blog/ai-documentation-trends/
-- Introducing Codex: https://openai.com/index/introducing-codex/
-- How to improve technical documentation with generative AI: https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html
+[^2]: Andrew Filev, CEO of Zencoder, claimed that AI coding agents with well-structured documentation access showed roughly 3x productivity gains. [Source](https://www.zencoder.ai)
