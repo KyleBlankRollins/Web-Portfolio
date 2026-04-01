@@ -7,7 +7,7 @@ tags: [technical writing, AI, documentation]
 ---
 
 <kbr-admonition type="note">
-**tl;dr:** Documentation has always been an interface between a product and its users. Now it's also an interface between a product and automated systems. The skills that technical writers have been building for years, precision, audience awareness, knowing what to leave out, are exactly what this new audience requires.
+**tl;dr:** Documentation has always been an interface between a product and its users. Now it's also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.
 </kbr-admonition>
 
 ## Stories as technology
@@ -24,21 +24,21 @@ But precision turned out to be writing's superpower. Once you could pin informat
 
 Technical writing is the discipline that took that superpower seriously: not just fixing words in place, but doing so with deliberate attention to clarity, structure, and audience. It is, when done well, the practice of removing ambiguity from language so that a reader can act on what they read without guessing.
 
-That skill set matters more than it ever has.
+## Drift at machine speed
 
-## The consequences of drift are worse
+That skill set matters more than it ever has because of our new AI coding agent audience.
 
-AI coding agents, tools like Codex, GitHub Copilot, and others, now consume documentation directly. Not as reference material that a person reads and interprets, but as runtime instructions that inform what the agent does next. Your API docs, configuration guides, and error messages aren't just being read. They're being parsed and acted on at super human speed and potentially at scale.
+AI coding agents, tools like Codex, GitHub Copilot, and others, now consume documentation directly. Not as reference material that a person reads and interprets, but as runtime instructions that inform what the agent does next. Your API docs, configuration guides, and error messages aren't just being read. They're being parsed and acted on at superhuman speed.
 
 This is a meaningful shift. When a human encounters ambiguous documentation, they use judgment to fill in the gaps. They check Stack Overflow, ask a colleague, or make a reasonable guess based on experience. They might get it wrong, but they'll usually notice when something feels off.
 
-When an agent encounters ambiguous documentation, or can't access your docs, it doesn't hesitate. It acts confidently on whatever interpretation it arrives at. And if the docs are unclear, it may act confidently on the wrong interpretation, which results in the agent running very quickly in the wrong direction. This is expensive in many ways.
+When an agent encounters ambiguous documentation, or can't access your docs, it doesn't hesitate. It acts confidently on whatever interpretation it arrives at. And if the docs are unclear, there are good odds the agent will interpret the docs poorly, which results in the agent running very quickly in the wrong direction. This is expensive for people trying to build with your products.
 
 For example, if your documentation site is not agent friendly, agents may not be able to find the information they're looking for. In that case, agents fall back on model training data, which, if you're lucky, will lead them to stale URLs or information sources that you don't control. If you're not lucky, the agent will rely solely on training data, which is guaranteed to be outdated if your company's products move with any real speed.
 
-Another example: A vague sentence about authentication flow in your API docs might confuse a human for ten minutes. That same sentence, consumed by an agent helping a developer build an integration, could produce broken code that gets committed and deployed before anyone notices. The ambiguity compounds because the agent doesn't flag uncertainty the way a person would.
+Or consider this case: A vague sentence about authentication flow in your API docs might confuse a human for ten minutes. That same sentence, consumed by an agent helping a developer build an integration, could produce broken code that gets committed and deployed before anyone notices. The ambiguity compounds because the agent doesn't flag uncertainty the way a person would.
 
-The skills that matter for this audience aren't creativity or flair. They're precision, audience awareness, and knowing what to leave out. These are the core skills of technical writing. Technical writers are still storytellers, but they tell stories designed to reduce drift over time rather than accumulate it. That's always been the job. AI agents are another audience where the consequences of ambiguity are more severe.
+The skills that matter for this audience aren't creativity or flair. They're precision, audience awareness, and knowing what to leave out. These are the core skills of technical writing. Technical writers are still storytellers, but they tell stories designed to reduce drift over time rather than accumulate it. That's always been the job. AI agents are another audience where ambiguity has an outside negative effect on their ability to get things done.
 
 ## Docs are a product interface
 
@@ -46,11 +46,11 @@ Documentation has always been an interface between a product and its users. It's
 
 What's changed is that documentation is now also an interface between a product and automated systems. When an AI agent integrates with your product, the quality of your docs directly affects how well that integration works. Your product docs are the story you're telling to agents about what your product does and how it works. If that story is incomplete, ambiguous, or hard to access, the agent builds on a flawed understanding. Poor docs don't only frustrate users anymore. They degrade the performance of every agent-assisted workflow that depends on them.
 
-There's a business case here that's starting to become visible. OpenAI noted that Codex's performance depends heavily on the quality of documentation and context it has access to.[^1] Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.[^2] You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.
+There's an emerging business case here. OpenAI noted that Codex's performance depends heavily on the quality of documentation and context it has access to.[^1] Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.[^2] You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.
 
-This matters because it changes the conversation about documentation resources. For a long time, the case for investing in docs has been somewhat abstract: better user experience, fewer support tickets, improved onboarding. These are real benefits, but they're hard to quantify in ways that move budgets.
+This matters because it changes the conversation about documentation resources. For a long time, the case for investing in docs has been abstract: better user experience, fewer support tickets, improved onboarding. These are real benefits, but they're hard to quantify in ways that move budgets.
 
-The new framing is more concrete. Documentation is a programmatic interface. Its quality has measurable downstream effects on agent performance, developer productivity, and integration reliability. That's a case you can make in terms that product and engineering leadership understand, because it connects docs to outcomes they're already tracking.
+The new framing is more concrete. Documentation is a programmatic interface. Its quality has downstream effects on agent performance, developer productivity, and integration reliability. That's a case you can make in terms that product and engineering leadership understand, because it connects docs to outcomes they're already tracking.
 
 For technical writers, this is an opportunity to advocate for the resources that documentation teams have always needed: headcount, cross-team relationships, and input into product decisions early enough to actually influence them. Not because the work has changed, but because the stakes have become more visible.
 
@@ -58,7 +58,7 @@ For technical writers, this is an opportunity to advocate for the resources that
 
 If you're a technical writer, you've spent your career managing the imprecision of natural language. Choosing the right word, cutting the unnecessary sentence, structuring information so that someone can find what they need and act on it without second-guessing.
 
-That's still the job. The audience just got bigger, and part of it is now automated. The fundamentals haven't changed, but the consequences of getting it wrong, or right, have.
+That's still the job, but the your new audience uses your docs as literal machine instructions. The fundamentals haven't changed, but the consequences of getting it wrong, or right, have.
 
 This isn't a call to panic or to overhaul how you work. It's more of an observation: the thing you've been doing all along turns out to be exactly what this moment requires.
 
@@ -66,6 +66,6 @@ And here's where the storytelling comes back in. Technical writers need to tell 
 
 That's a story worth telling clearly.
 
-[^1]: OpenAI noted in their Codex documentation that agent performance is closely tied to the quality and completeness of available documentation and project context.
+[^1]: OpenAI noted in their Codex documentation that agent performance is closely tied to the quality and completeness of available documentation and project context. [Introducing Codex](https://openai.com/index/introducing-codex/)
 
-[^2]: Andrew Filev, CEO of Zencoder, claimed that AI coding agents with well-structured documentation access showed roughly 3x productivity gains. [Source](https://www.zencoder.ai)
+[^2]: Andrew Filev, CEO of Zencoder, claimed that AI coding agents with well-structured documentation access showed roughly 3x productivity gains. [How to improve technical documentation with generative AI](https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html)
