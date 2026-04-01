@@ -41,6 +41,7 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- Technical storytelling and drift at machine speed
 - Intentional work patterns - boundaries
 - Intentional work patterns
 - Rule of thirds
