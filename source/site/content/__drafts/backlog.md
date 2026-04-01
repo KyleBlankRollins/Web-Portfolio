@@ -31,6 +31,7 @@ Valid section headings (must match exactly):
 - Intentional work patterns - rituals
 - Intentional work patterns - spaces
 - Intentional work patterns - traps
+- Signposting for AI Agents
 
 ## Outlining
 
@@ -40,6 +41,7 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- Technical storytelling and drift at machine speed
 - Intentional work patterns - boundaries
 - Intentional work patterns
 - Rule of thirds
