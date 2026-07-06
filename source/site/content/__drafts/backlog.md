@@ -22,6 +22,7 @@ Valid section headings (must match exactly):
 - The promotion paradox (do work outside of team, etc)
 - Strategies for scaling yourself
 - Inbox zero and only necessary tabs
+- There is no moat. The concept is wrong. Products need to move, not stake out territory to defend. Product docs are not a moat.
 
 ## Researching
 
@@ -32,6 +33,7 @@ Valid section headings (must match exactly):
 - Intentional work patterns - spaces
 - Intentional work patterns - traps
 - Signposting for AI Agents
+- Agent summaries and how they affect documentation retrieval
 
 ## Outlining
 
@@ -41,6 +43,7 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- Leading Through Change
 - Technical storytelling and drift at machine speed
 - Intentional work patterns - boundaries
 - Intentional work patterns
