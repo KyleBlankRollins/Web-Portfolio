@@ -37,6 +37,8 @@ Valid section headings (must match exactly):
 
 ## Outlining
 
+- AI Agent Workflows
+
 ## Writing
 
 ## Editing
