@@ -39,9 +39,12 @@
   </head>
 
   <body>
-    <kbr-navigation></kbr-navigation>
-    <!-- Theme Switcher - Fixed position in bottom left -->
-    <kbr-theme-switcher></kbr-theme-switcher>
+    <kbr-navigation>
+      <!-- Slotted into .header-content so the switcher sits at the far right
+           of the site header. It used to be a fixed-position floating control,
+           which overlapped page content at every viewport width. See DF-31. -->
+      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+    </kbr-navigation>
 
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">

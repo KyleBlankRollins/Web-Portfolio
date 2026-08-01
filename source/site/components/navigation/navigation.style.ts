@@ -40,6 +40,13 @@ export const navigationStyles = css`
     transform: scale(1.05);
   }
 
+  /* Right-hand cluster: nav links plus the slotted theme switcher. */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
   /* Main navigation */
   .main-nav ul {
     display: flex;
@@ -123,6 +130,14 @@ export const navigationStyles = css`
       flex-direction: column;
       gap: var(--space-sm);
       text-align: center;
+    }
+
+    /* Stack the cluster too. Kept as a row, the three nav links plus the
+       switcher exceed the width of a phone and force the link list to wrap
+       onto a second line underneath the button. */
+    .header-actions {
+      flex-direction: column;
+      gap: var(--space-sm);
     }
 
     .main-nav ul {

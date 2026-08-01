@@ -1019,18 +1019,26 @@ content columns are positioned differently again.
 
 #### Resolution
 
-Moved to the bottom-left corner: `left: var(--space-md)` with the `translateX(-50%)` removed. That is also what the comment in `templates/base.html` has always claimed this control does — "Fixed position in bottom left" — so the centring was drift from the original intent, not the intent itself.
+Moved into the site header, at the far right of `.header-content`. This is the first of the two options below, chosen by the site's owner after the intermediate fix (bottom-left corner) proved insufficient — see the note at the end.
 
-On mobile (≤768px) it still spans the bottom edge as before. There is no sidebar to sit beside at that width, and a full-width bottom bar is the conventional shape.
+`kbr-theme-switcher` is now slotted into `kbr-navigation` rather than floating in the body:
 
-Verified on a blog post at 1440×1000: the pill occupies x 27–151 against an article spanning 542–1284, and `elementsFromPoint` at its centre returns only the switcher over `body` — no content beneath it.
+- `navigation.ts` wraps the links and a `<slot name="theme-switcher">` in a `.header-actions` cluster. The two travel together so the switcher lands at the far edge; a bare `space-between` across three children would have pushed the links into the middle instead.
+- Both templates render `<kbr-theme-switcher slot="theme-switcher">` inside `<kbr-navigation>`. Slotted rather than rendered inside the navigation component, so `navigation.ts` does not depend on the switcher.
+- `:host` drops `position: fixed` for `position: relative; display: inline-block`, taking up layout space. **The control can no longer overlap page content at any width** — that is what moving it into the header buys over relocating it.
 
-**Not fully solved, and worth being explicit about.** Checking the same control against the portfolio layout, as this finding suggested, shows the residual: that page's content is full-width, so a fixed corner control still clips the bottom-left of a card. Any `position: fixed` control over a full-width layout overlaps something at some width — moving it out of the _reading column_ is what this fix buys, not the elimination of overlap.
+The component's `render()` changed as well. It used to swap the trigger out for the expanded panel; in the header that made the host collapse to zero width while open and shove the nav links sideways. The trigger now renders in both states and the panel is absolutely positioned beneath it, anchored to the trigger's right edge so it opens inward from the header. The trigger also became a real `<button>` with `aria-expanded`, replacing a `<div>` with a click handler.
 
-Closing it properly means choosing between two designs, which is a call for the site's owner rather than a defect to correct:
+Verified at 1440×1000: opening the panel shifts the nav links and the trigger by **0px**, the panel sits below the trigger and stays inside the viewport, and the theme select and mode toggle still write through to `data-theme`, `data-color-scheme` and `localStorage`. The trigger label measures 11.73:1 to 17.85:1 across the four theme/scheme combinations.
 
-1. Move the control into the site header, where it occupies layout space instead of floating.
-2. Keep it floating but have it auto-hide on scroll, or shrink to an icon and expand on hover or focus.
+**A regression this introduced, caught on mobile and fixed.** At 390px the three links plus the button exceeded the width of the row, wrapping the link list onto a second line beneath the button. `.header-actions` now stacks at the ≤480px breakpoint where `.header-content` already becomes a column, giving logo / links / button. Re-checked at 390×844: no wrapping, no horizontal scroll, panel within the viewport.
+
+The two intermediate states are worth recording, since both were verified and neither was sufficient:
+
+1. **Bottom-centre (original).** Occupied x 657–782 inside an article spanning 542–1284 at 1440×1000 — permanently covering a strip of body text and tracking the reader down the page.
+2. **Bottom-left.** Cleared the blog reading column, but the portfolio page's content is full-width, so it clipped the bottom-left of a card. Any `position: fixed` control over a full-width layout overlaps something at some width.
+
+Obsolete CSS removed along the way: the bottom-bar `.theme-switcher` wrapper styles, `.expanded-header` and its hover rule, and the mobile full-width-bottom-bar block. The `prefers-contrast: high` rule was retargeted from the old wrapper to the trigger and panel, which is where the borders now live.
 
 ---
 

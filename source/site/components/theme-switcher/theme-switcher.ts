@@ -236,57 +236,60 @@ export class KbrThemeSwitcher extends LitElement {
       return html`<div class="theme-switcher loading">Loading themes...</div>`;
     }
 
+    // The trigger renders in both states rather than being swapped out for
+    // the panel. It lives in the site header now, so if it disappeared while
+    // open the host would collapse to zero width and shove the nav links
+    // sideways. The panel is absolutely positioned beneath it instead.
     return html`
       <div
         class="theme-switcher ${this.isCollapsed ? "collapsed" : "expanded"}"
       >
+        <button
+          class="collapsed-trigger"
+          @click=${this.handleToggle}
+          aria-expanded=${this.isCollapsed ? "false" : "true"}
+          aria-label="Theme settings"
+        >
+          <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
+          <span class="trigger-text">Themes</span>
+        </button>
         ${this.isCollapsed
-          ? html`
-              <!-- Collapsed State -->
-              <div class="collapsed-trigger" @click=${this.handleToggle}>
-                <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
-                <span class="trigger-text">Themes</span>
-              </div>
-            `
+          ? null
           : html`
-              <!-- Expanded State -->
-              <div class="expanded-header" @click=${this.handleToggle}>
-                <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
-                <span class="trigger-text">Themes</span>
-              </div>
-              <div class="theme-controls">
-                <!-- Theme Selection -->
-                <div class="theme-select">
-                  <label for="theme-dropdown">Theme:</label>
-                  <select
-                    id="theme-dropdown"
-                    class="theme-dropdown"
-                    .value=${this.currentTheme}
-                    @change=${this.handleThemeChange}
-                  >
-                    ${this.themes.map(
-                      (theme) => html`
-                        <option value=${theme.id}>${theme.name}</option>
-                      `
-                    )}
-                  </select>
-                </div>
-                <!-- Theme Preview - Removed color swatches, themes are CSS-only -->
+              <div class="theme-panel">
+                <div class="theme-controls">
+                  <!-- Theme Selection -->
+                  <div class="theme-select">
+                    <label for="theme-dropdown">Theme:</label>
+                    <select
+                      id="theme-dropdown"
+                      class="theme-dropdown"
+                      .value=${this.currentTheme}
+                      @change=${this.handleThemeChange}
+                    >
+                      ${this.themes.map(
+                        (theme) => html`
+                          <option value=${theme.id}>${theme.name}</option>
+                        `
+                      )}
+                    </select>
+                  </div>
 
-                <!-- Color Scheme Toggle -->
-                <div class="color-scheme-toggle">
-                  <label for="color-scheme-toggle">Mode:</label>
-                  <div class="toggle-switch">
-                    <input
-                      type="checkbox"
-                      id="color-scheme-toggle"
-                      class="toggle-input"
-                      .checked=${this.currentColorScheme === "dark"}
-                      @click=${this.handleColorSchemeToggle}
-                      aria-label="Toggle between light and dark mode"
-                    />
-                    <div class="toggle-track"></div>
-                    <div class="toggle-thumb"></div>
+                  <!-- Color Scheme Toggle -->
+                  <div class="color-scheme-toggle">
+                    <label for="color-scheme-toggle">Mode:</label>
+                    <div class="toggle-switch">
+                      <input
+                        type="checkbox"
+                        id="color-scheme-toggle"
+                        class="toggle-input"
+                        .checked=${this.currentColorScheme === "dark"}
+                        @click=${this.handleColorSchemeToggle}
+                        aria-label="Toggle between light and dark mode"
+                      />
+                      <div class="toggle-track"></div>
+                      <div class="toggle-thumb"></div>
+                    </div>
                   </div>
                 </div>
               </div>
