@@ -41,12 +41,11 @@ Valid section headings (must match exactly):
 
 ## Writing
 
-- AI Agent Workflows
-
 ## Editing
 
 ## Published
 
+- AI Agent Workflows
 - Leading Through Change
 - Technical storytelling and drift at machine speed
 - Intentional work patterns - boundaries
