@@ -37,9 +37,11 @@ Valid section headings (must match exactly):
 
 ## Outlining
 
-- AI Agent Workflows
+- Structure is meaning
 
 ## Writing
+
+- AI Agent Workflows
 
 ## Editing
 
