@@ -13,6 +13,7 @@ export class GitAwareBuildPipeline {
 
   // Cached change detection results
   private _changedMarkdownFiles?: string[];
+  private _changedMarkdownPaths?: string[];
   private _changedHtmlFiles?: string[];
   private _allChangedFiles?: string[];
 
@@ -44,7 +45,7 @@ export class GitAwareBuildPipeline {
       return true; // Process all files in non-git-aware mode
     }
 
-    const changedMarkdown = this.getChangedMarkdownFiles();
+    const changedMarkdown = this.getChangedMarkdownPaths();
     return changedMarkdown.length > 0;
   }
 
@@ -60,6 +61,21 @@ export class GitAwareBuildPipeline {
       }
     }
     return this._changedMarkdownFiles;
+  }
+
+  /**
+   * Get changed markdown paths including deleted files.
+   */
+  getChangedMarkdownPaths(): string[] {
+    if (this._changedMarkdownPaths === undefined) {
+      if (!this.gitAware || this.forceAll || !this.isGitRepo) {
+        this._changedMarkdownPaths = [];
+      } else {
+        this._changedMarkdownPaths = GitUtils.getChangedMarkdownPaths();
+      }
+    }
+
+    return this._changedMarkdownPaths;
   }
 
   /**
@@ -258,5 +274,12 @@ export class GitAwareBuildPipeline {
       changedMarkdownCount: this.getChangedMarkdownFiles().length,
       changedHtmlCount: this.getChangedHtmlFiles().length,
     };
+  }
+
+  /**
+   * Whether incremental behavior is active and git metadata is available.
+   */
+  isIncrementalMode(): boolean {
+    return this.gitAware && !this.forceAll && this.isGitRepo;
   }
 }

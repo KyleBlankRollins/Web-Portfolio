@@ -115,21 +115,28 @@ export class GitUtils {
   static getChangedMarkdownFiles(
     contentDirectory: string = "source/site/content/published"
   ): string[] {
+    return this.getChangedMarkdownPaths(contentDirectory).filter((filePath) =>
+      existsSync(filePath)
+    );
+  }
+
+  /**
+   * Get markdown paths that have changed since the last commit.
+   * Includes deleted paths so incremental invalidation can rebuild related outputs.
+   */
+  static getChangedMarkdownPaths(
+    contentDirectory: string = "source/site/content/published"
+  ): string[] {
     const changedFiles = this.getChangedFiles();
-    const changedMarkdownFiles: string[] = [];
+    const changedMarkdownPaths: string[] = [];
 
     for (const file of changedFiles) {
-      // Check if it's a markdown file in the content directory
       if (file.endsWith(".md") && file.startsWith(contentDirectory)) {
-        // Convert to absolute path
-        const absolutePath = join(process.cwd(), file);
-        if (existsSync(absolutePath)) {
-          changedMarkdownFiles.push(absolutePath);
-        }
+        changedMarkdownPaths.push(join(process.cwd(), file));
       }
     }
 
-    return changedMarkdownFiles;
+    return changedMarkdownPaths;
   }
 
   /**

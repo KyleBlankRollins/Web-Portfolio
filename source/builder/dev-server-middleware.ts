@@ -8,6 +8,7 @@ import {
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
+import { ContentDiscovery } from "./modules/index.js";
 
 /**
  * Creates middleware that blocks direct access to source directories
@@ -17,21 +18,15 @@ function createBlockingMiddleware() {
     const url = req.url;
     if (!url) return next();
 
-    // Block direct access to pages/ and content/ directories
-    if (url.startsWith("/pages/") || url.startsWith("/content/")) {
-      res.statusCode = 404;
-      res.setHeader("Content-Type", "text/html");
-      res.end(`
-        <!DOCTYPE html>
-        <html>
-          <head><title>404 - Not Found</title></head>
-          <body>
-            <h1>404 - Not Found</h1>
-            <p>The requested resource was not found.</p>
-            <p><a href="/">Return to home</a></p>
-          </body>
-        </html>
-      `);
+    const cleanUrl = url.split("?")[0].split("#")[0];
+
+    // Block direct access to source-content paths, including nested variants.
+    if (
+      cleanUrl.startsWith("/pages/") ||
+      cleanUrl.startsWith("/content/") ||
+      cleanUrl.startsWith("/published/")
+    ) {
+      sendNotFoundHtml(res);
       return;
     }
 
@@ -184,11 +179,14 @@ async function handleHtmlRequest(
   res: any,
   next: any
 ) {
-  const fileName = url.slice(1); // Remove leading slash
+  const requestedPublicUrl = normalizePublicUrl(url);
+  const fileName = requestedPublicUrl.slice(1);
   const rootDir = path.join(process.cwd(), "source/site");
 
-  // First, check if this is a generated HTML file from markdown processor
-  const generatedFile = markdownProcessor.getGeneratedFile(fileName);
+  // First, resolve against generated documents by normalized public URL.
+  const generatedFile = markdownProcessor.getGeneratedFileByPublicUrl(
+    requestedPublicUrl
+  );
   if (generatedFile) {
     return await processAndServeGeneratedFile(
       templateProcessor,
@@ -209,35 +207,20 @@ async function handleHtmlRequest(
     );
   }
 
-  // Finally, check for corresponding .md file in content/published/.
-  // Support both standalone posts and directory parent-post convention.
-  const mdFileName = fileName.replace(".html", ".md");
-  const slug = fileName.replace(/\.html$/, "");
-  const publishedRoot = path.join(rootDir, "content", "published");
-  const standaloneMdPath = path.join(publishedRoot, mdFileName);
-  const directoryMdPath = path.join(publishedRoot, slug, mdFileName);
-
-  if (fs.existsSync(standaloneMdPath)) {
+  const markdownSourcePath = resolvePublishedMarkdownSourcePath(
+    requestedPublicUrl
+  );
+  if (markdownSourcePath) {
     return await processAndServeMarkdown(
       templateProcessor,
       markdownProcessor,
-      standaloneMdPath,
+      markdownSourcePath,
       res,
       next
     );
   }
 
-  if (fs.existsSync(directoryMdPath)) {
-    return await processAndServeMarkdown(
-      templateProcessor,
-      markdownProcessor,
-      directoryMdPath,
-      res,
-      next
-    );
-  }
-
-  next();
+  sendNotFoundHtml(res);
 }
 
 /**
@@ -350,7 +333,8 @@ async function processAndServeMarkdown(
  */
 function setupFileWatcher(
   server: ViteDevServer,
-  templateProcessor: TemplateProcessor
+  templateProcessor: TemplateProcessor,
+  onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
   server.ws.on("file-changed", ({ file }) => {
     if (file.includes("/templates/") || file.includes("/includes/")) {
@@ -371,6 +355,39 @@ function setupFileWatcher(
       });
     }
   });
+
+  const handleMarkdownFileChange = async (filePath: string) => {
+    const normalizedPath = filePath.replace(/\\/g, "/");
+    if (!normalizedPath.endsWith(".md")) {
+      return;
+    }
+
+    if (!normalizedPath.includes("/source/site/content/published/")) {
+      return;
+    }
+
+    BuildLogger.info(`🔄 Published markdown changed: ${normalizedPath}`);
+
+    if (onPublishedMarkdownChanged) {
+      await onPublishedMarkdownChanged(filePath);
+    }
+
+    server.ws.send({
+      type: "full-reload",
+    });
+  };
+
+  server.watcher.on("add", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
+
+  server.watcher.on("change", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
+
+  server.watcher.on("unlink", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
 }
 
 /**
@@ -380,7 +397,7 @@ function injectDevAssets(htmlContent: string): string {
   let modifiedContent = htmlContent;
 
   // Inject development script before closing </body>
-  const devScript = `    <script type="module" src="main.ts"></script>`;
+  const devScript = `    <script type="module" src="/main.ts"></script>`;
 
   modifiedContent = modifiedContent.replace("</body>", `${devScript}\n</body>`);
 
@@ -393,7 +410,8 @@ function injectDevAssets(htmlContent: string): string {
 export function setupDevServer(
   server: ViteDevServer,
   templateProcessor: TemplateProcessor,
-  markdownProcessor: MarkdownProcessor
+  markdownProcessor: MarkdownProcessor,
+  onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
   BuildLogger.info("🔧 Setting up dev server middleware for KBR Builder...");
 
@@ -406,5 +424,40 @@ export function setupDevServer(
   );
 
   // Setup file watcher
-  setupFileWatcher(server, templateProcessor);
+  setupFileWatcher(server, templateProcessor, onPublishedMarkdownChanged);
+}
+
+function normalizePublicUrl(url: string): string {
+  if (!url.startsWith("/")) {
+    return `/${url}`;
+  }
+
+  return url;
+}
+
+function resolvePublishedMarkdownSourcePath(
+  requestedPublicUrl: string
+): string | undefined {
+  const discoveryResult = new ContentDiscovery().discover();
+  const matchedDocument = discoveryResult.publishableDocuments.find(
+    (document) => document.publicUrl === requestedPublicUrl
+  );
+
+  return matchedDocument?.sourcePath;
+}
+
+function sendNotFoundHtml(res: any): void {
+  res.statusCode = 404;
+  res.setHeader("Content-Type", "text/html");
+  res.end(`
+    <!DOCTYPE html>
+    <html>
+      <head><title>404 - Not Found</title></head>
+      <body>
+        <h1>404 - Not Found</h1>
+        <p>The requested resource was not found.</p>
+        <p><a href="/">Return to home</a></p>
+      </body>
+    </html>
+  `);
 }

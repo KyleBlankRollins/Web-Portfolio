@@ -8,7 +8,7 @@ export default defineConfig({
   base: "./", // Use relative paths for assets
   build: {
     outDir: "../../dist",
-    emptyOutDir: true,
+    emptyOutDir: process.env.GIT_AWARE !== "true",
     // Additional performance optimizations
     target: "es2020", // Modern browsers for better tree shaking
     minify: "esbuild", // Fastest minifier (default, but explicit)

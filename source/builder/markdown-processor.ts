@@ -39,6 +39,7 @@ export class MarkdownProcessor {
   private manifestBuilder: BlogManifestBuilder;
   private localDocumentLinkIndex?: LocalDocumentLinkIndex;
   private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
+  private generatedFilesByPublicUrl: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
     this.renderer = new MarkdownRenderer();
@@ -171,6 +172,14 @@ export class MarkdownProcessor {
       metadata: metadata,
     });
 
+    this.generatedFilesByPublicUrl.set(contentDocument.publicUrl, {
+      filename: fileName,
+      sourcePath: contentDocument.sourcePath,
+      publicUrl: contentDocument.publicUrl,
+      content: htmlWithMetadata,
+      metadata: metadata,
+    });
+
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
     return fileName;
@@ -181,6 +190,31 @@ export class MarkdownProcessor {
    */
   public setLocalDocumentLinkIndex(documentLinkIndex: LocalDocumentLinkIndex) {
     this.localDocumentLinkIndex = documentLinkIndex;
+  }
+
+  /**
+   * Clear in-memory generated files and manifest state before rebuilding.
+   */
+  public resetBuildState(): void {
+    this.generatedFiles.clear();
+    this.generatedFilesByPublicUrl.clear();
+    this.manifestBuilder.clear();
+  }
+
+  /**
+   * Rebuild manifest entries from discovered publishable documents.
+   * This keeps manifest output complete even when HTML generation is incremental.
+   */
+  public rebuildManifestFromDocuments(contentDocuments: ContentDocument[]): void {
+    this.manifestBuilder.clear();
+
+    for (const contentDocument of contentDocuments) {
+      if (contentDocument.kind === "supplement-candidate") {
+        continue;
+      }
+
+      this.addToBlogManifest(contentDocument, contentDocument.metadata);
+    }
   }
 
   /**
@@ -362,10 +396,20 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Get a specific generated file by public URL.
+   */
+  public getGeneratedFileByPublicUrl(
+    publicUrl: string
+  ): GeneratedHtmlFile | undefined {
+    return this.generatedFilesByPublicUrl.get(publicUrl);
+  }
+
+  /**
    * Clear all generated files from memory
    */
   public clearGeneratedFiles(): void {
     this.generatedFiles.clear();
+    this.generatedFilesByPublicUrl.clear();
   }
 
   /**
