@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -23,6 +24,7 @@ export class KbrNavigation extends LitElement {
     buttonStyles,
     layoutStyles,
     navigationStyles,
+    reducedMotionStyles,
   ];
 
   connectedCallback() {

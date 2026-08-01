@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -55,6 +56,7 @@ export default class KbrTagFilter extends LitElement {
     buttonStyles,
     layoutStyles,
     tagFilterStyles,
+    reducedMotionStyles,
   ];
 
   constructor() {

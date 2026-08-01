@@ -4,23 +4,23 @@ export const tagFilterStyles = css`
   /* Host element - the <kbr-tag-filter> tag itself */
   :host {
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
   }
 
   .tag-filter-container {
     background: var(--color-surface);
     border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
   }
 
   .filter-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-xs);
   }
 
   .filter-title {
@@ -33,12 +33,12 @@ export const tagFilterStyles = css`
   .clear-filter-btn {
     background: none;
     border: 1px solid var(--color-border);
-    padding: 0.25rem 0.75rem;
+    padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.875rem;
     color: var(--color-text);
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
   }
 
   /* --color-accent is a mid-tone: as a fill it carried hardcoded white at
@@ -58,13 +58,13 @@ export const tagFilterStyles = css`
   .tags-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-xs);
     position: relative;
   }
 
   /* Enhanced animation for tag reordering */
   .tag-button {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--duration-slow) cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(0) translateY(0);
     position: relative;
     z-index: 1;
@@ -196,7 +196,7 @@ export const tagFilterStyles = css`
 
   .loading {
     text-align: center;
-    padding: 2rem;
+    padding: var(--space-lg);
     color: var(--color-text);
   }
 
@@ -206,7 +206,7 @@ export const tagFilterStyles = css`
   .error {
     color: var(--color-error-strong);
     text-align: center;
-    padding: 1rem;
+    padding: var(--space-sm);
     background: var(--color-error-subtle);
     border-radius: var(--radius-sm);
   }
@@ -215,23 +215,23 @@ export const tagFilterStyles = css`
 
   /* Expand/collapse controls */
   .expand-controls {
-    margin-top: 1rem;
+    margin-top: var(--space-sm);
     text-align: center;
   }
 
   .expand-tags-btn {
     background: none;
     border: 1px solid var(--color-border);
-    padding: 0.5rem 1rem;
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
     color: var(--color-text);
     font-size: 0.875rem;
     font-weight: var(--font-weight-medium);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   /* --color-accent as label text measured 1.79:1 to 3.68:1 on
@@ -266,7 +266,7 @@ export const tagFilterStyles = css`
   /* Mobile responsive */
   @media (max-width: 768px) {
     .tag-filter-container {
-      padding: 1rem;
+      padding: var(--space-sm);
     }
 
     .filter-header {

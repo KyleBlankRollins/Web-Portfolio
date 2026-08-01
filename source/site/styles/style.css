@@ -44,6 +44,12 @@ body {
    no-op for them. pages/portfolio.html had no such wrapper, and its prose ran
    the full viewport width on wide displays. See DF-23. */
 .page-content {
+  /* width: 100% matters because body is a flex column, which makes this a
+     flex item. Auto margins on the cross axis suppress the default stretch,
+     so without an explicit width the item shrinks to its content instead of
+     filling to --content-max-width - which silently narrowed the homepage
+     card grid from three columns to two. */
+  width: 100%;
   max-width: var(--content-max-width);
   margin: var(--space-2xl) auto;
   padding-inline: var(--space-lg);
@@ -73,16 +79,21 @@ body {
   }
 }
 
+/* min() in the minmax floor is what keeps auto-fit from overflowing a narrow
+   viewport. Bare `minmax(250px, 1fr)` never lets a track go below 250px, so
+   in a container narrower than one track the grid overflows instead of
+   collapsing to a single column. */
 .grid {
   display: grid;
   gap: var(--space-lg);
+  min-width: 0;
 
   &.two-columns {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   }
 
   &.three-columns {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
   }
 }
 
@@ -436,10 +447,15 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* Reduce horizontal margins to maximize screen space on mobile */
+  /* Reduce horizontal spacing to maximise screen space on mobile.
+
+     This used to set `margin: 0 0.2em`, which meant .hero had to cancel it
+     with `margin: -0.2em` to reach the screen edge. Now that the wrapper
+     carries its inset as padding (see DF-23), narrowing the padding is enough
+     and nothing needs to pull back against it. See DF-27. */
   .page-content {
-    margin: 0 0.2em;
-    margin-bottom: 2em;
+    margin-block: var(--space-lg) var(--space-xl);
+    padding-inline: var(--space-sm);
   }
 
   .container {
@@ -496,8 +512,12 @@ body {
 }
 
 /* Hero Section */
+/* Asymmetric on purpose. The bottom was the same as the top, and
+   .cards-container then pulled itself up by --space-2xl to close the gap.
+   Halving the bottom padding here produces the same layout without a
+   negative margin. See DF-27. */
 .hero {
-  padding: calc(var(--space-2xl) * 2) 0;
+  padding: calc(var(--space-2xl) * 2) 0 var(--space-2xl);
   text-align: center;
   font-size: var(--font-size-lg);
 
@@ -533,7 +553,6 @@ body {
 
   .hero {
     padding: var(--space-xl) 0;
-    margin: -0.2em;
   }
 
   .container {
@@ -658,12 +677,15 @@ button:focus-visible {
 .cards-container {
   display: flex;
   justify-content: center;
-  margin-top: calc(var(--space-2xl) * -1);
 }
 
+/* min-width: 0 so this can shrink below its content width. As a flex item it
+   defaults to min-width: auto, which pinned it to the grid's max-content size
+   and pushed a horizontal scrollbar onto every phone. */
 .cards {
   width: 100%;
   max-width: 1200px;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {

@@ -7,11 +7,13 @@ export const postListStyles = css`
     width: 100%;
   }
 
+  /* No top padding, stated directly. Each breakpoint used to apply padding
+     on all four sides and then cancel the top with an equal negative margin.
+     See DF-27. */
   .post-list-container {
     max-width: var(--content-max-width);
     margin: 0 auto;
-    margin-top: calc(var(--space-lg) * -1);
-    padding: var(--space-lg);
+    padding: 0 var(--space-lg) var(--space-lg);
   }
 
   /* Header */
@@ -142,8 +144,7 @@ export const postListStyles = css`
   /* Responsive design */
   @media (max-width: 768px) {
     .post-list-container {
-      padding: var(--space-md);
-      margin-top: calc(var(--space-md) * -1);
+      padding: 0 var(--space-md) var(--space-md);
     }
 
     .post-list-pagination {
@@ -165,8 +166,7 @@ export const postListStyles = css`
 
   @media (max-width: 480px) {
     .post-list-container {
-      margin-top: calc(var(--space-sm) * -1);
-      padding: var(--space-sm);
+      padding: 0 var(--space-sm) var(--space-sm);
     }
 
     .post-list-pagination {
@@ -181,17 +181,11 @@ export const postListStyles = css`
   }
 
   /* Animation preferences */
+  /* See post-card: the shared reducedMotionStyles block covers durations and
+     iteration counts, so only the transform suppression needs stating here. */
   @media (prefers-reduced-motion: reduce) {
-    .loading-spinner {
-      animation: none;
-    }
-
     .pagination-btn:hover:not([disabled]) {
       transform: none;
-    }
-
-    * {
-      transition: none !important;
     }
   }
 `;

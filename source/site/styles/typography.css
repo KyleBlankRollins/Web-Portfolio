@@ -127,6 +127,14 @@ html,
   font-family: var(--font-family-primary);
   font-size: 18px;
   line-height: 23px;
+  /* Consumes --font-weight-normal so the dark-scheme override in
+     theme-base.css (450, "increased font weight for better readability in
+     dark mode") actually reaches the page. Nothing referenced this token
+     before, so the block stated an intent it never carried out. See DF-16.
+
+     Headings are unaffected: the UA stylesheet sets font-weight on h1-h6
+     directly, which beats a value inherited from here. */
+  font-weight: var(--font-weight-normal);
   /* Apply font optimizations to html element */
   font-synthesis: none;
   text-rendering: optimizeLegibility;

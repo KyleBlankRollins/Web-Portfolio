@@ -126,9 +126,17 @@ export default class AnchorCopyComponent extends LitElement {
         flex: 1;
       }
 
-      /* Smooth scroll to anchors */
-      html {
-        scroll-behavior: smooth;
+      /* Smooth scroll to anchors.
+
+         Gated on no-preference rather than declared outright. This rule is
+         injected into document.head, so it escapes the shadow DOM and the
+         shared reducedMotionStyles block cannot reach it - the guard has to
+         be written here. Jumping straight to the anchor is the correct
+         behaviour for a reader who asked for reduced motion. See DF-22. */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
       }
 
       /* Add some padding for anchor scroll targets */

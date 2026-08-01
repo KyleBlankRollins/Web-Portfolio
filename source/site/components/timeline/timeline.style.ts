@@ -61,7 +61,7 @@ export const timelineStyles = css`
   .company-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-sm);
   }
 
   .company-name {
@@ -83,7 +83,7 @@ export const timelineStyles = css`
 
   .company-positions {
     position: relative;
-    padding: 1rem 1.5rem 1rem 2rem;
+    padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-lg);
   }
 
   /* Neither state declares a grid area, so both span the full track set

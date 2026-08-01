@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 // Components
@@ -58,6 +59,7 @@ export class KbrTimeline extends LitElement {
     buttonStyles,
     layoutStyles,
     timelineStyles,
+    reducedMotionStyles,
   ];
 
   constructor() {

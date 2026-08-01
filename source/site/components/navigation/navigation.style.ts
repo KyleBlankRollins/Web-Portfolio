@@ -152,15 +152,14 @@ export const navigationStyles = css`
     }
   }
 
-  /* Animation for better user experience */
-  @media (prefers-reduced-motion: no-preference) {
-    .main-nav a {
-      transition: all var(--transition-normal);
-    }
-
-    .main-nav a:hover {
-      animation: subtle-pulse 0.3s ease;
-    }
+  /* The hover pulse used to sit inside @media (prefers-reduced-motion:
+     no-preference), which inverted the guard: it was the only animation on
+     the site that stayed off unless a preference was actively expressed, and
+     browsers that report no preference at all never ran it. It is declared
+     unconditionally now, and reducedMotionStyles suppresses it under
+     a reduce preference like every other animation. See DF-22. */
+  .main-nav a:hover {
+    animation: subtle-pulse 0.3s ease;
   }
 
   @keyframes subtle-pulse {

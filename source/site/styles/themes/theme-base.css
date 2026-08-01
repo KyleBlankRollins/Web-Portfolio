@@ -248,6 +248,10 @@
 }
 
 /* Glass/Frosted Surface Utility */
+/* Frosted panel utility. The padding here is a default sized for small
+   panels; anything long-form should set its own (see .blog-post-content in
+   blog-post.css). Shadows come from the elevation scale so they follow the
+   colour scheme instead of staying black in dark mode. */
 .glass-surface {
   background: var(--glass-background);
   backdrop-filter: blur(var(--glass-blur));
@@ -255,7 +259,5 @@
   border-radius: var(--radius);
   padding: var(--space-sm);
   border: 1px solid var(--glass-border);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-lg);
 }

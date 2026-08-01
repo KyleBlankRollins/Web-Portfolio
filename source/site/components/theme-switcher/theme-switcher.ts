@@ -2,6 +2,7 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { themeSwitcherStyles } from "./theme-switcher.style.js";
 import type { ThemeConfig } from "../../theme-config.js";
+import { reducedMotionStyles } from "../../styles/shared-styles.js";
 
 /**
  * Theme Switcher Component
@@ -24,7 +25,7 @@ import type { ThemeConfig } from "../../theme-config.js";
 
 @customElement("kbr-theme-switcher")
 export class KbrThemeSwitcher extends LitElement {
-  static styles = [themeSwitcherStyles];
+  static styles = [themeSwitcherStyles, reducedMotionStyles];
 
   /**
    * Available themes configuration

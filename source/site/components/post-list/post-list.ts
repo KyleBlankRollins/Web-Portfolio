@@ -6,6 +6,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -61,6 +62,7 @@ export class KbrPostList extends LitElement {
     buttonStyles,
     layoutStyles,
     postListStyles,
+    reducedMotionStyles,
   ];
 
   constructor() {

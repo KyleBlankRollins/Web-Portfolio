@@ -1,6 +1,7 @@
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { postSeriesStyles } from "./post-series.style.js";
+import { reducedMotionStyles } from "../../styles/shared-styles.js";
 
 /**
  * Post Series Component
@@ -59,7 +60,7 @@ export class KbrPostSeries extends LitElement {
   @state()
   declare private error: string | null;
 
-  static styles = [postSeriesStyles];
+  static styles = [postSeriesStyles, reducedMotionStyles];
 
   constructor() {
     super();

@@ -43,20 +43,20 @@ Update the status column as work lands.
 | DF-13 | No `data-theme` until JavaScript runs                 | Medium   | fixed  |
 | DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | fixed  |
 | DF-15 | Reduced-motion override produces invalid CSS          | Low      | fixed  |
-| DF-16 | Dark-mode font-weight override is never consumed      | Low      | open   |
+| DF-16 | Dark-mode font-weight override is never consumed      | Low      | fixed  |
 | DF-17 | 49 of 139 design tokens are unreferenced              | Medium   | fixed  |
 | DF-18 | Three competing card surface colors                   | Medium   | fixed  |
 | DF-19 | Radius scale is unused; ~45 hardcoded values          | Medium   | fixed  |
 | DF-20 | Admonition headers fail contrast in light mode        | High     | fixed  |
-| DF-21 | Spacing tokens ignored in three components            | Low      | open   |
-| DF-22 | Reduced-motion coverage is uneven                     | Medium   | open   |
+| DF-21 | Spacing tokens ignored in three components            | Low      | fixed  |
+| DF-22 | Reduced-motion coverage is uneven                     | Medium   | fixed  |
 | DF-23 | Portfolio page has no measure constraint              | Medium   | fixed  |
 | DF-24 | `a:hover` reflows text                                | Low      | fixed  |
 | DF-25 | Lightbox modal is not full-screen                     | Medium   | fixed  |
-| DF-26 | Font fallback stacks are miscategorized               | Low      | open   |
-| DF-27 | Negative-margin layout hacks                          | Low      | open   |
-| DF-28 | Article glass surface has 1rem padding                | Low      | open   |
-| DF-29 | Nested sticky positioning on blog TOC                 | Low      | open   |
+| DF-26 | Font fallback stacks are miscategorized               | Low      | fixed  |
+| DF-27 | Negative-margin layout hacks                          | Low      | fixed  |
+| DF-28 | Article glass surface has 1rem padding                | Low      | fixed  |
+| DF-29 | Nested sticky positioning on blog TOC                 | Low      | fixed  |
 | DF-30 | `var()` fallbacks contradict documented rule          | Low      | fixed  |
 | DF-31 | Theme switcher occludes article text                  | Medium   | fixed  |
 
@@ -626,7 +626,7 @@ Every consumer composes these into a shorthand, e.g. `transition: color var(--tr
 ### DF-16 — Dark-mode font-weight override is never consumed
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 `themes/theme-base.css:152-157` states its intent in a comment:
 
@@ -638,6 +638,24 @@ Every consumer composes these into a shorthand, e.g. `transition: color var(--tr
 No rule anywhere references `var(--font-weight-normal)`. The readability improvement does not happen. `--letter-spacing-normal` from the same block _is_ consumed (`styles/style.css:28`), and `--font-size-base` and `--line-height-normal` are partially consumed, so the block is half-live.
 
 **Fix direction:** Either apply `--font-weight-normal` on `body` so the override takes effect, or delete the line so the file does not claim behavior it does not have.
+
+#### Resolution
+
+Applied, as chosen. `typography.css` now sets `font-weight: var(--font-weight-normal)` on the `html, .root` rule, alongside the other root typography. Headings are unaffected — the UA stylesheet sets `font-weight` on `h1`-`h6` directly, which beats a value inherited from an ancestor.
+
+The token is genuinely consumed now: computed weight on body copy reads `400` in light and `450` in dark.
+
+**But the readability improvement still does not happen, and the comment still overstates what the file does.** Measured in the browser, a paragraph is **668px wide in both schemes** — identical, so nothing about the rendering changed.
+
+The cause is font matching, not CSS. Valkyrie B ships `400`, `400 italic` and `700` only; there is no `450` or `500` face. `typography.css` also sets `font-synthesis: none`, which forbids the browser from faking one. CSS font matching for a desired weight in `[400, 500)` checks upward to 500 first, finds nothing, then falls back down to 400 — so `450` renders as `400`.
+
+The finding's defect is fixed: no rule referenced the token, and now one does. Closing the gap between the comment's claim and what a reader sees needs a separate decision:
+
+1. Ship a 500-weight Valkyrie B face and change the override to `500`. Real fix, costs a webfont.
+2. Set `font-synthesis: weight` under the dark scheme. Free, but synthesised weight on a serif looks poor.
+3. Delete the override and the comment.
+
+Left as-is pending that call, with the token wired so whichever option is chosen takes effect immediately.
 
 ### DF-17 — 49 of 139 design tokens are unreferenced
 
@@ -862,7 +880,7 @@ A full dark status set is now defined in that block, carrying the theme's own hu
 ### DF-21 — Spacing tokens ignored in three components
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 `components/tag-filter/tag-filter.style.ts`, `components/timeline/timeline.style.ts`, and `components/timeline-entry/timeline-entry.style.ts` hardcode `0.25rem`, `0.5rem`, `1rem`, `1.5rem`, `2rem`, and `3rem` in their base rules — then switch to `var(--space-*)` inside their mobile media queries. The same file uses both systems, which makes the responsive step look arbitrary rather than proportional.
 
@@ -870,10 +888,16 @@ The tag filter also hardcodes `transition: all 0.2s ease` (`:41`, `:226`) and `0
 
 **Fix direction:** Convert the base rules to the spacing and transition scales.
 
+#### Resolution
+
+**31 spacing values** converted to the scale across `tag-filter`, `timeline` and `timeline-entry`: `0.25rem` → `--space-1`, `0.5rem` → `--space-xs`, `0.75rem` → `--space-3`, `1rem` → `--space-sm`, `1.5rem` → `--space-md`, `2rem` → `--space-lg`, `3rem` → `--space-xl`. Two odd values in a mobile rule (`0.2rem`, `0.6rem`) mapped to the nearest steps. Base rules and media queries now use one system, so the responsive step reads as proportional rather than arbitrary.
+
+Transitions: `all 0.2s ease` and `background-color 0.2s ease` became `var(--transition-fast)` (150ms) — worth noting that this is a 50ms speed-up, since the literal did not match any step. The tag-reorder `all 0.4s cubic-bezier(…)` became `var(--duration-slow)` (350ms) with the custom easing kept, that being the nearest step on the scale; `--duration-slower` at 500ms would have been twice as far off.
+
 ### DF-22 — Reduced-motion coverage is uneven
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 Three different enforcement styles, and several gaps:
 
@@ -893,6 +917,35 @@ Unguarded continuous animations:
 - `components/anchor-copy.ts:130-132` — injects `html { scroll-behavior: smooth }` globally with no guard
 
 **Fix direction:** Pick one approach and apply it consistently. Guard every infinite animation, and gate the injected `scroll-behavior` on `prefers-reduced-motion: no-preference`.
+
+#### Resolution
+
+One approach, adopted by all thirteen animating components: a `reducedMotionStyles` block exported from `shared-styles.ts` and added to each component's `static styles`.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+It has to live _inside_ each shadow root — a rule in `styles/style.css` does not cross the shadow boundary, which is why per-component blocks existed at all. The fix is to share one block, not to hoist it out.
+
+Near-zero rather than `none`, because a 0.01ms animation still fires its `animationend`/`transitionend` event, so anything sequencing on those keeps working. `animation-iteration-count: 1` is what actually stops the four infinite animations the finding listed — `activeTagPulse`, `scroll-pulse`, `icon-loading` and the pagination `spin`.
+
+The three ad-hoc blocks were trimmed rather than deleted wholesale. `post-card` and `post-list` keep their `transform: none` rules: zeroing a duration does not remove a transform, so the hover lift would still happen, just instantly. Everything else in them was superseded. The `table-of-contents` block was removed entirely.
+
+`navigation`'s inverted guard is gone. It wrapped its hover animation in `@media (prefers-reduced-motion: no-preference)`, which meant that animation was the only one on the site that stayed off unless a preference was actively expressed. It is declared unconditionally now and suppressed by the shared block like everything else.
+
+`anchor-copy`'s injected `html { scroll-behavior: smooth }` **is** wrapped in `no-preference`, and correctly so: it is appended to `document.head`, escaping the shadow DOM, so the shared block cannot reach it and the guard has to be written at the injection site.
+
+Verified with Playwright's `emulateMedia`. Under `reduce`, inside a shadow root: the tag pulse goes from `2s` / `infinite` to `0.00001s` / `1`, transitions from `0.35s` and `0.25s` to `0.00001s`, and `scroll-behavior` on a post page from `smooth` to `auto`.
 
 ### DF-23 — Portfolio page has no measure constraint
 
@@ -993,7 +1046,7 @@ Verified by opening a lightbox on the portfolio page at 1600×1000: the backdrop
 ### DF-26 — Font fallback stacks are miscategorized
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 `themes/properties.css:114-116`:
 
@@ -1008,10 +1061,24 @@ Valkyrie B is a serif, but `--font-family-primary` falls back to system sans and
 
 **Fix direction:** End the primary stack in `serif` with a serif fallback chain (`Georgia`, `Cambria`, or similar), and make the heading fallback consistent with it.
 
+#### Resolution
+
+Both stacks are serif end to end:
+
+```css
+--font-family-primary: "valkyrie_b", Georgia, Cambria, "Times New Roman", serif;
+--font-family-heading:
+  "valkyrie_b_caps", Georgia, Cambria, "Times New Roman", serif;
+```
+
+The body stack dropped `-apple-system, BlinkMacSystemFont, "Segoe UI"` and its `sans-serif` terminator; the heading stack dropped `IBM Plex Sans`. `--font-family-mono` is unchanged and was never part of the problem.
+
+If the webfonts fail now, the page degrades to a serif and keeps its typographic relationship, instead of body and headings swapping classification in opposite directions.
+
 ### DF-27 — Negative-margin layout hacks
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 Overlap is created by pulling elements upward rather than by layout:
 
@@ -1023,10 +1090,26 @@ These are fragile at intermediate widths and make vertical rhythm hard to reason
 
 **Fix direction:** Replace with explicit spacing on the neighboring elements.
 
+#### Resolution
+
+All six negative margins are gone.
+
+- `.cards-container` pulled itself up by `--space-2xl` to close a gap the hero created. `.hero` had equal top and bottom padding; halving the bottom (`calc(var(--space-2xl) * 2) 0 var(--space-2xl)`) produces the same layout without the pull.
+- `.post-list-container` applied padding on all four sides at three breakpoints, then cancelled the top with an equal negative margin each time. Now stated directly: `padding: 0 <side> <side>`.
+- `.hero { margin: -0.2em }` existed only to cancel `.page-content { margin: 0 0.2em }` at mobile and reach the screen edge. Since DF-23 moved the wrapper's inset to `padding-inline`, narrowing that padding at mobile is enough and nothing needs to pull back against it. Both rules are gone; the mobile block now sets `margin-block` and a smaller `padding-inline`.
+
+#### Two layout bugs found while verifying this
+
+Neither was in the audit; both turned up from measuring rather than reading.
+
+**Horizontal scroll on every phone.** `.cards` is a flex item, so it defaulted to `min-width: auto` and could not shrink below its content width. Its grid used `repeat(auto-fit, minmax(250px, 1fr))`, whose floor never lets a track go below 250px — so three tracks held the container at 822px inside a 390px viewport and the page scrolled sideways. Fixed with `min-width: 0` on `.cards` and `.grid`, and by wrapping the floors as `minmax(min(250px, 100%), 1fr)` so a track can collapse when the container is narrower than one column. Confirmed: no overflow at 390px, 900px or 1440px on five pages.
+
+**The homepage lost a card column.** `body` is `display: flex; flex-direction: column`, which makes `.page-content` a flex item. Auto margins on the cross axis suppress the default `stretch`, so the DF-23 `margin: … auto` left it sizing to content — 872px instead of the 1200px cap — quietly dropping the card grid from three columns to two. Fixed with `width: 100%`. `main` now measures exactly `--content-max-width` at 1440px and fills the viewport at narrower widths. This was a regression from DF-23 that only rendering caught.
+
 ### DF-28 — Article glass surface has 1rem padding
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 `templates/blog-post.html:34` applies `.glass-surface` to the article:
 
@@ -1038,16 +1121,34 @@ These are fragile at intermediate widths and make vertical rhythm hard to reason
 
 **Fix direction:** Override padding on `.blog-post-content`, and convert `.glass-surface` to the radius and shadow scales.
 
+#### Resolution
+
+`.blog-post-content` now sets `padding: var(--space-xl) var(--space-lg)` — 54px / 36px at this root size — overriding the utility's 1rem default, which was sized for small frosted panels and left body copy near the container edge at article length.
+
+`.glass-surface` itself lost its two hardcoded `rgba(0, 0, 0, …)` shadows for `var(--shadow-lg)`. That matters beyond tidiness: the literals stayed black in dark mode, while the elevation scale is composed from `--color-shadow-*`, which the themes redefine per scheme. Its `border-radius` had already moved from `var(--space-xs)` to `var(--radius)` under DF-19.
+
+A comment on the utility now says the padding is a small-panel default and that long-form containers should set their own.
+
 ### DF-29 — Nested sticky positioning on blog TOC
 
 **Severity:** Low
-**Status:** open
+**Status:** fixed
 
 `styles/blog-post.css:27-29` makes `.blog-toc-sticky-container` sticky at `top: var(--space-lg)`. `components/table-of-contents/table-of-contents.style.ts:8-9` makes the TOC's own `:host` sticky at the same offset. `components/timeline/timeline.style.ts:46-49` adds a third sticky wrapper on the career page.
 
 Nesting sticky elements at identical offsets is redundant, and the inner element cannot move relative to an already-pinned parent.
 
 **Fix direction:** Keep the outer container sticky and make the component's `:host` position static, or the reverse — but not both.
+
+#### Resolution
+
+Kept the outer containers sticky and made the component's `:host` static. The container is the element that knows the layout it sits in; the component does not, and it is used in two different ones.
+
+Both call sites pin it from outside at the same offset — `.blog-toc-sticky-container` in `blog-post.css` and `.timeline-sidebar kbr-table-of-contents` in `timeline.style.ts` — so the inner `position: sticky` could never move relative to an already-pinned parent and only added a stacking context.
+
+Verified on both pages after scrolling. On a blog post the container pins at y=36 with the host computing `position: static`; on the career page the host still computes `sticky` at `top: 36px` and pins correctly, because a rule in the outer tree beats `:host` in the component's own sheet regardless of specificity.
+
+The third sticky wrapper the finding mentioned in `timeline.style.ts` is the surviving one there, so no separate change was needed.
 
 ### DF-30 — `var()` fallbacks contradict documented rule
 

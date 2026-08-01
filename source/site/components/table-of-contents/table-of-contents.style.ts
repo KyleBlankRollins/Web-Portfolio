@@ -1,12 +1,17 @@
 import { css } from "lit";
 
 export const tableOfContentsStyles = css`
+  /* Not sticky. Both places this component is used pin it from the outside -
+     .blog-toc-sticky-container in blog-post.css and .timeline-sidebar
+     kbr-table-of-contents in timeline.style.ts - both at the same top offset.
+     A sticky element inside an already-pinned parent cannot move relative to
+     it, so the inner one only ever added a second stacking context. Pinning
+     stays with the container, which is the element that knows the layout.
+     See DF-29. */
   :host {
     display: block;
     width: 100%;
     height: fit-content;
-    position: sticky;
-    top: var(--space-lg);
   }
 
   .toc-wrapper {
@@ -323,13 +328,6 @@ export const tableOfContentsStyles = css`
 
     .toc-link {
       padding: var(--space-xs);
-    }
-  }
-
-  /* Animation preferences */
-  @media (prefers-reduced-motion: reduce) {
-    .toc-link {
-      transition: none !important;
     }
   }
 `;

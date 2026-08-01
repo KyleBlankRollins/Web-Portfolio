@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -64,6 +65,7 @@ export class KbrPostCard extends LitElement {
     buttonStyles,
     layoutStyles,
     postCardStyles,
+    reducedMotionStyles,
   ];
 
   render() {

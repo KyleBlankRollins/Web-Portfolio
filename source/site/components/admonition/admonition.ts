@@ -1,6 +1,9 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { typographyStyles } from "../../styles/shared-styles.js";
+import {
+  typographyStyles,
+  reducedMotionStyles,
+} from "../../styles/shared-styles.js";
 import { admonitionStyles } from "./admonition.style.js";
 import "../icon/icon.js";
 
@@ -44,7 +47,7 @@ type AdmonitionType = keyof typeof ADMONITION_CONFIG;
  */
 @customElement("kbr-admonition")
 export class KbrAdmonition extends LitElement {
-  static styles = [typographyStyles, admonitionStyles];
+  static styles = [typographyStyles, admonitionStyles, reducedMotionStyles];
 
   /**
    * Type of admonition (note, tip, important, warning, caution)

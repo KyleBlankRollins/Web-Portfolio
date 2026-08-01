@@ -1,6 +1,41 @@
 import { css } from "lit";
 
 /**
+ * Reduced Motion
+ *
+ * One universal rule, adopted by every component that animates. Reduced-motion
+ * handling used to be per-component and inconsistent: post-card scoped rules
+ * to individual selectors, post-list used `* { transition: none !important }`,
+ * table-of-contents guarded a single class, tag-filter had nothing at all, and
+ * navigation inverted the query with `no-preference` - which means its
+ * animations were the only ones that stayed off by default and switched on
+ * only when a preference was expressed.
+ *
+ * This has to live inside each shadow root. A rule in styles/style.css does
+ * not cross the shadow boundary, which is why per-component blocks existed in
+ * the first place; the fix is to share one block, not to move it out.
+ *
+ * Near-zero rather than `none`: a 0.01ms animation still fires its end event,
+ * so anything sequencing on `animationend` or `transitionend` keeps working.
+ * `animation-iteration-count: 1` is what actually stops the infinite pulses
+ * (activeTagPulse, scroll-pulse, icon-loading, spin).
+ *
+ * See DF-22.
+ */
+export const reducedMotionStyles = css`
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+`;
+
+/**
  * Shared Typography Styles
  *
  * Typography system based on typography.css that can be imported

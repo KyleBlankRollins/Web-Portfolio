@@ -34,10 +34,15 @@
 }
 
 /* Blog post content area */
+/* The article carries .glass-surface, whose 1rem padding is a utility default
+   sized for small frosted panels. At article length that leaves body copy
+   almost against the container edge, so the measure is overridden here. See
+   DF-28. */
 .blog-post-content {
   grid-area: content;
   min-width: 0; /* Prevent grid overflow */
   max-width: none;
+  padding: var(--space-xl) var(--space-lg);
 }
 
 /* Blog post heading spacing (scoped to article content only) */

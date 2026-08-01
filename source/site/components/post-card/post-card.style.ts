@@ -192,14 +192,10 @@ export const postCardStyles = css`
   }
 
   /* Animation preferences */
+  /* Transitions and animations are handled by reducedMotionStyles in
+     shared-styles.ts. These rules remain because zeroing a duration does not
+     remove a transform - the lift would still happen, just instantly. */
   @media (prefers-reduced-motion: reduce) {
-    .post-card,
-    .post-title-link,
-    .post-tag,
-    .read-more-link {
-      transition: none;
-    }
-
     .post-card:hover {
       transform: none;
     }
