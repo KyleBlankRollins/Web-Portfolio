@@ -1,12 +1,20 @@
 import { css } from "lit";
 
 export const themeSwitcherStyles = css`
+  /* Anchored to the bottom-left corner, which is also what the comment in
+     templates/base.html has always claimed this control does.
+
+     It was centred on the viewport (left: 50% with a -50% translate). The
+     reading column is not viewport-centred - it sits to the right of the TOC
+     sidebar - so at 1440x1000 the collapsed pill occupied x 657-782 inside an
+     article spanning 542-1284, permanently covering a strip of body text and
+     tracking the reader down the page. A corner cannot collide with a centred
+     or offset column at any width. See DF-31. */
   :host {
     display: block;
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: var(--space-md);
     z-index: 1000;
     transition: all var(--transition-normal);
   }
@@ -216,7 +224,11 @@ export const themeSwitcherStyles = css`
 
   /* Mobile adjustments for bottom-centered layout */
   @media (max-width: 768px) {
+    /* Spans the bottom edge on mobile. There is no sidebar to sit beside at
+       this width, and a full-width bottom bar is the conventional shape. */
     :host {
+      left: 0;
+      right: 0;
       max-width: 100%;
       padding: 0 var(--space-sm);
     }

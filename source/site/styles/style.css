@@ -34,8 +34,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* The shared page wrapper. The side spacing moved from margin to padding so
+   the block can also carry a measure constraint: with `margin: … auto` the
+   side margins are what centres it, and they cannot be a fixed gutter at the
+   same time.
+
+   Most pages cap their own inner layout at --content-max-width already
+   (.blog-post-layout, .blog-layout, .timeline, .hero-content), so this is a
+   no-op for them. pages/portfolio.html had no such wrapper, and its prose ran
+   the full viewport width on wide displays. See DF-23. */
 .page-content {
-  margin: var(--space-2xl) var(--space-lg);
+  max-width: var(--content-max-width);
+  margin: var(--space-2xl) auto;
+  padding-inline: var(--space-lg);
 }
 
 /* Layout Components using CSS Grid */
@@ -367,7 +378,7 @@ body {
 @media (min-width: 1200px) {
   .portfolio-toc {
     position: fixed;
-    top: calc(80px + var(--space-lg)); /* Navigation height + spacing */
+    top: calc(var(--header-height) + var(--space-lg));
     right: var(--space-lg);
     width: 340px;
     max-width: 340px;
@@ -375,10 +386,16 @@ body {
     z-index: 100; /* Ensure it's above other content */
   }
 
-  /* Add right margin to main content when TOC is fixed */
+  /* Reserve the fixed TOC's column with one mechanism, not two.
+
+     This was `margin-right: 400px` AND `max-width: calc(100% - 500px)`. Both
+     reserve space for the same 340px sidebar, so the reservation was counted
+     twice and left roughly 100px of dead gap between the content and the TOC.
+
+     Derived from the TOC's own width now, rather than a rounded-up guess:
+     340px of sidebar, its right offset, and one more gutter between the two. */
   body:has(.portfolio-toc) main {
-    margin-right: 400px;
-    max-width: calc(100% - 500px);
+    margin-right: calc(340px + var(--space-lg) * 2);
   }
 }
 

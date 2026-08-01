@@ -26,39 +26,39 @@ Update the status column as work lands.
 
 ## Triage summary
 
-| ID    | Finding                                               | Severity | Status  |
-| ----- | ----------------------------------------------------- | -------- | ------- |
-| DF-01 | `--color-primary` role collision breaks ~35 consumers | Critical | fixed   |
-| DF-02 | Syntax highlighting fails contrast in light mode      | High     | fixed   |
-| DF-03 | `.card` padding token and container query are dead    | High     | fixed   |
-| DF-04 | Mobile TOC toggle renders on desktop                  | High     | fixed   |
-| DF-05 | Three `post-series` transitions are invalid CSS       | Medium   | fixed   |
-| DF-06 | Homepage flashes unstyled content                     | High     | fixed   |
-| DF-07 | Blog post template is missing the favicon link        | Low      | fixed   |
-| DF-08 | Career page renders no heading                        | Medium   | fixed   |
-| DF-09 | Navigation states are invisible in light mode         | High     | fixed   |
-| DF-10 | Dead rule blocks and duplicate declarations           | Low      | fixed   |
-| DF-11 | `theme-demo.html` ships broken                        | Medium   | open    |
-| DF-12 | Two competing dark-mode mechanisms                    | High     | fixed   |
-| DF-13 | No `data-theme` until JavaScript runs                 | Medium   | open    |
-| DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | partial |
-| DF-15 | Reduced-motion override produces invalid CSS          | Low      | fixed   |
-| DF-16 | Dark-mode font-weight override is never consumed      | Low      | open    |
-| DF-17 | 49 of 139 design tokens are unreferenced              | Medium   | open    |
-| DF-18 | Three competing card surface colors                   | Medium   | open    |
-| DF-19 | Radius scale is unused; ~45 hardcoded values          | Medium   | open    |
-| DF-20 | Admonition headers fail contrast in light mode        | High     | fixed   |
-| DF-21 | Spacing tokens ignored in three components            | Low      | open    |
-| DF-22 | Reduced-motion coverage is uneven                     | Medium   | open    |
-| DF-23 | Portfolio page has no measure constraint              | Medium   | open    |
-| DF-24 | `a:hover` reflows text                                | Low      | fixed   |
-| DF-25 | Lightbox modal is not full-screen                     | Medium   | open    |
-| DF-26 | Font fallback stacks are miscategorized               | Low      | open    |
-| DF-27 | Negative-margin layout hacks                          | Low      | open    |
-| DF-28 | Article glass surface has 1rem padding                | Low      | open    |
-| DF-29 | Nested sticky positioning on blog TOC                 | Low      | open    |
-| DF-30 | `var()` fallbacks contradict documented rule          | Low      | fixed   |
-| DF-31 | Theme switcher occludes article text                  | Medium   | open    |
+| ID    | Finding                                               | Severity | Status |
+| ----- | ----------------------------------------------------- | -------- | ------ |
+| DF-01 | `--color-primary` role collision breaks ~35 consumers | Critical | fixed  |
+| DF-02 | Syntax highlighting fails contrast in light mode      | High     | fixed  |
+| DF-03 | `.card` padding token and container query are dead    | High     | fixed  |
+| DF-04 | Mobile TOC toggle renders on desktop                  | High     | fixed  |
+| DF-05 | Three `post-series` transitions are invalid CSS       | Medium   | fixed  |
+| DF-06 | Homepage flashes unstyled content                     | High     | fixed  |
+| DF-07 | Blog post template is missing the favicon link        | Low      | fixed  |
+| DF-08 | Career page renders no heading                        | Medium   | fixed  |
+| DF-09 | Navigation states are invisible in light mode         | High     | fixed  |
+| DF-10 | Dead rule blocks and duplicate declarations           | Low      | fixed  |
+| DF-11 | `theme-demo.html` ships broken                        | Medium   | open   |
+| DF-12 | Two competing dark-mode mechanisms                    | High     | fixed  |
+| DF-13 | No `data-theme` until JavaScript runs                 | Medium   | fixed  |
+| DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | fixed  |
+| DF-15 | Reduced-motion override produces invalid CSS          | Low      | fixed  |
+| DF-16 | Dark-mode font-weight override is never consumed      | Low      | open   |
+| DF-17 | 49 of 139 design tokens are unreferenced              | Medium   | open   |
+| DF-18 | Three competing card surface colors                   | Medium   | open   |
+| DF-19 | Radius scale is unused; ~45 hardcoded values          | Medium   | open   |
+| DF-20 | Admonition headers fail contrast in light mode        | High     | fixed  |
+| DF-21 | Spacing tokens ignored in three components            | Low      | open   |
+| DF-22 | Reduced-motion coverage is uneven                     | Medium   | open   |
+| DF-23 | Portfolio page has no measure constraint              | Medium   | fixed  |
+| DF-24 | `a:hover` reflows text                                | Low      | fixed  |
+| DF-25 | Lightbox modal is not full-screen                     | Medium   | fixed  |
+| DF-26 | Font fallback stacks are miscategorized               | Low      | open   |
+| DF-27 | Negative-margin layout hacks                          | Low      | open   |
+| DF-28 | Article glass surface has 1rem padding                | Low      | open   |
+| DF-29 | Nested sticky positioning on blog TOC                 | Low      | open   |
+| DF-30 | `var()` fallbacks contradict documented rule          | Low      | fixed  |
+| DF-31 | Theme switcher occludes article text                  | Medium   | fixed  |
 
 DF-31 was added after the original 30, during browser verification of the
 fixes. Findings discovered by rendering rather than by reading source are
@@ -527,7 +527,7 @@ Remaining `prefers-color-scheme` uses in the codebase are in `theme-switcher.ts`
 ### DF-13 — No `data-theme` until JavaScript runs
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `styles/style.css:17` sets the page background from a gradient token:
 
@@ -541,16 +541,40 @@ Until then the page has no background and falls back to the `properties.css` def
 
 **Fix direction:** Add a small blocking inline script in `<head>` that reads `kbr-theme` and `kbr-color-scheme` from localStorage (falling back to `matchMedia`) and sets both attributes before first paint. The theme switcher can then adopt the already-applied values.
 
+#### Resolution
+
+Implemented as prescribed, in both `templates/base.html` and `templates/blog-post.html`, placed first in `<head>` — before the stylesheet link, so the attributes exist by the time the CSS is applied.
+
+The script mirrors `loadSavedTheme()` in `theme-switcher.ts` exactly: same two storage keys, same `"base"` default, same `matchMedia` fallback when no colour scheme is stored. It is wrapped in `try/catch`, because `localStorage` throws in private mode with cookies disabled; the fallback there is the same default pair the component would have used.
+
+The component still runs `applyTheme()` afterwards. That is now a no-op rather than a correction — both read the same source. **These two must be kept in sync**; the comment in `base.html` says so, since a divergence would reintroduce the repaint silently.
+
+Verified by seeding `localStorage` with `canney-valley`, reloading, and reading the document at rest: `data-theme="canney-valley"` is applied and `--gradient-primary` resolves to the theme's green immediately, with no fallback value in between. Confirmed present in the served dev HTML and in both `dist/index.html` and a built blog post, and confirmed to sit inside `<head>` ahead of the stylesheet.
+
 ### DF-14 — `canney-valley` light mode omits surface tokens
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `themes/theme-canney-valley.css:51-54` defines `--color-background`, `-secondary`, and `-tertiary`, but not `--color-surface`, `--color-surface-hover`, or `--color-surface-active`. They fall through to the `properties.css` defaults — `#ffffff`, `#f8f9fa`, `#e9ecef` — which are cool grays inside a deliberately warm palette.
 
 The dark variant at `:97-99` defines all three, so the omission is inconsistent within the theme itself.
 
 **Fix direction:** Define the three surface tokens in the light block with warm values consistent with the `#f4f5f2` background. Consider adding a build-time check that every theme defines the full token contract described in `properties.css`.
+
+#### Resolution
+
+`--color-surface`, `--color-surface-hover` and `--color-surface-active` are now defined in the light block as `#fbfcf9`, `#f4f5f2`, `#eef0ec`.
+
+The relationship was taken from the theme's own dark block rather than from `theme-base`. `theme-base` sets its surface trio equal to its background trio, but `canney-valley` dark lifts surfaces one step above the background (surface `#263238` over background `#1c2420`), so the light block now does the same: a warm near-white above the warm `#f4f5f2` background, with hover and active stepping back down through the background scale.
+
+This also repaired `--gradient-surface`, defined further down in the same block, which had been built from the inherited cool grays.
+
+Verified in-browser under `canney-valley` light: all three resolve to the warm values and `--gradient-surface` computes to `#fbfcf9 → #f4f5f2`.
+
+The status-colour half of this finding was fixed earlier, under DF-20 — see the note there on why the dark block's omissions resolved to the _light_ values rather than to the `properties.css` dark defaults.
+
+**Still open:** the build-time contract check. Two separate omissions in one theme, both invisible until something rendered, are a good argument for it. Filed as remaining work rather than done.
 
 ### DF-15 — Reduced-motion override produces invalid CSS
 
@@ -776,7 +800,7 @@ Unguarded continuous animations:
 ### DF-23 — Portfolio page has no measure constraint
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `styles/style.css:37` sets margins on `.page-content` but no `max-width`:
 
@@ -800,6 +824,18 @@ body:has(.portfolio-toc) main {
 The margin and the max-width both reserve space for the fixed TOC, so the reservation is double-counted and leaves a ~100px dead gap. `:368` also hardcodes the `80px` nav height rather than using `--header-height` (see DF-17).
 
 **Fix direction:** Give `.page-content` a `max-width` with auto side margins, and reserve TOC space with one mechanism rather than two.
+
+#### Resolution
+
+`.page-content` now carries `max-width: var(--content-max-width)` with `margin: var(--space-2xl) auto`. The side spacing moved from `margin` to `padding-inline`: with `margin: … auto` the side margins are what centres the block, so they cannot also serve as a fixed gutter.
+
+No-op for the pages that already constrained themselves — `.blog-post-layout`, `.blog-layout`, `.timeline` and the homepage all cap at the same token or below it. The portfolio page was the one with no wrapper.
+
+The double-counted TOC reservation is gone. `margin-right: 400px` **and** `max-width: calc(100% - 500px)` both reserved space for the same 340px sidebar, leaving roughly 100px of dead gap. It is now a single `margin-right: calc(340px + var(--space-lg) * 2)`, derived from the sidebar's actual width plus its offset and one gutter. The hardcoded `80px` nav height became `var(--header-height)`.
+
+Measured at a 1600px viewport: content spans 0–1188, the TOC 1224–1564, a 36px gap between them and no overlap.
+
+**Partially addressed.** The measure is now bounded, but the widest paragraph on the portfolio page is still ~1116px — long for prose. Constraining prose further is a typographic decision about this page's design rather than a defect, so it was left alone.
 
 ### DF-24 — `a:hover` reflows text
 
@@ -827,7 +863,7 @@ The fix direction above said to unify light-DOM links with the shadow-DOM treatm
 ### DF-25 — Lightbox modal is not full-screen
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `components/image-lightbox/image-lightbox.style.ts:74-93`:
 
@@ -848,6 +884,14 @@ A 90%-opaque black box covering 75% of the viewport reads as a floating rectangl
 `.modal-close` at `:129-132` is positioned against `.modal-content` rather than the modal, so it sits over the top-right of the image instead of at the overlay corner.
 
 **Fix direction:** Make `.modal` a full-viewport backdrop (`inset: 0`) and keep the `75vw`/`75vh` constraint on `.modal-content`. Reposition the close button against the backdrop.
+
+#### Resolution
+
+Done as prescribed. `.modal` is `position: fixed; inset: 0`, and `.modal-content` keeps the `75vw`/`75vh` cap it already had. `.modal-close` moved from `absolute` to `fixed`, so it anchors to the viewport instead of to `.modal-content` — which is `position: relative` and was pulling the button over the image's top-right corner.
+
+Verified by opening a lightbox on the portfolio page at 1600×1000: the backdrop measures exactly the viewport, the content sits inside it, and the close button lands 36px from the top and right edges. Dismissing now works anywhere on screen, since the handler is bound to `.modal` and `.modal` is finally the whole screen.
+
+**One thing this fix exposed.** The backdrop and the theme switcher both used `z-index: 1000` and had never met — the old 75vh box was centred and the switcher is pinned to the bottom edge. A full-viewport backdrop overlaps it, and at equal z-index the switcher won on document order, floating a page control on top of a modal. The modal is now `z-index: 2000`. Confirmed with `elementsFromPoint` at the switcher's position while the lightbox is open: the lightbox is topmost.
 
 ### DF-26 — Font fallback stacks are miscategorized
 
@@ -945,7 +989,7 @@ Re-verified with a multi-line-aware pattern (`var\(\s*--[a-z0-9-]+\s*,` with `re
 ### DF-31 — Theme switcher occludes article text
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 Found by rendering the page, not by reading source — nothing about the rule set
 looks wrong in isolation.
@@ -972,6 +1016,21 @@ fix.
 
 Worth checking the same control against the career and portfolio layouts, whose
 content columns are positioned differently again.
+
+#### Resolution
+
+Moved to the bottom-left corner: `left: var(--space-md)` with the `translateX(-50%)` removed. That is also what the comment in `templates/base.html` has always claimed this control does — "Fixed position in bottom left" — so the centring was drift from the original intent, not the intent itself.
+
+On mobile (≤768px) it still spans the bottom edge as before. There is no sidebar to sit beside at that width, and a full-width bottom bar is the conventional shape.
+
+Verified on a blog post at 1440×1000: the pill occupies x 27–151 against an article spanning 542–1284, and `elementsFromPoint` at its centre returns only the switcher over `body` — no content beneath it.
+
+**Not fully solved, and worth being explicit about.** Checking the same control against the portfolio layout, as this finding suggested, shows the residual: that page's content is full-width, so a fixed corner control still clips the bottom-left of a card. Any `position: fixed` control over a full-width layout overlaps something at some width — moving it out of the _reading column_ is what this fix buys, not the elimination of overlap.
+
+Closing it properly means choosing between two designs, which is a call for the site's owner rather than a defect to correct:
+
+1. Move the control into the site header, where it occupies layout space instead of floating.
+2. Keep it floating but have it auto-hide on scroll, or shrink to an icon and expand on hover or focus.
 
 ---
 

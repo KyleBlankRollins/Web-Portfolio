@@ -68,6 +68,20 @@
   --color-background-secondary: #eef0ec;
   --color-background-tertiary: #e8eae6;
 
+  /* These three were previously absent, so they fell through to the
+     properties.css defaults - #ffffff, #f8f9fa, #e9ecef - which are cool
+     grays sitting inside a deliberately warm palette. --gradient-surface,
+     defined further down in this same block, was built from them.
+
+     The dark block below lifts surfaces one step above the background
+     (surface #263238 over background #1c2420) rather than matching it, so
+     the light block follows the same relationship: a warm near-white above
+     the warm background, with hover and active stepping back down through
+     the background scale. */
+  --color-surface: #fbfcf9;
+  --color-surface-hover: #f4f5f2;
+  --color-surface-active: #eef0ec;
+
   /* Text Colors - Dark text for light backgrounds */
   --color-text: #263238;
   --color-text-secondary: #546e7a;

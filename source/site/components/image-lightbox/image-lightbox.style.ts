@@ -71,19 +71,27 @@ export const imageLightboxStyles = css`
     outline-offset: 2px;
   }
 
-  /* Modal styles */
+  /* Modal styles
+
+     The backdrop covers the whole viewport. It was a 75vw x 75vh centred box,
+     which read as a floating black rectangle rather than a lightbox - and
+     since the dismiss handler is bound to .modal, the outer 25% of the screen
+     was dead: clicking where a reader expects to dismiss did nothing. The size
+     constraint belongs on .modal-content, which already carries it.
+
+     z-index sits above the theme switcher's 1000. The two used to share 1000
+     and never met, because the old 75vh box was centred and the switcher is
+     pinned to the bottom edge. A full-viewport backdrop overlaps it, and at
+     equal z-index the switcher won on document order - floating a page
+     control on top of a modal overlay. */
   .modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75vw;
-    height: 75vh;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
     transition:
@@ -128,8 +136,11 @@ export const imageLightboxStyles = css`
     line-height: 1.4;
   }
 
+  /* Fixed, not absolute: .modal-content is position: relative, so an absolute
+     close button anchored there landed over the top-right corner of the image
+     instead of at the overlay's corner. */
   .modal-close {
-    position: absolute;
+    position: fixed;
     top: var(--space-lg);
     right: var(--space-lg);
     width: 44px;
