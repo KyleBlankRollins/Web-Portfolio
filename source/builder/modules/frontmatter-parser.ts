@@ -24,6 +24,8 @@ export interface FrontmatterData {
   date?: string;
   formattedDate?: string;
   tags?: string[];
+  published?: boolean;
+  publishedRawValue?: string;
   series?: SeriesInfo;
   citations?: Citation[];
   isBlogPost?: boolean;
@@ -74,6 +76,7 @@ export class FrontmatterParser {
     this.parseKeywords(frontmatter, metadata);
     this.parseDate(frontmatter, metadata);
     this.parseTags(frontmatter, metadata);
+    this.parsePublished(frontmatter, metadata);
     this.parseSeries(frontmatter, metadata);
     this.parseCitations(frontmatter, metadata);
 
@@ -198,6 +201,30 @@ export class FrontmatterParser {
 
     metadata.citations =
       this.citationProcessor.parseCitationsFromFrontmatter(frontmatter);
+  }
+
+  /**
+   * Parse published flag from frontmatter
+   * Only literal booleans (true/false) are considered valid typed values.
+   * Any other value is retained for downstream validation.
+   */
+  private parsePublished(frontmatter: string, metadata: FrontmatterData): void {
+    const publishedMatch = frontmatter.match(/^published:\s*(.+)$/m);
+    if (!publishedMatch) return;
+
+    const rawValue = publishedMatch[1].trim();
+
+    if (rawValue === "true") {
+      metadata.published = true;
+      return;
+    }
+
+    if (rawValue === "false") {
+      metadata.published = false;
+      return;
+    }
+
+    metadata.publishedRawValue = rawValue;
   }
 
   /**

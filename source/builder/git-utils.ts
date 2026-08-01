@@ -52,9 +52,7 @@ export class GitUtils {
    */
   static getChangedFiles(): string[] {
     if (!this.isGitRepository()) {
-      BuildLogger.warn(
-        "Not a git repository - cannot detect changed files"
-      );
+      BuildLogger.warn("Not a git repository - cannot detect changed files");
       return [];
     }
 
@@ -103,9 +101,7 @@ export class GitUtils {
           .forEach((file) => changedFiles.add(file.trim()));
       }
 
-      return Array.from(changedFiles).filter(
-        (file) => file.length > 0
-      );
+      return Array.from(changedFiles).filter((file) => file.length > 0);
     } catch (error) {
       BuildLogger.error(`Failed to get changed files: ${error}`);
       return [];
@@ -117,23 +113,30 @@ export class GitUtils {
    * Filters the changed files to only include .md files in the content directory
    */
   static getChangedMarkdownFiles(
-    contentDirectory: string = "source/site/content"
+    contentDirectory: string = "source/site/content/published"
+  ): string[] {
+    return this.getChangedMarkdownPaths(contentDirectory).filter((filePath) =>
+      existsSync(filePath)
+    );
+  }
+
+  /**
+   * Get markdown paths that have changed since the last commit.
+   * Includes deleted paths so incremental invalidation can rebuild related outputs.
+   */
+  static getChangedMarkdownPaths(
+    contentDirectory: string = "source/site/content/published"
   ): string[] {
     const changedFiles = this.getChangedFiles();
-    const changedMarkdownFiles: string[] = [];
+    const changedMarkdownPaths: string[] = [];
 
     for (const file of changedFiles) {
-      // Check if it's a markdown file in the content directory
       if (file.endsWith(".md") && file.startsWith(contentDirectory)) {
-        // Convert to absolute path
-        const absolutePath = join(process.cwd(), file);
-        if (existsSync(absolutePath)) {
-          changedMarkdownFiles.push(absolutePath);
-        }
+        changedMarkdownPaths.push(join(process.cwd(), file));
       }
     }
 
-    return changedMarkdownFiles;
+    return changedMarkdownPaths;
   }
 
   /**
@@ -209,13 +212,10 @@ export class GitUtils {
         stdio: "ignore",
       });
 
-      const output = execSync(
-        `git diff --name-only ${baseBranch}...HEAD`,
-        {
-          encoding: "utf8",
-          stdio: ["ignore", "pipe", "ignore"],
-        }
-      ).trim();
+      const output = execSync(`git diff --name-only ${baseBranch}...HEAD`, {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
 
       if (!output) {
         return [];
@@ -226,9 +226,7 @@ export class GitUtils {
         .map((file) => file.trim())
         .filter((file) => file.length > 0);
     } catch (error) {
-      BuildLogger.warn(
-        `Cannot compare against ${baseBranch}: ${error}`
-      );
+      BuildLogger.warn(`Cannot compare against ${baseBranch}: ${error}`);
       return [];
     }
   }
@@ -238,7 +236,7 @@ export class GitUtils {
    */
   static getChangedMarkdownFilesSince(
     baseBranch: string = "main",
-    contentDirectory: string = "source/site/content"
+    contentDirectory: string = "source/site/content/published"
   ): string[] {
     const changedFiles = this.getChangedFilesSince(baseBranch);
     const changedMarkdownFiles: string[] = [];
@@ -363,9 +361,7 @@ export class GitUtils {
     );
 
     if (status.hasUncommittedChanges) {
-      BuildLogger.info(
-        `📊 Found ${status.changedFiles.length} changed files`
-      );
+      BuildLogger.info(`📊 Found ${status.changedFiles.length} changed files`);
       if (status.changedMarkdownFiles.length > 0) {
         BuildLogger.info(
           `📝 Found ${status.changedMarkdownFiles.length} changed markdown files:`

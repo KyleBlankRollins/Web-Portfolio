@@ -31,10 +31,30 @@ export {
 // Content preprocessing
 export { ContentPreprocessor } from "./content-preprocessor.js";
 
+// Content discovery
+export {
+  ContentDiscovery,
+  type ContentDocument,
+  type ContentDocumentKind,
+  type ContentDiscoveryResult,
+  normalizePathForComparison,
+} from "./content-discovery.js";
+
+// Local document link resolver
+export {
+  createLocalDocumentLinkIndex,
+  resolveLocalDocumentLink,
+  type LocalDocumentLinkIndex,
+  type LocalDocumentLinkIndexEntry,
+  type ResolveLocalDocumentLinkInput,
+  type ResolveLocalDocumentLinkResult,
+} from "./local-document-link-resolver.js";
+
 // Blog manifest
 export {
   BlogManifestBuilder,
   type BlogPostManifestEntry,
+  type SupplementManifestEntry,
   type TagWithCount,
   type BlogManifest,
 } from "./blog-manifest.js";

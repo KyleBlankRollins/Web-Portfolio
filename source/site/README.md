@@ -93,10 +93,70 @@ source/site/
 
 ### Creating a Blog Post
 
-1. **Create a Markdown file** in `/source/site/content/`
+1. **Choose a post layout** in `/source/site/content/published/`
+   - Standalone post: `my-post.md`
+   - Directory post: `my-post/my-post.md` (required parent naming)
 2. **Add frontmatter** with metadata (required)
 3. **Write your content** in Markdown
 4. **Publish** - the post will automatically appear on the blog page
+
+### Published Content Layouts
+
+The published content root is:
+
+```text
+source/site/content/published/
+```
+
+You can publish in two supported layouts.
+
+**Standalone post**
+
+```text
+source/site/content/published/
+  my-post.md
+```
+
+Public URL:
+
+```text
+/my-post.html
+```
+
+**Directory post with supplements**
+
+```text
+source/site/content/published/
+  my-post/
+    my-post.md
+    supplements/
+      notes.md
+```
+
+Public URLs:
+
+```text
+/my-post.html
+/my-post/supplements/notes.html
+```
+
+The parent filename must match its directory name. For example, `my-post/my-post.md` is valid, while `my-post/overview.md` is rejected at build time.
+
+### Migrating a Standalone Post to a Directory Post
+
+To keep the same parent URL while adding supplements:
+
+1. Create a directory named after the post slug.
+2. Move the parent markdown file into that directory.
+3. Rename the parent file to match the directory name.
+
+Example:
+
+```text
+Before: source/site/content/published/my-post.md
+After:  source/site/content/published/my-post/my-post.md
+URL:    /my-post.html (unchanged)
+```
 
 ### Blog Post Structure
 
@@ -148,6 +208,7 @@ return "Hello, world!";
 **Optional:**
 
 - **keywords**: Additional SEO keywords
+- **published**: Required on supplement markdown files only (`true` or `false`)
 
 ### Tags
 
@@ -166,7 +227,42 @@ Tags are used for:
 
 ### Draft Posts
 
-Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them.
+Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them. When you're ready to publish, move the file to `/source/site/content/published/`.
+
+### Supplements (Optional)
+
+Supplements are additional markdown pages associated with a directory-based parent post.
+
+Structure:
+
+```text
+source/site/content/published/
+  my-post/
+    my-post.md
+    supplements/
+      notes.md
+```
+
+Supplement rules:
+
+- Each supplement file must include `published: true` or `published: false` in frontmatter.
+- `published: true` supplements are emitted at nested URLs such as `/my-post/supplements/notes.html`.
+- `published: false` supplements are excluded from generated HTML and parent links.
+- Missing or non-boolean `published` values fail the build.
+
+Local markdown links in published content:
+
+- Use relative markdown links between published documents (for example `supplements/notes.md`, `research.md#methods`, or `../my-post.md`).
+- During build, these links are resolved from the source document location and rewritten to public `.html` URLs.
+- Query strings and fragments are preserved (for example `supplements/research.md?mode=compare#methods` becomes `/my-post/supplements/research.html?mode=compare#methods`).
+- External URLs (`https://...`) and already-public URLs (`/my-post.html`) are left unchanged.
+
+Build validation for local markdown links:
+
+- Build fails if a relative markdown target does not exist under published content.
+- Build fails if a relative markdown target exists but is unpublished (for example supplement with `published: false`).
+- Build fails if a relative markdown target resolves outside `/source/site/content/published/`.
+- Error messages include the source markdown file, original target link, and resolved source location.
 
 ## Working with Templates
 
@@ -259,7 +355,7 @@ Provides tag-based filtering for blog posts.
    npm run dev
    ```
 
-2. **Create or edit content** in `/pages/` or `/content/`
+2. **Create or edit content** in `/pages/`, `/content/published/`, or `/content/__drafts/`
 
 3. **View changes** at `http://localhost:3000`
    - Changes are automatically reloaded
@@ -318,7 +414,9 @@ Provides tag-based filtering for blog posts.
 
 - Ensure frontmatter is properly formatted (YAML syntax)
 - Check date format: `YYYY-MM-DD`
-- Move out of `__drafts/` folder to publish
+- Move from `__drafts/` to `published/` to publish
+- For directory posts, verify the parent file matches the directory name (for example, `post/post.md`)
+- For supplements, verify `published` is explicitly set to `true` or `false`
 
 **Template not working:**
 
@@ -351,11 +449,13 @@ Provides tag-based filtering for blog posts.
 
 ### New Blog Post Checklist
 
-- [ ] Create `.md` file in `/content/`
+- [ ] Create standalone `.md` file or directory parent in `/content/published/`
 - [ ] Add required frontmatter (title, description, date, tags)
 - [ ] Write engaging content with proper headings
 - [ ] Add relevant tags
+- [ ] If using supplements, add them under `/content/published/<post>/supplements/`
+- [ ] Set `published: true` or `published: false` on every supplement
 - [ ] Preview in development server
-- [ ] Move out of drafts when ready to publish
+- [ ] Move from drafts to `/content/published/` when ready to publish
 
 This guide should get you started with creating and managing content for the KBR portfolio site. The system is designed to be simple and intuitive while providing powerful features for content management and SEO optimization.

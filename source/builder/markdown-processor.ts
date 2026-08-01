@@ -7,7 +7,10 @@ import {
   CitationProcessor,
   FrontmatterParser,
   BlogManifestBuilder,
+  type ContentDocument,
   type BlogPostManifestEntry,
+  type SupplementManifestEntry,
+  type LocalDocumentLinkIndex,
   escapeHtmlComment,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
@@ -17,6 +20,8 @@ export type { BlogPostManifestEntry };
 
 export interface GeneratedHtmlFile {
   filename: string;
+  sourcePath: string;
+  publicUrl: string;
   content: string;
   metadata: Partial<TemplateVariables>;
 }
@@ -30,7 +35,9 @@ export class MarkdownProcessor {
   private citationProcessor: CitationProcessor;
   private frontmatterParser: FrontmatterParser;
   private manifestBuilder: BlogManifestBuilder;
+  private localDocumentLinkIndex?: LocalDocumentLinkIndex;
   private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
+  private generatedFilesByPublicUrl: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
     this.renderer = new MarkdownRenderer();
@@ -45,12 +52,37 @@ export class MarkdownProcessor {
    * The template will be applied later by the HtmlBundleProcessor
    */
   public processMarkdownFile(filePath: string): string {
-    BuildLogger.info(`Processing Markdown file: ${filePath}`);
+    const fileName = basename(filePath).replace(/\.md$/, ".html");
+    const contentDocument: ContentDocument = {
+      sourcePath: filePath,
+      outputPath: fileName,
+      publicUrl: `/${fileName}`,
+      kind: "standalone-post",
+      metadata: {},
+    };
 
-    const markdownContent = readFileSync(filePath, "utf-8");
+    return this.processContentDocument(contentDocument);
+  }
+
+  /**
+   * Process a normalized content document and convert it to HTML content.
+   */
+  public processContentDocument(contentDocument: ContentDocument): string {
+    BuildLogger.info(
+      `Processing Markdown document: ${contentDocument.sourcePath}`
+    );
+
+    const markdownContent = readFileSync(contentDocument.sourcePath, "utf-8");
 
     // Extract frontmatter metadata and content
-    const { metadata, content } = this.frontmatterParser.parse(markdownContent);
+    const { metadata: parsedMetadata, content } =
+      this.frontmatterParser.parse(markdownContent);
+    const metadata = { ...parsedMetadata, ...contentDocument.metadata };
+
+    // Supplements are independently published pages and should use blog rendering.
+    if (contentDocument.kind === "supplement-candidate") {
+      metadata.isBlogPost = true;
+    }
 
     // Strip comments from the markdown content
     const commentFreeContent = this.preprocessor.stripComments(content);
@@ -60,7 +92,7 @@ export class MarkdownProcessor {
       this.citationProcessor.processCitationReferences(
         commentFreeContent,
         metadata.citations,
-        filePath
+        contentDocument.sourcePath
       );
 
     // Store citations HTML in metadata
@@ -74,7 +106,10 @@ export class MarkdownProcessor {
     );
 
     // Convert Markdown to HTML
-    const htmlContent = this.renderer.render(preprocessedContent);
+    const htmlContent = this.renderer.render(preprocessedContent, {
+      currentSourcePath: contentDocument.sourcePath,
+      documentLinkIndex: this.localDocumentLinkIndex,
+    });
 
     // For blog posts, inject title as H1 and add metadata
     let processedContent = htmlContent;
@@ -82,7 +117,7 @@ export class MarkdownProcessor {
       processedContent = this.injectTitleAndMetadata(htmlContent, metadata);
 
       // Add to blog post manifest
-      this.addToBlogManifest(filePath, metadata);
+      this.addToBlogManifest(contentDocument, metadata);
     }
 
     // Create HTML content with metadata comments for later processing
@@ -114,12 +149,22 @@ export class MarkdownProcessor {
       .filter(Boolean)
       .join("\n");
 
-    // Generate filename and store in memory
-    const fileName = basename(filePath).replace(/\.md$/, ".html");
+    // Use normalized output filename and store in memory
+    const fileName = contentDocument.outputPath;
 
     // Store the generated file in memory
     this.generatedFiles.set(fileName, {
       filename: fileName,
+      sourcePath: contentDocument.sourcePath,
+      publicUrl: contentDocument.publicUrl,
+      content: htmlWithMetadata,
+      metadata: metadata,
+    });
+
+    this.generatedFilesByPublicUrl.set(contentDocument.publicUrl, {
+      filename: fileName,
+      sourcePath: contentDocument.sourcePath,
+      publicUrl: contentDocument.publicUrl,
       content: htmlWithMetadata,
       metadata: metadata,
     });
@@ -127,6 +172,54 @@ export class MarkdownProcessor {
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
     return fileName;
+  }
+
+  /**
+   * Configure source-aware link index for local Markdown link resolution.
+   */
+  public setLocalDocumentLinkIndex(documentLinkIndex: LocalDocumentLinkIndex) {
+    this.localDocumentLinkIndex = documentLinkIndex;
+  }
+
+  /**
+   * Clear in-memory generated files and manifest state before rebuilding.
+   */
+  public resetBuildState(): void {
+    this.generatedFiles.clear();
+    this.generatedFilesByPublicUrl.clear();
+    this.manifestBuilder.clear();
+  }
+
+  /**
+   * Rebuild manifest entries from discovered publishable documents.
+   * This keeps manifest output complete even when HTML generation is incremental.
+   */
+  public rebuildManifestFromDocuments(
+    contentDocuments: ContentDocument[]
+  ): void {
+    this.manifestBuilder.clear();
+
+    for (const contentDocument of contentDocuments) {
+      if (contentDocument.kind === "supplement-candidate") {
+        continue;
+      }
+
+      this.addToBlogManifest(contentDocument, contentDocument.metadata);
+    }
+  }
+
+  /**
+   * Render markdown content in development fallback paths using the same resolver.
+   */
+  public renderMarkdownBody(content: string, sourcePath: string): string {
+    const commentFreeContent = this.preprocessor.stripComments(content);
+    const preprocessedContent =
+      this.preprocessor.preprocessAdmonitions(commentFreeContent);
+
+    return this.renderer.render(preprocessedContent, {
+      currentSourcePath: sourcePath,
+      documentLinkIndex: this.localDocumentLinkIndex,
+    });
   }
 
   /**
@@ -176,13 +269,14 @@ export class MarkdownProcessor {
    * Add a blog post to the manifest
    */
   private addToBlogManifest(
-    filePath: string,
+    contentDocument: ContentDocument,
     metadata: Partial<TemplateVariables>
   ): void {
     if (!metadata.isBlogPost) return;
+    if (contentDocument.kind === "supplement-candidate") return;
 
-    const filename = basename(filePath, ".md");
-    const url = `/${filename}.html`;
+    const filename = basename(contentDocument.outputPath, ".html");
+    const url = contentDocument.publicUrl;
 
     const manifestEntry: BlogPostManifestEntry = {
       title: metadata.title || "Untitled Post",
@@ -200,7 +294,37 @@ export class MarkdownProcessor {
       manifestEntry.series = metadata.series;
     }
 
+    const supplementEntries = this.getSupplementManifestEntries(metadata);
+    if (supplementEntries.length > 0) {
+      manifestEntry.supplements = supplementEntries;
+    }
+
     this.manifestBuilder.addPost(manifestEntry);
+  }
+
+  private getSupplementManifestEntries(
+    metadata: Partial<TemplateVariables>
+  ): SupplementManifestEntry[] {
+    const supplementsValue = metadata.supplements;
+    if (!Array.isArray(supplementsValue)) {
+      return [];
+    }
+
+    return supplementsValue.filter(
+      (supplement): supplement is SupplementManifestEntry => {
+        if (!supplement || typeof supplement !== "object") {
+          return false;
+        }
+
+        const candidate = supplement as Partial<SupplementManifestEntry>;
+        return (
+          typeof candidate.title === "string" &&
+          typeof candidate.description === "string" &&
+          typeof candidate.url === "string" &&
+          typeof candidate.filename === "string"
+        );
+      }
+    );
   }
 
   /**
@@ -232,10 +356,20 @@ export class MarkdownProcessor {
   }
 
   /**
+   * Get a specific generated file by public URL.
+   */
+  public getGeneratedFileByPublicUrl(
+    publicUrl: string
+  ): GeneratedHtmlFile | undefined {
+    return this.generatedFilesByPublicUrl.get(publicUrl);
+  }
+
+  /**
    * Clear all generated files from memory
    */
   public clearGeneratedFiles(): void {
     this.generatedFiles.clear();
+    this.generatedFilesByPublicUrl.clear();
   }
 
   /**

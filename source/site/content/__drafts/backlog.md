@@ -32,12 +32,11 @@ Valid section headings (must match exactly):
 - Intentional work patterns - rituals
 - Intentional work patterns - spaces
 - Intentional work patterns - traps
-- Signposting for AI Agents
 - Agent summaries and how they affect documentation retrieval
 
 ## Outlining
 
-- Structure is meaning
+- Syntax of documentation
 
 ## Writing
 
@@ -55,3 +54,5 @@ Valid section headings (must match exactly):
 - LLM as SME
 
 ## Discarded
+
+- Signposting for AI Agents

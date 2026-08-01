@@ -64,9 +64,9 @@ export class HtmlBundleProcessor {
     for (const fileName of Object.keys(bundle)) {
       if (fileName.startsWith("assets/")) {
         if (fileName.endsWith(".css")) {
-          assets.css.push(`./${fileName}`);
+          assets.css.push(`/${fileName}`);
         } else if (fileName.endsWith(".js")) {
-          assets.js.push(`./${fileName}`);
+          assets.js.push(`/${fileName}`);
         }
       }
     }
@@ -165,13 +165,14 @@ export class HtmlBundleProcessor {
 
     for (const [filename, fileData] of generatedFiles) {
       try {
-        const processedContent =
+        const processedContent = this.removeDevelopmentEntryScript(
           await HtmlProcessingUtils.processHtmlContent(
             this.templateProcessor,
             fileData.content,
             fileData.metadata.title || "Untitled",
             assets
-          );
+          )
+        );
 
         emitFile({
           type: "asset",
@@ -203,6 +204,13 @@ export class HtmlBundleProcessor {
 
     // Process and emit theme manifest
     await this.processAndEmitThemeManifest(emitFile);
+  }
+
+  private removeDevelopmentEntryScript(htmlContent: string): string {
+    return htmlContent.replace(
+      /\s*<script\s+type="module"\s+src="\/main\.ts"><\/script>/,
+      ""
+    );
   }
 
   /**

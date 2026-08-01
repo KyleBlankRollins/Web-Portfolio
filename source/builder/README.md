@@ -24,6 +24,7 @@ source/builder/
     ├── html-utils.ts           # HTML escaping and manipulation utilities
     ├── citation-processor.ts   # Citation parsing and footnote generation
     ├── frontmatter-parser.ts   # YAML frontmatter extraction and parsing
+    ├── content-discovery.ts    # Normalized content document discovery/validation
     ├── markdown-renderer.ts    # Marked.js configuration with custom renderers
     ├── content-preprocessor.ts # Content transformation before rendering
     ├── blog-manifest.ts        # Blog manifest building and validation
@@ -78,6 +79,15 @@ YAML frontmatter extraction and parsing:
 - Format dates with timezone handling
 - Parse series information for multi-part blog posts
 
+#### content-discovery.ts
+
+Normalized content-document discovery and validation:
+
+- Uses `source/site/content/published/` as the publishable content root
+- Discovers standalone posts and directory parent posts
+- Classifies supplement markdown under reserved `supplements/` directories
+- Validates structure and rejects duplicate public output URLs before emission
+
 ### Markdown Processing Modules
 
 #### markdown-renderer.ts
@@ -85,7 +95,7 @@ YAML frontmatter extraction and parsing:
 Marked.js configuration with custom renderers:
 
 - Custom heading renderer (auto-generates IDs for anchor links)
-- Custom link renderer (transforms `.md` → `.html`, XSS protection)
+- Source-aware local markdown link resolution (rewrites relative `.md` targets via discovery index)
 - Custom code renderer (Prism.js syntax highlighting)
 - Language normalization for code blocks
 
@@ -148,12 +158,13 @@ Template loading and variable substitution:
 
 **Variable Substitution**:
 
-````html
-**Template Syntax**: The system supports three types of template syntax: 1.
-**Escaped Variables**: `{{variable}}` - HTML-escaped content (safe for text) 2.
-**Unescaped Variables**: `{{{variable}}}` - Raw HTML content (for HTML
-injection) 3. **Conditional Sections**: `{{#variable}}...{{/variable}}` - Show
-content only if variable exists ```html
+Template syntax:
+
+- `{{variable}}` - HTML-escaped content
+- `{{{variable}}}` - Unescaped HTML content
+- `{{#variable}}...{{/variable}}` - Conditional block rendered only when variable exists
+
+```html
 <!-- In template files -->
 <title>{{title}}</title>
 {{#description}}
@@ -162,7 +173,7 @@ content only if variable exists ```html
 <meta name="keywords" content="{{keywords}}" />
 {{/keywords}}
 <main>{{{content}}}</main>
-````
+```
 
 ### 2. Markdown Processing
 
@@ -172,6 +183,9 @@ content only if variable exists ```html
 
 - GitHub Flavored Markdown (GFM) support
 - Frontmatter parsing for metadata (title, date, tags, description)
+- Supplement publishing for `post-directory/supplements/*.md` files using required `published` boolean frontmatter
+- Source-aware local markdown links for parent/supplement relationships with fragment/query preservation
+- Build-blocking validation for missing, unpublished, ambiguous, or traversal local markdown targets
 - Automatic heading ID generation for anchor links
 - Blog post manifest generation with tag aggregation
 - Draft post exclusion from production builds
@@ -193,8 +207,41 @@ Your markdown content starts here.
 
 **Output Locations**:
 
-- Processed HTML: `source/site/content/*.md` → `public/*.html` → `dist/`
-- Blog Manifest: `public/data/blog-manifest.json`
+- Processed HTML: `source/site/content/published/**/*.md` → in-memory generated files → emitted to `dist/`
+- Standalone output example: `published/post.md` → `/post.html`
+- Directory supplement output example: `published/post/supplements/notes.md` → `/post/supplements/notes.html`
+- Blog Manifest output: `data/blog-manifest.json` (served at `/data/blog-manifest.json`)
+
+### Discovery and URL Normalization Contract
+
+The builder performs discovery before rendering:
+
+1. Scan only `source/site/content/published/` for production candidates.
+2. Classify top-level markdown files as standalone posts.
+3. Classify `post-directory/supplements/*.md` files as supplement candidates.
+4. Require exactly one directory parent file named `directory-name.md`.
+5. Validate publication metadata for supplements (`published: true|false`).
+6. Build a normalized source-to-public URL map used by build and dev routing.
+
+Manifest and relationship behavior:
+
+- Top-level `posts` contains only parent posts.
+- Published supplements are attached under each parent post's optional `supplements` field.
+- Supplements do not affect top-level post count, tag counts, or series sequencing.
+
+Supplement behavior:
+
+- `published: true` supplements are emitted at nested URLs such as `/post/supplements/notes.html`
+- `published: false` supplements are excluded from HTML output and parent links
+- Supplements are aggregated under the parent post's optional `supplements` manifest field and are not added to top-level post counts
+
+Local markdown link behavior:
+
+- Relative markdown links (for example `supplements/notes.md` or `../post.md`) are resolved from the current source document path.
+- Rewrites are source-index driven, not global extension swaps.
+- Fragments and query strings are preserved when rewritten to public URLs.
+- External URLs and already-public URLs are not rewritten.
+- Invalid targets throw actionable build errors with source document, original target, and resolved source location.
 
 ### 3. Development Server Enhancements
 
@@ -203,9 +250,10 @@ Your markdown content starts here.
 **Key Features**:
 
 - **Route Processing**: Automatically process `.html` files through templates
+- **Public URL Resolution**: Resolve generated content by normalized public URL, including nested supplement routes
 - **Markdown Live Processing**: Real-time Markdown to HTML conversion
 - **Template Hot Reloading**: Changes to templates trigger full page reload
-- **Directory Blocking**: Prevent direct access to `/pages/` and `/content/` directories
+- **Directory Blocking**: Prevent direct access to source directories (`/pages/`, `/content/`, and `/published/`)
 - **Cache Management**: Intelligent template cache invalidation
 
 **Live Processing Workflow**:
@@ -407,14 +455,16 @@ GitAwareBuildPipeline
 
 **Conditional Processing Logic**:
 
-1. **Markdown Processing**: Only runs when `.md` files in `source/site/content/` are modified
+1. **Markdown Processing**: Only runs when `.md` files in `source/site/content/published/` are modified
 2. **HTML Processing**: Only runs when `.html` files in `source/site/pages/` or `source/site/index.html` are modified
-3. **Blog Manifest Generation**: Only runs when markdown files change or are deleted
+3. **Blog Manifest Generation**: Rebuilt from discovery so parent metadata remains complete in incremental mode
 4. **Template Cache**: Intelligently cleared when templates, includes, or pages change
+5. **Deletion Awareness**: Changed markdown path detection includes deleted files to trigger required parent/manifest updates
+6. **Stale Output Cleanup**: Incremental builds remove generated markdown HTML files that no longer exist in discovery
 
 **File Exclusions**:
 
-- **Generated Files**: Files in `/public` directory are excluded (generated by markdown processor)
+- **Generated Files**: Files in `/public` directory are excluded from change detection
 - **Draft Posts**: Files in `__drafts/` directories are excluded from production
 - **Non-Source Files**: Only source files are considered for git-aware processing
 
@@ -431,8 +481,8 @@ GitAwareBuildPipeline
 [Build] 🔧 Git repository detected (branch: main)
 [Build] 📊 Found 5 changed files
 [Build] 📝 Found 2 changed markdown files:
-[Build]   - source/site/content/blog-post.md
-[Build]   - source/site/content/another-post.md
+[Build]   - source/site/content/published/blog-post.md
+[Build]   - source/site/content/published/another-post.md
 [Build] 🌐 Found 1 changed HTML files:
 [Build]   - source/site/pages/about.html
 [Build] ⚡ Git-aware mode: processing 2 changed markdown files
@@ -475,7 +525,7 @@ export default defineConfig({
   base: "./",
   build: {
     outDir: "../../dist",
-    emptyOutDir: true,
+    emptyOutDir: process.env.GIT_AWARE !== "true",
   },
   server: {
     port: 3000,
@@ -774,7 +824,9 @@ keywords: "optional, seo, keywords"
 source/site/
 ├── pages/              # HTML pages (processed through templates)
 ├── templates/          # Template files
-├── content/           # Markdown blog posts
+├── content/
+│   ├── published/      # Publishable markdown content root
+│   └── __drafts/       # Draft-only markdown content
 ├── styles/            # CSS files
 ├── components/        # Lit components
 └── main.ts           # Application entry point
@@ -1032,4 +1084,4 @@ The modular design allows for easy extension and maintenance:
 - Easy to test individual components
 - Straightforward to add new features
 
-This architecture provides a solid foundation for a modern static site generator while
+This architecture provides a solid foundation for a modern static site generator while preserving stable public URLs during incremental migration from standalone posts to directory-based posts with supplements.

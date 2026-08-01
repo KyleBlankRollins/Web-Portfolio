@@ -1,7 +1,6 @@
 import type { ViteDevServer } from "vite";
 import * as fs from "fs";
 import * as path from "path";
-import { marked } from "marked";
 import {
   TemplateProcessor,
   type TemplateVariables,
@@ -9,6 +8,7 @@ import {
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
+import { ContentDiscovery } from "./modules/index.js";
 
 /**
  * Creates middleware that blocks direct access to source directories
@@ -18,21 +18,15 @@ function createBlockingMiddleware() {
     const url = req.url;
     if (!url) return next();
 
-    // Block direct access to pages/ and content/ directories
-    if (url.startsWith("/pages/") || url.startsWith("/content/")) {
-      res.statusCode = 404;
-      res.setHeader("Content-Type", "text/html");
-      res.end(`
-        <!DOCTYPE html>
-        <html>
-          <head><title>404 - Not Found</title></head>
-          <body>
-            <h1>404 - Not Found</h1>
-            <p>The requested resource was not found.</p>
-            <p><a href="/">Return to home</a></p>
-          </body>
-        </html>
-      `);
+    const cleanUrl = url.split("?")[0].split("#")[0];
+
+    // Block direct access to source-content paths, including nested variants.
+    if (
+      cleanUrl.startsWith("/pages/") ||
+      cleanUrl.startsWith("/content/") ||
+      cleanUrl.startsWith("/published/")
+    ) {
+      sendNotFoundHtml(res);
       return;
     }
 
@@ -54,12 +48,7 @@ function createProcessingMiddleware(
     // Handle data API requests (strip query parameters)
     const cleanUrl = url.split("?")[0].split("#")[0];
     if (cleanUrl === "/data/blog-manifest.json") {
-      return handleBlogManifestRequest(
-        req,
-        res,
-        next,
-        markdownProcessor
-      );
+      return handleBlogManifestRequest(req, res, next, markdownProcessor);
     }
 
     if (cleanUrl === "/data/theme-manifest.json") {
@@ -71,10 +60,10 @@ function createProcessingMiddleware(
       return handleIndexRequest(templateProcessor, req, res, next);
     }
 
-    // Handle HTML files at root level (matching production build structure)
+    // Handle HTML files (including nested supplement paths)
     // Extract the pathname without query parameters or hash
     const pathname = url.split("?")[0].split("#")[0];
-    if (pathname.match(/^\/[^/]+\.html$/)) {
+    if (pathname.endsWith(".html")) {
       return handleHtmlRequest(
         templateProcessor,
         markdownProcessor,
@@ -98,22 +87,16 @@ async function handleIndexRequest(
   res: any,
   next: any
 ) {
-  const indexPath = path.join(
-    process.cwd(),
-    "source",
-    "site",
-    "index.html"
-  );
+  const indexPath = path.join(process.cwd(), "source", "site", "index.html");
 
   if (fs.existsSync(indexPath)) {
     try {
       const content = fs.readFileSync(indexPath, "utf-8");
-      const processedContent =
-        await HtmlProcessingUtils.processHtmlContent(
-          templateProcessor,
-          content,
-          "Development Server"
-        );
+      const processedContent = await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        content,
+        "Development Server"
+      );
 
       // Inject development assets (consistent with other HTML handlers)
       const devContent = injectDevAssets(processedContent);
@@ -196,11 +179,13 @@ async function handleHtmlRequest(
   res: any,
   next: any
 ) {
-  const fileName = url.slice(1); // Remove leading slash
+  const requestedPublicUrl = normalizePublicUrl(url);
+  const fileName = requestedPublicUrl.slice(1);
   const rootDir = path.join(process.cwd(), "source/site");
 
-  // First, check if this is a generated HTML file from markdown processor
-  const generatedFile = markdownProcessor.getGeneratedFile(fileName);
+  // First, resolve against generated documents by normalized public URL.
+  const generatedFile =
+    markdownProcessor.getGeneratedFileByPublicUrl(requestedPublicUrl);
   if (generatedFile) {
     return await processAndServeGeneratedFile(
       templateProcessor,
@@ -221,19 +206,19 @@ async function handleHtmlRequest(
     );
   }
 
-  // Finally, check for corresponding .md file in content/ directory
-  const mdFileName = fileName.replace(".html", ".md");
-  const mdFilePath = path.join(rootDir, "content", mdFileName);
-  if (fs.existsSync(mdFilePath)) {
+  const markdownSourcePath =
+    resolvePublishedMarkdownSourcePath(requestedPublicUrl);
+  if (markdownSourcePath) {
     return await processAndServeMarkdown(
       templateProcessor,
-      mdFilePath,
+      markdownProcessor,
+      markdownSourcePath,
       res,
       next
     );
   }
 
-  next();
+  sendNotFoundHtml(res);
 }
 
 /**
@@ -246,12 +231,11 @@ async function processAndServeGeneratedFile(
   next: any
 ) {
   try {
-    const processedContent =
-      await HtmlProcessingUtils.processHtmlContent(
-        templateProcessor,
-        generatedFile.content,
-        generatedFile.metadata.title || "Generated Content"
-      );
+    const processedContent = await HtmlProcessingUtils.processHtmlContent(
+      templateProcessor,
+      generatedFile.content,
+      generatedFile.metadata.title || "Generated Content"
+    );
 
     // Inject development assets
     const devContent = injectDevAssets(processedContent);
@@ -278,11 +262,10 @@ async function processAndServeFile(
 ) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
-    const processedContent =
-      await HtmlProcessingUtils.processHtmlContent(
-        templateProcessor,
-        content
-      );
+    const processedContent = await HtmlProcessingUtils.processHtmlContent(
+      templateProcessor,
+      content
+    );
 
     // Inject development assets
     const devContent = injectDevAssets(processedContent);
@@ -301,6 +284,7 @@ async function processAndServeFile(
  */
 async function processAndServeMarkdown(
   templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor,
   mdFilePath: string,
   res: any,
   next: any
@@ -311,7 +295,10 @@ async function processAndServeMarkdown(
     // Extract frontmatter and convert markdown to HTML
     const { metadata, content } =
       templateProcessor.extractMarkdownFrontmatter(mdContent);
-    const htmlContent = marked(content);
+    const htmlContent = markdownProcessor.renderMarkdownBody(
+      content,
+      mdFilePath
+    );
 
     // Create template variables
     const templateVariables: TemplateVariables = {
@@ -334,9 +321,7 @@ async function processAndServeMarkdown(
     res.setHeader("Cache-Control", "no-cache");
     res.end(devContent);
   } catch (error) {
-    BuildLogger.error(
-      `Error processing markdown ${mdFilePath}: ${error}`
-    );
+    BuildLogger.error(`Error processing markdown ${mdFilePath}: ${error}`);
     next(error);
   }
 }
@@ -346,7 +331,8 @@ async function processAndServeMarkdown(
  */
 function setupFileWatcher(
   server: ViteDevServer,
-  templateProcessor: TemplateProcessor
+  templateProcessor: TemplateProcessor,
+  onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
   server.ws.on("file-changed", ({ file }) => {
     if (file.includes("/templates/") || file.includes("/includes/")) {
@@ -367,6 +353,39 @@ function setupFileWatcher(
       });
     }
   });
+
+  const handleMarkdownFileChange = async (filePath: string) => {
+    const normalizedPath = filePath.replace(/\\/g, "/");
+    if (!normalizedPath.endsWith(".md")) {
+      return;
+    }
+
+    if (!normalizedPath.includes("/source/site/content/published/")) {
+      return;
+    }
+
+    BuildLogger.info(`🔄 Published markdown changed: ${normalizedPath}`);
+
+    if (onPublishedMarkdownChanged) {
+      await onPublishedMarkdownChanged(filePath);
+    }
+
+    server.ws.send({
+      type: "full-reload",
+    });
+  };
+
+  server.watcher.on("add", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
+
+  server.watcher.on("change", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
+
+  server.watcher.on("unlink", (filePath) => {
+    void handleMarkdownFileChange(filePath);
+  });
 }
 
 /**
@@ -376,12 +395,9 @@ function injectDevAssets(htmlContent: string): string {
   let modifiedContent = htmlContent;
 
   // Inject development script before closing </body>
-  const devScript = `    <script type="module" src="main.ts"></script>`;
+  const devScript = `    <script type="module" src="/main.ts"></script>`;
 
-  modifiedContent = modifiedContent.replace(
-    "</body>",
-    `${devScript}\n</body>`
-  );
+  modifiedContent = modifiedContent.replace("</body>", `${devScript}\n</body>`);
 
   return modifiedContent;
 }
@@ -392,11 +408,10 @@ function injectDevAssets(htmlContent: string): string {
 export function setupDevServer(
   server: ViteDevServer,
   templateProcessor: TemplateProcessor,
-  markdownProcessor: MarkdownProcessor
+  markdownProcessor: MarkdownProcessor,
+  onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
-  BuildLogger.info(
-    "🔧 Setting up dev server middleware for KBR Builder..."
-  );
+  BuildLogger.info("🔧 Setting up dev server middleware for KBR Builder...");
 
   // Add blocking middleware first
   server.middlewares.use(createBlockingMiddleware());
@@ -407,5 +422,40 @@ export function setupDevServer(
   );
 
   // Setup file watcher
-  setupFileWatcher(server, templateProcessor);
+  setupFileWatcher(server, templateProcessor, onPublishedMarkdownChanged);
+}
+
+function normalizePublicUrl(url: string): string {
+  if (!url.startsWith("/")) {
+    return `/${url}`;
+  }
+
+  return url;
+}
+
+function resolvePublishedMarkdownSourcePath(
+  requestedPublicUrl: string
+): string | undefined {
+  const discoveryResult = new ContentDiscovery().discover();
+  const matchedDocument = discoveryResult.publishableDocuments.find(
+    (document) => document.publicUrl === requestedPublicUrl
+  );
+
+  return matchedDocument?.sourcePath;
+}
+
+function sendNotFoundHtml(res: any): void {
+  res.statusCode = 404;
+  res.setHeader("Content-Type", "text/html");
+  res.end(`
+    <!DOCTYPE html>
+    <html>
+      <head><title>404 - Not Found</title></head>
+      <body>
+        <h1>404 - Not Found</h1>
+        <p>The requested resource was not found.</p>
+        <p><a href="/">Return to home</a></p>
+      </body>
+    </html>
+  `);
 }

@@ -13,6 +13,7 @@ export class GitAwareBuildPipeline {
 
   // Cached change detection results
   private _changedMarkdownFiles?: string[];
+  private _changedMarkdownPaths?: string[];
   private _changedHtmlFiles?: string[];
   private _allChangedFiles?: string[];
 
@@ -31,9 +32,7 @@ export class GitAwareBuildPipeline {
    */
   private getAllChangedFiles(): string[] {
     if (this._allChangedFiles === undefined) {
-      this._allChangedFiles = this.isGitRepo
-        ? GitUtils.getChangedFiles()
-        : [];
+      this._allChangedFiles = this.isGitRepo ? GitUtils.getChangedFiles() : [];
     }
     return this._allChangedFiles;
   }
@@ -46,7 +45,7 @@ export class GitAwareBuildPipeline {
       return true; // Process all files in non-git-aware mode
     }
 
-    const changedMarkdown = this.getChangedMarkdownFiles();
+    const changedMarkdown = this.getChangedMarkdownPaths();
     return changedMarkdown.length > 0;
   }
 
@@ -58,11 +57,25 @@ export class GitAwareBuildPipeline {
       if (!this.gitAware || this.forceAll || !this.isGitRepo) {
         this._changedMarkdownFiles = []; // Will be handled by file discovery
       } else {
-        this._changedMarkdownFiles =
-          GitUtils.getChangedMarkdownFiles();
+        this._changedMarkdownFiles = GitUtils.getChangedMarkdownFiles();
       }
     }
     return this._changedMarkdownFiles;
+  }
+
+  /**
+   * Get changed markdown paths including deleted files.
+   */
+  getChangedMarkdownPaths(): string[] {
+    if (this._changedMarkdownPaths === undefined) {
+      if (!this.gitAware || this.forceAll || !this.isGitRepo) {
+        this._changedMarkdownPaths = [];
+      } else {
+        this._changedMarkdownPaths = GitUtils.getChangedMarkdownPaths();
+      }
+    }
+
+    return this._changedMarkdownPaths;
   }
 
   /**
@@ -75,7 +88,7 @@ export class GitAwareBuildPipeline {
 
     const changedHtml = this.getChangedHtmlFiles();
     const missingHtml = this.getMissingHtmlFiles();
-    
+
     return changedHtml.length > 0 || missingHtml.length > 0;
   }
 
@@ -101,37 +114,40 @@ export class GitAwareBuildPipeline {
     const distDir = "dist";
     const pagesDir = "source/site/pages";
     const blogManifestPath = "public/data/blog-manifest.json";
-    
+
     try {
       const fs = require("fs");
       const path = require("path");
-      
+
       // Get expected HTML files from pages directory
       const expectedFiles = new Set<string>();
-      
+
       // Add index.html (always expected)
       expectedFiles.add("index.html");
-      
+
       // Add pages from source/site/pages
       if (fs.existsSync(pagesDir)) {
-        const pageFiles = fs.readdirSync(pagesDir)
+        const pageFiles = fs
+          .readdirSync(pagesDir)
           .filter((file: string) => file.endsWith(".html"));
         pageFiles.forEach((file: string) => expectedFiles.add(file));
       }
-      
+
       // Add blog posts from manifest
       if (fs.existsSync(blogManifestPath)) {
         const manifest = JSON.parse(fs.readFileSync(blogManifestPath, "utf8"));
         manifest.posts?.forEach((post: any) => {
-          const filename = post.url?.startsWith("/") ? post.url.slice(1) : post.url;
+          const filename = post.url?.startsWith("/")
+            ? post.url.slice(1)
+            : post.url;
           if (filename) expectedFiles.add(filename);
         });
       }
-      
+
       // Check which files are missing from /dist
       const missingFiles: string[] = [];
       if (fs.existsSync(distDir)) {
-        expectedFiles.forEach(file => {
+        expectedFiles.forEach((file) => {
           const distPath = path.join(distDir, file);
           if (!fs.existsSync(distPath)) {
             missingFiles.push(file);
@@ -141,12 +157,14 @@ export class GitAwareBuildPipeline {
         // If /dist doesn't exist, all files are missing
         missingFiles.push(...Array.from(expectedFiles));
       }
-      
+
       if (missingFiles.length > 0) {
-        BuildLogger.info(`📄 Found ${missingFiles.length} missing HTML files in /dist:`);
-        missingFiles.forEach(file => BuildLogger.info(`   - ${file}`));
+        BuildLogger.info(
+          `📄 Found ${missingFiles.length} missing HTML files in /dist:`
+        );
+        missingFiles.forEach((file) => BuildLogger.info(`   - ${file}`));
       }
-      
+
       return missingFiles;
     } catch (error) {
       BuildLogger.error(`Failed to check for missing HTML files: ${error}`);
@@ -172,7 +190,9 @@ export class GitAwareBuildPipeline {
     // Check if any markdown files were deleted
     const allChangedFiles = this.getAllChangedFiles();
     const deletedMarkdown = allChangedFiles.filter(
-      (file) => file.endsWith(".md") && file.includes("content/")
+      (file) =>
+        file.endsWith(".md") &&
+        file.startsWith("source/site/content/published/")
     );
 
     return deletedMarkdown.length > 0;
@@ -200,9 +220,7 @@ export class GitAwareBuildPipeline {
    */
   logBuildStrategy(): void {
     if (!this.isGitRepo) {
-      BuildLogger.info(
-        "📝 Not a git repository: processing all files"
-      );
+      BuildLogger.info("📝 Not a git repository: processing all files");
     } else if (!this.gitAware) {
       BuildLogger.info("📝 Standard mode: processing all files");
     } else if (this.forceAll) {
@@ -214,9 +232,7 @@ export class GitAwareBuildPipeline {
       BuildLogger.info(
         `🔧 Git repository detected (branch: ${GitUtils.getCurrentBranch()})`
       );
-      BuildLogger.info(
-        `📊 Found ${changedFiles.length} changed files`
-      );
+      BuildLogger.info(`📊 Found ${changedFiles.length} changed files`);
 
       const changedMarkdown = this.getChangedMarkdownFiles();
       const changedHtml = this.getChangedHtmlFiles();
@@ -225,20 +241,14 @@ export class GitAwareBuildPipeline {
         BuildLogger.info(
           `📝 Found ${changedMarkdown.length} changed markdown files:`
         );
-        changedMarkdown.forEach((file) =>
-          BuildLogger.info(`  - ${file}`)
-        );
+        changedMarkdown.forEach((file) => BuildLogger.info(`  - ${file}`));
       } else {
         BuildLogger.info("📝 No changed markdown files detected");
       }
 
       if (changedHtml.length > 0) {
-        BuildLogger.info(
-          `🌐 Found ${changedHtml.length} changed HTML files:`
-        );
-        changedHtml.forEach((file) =>
-          BuildLogger.info(`  - ${file}`)
-        );
+        BuildLogger.info(`🌐 Found ${changedHtml.length} changed HTML files:`);
+        changedHtml.forEach((file) => BuildLogger.info(`  - ${file}`));
       } else {
         BuildLogger.info("🌐 No changed HTML files detected");
       }
@@ -264,5 +274,12 @@ export class GitAwareBuildPipeline {
       changedMarkdownCount: this.getChangedMarkdownFiles().length,
       changedHtmlCount: this.getChangedHtmlFiles().length,
     };
+  }
+
+  /**
+   * Whether incremental behavior is active and git metadata is available.
+   */
+  isIncrementalMode(): boolean {
+    return this.gitAware && !this.forceAll && this.isGitRepo;
   }
 }

@@ -27,7 +27,9 @@
 .blog-toc-sticky-container {
   position: sticky;
   top: var(--space-lg); /* Space from top of viewport when sticky */
-  max-height: calc(100vh - var(--space-xl)); /* Prevent container from being taller than viewport */
+  max-height: calc(
+    100vh - var(--space-xl)
+  ); /* Prevent container from being taller than viewport */
   overflow-y: auto; /* Allow scrolling if content is too tall */
 }
 
@@ -72,7 +74,10 @@
 }
 
 .blog-post-content code:hover {
-  background: var(--color-background-tertiary, var(--color-background-secondary));
+  background: var(
+    --color-background-tertiary,
+    var(--color-background-secondary)
+  );
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
@@ -86,23 +91,23 @@
   margin: var(--space-lg) 0;
   overflow-x: auto;
   position: relative;
-  
+
   /* Enhanced shadow for elevation */
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.08),
     0 1px 4px rgba(0, 0, 0, 0.04);
-  
+
   /* Improved typography */
   line-height: 1.6;
   font-size: 0.9rem;
-  
+
   /* Smooth transitions */
   transition: all 0.3s ease;
 }
 
 .blog-post-content pre:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -148,21 +153,21 @@
 /* Enhanced theme-aware styling for better contrast */
 @media (prefers-color-scheme: dark) {
   .blog-post-content pre {
-    box-shadow: 
+    box-shadow:
       0 2px 8px rgba(0, 0, 0, 0.3),
       0 1px 4px rgba(0, 0, 0, 0.2);
   }
-  
+
   .blog-post-content pre:hover {
-    box-shadow: 
+    box-shadow:
       0 4px 16px rgba(0, 0, 0, 0.4),
       0 2px 8px rgba(0, 0, 0, 0.25);
   }
-  
+
   .blog-post-content code {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
-  
+
   .blog-post-content code:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
@@ -181,7 +186,7 @@
     border-radius: 6px;
     font-size: 0.85rem;
   }
-  
+
   .blog-post-content pre:hover {
     transform: none; /* Reduce motion on mobile */
   }
@@ -237,17 +242,17 @@
 @media (max-width: 1024px) {
   .blog-post-layout {
     grid-template-columns: 1fr;
-    grid-template-areas: 
+    grid-template-areas:
       "sidebar"
       "content";
     gap: var(--space-lg);
     padding: var(--space-md);
   }
-  
+
   .blog-toc-sidebar {
     order: 1;
   }
-  
+
   .blog-post-content {
     order: 2;
   }
@@ -264,7 +269,7 @@
   .blog-post-layout {
     padding: var(--space-xs);
   }
-  
+
   .blog-post-content {
     padding: var(--space-sm);
   }
@@ -348,7 +353,7 @@
 /* Separator between links */
 .citation-separator {
   margin: 0 var(--space-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-tertiary);
 }
 
 /* Back-to-reference links */
@@ -358,7 +363,7 @@
 }
 
 .citation-backref {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   text-decoration: none;
   margin-left: var(--space-2xs);
   transition: color var(--transition-fast);
@@ -373,13 +378,13 @@
   .citations-list {
     padding-left: var(--space-lg);
   }
-  
+
   .citation-links {
     display: block;
     margin-left: 0;
     margin-top: var(--space-2xs);
   }
-  
+
   .citation-backrefs {
     display: block;
     margin-left: 0;

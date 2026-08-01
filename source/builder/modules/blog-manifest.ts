@@ -6,6 +6,13 @@
 import { BuildLogger } from "../helpers.js";
 import type { SeriesInfo } from "./frontmatter-parser.js";
 
+export interface SupplementManifestEntry {
+  title: string;
+  description: string;
+  url: string;
+  filename: string;
+}
+
 /**
  * Blog post manifest entry
  */
@@ -19,6 +26,7 @@ export interface BlogPostManifestEntry {
   filename: string;
   keywords?: string;
   series?: SeriesInfo;
+  supplements?: SupplementManifestEntry[];
 }
 
 /**

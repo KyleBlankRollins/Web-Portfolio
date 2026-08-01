@@ -4,6 +4,7 @@ import {
   FrontmatterParser,
   type SeriesInfo,
   type Citation,
+  type SupplementManifestEntry,
 } from "./modules/index.js";
 
 // Re-export types for backward compatibility
@@ -27,6 +28,7 @@ export interface TemplateVariables {
   series?: SeriesInfo; // Optional series information
   citations?: Citation[]; // Optional citations array
   citationsHtml?: string; // Rendered citations HTML for footnotes section
+  supplements?: SupplementManifestEntry[]; // Optional published supplements for parent posts
   [key: string]:
     | string
     | number
@@ -34,6 +36,7 @@ export interface TemplateVariables {
     | string[]
     | SeriesInfo
     | Citation[]
+    | SupplementManifestEntry[]
     | undefined; // Allow additional custom fields with constrained types
 }
 
