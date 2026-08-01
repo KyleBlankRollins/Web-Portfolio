@@ -53,6 +53,55 @@ body {
   max-width: var(--content-max-width);
   margin: var(--space-2xl) auto;
   padding-inline: var(--space-lg);
+  /* Grow to absorb the leftover height in body's flex column, so the footer
+     sits at the bottom of short pages instead of floating mid-viewport.
+     flex-basis stays auto so content still sizes it. */
+  flex: 1 0 auto;
+}
+
+/* ==========================================================================
+   SITE FOOTER
+   Markup lives in templates/partials/footer.html and is shared by every page
+   type. Transparent like .site-header, so the page gradient runs behind it.
+   ========================================================================== */
+
+.site-footer {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.site-footer-nav ul {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer-nav a {
+  color: var(--color-text);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  padding: var(--space-xs) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.site-footer-nav a:hover {
+  background-color: var(--color-on-surface);
+  color: var(--color-text-inverse);
+}
+
+.site-footer-nav a:focus-visible {
+  outline: var(--focus-ring-width) var(--focus-ring-style)
+    var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* Standfirst paragraph under a page's h1. Both pages/portfolio.html and

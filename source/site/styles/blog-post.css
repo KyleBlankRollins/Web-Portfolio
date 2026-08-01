@@ -14,7 +14,13 @@
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-lg);
-  min-height: calc(100vh - var(--header-height));
+  /* Fill the leftover height in body's flex column rather than computing it.
+     This was `min-height: calc(100vh - var(--header-height))`, which assumed
+     the header was the only other thing in the column - so once a footer was
+     added the page always exceeded the viewport by the footer's height.
+     flex-grow gets the same result without needing to know what else is
+     there, or whether --header-height still matches the real header. */
+  flex: 1 0 auto;
 }
 
 /* Table of contents sidebar */
