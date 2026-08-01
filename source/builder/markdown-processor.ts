@@ -7,6 +7,7 @@ import {
   CitationProcessor,
   FrontmatterParser,
   BlogManifestBuilder,
+  type ContentDocument,
   type BlogPostManifestEntry,
   escapeHtmlComment,
 } from "./modules/index.js";
@@ -17,6 +18,8 @@ export type { BlogPostManifestEntry };
 
 export interface GeneratedHtmlFile {
   filename: string;
+  sourcePath: string;
+  publicUrl: string;
   content: string;
   metadata: Partial<TemplateVariables>;
 }
@@ -45,12 +48,32 @@ export class MarkdownProcessor {
    * The template will be applied later by the HtmlBundleProcessor
    */
   public processMarkdownFile(filePath: string): string {
-    BuildLogger.info(`Processing Markdown file: ${filePath}`);
+    const fileName = basename(filePath).replace(/\.md$/, ".html");
+    const contentDocument: ContentDocument = {
+      sourcePath: filePath,
+      outputPath: fileName,
+      publicUrl: `/${fileName}`,
+      kind: "standalone-post",
+      metadata: {},
+    };
 
-    const markdownContent = readFileSync(filePath, "utf-8");
+    return this.processContentDocument(contentDocument);
+  }
+
+  /**
+   * Process a normalized content document and convert it to HTML content.
+   */
+  public processContentDocument(contentDocument: ContentDocument): string {
+    BuildLogger.info(
+      `Processing Markdown document: ${contentDocument.sourcePath}`
+    );
+
+    const markdownContent = readFileSync(contentDocument.sourcePath, "utf-8");
 
     // Extract frontmatter metadata and content
-    const { metadata, content } = this.frontmatterParser.parse(markdownContent);
+    const { metadata: parsedMetadata, content } =
+      this.frontmatterParser.parse(markdownContent);
+    const metadata = { ...parsedMetadata, ...contentDocument.metadata };
 
     // Strip comments from the markdown content
     const commentFreeContent = this.preprocessor.stripComments(content);
@@ -60,7 +83,7 @@ export class MarkdownProcessor {
       this.citationProcessor.processCitationReferences(
         commentFreeContent,
         metadata.citations,
-        filePath
+        contentDocument.sourcePath
       );
 
     // Store citations HTML in metadata
@@ -82,7 +105,7 @@ export class MarkdownProcessor {
       processedContent = this.injectTitleAndMetadata(htmlContent, metadata);
 
       // Add to blog post manifest
-      this.addToBlogManifest(filePath, metadata);
+      this.addToBlogManifest(contentDocument, metadata);
     }
 
     // Create HTML content with metadata comments for later processing
@@ -114,12 +137,14 @@ export class MarkdownProcessor {
       .filter(Boolean)
       .join("\n");
 
-    // Generate filename and store in memory
-    const fileName = basename(filePath).replace(/\.md$/, ".html");
+    // Use normalized output filename and store in memory
+    const fileName = contentDocument.outputPath;
 
     // Store the generated file in memory
     this.generatedFiles.set(fileName, {
       filename: fileName,
+      sourcePath: contentDocument.sourcePath,
+      publicUrl: contentDocument.publicUrl,
       content: htmlWithMetadata,
       metadata: metadata,
     });
@@ -176,13 +201,13 @@ export class MarkdownProcessor {
    * Add a blog post to the manifest
    */
   private addToBlogManifest(
-    filePath: string,
+    contentDocument: ContentDocument,
     metadata: Partial<TemplateVariables>
   ): void {
     if (!metadata.isBlogPost) return;
 
-    const filename = basename(filePath, ".md");
-    const url = `/${filename}.html`;
+    const filename = basename(contentDocument.outputPath, ".html");
+    const url = contentDocument.publicUrl;
 
     const manifestEntry: BlogPostManifestEntry = {
       title: metadata.title || "Untitled Post",

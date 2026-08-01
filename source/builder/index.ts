@@ -1,9 +1,12 @@
 import type { Plugin, ViteDevServer } from "vite";
-import { join } from "path";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { TemplateProcessor } from "./template-processor.js";
-import { FileSystemHelper, BuildLogger } from "./helpers.js";
+import { BuildLogger } from "./helpers.js";
 import { GitAwareBuildPipeline } from "./git-aware-pipeline.js";
+import {
+  ContentDiscovery,
+  normalizePathForComparison,
+} from "./modules/index.js";
 
 // Import our modular components
 import { setupDevServer } from "./dev-server-middleware.js";
@@ -39,36 +42,51 @@ async function processMarkdownFiles(
       return;
     }
 
-    const contentDirectory = join("source", "site", "content");
-    let markdownFiles: string[] = [];
+    const contentDiscovery = new ContentDiscovery();
+    const discoveryResult = contentDiscovery.discover();
+    let publishableDocuments = discoveryResult.publishableDocuments;
+
+    BuildLogger.info(
+      `🧭 Discovered ${publishableDocuments.length} publishable content documents`
+    );
+
+    if (discoveryResult.supplementCandidates.length > 0) {
+      BuildLogger.info(
+        `ℹ️ Found ${discoveryResult.supplementCandidates.length} supplement candidates (not emitted in phase 1)`
+      );
+    }
 
     // Get changed files if in git-aware mode, otherwise process all
     const changedMarkdownFiles = pipeline.getChangedMarkdownFiles();
     if (changedMarkdownFiles.length > 0) {
-      markdownFiles = changedMarkdownFiles;
-      BuildLogger.info(
-        `⚡ Git-aware mode: processing ${markdownFiles.length} changed files`
+      const normalizedChangedFiles = new Set(
+        changedMarkdownFiles.map((filePath) =>
+          normalizePathForComparison(filePath)
+        )
       );
-    } else {
-      // Process all markdown files (non-git-aware mode)
-      markdownFiles = FileSystemHelper.findFiles(
-        contentDirectory,
-        [".md"],
-        ["__drafts"] // Exclude drafts directory from production build
+
+      publishableDocuments = publishableDocuments.filter((document) =>
+        normalizedChangedFiles.has(
+          normalizePathForComparison(document.sourcePath)
+        )
+      );
+
+      BuildLogger.info(
+        `⚡ Git-aware mode: processing ${publishableDocuments.length} changed published documents`
       );
     }
 
-    if (markdownFiles.length === 0) {
+    if (publishableDocuments.length === 0) {
       BuildLogger.info("No Markdown files found");
       return;
     }
 
     BuildLogger.info(
-      `📝 Processing Markdown files: ${markdownFiles.length}`
+      `📝 Processing Markdown files: ${publishableDocuments.length}`
     );
 
-    for (const markdownFile of markdownFiles) {
-      markdownProcessor.processMarkdownFile(markdownFile);
+    for (const document of publishableDocuments) {
+      markdownProcessor.processContentDocument(document);
     }
   } catch (error) {
     BuildLogger.error(`Failed to process Markdown files: ${error}`);
@@ -131,10 +149,7 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
         return [];
       }
 
-      if (
-        file.includes("/templates/") ||
-        file.includes("/includes/")
-      ) {
+      if (file.includes("/templates/") || file.includes("/includes/")) {
         BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
         templateProcessor.clearCache();
 

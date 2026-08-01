@@ -54,12 +54,7 @@ function createProcessingMiddleware(
     // Handle data API requests (strip query parameters)
     const cleanUrl = url.split("?")[0].split("#")[0];
     if (cleanUrl === "/data/blog-manifest.json") {
-      return handleBlogManifestRequest(
-        req,
-        res,
-        next,
-        markdownProcessor
-      );
+      return handleBlogManifestRequest(req, res, next, markdownProcessor);
     }
 
     if (cleanUrl === "/data/theme-manifest.json") {
@@ -98,22 +93,16 @@ async function handleIndexRequest(
   res: any,
   next: any
 ) {
-  const indexPath = path.join(
-    process.cwd(),
-    "source",
-    "site",
-    "index.html"
-  );
+  const indexPath = path.join(process.cwd(), "source", "site", "index.html");
 
   if (fs.existsSync(indexPath)) {
     try {
       const content = fs.readFileSync(indexPath, "utf-8");
-      const processedContent =
-        await HtmlProcessingUtils.processHtmlContent(
-          templateProcessor,
-          content,
-          "Development Server"
-        );
+      const processedContent = await HtmlProcessingUtils.processHtmlContent(
+        templateProcessor,
+        content,
+        "Development Server"
+      );
 
       // Inject development assets (consistent with other HTML handlers)
       const devContent = injectDevAssets(processedContent);
@@ -221,13 +210,27 @@ async function handleHtmlRequest(
     );
   }
 
-  // Finally, check for corresponding .md file in content/ directory
+  // Finally, check for corresponding .md file in content/published/.
+  // Support both standalone posts and directory parent-post convention.
   const mdFileName = fileName.replace(".html", ".md");
-  const mdFilePath = path.join(rootDir, "content", mdFileName);
-  if (fs.existsSync(mdFilePath)) {
+  const slug = fileName.replace(/\.html$/, "");
+  const publishedRoot = path.join(rootDir, "content", "published");
+  const standaloneMdPath = path.join(publishedRoot, mdFileName);
+  const directoryMdPath = path.join(publishedRoot, slug, mdFileName);
+
+  if (fs.existsSync(standaloneMdPath)) {
     return await processAndServeMarkdown(
       templateProcessor,
-      mdFilePath,
+      standaloneMdPath,
+      res,
+      next
+    );
+  }
+
+  if (fs.existsSync(directoryMdPath)) {
+    return await processAndServeMarkdown(
+      templateProcessor,
+      directoryMdPath,
       res,
       next
     );
@@ -246,12 +249,11 @@ async function processAndServeGeneratedFile(
   next: any
 ) {
   try {
-    const processedContent =
-      await HtmlProcessingUtils.processHtmlContent(
-        templateProcessor,
-        generatedFile.content,
-        generatedFile.metadata.title || "Generated Content"
-      );
+    const processedContent = await HtmlProcessingUtils.processHtmlContent(
+      templateProcessor,
+      generatedFile.content,
+      generatedFile.metadata.title || "Generated Content"
+    );
 
     // Inject development assets
     const devContent = injectDevAssets(processedContent);
@@ -278,11 +280,10 @@ async function processAndServeFile(
 ) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
-    const processedContent =
-      await HtmlProcessingUtils.processHtmlContent(
-        templateProcessor,
-        content
-      );
+    const processedContent = await HtmlProcessingUtils.processHtmlContent(
+      templateProcessor,
+      content
+    );
 
     // Inject development assets
     const devContent = injectDevAssets(processedContent);
@@ -334,9 +335,7 @@ async function processAndServeMarkdown(
     res.setHeader("Cache-Control", "no-cache");
     res.end(devContent);
   } catch (error) {
-    BuildLogger.error(
-      `Error processing markdown ${mdFilePath}: ${error}`
-    );
+    BuildLogger.error(`Error processing markdown ${mdFilePath}: ${error}`);
     next(error);
   }
 }
@@ -378,10 +377,7 @@ function injectDevAssets(htmlContent: string): string {
   // Inject development script before closing </body>
   const devScript = `    <script type="module" src="main.ts"></script>`;
 
-  modifiedContent = modifiedContent.replace(
-    "</body>",
-    `${devScript}\n</body>`
-  );
+  modifiedContent = modifiedContent.replace("</body>", `${devScript}\n</body>`);
 
   return modifiedContent;
 }
@@ -394,9 +390,7 @@ export function setupDevServer(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor
 ) {
-  BuildLogger.info(
-    "🔧 Setting up dev server middleware for KBR Builder..."
-  );
+  BuildLogger.info("🔧 Setting up dev server middleware for KBR Builder...");
 
   // Add blocking middleware first
   server.middlewares.use(createBlockingMiddleware());

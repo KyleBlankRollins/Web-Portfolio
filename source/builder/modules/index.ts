@@ -31,6 +31,15 @@ export {
 // Content preprocessing
 export { ContentPreprocessor } from "./content-preprocessor.js";
 
+// Content discovery
+export {
+  ContentDiscovery,
+  type ContentDocument,
+  type ContentDocumentKind,
+  type ContentDiscoveryResult,
+  normalizePathForComparison,
+} from "./content-discovery.js";
+
 // Blog manifest
 export {
   BlogManifestBuilder,

@@ -93,7 +93,7 @@ source/site/
 
 ### Creating a Blog Post
 
-1. **Create a Markdown file** in `/source/site/content/`
+1. **Create a Markdown file** in `/source/site/content/published/`
 2. **Add frontmatter** with metadata (required)
 3. **Write your content** in Markdown
 4. **Publish** - the post will automatically appear on the blog page
@@ -166,7 +166,7 @@ Tags are used for:
 
 ### Draft Posts
 
-Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them.
+Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them. When you're ready to publish, move the file to `/source/site/content/published/`.
 
 ## Working with Templates
 
@@ -259,7 +259,7 @@ Provides tag-based filtering for blog posts.
    npm run dev
    ```
 
-2. **Create or edit content** in `/pages/` or `/content/`
+2. **Create or edit content** in `/pages/`, `/content/published/`, or `/content/__drafts/`
 
 3. **View changes** at `http://localhost:3000`
    - Changes are automatically reloaded
@@ -318,7 +318,7 @@ Provides tag-based filtering for blog posts.
 
 - Ensure frontmatter is properly formatted (YAML syntax)
 - Check date format: `YYYY-MM-DD`
-- Move out of `__drafts/` folder to publish
+- Move from `__drafts/` to `published/` to publish
 
 **Template not working:**
 
@@ -351,11 +351,11 @@ Provides tag-based filtering for blog posts.
 
 ### New Blog Post Checklist
 
-- [ ] Create `.md` file in `/content/`
+- [ ] Create `.md` file in `/content/published/`
 - [ ] Add required frontmatter (title, description, date, tags)
 - [ ] Write engaging content with proper headings
 - [ ] Add relevant tags
 - [ ] Preview in development server
-- [ ] Move out of drafts when ready to publish
+- [ ] Move from drafts to `/content/published/` when ready to publish
 
 This guide should get you started with creating and managing content for the KBR portfolio site. The system is designed to be simple and intuitive while providing powerful features for content management and SEO optimization.

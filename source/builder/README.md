@@ -24,6 +24,7 @@ source/builder/
     ├── html-utils.ts           # HTML escaping and manipulation utilities
     ├── citation-processor.ts   # Citation parsing and footnote generation
     ├── frontmatter-parser.ts   # YAML frontmatter extraction and parsing
+    ├── content-discovery.ts    # Normalized content document discovery/validation
     ├── markdown-renderer.ts    # Marked.js configuration with custom renderers
     ├── content-preprocessor.ts # Content transformation before rendering
     ├── blog-manifest.ts        # Blog manifest building and validation
@@ -77,6 +78,15 @@ YAML frontmatter extraction and parsing:
 - Parse metadata fields (title, description, date, tags, series)
 - Format dates with timezone handling
 - Parse series information for multi-part blog posts
+
+#### content-discovery.ts
+
+Normalized content-document discovery and validation:
+
+- Uses `source/site/content/published/` as the publishable content root
+- Discovers standalone posts and directory parent posts
+- Classifies supplement markdown under reserved `supplements/` directories
+- Validates structure and rejects duplicate public output URLs before emission
 
 ### Markdown Processing Modules
 
@@ -193,7 +203,7 @@ Your markdown content starts here.
 
 **Output Locations**:
 
-- Processed HTML: `source/site/content/*.md` → `public/*.html` → `dist/`
+- Processed HTML: `source/site/content/published/**/*.md` → `public/*.html` → `dist/`
 - Blog Manifest: `public/data/blog-manifest.json`
 
 ### 3. Development Server Enhancements
@@ -407,7 +417,7 @@ GitAwareBuildPipeline
 
 **Conditional Processing Logic**:
 
-1. **Markdown Processing**: Only runs when `.md` files in `source/site/content/` are modified
+1. **Markdown Processing**: Only runs when `.md` files in `source/site/content/published/` are modified
 2. **HTML Processing**: Only runs when `.html` files in `source/site/pages/` or `source/site/index.html` are modified
 3. **Blog Manifest Generation**: Only runs when markdown files change or are deleted
 4. **Template Cache**: Intelligently cleared when templates, includes, or pages change
@@ -431,8 +441,8 @@ GitAwareBuildPipeline
 [Build] 🔧 Git repository detected (branch: main)
 [Build] 📊 Found 5 changed files
 [Build] 📝 Found 2 changed markdown files:
-[Build]   - source/site/content/blog-post.md
-[Build]   - source/site/content/another-post.md
+[Build]   - source/site/content/published/blog-post.md
+[Build]   - source/site/content/published/another-post.md
 [Build] 🌐 Found 1 changed HTML files:
 [Build]   - source/site/pages/about.html
 [Build] ⚡ Git-aware mode: processing 2 changed markdown files

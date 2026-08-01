@@ -21,7 +21,7 @@ This project uses [Vale](https://vale.sh/) for linting prose in Markdown blog po
 
 Vale only runs on Markdown files in:
 
-- `source/site/content/*.md`
+- `source/site/content/published/**/*.md`
 - `source/site/content/__drafts/*.md`
 
 ### Configuration
