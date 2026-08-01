@@ -252,7 +252,7 @@ export const tagFilterStyles = css`
 
     .tag-button {
       background: var(--color-background);
-      border-color: var(--color-border-dark);
+      border-color: var(--color-border-strong);
       color: var(--color-text);
     }
 
@@ -267,7 +267,7 @@ export const tagFilterStyles = css`
     }
 
     .expand-tags-btn {
-      border-color: var(--color-border-dark);
+      border-color: var(--color-border-strong);
       color: var(--color-text);
     }
 

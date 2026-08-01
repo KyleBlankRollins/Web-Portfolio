@@ -163,7 +163,7 @@ import { css } from "lit";
 
 export const typographyStyles = css`
   :host {
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
   }
@@ -398,7 +398,7 @@ static styles = css`
   :host {
     color: var(--color-primary);
     background: var(--color-background);
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
     padding: var(--space-md);
   }
 `;
@@ -424,7 +424,7 @@ static styles = css`
   }
 
   p {
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
   }
 `;
 ```
@@ -541,7 +541,7 @@ For comprehensive theming documentation, see: **[Theme System README](./themes/R
   color: var(--color-primary);
   background: var(--color-background);
   padding: var(--space-md);
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-primary);
 }
 ```
 
@@ -553,7 +553,7 @@ For comprehensive theming documentation, see: **[Theme System README](./themes/R
   color: var(--color-primary, #2d2d2d);
   background: var(--color-background, #ffffff);
   padding: var(--space-md, 1.5rem);
-  font-family: var(--font-family-base, sans-serif);
+  font-family: var(--font-family-primary, sans-serif);
 }
 ```
 
@@ -563,7 +563,7 @@ For comprehensive theming documentation, see: **[Theme System README](./themes/R
 /* ✅ Acceptable - Feature detection */
 .element {
   background: var(--color-background);
-  backdrop-filter: var(--backdrop-blur, none); /* Experimental feature */
+  backdrop-filter: var(--glass-blur, none); /* Experimental feature */
 }
 ```
 
@@ -620,7 +620,7 @@ export const myComponentStyles = css`
   .component-element {
     color: var(--color-text);
     background: var(--color-background);
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
   }
 
   /* Scope all styles to avoid conflicts */
@@ -638,7 +638,7 @@ export const myComponentStyles = css`
   /* All component-specific styles organized here */
   .content-section {
     padding: var(--space-lg);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius);
   }
 `;
 ```
@@ -686,8 +686,8 @@ static styles = css`
   }
 
   p, span, div {
-    font-family: var(--font-family-base);
-    line-height: var(--line-height-base, 1.5);
+    font-family: var(--font-family-primary);
+    line-height: var(--line-height-normal, 1.5);
   }
 
   /* Use consistent typography scale */
@@ -717,7 +717,7 @@ static styles = [
     /* Use semantic tokens consistently */
     .error {
       color: var(--color-error);
-      background: var(--color-error-background);
+      background: var(--color-error-subtle);
     }
 
     /* Leverage shared typography classes */
@@ -739,7 +739,7 @@ static styles = [
 ```typescript
 static styles = css`
   .loading {
-    color: var(--color-text-muted, #718096);
+    color: var(--color-text-secondary, #718096);
     text-align: center;
     font-style: italic;
     animation: pulse 2s ease-in-out infinite alternate;
@@ -758,10 +758,10 @@ static styles = css`
 static styles = css`
   .error {
     color: var(--color-error, #e53e3e);
-    background: var(--color-error-background, #fed7d7);
-    border: 1px solid var(--color-error-border, #feb2b2);
+    background: var(--color-error-subtle, #fed7d7);
+    border: 1px solid var(--color-error, #feb2b2);
     padding: var(--space-md);
-    border-radius: var(--border-radius, 4px);
+    border-radius: var(--radius, 4px);
     text-align: center;
     font-weight: 500;
   }
@@ -801,13 +801,13 @@ static styles = css`
     color: var(--color-background);
     border: none;
     padding: var(--space-sm) var(--space-md);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius);
     cursor: pointer;
     transition: var(--transition-normal, 0.2s ease);
   }
 
   .button:hover {
-    background: var(--color-primary-dark);
+    background: var(--color-primary-hover);
     transform: translateY(-1px);
   }
 
@@ -904,7 +904,7 @@ import { componentStyles } from "./component-styles.js"; // Same directory as co
 /* Component */
 static styles = css`
   :host {
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
   }
 `;
 ```

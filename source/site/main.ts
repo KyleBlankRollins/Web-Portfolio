@@ -6,6 +6,7 @@ import "./components/navigation/navigation";
 import "./components/post-list/post-list";
 import "./components/post-card/post-card";
 import "./components/post-series/post-series";
+import "./components/supplement-list/supplement-list";
 import "./components/table-of-contents/table-of-contents";
 import "./components/anchor-copy";
 import "./components/tag-filter/tag-filter";

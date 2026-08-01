@@ -180,7 +180,7 @@ export const tableOfContentsStyles = css`
   .toc-link.active {
     background: var(--color-primary);
     font-weight: 500;
-    border-left-color: var(--color-primary-dark);
+    border-left-color: var(--color-primary-active);
   }
 
   /* Level-specific styling with progressive indentation */

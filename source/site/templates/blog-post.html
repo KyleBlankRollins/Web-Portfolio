@@ -32,8 +32,9 @@
       </aside>
 
       <article class="blog-post-content glass-surface">
-        {{{content}}} {{#supplementsHtml}} {{{supplementsHtml}}}
-        {{/supplementsHtml}} {{#citationsHtml}}
+        {{{content}}}
+        <kbr-supplement-list></kbr-supplement-list>
+        {{#citationsHtml}}
         <div class="blog-citations-container">{{{citationsHtml}}}</div>
         {{/citationsHtml}}
 

@@ -29,7 +29,6 @@ export interface TemplateVariables {
   citations?: Citation[]; // Optional citations array
   citationsHtml?: string; // Rendered citations HTML for footnotes section
   supplements?: SupplementManifestEntry[]; // Optional published supplements for parent posts
-  supplementsHtml?: string; // Rendered supplements section HTML
   [key: string]:
     | string
     | number

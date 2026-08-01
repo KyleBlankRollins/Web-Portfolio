@@ -98,7 +98,7 @@ Here's a larger code example to test monospace typography:
 .code-block {
   font-family: "IBM Plex Mono", "Cascadia Code", Monaco, monospace;
   font-weight: 400;
-  background: var(--color-surface-secondary);
+  background: var(--color-background-secondary);
   padding: 1rem;
   border-radius: 0.5rem;
 }

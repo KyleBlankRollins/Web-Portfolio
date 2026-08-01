@@ -117,7 +117,7 @@ export const postSeriesStyles = css`
 
   .nav-button:hover:not(:disabled) {
     background-color: var(--color-surface-hover);
-    border-color: var(--color-border-hover);
+    border-color: var(--color-border-strong);
   }
 
   .nav-button:hover:not(:disabled) .nav-arrow {
@@ -152,11 +152,11 @@ export const postSeriesStyles = css`
 
   .series-link:hover {
     background-color: var(--color-surface-hover);
-    border-color: var(--color-border-hover);
+    border-color: var(--color-border-strong);
   }
 
   .series-link.current {
-    background-color: var(--color-primary-light);
+    background-color: var(--color-primary-subtle);
     border-color: var(--color-primary);
     font-weight: 600;
   }

@@ -117,7 +117,7 @@ export const postListStyles = css`
 
   .pagination-btn:hover:not([disabled]) {
     background: var(--color-background-secondary);
-    border-color: var(--color-border-dark);
+    border-color: var(--color-border-strong);
     transform: translateY(-1px);
   }
 

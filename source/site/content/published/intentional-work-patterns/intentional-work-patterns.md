@@ -19,7 +19,4 @@ While these patterns emerged from remote work, many of them apply to any work en
 4. Physical and digital spaces: Creating environments that support focus
 5. Building connections: Staying visible and connected in distributed teams
 
-If you are looking for practical implementation details, see the companion supplements:
-
-- [Boundary checklist](supplements/boundary-checklist.md#boundary-checklist)
-- [Conversation script](supplements/boundary-conversation-script.md?view=condensed#conversation-outline)
+If you are looking for practical implementation details, see the companion supplements below.

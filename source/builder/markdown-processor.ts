@@ -11,8 +11,6 @@ import {
   type BlogPostManifestEntry,
   type SupplementManifestEntry,
   type LocalDocumentLinkIndex,
-  escapeHtml,
-  escapeHtmlAttribute,
   escapeHtmlComment,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
@@ -122,12 +120,6 @@ export class MarkdownProcessor {
       this.addToBlogManifest(contentDocument, metadata);
     }
 
-    const supplementEntries = this.getSupplementManifestEntries(metadata);
-    if (supplementEntries.length > 0) {
-      metadata.supplementsHtml =
-        this.createSupplementsSectionHtml(supplementEntries);
-    }
-
     // Create HTML content with metadata comments for later processing
     const htmlWithMetadata = [
       metadata.title ? `<!-- title: ${metadata.title} -->` : "",
@@ -151,9 +143,6 @@ export class MarkdownProcessor {
         : "",
       metadata.citationsHtml
         ? `<!-- citationsHtml: ${escapeHtmlComment(metadata.citationsHtml)} -->`
-        : "",
-      metadata.supplementsHtml
-        ? `<!-- supplementsHtml: ${escapeHtmlComment(metadata.supplementsHtml)} -->`
         : "",
       processedContent,
     ]
@@ -336,37 +325,6 @@ export class MarkdownProcessor {
         );
       }
     );
-  }
-
-  private createSupplementsSectionHtml(
-    supplements: SupplementManifestEntry[]
-  ): string {
-    if (supplements.length === 0) {
-      return "";
-    }
-
-    const listItems = supplements
-      .map((supplement) => {
-        const escapedUrl = escapeHtmlAttribute(supplement.url);
-        const escapedTitle = escapeHtml(supplement.title);
-        const escapedDescription = escapeHtml(supplement.description);
-
-        const descriptionHtml = escapedDescription
-          ? ` <span class="supplement-description">- ${escapedDescription}</span>`
-          : "";
-
-        return `      <li><a href="${escapedUrl}">${escapedTitle}</a>${descriptionHtml}</li>`;
-      })
-      .join("\n");
-
-    return [
-      '<section class="blog-supplements" aria-labelledby="supplements-heading">',
-      '  <h2 id="supplements-heading">Supplements</h2>',
-      '  <ul class="supplements-list">',
-      listItems,
-      "  </ul>",
-      "</section>",
-    ].join("\n");
   }
 
   /**

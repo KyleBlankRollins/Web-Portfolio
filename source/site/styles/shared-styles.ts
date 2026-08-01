@@ -10,7 +10,7 @@ import { css } from "lit";
 export const typographyStyles = css`
   /* Typography Foundation */
   :host {
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-primary);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -111,7 +111,7 @@ export const typographyStyles = css`
   }
 
   a:hover {
-    color: var(--color-primary-dark);
+    color: var(--color-primary-hover);
     text-decoration: underline;
   }
 
@@ -198,15 +198,15 @@ export const buttonStyles = css`
   }
 
   .btn-primary:hover:not(:disabled) {
-    background-color: var(--color-primary-dark);
-    border-color: var(--color-primary-dark);
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
   }
 
   /* Secondary Button */
   .btn-secondary {
     background-color: transparent;
     color: var(--color-text);
-    border-color: var(--color-border-dark);
+    border-color: var(--color-border-strong);
   }
 
   .btn-secondary:hover:not(:disabled) {
@@ -301,7 +301,7 @@ export const buttonStyles = css`
 
   .tag-button .tag-count {
     background: var(--color-background-secondary);
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     padding: 2px 6px;
     border-radius: 12px;
     font-size: 0.75rem;
@@ -322,7 +322,7 @@ export const buttonStyles = css`
 export const layoutStyles = css`
   /* Container Styles */
   .container {
-    max-width: var(--container-max-width);
+    max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 0 var(--space-md);
   }
@@ -409,17 +409,17 @@ export const formStyles = css`
   .input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-alpha);
+    box-shadow: var(--shadow-focus);
   }
 
   .input:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: var(--color-background-muted);
+    background-color: var(--color-background-secondary);
   }
 
   .input::placeholder {
-    color: var(--color-text-muted);
+    color: var(--color-text-tertiary);
   }
 
   .label {
@@ -440,7 +440,7 @@ export const formStyles = css`
   }
 
   .form-help {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     font-size: 0.8888889rem;
     margin-top: var(--space-xs);
   }

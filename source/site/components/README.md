@@ -52,7 +52,7 @@ The timeline components work together to display career history:
 ### 1. Development
 
 - Edit CSS files directly in `source/site/components/`
-- CSS files have full access to all theme variables from `theme.css`
+- CSS files have full access to all theme variables from `themes/properties.css`
 - Styles are scoped to the component via Shadow DOM
 
 ### 2. Styling Benefits
@@ -64,26 +64,28 @@ The timeline components work together to display career history:
 
 ## Theme Variables Available
 
-All CSS custom properties from `theme.css` are available:
+All CSS custom properties from `themes/properties.css` are available:
 
 ```css
 /* Colors */
---color-primary
---color-primary-dark
+--color-primary, --color-primary-hover, --color-primary-active
 --color-accent
 --color-background
---color-text
---color-text-muted
+--color-text, --color-text-secondary, --color-text-tertiary
+--color-border, --color-border-strong
 
 /* Spacing */
---space-xs, --space-sm, --space-md, --space-lg, --space-xl
+--space-2xs, --space-xs, --space-sm, --space-md, --space-lg, --space-xl
 
 /* Typography */
---font-family-base, --font-family-mono
+--font-family-primary, --font-family-heading, --font-family-mono
 --font-size-base, --font-size-lg, --font-size-xl, etc.
 
 /* Layout */
 --content-max-width, --content-narrow
+
+/* Elevation */
+--shadow-xs, --shadow-sm, --shadow-md, --shadow-lg, --shadow-focus
 
 /* Animation */
 --transition-fast, --transition-normal, --transition-slow
@@ -102,9 +104,9 @@ export class MyComponent extends LitElement {
   static styles = css`
     :host {
       display: block;
-      /* CSS custom properties from theme.css are available */
+      /* CSS custom properties from themes/properties.css are available */
       color: var(--color-text);
-      font-family: var(--font-family-base);
+      font-family: var(--font-family-primary);
     }
   `;
 

@@ -29,7 +29,7 @@
   /* Light mode Prism colors (using theme tokens) */
   --prism-comment: var(--color-text-tertiary, #6a737d);
   --prism-punctuation: var(--color-text-secondary, #586069);
-  --prism-property: var(--color-danger, #d73a49);
+  --prism-property: var(--color-error, #d73a49);
   --prism-string: var(--color-success, #28a745);
   --prism-operator: var(--color-warning, #e36209);
   --prism-keyword: var(--color-primary, #0366d6);
