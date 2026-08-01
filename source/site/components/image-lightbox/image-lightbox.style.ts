@@ -40,7 +40,7 @@ export const imageLightboxStyles = css`
     width: 50px;
     height: 50px;
     background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,7 +123,7 @@ export const imageLightboxStyles = css`
     max-width: 100%;
     max-height: calc(75vh - 4rem);
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: var(--radius);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   }
 
@@ -147,7 +147,7 @@ export const imageLightboxStyles = css`
     height: 44px;
     background: rgba(255, 255, 255, 0.2);
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     color: white;
     font-size: 24px;
     cursor: pointer;

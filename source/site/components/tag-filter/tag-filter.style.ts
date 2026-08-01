@@ -8,8 +8,8 @@ export const tagFilterStyles = css`
   }
 
   .tag-filter-container {
-    background: var(--color-background-secondary);
-    border-radius: 8px;
+    background: var(--color-surface);
+    border-radius: var(--radius);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
   }
@@ -24,7 +24,7 @@ export const tagFilterStyles = css`
   }
 
   .filter-title {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text);
     margin: 0;
     font-size: 1rem;
@@ -34,7 +34,7 @@ export const tagFilterStyles = css`
     background: none;
     border: 1px solid var(--color-border);
     padding: 0.25rem 0.75rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.875rem;
     color: var(--color-text);
@@ -208,7 +208,7 @@ export const tagFilterStyles = css`
     text-align: center;
     padding: 1rem;
     background: var(--color-error-subtle);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   /* Tag count styles now use shared .tag-count class */
@@ -223,10 +223,10 @@ export const tagFilterStyles = css`
     background: none;
     border: 1px solid var(--color-border);
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     color: var(--color-text);
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all 0.2s ease;
     display: inline-flex;

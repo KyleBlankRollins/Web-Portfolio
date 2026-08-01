@@ -44,9 +44,9 @@ Update the status column as work lands.
 | DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | fixed  |
 | DF-15 | Reduced-motion override produces invalid CSS          | Low      | fixed  |
 | DF-16 | Dark-mode font-weight override is never consumed      | Low      | open   |
-| DF-17 | 49 of 139 design tokens are unreferenced              | Medium   | open   |
-| DF-18 | Three competing card surface colors                   | Medium   | open   |
-| DF-19 | Radius scale is unused; ~45 hardcoded values          | Medium   | open   |
+| DF-17 | 49 of 139 design tokens are unreferenced              | Medium   | fixed  |
+| DF-18 | Three competing card surface colors                   | Medium   | fixed  |
+| DF-19 | Radius scale is unused; ~45 hardcoded values          | Medium   | fixed  |
 | DF-20 | Admonition headers fail contrast in light mode        | High     | fixed  |
 | DF-21 | Spacing tokens ignored in three components            | Low      | open   |
 | DF-22 | Reduced-motion coverage is uneven                     | Medium   | open   |
@@ -642,7 +642,7 @@ No rule anywhere references `var(--font-weight-normal)`. The readability improve
 ### DF-17 — 49 of 139 design tokens are unreferenced
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 Tokens defined in `themes/properties.css` and never used via `var()` anywhere in `source/site/`.
 
@@ -690,6 +690,32 @@ Note: `--theme-name`, `--theme-version`, and `--theme-author` are not dead. They
 
 **Fix direction:** Two valid paths — adopt the tokens in the places that currently hardcode equivalents, or prune the ones that represent abandoned intent. Prefer adopting for `--header-height`, `--radius-*` (see DF-19), and `--font-weight-*`; prefer pruning for the component-token layer unless it is going to be used.
 
+#### Resolution
+
+**49 unreferenced tokens down to 36**, with the adopt/prune split the finding recommended.
+
+**Adopted.**
+
+- `--header-height` — the sharpest case, now used in all three places that hardcoded `80px`: `blog-post.css`, `timeline.style.ts`, and the scroll-offset hack in `anchor-copy.ts` whose comment literally read _"Adjust based on your header height."_ A fourth site in `style.css` was picked up earlier under DF-23.
+- `--sidebar-width` — two `grid-template-columns: 280px 1fr` declarations.
+- `--radius-*` — 47 declarations; see DF-19.
+- `--font-weight-medium`, `-semibold`, `-bold` — 40 declarations across 14 files, replacing literal `500`, `600` and `700`.
+
+**Pruned.** Nine component tokens with zero consumers: `--button-padding-x/-y`, `--button-border-radius`, `--button-font-weight`, `--card-padding`, `--card-border-radius`, `--card-shadow`, `--nav-link-padding-x/-y`. Every button, card and nav link composed padding and radius from the primitive scales directly, so this layer was abandoned intent rather than indirection anything relied on. The comment left in its place says why, and that reintroducing it means adopting it at the same time — a component token nothing references is worse than no token, because it reads as the sanctioned way to style a button while the components quietly ignore it.
+
+`--input-*` was kept: unlike the rest of that layer it has real consumers, in `theme-switcher` and `theme-demo`.
+
+**Deliberately not adopted.**
+
+- `--font-weight-normal`. It is entangled with DF-16: `theme-base.css` overrides it to `450` in dark mode. Only one rule on the site hardcodes `400` (`blog-post.css:122`), so adopting the token there would apply the dark-mode weight bump to that single rule and nowhere else — worse than the current inconsistency. That token is DF-16's to resolve.
+- `typography.css` was excluded from the font-weight pass entirely. Every numeric weight in it is an `@font-face` descriptor, where a `var()` would be invalid.
+
+**The remaining 36** are, with two exceptions, complete-scale tokens rather than dead code: unused steps of the spacing scale (`--space-0/5/10/20/24/32`), the upper type scale (`--font-size-2xl` through `-5xl`, unused because `typography.css` sizes headings from a baseline grid instead), the easing set, `--radius-xl`, and the `-hover` variants of the semantic colours. Removing individual steps would gap otherwise continuous scales, which is a worse defect than an unused step.
+
+The genuine orphans left are `--content-wide`, `--footer-height`, `--animation-duration`, `--animation-easing`, `--color-surface-active` and `--color-text-disabled` — features that do not exist yet rather than scales with holes. They are cheap to keep and were left for a deliberate decision rather than pruned on my judgement.
+
+Note that the earlier count of 139 defined tokens is now 138, and the finding's own note stands: `--theme-name`, `--theme-version` and `--theme-author` are not dead — `source/builder/theme-processor.ts` parses them at build time to generate `data/theme-manifest.json`.
+
 ---
 
 ## Category 4: Design inconsistency
@@ -697,7 +723,7 @@ Note: `--theme-name`, `--theme-version`, and `--theme-author` are not dead. They
 ### DF-18 — Three competing card surface colors
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 | Surface                        | Location                                                                              |
 | ------------------------------ | ------------------------------------------------------------------------------------- |
@@ -709,10 +735,33 @@ Note: `--theme-name`, `--theme-version`, and `--theme-author` are not dead. They
 
 **Fix direction:** Standardize on `--color-surface` for all elevated containers, and make sure every theme defines it distinctly from `--color-background` (see DF-14).
 
+#### Resolution
+
+Six elevated containers now name `--color-surface`: `.card` in `style.css`, `.card` in `shared-styles.ts`, `.post-card`, `.timeline-entry`, `.toc-wrapper`, and `.tag-filter-container`. `post-series` and `theme-demo` already used it.
+
+The sharpest instance was the two `.card` rules. `style.css` styled light-DOM cards with `--color-background` while `shared-styles.ts` styled shadow-DOM cards with `--color-background-secondary` — **the same class name resolving to two different surfaces depending on which DOM it landed in.**
+
+Code blocks, inline-code chips, input fields, hover states and scroll-fade gradients were deliberately left on `--color-background-secondary`. They are not elevated containers, and sweeping them in would have been a restyle rather than a consolidation.
+
+One knock-on had to be fixed in the same pass: three TOC scroll-fade gradients faded _to_ `--color-background-secondary` because that was the container's colour. Once the wrapper moved to `--color-surface` they would have ended on a visible seam, so they were retargeted too.
+
+**A correction to the finding.** It stated that post cards "are the same color as the page beneath them — only the border separates a card from its background on the blog index." That is not what renders. Walking the ancestor chain from a post card, every element up to and including `main.page-content` has a transparent background — what is actually behind a card is the `html` gradient, `#e2e8f0 → #3b82f6` in the base theme. A white card was never indistinguishable from it.
+
+The change is still worth making, and in two themes it fixes something real that the finding missed: in **base dark** and **canney dark**, cards were painted `--color-background`, which is exactly the page background token. Now:
+
+| Theme / scheme | `--color-surface` | `--color-background` | Distinct |
+| -------------- | ----------------- | -------------------- | -------- |
+| base / light   | `#ffffff`         | `#ffffff`            | no       |
+| base / dark    | `#1e293b`         | `#0f172a`            | yes      |
+| canney / light | `#fbfcf9`         | `#f4f5f2`            | yes      |
+| canney / dark  | `#263238`         | `#1c2420`            | yes      |
+
+**base/light is the remaining exception**, and it was left alone on purpose. Giving that theme a distinct surface would tint every card on the site off-white — a visual decision about the theme, not a defect — and it buys nothing while `--color-background` is not painted behind any card.
+
 ### DF-19 — Radius scale is unused; ~45 hardcoded values
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `properties.css:188-193` defines a six-step radius scale. `--radius-xl` is never used and the rest are used rarely. Roughly 45 hardcoded values appear instead: `1px`, `3px`, `4px`, `6px`, `8px`, `12px`, `14px`, `20px`, `50%`, `0.5rem`, `1rem`.
 
@@ -728,6 +777,30 @@ In the admonition this inverts the visual hierarchy: inline code gets `var(--spa
 A related 1px mismatch: `table-of-contents.style.ts:16` sets the wrapper radius to `var(--space-xs)` (8px) while the scroll indicators at `:100` and `:106` use `8px 8px 0 0` — these agree today only by coincidence.
 
 **Fix direction:** Repoint all radii to the `--radius-*` scale. Never use spacing tokens for radius.
+
+#### Resolution
+
+**47 `border-radius` declarations repointed across 16 files.** The only ones left holding a literal resolve through `--input-border-radius`, which is itself `var(--radius)`.
+
+| Was                                | Now             | Computed      |
+| ---------------------------------- | --------------- | ------------- |
+| `1px`, `3px`, `50%`                | `--radius-full` | pill / circle |
+| `4px`, `6px`                       | `--radius-sm`   | 4.5px         |
+| `8px`, `0.5rem`, `var(--space-xs)` | `--radius`      | 9px           |
+| `12px`, `14px`                     | `--radius-md`   | 13.5px        |
+| `20px`, `1rem`, `var(--space-sm)`  | `--radius-lg`   | 18px          |
+
+Compound values were mapped per corner: the Prism language badge's `0 8px 0 4px` became `0 var(--radius) 0 var(--radius-sm)`, and the two TOC scroll indicators became `var(--radius) var(--radius) 0 0` / `0 0 var(--radius) var(--radius)`.
+
+**The scale does not compute to the numbers it looks like.** `--radius-*` is expressed in `rem`, and `typography.css` sets the root font-size to **18px**, not the 16px most scales assume. So the steps are 4.5px, 9px, 13.5px, 18px, 27px. Repointing therefore shifted most corners by half a pixel to two pixels — imperceptible on a radius, but it means the literals and the tokens were never the same values. `properties.css` now records this next to the scale, along with the observation that radii are the one part of the system with no reason to track font size, so if they are ever converted to px it should happen there rather than by literals creeping back into components.
+
+Spacing-as-radius is gone from all seven sites. The specific inversion the finding described — 16px on inline code inside an 8px admonition — had already been corrected under DF-20 when that component's inline code was unified with the article treatment; the container and the chip now sit at `--radius` and `--radius-sm`.
+
+The 1px TOC mismatch is resolved by construction rather than by coincidence: the wrapper and both scroll indicators now name `--radius`.
+
+`--radius-xl` is still unreferenced. Nothing on the site wants a 27px corner, and removing one step would gap an otherwise continuous scale, so it stays — flagged as such in the comment.
+
+`content/published/typography-test.md:103` was left alone. It is inside a fenced code block: a CSS example in prose, not a rule the site applies.
 
 ### DF-20 — Admonition headers fail contrast in light mode
 

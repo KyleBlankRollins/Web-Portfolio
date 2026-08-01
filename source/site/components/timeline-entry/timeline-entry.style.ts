@@ -8,8 +8,8 @@ export const timelineEntryStyles = css`
   }
 
   .timeline-entry {
-    background: var(--color-background-secondary);
-    border-radius: 8px;
+    background: var(--color-surface);
+    border-radius: var(--radius);
     padding: 1.5rem;
     border: 1px solid var(--color-border);
     transition: all 0.2s ease;
@@ -34,7 +34,7 @@ export const timelineEntryStyles = css`
 
   .job-title {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text);
     margin: 0;
     line-height: 1.3;
@@ -48,7 +48,7 @@ export const timelineEntryStyles = css`
   }
 
   .date-range {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-text);
   }
 
@@ -76,9 +76,9 @@ export const timelineEntryStyles = css`
     display: inline-block;
     padding: 0.25rem 0.75rem;
     background: var(--color-secondary);
-    border-radius: 1rem;
+    border-radius: var(--radius-lg);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.025em;
     transition: background-color 0.2s ease;

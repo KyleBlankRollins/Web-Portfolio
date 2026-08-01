@@ -123,13 +123,13 @@
 .token.attr-value,
 .token.keyword {
   color: var(--prism-keyword);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .token.function,
 .token.class-name {
   color: var(--prism-function);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .token.regex,
@@ -256,9 +256,9 @@
   background: var(--color-background-tertiary);
   color: var(--color-text-secondary);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   padding: 0.25rem 0.5rem;
-  border-radius: 0 8px 0 4px;
+  border-radius: 0 var(--radius) 0 var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.75px;
   opacity: 0.6;

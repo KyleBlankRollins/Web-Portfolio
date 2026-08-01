@@ -252,7 +252,7 @@
   background: var(--glass-background);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border-radius: var(--space-xs);
+  border-radius: var(--radius);
   padding: var(--space-sm);
   border: 1px solid var(--glass-border);
   box-shadow:

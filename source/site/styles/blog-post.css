@@ -14,7 +14,7 @@
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-lg);
-  min-height: calc(100vh - 80px); /* Account for navigation height */
+  min-height: calc(100vh - var(--header-height));
 }
 
 /* Table of contents sidebar */
@@ -63,12 +63,12 @@
 .blog-post-content code {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 0em 0.2em;
   font-family: var(--font-family-mono);
   font-size: 0.875em;
   color: var(--color-on-surface);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   box-shadow: 0 1px 2px var(--color-shadow-light);
   transition: all 0.2s ease;
 }
@@ -83,7 +83,7 @@
 .blog-post-content pre {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: var(--space-lg) var(--space-xl);
   margin: var(--space-lg) 0;
   overflow-x: auto;
@@ -136,12 +136,12 @@
 
 .blog-post-content pre::-webkit-scrollbar-track {
   background: var(--color-background-tertiary);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .blog-post-content pre::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   transition: background 0.2s ease;
 }
 
@@ -166,7 +166,7 @@
 @media (max-width: 768px) {
   .blog-post-content pre {
     padding: var(--space-md) var(--space-lg);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.85rem;
   }
 
@@ -185,7 +185,7 @@
 
 .blog-post-date time {
   color: var(--color-text-secondary);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .blog-post-tags {
@@ -194,7 +194,7 @@
 
 .tags-label {
   color: var(--color-text);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   margin-right: var(--space-sm);
 }
 
@@ -207,7 +207,7 @@
 .blog-tag {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   color: var(--color-text);
   cursor: pointer;
   font-size: 0.9rem;
@@ -264,7 +264,7 @@
 
 /* Citation inline references (superscript numbers) */
 .citation-ref {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   text-decoration: none;
   color: var(--color-on-surface);
   margin-left: 0.1em;
@@ -289,7 +289,7 @@
   font-size: var(--font-size-lg);
   color: var(--color-text);
   margin-bottom: var(--space-md);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Citations list */
@@ -312,7 +312,7 @@
 .citations em {
   font-style: italic;
   color: var(--color-text);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 /* Citation links */

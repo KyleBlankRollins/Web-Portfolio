@@ -168,11 +168,11 @@ export const buttonStyles = css`
     justify-content: center;
     padding: var(--space-sm) var(--space-md);
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: inherit;
     font-size: 1rem;
     line-height: 1.2777778rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -243,9 +243,9 @@ export const buttonStyles = css`
     display: inline-block;
     color: inherit;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     padding: var(--space-xs) var(--space-sm);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: all var(--transition-fast);
     position: relative;
   }
@@ -272,7 +272,7 @@ export const buttonStyles = css`
      navigation.style.ts, not by a fill - so hover stays distinguishable from
      active instead of both rendering as the same chip. */
   .nav-link.active {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   /* Tag Button Styles */
@@ -283,11 +283,11 @@ export const buttonStyles = css`
     padding: var(--space-xs) var(--space-sm);
     background: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     color: var(--color-text);
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
   }
@@ -314,9 +314,9 @@ export const buttonStyles = css`
     background: var(--color-background-secondary);
     color: var(--color-text-secondary);
     padding: 2px 6px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .tag-button.active .tag-count {
@@ -340,9 +340,9 @@ export const layoutStyles = css`
 
   /* Card Styles */
   .card {
-    background: var(--color-background-secondary);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius);
     padding: var(--space-lg);
   }
 
@@ -413,7 +413,7 @@ export const formStyles = css`
     color: var(--color-text);
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     transition: border-color var(--transition-fast);
   }
 
@@ -435,7 +435,7 @@ export const formStyles = css`
 
   .label {
     display: block;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     margin-bottom: var(--space-xs);
     color: var(--color-text);
   }

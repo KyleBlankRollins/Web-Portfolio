@@ -8,9 +8,9 @@ export const postCardStyles = css`
   }
 
   .post-card {
-    background: var(--color-background);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: var(--space-lg);
     transition: all var(--transition-normal);
     display: flex;
@@ -36,7 +36,7 @@ export const postCardStyles = css`
 
   .post-card-title {
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .post-title-link {
@@ -51,7 +51,7 @@ export const postCardStyles = css`
   .post-title-link:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .post-card-date {
@@ -92,9 +92,9 @@ export const postCardStyles = css`
     border: 1px solid var(--color-border);
     color: var(--color-text);
     padding: var(--space-xs) var(--space-sm);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
     text-decoration: none;
@@ -122,7 +122,7 @@ export const postCardStyles = css`
   .read-more-link {
     color: var(--color-text);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-size: 0.9rem;
     transition: all var(--transition-fast);
     display: inline-flex;
@@ -137,7 +137,7 @@ export const postCardStyles = css`
   .read-more-link:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   /* Responsive design */

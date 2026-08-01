@@ -8,7 +8,7 @@ export const timelineStyles = css`
 
   .timeline {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     /* The header spans both columns so the page title sits above the
        sidebar and the entries rather than sharing a cell with either. */
     grid-template-areas:
@@ -18,7 +18,7 @@ export const timelineStyles = css`
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: var(--space-lg);
-    min-height: calc(100vh - 80px); /* Account for navigation height */
+    min-height: calc(100vh - var(--header-height));
   }
 
   .timeline-header {
@@ -29,7 +29,7 @@ export const timelineStyles = css`
 
   .timeline-title {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text);
     margin: 0 0 var(--space-sm) 0;
     line-height: 1.2;
@@ -66,7 +66,7 @@ export const timelineStyles = css`
 
   .company-name {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin-top: 0;
     color: var(--color-text);
     text-decoration: none;

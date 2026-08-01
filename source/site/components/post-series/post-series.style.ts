@@ -8,7 +8,7 @@ export const postSeriesStyles = css`
 
   .series-container {
     border: 1px solid var(--color-border);
-    border-radius: var(--space-xs);
+    border-radius: var(--radius);
     padding: var(--space-sm);
     background-color: var(--color-surface);
   }
@@ -39,7 +39,7 @@ export const postSeriesStyles = css`
   }
 
   .series-name {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-base);
     color: var(--color-text);
     margin: 0 0 var(--space-xs) 0;
@@ -88,7 +88,7 @@ export const postSeriesStyles = css`
     padding: var(--space-xs) var(--space-sm);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-sm);
+    border-radius: var(--radius-lg);
     cursor: pointer;
     color: var(--color-text);
     font-size: var(--font-size-sm);
@@ -144,7 +144,7 @@ export const postSeriesStyles = css`
     padding: var(--space-sm) var(--space-md);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-sm);
+    border-radius: var(--radius-lg);
     color: var(--color-text);
     text-decoration: none;
     transition: all var(--transition-fast);
@@ -158,13 +158,13 @@ export const postSeriesStyles = css`
   .series-link.current {
     background-color: var(--color-primary-subtle);
     border-color: var(--color-on-surface);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .part-number {
     display: inline-block;
     min-width: 4ch;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
   }
 

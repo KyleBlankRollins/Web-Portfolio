@@ -36,7 +36,7 @@ export default class AnchorCopyComponent extends LitElement {
         border-left: 4px solid var(--color-on-surface);
         padding-left: 1rem;
         margin-left: -1.25rem;
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         animation: anchor-highlight-fade 3s ease-out forwards;
       }
 
@@ -64,7 +64,7 @@ export default class AnchorCopyComponent extends LitElement {
         background: transparent;
         border: 1px solid transparent;
         padding: var(--space-xs);
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         cursor: pointer;
         color: var(--color-text-secondary);
         transition: all var(--transition-fast);
@@ -141,8 +141,8 @@ export default class AnchorCopyComponent extends LitElement {
       h6[id]::before {
         content: "";
         display: block;
-        height: 80px; /* Adjust based on your header height */
-        margin-top: -80px;
+        height: var(--header-height);
+        margin-top: calc(-1 * var(--header-height));
         visibility: hidden;
       }
     `;

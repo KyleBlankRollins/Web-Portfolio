@@ -213,38 +213,48 @@
   --header-height: 80px;
   --footer-height: 120px;
 
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  /* Border Radius
+
+     These are rem, and typography.css sets the root font-size to 18px - not
+     the 16px most scales assume. So the computed steps are 4.5px, 9px,
+     13.5px, 18px and 27px. Worth knowing before picking one: reaching for
+     "4px" gets you --radius-sm at 4.5px, which is the intent, but the number
+     you type and the number you get are not the same.
+
+     Radii are also the one part of the scale with no reason to track font
+     size. If they are ever converted to px, do it here rather than letting
+     literals creep back into components.
+
+     Never use a --space-* token as a radius. Several components did, which is
+     how the admonition ended up with 16px on inline code inside an 8px
+     container - the small element rounder than the block holding it. */
+  --radius-sm: 0.25rem; /* 4.5px */
+  --radius: 0.5rem; /* 9px */
+  --radius-md: 0.75rem; /* 13.5px */
+  --radius-lg: 1rem; /* 18px */
+  --radius-xl: 1.5rem; /* 27px - unused; kept so the scale is not gapped */
   --radius-full: 9999px;
 
   /* ==========================================================================
      COMPONENT TOKENS - Specific component styling
+
+     Only the form tokens survive. The button, card, and navigation sets were
+     removed: nine tokens with zero consumers anywhere in source/site. Every
+     button, card, and nav link composed its own padding and radius from the
+     primitive scales directly, so the component layer was abandoned intent
+     rather than indirection anything relied on.
+
+     If this layer is reintroduced, it has to be adopted at the same time.
+     A component token nothing references is worse than no token: it reads as
+     the sanctioned way to style a button while the components quietly ignore
+     it, so changing it appears to do nothing. See DF-17.
      ========================================================================== */
 
-  /* Buttons */
-  --button-padding-x: var(--space-6);
-  --button-padding-y: var(--space-3);
-  --button-border-radius: var(--radius);
-  --button-font-weight: var(--font-weight-medium);
-
-  /* Cards */
-  --card-padding: var(--space-6);
-  --card-border-radius: var(--radius-lg);
-  --card-shadow: var(--shadow-md);
-
-  /* Forms */
+  /* Forms - the one set with real consumers (theme-switcher, theme-demo) */
   --input-padding-x: var(--space-4);
   --input-padding-y: var(--space-3);
   --input-border-radius: var(--radius);
   --input-border-width: 1px;
-
-  /* Navigation */
-  --nav-link-padding-x: var(--space-4);
-  --nav-link-padding-y: var(--space-2);
 
   /* ==========================================================================
      ANIMATION SYSTEM

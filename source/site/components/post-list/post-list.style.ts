@@ -23,7 +23,7 @@ export const postListStyles = css`
   .post-list-header h2 {
     color: var(--color-on-surface);
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   /* Posts grid */
@@ -43,7 +43,7 @@ export const postListStyles = css`
     height: 40px;
     border: 3px solid var(--color-border);
     border-top: 3px solid var(--color-on-surface);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     animation: spin 1s linear infinite;
     margin: 0 auto var(--space-md) auto;
   }
@@ -106,9 +106,9 @@ export const postListStyles = css`
     border: 1px solid var(--color-border);
     color: var(--color-text);
     padding: var(--space-sm) var(--space-md);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
     min-width: 44px;

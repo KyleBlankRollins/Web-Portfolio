@@ -11,9 +11,9 @@ export const tableOfContentsStyles = css`
 
   .toc-wrapper {
     position: relative;
-    background: var(--color-background-secondary);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-xs);
+    border-radius: var(--radius);
     overflow: hidden;
   }
 
@@ -79,7 +79,7 @@ export const tableOfContentsStyles = css`
     left: 0;
     right: 0;
     height: 20px;
-    background: linear-gradient(transparent, var(--color-background-secondary));
+    background: linear-gradient(transparent, var(--color-surface));
     pointer-events: none;
     opacity: 0;
     transition: opacity var(--transition-normal);
@@ -95,14 +95,14 @@ export const tableOfContentsStyles = css`
 
   .scroll-indicator-top {
     top: 0;
-    background: linear-gradient(var(--color-background-secondary), transparent);
-    border-radius: 8px 8px 0 0;
+    background: linear-gradient(var(--color-surface), transparent);
+    border-radius: var(--radius) var(--radius) 0 0;
   }
 
   .scroll-indicator-bottom {
     bottom: 0;
-    background: linear-gradient(transparent, var(--color-background-secondary));
-    border-radius: 0 0 8px 8px;
+    background: linear-gradient(transparent, var(--color-surface));
+    border-radius: 0 0 var(--radius) var(--radius);
   }
 
   .scroll-indicator-icon {
@@ -158,7 +158,7 @@ export const tableOfContentsStyles = css`
     color: var(--color-text);
     text-decoration: none;
     padding: var(--space-xs) var(--space-sm);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     line-height: 1.4;
     transition: all var(--transition-fast);
     border-left: 3px solid transparent;
@@ -183,13 +183,13 @@ export const tableOfContentsStyles = css`
   .toc-link.active {
     background: var(--color-on-surface);
     color: var(--color-text-inverse);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     border-left-color: var(--color-on-surface-active);
   }
 
   /* Level-specific styling with progressive indentation */
   .toc-level-1 .toc-link {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-size: 1em;
     padding-left: var(--space-sm);
   }
@@ -238,12 +238,12 @@ export const tableOfContentsStyles = css`
 
   .toc-container::-webkit-scrollbar-track {
     background: var(--color-background);
-    border-radius: 3px;
+    border-radius: var(--radius-full);
   }
 
   .toc-container::-webkit-scrollbar-thumb {
     background: var(--color-border-strong);
-    border-radius: 3px;
+    border-radius: var(--radius-full);
   }
 
   .toc-container::-webkit-scrollbar-thumb:hover {

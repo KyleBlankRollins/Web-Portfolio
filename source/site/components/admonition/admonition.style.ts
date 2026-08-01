@@ -7,7 +7,7 @@ export const admonitionStyles = css`
   }
 
   .admonition {
-    border-radius: var(--space-xs);
+    border-radius: var(--radius);
     border-left: 4px solid;
     padding: var(--space-md);
     background-color: var(--color-background-secondary);
@@ -148,11 +148,11 @@ export const admonitionStyles = css`
   .admonition-content ::slotted(code) {
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 0em 0.2em;
     font-family: var(--font-family-mono);
     font-size: 0.875em;
     color: var(--color-on-surface);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 `;

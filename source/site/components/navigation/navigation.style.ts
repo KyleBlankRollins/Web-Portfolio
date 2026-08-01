@@ -86,7 +86,7 @@ export const navigationStyles = css`
     width: 20px;
     height: 2px;
     background-color: var(--color-text);
-    border-radius: 1px;
+    border-radius: var(--radius-full);
     opacity: 0.9;
   }
 
