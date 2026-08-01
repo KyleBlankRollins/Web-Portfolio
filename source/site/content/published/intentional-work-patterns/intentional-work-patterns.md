@@ -13,8 +13,13 @@ Remote work offers flexibility, but without intentional structure, work can easi
 
 While these patterns emerged from remote work, many of them apply to any work environment.
 
-1. [Setting boundaries](intentional-work-patterns-boundaries.md): Practical strategies for protecting your time and energy
+1. [Setting boundaries](../intentional-work-patterns-boundaries.md): Practical strategies for protecting your time and energy
 2. Remote work traps: Common patterns that derail remote workers
 3. Work rituals: How start-of-day and end-of-day routines reinforce boundaries
 4. Physical and digital spaces: Creating environments that support focus
 5. Building connections: Staying visible and connected in distributed teams
+
+If you are looking for practical implementation details, see the companion supplements:
+
+- [Boundary checklist](supplements/boundary-checklist.md#boundary-checklist)
+- [Conversation script](supplements/boundary-conversation-script.md?view=condensed#conversation-outline)

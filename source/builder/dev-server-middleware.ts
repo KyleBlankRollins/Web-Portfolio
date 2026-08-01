@@ -184,9 +184,8 @@ async function handleHtmlRequest(
   const rootDir = path.join(process.cwd(), "source/site");
 
   // First, resolve against generated documents by normalized public URL.
-  const generatedFile = markdownProcessor.getGeneratedFileByPublicUrl(
-    requestedPublicUrl
-  );
+  const generatedFile =
+    markdownProcessor.getGeneratedFileByPublicUrl(requestedPublicUrl);
   if (generatedFile) {
     return await processAndServeGeneratedFile(
       templateProcessor,
@@ -207,9 +206,8 @@ async function handleHtmlRequest(
     );
   }
 
-  const markdownSourcePath = resolvePublishedMarkdownSourcePath(
-    requestedPublicUrl
-  );
+  const markdownSourcePath =
+    resolvePublishedMarkdownSourcePath(requestedPublicUrl);
   if (markdownSourcePath) {
     return await processAndServeMarkdown(
       templateProcessor,

@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed project plan and implementation specification.
+Implemented feature contract and migration reference.
 
 ## Problem
 

@@ -93,10 +93,70 @@ source/site/
 
 ### Creating a Blog Post
 
-1. **Create a Markdown file** in `/source/site/content/published/`
+1. **Choose a post layout** in `/source/site/content/published/`
+   - Standalone post: `my-post.md`
+   - Directory post: `my-post/my-post.md` (required parent naming)
 2. **Add frontmatter** with metadata (required)
 3. **Write your content** in Markdown
 4. **Publish** - the post will automatically appear on the blog page
+
+### Published Content Layouts
+
+The published content root is:
+
+```text
+source/site/content/published/
+```
+
+You can publish in two supported layouts.
+
+**Standalone post**
+
+```text
+source/site/content/published/
+  my-post.md
+```
+
+Public URL:
+
+```text
+/my-post.html
+```
+
+**Directory post with supplements**
+
+```text
+source/site/content/published/
+  my-post/
+    my-post.md
+    supplements/
+      notes.md
+```
+
+Public URLs:
+
+```text
+/my-post.html
+/my-post/supplements/notes.html
+```
+
+The parent filename must match its directory name. For example, `my-post/my-post.md` is valid, while `my-post/overview.md` is rejected at build time.
+
+### Migrating a Standalone Post to a Directory Post
+
+To keep the same parent URL while adding supplements:
+
+1. Create a directory named after the post slug.
+2. Move the parent markdown file into that directory.
+3. Rename the parent file to match the directory name.
+
+Example:
+
+```text
+Before: source/site/content/published/my-post.md
+After:  source/site/content/published/my-post/my-post.md
+URL:    /my-post.html (unchanged)
+```
 
 ### Blog Post Structure
 
@@ -188,6 +248,7 @@ Supplement rules:
 - Each supplement file must include `published: true` or `published: false` in frontmatter.
 - `published: true` supplements are emitted at nested URLs such as `/my-post/supplements/notes.html`.
 - `published: false` supplements are excluded from generated HTML and parent links.
+- Missing or non-boolean `published` values fail the build.
 
 Local markdown links in published content:
 
@@ -354,6 +415,8 @@ Provides tag-based filtering for blog posts.
 - Ensure frontmatter is properly formatted (YAML syntax)
 - Check date format: `YYYY-MM-DD`
 - Move from `__drafts/` to `published/` to publish
+- For directory posts, verify the parent file matches the directory name (for example, `post/post.md`)
+- For supplements, verify `published` is explicitly set to `true` or `false`
 
 **Template not working:**
 
@@ -386,10 +449,12 @@ Provides tag-based filtering for blog posts.
 
 ### New Blog Post Checklist
 
-- [ ] Create `.md` file in `/content/published/`
+- [ ] Create standalone `.md` file or directory parent in `/content/published/`
 - [ ] Add required frontmatter (title, description, date, tags)
 - [ ] Write engaging content with proper headings
 - [ ] Add relevant tags
+- [ ] If using supplements, add them under `/content/published/<post>/supplements/`
+- [ ] Set `published: true` or `published: false` on every supplement
 - [ ] Preview in development server
 - [ ] Move from drafts to `/content/published/` when ready to publish
 

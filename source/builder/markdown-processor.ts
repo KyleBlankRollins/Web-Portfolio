@@ -205,7 +205,9 @@ export class MarkdownProcessor {
    * Rebuild manifest entries from discovered publishable documents.
    * This keeps manifest output complete even when HTML generation is incremental.
    */
-  public rebuildManifestFromDocuments(contentDocuments: ContentDocument[]): void {
+  public rebuildManifestFromDocuments(
+    contentDocuments: ContentDocument[]
+  ): void {
     this.manifestBuilder.clear();
 
     for (const contentDocument of contentDocuments) {

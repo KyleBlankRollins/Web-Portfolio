@@ -233,7 +233,9 @@ function cleanupStaleGeneratedHtmlOutputs(
   const expectedHtmlPaths = new Set<string>([
     "index.html",
     ...getPageHtmlOutputPaths(),
-    ...discoveryResult.publishableDocuments.map((document) => document.outputPath),
+    ...discoveryResult.publishableDocuments.map(
+      (document) => document.outputPath
+    ),
   ]);
 
   const distHtmlPaths = collectDistHtmlPaths(distRoot, distRoot);
@@ -353,14 +355,9 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
      */
     configureServer(server: ViteDevServer) {
       isDevelopmentServer = true;
-      setupDevServer(
-        server,
-        templateProcessor,
-        markdownProcessor,
-        async () => {
-          await rebuildAllMarkdownDocuments(markdownProcessor);
-        }
-      );
+      setupDevServer(server, templateProcessor, markdownProcessor, async () => {
+        await rebuildAllMarkdownDocuments(markdownProcessor);
+      });
     },
 
     /**
