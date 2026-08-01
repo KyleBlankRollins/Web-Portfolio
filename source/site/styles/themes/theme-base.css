@@ -7,42 +7,57 @@
   /* Theme Metadata */
   --theme-name: "Basic Blue";
   --theme-version: "1.0.0";
-  
+
   /* Primary Colors - Light blue-gray for light mode backgrounds */
   --color-primary: #e2e8f0;
   --color-primary-hover: #cbd5e1;
   --color-primary-active: #94a3b8;
   --color-primary-subtle: #f8fafc;
-  
+
+  /* On-Surface Colors - Deep blue foreground for light surfaces
+     8.72:1 on #ffffff; carries --color-text-inverse at 8.34:1 as a fill */
+  --color-on-surface: #1e40af;
+  --color-on-surface-hover: #1e3a8a;
+  --color-on-surface-active: #172554;
+
   /* Secondary Colors - Medium blue-gray */
   --color-secondary: #94a3b8;
   --color-secondary-hover: #64748b;
   --color-secondary-active: #475569;
   --color-secondary-subtle: #f1f5f9;
-  
+
   /* Accent Colors - Bright blue accent for light backgrounds */
   --color-accent: #3b82f6;
   --color-accent-hover: #2563eb;
   --color-accent-active: #1d4ed8;
   --color-accent-subtle: #eff6ff;
-  
+
   /* Semantic Colors - Status and feedback */
   --color-success: #22c55e;
   --color-success-hover: #16a34a;
   --color-success-subtle: #dcfce7;
-  
+
   --color-warning: #f59e0b;
   --color-warning-hover: #d97706;
   --color-warning-subtle: #fef3c7;
-  
+
   --color-error: #ef4444;
   --color-error-hover: #dc2626;
   --color-error-subtle: #fecaca;
-  
+
   --color-info: #3b82f6;
   --color-info-hover: #2563eb;
   --color-info-subtle: #dbeafe;
-  
+
+  /* Status foregrounds on the matching -subtle background. See the contract
+     note in properties.css. Only accent differs from the default set, because
+     this theme's --color-accent is lighter than the fallback. */
+  --color-accent-strong: #0b63f1; /* 4.76 */
+  --color-success-strong: #167d3c; /* 4.76 */
+  --color-warning-strong: #956006; /* 4.76 */
+  --color-error-strong: #b51010; /* 4.76 */
+  --color-info-strong: #0a5ce1; /* 4.75 */
+
   /* Surface Colors - Clean whites and subtle grays */
   --color-background: #ffffff;
   --color-background-secondary: #f8f9fa;
@@ -50,35 +65,48 @@
   --color-surface: #ffffff;
   --color-surface-hover: #f8f9fa;
   --color-surface-active: #e9ecef;
-  
+
   /* Text Colors - Dark text for light backgrounds */
   --color-text: #0f172a;
   --color-text-secondary: #475569;
   --color-text-tertiary: #64748b;
   --color-text-inverse: #f8fafc;
   --color-text-disabled: #94a3b8;
-  
+
   /* Border Colors */
   --color-border: #e2e8f0;
   --color-border-secondary: #f1f5f9;
   --color-border-strong: #cbd5e1;
   --color-border-interactive: #3b82f6;
-  
+
   /* Shadow Colors */
   --color-shadow-light: rgba(0, 0, 0, 0.05);
   --color-shadow: rgba(0, 0, 0, 0.1);
   --color-shadow-strong: rgba(0, 0, 0, 0.15);
   --color-shadow-dark: rgba(0, 0, 0, 0.25);
-  
+
   /* Gradient Properties - Light gradients for light mode */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-primary-light: linear-gradient(90deg, 
-    rgba(226, 232, 240, 0.1) 0%, 
-    rgba(148, 163, 184, 0.1) 50%, 
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
+  --gradient-primary-light: linear-gradient(
+    90deg,
+    rgba(226, 232, 240, 0.1) 0%,
+    rgba(148, 163, 184, 0.1) 50%,
     rgba(59, 130, 246, 0.1) 100%
   );
-  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-hover) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 100%
+  );
 
   /* Glass/Frosted Surface Properties */
   --glass-background: rgba(248, 249, 250, 0.25);
@@ -95,54 +123,69 @@
   --color-surface: #1e293b;
   --color-surface-hover: #334155;
   --color-surface-active: #475569;
-  
+
   /* Text Colors - Light text for dark backgrounds */
   --color-text: #e2e8f0;
   --color-text-secondary: #cbd5e1;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #0f172a;
   --color-text-disabled: #64748b;
-  
+
   /* Primary Colors - Dark slate for dark mode backgrounds */
   --color-primary: #1e293b;
   --color-primary-hover: #0f172a;
   --color-primary-active: #020617;
   --color-primary-subtle: #334155;
-  
+
+  /* On-Surface Colors - Pale blue foreground for dark surfaces
+     10.30:1 on #1e293b; carries --color-text-inverse at 12.56:1 as a fill */
+  --color-on-surface: #bfdbfe;
+  --color-on-surface-hover: #dbeafe;
+  --color-on-surface-active: #eff6ff;
+
   /* Secondary Colors - Dark gray-blue */
   --color-secondary: #334155;
   --color-secondary-hover: #475569;
   --color-secondary-active: #64748b;
   --color-secondary-subtle: #1e293b;
-  
+
   /* Accent Colors - Deeper blue for dark backgrounds */
   --color-accent: #1e40af;
   --color-accent-hover: #1d4ed8;
   --color-accent-active: #2563eb;
   --color-accent-subtle: #1e3a8a;
-  
+
   /* Semantic Colors - Dark mode variants */
   --color-success: #10b981;
   --color-success-hover: #34d399;
   --color-success-subtle: #064e3b;
-  
+
   --color-warning: #f59e0b;
   --color-warning-hover: #fbbf24;
   --color-warning-subtle: #78350f;
-  
+
   --color-error: #f87171;
   --color-error-hover: #fca5a5;
   --color-error-subtle: #7f1d1d;
-  
+
   --color-info: #60a5fa;
   --color-info-hover: #93c5fd;
   --color-info-subtle: #1e3a8a;
-  
+
+  /* Status foregrounds. Accent is overridden because this theme's dark
+     --color-accent (#1e40af) is darker than its own -subtle background,
+     measuring 1.19:1 - the worst status pairing in either theme. */
+  --color-accent-strong: #9aaeee; /* 4.76 */
+  --color-success-strong: #12ce90; /* 4.76 */
+  --color-warning-strong: #f7ad32; /* 4.75 */
+  --color-error-strong: #fa9797; /* 4.75 */
+  --color-info-strong: #78b3fb; /* 4.75 */
+
   /* Border Colors */
   --color-border: #334155;
   --color-border-secondary: #475569;
   --color-border-strong: #64748b;
-  
+
   /* Shadow Colors - More subtle for dark mode */
   --color-shadow-light: rgba(0, 0, 0, 0.3);
   --color-shadow: rgba(0, 0, 0, 0.4);
@@ -155,16 +198,29 @@
   --line-height-normal: 1.6;
   --line-height-relaxed: 1.7;
   --letter-spacing-normal: 0.01em;
-  
+
   /* Gradient Properties - Dark gradients for dark mode */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-primary-light: linear-gradient(90deg, 
-    rgba(30, 41, 59, 0.1) 0%, 
-    rgba(51, 65, 85, 0.1) 50%, 
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
+  --gradient-primary-light: linear-gradient(
+    90deg,
+    rgba(30, 41, 59, 0.1) 0%,
+    rgba(51, 65, 85, 0.1) 50%,
     rgba(30, 64, 175, 0.1) 100%
   );
-  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-hover) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 100%
+  );
 
   /* Glass/Frosted Surface Properties */
   --glass-background: rgba(30, 41, 59, 0.15);
@@ -197,8 +253,7 @@
   border-radius: var(--space-xs);
   padding: var(--space-sm);
   border: 1px solid var(--glass-border);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     0 2px 8px rgba(0, 0, 0, 0.05);
 }
-

@@ -95,8 +95,7 @@ export const tagFilterStyles = css`
 
   .tag-button.moving-to-top:focus {
     box-shadow: var(--shadow-focus), var(--shadow-lg);
-    animation: moveToTopFocused 0.6s cubic-bezier(0.4, 0, 0.2, 1)
-      forwards;
+    animation: moveToTopFocused 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   @keyframes moveToTopFocused {
@@ -198,8 +197,11 @@ export const tagFilterStyles = css`
     color: var(--color-text);
   }
 
+  /* -strong, not --color-error: the base token is a fill and is not readable
+     on its own -subtle background. Same pairing as the admonitions in
+     DF-20. */
   .error {
-    color: var(--color-error);
+    color: var(--color-error-strong);
     text-align: center;
     padding: 1rem;
     background: var(--color-error-subtle);

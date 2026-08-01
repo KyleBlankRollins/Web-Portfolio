@@ -155,10 +155,27 @@ export class KbrTimeline extends LitElement {
     }
   }
 
+  /**
+   * The page heading. Rendered in every state so /career.html always has an
+   * h1, including while the data is still loading or after it fails. The id
+   * is the anchor target for the top entry in the table of contents.
+   */
+  private renderHeader() {
+    return html`
+      <header class="timeline-header">
+        <h1 class="timeline-title" id="career-timeline">Career Timeline</h1>
+        <p class="timeline-subtitle">
+          Where I've worked and what I did there, most recent first.
+        </p>
+      </header>
+    `;
+  }
+
   render() {
     if (this.isLoading) {
       return html`
         <div class="timeline">
+          ${this.renderHeader()}
           <div class="loading">Loading career timeline...</div>
         </div>
       `;
@@ -167,6 +184,7 @@ export class KbrTimeline extends LitElement {
     if (this.error) {
       return html`
         <div class="timeline">
+          ${this.renderHeader()}
           <div class="error">
             <h2>Error Loading Timeline</h2>
             <p>${this.error}</p>
@@ -177,6 +195,8 @@ export class KbrTimeline extends LitElement {
 
     return html`
       <div class="timeline">
+        ${this.renderHeader()}
+
         <div class="timeline-sidebar">
           <kbr-table-of-contents
             min-level="2"

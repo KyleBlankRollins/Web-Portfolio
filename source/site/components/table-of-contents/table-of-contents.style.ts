@@ -32,7 +32,6 @@ export const tableOfContentsStyles = css`
     color: var(--color-text);
     text-align: left;
     transition: background-color var(--transition-fast);
-    display: flex;
     align-items: center;
     justify-content: space-between;
   }
@@ -165,9 +164,13 @@ export const tableOfContentsStyles = css`
     border-left: 3px solid transparent;
   }
 
+  /* --color-on-surface is a fill here, so the label has to flip to the
+     inverse text color. Leaving it at --color-text (or at an accent, which
+     is itself tuned for a page background) puts dark on dark: 2.05:1 and
+     1.69:1 respectively in base/light, worse in the other themes. */
   .toc-link:hover {
-    background: var(--color-primary);
-    color: var(--color-accent-hover);
+    background: var(--color-on-surface);
+    color: var(--color-text-inverse);
     text-decoration: none;
     border-left-color: var(--color-border-strong);
   }
@@ -178,9 +181,10 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-link.active {
-    background: var(--color-primary);
+    background: var(--color-on-surface);
+    color: var(--color-text-inverse);
     font-weight: 500;
-    border-left-color: var(--color-primary-active);
+    border-left-color: var(--color-on-surface-active);
   }
 
   /* Level-specific styling with progressive indentation */
@@ -243,7 +247,7 @@ export const tableOfContentsStyles = css`
   }
 
   .toc-container::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
+    background: var(--color-on-surface);
   }
 
   /* Responsive design */

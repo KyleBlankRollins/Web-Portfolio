@@ -1,19 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Root-absolute so it resolves from nested paths such as
+         /<post>/supplements/<page>.html as well as from the site root. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{{title}}</title>
     {{#description}}
     <meta name="description" content="{{description}}" />
     {{/description}} {{#keywords}}
     <meta name="keywords" content="{{keywords}}" />
-    {{/keywords}} {{#additionalHead}} {{{additionalHead}}}
-    {{/additionalHead}}
+    {{/keywords}} {{#additionalHead}} {{{additionalHead}}} {{/additionalHead}}
   </head>
 
   <body>

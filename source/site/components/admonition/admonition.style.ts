@@ -40,88 +40,89 @@ export const admonitionStyles = css`
     font-weight: var(--font-weight-medium);
   }
 
+  /* Full-contrast body copy in every variant. This was
+     --color-text-secondary, which only .admonition-caution overrode back to
+     --color-text - so four of the five variants rendered muted body text
+     while the fifth did not, with nothing to justify the split. An admonition
+     is emphasis; its content should not read as de-emphasized. */
   .admonition-content {
-    color: var(--color-text-secondary);
+    color: var(--color-text);
     line-height: var(--line-height-relaxed);
   }
 
   /* Note styling - blue theme */
   .admonition-note {
-    border-left-color: var(--color-info);
+    border-left-color: var(--color-info-strong);
     background-color: var(--color-info-subtle);
   }
 
   .admonition-note .admonition-header,
   .admonition-note.compact .admonition-icon {
-    color: var(--color-info);
+    color: var(--color-info-strong);
   }
 
   .admonition-note kbr-icon {
-    color: var(--color-info);
+    color: var(--color-info-strong);
   }
 
   /* Tip styling - green theme */
   .admonition-tip {
-    border-left-color: var(--color-success);
+    border-left-color: var(--color-success-strong);
     background-color: var(--color-success-subtle);
   }
 
   .admonition-tip .admonition-header,
   .admonition-tip.compact .admonition-icon {
-    color: var(--color-success);
+    color: var(--color-success-strong);
   }
 
   .admonition-tip kbr-icon {
-    color: var(--color-success);
+    color: var(--color-success-strong);
   }
 
   /* Important styling - purple theme */
   .admonition-important {
-    border-left-color: var(--color-accent);
+    border-left-color: var(--color-accent-strong);
     background-color: var(--color-accent-subtle);
   }
 
   .admonition-important .admonition-header,
   .admonition-important.compact .admonition-icon {
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
   }
 
   .admonition-important kbr-icon {
-    color: var(--color-accent);
+    color: var(--color-accent-strong);
   }
 
   /* Warning styling - orange theme */
   .admonition-warning {
-    border-left-color: var(--color-warning);
+    border-left-color: var(--color-warning-strong);
     background-color: var(--color-warning-subtle);
   }
 
   .admonition-warning .admonition-header,
   .admonition-warning.compact .admonition-icon {
-    color: var(--color-warning);
+    color: var(--color-warning-strong);
   }
 
   .admonition-warning kbr-icon {
-    color: var(--color-warning);
+    color: var(--color-warning-strong);
   }
 
   /* Caution styling - red theme */
   .admonition-caution {
-    border-left-color: var(--color-error);
+    border-left-color: var(--color-error-strong);
     background-color: var(--color-error-subtle);
-  }
-
-  .admonition-caution .admonition-content {
-    color: var(--color-text);
   }
 
   .admonition-caution .admonition-header,
   .admonition-caution.compact .admonition-icon {
-    color: var(--color-error);
+    color: var(--color-error-strong);
   }
 
   .admonition-caution kbr-icon {
-    color: var(--color-error);
+    color: var(--color-error-strong);
   }
 
   /* Typography adjustments */
@@ -139,10 +140,19 @@ export const admonitionStyles = css`
     padding-left: var(--space-lg);
   }
 
+  /* Matches the article inline-code treatment in blog-post.css so the same
+     element does not render two ways depending on where it sits. The chip
+     keeps --color-background rather than the article's
+     --color-background-secondary: here it sits on a tinted -subtle panel, not
+     on the page, and needs to stay distinguishable from it. */
   .admonition-content ::slotted(code) {
     background-color: var(--color-background);
-    padding: 0.125rem 0.25rem;
-    border-radius: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0em 0.2em;
+    font-family: var(--font-family-mono);
     font-size: 0.875em;
+    color: var(--color-on-surface);
+    font-weight: 500;
   }
 `;

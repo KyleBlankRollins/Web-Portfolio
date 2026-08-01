@@ -21,7 +21,7 @@ export const postListStyles = css`
   }
 
   .post-list-header h2 {
-    color: var(--color-primary);
+    color: var(--color-on-surface);
     margin: 0;
     font-weight: 600;
   }
@@ -42,7 +42,7 @@ export const postListStyles = css`
     width: 40px;
     height: 40px;
     border: 3px solid var(--color-border);
-    border-top: 3px solid var(--color-primary);
+    border-top: 3px solid var(--color-on-surface);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto var(--space-md) auto;
@@ -82,7 +82,7 @@ export const postListStyles = css`
   }
 
   .post-list-error h2 {
-    color: var(--color-primary);
+    color: var(--color-on-surface);
     margin-bottom: var(--space-md);
   }
 
@@ -127,9 +127,9 @@ export const postListStyles = css`
   }
 
   .pagination-btn.active {
-    background: var(--color-primary);
+    background: var(--color-on-surface);
     color: var(--color-text-inverse);
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
   }
 
   .pagination-btn[disabled] {

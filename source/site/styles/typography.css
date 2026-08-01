@@ -9,40 +9,40 @@
 
 /* IBM Plex Sans Family */
 @font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/IBMPlexSans-Thin.woff2') format('woff2');
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/IBMPlexSans-Medium.woff2') format('woff2');
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/IBMPlexSans-Bold.woff2') format('woff2');
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('/fonts/IBMPlexSans-Italic.woff2') format('woff2');
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -75,54 +75,55 @@
 
 /* Valkyrie B */
 @font-face {
-font-family: valkyrie_b;
-font-style: normal;
-font-weight: normal;
-font-stretch: normal;
-font-display: auto;
-src: url('/fonts/valkyrie_b_regular.woff2') format('woff2');
+  font-family: valkyrie_b;
+  font-style: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-display: auto;
+  src: url("/fonts/valkyrie_b_regular.woff2") format("woff2");
 }
 
 @font-face {
-font-family: valkyrie_b;
-font-style: italic;
-font-weight: normal;
-font-stretch: normal;
-font-display: auto;
-src: url('/fonts/valkyrie_b_italic.woff2') format('woff2');
+  font-family: valkyrie_b;
+  font-style: italic;
+  font-weight: normal;
+  font-stretch: normal;
+  font-display: auto;
+  src: url("/fonts/valkyrie_b_italic.woff2") format("woff2");
 }
 
 @font-face {
-font-family: valkyrie_b;
-font-style: normal;
-font-weight: bold;
-font-stretch: normal;
-font-display: auto;
-src: url('/fonts/valkyrie_b_bold.woff2') format('woff2');
+  font-family: valkyrie_b;
+  font-style: normal;
+  font-weight: bold;
+  font-stretch: normal;
+  font-display: auto;
+  src: url("/fonts/valkyrie_b_bold.woff2") format("woff2");
 }
 
 /* Valkyrie B Caps*/
 
 @font-face {
-font-family: valkyrie_b_caps;
-font-style: normal;
-font-weight: normal;
-font-stretch: normal;
-font-display: auto;
-src: url('/fonts/valkyrie_b_caps_regular.woff2') format('woff2');
+  font-family: valkyrie_b_caps;
+  font-style: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-display: auto;
+  src: url("/fonts/valkyrie_b_caps_regular.woff2") format("woff2");
 }
 
 @font-face {
-font-family: valkyrie_b_caps;
-font-style: normal;
-font-weight: bold;
-font-stretch: normal;
-font-display: auto;
-src: url('/fonts/valkyrie_b_caps_bold.woff2') format('woff2');
+  font-family: valkyrie_b_caps;
+  font-style: normal;
+  font-weight: bold;
+  font-stretch: normal;
+  font-display: auto;
+  src: url("/fonts/valkyrie_b_caps_bold.woff2") format("woff2");
 }
 
 /* Typography Scale & Baseline Grid */
-html, .root {
+html,
+.root {
   font-family: var(--font-family-primary);
   font-size: 18px;
   line-height: 23px;
@@ -140,62 +141,81 @@ html, .root {
   line-height: 1.2777778rem;
   margin: auto;
 }
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: var(--font-family-heading);
 }
-h1, .h1
- {
+h1,
+.h1 {
   font-size: 3rem;
   line-height: 3.63rem;
   margin-top: 0;
   margin-bottom: 1.81rem;
 }
-h2, .h2
- {
+h2,
+.h2 {
   font-size: 2rem;
-  line-height: 2.95rem; 
+  line-height: 2.95rem;
   margin-top: 0.98rem;
   margin-bottom: 0.98rem;
 }
-h3, .h3
- {
+h3,
+.h3 {
   font-size: 1.6111111rem;
   line-height: 2.5555556rem;
   margin-top: 1.2777778rem;
   margin-bottom: 0rem;
 }
-h4, .h4
- {
+h4,
+.h4 {
   font-size: 1rem;
   line-height: 1.2777778rem;
   margin-top: 1.2777778rem;
   margin-bottom: 0rem;
 }
-h5, .h5
- {
+h5,
+.h5 {
   font-size: 1rem;
   line-height: 1.2777778rem;
   margin-top: 1.2777778rem;
   margin-bottom: 0rem;
 }
-p, ul, ol, pre, table, blockquote {
+p,
+ul,
+ol,
+pre,
+table,
+blockquote {
   margin-top: 0rem;
   margin-bottom: 1.2777778rem;
 }
-ul ul, ol ol, ul ol, ol ul {
+ul ul,
+ol ol,
+ul ol,
+ol ul {
   margin-top: 0rem;
   margin-bottom: 0rem;
 }
 
 /* Let's make sure all's aligned */
-hr, .hr {
+hr,
+.hr {
   border: 1px solid;
   margin: -1px 0;
 }
-b, i, strong, em, small, code {
+b,
+i,
+strong,
+em,
+small,
+code {
   line-height: 0;
 }
-sub, sup {
+sub,
+sup {
   line-height: 0;
   position: relative;
   vertical-align: baseline;
@@ -207,14 +227,22 @@ sub {
   bottom: -0.25em;
 }
 
-/* Link Typography */
+/* Link Typography
+   Hover shifts color, not weight: bolding on hover changes the element's
+   width and reflows the surrounding text.
+   The resting underline stays. These are light-DOM prose links, where the
+   underline is the only affordance distinguishing them from body copy -
+   they share --color-text with it. Components that need a bare link
+   (.nav-card, .sample-link, .project-link, .citations a) already opt out
+   individually, as does the shadow-DOM `a` in shared-styles.ts. */
 a {
   color: var(--color-text);
-  transition: all var(--transition-normal);
+  text-decoration: underline;
+  transition: color var(--transition-normal);
 }
 
 a:hover {
-  font-weight: bold;
+  color: var(--color-on-surface-hover);
 }
 
 /* UI Typography */
@@ -226,27 +254,32 @@ a:hover {
 /* Mobile Typography Adjustments */
 @media (max-width: 768px) {
   /* Reduce H1/H2 font sizes while maintaining hierarchy */
-  h1, .h1 {
+  h1,
+  .h1 {
     font-size: 2.25rem; /* Reduced from 3rem */
     line-height: 2.3rem; /* Reduced from 3.63rem */
     margin-bottom: 1.2rem; /* Slightly reduced */
   }
 
-  h2, .h2 {
+  h2,
+  .h2 {
     font-size: 1.5rem; /* Reduced from 2rem */
     line-height: 1.6rem; /* Reduced from 2.95rem */
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
   }
 
-  h3, .h3 {
+  h3,
+  .h3 {
     font-size: 1.3rem;
     line-height: 1.4rem; /* Reduced from 2.5555556rem */
     margin-top: 1rem;
   }
 
-  h4, .h4,
-  h5, .h5 {
+  h4,
+  .h4,
+  h5,
+  .h5 {
     line-height: 1.1rem; /* Slightly reduced from 1.2777778rem */
     margin-top: 1rem;
   }

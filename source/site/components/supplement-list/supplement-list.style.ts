@@ -42,7 +42,7 @@ export const supplementListStyles = css`
   }
 
   .supplement-link:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-on-surface-hover);
     text-decoration: underline;
   }
 

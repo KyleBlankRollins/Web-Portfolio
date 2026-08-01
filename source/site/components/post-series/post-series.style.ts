@@ -55,7 +55,7 @@ export const postSeriesStyles = css`
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-    transition: transform var(--transition-fast) ease;
+    transition: transform var(--transition-fast);
     color: var(--color-text-secondary);
   }
 
@@ -94,7 +94,7 @@ export const postSeriesStyles = css`
     font-size: var(--font-size-sm);
     text-decoration: none;
     text-align: center;
-    transition: all var(--transition-fast) ease;
+    transition: all var(--transition-fast);
     display: flex;
     flex-direction: column;
     min-height: 80px;
@@ -147,7 +147,7 @@ export const postSeriesStyles = css`
     border-radius: var(--space-sm);
     color: var(--color-text);
     text-decoration: none;
-    transition: all var(--transition-fast) ease;
+    transition: all var(--transition-fast);
   }
 
   .series-link:hover {
@@ -157,7 +157,7 @@ export const postSeriesStyles = css`
 
   .series-link.current {
     background-color: var(--color-primary-subtle);
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
     font-weight: 600;
   }
 

@@ -111,7 +111,7 @@ export const typographyStyles = css`
   }
 
   a:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-on-surface-hover);
     text-decoration: underline;
   }
 
@@ -192,14 +192,14 @@ export const buttonStyles = css`
 
   /* Primary Button */
   .btn-primary {
-    background-color: var(--color-primary);
+    background-color: var(--color-on-surface);
     color: var(--color-text-inverse);
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
   }
 
   .btn-primary:hover:not(:disabled) {
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    background-color: var(--color-on-surface-hover);
+    border-color: var(--color-on-surface-hover);
   }
 
   /* Secondary Button */
@@ -211,8 +211,8 @@ export const buttonStyles = css`
 
   .btn-secondary:hover:not(:disabled) {
     background-color: var(--color-background-secondary);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
   }
 
   /* Ghost Button */
@@ -224,7 +224,7 @@ export const buttonStyles = css`
 
   .btn-ghost:hover:not(:disabled) {
     background-color: var(--color-background-secondary);
-    color: var(--color-primary);
+    color: var(--color-on-surface);
   }
 
   /* Button Sizes */
@@ -250,18 +250,28 @@ export const buttonStyles = css`
     position: relative;
   }
 
+  /* Hover fills rather than tinting. The header has no background of its own
+     - it sits on the page gradient - so a white-alpha wash had nothing to
+     lighten: it measured 1.03:1 against the gradient in base/dark, where the
+     gradient's first stop is the surface color exactly. --color-on-surface is
+     visible against the gradient in every scheme (3.25:1 to 9.98:1), and
+     carries --color-text-inverse at 4.5:1 or better by contract. */
   .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--color-on-surface);
+    color: var(--color-text-inverse);
     text-decoration: none;
   }
 
   .nav-link:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
+  /* The current page is marked by weight plus the underline drawn in
+     navigation.style.ts, not by a fill - so hover stays distinguishable from
+     active instead of both rendering as the same chip. */
   .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.2);
     font-weight: 600;
   }
 
@@ -284,8 +294,8 @@ export const buttonStyles = css`
 
   .tag-button:hover {
     background: var(--color-background-secondary);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
   }
 
   .tag-button:focus {
@@ -294,8 +304,8 @@ export const buttonStyles = css`
   }
 
   .tag-button.active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: var(--color-on-surface);
+    border-color: var(--color-on-surface);
     color: var(--color-text-inverse);
   }
 
@@ -408,7 +418,7 @@ export const formStyles = css`
 
   .input:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
     box-shadow: var(--shadow-focus);
   }
 

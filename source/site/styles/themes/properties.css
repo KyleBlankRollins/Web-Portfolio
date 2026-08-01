@@ -24,115 +24,144 @@
   /* ==========================================================================
      THEME METADATA
      ========================================================================== */
-  
+
   --theme-name: "Default";
   --theme-version: "1.0.0";
   --theme-author: "Kyle Blank Rollins";
-  
+
   /* ==========================================================================
      COLOR SYSTEM - SEMANTIC TOKENS
      All colors must meet WCAG AA contrast requirements (4.5:1 for normal text)
      ========================================================================== */
-  
-  /* Primary Colors - Main brand colors */
-  --color-primary: #2d2d2d;           /* Primary brand color */
-  --color-primary-hover: #1a1a1a;     /* Primary hover state */
-  --color-primary-active: #000000;    /* Primary active/pressed state */
-  --color-primary-subtle: #f5f5f5;    /* Subtle primary background */
-  
+
+  /* Primary Colors - Main brand SURFACE tint.
+     Themes define this as a fill behind content (gradients, tinted panels).
+     Never use it as a text, icon, or border color - use --color-on-surface. */
+  --color-primary: #2d2d2d; /* Primary brand color */
+  --color-primary-hover: #1a1a1a; /* Primary hover state */
+  --color-primary-active: #000000; /* Primary active/pressed state */
+  --color-primary-subtle: #f5f5f5; /* Subtle primary background */
+
+  /* On-Surface Colors - Brand FOREGROUND.
+     Text, icons, borders, focus rings, and filled controls that sit on
+     --color-background or --color-surface. Every theme must define these
+     to reach at least 4.5:1 against its own surfaces in both color schemes,
+     and to carry --color-text-inverse at 4.5:1 when used as a fill. */
+  --color-on-surface: #2d2d2d; /* Brand foreground */
+  --color-on-surface-hover: #1a1a1a; /* Foreground hover state */
+  --color-on-surface-active: #000000; /* Foreground active/pressed state */
+
   /* Secondary Colors - Supporting brand colors */
-  --color-secondary: #4a4a4a;         /* Secondary brand color */
-  --color-secondary-hover: #616161;   /* Secondary hover state */
-  --color-secondary-active: #757575;  /* Secondary active state */
-  --color-secondary-subtle: #f8f8f8;  /* Subtle secondary background */
-  
+  --color-secondary: #4a4a4a; /* Secondary brand color */
+  --color-secondary-hover: #616161; /* Secondary hover state */
+  --color-secondary-active: #757575; /* Secondary active state */
+  --color-secondary-subtle: #f8f8f8; /* Subtle secondary background */
+
   /* Accent Colors - Highlight and emphasis */
-  --color-accent: #0066cc;            /* Accent color for links, CTAs */
-  --color-accent-hover: #0052a3;      /* Accent hover state */
-  --color-accent-active: #004080;     /* Accent active state */
-  --color-accent-subtle: #e6f2ff;     /* Subtle accent background */
-  
+  --color-accent: #0066cc; /* Accent color for links, CTAs */
+  --color-accent-hover: #0052a3; /* Accent hover state */
+  --color-accent-active: #004080; /* Accent active state */
+  --color-accent-subtle: #e6f2ff; /* Subtle accent background */
+
   /* Semantic Colors - Status and feedback */
-  --color-success: #22c55e;           /* Success states */
-  --color-success-hover: #16a34a;     /* Success hover */
-  --color-success-subtle: #dcfce7;    /* Success background */
-  
-  --color-warning: #f59e0b;           /* Warning states */
-  --color-warning-hover: #d97706;     /* Warning hover */
-  --color-warning-subtle: #fef3c7;    /* Warning background */
-  
-  --color-error: #ef4444;             /* Error states */
-  --color-error-hover: #dc2626;       /* Error hover */
-  --color-error-subtle: #fecaca;      /* Error background */
-  
-  --color-info: #3b82f6;              /* Info states */
-  --color-info-hover: #2563eb;        /* Info hover */
-  --color-info-subtle: #dbeafe;       /* Info background */
-  
+  --color-success: #22c55e; /* Success states */
+  --color-success-hover: #16a34a; /* Success hover */
+  --color-success-subtle: #dcfce7; /* Success background */
+
+  --color-warning: #f59e0b; /* Warning states */
+  --color-warning-hover: #d97706; /* Warning hover */
+  --color-warning-subtle: #fef3c7; /* Warning background */
+
+  --color-error: #ef4444; /* Error states */
+  --color-error-hover: #dc2626; /* Error hover */
+  --color-error-subtle: #fecaca; /* Error background */
+
+  --color-info: #3b82f6; /* Info states */
+  --color-info-hover: #2563eb; /* Info hover */
+  --color-info-subtle: #dbeafe; /* Info background */
+
+  /* Status Foregrounds - text and icons on the matching -subtle background.
+
+     The base status colors above are fills: swatches, borders, dots. They are
+     not readable as text on their own -subtle backgrounds, which are tinted
+     with the same hue and so sit close in luminance - the pairing measured
+     1.84:1 to 3.01:1. Use -strong wherever a status color carries text or an
+     icon; keep the base token for borders and fills.
+
+     Every -strong value is the base hue at adjusted lightness, holding at
+     least 4.75:1 against its own -subtle background in the same scheme. */
+  --color-accent-strong: #0066cc; /* 4.91 on --color-accent-subtle */
+  --color-success-strong: #167d3c; /* 4.76 on --color-success-subtle */
+  --color-warning-strong: #956006; /* 4.76 on --color-warning-subtle */
+  --color-error-strong: #b51010; /* 4.76 on --color-error-subtle */
+  --color-info-strong: #0a5ce1; /* 4.75 on --color-info-subtle */
+
   /* Surface Colors - Backgrounds and containers */
-  --color-background: #ffffff;         /* Main page background */
+  --color-background: #ffffff; /* Main page background */
   --color-background-secondary: #f8f9fa; /* Secondary backgrounds */
-  --color-background-tertiary: #e9ecef;  /* Tertiary backgrounds */
-  --color-surface: #ffffff;           /* Card/container surfaces */
-  --color-surface-hover: #f8f9fa;     /* Surface hover states */
-  --color-surface-active: #e9ecef;    /* Surface active states */
-  
+  --color-background-tertiary: #e9ecef; /* Tertiary backgrounds */
+  --color-surface: #ffffff; /* Card/container surfaces */
+  --color-surface-hover: #f8f9fa; /* Surface hover states */
+  --color-surface-active: #e9ecef; /* Surface active states */
+
   /* Text Colors - Typography */
-  --color-text: #212529;              /* Primary text color */
-  --color-text-secondary: #6c757d;    /* Secondary text */
-  --color-text-tertiary: #adb5bd;     /* Tertiary text (captions, etc.) */
-  --color-text-inverse: #ffffff;      /* Text on dark backgrounds */
-  --color-text-disabled: #ced4da;     /* Disabled text */
-  
+  --color-text: #212529; /* Primary text color */
+  --color-text-secondary: #6c757d; /* Secondary text */
+  --color-text-tertiary: #adb5bd; /* Tertiary text (captions, etc.) */
+  --color-text-inverse: #ffffff; /* Text on dark backgrounds */
+  --color-text-disabled: #ced4da; /* Disabled text */
+
   /* Border Colors - Dividers and outlines */
-  --color-border: #dee2e6;            /* Default borders */
-  --color-border-secondary: #e9ecef;  /* Subtle borders */
-  --color-border-strong: #adb5bd;     /* Emphasis borders */
+  --color-border: #dee2e6; /* Default borders */
+  --color-border-secondary: #e9ecef; /* Subtle borders */
+  --color-border-strong: #adb5bd; /* Emphasis borders */
   --color-border-interactive: #0066cc; /* Interactive element borders */
-  
+
   /* Shadow Colors - Depth and elevation */
-  --color-shadow-light: rgba(0, 0, 0, 0.05);   /* Light shadow */
-  --color-shadow: rgba(0, 0, 0, 0.1);          /* Default shadow */
-  --color-shadow-strong: rgba(0, 0, 0, 0.15);  /* Strong shadow */
-  --color-shadow-dark: rgba(0, 0, 0, 0.25);    /* Dark shadow */
+  --color-shadow-light: rgba(0, 0, 0, 0.05); /* Light shadow */
+  --color-shadow: rgba(0, 0, 0, 0.1); /* Default shadow */
+  --color-shadow-strong: rgba(0, 0, 0, 0.15); /* Strong shadow */
+  --color-shadow-dark: rgba(0, 0, 0, 0.25); /* Dark shadow */
 
   /* Elevation Scale - Composed box-shadow values.
      Built from the shadow colors above so they follow the color scheme. */
   --shadow-xs: 0 1px 2px 0 var(--color-shadow-light);
-  --shadow-sm: 0 1px 3px 0 var(--color-shadow),
-               0 1px 2px -1px var(--color-shadow-light);
-  --shadow-md: 0 4px 6px -1px var(--color-shadow),
-               0 2px 4px -2px var(--color-shadow-light);
-  --shadow-lg: 0 10px 15px -3px var(--color-shadow-strong),
-               0 4px 6px -4px var(--color-shadow);
+  --shadow-sm:
+    0 1px 3px 0 var(--color-shadow), 0 1px 2px -1px var(--color-shadow-light);
+  --shadow-md:
+    0 4px 6px -1px var(--color-shadow), 0 2px 4px -2px var(--color-shadow-light);
+  --shadow-lg:
+    0 10px 15px -3px var(--color-shadow-strong),
+    0 4px 6px -4px var(--color-shadow);
 
   /* ==========================================================================
      TYPOGRAPHY SYSTEM
      ========================================================================== */
-  
+
   /* Font Families */
-  --font-family-primary: 'valkyrie_b', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-family-heading: 'valkyrie_b_caps', 'IBM Plex Sans', serif;
-  --font-family-mono: 'IBM Plex Mono', 'Cascadia Code', Monaco, monospace;
-  
+  --font-family-primary:
+    "valkyrie_b", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-heading: "valkyrie_b_caps", "IBM Plex Sans", serif;
+  --font-family-mono: "IBM Plex Mono", "Cascadia Code", Monaco, monospace;
+
   /* Font Sizes - Fluid typography scale */
-  --font-size-xs: 0.75rem;     /* 12px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1rem;      /* 16px */
-  --font-size-md: 1.125rem;    /* 18px */
-  --font-size-lg: 1.25rem;     /* 20px */
-  --font-size-xl: 1.5rem;      /* 24px */
-  --font-size-2xl: 2rem;       /* 32px */
-  --font-size-3xl: 2.5rem;     /* 40px */
-  --font-size-4xl: 3rem;       /* 48px */
-  --font-size-5xl: 3.5rem;     /* 56px */
-  
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-md: 1.125rem; /* 18px */
+  --font-size-lg: 1.25rem; /* 20px */
+  --font-size-xl: 1.5rem; /* 24px */
+  --font-size-2xl: 2rem; /* 32px */
+  --font-size-3xl: 2.5rem; /* 40px */
+  --font-size-4xl: 3rem; /* 48px */
+  --font-size-5xl: 3.5rem; /* 56px */
+
   /* Line Heights */
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
   --line-height-loose: 1.8;
-  
+
   /* Font Weights */
   --font-weight-light: 300;
   --font-weight-normal: 400;
@@ -144,26 +173,26 @@
   --letter-spacing-tight: -0.01em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.025em;
-  
+
   /* ==========================================================================
      SPACING SYSTEM - Consistent spacing scale
      ========================================================================== */
-  
+
   --space-0: 0;
-  --space-1: 0.25rem;    /* 4px */
-  --space-2: 0.5rem;     /* 8px */
-  --space-3: 0.75rem;    /* 12px */
-  --space-4: 1rem;       /* 16px */
-  --space-5: 1.25rem;    /* 20px */
-  --space-6: 1.5rem;     /* 24px */
-  --space-8: 2rem;       /* 32px */
-  --space-10: 2.5rem;    /* 40px */
-  --space-12: 3rem;      /* 48px */
-  --space-16: 4rem;      /* 64px */
-  --space-20: 5rem;      /* 80px */
-  --space-24: 6rem;      /* 96px */
-  --space-32: 8rem;      /* 128px */
-  
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+  --space-32: 8rem; /* 128px */
+
   /* Semantic Spacing Aliases */
   --space-2xs: var(--space-1);
   --space-xs: var(--space-2);
@@ -172,18 +201,18 @@
   --space-lg: var(--space-8);
   --space-xl: var(--space-12);
   --space-2xl: var(--space-16);
-  
+
   /* ==========================================================================
      LAYOUT SYSTEM
      ========================================================================== */
-  
+
   --content-max-width: 1200px;
   --content-narrow: 800px;
   --content-wide: 1600px;
   --sidebar-width: 280px;
   --header-height: 80px;
   --footer-height: 120px;
-  
+
   /* Border Radius */
   --radius-sm: 0.25rem;
   --radius: 0.5rem;
@@ -191,59 +220,71 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   --radius-full: 9999px;
-  
+
   /* ==========================================================================
      COMPONENT TOKENS - Specific component styling
      ========================================================================== */
-  
+
   /* Buttons */
   --button-padding-x: var(--space-6);
   --button-padding-y: var(--space-3);
   --button-border-radius: var(--radius);
   --button-font-weight: var(--font-weight-medium);
-  
+
   /* Cards */
   --card-padding: var(--space-6);
   --card-border-radius: var(--radius-lg);
   --card-shadow: var(--shadow-md);
-  
+
   /* Forms */
   --input-padding-x: var(--space-4);
   --input-padding-y: var(--space-3);
   --input-border-radius: var(--radius);
   --input-border-width: 1px;
-  
+
   /* Navigation */
   --nav-link-padding-x: var(--space-4);
   --nav-link-padding-y: var(--space-2);
-  
+
   /* ==========================================================================
      ANIMATION SYSTEM
      ========================================================================== */
-  
+
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 350ms;
   --duration-slower: 500ms;
-  
+
   --easing-ease: ease;
   --easing-ease-in: ease-in;
   --easing-ease-out: ease-out;
   --easing-ease-in-out: ease-in-out;
-  
+
   /* Transition Shortcuts */
   --transition-fast: var(--duration-fast) var(--easing-ease);
   --transition-normal: var(--duration-normal) var(--easing-ease);
   --transition-slow: var(--duration-slow) var(--easing-ease);
-  
+
   /* ==========================================================================
      ACCESSIBILITY FEATURES
      ========================================================================== */
-  
-  /* Focus States */
+
+  /* Focus States
+
+     The ring tracks --color-on-surface, not --color-accent. A focus ring has
+     to stay visible wherever it lands, and --color-accent carries no such
+     guarantee: it is a mid-tone tuned to read as an accent, so it disappears
+     against mid-tone surfaces. Measured against the site header gradient it
+     ranges 1.03:1 to 1.68:1 across the four theme/scheme combinations - below
+     even the 3:1 minimum for UI components.
+
+     --color-on-surface is contract-bound to clear 4.5:1 against every theme's
+     own surfaces, so it measures 3.25:1 to 9.98:1 in the same test. Anything
+     redefining this token must hold at least 3:1 against every background a
+     focusable element can sit on. */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
-  --focus-ring-color: var(--color-accent);
+  --focus-ring-color: var(--color-on-surface);
   --focus-ring-style: solid;
 
   /* Focus ring expressed as a box-shadow, for elements that compose it
@@ -268,54 +309,67 @@
   --color-surface: #1e293b;
   --color-surface-hover: #334155;
   --color-surface-active: #475569;
-  
+
   /* Text Colors - High contrast for dark backgrounds */
   --color-text: #f8fafc;
   --color-text-secondary: #cbd5e1;
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #0f172a;
   --color-text-disabled: #64748b;
-  
+
   /* Border Colors */
   --color-border: #334155;
   --color-border-secondary: #475569;
   --color-border-strong: #64748b;
-  
+
   /* Primary Colors - Adjusted for dark mode */
   --color-primary: #e2e8f0;
   --color-primary-hover: #f8fafc;
   --color-primary-active: #ffffff;
   --color-primary-subtle: #334155;
-  
+
+  /* On-Surface Colors - Light foreground for dark surfaces */
+  --color-on-surface: #e2e8f0;
+  --color-on-surface-hover: #f8fafc;
+  --color-on-surface-active: #ffffff;
+
   /* Secondary Colors */
   --color-secondary: #94a3b8;
   --color-secondary-hover: #cbd5e1;
   --color-secondary-active: #e2e8f0;
   --color-secondary-subtle: #1e293b;
-  
+
   /* Accent Colors - Brighter for dark backgrounds */
   --color-accent: #3b82f6;
   --color-accent-hover: #60a5fa;
   --color-accent-active: #93c5fd;
   --color-accent-subtle: #1e3a8a;
-  
+
   /* Semantic Colors - Dark mode variants */
   --color-success: #10b981;
   --color-success-hover: #34d399;
   --color-success-subtle: #064e3b;
-  
+
   --color-warning: #f59e0b;
   --color-warning-hover: #fbbf24;
   --color-warning-subtle: #78350f;
-  
+
   --color-error: #f87171;
   --color-error-hover: #fca5a5;
   --color-error-subtle: #7f1d1d;
-  
+
   --color-info: #60a5fa;
   --color-info-hover: #93c5fd;
   --color-info-subtle: #1e3a8a;
-  
+
+  /* Status foregrounds - lightened here, since the dark -subtle backgrounds
+     are deep tints of the same hue. Ratios against those backgrounds. */
+  --color-accent-strong: #84b1f9; /* 4.76 */
+  --color-success-strong: #12ce90; /* 4.76 */
+  --color-warning-strong: #f7ad32; /* 4.75 */
+  --color-error-strong: #fa9797; /* 4.75 */
+  --color-info-strong: #78b3fb; /* 4.75 */
+
   /* Shadow Colors - More subtle in dark mode */
   --color-shadow-light: rgba(0, 0, 0, 0.3);
   --color-shadow: rgba(0, 0, 0, 0.4);
@@ -331,9 +385,12 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --animation-duration: 0ms;
-    --transition-fast: none;
-    --transition-normal: none;
-    --transition-slow: none;
+    /* Zero duration, not `none`. These tokens are composed into shorthands
+       like `transition: color var(--transition-normal)`, and `none` there
+       produces invalid CSS that the browser drops. */
+    --transition-fast: 0s;
+    --transition-normal: 0s;
+    --transition-slow: 0s;
   }
 }
 

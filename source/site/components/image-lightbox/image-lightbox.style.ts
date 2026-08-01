@@ -25,7 +25,8 @@ export const imageLightboxStyles = css`
     height: auto;
     object-fit: contain;
     object-position: center;
-    transition: transform var(--transition-normal),
+    transition:
+      transform var(--transition-normal),
       filter var(--transition-normal);
     border-radius: inherit;
   }
@@ -66,7 +67,7 @@ export const imageLightboxStyles = css`
 
   /* Focus styles for accessibility */
   :host(:focus) {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-on-surface);
     outline-offset: 2px;
   }
 
@@ -85,7 +86,8 @@ export const imageLightboxStyles = css`
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-normal),
+    transition:
+      opacity var(--transition-normal),
       visibility var(--transition-normal);
     cursor: pointer;
     padding: var(--space-lg);

@@ -32,7 +32,6 @@ export const themeSwitcherStyles = css`
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     box-shadow: 0 -4px 12px var(--color-shadow);
     backdrop-filter: blur(10px);
-    background: var(--color-background-secondary);
     transition: all var(--transition-normal);
     overflow: hidden;
   }
@@ -210,38 +209,9 @@ export const themeSwitcherStyles = css`
   }
 
   .toggle-input:focus + .toggle-track {
-    outline: var(--focus-ring-width) var(--focus-ring-style) var(--color-accent);
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
-  }
-
-  .theme-preview {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-2);
-    margin-left: var(--space-2);
-    border-radius: var(--radius);
-    border: 1px solid var(--color-border);
-    min-width: 60px;
-  }
-
-  .color-swatch {
-    width: 12px;
-    height: 12px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border-secondary);
-  }
-
-  .swatch-primary {
-    background: var(--color-primary);
-  }
-
-  .swatch-accent {
-    background: var(--color-accent);
-  }
-
-  .swatch-secondary {
-    background: var(--color-secondary);
   }
 
   /* Mobile adjustments for bottom-centered layout */
@@ -279,18 +249,9 @@ export const themeSwitcherStyles = css`
       min-width: 80px;
       font-size: var(--font-size-sm);
     }
-
-    .theme-preview {
-      margin-left: 0;
-      flex: 0 0 auto;
-    }
   }
 
   @media (max-width: 479px) {
-    .theme-preview {
-      display: none; /* Hide preview on very small screens */
-    }
-
     .theme-select label,
     .color-scheme-toggle label {
       min-width: 60px;

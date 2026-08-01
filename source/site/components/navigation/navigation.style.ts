@@ -63,9 +63,13 @@ export const navigationStyles = css`
 
   .main-nav a:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px var(--color-shadow-strong);
   }
 
+  /* The current-page marker sits 2px below the link box, on the header
+     gradient - not on the hover chip - so it is measured against the
+     gradient. --color-text-inverse was 1.58:1 to 2.09:1 there; --color-text
+     is 4.76:1 at worst. */
   .main-nav a.active::after {
     content: "";
     position: absolute;
@@ -74,16 +78,23 @@ export const navigationStyles = css`
     transform: translateX(-50%);
     width: 20px;
     height: 2px;
-    background-color: var(--color-text-inverse);
+    background-color: var(--color-text);
     border-radius: 1px;
     opacity: 0.9;
   }
 
-  /* Focus states for accessibility */
+  /* Focus states for accessibility
+
+     These selectors outrank .nav-link:focus in shared-styles.ts
+     ((0,2,1) vs (0,2,0)), so whatever they declare is what the user sees.
+     They previously hardcoded a white ring, which was written for a dark
+     header background that no longer exists: 2.02:1 and 2.19:1 in the two
+     light schemes, failing WCAG 2.4.7 on the site's primary navigation. */
   .logo a:focus,
   .main-nav a:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
   /* Responsive design */
@@ -147,14 +158,12 @@ export const navigationStyles = css`
     }
   }
 
-  /* Dark mode adjustments (if needed beyond theme variables) */
-  @media (prefers-color-scheme: dark) {
-    .main-nav a:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-    }
+  /* Removed: a @media (prefers-color-scheme: dark) block that re-applied
+     white-alpha hover and active backgrounds.
 
-    .main-nav a.active {
-      background-color: rgba(255, 255, 255, 0.25);
-    }
-  }
+     It keyed off the OS preference rather than [data-color-scheme], so it
+     fired whenever the OS was dark - including when the reader had explicitly
+     chosen the site's light scheme, where white-on-light is invisible. The
+     hover and active states are now defined once, in theme-aware tokens, and
+     work in every scheme without a second mechanism. See DF-12. */
 `;
