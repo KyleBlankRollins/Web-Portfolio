@@ -122,7 +122,7 @@ export default class AnchorCopyComponent extends LitElement {
       .heading-with-anchor h4,
       .heading-with-anchor h5,
       .heading-with-anchor h6 {
-        margin: 0;
+        margin-top: 0;
         flex: 1;
       }
 

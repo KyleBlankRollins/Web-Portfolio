@@ -37,12 +37,15 @@ Valid section headings (must match exactly):
 
 ## Outlining
 
+- Structure is meaning
+
 ## Writing
 
 ## Editing
 
 ## Published
 
+- AI Agent Workflows
 - Leading Through Change
 - Technical storytelling and drift at machine speed
 - Intentional work patterns - boundaries
