@@ -1,6 +1,8 @@
-/* Base Theme - Accessible Blue
+/* Base Theme - Basic Blue
  * Uses the standardized theme properties system
- * Provides clean, professional grayscale aesthetic
+ * Provides a clean, professional aesthetic: a deep blue foreground over cool
+ * grey surfaces. The name here matches --theme-name below, which is what the
+ * theme manifest and the switcher present to readers.
  */
 
 [data-theme="base"] {

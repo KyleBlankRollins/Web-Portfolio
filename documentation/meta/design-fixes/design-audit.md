@@ -38,7 +38,7 @@ Update the status column as work lands.
 | DF-08 | Career page renders no heading                        | Medium   | fixed  |
 | DF-09 | Navigation states are invisible in light mode         | High     | fixed  |
 | DF-10 | Dead rule blocks and duplicate declarations           | Low      | fixed  |
-| DF-11 | `theme-demo.html` ships broken                        | Medium   | open   |
+| DF-11 | `theme-demo.html` ships broken                        | Medium   | fixed  |
 | DF-12 | Two competing dark-mode mechanisms                    | High     | fixed  |
 | DF-13 | No `data-theme` until JavaScript runs                 | Medium   | fixed  |
 | DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | fixed  |
@@ -463,7 +463,7 @@ Both duplicates are merged. The theme switcher keeps `--color-surface`, the toke
 ### DF-11 — `theme-demo.html` ships broken
 
 **Severity:** Medium
-**Status:** open
+**Status:** fixed
 
 `pages/theme-demo.html` builds to `dist/theme-demo.html` and is publicly reachable.
 
@@ -475,6 +475,30 @@ Both duplicates are merged. The theme switcher keeps `--color-surface`, the toke
 Related: `content/published/typography-test.md` is a test post that appears in `dist/data/blog-manifest.json` and is listed on the blog index. Its own admonition states it was generated as a reference. Both pages are development artifacts currently published.
 
 **Fix direction:** Decide whether these pages are public. If they are, fix the button classes (either move them to light-DOM CSS or drop them) and correct the theme name. If not, exclude them from the production build.
+
+#### Resolution
+
+Decided: both pages stay public, and were fixed rather than excluded.
+
+**Buttons.** `.btn` and its variants live in `styles/shared-styles.ts`, which is only ever adopted into component shadow roots, so this light-DOM page matched nothing but the bare `button` rule in `style.css`. The declarations now exist in the page's own `<style>` block, mirroring `shared-styles.ts`. They are scoped to the page rather than promoted to `style.css` because this is the **only** light-DOM consumer of `.btn` on the site — putting them in the global sheet would ship rules nothing else matches, which is the DF-10 problem in reverse. The comment on the block says to keep the two in step.
+
+`.btn-accent` and `.btn-success` were dropped rather than defined. They exist in no stylesheet anywhere; inventing them here would be adding variants to the design system through its own demo page. The demo now shows `.btn-primary`, `.btn-secondary` and `.btn-ghost` — the three the system actually defines. Verified rendering: primary fills with `--color-on-surface` and `--color-text-inverse`, secondary carries a `--color-border-strong` outline, ghost is transparent.
+
+**Swatch labels.** The label moved out of the coloured chip and sits underneath it, on the page background. `color: white` inside the chip could not work on this page in particular: it exists to display arbitrary token values including light ones — white on `--color-primary` (`#e2e8f0` in the base theme) is about 1.1:1 — and the two hand-written `color: var(--color-text)` opt-outs on the `-subtle` swatches show the pattern was already being patched case by case. Below the chip, the label is readable whatever colour the swatch holds, and any token added later inherits that for free.
+
+**Theme name.** "Base Grayscale" → "Basic Blue", matching `--theme-name` and the manifest. The description was wrong in the same way — it called the theme grayscale "with subtle blue accents" when the palette is built on a deep blue — and so was the file header comment in `theme-base.css`, which is now corrected too.
+
+#### Also found: `.lead` had no rule at all
+
+Scanning the rendered page for classes with no matching CSS turned up `.lead`, used for the standfirst paragraph under the `h1`. It rendered identically to body copy — same size, weight and colour.
+
+It is used on `pages/portfolio.html` as well as here, so unlike `.btn` it went into `style.css` rather than the page. It is distinguished by size and measure, not colour: these paragraphs sit in `.page-content` directly on the page gradient, where `--color-text-secondary` falls to roughly 3:1 at the darker end.
+
+`.grid.two-columns` and `.grid.three-columns` came up in the same scan but are false positives — they are nested rules (`&.two-columns`) that the scan's flat selector match missed. Confirmed applying: `473px 473px` and `303px 303px 303px`.
+
+#### On `content/published/typography-test.md`
+
+No change. The finding grouped it with `theme-demo.html` as a development artifact that is published, but publishing it is now a deliberate choice, and the post already opens with an admonition disclosing that it was generated as a reference. There is no defect left to fix — only the decision, which has been made.
 
 ---
 

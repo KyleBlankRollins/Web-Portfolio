@@ -49,6 +49,19 @@ body {
   padding-inline: var(--space-lg);
 }
 
+/* Standfirst paragraph under a page's h1. Both pages/portfolio.html and
+   pages/theme-demo.html marked one up, but no rule existed, so it rendered
+   identically to body copy. Found while fixing DF-11.
+
+   Distinguished by size and measure rather than by colour: these sit in
+   .page-content, directly on the page gradient, where --color-text-secondary
+   drops to about 3:1 at the darker end. */
+.lead {
+  font-size: var(--font-size-lg);
+  line-height: 1.4;
+  max-width: 65ch;
+}
+
 /* Layout Components using CSS Grid */
 .container {
   max-width: var(--content-max-width);

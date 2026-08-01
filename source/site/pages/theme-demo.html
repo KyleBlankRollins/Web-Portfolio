@@ -5,8 +5,8 @@
 <section>
   <h1>Theme System</h1>
   <p class="lead">
-    Experience the powerful theme system with accessible color schemes
-    and smooth transitions between light and dark modes.
+    Experience the powerful theme system with accessible color schemes and
+    smooth transitions between light and dark modes.
   </p>
 </section>
 
@@ -15,9 +15,9 @@
 
   <div class="grid two-columns">
     <article class="card">
-      <h3>Base Grayscale</h3>
+      <h3>Basic Blue</h3>
       <p>
-        Clean, professional grayscale theme with subtle blue accents.
+        Clean, professional theme built on a deep blue, over cool grey surfaces.
         Designed for maximum accessibility and readability.
       </p>
       <ul>
@@ -30,8 +30,8 @@
     <article class="card">
       <h3>Canney Valley</h3>
       <p>
-        Nature-inspired theme featuring forest greens, warm purples,
-        and deep slate colors from the original Canney Valley design.
+        Nature-inspired theme featuring forest greens, warm purples, and deep
+        slate colors from the original Canney Valley design.
       </p>
       <ul>
         <li>Organic color palette</li>
@@ -49,24 +49,24 @@
     <div class="feature-card">
       <h3>🌓 Light & Dark Modes</h3>
       <p>
-        Every theme includes carefully crafted light and dark variants
-        with proper contrast ratios for accessibility.
+        Every theme includes carefully crafted light and dark variants with
+        proper contrast ratios for accessibility.
       </p>
     </div>
 
     <div class="feature-card">
       <h3>♿ Accessibility First</h3>
       <p>
-        All themes meet WCAG AA standards with support for reduced
-        motion and high contrast preferences.
+        All themes meet WCAG AA standards with support for reduced motion and
+        high contrast preferences.
       </p>
     </div>
 
     <div class="feature-card">
       <h3>💾 Persistent Preferences</h3>
       <p>
-        Your theme and color scheme choices are saved and restored
-        across sessions using localStorage.
+        Your theme and color scheme choices are saved and restored across
+        sessions using localStorage.
       </p>
     </div>
   </div>
@@ -75,40 +75,41 @@
 <section>
   <h2>Color System</h2>
   <p>
-    The theme system uses semantic color tokens that adapt based on
-    the selected theme and color scheme.
+    The theme system uses semantic color tokens that adapt based on the selected
+    theme and color scheme.
   </p>
 
   <div class="color-showcase">
     <div class="color-group">
       <h3>Primary Colors</h3>
       <div class="color-swatches">
-        <div
-          class="color-swatch"
-          style="background: var(--color-primary)"
-        >
-          <span>Primary</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-primary)"
+          ></div>
+          <span class="swatch-label">Primary</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-primary-hover)"
-        >
-          <span>Hover</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-primary-hover)"
+          ></div>
+          <span class="swatch-label">Hover</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-primary-active)"
-        >
-          <span>Active</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-primary-active)"
+          ></div>
+          <span class="swatch-label">Active</span>
         </div>
-        <div
-          class="color-swatch"
-          style="
-            background: var(--color-primary-subtle);
-            color: var(--color-text);
-          "
-        >
-          <span>Subtle</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-primary-subtle)"
+          ></div>
+          <span class="swatch-label">Subtle</span>
         </div>
       </div>
     </div>
@@ -116,32 +117,33 @@
     <div class="color-group">
       <h3>Accent Colors</h3>
       <div class="color-swatches">
-        <div
-          class="color-swatch"
-          style="background: var(--color-accent)"
-        >
-          <span>Accent</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-accent)"
+          ></div>
+          <span class="swatch-label">Accent</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-accent-hover)"
-        >
-          <span>Hover</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-accent-hover)"
+          ></div>
+          <span class="swatch-label">Hover</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-accent-active)"
-        >
-          <span>Active</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-accent-active)"
+          ></div>
+          <span class="swatch-label">Active</span>
         </div>
-        <div
-          class="color-swatch"
-          style="
-            background: var(--color-accent-subtle);
-            color: var(--color-text);
-          "
-        >
-          <span>Subtle</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-accent-subtle)"
+          ></div>
+          <span class="swatch-label">Subtle</span>
         </div>
       </div>
     </div>
@@ -149,29 +151,27 @@
     <div class="color-group">
       <h3>Semantic Colors</h3>
       <div class="color-swatches">
-        <div
-          class="color-swatch"
-          style="background: var(--color-success)"
-        >
-          <span>Success</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-success)"
+          ></div>
+          <span class="swatch-label">Success</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-warning)"
-        >
-          <span>Warning</span>
+        <div class="color-swatch">
+          <div
+            class="swatch-chip"
+            style="background: var(--color-warning)"
+          ></div>
+          <span class="swatch-label">Warning</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-error)"
-        >
-          <span>Error</span>
+        <div class="color-swatch">
+          <div class="swatch-chip" style="background: var(--color-error)"></div>
+          <span class="swatch-label">Error</span>
         </div>
-        <div
-          class="color-swatch"
-          style="background: var(--color-info)"
-        >
-          <span>Info</span>
+        <div class="color-swatch">
+          <div class="swatch-chip" style="background: var(--color-info)"></div>
+          <span class="swatch-label">Info</span>
         </div>
       </div>
     </div>
@@ -187,8 +187,7 @@
       <h3>Buttons</h3>
       <button class="btn btn-primary">Primary</button>
       <button class="btn btn-secondary">Secondary</button>
-      <button class="btn btn-accent">Accent</button>
-      <button class="btn btn-success">Success</button>
+      <button class="btn btn-ghost">Ghost</button>
     </div>
 
     <div class="form-demo">
@@ -206,10 +205,7 @@
       <h3>Cards</h3>
       <div class="sample-card card">
         <h4>Sample Card</h4>
-        <p>
-          This card demonstrates how content looks within the theme
-          system.
-        </p>
+        <p>This card demonstrates how content looks within the theme system.</p>
         <a href="#" class="card-link">Learn More →</a>
       </div>
     </div>
@@ -217,6 +213,79 @@
 </section>
 
 <style>
+  /* Light-DOM button classes.
+
+     .btn and its variants are defined in styles/shared-styles.ts, which is
+     only ever adopted into component shadow roots - so on this page, which is
+     plain light DOM, the markup below picked up nothing but the bare `button`
+     rule in style.css. The declarations here mirror shared-styles.ts; keep
+     them in step if that file changes.
+
+     They live on this page rather than in style.css because this is the only
+     light-DOM consumer of .btn on the site. Promoting them to the global
+     sheet would ship rules nothing else matches.
+
+     Variants shown are the ones the design system actually defines. The page
+     previously also rendered .btn-accent and .btn-success, which exist in no
+     stylesheet at all - inventing them here would be adding to the design
+     system through its own demo page. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.2777778rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+  }
+
+  .btn:focus {
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .btn-primary {
+    background-color: var(--color-on-surface);
+    color: var(--color-text-inverse);
+    border-color: var(--color-on-surface);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-on-surface-hover);
+    border-color: var(--color-on-surface-hover);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-background-secondary);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-text);
+    border-color: transparent;
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-background-secondary);
+    color: var(--color-on-surface);
+  }
+
   .color-showcase {
     display: grid;
     gap: var(--space-lg);
@@ -234,18 +303,33 @@
     flex-wrap: wrap;
   }
 
+  /* The label sits under the chip rather than on it.
+
+     It used to be `color: white` inside the coloured block, with two swatches
+     opting back out to --color-text. That cannot work here: this page exists
+     to display arbitrary token values, including light ones - white on
+     --color-primary (#e2e8f0 in the base theme) is about 1.1:1 - and every
+     new token would need someone to judge its luminance by hand. Below the
+     chip the label is on the page background, so it is readable for any
+     colour the swatch happens to hold. */
   .color-swatch {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-xs);
     width: 100px;
+  }
+
+  .swatch-chip {
     height: 60px;
     border-radius: var(--radius);
-    color: white;
+    border: 1px solid var(--color-border-secondary);
+  }
+
+  .swatch-label {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--color-border-secondary);
+    color: var(--color-text);
+    text-align: center;
   }
 
   .demo-elements {
