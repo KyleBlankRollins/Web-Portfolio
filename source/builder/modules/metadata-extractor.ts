@@ -20,6 +20,7 @@ export interface ExtractedMetadata {
   isBlogPost?: boolean;
   series?: SeriesInfo;
   citationsHtml?: string;
+  supplementsHtml?: string;
   [key: string]: string | string[] | boolean | SeriesInfo | undefined;
 }
 
@@ -125,6 +126,17 @@ export class MetadataExtractor {
         citationsHtmlMatch[1].trim()
       );
       content = content.replace(citationsHtmlMatch[0], "");
+    }
+
+    // Extract supplements HTML
+    const supplementsHtmlMatch = htmlContent.match(
+      /<!--\s*supplementsHtml:\s*([\s\S]*?)\s*-->/i
+    );
+    if (supplementsHtmlMatch) {
+      metadata.supplementsHtml = unescapeHtmlComment(
+        supplementsHtmlMatch[1].trim()
+      );
+      content = content.replace(supplementsHtmlMatch[0], "");
     }
 
     // Remove template comment if present

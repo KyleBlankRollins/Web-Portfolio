@@ -52,7 +52,7 @@ async function processMarkdownFiles(
 
     if (discoveryResult.supplementCandidates.length > 0) {
       BuildLogger.info(
-        `ℹ️ Found ${discoveryResult.supplementCandidates.length} supplement candidates (not emitted in phase 1)`
+        `ℹ️ Found ${discoveryResult.supplementCandidates.length} supplement candidates (${discoveryResult.publishedSupplements.length} published)`
       );
     }
 
@@ -65,10 +65,22 @@ async function processMarkdownFiles(
         )
       );
 
-      publishableDocuments = publishableDocuments.filter((document) =>
-        normalizedChangedFiles.has(
-          normalizePathForComparison(document.sourcePath)
-        )
+      const parentUrlsToRebuild = new Set<string>();
+      for (const supplement of discoveryResult.supplementCandidates) {
+        const isChanged = normalizedChangedFiles.has(
+          normalizePathForComparison(supplement.sourcePath)
+        );
+
+        if (isChanged && supplement.parentUrl) {
+          parentUrlsToRebuild.add(supplement.parentUrl);
+        }
+      }
+
+      publishableDocuments = publishableDocuments.filter(
+        (document) =>
+          normalizedChangedFiles.has(
+            normalizePathForComparison(document.sourcePath)
+          ) || parentUrlsToRebuild.has(document.publicUrl)
       );
 
       BuildLogger.info(

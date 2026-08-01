@@ -4,13 +4,13 @@
  */
 
 import { existsSync, readdirSync, readFileSync } from "fs";
-import { join, posix, relative, sep } from "path";
+import { basename, join, posix, relative, sep } from "path";
 import { BuildLogger } from "../helpers.js";
 import {
   FrontmatterParser,
   type FrontmatterData,
 } from "./frontmatter-parser.js";
-
+import type { SupplementManifestEntry } from "./blog-manifest.js";
 export type ContentDocumentKind =
   | "standalone-post"
   | "directory-post"
@@ -29,6 +29,7 @@ export interface ContentDiscoveryResult {
   documents: ContentDocument[];
   publishableDocuments: ContentDocument[];
   supplementCandidates: ContentDocument[];
+  publishedSupplements: ContentDocument[];
 }
 
 const RESERVED_DIRECTORY_NAMES = new Set(["supplements", "media"]);
@@ -66,6 +67,7 @@ export class ContentDiscovery {
         documents: [],
         publishableDocuments: [],
         supplementCandidates: [],
+        publishedSupplements: [],
       };
     }
 
@@ -105,20 +107,140 @@ export class ContentDiscovery {
 
     this.assertUniquePublicUrls(documents);
 
-    const publishableDocuments = documents.filter(
-      (document) =>
-        document.kind === "standalone-post" ||
-        document.kind === "directory-post"
-    );
     const supplementCandidates = documents.filter(
       (document) => document.kind === "supplement-candidate"
+    );
+
+    for (const supplement of supplementCandidates) {
+      this.validateSupplementPublicationMetadata(supplement);
+    }
+
+    const documentsByPublicUrl = new Map<string, ContentDocument>(
+      documents.map((document) => [document.publicUrl, document])
+    );
+
+    const publishableParentDocuments = documents.filter(
+      (document) =>
+        (document.kind === "standalone-post" ||
+          document.kind === "directory-post") &&
+        document.metadata.published !== false
+    );
+
+    const publishedSupplements = supplementCandidates.filter((supplement) => {
+      if (supplement.metadata.published !== true) {
+        return false;
+      }
+
+      if (!supplement.parentUrl) {
+        throw new Error(
+          `Supplement "${supplement.sourcePath}" is missing a parent relationship.`
+        );
+      }
+
+      const parentDocument = documentsByPublicUrl.get(supplement.parentUrl);
+      if (!parentDocument) {
+        throw new Error(
+          `Supplement "${supplement.sourcePath}" references parent URL "${supplement.parentUrl}" but no parent document was discovered.`
+        );
+      }
+
+      if (parentDocument.metadata.published === false) {
+        throw new Error(
+          `Supplement "${supplement.sourcePath}" is published, but parent "${parentDocument.sourcePath}" is unpublished (published: false).`
+        );
+      }
+
+      return true;
+    });
+
+    this.attachSupplementsToParents(
+      publishableParentDocuments,
+      publishedSupplements
+    );
+
+    const publishableDocuments = documents.filter(
+      (document) =>
+        ((document.kind === "standalone-post" ||
+          document.kind === "directory-post") &&
+          document.metadata.published !== false) ||
+        publishedSupplements.includes(document)
     );
 
     return {
       documents,
       publishableDocuments,
       supplementCandidates,
+      publishedSupplements,
     };
+  }
+
+  private validateSupplementPublicationMetadata(
+    supplement: ContentDocument
+  ): void {
+    if (supplement.metadata.publishedRawValue !== undefined) {
+      throw new Error(
+        `Invalid supplement frontmatter in "${supplement.sourcePath}": published must be a boolean true or false, received "${supplement.metadata.publishedRawValue}".`
+      );
+    }
+
+    if (supplement.metadata.published === undefined) {
+      throw new Error(
+        `Invalid supplement frontmatter in "${supplement.sourcePath}": missing required boolean field "published".`
+      );
+    }
+
+    if (typeof supplement.metadata.published !== "boolean") {
+      throw new Error(
+        `Invalid supplement frontmatter in "${supplement.sourcePath}": published must be a boolean true or false.`
+      );
+    }
+  }
+
+  private attachSupplementsToParents(
+    parentDocuments: ContentDocument[],
+    publishedSupplements: ContentDocument[]
+  ): void {
+    const parentSupplementMap = new Map<string, SupplementManifestEntry[]>();
+
+    for (const supplement of publishedSupplements) {
+      if (!supplement.parentUrl) {
+        continue;
+      }
+
+      const existing = parentSupplementMap.get(supplement.parentUrl) || [];
+
+      const rawTitle =
+        supplement.metadata.title || basename(supplement.outputPath, ".html");
+      const rawDescription = supplement.metadata.description || "";
+
+      existing.push({
+        title: this.sanitizeSupplementMetadataText(rawTitle),
+        description: this.sanitizeSupplementMetadataText(rawDescription),
+        url: supplement.publicUrl,
+        filename: supplement.outputPath,
+      });
+
+      parentSupplementMap.set(supplement.parentUrl, existing);
+    }
+
+    for (const parentDocument of parentDocuments) {
+      const parentSupplements = parentSupplementMap.get(
+        parentDocument.publicUrl
+      );
+
+      if (!parentSupplements || parentSupplements.length === 0) {
+        delete parentDocument.metadata.supplements;
+        continue;
+      }
+
+      parentDocument.metadata.supplements = [...parentSupplements].sort(
+        (a, b) => a.filename.localeCompare(b.filename)
+      );
+    }
+  }
+
+  private sanitizeSupplementMetadataText(value: string): string {
+    return value.replace(/<[^>]*>/g, "").trim();
   }
 
   private discoverPostDirectory(

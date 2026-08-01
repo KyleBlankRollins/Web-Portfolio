@@ -148,6 +148,7 @@ return "Hello, world!";
 **Optional:**
 
 - **keywords**: Additional SEO keywords
+- **published**: Required on supplement markdown files only (`true` or `false`)
 
 ### Tags
 
@@ -167,6 +168,26 @@ Tags are used for:
 ### Draft Posts
 
 Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them. When you're ready to publish, move the file to `/source/site/content/published/`.
+
+### Supplements (Optional)
+
+Supplements are additional markdown pages associated with a directory-based parent post.
+
+Structure:
+
+```text
+source/site/content/published/
+  my-post/
+    my-post.md
+    supplements/
+      notes.md
+```
+
+Supplement rules:
+
+- Each supplement file must include `published: true` or `published: false` in frontmatter.
+- `published: true` supplements are emitted at nested URLs such as `/my-post/supplements/notes.html`.
+- `published: false` supplements are excluded from generated HTML and parent links.
 
 ## Working with Templates
 

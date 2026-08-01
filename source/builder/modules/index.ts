@@ -44,6 +44,7 @@ export {
 export {
   BlogManifestBuilder,
   type BlogPostManifestEntry,
+  type SupplementManifestEntry,
   type TagWithCount,
   type BlogManifest,
 } from "./blog-manifest.js";

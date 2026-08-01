@@ -9,6 +9,9 @@ import {
   BlogManifestBuilder,
   type ContentDocument,
   type BlogPostManifestEntry,
+  type SupplementManifestEntry,
+  escapeHtml,
+  escapeHtmlAttribute,
   escapeHtmlComment,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
@@ -75,6 +78,11 @@ export class MarkdownProcessor {
       this.frontmatterParser.parse(markdownContent);
     const metadata = { ...parsedMetadata, ...contentDocument.metadata };
 
+    // Supplements are independently published pages and should use blog rendering.
+    if (contentDocument.kind === "supplement-candidate") {
+      metadata.isBlogPost = true;
+    }
+
     // Strip comments from the markdown content
     const commentFreeContent = this.preprocessor.stripComments(content);
 
@@ -108,6 +116,12 @@ export class MarkdownProcessor {
       this.addToBlogManifest(contentDocument, metadata);
     }
 
+    const supplementEntries = this.getSupplementManifestEntries(metadata);
+    if (supplementEntries.length > 0) {
+      metadata.supplementsHtml =
+        this.createSupplementsSectionHtml(supplementEntries);
+    }
+
     // Create HTML content with metadata comments for later processing
     const htmlWithMetadata = [
       metadata.title ? `<!-- title: ${metadata.title} -->` : "",
@@ -131,6 +145,9 @@ export class MarkdownProcessor {
         : "",
       metadata.citationsHtml
         ? `<!-- citationsHtml: ${escapeHtmlComment(metadata.citationsHtml)} -->`
+        : "",
+      metadata.supplementsHtml
+        ? `<!-- supplementsHtml: ${escapeHtmlComment(metadata.supplementsHtml)} -->`
         : "",
       processedContent,
     ]
@@ -205,6 +222,7 @@ export class MarkdownProcessor {
     metadata: Partial<TemplateVariables>
   ): void {
     if (!metadata.isBlogPost) return;
+    if (contentDocument.kind === "supplement-candidate") return;
 
     const filename = basename(contentDocument.outputPath, ".html");
     const url = contentDocument.publicUrl;
@@ -225,7 +243,68 @@ export class MarkdownProcessor {
       manifestEntry.series = metadata.series;
     }
 
+    const supplementEntries = this.getSupplementManifestEntries(metadata);
+    if (supplementEntries.length > 0) {
+      manifestEntry.supplements = supplementEntries;
+    }
+
     this.manifestBuilder.addPost(manifestEntry);
+  }
+
+  private getSupplementManifestEntries(
+    metadata: Partial<TemplateVariables>
+  ): SupplementManifestEntry[] {
+    const supplementsValue = metadata.supplements;
+    if (!Array.isArray(supplementsValue)) {
+      return [];
+    }
+
+    return supplementsValue.filter(
+      (supplement): supplement is SupplementManifestEntry => {
+        if (!supplement || typeof supplement !== "object") {
+          return false;
+        }
+
+        const candidate = supplement as Partial<SupplementManifestEntry>;
+        return (
+          typeof candidate.title === "string" &&
+          typeof candidate.description === "string" &&
+          typeof candidate.url === "string" &&
+          typeof candidate.filename === "string"
+        );
+      }
+    );
+  }
+
+  private createSupplementsSectionHtml(
+    supplements: SupplementManifestEntry[]
+  ): string {
+    if (supplements.length === 0) {
+      return "";
+    }
+
+    const listItems = supplements
+      .map((supplement) => {
+        const escapedUrl = escapeHtmlAttribute(supplement.url);
+        const escapedTitle = escapeHtml(supplement.title);
+        const escapedDescription = escapeHtml(supplement.description);
+
+        const descriptionHtml = escapedDescription
+          ? ` <span class="supplement-description">- ${escapedDescription}</span>`
+          : "";
+
+        return `      <li><a href="${escapedUrl}">${escapedTitle}</a>${descriptionHtml}</li>`;
+      })
+      .join("\n");
+
+    return [
+      '<section class="blog-supplements" aria-labelledby="supplements-heading">',
+      '  <h2 id="supplements-heading">Supplements</h2>',
+      '  <ul class="supplements-list">',
+      listItems,
+      "  </ul>",
+      "</section>",
+    ].join("\n");
   }
 
   /**

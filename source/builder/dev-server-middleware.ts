@@ -66,10 +66,10 @@ function createProcessingMiddleware(
       return handleIndexRequest(templateProcessor, req, res, next);
     }
 
-    // Handle HTML files at root level (matching production build structure)
+    // Handle HTML files (including nested supplement paths)
     // Extract the pathname without query parameters or hash
     const pathname = url.split("?")[0].split("#")[0];
-    if (pathname.match(/^\/[^/]+\.html$/)) {
+    if (pathname.endsWith(".html")) {
       return handleHtmlRequest(
         templateProcessor,
         markdownProcessor,

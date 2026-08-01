@@ -182,6 +182,7 @@ content only if variable exists ```html
 
 - GitHub Flavored Markdown (GFM) support
 - Frontmatter parsing for metadata (title, date, tags, description)
+- Supplement publishing for `post-directory/supplements/*.md` files using required `published` boolean frontmatter
 - Automatic heading ID generation for anchor links
 - Blog post manifest generation with tag aggregation
 - Draft post exclusion from production builds
@@ -205,6 +206,12 @@ Your markdown content starts here.
 
 - Processed HTML: `source/site/content/published/**/*.md` → `public/*.html` → `dist/`
 - Blog Manifest: `public/data/blog-manifest.json`
+
+Supplement behavior:
+
+- `published: true` supplements are emitted at nested URLs such as `/post/supplements/notes.html`
+- `published: false` supplements are excluded from HTML output and parent links
+- Supplements are aggregated under the parent post's optional `supplements` manifest field and are not added to top-level post counts
 
 ### 3. Development Server Enhancements
 
