@@ -33,13 +33,13 @@ Update the status column as work lands.
 | DF-03 | `.card` padding token and container query are dead    | High     | fixed   |
 | DF-04 | Mobile TOC toggle renders on desktop                  | High     | fixed   |
 | DF-05 | Three `post-series` transitions are invalid CSS       | Medium   | fixed   |
-| DF-06 | Homepage flashes unstyled content                     | High     | open    |
+| DF-06 | Homepage flashes unstyled content                     | High     | fixed   |
 | DF-07 | Blog post template is missing the favicon link        | Low      | fixed   |
 | DF-08 | Career page renders no heading                        | Medium   | fixed   |
 | DF-09 | Navigation states are invisible in light mode         | High     | fixed   |
 | DF-10 | Dead rule blocks and duplicate declarations           | Low      | fixed   |
 | DF-11 | `theme-demo.html` ships broken                        | Medium   | open    |
-| DF-12 | Two competing dark-mode mechanisms                    | High     | open    |
+| DF-12 | Two competing dark-mode mechanisms                    | High     | fixed   |
 | DF-13 | No `data-theme` until JavaScript runs                 | Medium   | open    |
 | DF-14 | `canney-valley` light mode omits surface tokens       | Medium   | partial |
 | DF-15 | Reduced-motion override produces invalid CSS          | Low      | fixed   |
@@ -301,7 +301,7 @@ transition: all var(--transition-fast) ease;
 ### DF-06 — Homepage flashes unstyled content
 
 **Severity:** High
-**Status:** open
+**Status:** fixed
 **Confirmed in build:** `dist/index.html`
 
 `source/site/index.html:56` places the module script inside the page content:
@@ -317,6 +317,22 @@ No other page has this problem: `pages/blog.html` and `pages/career.html` carry 
 Related inconsistency: `base: "./"` in `vite.config.ts:8` gives index.html `./assets/…` paths while the builder emits `/assets/…` for every other page. Both resolve at the site root, so this is latent rather than broken.
 
 **Fix direction:** Move the script tag out of the content and into `templates/base.html`, in `<head>` with `type="module"`, or immediately before `</body>`. Rebuild and confirm the stylesheet link lands in `<head>` for `dist/index.html`.
+
+#### Resolution
+
+Fixed in the builder rather than in the markup, because the prescribed fix is not available: **the script tag is what marks `index.html` as Vite's HTML entry.** Deleting it or moving it into `templates/base.html` — which Vite never sees, since the builder reads it as a template at build time — leaves Vite with no entry and therefore no bundle to emit.
+
+`HtmlProcessingUtils.normalizeAssetPlacement()` now runs on Vite-emitted HTML after templating, in `html-bundle-processor.ts`. It lifts `<link rel="stylesheet">` and `<link rel="modulepreload">` into `<head>` and moves `<script type="module">` to just before `</body>` — the same placement `injectAssets()` already produced for every page under `pages/`. It is idempotent and a no-op for files whose assets are already placed correctly, so the `pages/` path is untouched.
+
+Correcting placement after the fact also means it stays correct wherever the source tag sits, rather than depending on an author remembering where to put it.
+
+Verified in `dist/index.html`: the stylesheet and the modulepreload hint are both inside `<head>`, the module script sits before `</body>`, and `<main>` contains no `<link>` or `<script>` at all. `dist/blog.html`, `dist/career.html` and `dist/typography-test.html` are unchanged — stylesheet in `<head>`, nothing in `<main>`.
+
+Then served the built output with `vite preview` and loaded it: both custom elements upgrade, the gradient and the Valkyrie webfont apply, the stylesheet is in `document.head` with none in `document.body`, and the console is clean — 0 errors, 0 warnings.
+
+The modulepreload hint was worth moving on its own: a preload hint placed after the markup it is meant to front-run does nothing.
+
+**Not addressed:** the `base: "./"` inconsistency noted above. `index.html` still gets `./assets/…` while the builder emits `/assets/…` elsewhere. Both resolve from the site root, so it remains latent. Changing it would touch every emitted page and is better done as its own change.
 
 ### DF-07 — Blog post template is missing the favicon link
 
@@ -467,7 +483,7 @@ Related: `content/published/typography-test.md` is a test post that appears in `
 ### DF-12 — Two competing dark-mode mechanisms
 
 **Severity:** High
-**Status:** open
+**Status:** fixed
 
 The site switches color scheme via the `[data-color-scheme]` attribute, set by `components/theme-switcher/theme-switcher.ts:148`. Three stylesheets instead branch on the OS-level media query:
 
@@ -485,6 +501,28 @@ The tag filter case is the most visible. `tag-filter.style.ts:264-267` overrides
 | Light         | Dark        | `--color-primary` active tags — invisible, **1.22:1**        |
 
 **Fix direction:** Convert all three blocks to `[data-color-scheme="dark"]` selectors. Inside shadow DOM this requires `:host-context([data-color-scheme="dark"])` or driving the variation through tokens rather than selectors — prefer tokens.
+
+#### Resolution
+
+All three blocks are gone. None needed converting to a selector: in every case the tokens already carried the per-scheme value, so the override was redundant, contradictory, or both. `:host-context()` was not needed anywhere, which is fortunate — it is still unsupported in Firefox.
+
+**`navigation.style.ts`** — deleted as part of DF-09. It re-applied white-alpha hover and active backgrounds, which are now defined once in theme-aware tokens.
+
+**`tag-filter.style.ts`** — deleted outright. Seven of its nine declarations restated the token-driven base rule verbatim. The two that differed were the bug: `.tag-button.active` used `--color-accent` where `shared-styles.ts` uses `--color-on-surface`, so which treatment a reader saw depended on their OS rather than the theme they chose. The only real loss is `--color-border-strong` in place of `--color-border` on two elements; `--color-border` already resolves per scheme, so the base rule covers it.
+
+**`blog-post.css`** — deleted, and the four shadows it was deepening now use `--color-shadow` and `--color-shadow-light` instead of hardcoded `rgba(0,0,0,…)`. Those tokens already carry a heavier alpha in the dark scheme (0.05/0.1 light, 0.3/0.4 dark), so the intended effect survives without a second mechanism. Shadow geometry is unchanged.
+
+While in `tag-filter.style.ts`, three `--color-accent`-as-foreground failures were fixed — the same defect class as DF-01, missed there because that finding tracked `--color-primary`:
+
+| Rule                      | Was                                   | Measured                                |
+| ------------------------- | ------------------------------------- | --------------------------------------- |
+| `.clear-filter-btn:hover` | hardcoded `white` on `--color-accent` | 1.96:1 canney/light, 3.68:1 base/light  |
+| `.expand-tags-btn:hover`  | `--color-accent` as label text        | 1.79:1 to 3.68:1, all four combinations |
+| `.tag-button:focus`       | `--color-accent` outline              | see DF-09 — 1.03:1 to 1.68:1            |
+
+All three now use `--color-on-surface` / `--color-text-inverse` / the focus-ring tokens. Verified in-browser: the active tag renders at 6.76:1.
+
+Remaining `prefers-color-scheme` uses in the codebase are in `theme-switcher.ts`, in JavaScript, reading the OS preference to seed the "auto" scheme. That is the correct use and was left alone.
 
 ### DF-13 — No `data-theme` until JavaScript runs
 

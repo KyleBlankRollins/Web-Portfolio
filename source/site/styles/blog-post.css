@@ -69,14 +69,14 @@
   font-size: 0.875em;
   color: var(--color-on-surface);
   font-weight: 500;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px var(--color-shadow-light);
   transition: all 0.2s ease;
 }
 
 .blog-post-content code:hover {
   background: var(--color-background-tertiary);
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 /* Code block container styling */
@@ -89,10 +89,12 @@
   overflow-x: auto;
   position: relative;
 
-  /* Enhanced shadow for elevation */
+  /* Enhanced shadow for elevation. Geometry is bespoke; the colors come from
+     tokens, which already carry a heavier alpha in the dark scheme - so no
+     dark-mode override is needed. */
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.08),
-    0 1px 4px rgba(0, 0, 0, 0.04);
+    0 2px 8px var(--color-shadow),
+    0 1px 4px var(--color-shadow-light);
 
   /* Improved typography */
   line-height: 1.6;
@@ -105,8 +107,8 @@
 .blog-post-content pre:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.06);
+    0 4px 16px var(--color-shadow),
+    0 2px 8px var(--color-shadow-light);
 }
 
 /* Code inside pre blocks */
@@ -147,28 +149,12 @@
   background: var(--color-text-secondary);
 }
 
-/* Enhanced theme-aware styling for better contrast */
-@media (prefers-color-scheme: dark) {
-  .blog-post-content pre {
-    box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.3),
-      0 1px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .blog-post-content pre:hover {
-    box-shadow:
-      0 4px 16px rgba(0, 0, 0, 0.4),
-      0 2px 8px rgba(0, 0, 0, 0.25);
-  }
-
-  .blog-post-content code {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
-  .blog-post-content code:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-}
+/* Removed: a @media (prefers-color-scheme: dark) block that deepened these
+   four shadows. It keyed off the OS setting rather than [data-color-scheme],
+   so it applied against the reader's chosen scheme. The shadows above now use
+   --color-shadow and --color-shadow-light, which already resolve to a heavier
+   alpha in the dark scheme, so the effect survives without a second
+   mechanism. See DF-12. */
 
 /* Focus states for accessibility */
 .blog-post-content pre:focus-within {

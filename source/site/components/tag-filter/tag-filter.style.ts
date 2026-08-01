@@ -41,10 +41,13 @@ export const tagFilterStyles = css`
     transition: all 0.2s ease;
   }
 
+  /* --color-accent is a mid-tone: as a fill it carried hardcoded white at
+     1.96:1 in canney/light and 3.68:1 in base/light. --color-on-surface
+     carries --color-text-inverse at 7.19:1 or better by contract. */
   .clear-filter-btn:hover {
-    background: var(--color-accent);
-    color: white;
-    border-color: var(--color-accent);
+    background: var(--color-on-surface);
+    color: var(--color-text-inverse);
+    border-color: var(--color-on-surface);
   }
 
   .clear-filter-btn:disabled {
@@ -231,54 +234,34 @@ export const tagFilterStyles = css`
     gap: 0.25rem;
   }
 
+  /* --color-accent as label text measured 1.79:1 to 3.68:1 on
+     --color-background across the four theme/scheme combinations. */
   .expand-tags-btn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
     background: var(--color-background);
   }
 
   .expand-tags-btn:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
-  /* Dark theme support */
-  @media (prefers-color-scheme: dark) {
-    .tag-filter-container {
-      background: var(--color-background-secondary);
-    }
+  /* Removed: a @media (prefers-color-scheme: dark) block.
 
-    .filter-title {
-      color: var(--color-text);
-    }
+     It keyed off the OS setting rather than [data-color-scheme], so it fired
+     against the reader's actual choice - and its .tag-button.active override
+     used --color-accent where shared-styles.ts uses --color-on-surface, so
+     which treatment you saw depended on your OS rather than on the theme you
+     picked. See DF-12.
 
-    .tag-button {
-      background: var(--color-background);
-      border-color: var(--color-border-strong);
-      color: var(--color-text);
-    }
-
-    .tag-button:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
-    }
-
-    .tag-button.active {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
-    }
-
-    .expand-tags-btn {
-      border-color: var(--color-border-strong);
-      color: var(--color-text);
-    }
-
-    .expand-tags-btn:hover {
-      border-color: var(--color-accent);
-      color: var(--color-accent);
-      background: var(--color-background);
-    }
-  }
+     Nothing replaced it. Every declaration it held either restated the
+     token-driven base rule verbatim (.tag-filter-container, .filter-title,
+     .expand-tags-btn:hover) or contradicted it. The one real difference was
+     --color-border-strong instead of --color-border on two elements;
+     --color-border already resolves to a scheme-appropriate value in every
+     theme, so the base rule covers it. */
 
   /* Mobile responsive */
   @media (max-width: 768px) {

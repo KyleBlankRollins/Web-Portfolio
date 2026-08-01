@@ -299,8 +299,9 @@ export const buttonStyles = css`
   }
 
   .tag-button:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
   .tag-button.active {

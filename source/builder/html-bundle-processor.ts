@@ -32,11 +32,7 @@ export class HtmlBundleProcessor {
 
       // First, emit generated HTML files from markdown processor if available
       if (markdownProcessor) {
-        await this.emitGeneratedFiles(
-          emitFile,
-          assets,
-          markdownProcessor
-        );
+        await this.emitGeneratedFiles(emitFile, assets, markdownProcessor);
       }
 
       // First, process any HTML files that Vite already added to the bundle
@@ -85,22 +81,19 @@ export class HtmlBundleProcessor {
     for (const fileName of existingHtmlFiles) {
       const htmlAsset = bundle[fileName];
 
-      if (
-        htmlAsset.type === "asset" &&
-        typeof htmlAsset.source === "string"
-      ) {
+      if (htmlAsset.type === "asset" && typeof htmlAsset.source === "string") {
         try {
-          const processedContent =
-            await HtmlProcessingUtils.processHtmlContent(
-              this.templateProcessor,
-              htmlAsset.source
-            );
-
-          htmlAsset.source = processedContent;
-        } catch (error) {
-          BuildLogger.error(
-            `Failed to process ${fileName}: ${error}`
+          const processedContent = await HtmlProcessingUtils.processHtmlContent(
+            this.templateProcessor,
+            htmlAsset.source
           );
+
+          // Vite injected this file's assets at the source script tag's
+          // position, which the template puts inside <main>. See DF-06.
+          htmlAsset.source =
+            HtmlProcessingUtils.normalizeAssetPlacement(processedContent);
+        } catch (error) {
+          BuildLogger.error(`Failed to process ${fileName}: ${error}`);
           throw error;
         }
       }
@@ -119,20 +112,17 @@ export class HtmlBundleProcessor {
     // Generated HTML files are handled by emitGeneratedFiles()
     const pagesFiles = FileSystemHelper.findFiles("pages", [".html"]);
 
-    BuildLogger.info(
-      `� Processing ${pagesFiles.length} pages HTML files`
-    );
+    BuildLogger.info(`� Processing ${pagesFiles.length} pages HTML files`);
 
     for (const filePath of pagesFiles) {
       try {
         const content = readFileSync(filePath, "utf-8");
-        const processedContent =
-          await HtmlProcessingUtils.processHtmlContent(
-            this.templateProcessor,
-            content,
-            "Untitled",
-            assets
-          );
+        const processedContent = await HtmlProcessingUtils.processHtmlContent(
+          this.templateProcessor,
+          content,
+          "Untitled",
+          assets
+        );
 
         // Get the output filename (flatten the directory structure)
         const fileName = basename(filePath);
@@ -216,9 +206,7 @@ export class HtmlBundleProcessor {
   /**
    * Process themes and emit theme manifest
    */
-  private async processAndEmitThemeManifest(
-    emitFile: any
-  ): Promise<void> {
+  private async processAndEmitThemeManifest(emitFile: any): Promise<void> {
     const themesDir = join("source", "site", "styles", "themes");
     const themeProcessor = new ThemeProcessor(themesDir);
 
@@ -226,8 +214,7 @@ export class HtmlBundleProcessor {
     themeProcessor.processThemes();
 
     // Generate and emit theme manifest
-    const themeManifestJson =
-      themeProcessor.generateThemeManifestJson();
+    const themeManifestJson = themeProcessor.generateThemeManifestJson();
     emitFile({
       type: "asset",
       fileName: "data/theme-manifest.json",
