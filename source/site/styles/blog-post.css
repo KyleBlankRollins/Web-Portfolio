@@ -38,6 +38,16 @@
   max-width: none;
 }
 
+/* Blog post heading spacing (scoped to article content only) */
+.blog-post-content h1,
+.blog-post-content h2,
+.blog-post-content h3,
+.blog-post-content h4,
+.blog-post-content h5,
+.blog-post-content h6 {
+  margin-bottom: var(--space-sm);
+}
+
 /* Special blog post elements that need layout/visual styling */
 .blog-post-content blockquote {
   background: var(--color-background-secondary);
