@@ -5,6 +5,7 @@ import { BuildLogger } from "./helpers.js";
 import { GitAwareBuildPipeline } from "./git-aware-pipeline.js";
 import {
   ContentDiscovery,
+  createLocalDocumentLinkIndex,
   normalizePathForComparison,
 } from "./modules/index.js";
 
@@ -35,6 +36,15 @@ async function processMarkdownFiles(
   BuildLogger.info("🔎 Discovering Markdown files...");
 
   try {
+    const contentDiscovery = new ContentDiscovery();
+    const discoveryResult = contentDiscovery.discover();
+    const localDocumentLinkIndex = createLocalDocumentLinkIndex(
+      discoveryResult.documents,
+      discoveryResult.publishableDocuments,
+      discoveryResult.publishedRootPath
+    );
+    markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
+
     if (!pipeline.shouldProcessMarkdown()) {
       BuildLogger.info(
         "⚡ No changed markdown files detected - skipping processing"
@@ -42,8 +52,6 @@ async function processMarkdownFiles(
       return;
     }
 
-    const contentDiscovery = new ContentDiscovery();
-    const discoveryResult = contentDiscovery.discover();
     let publishableDocuments = discoveryResult.publishableDocuments;
 
     BuildLogger.info(

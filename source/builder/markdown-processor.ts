@@ -10,6 +10,7 @@ import {
   type ContentDocument,
   type BlogPostManifestEntry,
   type SupplementManifestEntry,
+  type LocalDocumentLinkIndex,
   escapeHtml,
   escapeHtmlAttribute,
   escapeHtmlComment,
@@ -36,6 +37,7 @@ export class MarkdownProcessor {
   private citationProcessor: CitationProcessor;
   private frontmatterParser: FrontmatterParser;
   private manifestBuilder: BlogManifestBuilder;
+  private localDocumentLinkIndex?: LocalDocumentLinkIndex;
   private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
@@ -105,7 +107,10 @@ export class MarkdownProcessor {
     );
 
     // Convert Markdown to HTML
-    const htmlContent = this.renderer.render(preprocessedContent);
+    const htmlContent = this.renderer.render(preprocessedContent, {
+      currentSourcePath: contentDocument.sourcePath,
+      documentLinkIndex: this.localDocumentLinkIndex,
+    });
 
     // For blog posts, inject title as H1 and add metadata
     let processedContent = htmlContent;
@@ -169,6 +174,27 @@ export class MarkdownProcessor {
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
     return fileName;
+  }
+
+  /**
+   * Configure source-aware link index for local Markdown link resolution.
+   */
+  public setLocalDocumentLinkIndex(documentLinkIndex: LocalDocumentLinkIndex) {
+    this.localDocumentLinkIndex = documentLinkIndex;
+  }
+
+  /**
+   * Render markdown content in development fallback paths using the same resolver.
+   */
+  public renderMarkdownBody(content: string, sourcePath: string): string {
+    const commentFreeContent = this.preprocessor.stripComments(content);
+    const preprocessedContent =
+      this.preprocessor.preprocessAdmonitions(commentFreeContent);
+
+    return this.renderer.render(preprocessedContent, {
+      currentSourcePath: sourcePath,
+      documentLinkIndex: this.localDocumentLinkIndex,
+    });
   }
 
   /**

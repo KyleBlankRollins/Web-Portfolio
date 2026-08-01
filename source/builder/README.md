@@ -95,7 +95,7 @@ Normalized content-document discovery and validation:
 Marked.js configuration with custom renderers:
 
 - Custom heading renderer (auto-generates IDs for anchor links)
-- Custom link renderer (transforms `.md` → `.html`, XSS protection)
+- Source-aware local markdown link resolution (rewrites relative `.md` targets via discovery index)
 - Custom code renderer (Prism.js syntax highlighting)
 - Language normalization for code blocks
 
@@ -183,6 +183,8 @@ content only if variable exists ```html
 - GitHub Flavored Markdown (GFM) support
 - Frontmatter parsing for metadata (title, date, tags, description)
 - Supplement publishing for `post-directory/supplements/*.md` files using required `published` boolean frontmatter
+- Source-aware local markdown links for parent/supplement relationships with fragment/query preservation
+- Build-blocking validation for missing, unpublished, ambiguous, or traversal local markdown targets
 - Automatic heading ID generation for anchor links
 - Blog post manifest generation with tag aggregation
 - Draft post exclusion from production builds
@@ -212,6 +214,14 @@ Supplement behavior:
 - `published: true` supplements are emitted at nested URLs such as `/post/supplements/notes.html`
 - `published: false` supplements are excluded from HTML output and parent links
 - Supplements are aggregated under the parent post's optional `supplements` manifest field and are not added to top-level post counts
+
+Local markdown link behavior:
+
+- Relative markdown links (for example `supplements/notes.md` or `../post.md`) are resolved from the current source document path.
+- Rewrites are source-index driven, not global extension swaps.
+- Fragments and query strings are preserved when rewritten to public URLs.
+- External URLs and already-public URLs are not rewritten.
+- Invalid targets throw actionable build errors with source document, original target, and resolved source location.
 
 ### 3. Development Server Enhancements
 

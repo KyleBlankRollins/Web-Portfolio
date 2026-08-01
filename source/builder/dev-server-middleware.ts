@@ -1,7 +1,6 @@
 import type { ViteDevServer } from "vite";
 import * as fs from "fs";
 import * as path from "path";
-import { marked } from "marked";
 import {
   TemplateProcessor,
   type TemplateVariables,
@@ -221,6 +220,7 @@ async function handleHtmlRequest(
   if (fs.existsSync(standaloneMdPath)) {
     return await processAndServeMarkdown(
       templateProcessor,
+      markdownProcessor,
       standaloneMdPath,
       res,
       next
@@ -230,6 +230,7 @@ async function handleHtmlRequest(
   if (fs.existsSync(directoryMdPath)) {
     return await processAndServeMarkdown(
       templateProcessor,
+      markdownProcessor,
       directoryMdPath,
       res,
       next
@@ -302,6 +303,7 @@ async function processAndServeFile(
  */
 async function processAndServeMarkdown(
   templateProcessor: TemplateProcessor,
+  markdownProcessor: MarkdownProcessor,
   mdFilePath: string,
   res: any,
   next: any
@@ -312,7 +314,10 @@ async function processAndServeMarkdown(
     // Extract frontmatter and convert markdown to HTML
     const { metadata, content } =
       templateProcessor.extractMarkdownFrontmatter(mdContent);
-    const htmlContent = marked(content);
+    const htmlContent = markdownProcessor.renderMarkdownBody(
+      content,
+      mdFilePath
+    );
 
     // Create template variables
     const templateVariables: TemplateVariables = {

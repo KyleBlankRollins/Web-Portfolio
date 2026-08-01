@@ -189,6 +189,20 @@ Supplement rules:
 - `published: true` supplements are emitted at nested URLs such as `/my-post/supplements/notes.html`.
 - `published: false` supplements are excluded from generated HTML and parent links.
 
+Local markdown links in published content:
+
+- Use relative markdown links between published documents (for example `supplements/notes.md`, `research.md#methods`, or `../my-post.md`).
+- During build, these links are resolved from the source document location and rewritten to public `.html` URLs.
+- Query strings and fragments are preserved (for example `supplements/research.md?mode=compare#methods` becomes `/my-post/supplements/research.html?mode=compare#methods`).
+- External URLs (`https://...`) and already-public URLs (`/my-post.html`) are left unchanged.
+
+Build validation for local markdown links:
+
+- Build fails if a relative markdown target does not exist under published content.
+- Build fails if a relative markdown target exists but is unpublished (for example supplement with `published: false`).
+- Build fails if a relative markdown target resolves outside `/source/site/content/published/`.
+- Error messages include the source markdown file, original target link, and resolved source location.
+
 ## Working with Templates
 
 ### Available Templates

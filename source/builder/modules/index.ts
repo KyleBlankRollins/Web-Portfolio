@@ -40,6 +40,16 @@ export {
   normalizePathForComparison,
 } from "./content-discovery.js";
 
+// Local document link resolver
+export {
+  createLocalDocumentLinkIndex,
+  resolveLocalDocumentLink,
+  type LocalDocumentLinkIndex,
+  type LocalDocumentLinkIndexEntry,
+  type ResolveLocalDocumentLinkInput,
+  type ResolveLocalDocumentLinkResult,
+} from "./local-document-link-resolver.js";
+
 // Blog manifest
 export {
   BlogManifestBuilder,

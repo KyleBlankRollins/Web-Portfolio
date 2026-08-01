@@ -6,6 +6,10 @@
 import { marked } from "marked";
 import Prism from "prismjs";
 import { escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
+import {
+  resolveLocalDocumentLink,
+  type LocalDocumentLinkIndex,
+} from "./local-document-link-resolver.js";
 
 // Import common languages for Prism
 import "prismjs/components/prism-typescript.js";
@@ -28,11 +32,17 @@ export interface MarkdownRendererOptions {
   syntaxHighlighting?: boolean;
 }
 
+export interface MarkdownRenderContext {
+  currentSourcePath: string;
+  documentLinkIndex?: LocalDocumentLinkIndex;
+}
+
 /**
  * Markdown renderer class
  */
 export class MarkdownRenderer {
   private syntaxHighlighting: boolean;
+  private activeRenderContext?: MarkdownRenderContext;
 
   constructor(options: MarkdownRendererOptions = {}) {
     this.syntaxHighlighting = options.syntaxHighlighting !== false;
@@ -50,8 +60,14 @@ export class MarkdownRenderer {
   /**
    * Render markdown to HTML
    */
-  public render(markdown: string): string {
-    return marked(markdown);
+  public render(markdown: string, context?: MarkdownRenderContext): string {
+    this.activeRenderContext = context;
+
+    try {
+      return marked(markdown);
+    } finally {
+      this.activeRenderContext = undefined;
+    }
   }
 
   /**
@@ -72,7 +88,7 @@ export class MarkdownRenderer {
       title: string | null | undefined,
       text: string
     ) => {
-      const transformedHref = href.replace(/\.md$/, ".html");
+      const transformedHref = this.resolveLinkHref(href);
       const titleAttr = title ? ` title="${escapeHtmlAttribute(title)}"` : "";
       return `<a href="${escapeHtmlAttribute(transformedHref)}"${titleAttr}>${text}</a>`;
     };
@@ -81,7 +97,9 @@ export class MarkdownRenderer {
     renderer.code = (code: string, language: string | undefined) => {
       if (!this.syntaxHighlighting) {
         const escapedCode = escapeHtml(code);
-        const langClass = language ? ` class="language-${escapeHtmlAttribute(language)}"` : "";
+        const langClass = language
+          ? ` class="language-${escapeHtmlAttribute(language)}"`
+          : "";
         return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
       }
 
@@ -103,11 +121,26 @@ export class MarkdownRenderer {
 
       // Default behavior for unsupported languages or errors
       const escapedCode = escapeHtml(code);
-      const langClass = lang ? ` class="language-${escapeHtmlAttribute(lang)}"` : "";
+      const langClass = lang
+        ? ` class="language-${escapeHtmlAttribute(lang)}"`
+        : "";
       return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
     };
 
     marked.setOptions({ renderer });
+  }
+
+  private resolveLinkHref(href: string): string {
+    const renderContext = this.activeRenderContext;
+    if (!renderContext?.documentLinkIndex) {
+      return href.replace(/\.md$/, ".html");
+    }
+
+    return resolveLocalDocumentLink({
+      currentSourcePath: renderContext.currentSourcePath,
+      targetHref: href,
+      documentIndex: renderContext.documentLinkIndex,
+    }).resolvedHref;
   }
 
   /**

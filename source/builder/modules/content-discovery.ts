@@ -26,6 +26,7 @@ export interface ContentDocument {
 }
 
 export interface ContentDiscoveryResult {
+  publishedRootPath: string;
   documents: ContentDocument[];
   publishableDocuments: ContentDocument[];
   supplementCandidates: ContentDocument[];
@@ -64,6 +65,7 @@ export class ContentDiscovery {
       );
 
       return {
+        publishedRootPath: this.publishedRoot,
         documents: [],
         publishableDocuments: [],
         supplementCandidates: [],
@@ -167,6 +169,7 @@ export class ContentDiscovery {
     );
 
     return {
+      publishedRootPath: this.publishedRoot,
       documents,
       publishableDocuments,
       supplementCandidates,
