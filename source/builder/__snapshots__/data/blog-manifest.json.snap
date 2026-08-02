@@ -119,22 +119,9 @@
       "url": "/llm-as-sme.html",
       "filename": "llm-as-sme",
       "keywords": "technical writing, documentation, research, process, AI, LLM"
-    },
-    {
-      "title": "What Typography on KBR Looks Like",
-      "description": "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website",
-      "date": "2025-09-24",
-      "formattedDate": "September 24, 2025",
-      "tags": [
-        "design",
-        "typography",
-        "testing"
-      ],
-      "url": "/typography-test.html",
-      "filename": "typography-test"
     }
   ],
-  "totalPosts": 8,
+  "totalPosts": 7,
   "availableTags": [
     "AI",
     "intentionality",
@@ -143,7 +130,6 @@
     "boundaries",
     "career",
     "coding agents",
-    "design",
     "documentation",
     "goal setting",
     "habits",
@@ -153,8 +139,6 @@
     "professional growth",
     "research",
     "rule of thirds",
-    "testing",
-    "typography",
     "workflows"
   ],
   "tagsWithCounts": [
@@ -184,10 +168,6 @@
     },
     {
       "tag": "coding agents",
-      "count": 1
-    },
-    {
-      "tag": "design",
       "count": 1
     },
     {
@@ -224,14 +204,6 @@
     },
     {
       "tag": "rule of thirds",
-      "count": 1
-    },
-    {
-      "tag": "testing",
-      "count": 1
-    },
-    {
-      "tag": "typography",
       "count": 1
     },
     {

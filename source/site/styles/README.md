@@ -153,7 +153,6 @@ source/site/components/
 - Typography system (fonts, scales, weights)
 - Button styles (variants, sizes, states)
 - Layout utilities (container, card, flex)
-- Form styles (inputs, labels, validation)
 
 **Architecture Pattern**:
 Shared styles are defined as exportable CSS modules:

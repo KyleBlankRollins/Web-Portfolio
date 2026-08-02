@@ -1,9 +1,5 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import {
   TemplateEngine,
-  MetadataExtractor,
-  FrontmatterParser,
   type SeriesInfo,
   type Citation,
   type SupplementManifestEntry,
@@ -47,45 +43,10 @@ export interface TemplateVariables {
  */
 export class TemplateProcessor {
   private engine: TemplateEngine;
-  private metadataExtractor: MetadataExtractor;
-  private frontmatterParser: FrontmatterParser;
   private defaultTemplate: string = "base.html";
-  private partialCache: Map<string, string> = new Map();
 
   constructor() {
     this.engine = new TemplateEngine();
-    this.metadataExtractor = new MetadataExtractor();
-    this.frontmatterParser = new FrontmatterParser();
-  }
-
-  /**
-   * Load a shared markup partial from templates/partials, with caching.
-   *
-   * The template engine only substitutes variables - it has no include
-   * syntax - so shared markup is read here and passed in as a triple-brace
-   * variable. That keeps one copy of the markup on disk instead of one per
-   * page template.
-   */
-  private loadPartial(name: string): string {
-    const cached = this.partialCache.get(name);
-    if (cached !== undefined) {
-      return cached;
-    }
-
-    const partial = readFileSync(
-      join("source", "site", "templates", "partials", name),
-      "utf-8"
-    ).trim();
-
-    this.partialCache.set(name, partial);
-    return partial;
-  }
-
-  /**
-   * Check if content is already a complete HTML document
-   */
-  public isCompleteHtmlDocument(content: string): boolean {
-    return this.engine.isCompleteHtmlDocument(content);
   }
 
   /**
@@ -97,7 +58,7 @@ export class TemplateProcessor {
     templateName?: string
   ): string {
     // If content is already a complete HTML document, return it as-is
-    if (this.isCompleteHtmlDocument(content)) {
+    if (this.engine.isCompleteHtmlDocument(content)) {
       return content;
     }
 
@@ -117,33 +78,12 @@ export class TemplateProcessor {
     const allVariables: TemplateVariables = {
       ...variables,
       content,
-      head: this.engine.render(this.loadPartial("head.html"), variables),
-      header: this.loadPartial("header.html"),
-      footer: this.loadPartial("footer.html"),
+      head: this.engine.render(this.engine.loadPartial("head.html"), variables),
+      header: this.engine.loadPartial("header.html"),
+      footer: this.engine.loadPartial("footer.html"),
     };
 
     return this.engine.render(template, allVariables);
-  }
-
-  /**
-   * Extract metadata from HTML content (looking for comments or meta tags)
-   * Returns both the extracted metadata and the content with metadata comments removed
-   */
-  public extractMetadata(htmlContent: string): {
-    metadata: Partial<TemplateVariables>;
-    content: string;
-  } {
-    return this.metadataExtractor.extract(htmlContent);
-  }
-
-  /**
-   * Extract metadata from Markdown frontmatter
-   */
-  public extractMarkdownFrontmatter(markdownContent: string): {
-    metadata: Partial<TemplateVariables>;
-    content: string;
-  } {
-    return this.frontmatterParser.parse(markdownContent);
   }
 
   /**

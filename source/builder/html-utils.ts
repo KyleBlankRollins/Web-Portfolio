@@ -3,6 +3,9 @@ import {
   type TemplateVariables,
 } from "./template-processor.js";
 import { escapeHtml } from "./modules/html-utils.js";
+import { MetadataExtractor } from "./modules/metadata-extractor.js";
+
+const metadataExtractor = new MetadataExtractor();
 
 /**
  * Shared utility functions for HTML processing
@@ -41,9 +44,11 @@ export class HtmlProcessingUtils {
   ): Promise<string> {
     // Hand-written pages use metadata comments; generated documents provide
     // their already-parsed metadata directly.
-    const { metadata, content: cleanedContent } = options.metadata
+    const extracted = options.metadata
       ? { metadata: options.metadata, content }
-      : templateProcessor.extractMetadata(content);
+      : metadataExtractor.extract(content);
+    const metadata = extracted.metadata as Partial<TemplateVariables>;
+    const cleanedContent = extracted.content;
 
     // Create template variables - if no title found, try to extract from content
     const templateVariables: TemplateVariables = {

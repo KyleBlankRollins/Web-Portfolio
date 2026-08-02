@@ -409,8 +409,7 @@ The system successfully balances these competing requirements:
   "tagsWithCounts": [
     { "tag": "web-dev", "count": 1 },
     { "tag": "typescript", "count": 1 }
-  ],
-  "generatedAt": "2024-01-15T12:00:00.000Z"
+  ]
 }
 ```
 
@@ -446,7 +445,6 @@ npm run build
 ```typescript
 GitAwareBuildPipeline
 ├── shouldProcessMarkdown() → Only when .md files change
-├── shouldProcessHtml() → Only when source .html files change
 ├── shouldGenerateBlogManifest() → Only when markdown changes/deletions
 ├── shouldClearTemplateCache() → Only when templates change
 └── Centralized file change detection with caching
@@ -601,9 +599,8 @@ graph TD
 
 **Key Methods**:
 
-- `processMarkdownFile()` - Process individual Markdown file
+- `processContentDocument()` - Process an individual discovered Markdown document
 - `generateBlogManifest()` - Create blog post index
-- `setupHeadingRenderer()` - Configure automatic heading IDs
 
 ### TemplateProcessor
 
@@ -611,33 +608,14 @@ graph TD
 
 - Load and cache HTML templates
 - Perform variable substitution ({{variable}})
-- Extract metadata from HTML comments
 - Handle template inheritance
 - Manage template cache invalidation
-- Clean metadata comments from processed content
 
 **Key Methods**:
 
 - `processTemplate()` - Apply template with variables
-- `extractMetadata()` - Parse HTML metadata and return cleaned content
 - `loadTemplate()` - Load template from filesystem
 - `clearCache()` - Invalidate template cache
-
-**Enhanced Metadata Processing**:
-
-The `extractMetadata()` method has been enhanced to return both extracted metadata and cleaned content:
-
-```typescript
-public extractMetadata(htmlContent: string): {
-  metadata: Record<string, string>;
-  content: string;
-}
-```
-
-**Key Features**:
-
-- **Dual Return**: Returns both metadata object and content with comments removed
-- **Comment Removal**: Automatically strips metadata comments from content to prevent duplication
 - **Template Integration**: Cleaned content is used in template processing to avoid showing metadata comments in final HTML
 
 **Metadata Comment Format**:
@@ -714,9 +692,9 @@ This enhancement ensures that:
 **Key Methods**:
 
 - `shouldProcessMarkdown()` - Determine if markdown processing should run
-- `shouldProcessHtml()` - Determine if HTML processing should run
 - `shouldGenerateBlogManifest()` - Determine if blog manifest generation should run
 - `getChangedMarkdownFiles()` - Get list of changed markdown files
+- `getChangedMarkdownPaths()` - Get changed markdown files including deletions
 - `getChangedHtmlFiles()` - Get list of changed HTML files
 - `logBuildStrategy()` - Log the current build approach and detected changes
 
@@ -909,14 +887,14 @@ Intelligent HMR for different file types:
 ### Adding New Template Variables
 
 1. Extend `TemplateVariables` interface in `template-processor.ts`
-2. Add extraction logic in `extractMetadata()` method
+2. Add extraction logic in the appropriate metadata module
 3. Update template files to use new variables
 4. Document new variables in this README
 
 ### Custom Markdown Rendering
 
 1. Extend `MarkdownProcessor` class
-2. Override `setupHeadingRenderer()` or add new renderers
+2. Update the MarkdownRenderer module or add new renderers
 3. Configure marked.js options in constructor
 4. Add custom post-processing steps
 

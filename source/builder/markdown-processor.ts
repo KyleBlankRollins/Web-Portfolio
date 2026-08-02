@@ -163,20 +163,6 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Render markdown content in development fallback paths using the same resolver.
-   */
-  public renderMarkdownBody(content: string, sourcePath: string): string {
-    const commentFreeContent = this.preprocessor.stripComments(content);
-    const preprocessedContent =
-      this.preprocessor.preprocessAdmonitions(commentFreeContent);
-
-    return this.renderer.render(preprocessedContent, {
-      currentSourcePath: sourcePath,
-      documentLinkIndex: this.localDocumentLinkIndex,
-    });
-  }
-
-  /**
    * Inject title as H1 and add blog metadata below it
    */
   private injectTitleAndMetadata(

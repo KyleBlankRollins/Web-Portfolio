@@ -291,29 +291,43 @@ function normalizePathForOutput(pathValue: string): string {
   return pathValue.replace(/\\/g, "/");
 }
 
+let markdownRebuildPromise: Promise<void> | undefined;
+
 async function rebuildAllMarkdownDocuments(
   markdownProcessor: MarkdownProcessor
 ): Promise<void> {
-  const discoveryResult = new ContentDiscovery().discover();
-  const localDocumentLinkIndex = createLocalDocumentLinkIndex(
-    discoveryResult.documents,
-    discoveryResult.publishableDocuments,
-    discoveryResult.publishedRootPath
-  );
-
-  markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
-  markdownProcessor.resetBuildState();
-  markdownProcessor.rebuildManifestFromDocuments(
-    discoveryResult.publishableDocuments
-  );
-
-  for (const document of discoveryResult.publishableDocuments) {
-    markdownProcessor.processContentDocument(document);
+  if (markdownRebuildPromise) {
+    return markdownRebuildPromise;
   }
 
-  markdownProcessor.rebuildManifestFromDocuments(
-    discoveryResult.publishableDocuments
-  );
+  markdownRebuildPromise = (async () => {
+    const discoveryResult = new ContentDiscovery().discover();
+    const localDocumentLinkIndex = createLocalDocumentLinkIndex(
+      discoveryResult.documents,
+      discoveryResult.publishableDocuments,
+      discoveryResult.publishedRootPath
+    );
+
+    markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
+    markdownProcessor.resetBuildState();
+    markdownProcessor.rebuildManifestFromDocuments(
+      discoveryResult.publishableDocuments
+    );
+
+    for (const document of discoveryResult.publishableDocuments) {
+      markdownProcessor.processContentDocument(document);
+    }
+
+    markdownProcessor.rebuildManifestFromDocuments(
+      discoveryResult.publishableDocuments
+    );
+  })();
+
+  try {
+    await markdownRebuildPromise;
+  } finally {
+    markdownRebuildPromise = undefined;
+  }
 }
 
 /**

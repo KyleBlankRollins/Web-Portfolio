@@ -16,21 +16,12 @@ export function setupApiRoutes(
    * Get all posts from backlog
    */
   app.get("/api/posts", (_req: Request, res: Response) => {
-    try {
-      const posts = parser.parse();
-      const response: ApiResponse<typeof posts> = {
-        success: true,
-        data: posts,
-      };
-      res.json(response);
-    } catch (error) {
-      console.error("API Error: Failed to get posts", error);
-      const response: ApiResponse<null> = {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      };
-      res.status(500).json(response);
-    }
+    const posts = parser.parse();
+    const response: ApiResponse<typeof posts> = {
+      success: true,
+      data: posts,
+    };
+    res.json(response);
   });
 
   /**
@@ -40,41 +31,32 @@ export function setupApiRoutes(
   app.patch(
     "/api/posts/:id",
     async (req: Request<{ id: string }>, res: Response) => {
-      try {
-        const { id } = req.params;
-        const updates: UpdatePostRequest = req.body;
+      const { id } = req.params;
+      const updates: UpdatePostRequest = req.body;
 
-        // For now, we only support status updates
-        if (updates.status) {
-          const success = await writer.updatePostStatus(id, updates.status);
+      // For now, we only support status updates
+      if (updates.status) {
+        const success = await writer.updatePostStatus(id, updates.status);
 
-          if (success) {
-            const response: ApiResponse<{ id: string }> = {
-              success: true,
-              data: { id },
-            };
-            res.json(response);
-          } else {
-            const response: ApiResponse<null> = {
-              success: false,
-              error: "Failed to update post status",
-            };
-            res.status(400).json(response);
-          }
+        if (success) {
+          const response: ApiResponse<{ id: string }> = {
+            success: true,
+            data: { id },
+          };
+          res.json(response);
         } else {
           const response: ApiResponse<null> = {
             success: false,
-            error: "No valid updates provided",
+            error: "Failed to update post status",
           };
           res.status(400).json(response);
         }
-      } catch (error) {
-        console.error("API Error: Failed to update post", error);
+      } else {
         const response: ApiResponse<null> = {
           success: false,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: "No valid updates provided",
         };
-        res.status(500).json(response);
+        res.status(400).json(response);
       }
     }
   );
@@ -84,38 +66,29 @@ export function setupApiRoutes(
    * Create a new post
    */
   app.post("/api/posts", async (req: Request, res: Response) => {
-    try {
-      const { title, status = "planned" } = req.body;
+    const { title, status = "planned" } = req.body;
 
-      if (!title) {
-        const response: ApiResponse<null> = {
-          success: false,
-          error: "Title is required",
-        };
-        res.status(400).json(response);
-        return;
-      }
-
-      const success = await writer.addPost(title, status);
-
-      if (success) {
-        const response: ApiResponse<{ title: string }> = {
-          success: true,
-          data: { title },
-        };
-        res.status(201).json(response);
-      } else {
-        const response: ApiResponse<null> = {
-          success: false,
-          error: "Failed to create post",
-        };
-        res.status(500).json(response);
-      }
-    } catch (error) {
-      console.error("API Error: Failed to create post", error);
+    if (!title) {
       const response: ApiResponse<null> = {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: "Title is required",
+      };
+      res.status(400).json(response);
+      return;
+    }
+
+    const success = await writer.addPost(title, status);
+
+    if (success) {
+      const response: ApiResponse<{ title: string }> = {
+        success: true,
+        data: { title },
+      };
+      res.status(201).json(response);
+    } else {
+      const response: ApiResponse<null> = {
+        success: false,
+        error: "Failed to create post",
       };
       res.status(500).json(response);
     }
@@ -128,30 +101,21 @@ export function setupApiRoutes(
   app.delete(
     "/api/posts/:id",
     async (req: Request<{ id: string }>, res: Response) => {
-      try {
-        const { id } = req.params;
-        const success = await writer.removePost(id);
+      const { id } = req.params;
+      const success = await writer.removePost(id);
 
-        if (success) {
-          const response: ApiResponse<{ id: string }> = {
-            success: true,
-            data: { id },
-          };
-          res.json(response);
-        } else {
-          const response: ApiResponse<null> = {
-            success: false,
-            error: "Failed to remove post",
-          };
-          res.status(400).json(response);
-        }
-      } catch (error) {
-        console.error("API Error: Failed to remove post", error);
+      if (success) {
+        const response: ApiResponse<{ id: string }> = {
+          success: true,
+          data: { id },
+        };
+        res.json(response);
+      } else {
         const response: ApiResponse<null> = {
           success: false,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: "Failed to remove post",
         };
-        res.status(500).json(response);
+        res.status(400).json(response);
       }
     }
   );

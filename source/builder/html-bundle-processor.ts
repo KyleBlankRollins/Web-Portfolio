@@ -5,9 +5,9 @@ import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
 import { ThemeProcessor } from "./theme-processor.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
-import type { Rolldown } from "vite";
+import type { OutputBundle, PluginContext } from "rolldown";
 
-type EmitFile = Rolldown.PluginContext["emitFile"];
+type EmitFile = PluginContext["emitFile"];
 
 /**
  * Handles HTML bundle generation during build
@@ -23,7 +23,7 @@ export class HtmlBundleProcessor {
    * Process HTML files in the Vite bundle
    */
   async processBundle(
-    bundle: Rolldown.OutputBundle,
+    bundle: OutputBundle,
     emitFile: EmitFile,
     markdownProcessor?: MarkdownProcessor
   ): Promise<void> {
@@ -54,7 +54,7 @@ export class HtmlBundleProcessor {
   /**
    * Extract CSS and JS assets from the bundle
    */
-  private extractAssets(bundle: Rolldown.OutputBundle): {
+  private extractAssets(bundle: OutputBundle): {
     css: string[];
     js: string[];
   } {
@@ -76,9 +76,7 @@ export class HtmlBundleProcessor {
   /**
    * Process HTML files already in the Vite bundle
    */
-  private async processExistingHtmlFiles(
-    bundle: Rolldown.OutputBundle
-  ): Promise<void> {
+  private async processExistingHtmlFiles(bundle: OutputBundle): Promise<void> {
     const existingHtmlFiles = Object.keys(bundle).filter((fileName) =>
       fileName.endsWith(".html")
     );
@@ -116,9 +114,12 @@ export class HtmlBundleProcessor {
   ): Promise<void> {
     // Only process HTML files from pages/ directory now
     // Generated HTML files are handled by emitGeneratedFiles()
-    const pagesFiles = FileSystemHelper.findFiles("pages", [".html"]);
+    const pagesFiles = FileSystemHelper.findFiles(
+      join(process.cwd(), "source", "site", "pages"),
+      [".html"]
+    ).filter((filePath) => !basename(filePath).startsWith("_"));
 
-    BuildLogger.info(`� Processing ${pagesFiles.length} pages HTML files`);
+    BuildLogger.info(`✓ Processing ${pagesFiles.length} pages HTML files`);
 
     for (const filePath of pagesFiles) {
       try {

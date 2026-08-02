@@ -12,6 +12,16 @@ import type {
 } from "./markdown-processor.js";
 import { ThemeProcessor } from "./theme-processor.js";
 
+const themesDir = path.join(
+  process.cwd(),
+  "source",
+  "site",
+  "styles",
+  "themes"
+);
+const themeProcessor = new ThemeProcessor(themesDir);
+themeProcessor.processThemes();
+
 /**
  * Creates middleware that blocks direct access to source directories
  */
@@ -156,17 +166,6 @@ function handleThemeManifestRequest(
   _next: Connect.NextFunction
 ) {
   try {
-    const themesDir = path.join(
-      process.cwd(),
-      "source",
-      "site",
-      "styles",
-      "themes"
-    );
-    const themeProcessor = new ThemeProcessor(themesDir);
-
-    // Process themes and generate manifest
-    themeProcessor.processThemes();
     const manifestJson = themeProcessor.generateThemeManifestJson();
 
     res.setHeader("Content-Type", "application/json");
@@ -291,7 +290,10 @@ function setupFileWatcher(
   onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
   server.ws.on("file-changed", ({ file }) => {
-    if (file.includes("/templates/") || file.includes("/includes/")) {
+    if (file.includes("/styles/themes/") && file.endsWith(".css")) {
+      BuildLogger.info(`🔄 Theme file changed: ${file}`);
+      themeProcessor.processThemes();
+    } else if (file.includes("/templates/") || file.includes("/includes/")) {
       BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
       templateProcessor.clearCache();
 

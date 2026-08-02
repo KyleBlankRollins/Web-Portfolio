@@ -199,16 +199,25 @@ export class BacklogWriter {
     try {
       const content = fs.readFileSync(this.backlogPath, "utf-8");
       const lines = content.split("\n");
+      let foundPost = false;
 
       const filteredLines = lines.filter((line) => {
         const trimmed = line.trim();
         if (trimmed.startsWith("-")) {
           const title = trimmed.replace(/^-\s+/, "").trim();
           const id = this.titleToId(title);
+          if (id === postId) {
+            foundPost = true;
+          }
           return id !== postId;
         }
         return true;
       });
+
+      if (!foundPost) {
+        console.warn(`Admin: Post ${postId} not found in backlog`);
+        return false;
+      }
 
       fs.writeFileSync(this.backlogPath, filteredLines.join("\n"), "utf-8");
 

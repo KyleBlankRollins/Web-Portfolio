@@ -63,6 +63,18 @@ export function startAdminServer() {
     });
   });
 
+  // Express 5 forwards rejected async route promises here.
+  app.use(
+    (error: unknown, _req: Request, res: Response, _next: NextFunction) => {
+      console.error("API Error:", error);
+      const response = {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      };
+      res.status(500).json(response);
+    }
+  );
+
   // 404 handler
   app.use((_req: Request, res: Response) => {
     res.status(404).json({

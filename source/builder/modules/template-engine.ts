@@ -23,6 +23,7 @@ export interface TemplateVariables {
  */
 export class TemplateEngine {
   private templateCache: Map<string, string> = new Map();
+  private partialCache: Map<string, string> = new Map();
   private templateDir: string;
 
   constructor(templateDir: string = "source/site/templates") {
@@ -60,6 +61,24 @@ export class TemplateEngine {
 
     BuildLogger.info(`✓ Loaded template: ${templateName}`);
     return templateContent;
+  }
+
+  /**
+   * Load a shared markup partial with caching.
+   */
+  public loadPartial(
+    partialName: string,
+    partialDir: string = "source/site/templates/partials"
+  ): string {
+    const cached = this.partialCache.get(partialName);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const partialPath = join(partialDir, partialName);
+    const partial = readFileSync(partialPath, "utf-8").trim();
+    this.partialCache.set(partialName, partial);
+    return partial;
   }
 
   /**
@@ -197,5 +216,6 @@ export class TemplateEngine {
    */
   public clearCache(): void {
     this.templateCache.clear();
+    this.partialCache.clear();
   }
 }

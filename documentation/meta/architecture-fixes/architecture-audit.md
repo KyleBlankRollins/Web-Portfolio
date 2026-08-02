@@ -48,8 +48,8 @@ Update the status column as work lands.
 | AF-03 | Builder and site share data contracts but no type definitions   | High     | fixed   |
 | AF-04 | `typographyStyles` duplicates `typography.css`, and has drifted | Medium   | fixed   |
 | AF-05 | The document head and theme bootstrap exist in three places     | Medium   | fixed   |
-| AF-06 | Processor facades delegate without adding behaviour             | Low      | open    |
-| AF-07 | Admin API routes repeat one try/catch four times                | Low      | open    |
+| AF-06 | Processor facades delegate without adding behaviour             | Low      | fixed   |
+| AF-07 | Admin API routes repeat one try/catch four times                | Low      | fixed   |
 | AF-08 | Template cleanup regex deletes literal braces from content      | High     | fixed   |
 | AF-09 | Code block restoration corrupts content containing `$`          | Medium   | fixed   |
 | AF-10 | Two near-identical HTML escape functions                        | Low      | fixed   |
@@ -66,15 +66,15 @@ Update the status column as work lands.
 | AF-21 | `FileSystemHelper.readFile` is unused and misleadingly async    | Low      | fixed   |
 | AF-22 | Two unused exports in `theme-config.ts`                         | Low      | fixed   |
 | AF-23 | `formStyles` has no importers                                   | Low      | fixed   |
-| AF-24 | `ContentDiscovery` re-walks the filesystem per request          | Medium   | open    |
+| AF-24 | `ContentDiscovery` re-walks the filesystem per request          | Medium   | fixed   |
 | AF-25 | Rollup and Connect APIs are typed as `any`                      | Medium   | fixed   |
-| AF-26 | `findFiles` guesses at path roots                               | Low      | open    |
+| AF-26 | `findFiles` guesses at path roots                               | Low      | fixed   |
 | AF-27 | `scripts/lint-prose.ts` is not type-checked                     | Low      | fixed   |
-| AF-28 | Test and demo pages ship to production                          | Medium   | open    |
-| AF-29 | `netlify.toml` carries a stale branch context                   | Low      | open    |
+| AF-28 | Test and demo pages ship to production                          | Medium   | fixed   |
+| AF-29 | `netlify.toml` carries a stale branch context                   | Low      | fixed   |
 | AF-30 | No continuous integration                                       | Medium   | fixed   |
-| AF-31 | Mojibake in build log output                                    | Low      | open    |
-| AF-32 | Untracked build artifacts in the repository root                | Low      | open    |
+| AF-31 | Mojibake in build log output                                    | Low      | fixed   |
+| AF-32 | Untracked build artifacts in the repository root                | Low      | fixed   |
 | AF-33 | Three different Node version contracts, none enforced           | High     | fixed   |
 | AF-34 | `build.minify: "esbuild"` opts out of Vite 8's default          | Low      | fixed   |
 | AF-35 | `manualChunks` is Rolldown's compat shim, not its API           | Low      | fixed   |
@@ -367,6 +367,8 @@ Declared on the options interface and defaulted to `"main"`, but never consumed.
 
 **Severity:** Low
 **Location:** `builder/modules/metadata-extractor.ts:145`, `:156`, and four other files
+
+**Status note:** Remains open and is deferred to a separate date-utility cleanup; it is outside Phase 7 and was not changed here.
 
 `extractComment()` and `formatDate()` have no callers. The latter is byte-identical to the private, actively used `FrontmatterParser.formatDate` (`modules/frontmatter-parser.ts:234`).
 

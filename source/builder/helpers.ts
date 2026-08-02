@@ -13,29 +13,20 @@ export class FileSystemHelper {
     extensions: string[],
     excludeDirectories: string[] = []
   ): string[] {
-    let directoryPath: string;
-
-    // Avoid concatenating the path for every recursive call
-    if (directory.includes(join("source", "site"))) {
-      directoryPath = directory;
-    } else {
-      directoryPath = join("source", "site", directory);
-    }
-
     const files: string[] = [];
 
-    if (!existsSync(directoryPath)) {
+    if (!existsSync(directory)) {
       BuildLogger.info(`🛑 directory path doesn't exist`);
 
       return files;
     }
 
-    const entries = readdirSync(directoryPath, {
+    const entries = readdirSync(directory, {
       withFileTypes: true,
     });
 
     for (const entry of entries) {
-      const fullPath = join(directoryPath, entry.name);
+      const fullPath = join(directory, entry.name);
 
       if (entry.isDirectory()) {
         // Skip excluded directories
