@@ -20,9 +20,9 @@
  *   tsx scripts/lint-prose.ts --help
  */
 
-import { spawn } from "child_process";
-import { existsSync, statSync } from "fs";
-import { join, relative } from "path";
+import { spawn } from "node:child_process";
+import { existsSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import { glob } from "glob";
 
 // ANSI color codes for output formatting

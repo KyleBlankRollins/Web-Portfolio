@@ -148,41 +148,4 @@ export class MetadataExtractor {
     const match = htmlContent.match(regex);
     return match ? match[1].trim() : undefined;
   }
-
-  /**
-   * Format a date string for display
-   * Parses YYYY-MM-DD format and creates date in local timezone to avoid day-off errors
-   */
-  public formatDate(dateStr: string): string {
-    try {
-      // Parse YYYY-MM-DD format to avoid timezone issues
-      const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (match) {
-        const year = parseInt(match[1], 10);
-        const month = parseInt(match[2], 10) - 1; // Month is 0-indexed
-        const day = parseInt(match[3], 10);
-        const date = new Date(year, month, day);
-
-        return date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-      }
-
-      // Fallback for other date formats
-      const date = new Date(dateStr);
-      if (isNaN(date.getTime())) {
-        return dateStr; // Return original if invalid
-      }
-
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    } catch {
-      return dateStr; // Return original if formatting fails
-    }
-  }
 }

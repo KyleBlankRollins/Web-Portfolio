@@ -187,37 +187,44 @@ This makes the coupling explicit and both modules independently testable, which 
 
 ---
 
-## Step 6 — AF-40: the standard decorators spike
+## Step 6 — AF-40: the standard decorators spike — RESOLVED, do not re-run
 
-**This step may correctly end in "not yet." That is a successful outcome, not a failure.**
+**Outcome: ABANDON. AF-40 is `wontfix`, blocked upstream on [oxc#9170](https://github.com/oxc-project/oxc/issues/9170).**
 
-The project uses `experimentalDecorators: true` with `useDefineForClassFields: false`, and components write `@state() declare private currentPath: string`. Lit 3.3 and TypeScript 7 both support TC39 standard decorators (`@state() accessor currentPath = ""`), which is the successor path.
+This step is kept as a record rather than an instruction. Do not re-run it. The full evidence is in `architecture-audit.md` under AF-40; the summary is:
 
-Two things are already established and you do not need to re-derive them:
+- **TypeScript is not the blocker.** TS 7 supports standard decorators and Lit 3.3's typings are standard-decorator-ready. `@state() accessor x!: T` and its variants compile clean.
+- **Oxc is the blocker.** It lowers legacy decorators but not standard ones. With `experimentalDecorators: false` and a correctly converted component, the emitted chunk contains raw `@n()accessor supplements=[]` and `node --check` throws `SyntaxError`. The site would not load.
+- Re-open when oxc#9170 closes.
 
-1. `transformWithOxc` leaves standard decorator syntax and the `accessor` keyword **completely untransformed**. No browser ships decorators, so such output would not parse.
-2. In a full build, a standard-decorator component _was_ transformed — but into the **legacy** `__decorate` form, because `experimentalDecorators: true` makes Oxc apply TS-legacy semantics regardless of source syntax.
+### Correction to this step's original instructions
 
-What is unknown: whether Oxc downlevels standard decorators when `experimentalDecorators` is **off**. That is the entire question this spike answers.
+The earlier version of this step told the implementer to "convert exactly **one** component" and then run `npx tsc --noEmit`. **That instruction was wrong**, and it is worth understanding why, because it produced a misleading result.
 
-Procedure:
+`experimentalDecorators` is a **project-wide** compiler switch. Flipping it while 96 of 97 decorated fields still use the old form guarantees a wall of errors in the untouched components — 67 × TS1206, 7 × TS1270, 7 × TS1240, 20 × TS6133 across `source/site` alone. Those errors say nothing about feasibility; they say the migration is incomplete, which it was by design.
 
-1. Branch. Set `experimentalDecorators: false` and `useDefineForClassFields: true` in `tsconfig.json`.
-2. Convert exactly **one** component — `navigation.ts` is the smallest with `@state`. Change `@state() declare private currentPath: string` to `@state() accessor currentPath = ""`.
-3. `npx tsc --noEmit`, then `npm run build`.
-4. Inspect the emitted chunk containing that component.
+An implementer following the original step would reasonably read that wall as "TypeScript cannot do this" and stop — which is exactly what happened, and it recorded the wrong reason on the finding. The correct reason lay one step further downstream, in the bundler, and could only be reached by ignoring `tsc` and inspecting the emitted bundle.
 
-> ### GATE 8.8 — Decide on evidence, not preference
+**The general lesson for gates in this plan:** when a spike flips a project-wide flag, `tsc` is not a valid checkpoint for a single-file change, because the flag's blast radius is the whole project. The checkpoint has to be the artifact the flag actually affects. Had GATE 8.8 said "run `vite build`, which does not typecheck, and inspect the chunk" rather than implying a `tsc` gate first, it would have reached the right answer directly.
+
+### If this is ever re-run
+
+Use this procedure, not the original one:
+
+1. Branch. Set `experimentalDecorators: false` and `useDefineForClassFields: true`.
+2. Convert **all** decorated fields, not one — roughly 58 `@state()` and 39 `@property()` across 30 components. Mechanically, `declare x: T` → `accessor x!: T`, and `private x = init` → `accessor x = init`.
+3. `npx tsc --noEmit` should now be clean. If it is not, the migration is still incomplete — that is the only thing a `tsc` failure means here.
+4. `npm run build`, then inspect the emitted chunk.
+
+> ### GATE 8.8 — Decide on the bundle, not on the compiler
 >
-> - **Trigger:** the single-component build has completed.
-> - **Action:** locate the emitted chunk and count occurrences of raw `@` decorator syntax applied to a class or field, the literal keyword `accessor`, and any `__decorate` / `__esDecorate` helper.
+> - **Trigger:** the fully converted build has completed.
+> - **Action:** locate the emitted chunk containing a converted component. Run `node --check` on a copy of it, and count occurrences of the literal `accessor` keyword and of raw `@` decorator syntax applied to a class or field.
 > - **Checkpoint:** exactly one of two conclusions, stated explicitly:
->   - **PROCEED** — zero raw decorator syntax, zero surviving `accessor` keyword, and a downlevel helper present. Oxc handles it. Migrate the remaining components.
->   - **ABANDON** — any raw decorator syntax or `accessor` keyword survives into the bundle. Oxc cannot downlevel. Revert the tsconfig change and the component, and set AF-40 to `wontfix` with this evidence as the justification.
-> - **Evidence:** paste the three counts and the surrounding bundle excerpt, then state PROCEED or ABANDON.
-> - **Blocked:** you may not migrate a second component before this gate resolves, and you may not resolve it by reading documentation. The question is what **this** toolchain emits, and the only thing that answers it is the bundle. Shipping syntax no browser parses would break the entire site while every other gate in this plan stayed green — the snapshot normalizes asset hashes and would not notice.
-
-If PROCEED: migrate the remaining components one at a time, running `npm test` after each. If ABANDON: AF-39 still stands and is already committed.
+>   - **PROCEED** — `node --check` parses the chunk, zero surviving `accessor` keyword, zero raw decorator syntax, and a downlevel helper present.
+>   - **ABANDON** — `node --check` throws, or either token survives. Revert everything and leave AF-40 `wontfix`.
+> - **Evidence:** paste the `node --check` result, the two counts, and the surrounding bundle excerpt. Then state PROCEED or ABANDON.
+> - **Blocked:** a green `tsc` does not resolve this gate and never did. The Phase 1 snapshot does not resolve it either — it normalizes asset fingerprints and the emitted HTML is byte-identical whether or not the JavaScript parses, so **every other gate in this plan stays green while the site is completely broken**. `node --check` on the chunk is the only checkpoint that distinguishes the two outcomes.
 
 ---
 

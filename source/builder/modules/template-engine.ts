@@ -3,8 +3,8 @@
  * Handles template loading, caching, and variable substitution
  */
 
-import { readFileSync, existsSync } from "fs";
-import { join } from "path";
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 import { BuildLogger, StringHelper } from "../helpers.js";
 import { escapeHtml } from "./html-utils.js";
 

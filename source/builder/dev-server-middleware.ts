@@ -1,8 +1,8 @@
 import type { ViteDevServer } from "vite";
-import type * as Connect from "connect";
-import type { ServerResponse } from "http";
-import * as fs from "fs";
-import * as path from "path";
+import type { Connect } from "vite";
+import type { ServerResponse } from "node:http";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import {
   TemplateProcessor,
   type TemplateVariables,

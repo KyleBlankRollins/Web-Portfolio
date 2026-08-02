@@ -41,52 +41,52 @@ Update the status column as work lands.
 
 ## Triage summary
 
-| ID    | Finding                                                         | Severity | Status |
-| ----- | --------------------------------------------------------------- | -------- | ------ |
-| AF-01 | No automated tests cover the build pipeline                     | Critical | fixed  |
-| AF-02 | Metadata is serialized to HTML comments and re-parsed           | High     | open   |
-| AF-03 | Builder and site share data contracts but no type definitions   | High     | open   |
-| AF-04 | `typographyStyles` duplicates `typography.css`, and has drifted | Medium   | open   |
-| AF-05 | The document head and theme bootstrap exist in three places     | Medium   | open   |
-| AF-06 | Processor facades delegate without adding behaviour             | Low      | open   |
-| AF-07 | Admin API routes repeat one try/catch four times                | Low      | open   |
-| AF-08 | Template cleanup regex deletes literal braces from content      | High     | open   |
-| AF-09 | Code block restoration corrupts content containing `$`          | Medium   | open   |
-| AF-10 | Two near-identical HTML escape functions                        | Low      | open   |
-| AF-11 | `generateTagsHtml` is the one generator that skips escaping     | Low      | open   |
-| AF-12 | `require()` calls in an ESM package                             | Low      | open   |
-| AF-13 | Dev server markdown fallback renders differently from build     | Medium   | open   |
-| AF-14 | Build status is logged twice per git-aware build                | Low      | open   |
-| AF-15 | Three custom events are dispatched with no listeners            | Low      | open   |
-| AF-16 | `GitAwareBuildPipeline` has an unreachable subsystem            | Low      | open   |
-| AF-17 | `GitUtils` base-branch comparison is entirely unused            | Low      | open   |
-| AF-18 | `KBRBuilderOptions.baseBranch` is declared and never read       | Low      | open   |
-| AF-19 | Four unused public methods on `MarkdownProcessor`               | Low      | open   |
-| AF-20 | `MetadataExtractor` dead methods, and five `formatDate` copies  | Low      | open   |
-| AF-21 | `FileSystemHelper.readFile` is unused and misleadingly async    | Low      | open   |
-| AF-22 | Two unused exports in `theme-config.ts`                         | Low      | open   |
-| AF-23 | `formStyles` has no importers                                   | Low      | open   |
-| AF-24 | `ContentDiscovery` re-walks the filesystem per request          | Medium   | open   |
-| AF-25 | Rollup and Connect APIs are typed as `any`                      | Medium   | fixed  |
-| AF-26 | `findFiles` guesses at path roots                               | Low      | open   |
-| AF-27 | `scripts/lint-prose.ts` is not type-checked                     | Low      | fixed  |
-| AF-28 | Test and demo pages ship to production                          | Medium   | open   |
-| AF-29 | `netlify.toml` carries a stale branch context                   | Low      | open   |
-| AF-30 | No continuous integration                                       | Medium   | fixed  |
-| AF-31 | Mojibake in build log output                                    | Low      | open   |
-| AF-32 | Untracked build artifacts in the repository root                | Low      | open   |
-| AF-33 | Three different Node version contracts, none enforced           | High     | open   |
-| AF-34 | `build.minify: "esbuild"` opts out of Vite 8's default          | Low      | open   |
-| AF-35 | `manualChunks` is Rolldown's compat shim, not its API           | Low      | open   |
-| AF-36 | `prismjs` is build-time only but sits in `dependencies`         | Medium   | open   |
-| AF-37 | `build.target` and tsconfig `target` disagree                   | Low      | open   |
-| AF-38 | Two type imports reach around Vite to its own dependencies      | Medium   | open   |
-| AF-39 | `emitDecoratorMetadata` ships reflection nothing reads          | Low      | open   |
-| AF-40 | Legacy decorators, where standard decorators are the successor  | Low      | open   |
-| AF-41 | `marked.setOptions` mutates global state across modules         | Medium   | open   |
-| AF-42 | Node builtins imported without the `node:` prefix               | Low      | open   |
-| AF-43 | `__dirname` used in an ESM-only package                         | Low      | open   |
-| AF-44 | `@types/glob` is redundant and five majors stale                | Low      | open   |
+| ID    | Finding                                                         | Severity | Status  |
+| ----- | --------------------------------------------------------------- | -------- | ------- |
+| AF-01 | No automated tests cover the build pipeline                     | Critical | fixed   |
+| AF-02 | Metadata is serialized to HTML comments and re-parsed           | High     | open    |
+| AF-03 | Builder and site share data contracts but no type definitions   | High     | open    |
+| AF-04 | `typographyStyles` duplicates `typography.css`, and has drifted | Medium   | open    |
+| AF-05 | The document head and theme bootstrap exist in three places     | Medium   | open    |
+| AF-06 | Processor facades delegate without adding behaviour             | Low      | open    |
+| AF-07 | Admin API routes repeat one try/catch four times                | Low      | open    |
+| AF-08 | Template cleanup regex deletes literal braces from content      | High     | open    |
+| AF-09 | Code block restoration corrupts content containing `$`          | Medium   | open    |
+| AF-10 | Two near-identical HTML escape functions                        | Low      | open    |
+| AF-11 | `generateTagsHtml` is the one generator that skips escaping     | Low      | open    |
+| AF-12 | `require()` calls in an ESM package                             | Low      | partial |
+| AF-13 | Dev server markdown fallback renders differently from build     | Medium   | open    |
+| AF-14 | Build status is logged twice per git-aware build                | Low      | open    |
+| AF-15 | Three custom events are dispatched with no listeners            | Low      | open    |
+| AF-16 | `GitAwareBuildPipeline` has an unreachable subsystem            | Low      | fixed   |
+| AF-17 | `GitUtils` base-branch comparison is entirely unused            | Low      | fixed   |
+| AF-18 | `KBRBuilderOptions.baseBranch` is declared and never read       | Low      | fixed   |
+| AF-19 | Four unused public methods on `MarkdownProcessor`               | Low      | fixed   |
+| AF-20 | `MetadataExtractor` dead methods, and five `formatDate` copies  | Low      | open    |
+| AF-21 | `FileSystemHelper.readFile` is unused and misleadingly async    | Low      | fixed   |
+| AF-22 | Two unused exports in `theme-config.ts`                         | Low      | fixed   |
+| AF-23 | `formStyles` has no importers                                   | Low      | fixed   |
+| AF-24 | `ContentDiscovery` re-walks the filesystem per request          | Medium   | open    |
+| AF-25 | Rollup and Connect APIs are typed as `any`                      | Medium   | fixed   |
+| AF-26 | `findFiles` guesses at path roots                               | Low      | open    |
+| AF-27 | `scripts/lint-prose.ts` is not type-checked                     | Low      | fixed   |
+| AF-28 | Test and demo pages ship to production                          | Medium   | open    |
+| AF-29 | `netlify.toml` carries a stale branch context                   | Low      | open    |
+| AF-30 | No continuous integration                                       | Medium   | fixed   |
+| AF-31 | Mojibake in build log output                                    | Low      | open    |
+| AF-32 | Untracked build artifacts in the repository root                | Low      | open    |
+| AF-33 | Three different Node version contracts, none enforced           | High     | fixed   |
+| AF-34 | `build.minify: "esbuild"` opts out of Vite 8's default          | Low      | fixed   |
+| AF-35 | `manualChunks` is Rolldown's compat shim, not its API           | Low      | fixed   |
+| AF-36 | `prismjs` is build-time only but sits in `dependencies`         | Medium   | fixed   |
+| AF-37 | `build.target` and tsconfig `target` disagree                   | Low      | fixed   |
+| AF-38 | Two type imports reach around Vite to its own dependencies      | Medium   | fixed   |
+| AF-39 | `emitDecoratorMetadata` ships reflection nothing reads          | Low      | fixed   |
+| AF-40 | Legacy decorators, where standard decorators are the successor  | Low      | wontfix |
+| AF-41 | `marked.setOptions` mutates global state across modules         | Medium   | fixed   |
+| AF-42 | Node builtins imported without the `node:` prefix               | Low      | fixed   |
+| AF-43 | `__dirname` used in an ESM-only package                         | Low      | fixed   |
+| AF-44 | `@types/glob` is redundant and five majors stale                | Low      | fixed   |
 
 ---
 
@@ -542,15 +542,15 @@ The upgrade correctly converted `manualChunks` from the object form to a functio
 
 ```ts
 output: {
-  advancedChunks: {
+  codeSplitting: {
     groups: [{ name: "lit", test: /node_modules[\\/]lit/ }],
   },
 }
 ```
 
-`advancedChunks` also exposes `minSize`, `maxSize`, `minShareCount`, and `includeDependenciesRecursively` (`node_modules/rolldown/dist/shared/define-config-DSMNXceb.d.mts:849-857`), none of which a `manualChunks` function can express.
+`codeSplitting` also exposes `minSize`, `maxSize`, `minShareCount`, and `includeDependenciesRecursively`, none of which a `manualChunks` function can express. `advancedChunks` is the deprecated spelling in the installed Rolldown version.
 
-**Fix direction.** Move to `advancedChunks.groups`. Note that the `prism` group is dead regardless — see AF-36.
+**Fix direction.** Move to `codeSplitting.groups`. Note that the `prism` group is dead regardless — see AF-36.
 
 ### AF-36 — `prismjs` is build-time only but sits in `dependencies`
 
@@ -617,14 +617,43 @@ Measured by rebuilding with the flag disabled:
 
 The project uses `experimentalDecorators: true` with `useDefineForClassFields: false`, and components declare reactive fields as `@state() declare private currentPath: string`. Lit 3.3 supports both this and TC39 standard decorators (`@state() accessor currentPath = ""`), and TypeScript 7 supports standard decorators natively. Legacy decorators are the older path.
 
-**This is not a flag flip, and it may not be possible yet.** Two things were established empirically:
+**Status: `wontfix`, blocked upstream on [oxc#9170](https://github.com/oxc-project/oxc/issues/9170).** Resolved by a full spike; the details below exist so nobody repeats it.
 
-1. `transformWithOxc` leaves standard decorator syntax and the `accessor` keyword **completely untransformed**. No browser ships decorators, so that output would not parse.
-2. In a full build, a standard-decorator component was transformed — but into the **legacy** `__decorate` form, because `experimentalDecorators: true` makes Oxc apply TS-legacy semantics regardless of the source syntax.
+**TypeScript is not the blocker.** TypeScript 7 supports standard decorators, and Lit 3.3's decorator typings are already standard-decorator-ready. All four field forms compile clean under `experimentalDecorators: false` + `useDefineForClassFields: true`:
 
-Whether Oxc can downlevel standard decorators when `experimentalDecorators` is off was not established.
+```ts
+@state() accessor withInit = "x";
+@state() accessor withBang!: string;                    // closest analogue to `declare`
+@property({ type: String }) accessor typedInit: string = "";
+@state() accessor nullable: { a: number } | null = null;
+```
 
-**Fix direction.** Treat as a spike, not a migration. Convert one component, build, and inspect the emitted bundle for raw `@` decorator syntax or a surviving `accessor` keyword. If either is present, Oxc cannot downlevel and the correct decision is to stay on experimental decorators and revisit later — shipping unparseable syntax is far worse than a legacy compiler flag. AF-39 is independent of this and should land regardless.
+**The compiler errors reported from a first attempt were a symptom of an incomplete migration, not a blocker.** `experimentalDecorators` is a project-wide switch, so it cannot be flipped while any component still uses the old field form. Flipping it with the 97 decorated fields unconverted produces, across `source/site` alone:
+
+| Code   | Count | Meaning                                                                                                                 |
+| ------ | ----- | ----------------------------------------------------------------------------------------------------------------------- |
+| TS1206 | 67    | "Decorators are not valid here" — a `declare` field cannot carry a standard decorator                                   |
+| TS1270 | 7     | Return type `ClassAccessorDecoratorResult` not assignable — decorator applied to a plain field instead of an `accessor` |
+| TS1240 | 7     | Cannot resolve property-decorator signature — same cause as TS1270                                                      |
+| TS6133 | 20    | Unused `property` import — downstream noise from TS1206                                                                 |
+
+TS1270's message is the tell: Lit is _returning_ `ClassAccessorDecoratorResult`, the standard-decorator shape. The error is "you didn't write `accessor`", not "this is unsupported."
+
+**The real blocker is the bundler.** Verified end to end: with `experimentalDecorators: false` and one component correctly converted, `vite build` succeeds and emits
+
+```js
+class extends t{static styles=[l,g,c];@n()accessor supplements=[];@n()accessor …
+```
+
+Raw decorator syntax and the `accessor` keyword pass straight through untransformed, and `node --check` on the emitted chunk throws `SyntaxError: Invalid or unexpected token`. No browser ships decorators, so the site would be dead on load. The Phase 1 snapshot would **not** catch this — it normalizes asset fingerprints and the HTML is unchanged.
+
+Oxc lowers legacy decorators (oxc PR #8614) but not standard ones. Issue #9170 is open, milestone "Compiler Q2", deferred because "the spec has been updated multiple times since reaching Stage 3, and engine implementations are still in progress."
+
+**Fix direction — none, deliberately.** Staying on legacy decorators costs nothing functional: Lit 3.3 supports both paths equally and no capability is gained by switching. The available workarounds all mean reintroducing a Babel or SWC pass over every site source file purely to lower decorators, which gives up much of the reason to be on Rolldown at all, for zero user-visible benefit.
+
+**Unblock condition.** When oxc#9170 closes, the switch is small — Rolldown already exposes a `decorator?: DecoratorOptions` transform option (`node_modules/rolldown/dist/shared/binding-*.d.mts:1130`, surfaced through Vite's `oxc` config key) and auto-detects decorator mode from tsconfig. At that point the work is: flip the two tsconfig flags and convert all 97 fields in one commit, mostly `declare x: T` → `accessor x!: T`. Re-open this finding then.
+
+AF-39 is independent of this and has already landed.
 
 ### AF-41 — `marked.setOptions` mutates global state across modules
 

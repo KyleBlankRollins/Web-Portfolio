@@ -1,6 +1,6 @@
-import { execSync } from "child_process";
-import { readdirSync, readFileSync } from "fs";
-import { join, relative } from "path";
+import { execSync } from "node:child_process";
+import { readdirSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 
 function findHtmlFiles(directory: string): string[] {

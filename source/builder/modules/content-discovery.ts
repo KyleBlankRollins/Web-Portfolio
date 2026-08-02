@@ -3,8 +3,8 @@
  * Discovers and validates normalized content documents for publishing.
  */
 
-import { existsSync, readdirSync, readFileSync } from "fs";
-import { basename, join, posix, relative, sep } from "path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { basename, join, posix, relative, sep } from "node:path";
 import { BuildLogger } from "../helpers.js";
 import {
   FrontmatterParser,
@@ -12,7 +12,9 @@ import {
 } from "./frontmatter-parser.js";
 import type { SupplementManifestEntry } from "./blog-manifest.js";
 export type ContentDocumentKind =
-  "standalone-post" | "directory-post" | "supplement-candidate";
+  | "standalone-post"
+  | "directory-post"
+  | "supplement-candidate";
 
 export interface ContentDocument {
   sourcePath: string;

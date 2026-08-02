@@ -1,13 +1,13 @@
-import { basename, join } from "path";
-import { readFileSync } from "fs";
+import { basename, join } from "node:path";
+import { readFileSync } from "node:fs";
 import { FileSystemHelper, BuildLogger } from "./helpers.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
 import { ThemeProcessor } from "./theme-processor.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
-import type { OutputBundle, PluginContext } from "rolldown";
+import type { Rolldown } from "vite";
 
-type EmitFile = PluginContext["emitFile"];
+type EmitFile = Rolldown.PluginContext["emitFile"];
 
 /**
  * Handles HTML bundle generation during build
@@ -23,7 +23,7 @@ export class HtmlBundleProcessor {
    * Process HTML files in the Vite bundle
    */
   async processBundle(
-    bundle: OutputBundle,
+    bundle: Rolldown.OutputBundle,
     emitFile: EmitFile,
     markdownProcessor?: MarkdownProcessor
   ): Promise<void> {
@@ -54,7 +54,7 @@ export class HtmlBundleProcessor {
   /**
    * Extract CSS and JS assets from the bundle
    */
-  private extractAssets(bundle: OutputBundle): {
+  private extractAssets(bundle: Rolldown.OutputBundle): {
     css: string[];
     js: string[];
   } {
@@ -76,7 +76,9 @@ export class HtmlBundleProcessor {
   /**
    * Process HTML files already in the Vite bundle
    */
-  private async processExistingHtmlFiles(bundle: OutputBundle): Promise<void> {
+  private async processExistingHtmlFiles(
+    bundle: Rolldown.OutputBundle
+  ): Promise<void> {
     const existingHtmlFiles = Object.keys(bundle).filter((fileName) =>
       fileName.endsWith(".html")
     );

@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer } from "vite";
-import { existsSync, readdirSync, rmSync } from "fs";
-import { join, relative } from "path";
+import { existsSync, readdirSync, rmSync } from "node:fs";
+import { join, relative } from "node:path";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
@@ -22,8 +22,6 @@ import { HtmlBundleProcessor } from "./html-bundle-processor.js";
 export interface KBRBuilderOptions {
   /** Enable git-aware building to only process changed markdown files */
   gitAware?: boolean;
-  /** Base branch to compare against when using git-aware mode */
-  baseBranch?: string;
   /** Force processing of all files regardless of git status */
   forceAll?: boolean;
 }
@@ -337,7 +335,6 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
   // Set default options
   const builderOptions: KBRBuilderOptions = {
     gitAware: false,
-    baseBranch: "main",
     forceAll: false,
     ...options,
   };

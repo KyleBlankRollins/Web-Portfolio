@@ -3,7 +3,7 @@
  * Configures marked.js with custom renderers for headings, links, and code blocks
  */
 
-import { marked, type Tokens } from "marked";
+import { Marked, Parser, Renderer, type Tokens } from "marked";
 import Prism from "prismjs";
 import { escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
 import {
@@ -41,14 +41,19 @@ export interface MarkdownRenderContext {
  * Markdown renderer class
  */
 export class MarkdownRenderer {
+  private marked: Marked;
   private syntaxHighlighting: boolean;
   private activeRenderContext?: MarkdownRenderContext;
 
-  constructor(options: MarkdownRendererOptions = {}) {
+  constructor(
+    markedInstance: Marked = new Marked(),
+    options: MarkdownRendererOptions = {}
+  ) {
+    this.marked = markedInstance;
     this.syntaxHighlighting = options.syntaxHighlighting !== false;
 
     // Configure marked options
-    marked.setOptions({
+    this.marked.setOptions({
       gfm: options.gfm !== false,
       breaks: options.breaks || false,
     });
@@ -64,7 +69,7 @@ export class MarkdownRenderer {
     this.activeRenderContext = context;
 
     try {
-      return marked.parse(markdown, { async: false });
+      return this.marked.parse(markdown, { async: false });
     } finally {
       this.activeRenderContext = undefined;
     }
@@ -74,11 +79,11 @@ export class MarkdownRenderer {
    * Setup custom renderer for headings, links, and code blocks
    */
   private setupCustomRenderer(): void {
-    const renderer = new marked.Renderer();
+    const renderer = new Renderer();
 
     // Override heading renderer to add IDs
     renderer.heading = ({ tokens, depth }: Tokens.Heading) => {
-      const text = marked.Parser.parseInline(tokens);
+      const text = Parser.parseInline(tokens);
       const headingId = this.generateAnchorId(text);
       return `<h${depth} id="${escapeHtmlAttribute(headingId)}">${text}</h${depth}>`;
     };
@@ -86,7 +91,7 @@ export class MarkdownRenderer {
     // Override link renderer to transform .md to .html
     renderer.link = ({ href, title, tokens }: Tokens.Link) => {
       const transformedHref = this.resolveLinkHref(href);
-      const text = marked.Parser.parseInline(tokens);
+      const text = Parser.parseInline(tokens);
       const titleAttr = title ? ` title="${escapeHtmlAttribute(title)}"` : "";
       return `<a href="${escapeHtmlAttribute(transformedHref)}"${titleAttr}>${text}</a>`;
     };
@@ -125,7 +130,7 @@ export class MarkdownRenderer {
       return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
     };
 
-    marked.setOptions({ renderer });
+    this.marked.setOptions({ renderer });
   }
 
   private resolveLinkHref(href: string): string {

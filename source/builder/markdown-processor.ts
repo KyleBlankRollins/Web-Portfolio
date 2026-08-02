@@ -1,5 +1,6 @@
-import { readFileSync } from "fs";
-import { basename } from "path";
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
+import { Marked } from "marked";
 import { BuildLogger } from "./helpers.js";
 import {
   MarkdownRenderer,
@@ -40,28 +41,12 @@ export class MarkdownProcessor {
   private generatedFilesByPublicUrl: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
-    this.renderer = new MarkdownRenderer();
-    this.preprocessor = new ContentPreprocessor();
+    const markedInstance = new Marked();
+    this.renderer = new MarkdownRenderer(markedInstance);
+    this.preprocessor = new ContentPreprocessor(markedInstance);
     this.citationProcessor = new CitationProcessor();
     this.frontmatterParser = new FrontmatterParser();
     this.manifestBuilder = new BlogManifestBuilder();
-  }
-
-  /**
-   * Process a single Markdown file and convert it to HTML content (without template)
-   * The template will be applied later by the HtmlBundleProcessor
-   */
-  public processMarkdownFile(filePath: string): string {
-    const fileName = basename(filePath).replace(/\.md$/, ".html");
-    const contentDocument: ContentDocument = {
-      sourcePath: filePath,
-      outputPath: fileName,
-      publicUrl: `/${fileName}`,
-      kind: "standalone-post",
-      metadata: {},
-    };
-
-    return this.processContentDocument(contentDocument);
   }
 
   /**
@@ -335,24 +320,10 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Get the current blog post manifest
-   */
-  public getBlogManifest(): BlogPostManifestEntry[] {
-    return this.manifestBuilder.getPosts();
-  }
-
-  /**
    * Get all generated HTML files from memory
    */
   public getGeneratedFiles(): Map<string, GeneratedHtmlFile> {
     return this.generatedFiles;
-  }
-
-  /**
-   * Get a specific generated file by filename
-   */
-  public getGeneratedFile(filename: string): GeneratedHtmlFile | undefined {
-    return this.generatedFiles.get(filename);
   }
 
   /**
@@ -362,14 +333,6 @@ export class MarkdownProcessor {
     publicUrl: string
   ): GeneratedHtmlFile | undefined {
     return this.generatedFilesByPublicUrl.get(publicUrl);
-  }
-
-  /**
-   * Clear all generated files from memory
-   */
-  public clearGeneratedFiles(): void {
-    this.generatedFiles.clear();
-    this.generatedFilesByPublicUrl.clear();
   }
 
   /**

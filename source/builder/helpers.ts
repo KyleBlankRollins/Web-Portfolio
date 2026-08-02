@@ -1,5 +1,5 @@
-import { readFileSync, existsSync, readdirSync } from "fs";
-import { join } from "path";
+import { existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 
 /**
  * Utility class for file system operations related to the build process
@@ -53,13 +53,6 @@ export class FileSystemHelper {
     }
 
     return files;
-  }
-
-  /**
-   * Read file content synchronously
-   */
-  public static async readFile(filePath: string): Promise<string> {
-    return readFileSync(filePath, "utf-8");
   }
 }
 

@@ -3,12 +3,18 @@
  * Transforms content before markdown rendering
  */
 
-import { marked } from "marked";
+import { Marked } from "marked";
 
 /**
  * Content preprocessor class
  */
 export class ContentPreprocessor {
+  private marked: Marked;
+
+  constructor(markedInstance: Marked = new Marked()) {
+    this.marked = markedInstance;
+  }
+
   /**
    * Remove JavaScript/CSS comments from markdown content before processing
    * Only removes comments outside of code blocks - preserves comments within fenced code blocks
@@ -57,7 +63,7 @@ export class ContentPreprocessor {
       const trimmedContent = innerContent.trim();
 
       // Process markdown content with parseInline to avoid wrapping in <p> tags
-      const processedContent = marked.parseInline(trimmedContent);
+      const processedContent = this.marked.parseInline(trimmedContent);
 
       // Return admonition with processed content, preserving original attributes
       return `\n\n<kbr-admonition${attributes}>${processedContent}</kbr-admonition>\n\n`;

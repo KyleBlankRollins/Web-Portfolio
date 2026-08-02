@@ -98,21 +98,3 @@ async function setupThemes() {
     console.error("Failed to setup themes:", error);
   }
 }
-
-/**
- * Get theme configuration by ID
- */
-export async function getThemeById(
-  id: string
-): Promise<ThemeConfig | undefined> {
-  const themes = await loadThemes();
-  return themes.find((theme: ThemeConfig) => theme.id === id);
-}
-
-/**
- * Get all available theme IDs
- */
-export async function getAvailableThemeIds(): Promise<string[]> {
-  const themes = await loadThemes();
-  return themes.map((theme: ThemeConfig) => theme.id);
-}
