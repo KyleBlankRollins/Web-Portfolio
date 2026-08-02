@@ -117,6 +117,8 @@ export class TemplateProcessor {
     const allVariables: TemplateVariables = {
       ...variables,
       content,
+      head: this.engine.render(this.loadPartial("head.html"), variables),
+      header: this.loadPartial("header.html"),
       footer: this.loadPartial("footer.html"),
     };
 

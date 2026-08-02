@@ -3,6 +3,11 @@ import { customElement, property, state } from "lit/decorators.js";
 import { themeSwitcherStyles } from "./theme-switcher.style.js";
 import type { ThemeConfig } from "../../theme-config.js";
 import { reducedMotionStyles } from "../../styles/shared-styles.js";
+import {
+  COLOR_SCHEME_STORAGE_KEY,
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+} from "../../theme-constants.js";
 
 /**
  * Theme Switcher Component
@@ -55,8 +60,8 @@ export class KbrThemeSwitcher extends LitElement {
    * Storage keys for persistence
    */
   private readonly STORAGE_KEYS = {
-    theme: "kbr-theme",
-    colorScheme: "kbr-color-scheme",
+    theme: THEME_STORAGE_KEY,
+    colorScheme: COLOR_SCHEME_STORAGE_KEY,
   };
 
   constructor() {
@@ -87,7 +92,8 @@ export class KbrThemeSwitcher extends LitElement {
   private loadSavedTheme() {
     // Load theme preference
     const savedTheme = localStorage.getItem(this.STORAGE_KEYS.theme);
-    this.currentTheme = savedTheme || "base";
+    // The blocking bootstrap in templates/partials/head.html uses the same constants.
+    this.currentTheme = savedTheme || DEFAULT_THEME;
 
     // Load color scheme preference or detect system preference
     const savedColorScheme = localStorage.getItem(

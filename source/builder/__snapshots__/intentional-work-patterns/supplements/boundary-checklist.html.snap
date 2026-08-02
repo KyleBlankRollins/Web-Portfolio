@@ -2,49 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Theme bootstrap - see the matching comment in base.html. Blocking on
-         purpose so [data-theme] and [data-color-scheme] exist before first
-         paint. Mirrors loadSavedTheme() in theme-switcher.ts; keep in sync. -->
-    <script>
-      (function () {
-        var d = document.documentElement;
-        try {
-          d.setAttribute(
-            "data-theme",
-            localStorage.getItem("kbr-theme") || "base"
-          );
-          d.setAttribute(
-            "data-color-scheme",
-            localStorage.getItem("kbr-color-scheme") ||
-              (window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light")
-          );
-        } catch (e) {
-          d.setAttribute("data-theme", "base");
-          d.setAttribute("data-color-scheme", "light");
-        }
-      })();
-    </script>
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Boundary Checklist</title>
-    
-    <meta name="description" content="A practical checklist for setting and maintaining healthy work boundaries." />
-      
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
+
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Boundary Checklist</title>
+
+<meta name="description" content="A practical checklist for setting and maintaining healthy work boundaries." />
+  
       <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
 </head>
-
   <body>
     <kbr-navigation>
-      <!-- Slotted into .header-content so the switcher sits at the far right
-           of the site header. It used to be a fixed-position floating control,
-           which overlapped page content at every viewport width. See DF-31. -->
-      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
-    </kbr-navigation>
-
+  <!-- Slotted into .header-content so the switcher sits at the far right
+       of the site header. It used to be a fixed-position floating control,
+       which overlapped page content at every viewport width. See DF-31. -->
+  <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+</kbr-navigation>
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
@@ -53,7 +58,6 @@
           
         </div>
       </aside>
-
       <article class="blog-post-content glass-surface">
         <h1 id="boundary-checklist">Boundary Checklist</h1>
 
@@ -95,14 +99,11 @@
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
     </main>
-
-    <!-- Shared markup from templates/partials/footer.html, injected by
-         template-processor.ts. Edit the partial, not this line. -->
     <!--
   Shared site footer.
 
   This is the single source of the footer markup. It is injected into both
-  base.html and blog-post.html as the {{{footer}}} template variable, wired up
+  base.html and blog-post.html through the footer template variable, wired up
   in source/builder/template-processor.ts - which is the one choke point both
   the production build and the dev server render through. Do not paste this
   markup into a template; add the variable instead, or every page type grows

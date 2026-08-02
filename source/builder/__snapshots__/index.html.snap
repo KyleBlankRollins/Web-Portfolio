@@ -2,62 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-         The gradient behind every page comes from --gradient-primary, which
-         only exists inside [data-theme="base"] and [data-theme="canney-valley"].
-         Those attributes used to be stamped by theme-switcher.ts in
-         connectedCallback - after the Lit bundle parses - so the page painted
-         once with the properties.css fallbacks and then visibly repainted.
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
 
-         This mirrors loadSavedTheme() in theme-switcher.ts exactly: same
-         storage keys, same "base" default, same matchMedia fallback. The
-         component reads the same values afterwards and re-applies them, which
-         is a no-op. Keep the two in sync. See DF-13. -->
-    <script>
-      (function () {
-        var d = document.documentElement;
-        try {
-          d.setAttribute(
-            "data-theme",
-            localStorage.getItem("kbr-theme") || "base"
-          );
-          d.setAttribute(
-            "data-color-scheme",
-            localStorage.getItem("kbr-color-scheme") ||
-              (window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light")
-          );
-        } catch (e) {
-          // localStorage throws in private mode with cookies disabled.
-          d.setAttribute("data-theme", "base");
-          d.setAttribute("data-color-scheme", "light");
-        }
-      })();
-    </script>
-    <!-- Root-absolute so it resolves from nested paths such as
-         /<post>/supplements/<page>.html as well as from the site root. -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Kyle Blank Rollins - Technical Manager and Writer</title>
-    
-    <meta name="description" content="Kyle Blank Rollins - Technical Manager, Technical Writer, and Developer" />
-     
-    <meta name="keywords" content="Kyle Blank Rollins, technical manager, technical writer, developer, portfolio" />
-     
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Kyle Blank Rollins - Technical Manager and Writer</title>
+
+<meta name="description" content="Kyle Blank Rollins - Technical Manager, Technical Writer, and Developer" />
+ 
+<meta name="keywords" content="Kyle Blank Rollins, technical manager, technical writer, developer, portfolio" />
+ 
       <link rel="modulepreload" crossorigin href="./assets/lit-HASH.js">
     <link rel="stylesheet" crossorigin href="./assets/index-HASH.css">
 </head>
 
   <body>
     <kbr-navigation>
-      <!-- Slotted into .header-content so the switcher sits at the far right
-           of the site header. It used to be a fixed-position floating control,
-           which overlapped page content at every viewport width. See DF-31. -->
-      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
-    </kbr-navigation>
+  <!-- Slotted into .header-content so the switcher sits at the far right
+       of the site header. It used to be a fixed-position floating control,
+       which overlapped page content at every viewport width. See DF-31. -->
+  <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+</kbr-navigation>
 
     <main class="page-content">
 
@@ -124,7 +120,7 @@
   Shared site footer.
 
   This is the single source of the footer markup. It is injected into both
-  base.html and blog-post.html as the {{{footer}}} template variable, wired up
+  base.html and blog-post.html through the footer template variable, wired up
   in source/builder/template-processor.ts - which is the one choke point both
   the production build and the dev server render through. Do not paste this
   markup into a template; add the variable instead, or every page type grows

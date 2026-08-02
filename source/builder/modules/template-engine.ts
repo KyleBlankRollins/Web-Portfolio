@@ -80,6 +80,8 @@ export class TemplateEngine {
     let result = template;
     const rawHtmlVariableNames = new Set([
       "content",
+      "head",
+      "header",
       "footer",
       "tagsHtml",
       "citationsHtml",
