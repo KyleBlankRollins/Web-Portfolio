@@ -586,6 +586,10 @@ body {
   }
 }
 
+.hero.home .hero-content {
+  text-align: left;
+}
+
 /* Content visibility for performance */
 .content-section {
   content-visibility: auto;

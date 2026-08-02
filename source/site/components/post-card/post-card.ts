@@ -114,10 +114,6 @@ export class KbrPostCard extends LitElement {
                 </div>
               `
             : ""}
-
-          <footer class="post-card-footer">
-            <a href="${this.displayUrl}" class="read-more-link">Read more →</a>
-          </footer>
         </div>
       </article>
     `;

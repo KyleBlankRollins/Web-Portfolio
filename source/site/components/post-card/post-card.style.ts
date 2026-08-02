@@ -112,34 +112,6 @@ export const postCardStyles = css`
     outline-offset: 2px;
   }
 
-  /* Footer section */
-  .post-card-footer {
-    margin-top: auto;
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .read-more-link {
-    color: var(--color-text);
-    text-decoration: none;
-    font-weight: var(--font-weight-medium);
-    font-size: 0.9rem;
-    transition: all var(--transition-fast);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-
-  .read-more-link:hover {
-    transform: translateX(4px);
-  }
-
-  .read-more-link:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
   /* Responsive design */
   @media (max-width: 768px) {
     :host {
@@ -181,14 +153,6 @@ export const postCardStyles = css`
       font-size: 0.7rem;
       padding: calc(var(--space-xs) * 0.8) var(--space-xs);
     }
-
-    .post-card-footer {
-      padding-top: var(--space-xs); /* Reduced */
-    }
-
-    .read-more-link {
-      font-size: var(--font-size-sm);
-    }
   }
 
   /* Animation preferences */
@@ -201,10 +165,6 @@ export const postCardStyles = css`
     }
 
     .post-tag:hover {
-      transform: none;
-    }
-
-    .read-more-link:hover {
       transform: none;
     }
   }
