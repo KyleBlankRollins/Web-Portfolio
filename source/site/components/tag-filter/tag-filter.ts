@@ -87,8 +87,13 @@ export default class KbrTagFilter extends LitElement {
       !this.isLoading &&
       this.tagsWithCounts.length > 0
     ) {
-      // Update tag order when active tag changes
-      this.updateTagOrder();
+      // Reorder after the current update so reactive state is not changed during updated().
+      const activeTag = this.activeTag;
+      queueMicrotask(() => {
+        if (this.isConnected && this.activeTag === activeTag) {
+          this.updateTagOrder();
+        }
+      });
     }
   }
 
