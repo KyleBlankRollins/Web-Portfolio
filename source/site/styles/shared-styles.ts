@@ -1,6 +1,41 @@
 import { css } from "lit";
 
 /**
+ * Reduced Motion
+ *
+ * One universal rule, adopted by every component that animates. Reduced-motion
+ * handling used to be per-component and inconsistent: post-card scoped rules
+ * to individual selectors, post-list used `* { transition: none !important }`,
+ * table-of-contents guarded a single class, tag-filter had nothing at all, and
+ * navigation inverted the query with `no-preference` - which means its
+ * animations were the only ones that stayed off by default and switched on
+ * only when a preference was expressed.
+ *
+ * This has to live inside each shadow root. A rule in styles/style.css does
+ * not cross the shadow boundary, which is why per-component blocks existed in
+ * the first place; the fix is to share one block, not to move it out.
+ *
+ * Near-zero rather than `none`: a 0.01ms animation still fires its end event,
+ * so anything sequencing on `animationend` or `transitionend` keeps working.
+ * `animation-iteration-count: 1` is what actually stops the infinite pulses
+ * (activeTagPulse, scroll-pulse, icon-loading, spin).
+ *
+ * See DF-22.
+ */
+export const reducedMotionStyles = css`
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+`;
+
+/**
  * Shared Typography Styles
  *
  * Typography system based on typography.css that can be imported
@@ -17,12 +52,16 @@ export const typographyStyles = css`
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* See typography.css: small caps stop at h2 so they stay a signal. */
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-family-heading);
+  }
+
   h3,
   h4,
   h5 {
-    font-family: var(--font-family-heading);
+    font-family: var(--font-family-primary);
   }
   h1,
   .h1 {
@@ -111,7 +150,7 @@ export const typographyStyles = css`
   }
 
   a:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-on-surface-hover);
     text-decoration: underline;
   }
 
@@ -168,11 +207,11 @@ export const buttonStyles = css`
     justify-content: center;
     padding: var(--space-sm) var(--space-md);
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: inherit;
     font-size: 1rem;
     line-height: 1.2777778rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -192,14 +231,14 @@ export const buttonStyles = css`
 
   /* Primary Button */
   .btn-primary {
-    background-color: var(--color-primary);
+    background-color: var(--color-on-surface);
     color: var(--color-text-inverse);
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
   }
 
   .btn-primary:hover:not(:disabled) {
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
+    background-color: var(--color-on-surface-hover);
+    border-color: var(--color-on-surface-hover);
   }
 
   /* Secondary Button */
@@ -211,8 +250,8 @@ export const buttonStyles = css`
 
   .btn-secondary:hover:not(:disabled) {
     background-color: var(--color-background-secondary);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
   }
 
   /* Ghost Button */
@@ -224,7 +263,7 @@ export const buttonStyles = css`
 
   .btn-ghost:hover:not(:disabled) {
     background-color: var(--color-background-secondary);
-    color: var(--color-primary);
+    color: var(--color-on-surface);
   }
 
   /* Button Sizes */
@@ -243,26 +282,36 @@ export const buttonStyles = css`
     display: inline-block;
     color: inherit;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     padding: var(--space-xs) var(--space-sm);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: all var(--transition-fast);
     position: relative;
   }
 
+  /* Hover fills rather than tinting. The header has no background of its own
+     - it sits on the page gradient - so a white-alpha wash had nothing to
+     lighten: it measured 1.03:1 against the gradient in base/dark, where the
+     gradient's first stop is the surface color exactly. --color-on-surface is
+     visible against the gradient in every scheme (3.25:1 to 9.98:1), and
+     carries --color-text-inverse at 4.5:1 or better by contract. */
   .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--color-on-surface);
+    color: var(--color-text-inverse);
     text-decoration: none;
   }
 
   .nav-link:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
+  /* The current page is marked by weight plus the underline drawn in
+     navigation.style.ts, not by a fill - so hover stays distinguishable from
+     active instead of both rendering as the same chip. */
   .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   /* Tag Button Styles */
@@ -273,29 +322,30 @@ export const buttonStyles = css`
     padding: var(--space-xs) var(--space-sm);
     background: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     color: var(--color-text);
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
   }
 
   .tag-button:hover {
     background: var(--color-background-secondary);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-on-surface);
+    color: var(--color-on-surface);
   }
 
   .tag-button:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
   .tag-button.active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: var(--color-on-surface);
+    border-color: var(--color-on-surface);
     color: var(--color-text-inverse);
   }
 
@@ -303,14 +353,14 @@ export const buttonStyles = css`
     background: var(--color-background-secondary);
     color: var(--color-text-secondary);
     padding: 2px 6px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .tag-button.active .tag-count {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--color-text-inverse);
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
   }
 `;
 
@@ -329,9 +379,9 @@ export const layoutStyles = css`
 
   /* Card Styles */
   .card {
-    background: var(--color-background-secondary);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius);
     padding: var(--space-lg);
   }
 
@@ -402,13 +452,13 @@ export const formStyles = css`
     color: var(--color-text);
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     transition: border-color var(--transition-fast);
   }
 
   .input:focus {
     outline: none;
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
     box-shadow: var(--shadow-focus);
   }
 
@@ -424,7 +474,7 @@ export const formStyles = css`
 
   .label {
     display: block;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     margin-bottom: var(--space-xs);
     color: var(--color-text);
   }

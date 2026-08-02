@@ -4,6 +4,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 import { timelineEntryStyles } from "./timeline-entry.style.js";
 
@@ -37,6 +38,7 @@ export class KbrTimelineEntry extends LitElement {
     buttonStyles,
     layoutStyles,
     timelineEntryStyles,
+    reducedMotionStyles,
   ];
 
   private get parsedSkills(): string[] {

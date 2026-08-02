@@ -1,6 +1,9 @@
 import { LitElement, html, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { typographyStyles } from "../../styles/shared-styles.js";
+import {
+  typographyStyles,
+  reducedMotionStyles,
+} from "../../styles/shared-styles.js";
 import { supplementListStyles } from "./supplement-list.style.js";
 
 interface SupplementManifestEntry {
@@ -21,7 +24,7 @@ interface BlogManifest {
 
 @customElement("kbr-supplement-list")
 export class KbrSupplementList extends LitElement {
-  static styles = [typographyStyles, supplementListStyles];
+  static styles = [typographyStyles, supplementListStyles, reducedMotionStyles];
 
   @state()
   private supplements: SupplementManifestEntry[] = [];

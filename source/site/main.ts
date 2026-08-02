@@ -5,6 +5,7 @@ import "./styles/index.css";
 import "./components/navigation/navigation";
 import "./components/post-list/post-list";
 import "./components/post-card/post-card";
+import "./components/home-highlights/home-highlights";
 import "./components/post-series/post-series";
 import "./components/supplement-list/supplement-list";
 import "./components/table-of-contents/table-of-contents";

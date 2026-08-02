@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { imageLightboxStyles } from "./image-lightbox.style.js";
+import { reducedMotionStyles } from "../../styles/shared-styles.js";
 
 /**
  * Image Lightbox Component
@@ -19,7 +20,7 @@ import { imageLightboxStyles } from "./image-lightbox.style.js";
  */
 @customElement("kbr-image-lightbox")
 export class KbrImageLightbox extends LitElement {
-  static styles = [imageLightboxStyles];
+  static styles = [imageLightboxStyles, reducedMotionStyles];
 
   /**
    * Image source URL

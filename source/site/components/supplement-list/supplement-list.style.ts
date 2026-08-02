@@ -17,7 +17,7 @@ export const supplementListStyles = css`
   h2 {
     font-size: var(--font-size-lg);
     line-height: 1.4;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text);
     margin-top: 0;
     margin-bottom: var(--space-md);
@@ -35,14 +35,14 @@ export const supplementListStyles = css`
 
   .supplement-link {
     color: var(--color-text-secondary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 1.6;
     text-decoration: none;
     transition: color var(--transition-fast);
   }
 
   .supplement-link:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-on-surface-hover);
     text-decoration: underline;
   }
 

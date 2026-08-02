@@ -8,9 +8,9 @@ export const postCardStyles = css`
   }
 
   .post-card {
-    background: var(--color-background);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: var(--space-lg);
     transition: all var(--transition-normal);
     display: flex;
@@ -36,7 +36,7 @@ export const postCardStyles = css`
 
   .post-card-title {
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .post-title-link {
@@ -51,7 +51,7 @@ export const postCardStyles = css`
   .post-title-link:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .post-card-date {
@@ -92,9 +92,9 @@ export const postCardStyles = css`
     border: 1px solid var(--color-border);
     color: var(--color-text);
     padding: var(--space-xs) var(--space-sm);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
     text-decoration: none;
@@ -110,34 +110,6 @@ export const postCardStyles = css`
   .post-tag:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-  }
-
-  /* Footer section */
-  .post-card-footer {
-    margin-top: auto;
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .read-more-link {
-    color: var(--color-text);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all var(--transition-fast);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-
-  .read-more-link:hover {
-    transform: translateX(4px);
-  }
-
-  .read-more-link:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 4px;
   }
 
   /* Responsive design */
@@ -181,34 +153,18 @@ export const postCardStyles = css`
       font-size: 0.7rem;
       padding: calc(var(--space-xs) * 0.8) var(--space-xs);
     }
-
-    .post-card-footer {
-      padding-top: var(--space-xs); /* Reduced */
-    }
-
-    .read-more-link {
-      font-size: var(--font-size-sm);
-    }
   }
 
   /* Animation preferences */
+  /* Transitions and animations are handled by reducedMotionStyles in
+     shared-styles.ts. These rules remain because zeroing a duration does not
+     remove a transform - the lift would still happen, just instantly. */
   @media (prefers-reduced-motion: reduce) {
-    .post-card,
-    .post-title-link,
-    .post-tag,
-    .read-more-link {
-      transition: none;
-    }
-
     .post-card:hover {
       transform: none;
     }
 
     .post-tag:hover {
-      transform: none;
-    }
-
-    .read-more-link:hover {
       transform: none;
     }
   }

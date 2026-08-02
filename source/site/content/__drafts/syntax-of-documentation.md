@@ -34,16 +34,16 @@ Use one example throughout the post:
 ```markdown
 ## Rotate an API key
 
-Rotate the key every 90 days.
+Rotate your [product/service name] key every 90 days.
 
 1. Create a replacement key.
 2. Update the application configuration.
 3. Revoke the old key.
 ```
 
-- **Syntax:** The heading, paragraph, and numbered list establish a document structure.
-- **Semantics:** The content says that key rotation happens every 90 days and identifies the required operations.
-- **Pragmatics:** The reader should create and configure the replacement before revoking the old key.
+- **Syntax:** The heading, paragraph, and numbered list establish a document structure, both implicit and explicit.
+- **Semantics:** The content says that key rotation should happen every 90 days and identifies the required actions.
+- **Pragmatics:** The reader should create and configure the replacement before revoking the old key. In other words, the sequence of actions.
 
 The same document can have different parsing paths:
 

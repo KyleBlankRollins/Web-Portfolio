@@ -8,31 +8,35 @@ export const timelineStyles = css`
 
   .timeline {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    grid-template-areas: "sidebar content";
+    grid-template-columns: var(--sidebar-width) 1fr;
+    /* The header spans both columns so the page title sits above the
+       sidebar and the entries rather than sharing a cell with either. */
+    grid-template-areas:
+      "header header"
+      "sidebar content";
     gap: var(--space-xl);
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: var(--space-lg);
-    min-height: calc(100vh - 80px); /* Account for navigation height */
+    min-height: calc(100vh - var(--header-height));
   }
 
   .timeline-header {
-    grid-area: content;
+    grid-area: header;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-md);
   }
 
   .timeline-title {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text);
-    margin: 0 0 1rem 0;
+    margin: 0 0 var(--space-sm) 0;
     line-height: 1.2;
   }
 
   .timeline-subtitle {
-    font-size: 1.125rem;
+    font-size: var(--font-size-md);
     color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.5;
@@ -57,45 +61,50 @@ export const timelineStyles = css`
   .company-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-sm);
   }
 
   .company-name {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin-top: 0;
     color: var(--color-text);
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    transition: opacity var(--transition-fast);
+
+    a {
+      color: var(--color-text);
+    }
   }
 
   .company-name:hover {
     opacity: 0.8;
   }
 
-  .company-name {
-    a {
-      color: var(--color-text);
-    }
-  }
-
   .company-positions {
     position: relative;
-    padding: 1rem 1.5rem 1rem 2rem;
+    padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-lg);
   }
 
+  /* Neither state declares a grid area, so both span the full track set
+     rather than being auto-placed into the 280px sidebar column. */
   .loading {
+    grid-column: 1 / -1;
     text-align: center;
-    padding: 3rem 1rem;
+    padding: var(--space-xl) var(--space-sm);
     color: var(--color-text-secondary);
   }
 
+  /* See tag-filter: the message text takes -strong so it is readable on the
+     -subtle panel. The border keeps the base token - it sits against the page
+     background, not the panel. */
   .error {
+    grid-column: 1 / -1;
     text-align: center;
-    padding: 3rem 1rem;
-    color: var(--color-error);
+    padding: var(--space-xl) var(--space-sm);
+    color: var(--color-error-strong);
     background: var(--color-error-subtle);
-    border-radius: 0.5rem;
+    border-radius: var(--radius);
     border: 1px solid var(--color-error);
   }
 
@@ -103,19 +112,11 @@ export const timelineStyles = css`
     .timeline {
       grid-template-columns: 1fr;
       grid-template-areas:
+        "header"
         "sidebar"
         "content";
       gap: var(--space-lg);
       padding: var(--space-md);
-    }
-
-    .timeline-sidebar {
-      order: 1;
-    }
-
-    .timeline-header,
-    .timeline-content {
-      order: 2;
     }
   }
 

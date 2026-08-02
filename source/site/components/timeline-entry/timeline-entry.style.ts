@@ -4,15 +4,15 @@ export const timelineEntryStyles = css`
   :host {
     display: block;
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-lg);
   }
 
   .timeline-entry {
-    background: var(--color-background-secondary);
-    border-radius: 8px;
-    padding: 1.5rem;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    padding: var(--space-md);
     border: 1px solid var(--color-border);
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
   }
 
   .timeline-entry:hover {
@@ -24,8 +24,8 @@ export const timelineEntryStyles = css`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1rem;
-    gap: 1rem;
+    margin-bottom: var(--space-sm);
+    gap: var(--space-sm);
   }
 
   .entry-title {
@@ -34,7 +34,7 @@ export const timelineEntryStyles = css`
 
   .job-title {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text);
     margin: 0;
     line-height: 1.3;
@@ -48,7 +48,7 @@ export const timelineEntryStyles = css`
   }
 
   .date-range {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-text);
   }
 
@@ -56,11 +56,11 @@ export const timelineEntryStyles = css`
   .employment-type,
   .location {
     display: block;
-    margin-top: 0.25rem;
+    margin-top: var(--space-1);
   }
 
   .description {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
     color: var(--color-text);
     line-height: 1.6;
     white-space: pre-line;
@@ -69,19 +69,19 @@ export const timelineEntryStyles = css`
   .skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-xs);
   }
 
   .skill-tag {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
+    padding: var(--space-1) var(--space-3);
     background: var(--color-secondary);
-    border-radius: 1rem;
+    border-radius: var(--radius-lg);
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.025em;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--transition-fast);
   }
 
   @media (max-width: 768px) {
@@ -119,7 +119,7 @@ export const timelineEntryStyles = css`
     }
 
     .skill-tag {
-      padding: 0.2rem 0.6rem;
+      padding: var(--space-1) var(--space-xs);
       font-size: 0.7rem;
     }
   }

@@ -8,79 +8,121 @@
   --theme-name: "Canney Valley";
   --theme-version: "1.0.0";
   --theme-author: "Kyle Blank Rollins";
-  
+
   /* Primary Colors - Bright green for light mode backgrounds */
   --color-primary: #81c784;
   --color-primary-hover: #66bb6a;
   --color-primary-active: #4caf50;
   --color-primary-subtle: #e8f5e9;
-  
+
+  /* On-Surface Colors - Deep forest foreground for light surfaces
+     7.19:1 on #f4f5f2; carries --color-text-inverse at 7.19:1 as a fill */
+  --color-on-surface: #1b5e20;
+  --color-on-surface-hover: #14481a;
+  --color-on-surface-active: #0d3d14;
+
   /* Secondary Colors - Light gray-green */
   --color-secondary: #a5d6a7;
   --color-secondary-hover: #81c784;
   --color-secondary-active: #66bb6a;
   --color-secondary-subtle: #f1f8e9;
-  
+
   /* Accent Colors - Soft purple for light backgrounds */
   --color-accent: #cab3bf;
   --color-accent-hover: #b39dac;
   --color-accent-active: #9c8799;
   --color-accent-subtle: #faf7f9;
-  
+
   /* Semantic Colors - Nature-inspired */
   --color-success: #68b96b;
   --color-success-hover: #5aa65d;
   --color-success-active: #4d8850;
   --color-success-subtle: #f0f8f0;
-  
+
   --color-warning: #e5a933;
   --color-warning-hover: #d4951f;
   --color-warning-active: #c2810c;
   --color-warning-subtle: #fdf6e8;
-  
+
   --color-error: #f44336;
   --color-error-hover: #e53935;
   --color-error-active: #d32f2f;
   --color-error-subtle: #ffebee;
-  
+
   --color-info: #66ab68;
   --color-info-hover: #5a9a5c;
   --color-info-active: #4d8850;
   --color-info-subtle: #f0f8f0;
-  
+
+  /* Status foregrounds on the matching -subtle background. This theme needs
+     its own set: the muted naturals here sit closer to their backgrounds than
+     the base theme's, measuring 1.84:1 to 3.22:1 before correction. */
+  --color-accent-strong: #8d6278; /* 4.75 */
+  --color-success-strong: #397b3b; /* 4.76 */
+  --color-warning-strong: #916612; /* 4.75 */
+  --color-error-strong: #d1190b; /* 4.75 */
+  --color-info-strong: #437944; /* 4.76 */
+
   /* Surface Colors - Warm, natural tones */
   --color-background: #f4f5f2;
   --color-background-secondary: #eef0ec;
   --color-background-tertiary: #e8eae6;
-  
+
+  /* These three were previously absent, so they fell through to the
+     properties.css defaults - #ffffff, #f8f9fa, #e9ecef - which are cool
+     grays sitting inside a deliberately warm palette. --gradient-surface,
+     defined further down in this same block, was built from them.
+
+     The dark block below lifts surfaces one step above the background
+     (surface #263238 over background #1c2420) rather than matching it, so
+     the light block follows the same relationship: a warm near-white above
+     the warm background, with hover and active stepping back down through
+     the background scale. */
+  --color-surface: #fbfcf9;
+  --color-surface-hover: #f4f5f2;
+  --color-surface-active: #eef0ec;
+
   /* Text Colors - Dark text for light backgrounds */
   --color-text: #263238;
   --color-text-secondary: #546e7a;
   --color-text-tertiary: #78909c;
   --color-text-inverse: #f4f5f2;
   --color-text-disabled: #b0bec5;
-  
+
   /* Border Colors - Subtle natural tones */
   --color-border: #c8e6c9;
   --color-border-secondary: #e8f5e9;
   --color-border-strong: #81c784;
   --color-border-interactive: #cab3bf;
-  
+
   /* Shadow Colors - Warm shadows */
   --color-shadow-light: rgba(38, 50, 56, 0.05);
   --color-shadow: rgba(38, 50, 56, 0.1);
   --color-shadow-strong: rgba(38, 50, 56, 0.15);
   --color-shadow-dark: rgba(38, 50, 56, 0.25);
-  
+
   /* Gradient Properties - Light nature gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-primary-light: linear-gradient(90deg, 
-    rgba(129, 199, 132, 0.2) 2%, 
-    rgba(202, 179, 191, 0.2) 50%, 
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
+  --gradient-primary-light: linear-gradient(
+    90deg,
+    rgba(129, 199, 132, 0.2) 2%,
+    rgba(202, 179, 191, 0.2) 50%,
     rgba(165, 214, 167, 0.2) 98%
   );
-  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-hover) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 100%
+  );
 
   /* Glass/Frosted Surface Properties */
   --glass-background: rgba(238, 240, 236, 0.25);
@@ -97,57 +139,119 @@
   --color-surface: #263238;
   --color-surface-hover: #37474f;
   --color-surface-active: #455a64;
-  
+
   /* Text Colors - Light on dark */
   --color-text: #ecf4ec;
   --color-text-secondary: #b2d5b3;
   --color-text-tertiary: #839097;
   --color-text-inverse: #263238;
   --color-text-disabled: #546e7a;
-  
+
   /* Primary Colors - Dark forest green for dark mode backgrounds */
   --color-primary: #2e7d32;
   --color-primary-hover: #1b5e20;
   --color-primary-active: #0d3d14;
   --color-primary-subtle: #4caf50;
-  
+
+  /* On-Surface Colors - Pale sage foreground for dark surfaces
+     8.01:1 on #263238; carries --color-text-inverse at 8.01:1 as a fill */
+  --color-on-surface: #a5d6a7;
+  --color-on-surface-hover: #c8e6c9;
+  --color-on-surface-active: #e8f5e9;
+
   /* Secondary Colors - Deep slate */
   --color-secondary: #263238;
   --color-secondary-hover: #37474f;
   --color-secondary-active: #455a64;
   --color-secondary-subtle: #37474f;
-  
+
   /* Accent Colors - Deep warm purple for dark backgrounds */
   --color-accent: #6d4c5a;
   --color-accent-hover: #4a2c37;
   --color-accent-active: #2d1a23;
-  --color-accent-subtle: #96687f;
-  
+
+  /* Was #96687f - a mid-tone that was *lighter* than --color-accent itself,
+     inverting the fill/background relationship every other -subtle token
+     holds. Nothing in the accent hue could reach 4.5:1 against it; even pure
+     white topped out at 4.58:1. Replaced with a dark tint of the same hue, at
+     a luminance in line with the other dark -subtle backgrounds (0.049 vs
+     their 0.051-0.066). Only the admonition and the theme-demo swatch consume
+     this token. */
+  --color-accent-subtle: #5d3043;
+
+  --color-accent-strong: #c1a6b1; /* 4.75 on --color-accent-subtle */
+
+  /* Semantic Colors - dark scheme.
+
+     These were previously absent from this block, which did not mean they
+     fell back to the dark defaults in properties.css: that block is
+     [data-color-scheme="dark"] and this theme's light block is
+     [data-theme="canney-valley"] - equal specificity, and the theme file
+     loads second. So the LIGHT values won in dark mode, and admonitions
+     rendered near-white -subtle panels behind this theme's near-white
+     --color-text: 1.02:1 to 1.04:1. Defining the set here is what actually
+     scopes it to the dark scheme.
+
+     Hues are carried over from this theme's light palette - success and info
+     stay green, which is the theme's idiom - and re-solved for a dark ground.
+     Base tones hold 4.5:1 on --color-background so they stay readable as text
+     there; -strong holds 4.75:1 on its own -subtle. */
+  --color-success: #479a4a; /* 4.53 on --color-background */
+  --color-success-hover: #5fb562;
+  --color-success-subtle: #204622;
+  --color-success-strong: #72be75; /* 4.76 */
+
+  --color-info: #539855; /* 4.53 */
+  --color-info-hover: #6eb070;
+  --color-info-subtle: #244625;
+  --color-info-strong: #83bb84; /* 4.76 */
+
+  --color-warning: #b47f17; /* 4.53 */
+  --color-warning-hover: #e19f1d;
+  --color-warning-subtle: #523a0a;
+  --color-warning-strong: #e2a11f; /* 4.75 */
+
+  --color-error: #f54c40; /* 4.53 */
+  --color-error-hover: #f77a71;
+  --color-error-subtle: #7f0f07;
+  --color-error-strong: #f99089; /* 4.75 */
+
   /* Border Colors */
   --color-border: #455a64;
   --color-border-secondary: #546e7a;
   --color-border-strong: #78909c;
-  
+
   /* Shadow Colors */
   --color-shadow-light: rgba(0, 0, 0, 0.3);
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-shadow-strong: rgba(0, 0, 0, 0.6);
   --color-shadow-dark: rgba(0, 0, 0, 0.8);
-  
+
   /* Gradient Properties - Dark forest gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-primary-light: linear-gradient(90deg, 
-    rgba(46, 125, 50, 0.2) 2%, 
-    rgba(109, 76, 90, 0.2) 50%, 
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
+  --gradient-primary-light: linear-gradient(
+    90deg,
+    rgba(46, 125, 50, 0.2) 2%,
+    rgba(109, 76, 90, 0.2) 50%,
     rgba(38, 50, 56, 0.2) 98%
   );
-  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  --gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-hover) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 100%
+  );
 
   /* Glass/Frosted Surface Properties */
   --glass-background: rgba(38, 50, 56, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: 12px;
 }
-
-

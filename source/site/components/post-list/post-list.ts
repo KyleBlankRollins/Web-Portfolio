@@ -6,6 +6,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -54,6 +55,9 @@ export class KbrPostList extends LitElement {
   @state()
   declare private isLoading: boolean;
 
+  @state()
+  declare private loadError: boolean;
+
   private boundHandleTagFilterChange: (event: Event) => void;
 
   static styles = [
@@ -61,6 +65,7 @@ export class KbrPostList extends LitElement {
     buttonStyles,
     layoutStyles,
     postListStyles,
+    reducedMotionStyles,
   ];
 
   constructor() {
@@ -73,6 +78,7 @@ export class KbrPostList extends LitElement {
     this.currentFilter = null;
     this.currentPage = 1;
     this.isLoading = false;
+    this.loadError = false;
 
     // Bind the event handler once to use with addEventListener/removeEventListener
     this.boundHandleTagFilterChange = this.handleTagFilterChange.bind(this);
@@ -118,6 +124,7 @@ export class KbrPostList extends LitElement {
       this.isLoading = false;
     } catch (error) {
       console.error("Failed to load blog posts:", error);
+      this.loadError = true;
       this.isLoading = false;
     }
   }
@@ -129,6 +136,18 @@ export class KbrPostList extends LitElement {
           <div class="post-list-loading">
             <div class="loading-spinner"></div>
             <p>Loading blog posts...</p>
+          </div>
+        </div>
+      `;
+    }
+
+    if (this.loadError) {
+      return html`
+        <div class="post-list-container">
+          <div class="post-list-error" role="status">
+            <p>
+              Blog posts are temporarily unavailable. Please try again later.
+            </p>
           </div>
         </div>
       `;

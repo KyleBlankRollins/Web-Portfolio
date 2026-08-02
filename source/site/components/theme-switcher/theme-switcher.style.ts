@@ -1,86 +1,70 @@
 import { css } from "lit";
 
 export const themeSwitcherStyles = css`
+  /* Lives in the site header, slotted into .header-content by
+     navigation.ts, and sits in normal flow rather than floating.
+
+     It was position: fixed against the viewport - first bottom-centred, then
+     bottom-left. Either way a fixed control overlaps page content at some
+     width: bottom-centre put it inside the blog reading column, bottom-left
+     clipped the portfolio's full-width cards. Occupying layout space in the
+     header is what actually removes the collision. See DF-31.
+
+     position: relative is the anchor for the expanded dropdown below. */
   :host {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    transition: all var(--transition-normal);
-  }
-
-  /* Host styles for expanded state */
-  :host(:not(.collapsed)) {
-    width: 100%;
-    max-width: 600px;
-    padding: 0 var(--space-md);
-  }
-
-  /* Host styles for collapsed state */
-  :host(.collapsed) {
-    width: auto;
-    padding: 0;
+    display: inline-block;
+    position: relative;
   }
 
   .theme-switcher {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    box-shadow: 0 -4px 12px var(--color-shadow);
-    backdrop-filter: blur(10px);
-    background: var(--color-background-secondary);
-    transition: all var(--transition-normal);
-    overflow: hidden;
+    position: relative;
   }
 
-  /* Collapsed state */
-  .theme-switcher.collapsed {
-    width: auto;
-    max-width: none;
-    padding: 0;
-  }
-
-  /* Expanded state */
-  .theme-switcher.expanded {
-    width: 100%;
-    gap: var(--space-3);
-    padding: var(--space-4);
-  }
-
-  /* Collapsed trigger */
+  /* The trigger stays in flow in both states, so the header does not reflow
+     when the panel opens. */
   .collapsed-trigger {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-family: inherit;
     cursor: pointer;
-    transition: background-color var(--transition-normal);
+    transition:
+      background-color var(--transition-normal),
+      border-color var(--transition-normal);
   }
 
   .collapsed-trigger:hover {
     background: var(--color-background-tertiary);
+    border-color: var(--color-border-interactive);
   }
 
-  /* Expanded header */
-  .expanded-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) 0;
-    cursor: pointer;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: var(--space-3);
-    transition: background-color var(--transition-normal);
+  .collapsed-trigger:focus-visible {
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 
-  .expanded-header:hover {
-    background: var(--color-background-tertiary);
-    margin: 0 calc(-1 * var(--space-4)) var(--space-3) calc(-1 * var(--space-4));
-    padding: var(--space-2) var(--space-4);
+  .theme-switcher.expanded .collapsed-trigger {
+    border-color: var(--color-border-interactive);
+  }
+
+  /* The panel drops below the trigger and is anchored to its right edge, so
+     it opens inward from the header rather than off the side of the page. */
+  .theme-panel {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    z-index: 1000;
+    min-width: 320px;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px var(--color-shadow);
   }
 
   /* Icon and text styling */
@@ -161,6 +145,11 @@ export const themeSwitcherStyles = css`
     min-width: 48px;
   }
 
+  .mode-indicator {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+  }
+
   .toggle-switch {
     position: relative;
     display: inline-flex;
@@ -198,7 +187,7 @@ export const themeSwitcherStyles = css`
     left: 2px;
     width: 20px;
     height: 20px;
-    background: white;
+    background: var(--color-text-inverse);
     border-radius: var(--radius-full);
     box-shadow: 0 2px 4px var(--color-shadow);
     transition: transform var(--transition-normal);
@@ -210,50 +199,20 @@ export const themeSwitcherStyles = css`
   }
 
   .toggle-input:focus + .toggle-track {
-    outline: var(--focus-ring-width) var(--focus-ring-style) var(--color-accent);
+    outline: var(--focus-ring-width) var(--focus-ring-style)
+      var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
   }
 
-  .theme-preview {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-2);
-    margin-left: var(--space-2);
-    border-radius: var(--radius);
-    border: 1px solid var(--color-border);
-    min-width: 60px;
-  }
-
-  .color-swatch {
-    width: 12px;
-    height: 12px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border-secondary);
-  }
-
-  .swatch-primary {
-    background: var(--color-primary);
-  }
-
-  .swatch-accent {
-    background: var(--color-accent);
-  }
-
-  .swatch-secondary {
-    background: var(--color-secondary);
-  }
-
-  /* Mobile adjustments for bottom-centered layout */
   @media (max-width: 768px) {
-    :host {
-      max-width: 100%;
-      padding: 0 var(--space-sm);
-    }
-
-    .theme-switcher {
+    /* The header stacks at these widths, so the panel is narrower than the
+       320px desktop minimum and is capped to the viewport. It still opens
+       from the trigger's right edge, which keeps it on screen. */
+    .theme-panel {
+      min-width: 0;
+      width: max-content;
+      max-width: calc(100vw - var(--space-md) * 2);
       padding: var(--space-3);
-      border-radius: var(--radius-md) var(--radius-md) 0 0;
     }
 
     /* Force vertical layout on mobile */
@@ -279,18 +238,9 @@ export const themeSwitcherStyles = css`
       min-width: 80px;
       font-size: var(--font-size-sm);
     }
-
-    .theme-preview {
-      margin-left: 0;
-      flex: 0 0 auto;
-    }
   }
 
   @media (max-width: 479px) {
-    .theme-preview {
-      display: none; /* Hide preview on very small screens */
-    }
-
     .theme-select label,
     .color-scheme-toggle label {
       min-width: 60px;
@@ -300,7 +250,8 @@ export const themeSwitcherStyles = css`
 
   /* High contrast mode adjustments */
   @media (prefers-contrast: high) {
-    .theme-switcher {
+    .collapsed-trigger,
+    .theme-panel {
       border-width: 2px;
     }
 

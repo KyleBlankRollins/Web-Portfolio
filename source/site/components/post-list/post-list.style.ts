@@ -7,11 +7,13 @@ export const postListStyles = css`
     width: 100%;
   }
 
+  /* No top padding, stated directly. Each breakpoint used to apply padding
+     on all four sides and then cancel the top with an equal negative margin.
+     See DF-27. */
   .post-list-container {
     max-width: var(--content-max-width);
     margin: 0 auto;
-    margin-top: calc(var(--space-lg) * -1);
-    padding: var(--space-lg);
+    padding: 0 var(--space-lg) var(--space-lg);
   }
 
   /* Header */
@@ -21,9 +23,9 @@ export const postListStyles = css`
   }
 
   .post-list-header h2 {
-    color: var(--color-primary);
+    color: var(--color-on-surface);
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   /* Posts grid */
@@ -42,8 +44,8 @@ export const postListStyles = css`
     width: 40px;
     height: 40px;
     border: 3px solid var(--color-border);
-    border-top: 3px solid var(--color-primary);
-    border-radius: 50%;
+    border-top: 3px solid var(--color-on-surface);
+    border-radius: var(--radius-full);
     animation: spin 1s linear infinite;
     margin: 0 auto var(--space-md) auto;
   }
@@ -82,7 +84,7 @@ export const postListStyles = css`
   }
 
   .post-list-error h2 {
-    color: var(--color-primary);
+    color: var(--color-on-surface);
     margin-bottom: var(--space-md);
   }
 
@@ -106,9 +108,9 @@ export const postListStyles = css`
     border: 1px solid var(--color-border);
     color: var(--color-text);
     padding: var(--space-sm) var(--space-md);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
     min-width: 44px;
@@ -127,9 +129,9 @@ export const postListStyles = css`
   }
 
   .pagination-btn.active {
-    background: var(--color-primary);
+    background: var(--color-on-surface);
     color: var(--color-text-inverse);
-    border-color: var(--color-primary);
+    border-color: var(--color-on-surface);
   }
 
   .pagination-btn[disabled] {
@@ -142,8 +144,7 @@ export const postListStyles = css`
   /* Responsive design */
   @media (max-width: 768px) {
     .post-list-container {
-      padding: var(--space-md);
-      margin-top: calc(var(--space-md) * -1);
+      padding: 0 var(--space-md) var(--space-md);
     }
 
     .post-list-pagination {
@@ -165,8 +166,7 @@ export const postListStyles = css`
 
   @media (max-width: 480px) {
     .post-list-container {
-      margin-top: calc(var(--space-sm) * -1);
-      padding: var(--space-sm);
+      padding: 0 var(--space-sm) var(--space-sm);
     }
 
     .post-list-pagination {
@@ -181,17 +181,11 @@ export const postListStyles = css`
   }
 
   /* Animation preferences */
+  /* See post-card: the shared reducedMotionStyles block covers durations and
+     iteration counts, so only the transform suppression needs stating here. */
   @media (prefers-reduced-motion: reduce) {
-    .loading-spinner {
-      animation: none;
-    }
-
     .pagination-btn:hover:not([disabled]) {
       transform: none;
-    }
-
-    * {
-      transition: none !important;
     }
   }
 `;

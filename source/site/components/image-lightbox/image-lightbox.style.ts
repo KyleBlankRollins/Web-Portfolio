@@ -25,7 +25,8 @@ export const imageLightboxStyles = css`
     height: auto;
     object-fit: contain;
     object-position: center;
-    transition: transform var(--transition-normal),
+    transition:
+      transform var(--transition-normal),
       filter var(--transition-normal);
     border-radius: inherit;
   }
@@ -39,7 +40,7 @@ export const imageLightboxStyles = css`
     width: 50px;
     height: 50px;
     background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,26 +67,35 @@ export const imageLightboxStyles = css`
 
   /* Focus styles for accessibility */
   :host(:focus) {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-on-surface);
     outline-offset: 2px;
   }
 
-  /* Modal styles */
+  /* Modal styles
+
+     The backdrop covers the whole viewport. It was a 75vw x 75vh centred box,
+     which read as a floating black rectangle rather than a lightbox - and
+     since the dismiss handler is bound to .modal, the outer 25% of the screen
+     was dead: clicking where a reader expects to dismiss did nothing. The size
+     constraint belongs on .modal-content, which already carries it.
+
+     z-index sits above the theme switcher's 1000. The two used to share 1000
+     and never met, because the old 75vh box was centred and the switcher is
+     pinned to the bottom edge. A full-viewport backdrop overlaps it, and at
+     equal z-index the switcher won on document order - floating a page
+     control on top of a modal overlay. */
   .modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75vw;
-    height: 75vh;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-normal),
+    transition:
+      opacity var(--transition-normal),
       visibility var(--transition-normal);
     cursor: pointer;
     padding: var(--space-lg);
@@ -113,7 +123,7 @@ export const imageLightboxStyles = css`
     max-width: 100%;
     max-height: calc(75vh - 4rem);
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: var(--radius);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   }
 
@@ -126,15 +136,18 @@ export const imageLightboxStyles = css`
     line-height: 1.4;
   }
 
+  /* Fixed, not absolute: .modal-content is position: relative, so an absolute
+     close button anchored there landed over the top-right corner of the image
+     instead of at the overlay's corner. */
   .modal-close {
-    position: absolute;
+    position: fixed;
     top: var(--space-lg);
     right: var(--space-lg);
     width: 44px;
     height: 44px;
     background: rgba(255, 255, 255, 0.2);
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     color: white;
     font-size: 24px;
     cursor: pointer;

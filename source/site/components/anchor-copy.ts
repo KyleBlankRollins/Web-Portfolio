@@ -33,17 +33,17 @@ export default class AnchorCopyComponent extends LitElement {
       /* Global styles for anchor functionality */
       .anchor-highlighted {
         background-color: var(--color-background-secondary);
-        border-left: 4px solid var(--color-primary);
+        border-left: 4px solid var(--color-on-surface);
         padding-left: 1rem;
         margin-left: -1.25rem;
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         animation: anchor-highlight-fade 3s ease-out forwards;
       }
 
       @keyframes anchor-highlight-fade {
         0% {
           background-color: var(--color-background-secondary);
-          border-left-color: var(--color-primary);
+          border-left-color: var(--color-on-surface);
         }
         100% {
           background-color: transparent;
@@ -64,7 +64,7 @@ export default class AnchorCopyComponent extends LitElement {
         background: transparent;
         border: 1px solid transparent;
         padding: var(--space-xs);
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         cursor: pointer;
         color: var(--color-text-secondary);
         transition: all var(--transition-fast);
@@ -79,7 +79,7 @@ export default class AnchorCopyComponent extends LitElement {
       }
 
       .anchor-copy-btn:hover {
-        color: var(--color-primary);
+        color: var(--color-on-surface);
         background-color: var(--color-background-secondary);
         transform: scale(1.1);
       }
@@ -100,7 +100,7 @@ export default class AnchorCopyComponent extends LitElement {
       /* Always show on focus for accessibility */
       .anchor-copy-btn:focus {
         opacity: 1;
-        outline: 2px solid var(--color-primary);
+        outline: 2px solid var(--color-on-surface);
         outline-offset: 2px;
       }
 
@@ -126,9 +126,17 @@ export default class AnchorCopyComponent extends LitElement {
         flex: 1;
       }
 
-      /* Smooth scroll to anchors */
-      html {
-        scroll-behavior: smooth;
+      /* Smooth scroll to anchors.
+
+         Gated on no-preference rather than declared outright. This rule is
+         injected into document.head, so it escapes the shadow DOM and the
+         shared reducedMotionStyles block cannot reach it - the guard has to
+         be written here. Jumping straight to the anchor is the correct
+         behaviour for a reader who asked for reduced motion. See DF-22. */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
       }
 
       /* Add some padding for anchor scroll targets */
@@ -141,8 +149,8 @@ export default class AnchorCopyComponent extends LitElement {
       h6[id]::before {
         content: "";
         display: block;
-        height: 80px; /* Adjust based on your header height */
-        margin-top: -80px;
+        height: var(--header-height);
+        margin-top: calc(-1 * var(--header-height));
         visibility: hidden;
       }
     `;

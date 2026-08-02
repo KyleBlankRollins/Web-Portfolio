@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -23,6 +24,7 @@ export class KbrNavigation extends LitElement {
     buttonStyles,
     layoutStyles,
     navigationStyles,
+    reducedMotionStyles,
   ];
 
   connectedCallback() {
@@ -38,31 +40,42 @@ export class KbrNavigation extends LitElement {
             <a href="/">K_R</a>
           </div>
 
-          <nav class="main-nav">
-            <ul>
-              <li>
-                <a
-                  href="/blog.html"
-                  class="nav-link ${this.getLinkClass("/blog.html")}"
-                  >Blog</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/portfolio.html"
-                  class="nav-link ${this.getLinkClass("/portfolio.html")}"
-                  >Portfolio</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/career.html"
-                  class="nav-link ${this.getLinkClass("/career.html")}"
-                  >Career</a
-                >
-              </li>
-            </ul>
-          </nav>
+          <!-- The links and the theme switcher travel together as one
+               right-hand cluster, so the switcher lands at the far edge of
+               .header-content rather than splitting the two apart, which is
+               what a bare space-between across three children would do. -->
+          <div class="header-actions">
+            <nav class="main-nav">
+              <ul>
+                <li>
+                  <a
+                    href="/blog.html"
+                    class="nav-link ${this.getLinkClass("/blog.html")}"
+                    >Blog</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/portfolio.html"
+                    class="nav-link ${this.getLinkClass("/portfolio.html")}"
+                    >Portfolio</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/career.html"
+                    class="nav-link ${this.getLinkClass("/career.html")}"
+                    >Career</a
+                  >
+                </li>
+              </ul>
+            </nav>
+
+            <!-- Filled by <kbr-theme-switcher slot="theme-switcher"> in the
+                 page templates. Slotted rather than rendered here so the
+                 navigation component does not depend on the switcher. -->
+            <slot name="theme-switcher"></slot>
+          </div>
         </div>
       </header>
     `;

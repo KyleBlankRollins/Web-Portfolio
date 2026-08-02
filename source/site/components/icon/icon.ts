@@ -2,6 +2,7 @@ import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { iconStyles } from "./icon.style.js";
+import { reducedMotionStyles } from "../../styles/shared-styles.js";
 
 /**
  * Available icon names (matches files in assets/icons/)
@@ -38,7 +39,7 @@ const AVAILABLE_ICONS = [
  */
 @customElement("kbr-icon")
 export class KbrIcon extends LitElement {
-  static styles = [iconStyles];
+  static styles = [iconStyles, reducedMotionStyles];
 
   /**
    * Icon name - should match an SVG file in assets/icons/ without the .svg extension

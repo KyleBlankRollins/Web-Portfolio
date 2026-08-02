@@ -8,7 +8,7 @@ export const postSeriesStyles = css`
 
   .series-container {
     border: 1px solid var(--color-border);
-    border-radius: var(--space-xs);
+    border-radius: var(--radius);
     padding: var(--space-sm);
     background-color: var(--color-surface);
   }
@@ -39,7 +39,7 @@ export const postSeriesStyles = css`
   }
 
   .series-name {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-base);
     color: var(--color-text);
     margin: 0 0 var(--space-xs) 0;
@@ -55,7 +55,7 @@ export const postSeriesStyles = css`
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-    transition: transform var(--transition-fast) ease;
+    transition: transform var(--transition-fast);
     color: var(--color-text-secondary);
   }
 
@@ -88,13 +88,13 @@ export const postSeriesStyles = css`
     padding: var(--space-xs) var(--space-sm);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-sm);
+    border-radius: var(--radius-lg);
     cursor: pointer;
     color: var(--color-text);
     font-size: var(--font-size-sm);
     text-decoration: none;
     text-align: center;
-    transition: all var(--transition-fast) ease;
+    transition: all var(--transition-fast);
     display: flex;
     flex-direction: column;
     min-height: 80px;
@@ -144,10 +144,10 @@ export const postSeriesStyles = css`
     padding: var(--space-sm) var(--space-md);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--space-sm);
+    border-radius: var(--radius-lg);
     color: var(--color-text);
     text-decoration: none;
-    transition: all var(--transition-fast) ease;
+    transition: all var(--transition-fast);
   }
 
   .series-link:hover {
@@ -157,14 +157,14 @@ export const postSeriesStyles = css`
 
   .series-link.current {
     background-color: var(--color-primary-subtle);
-    border-color: var(--color-primary);
-    font-weight: 600;
+    border-color: var(--color-on-surface);
+    font-weight: var(--font-weight-semibold);
   }
 
   .part-number {
     display: inline-block;
     min-width: 4ch;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-secondary);
   }
 

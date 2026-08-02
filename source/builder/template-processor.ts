@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import {
   TemplateEngine,
   MetadataExtractor,
@@ -48,11 +50,35 @@ export class TemplateProcessor {
   private metadataExtractor: MetadataExtractor;
   private frontmatterParser: FrontmatterParser;
   private defaultTemplate: string = "base.html";
+  private partialCache: Map<string, string> = new Map();
 
   constructor() {
     this.engine = new TemplateEngine();
     this.metadataExtractor = new MetadataExtractor();
     this.frontmatterParser = new FrontmatterParser();
+  }
+
+  /**
+   * Load a shared markup partial from templates/partials, with caching.
+   *
+   * The template engine only substitutes variables - it has no include
+   * syntax - so shared markup is read here and passed in as a triple-brace
+   * variable. That keeps one copy of the markup on disk instead of one per
+   * page template.
+   */
+  private loadPartial(name: string): string {
+    const cached = this.partialCache.get(name);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const partial = readFileSync(
+      join("source", "site", "templates", "partials", name),
+      "utf-8"
+    ).trim();
+
+    this.partialCache.set(name, partial);
+    return partial;
   }
 
   /**
@@ -84,10 +110,14 @@ export class TemplateProcessor {
 
     const template = this.engine.loadTemplate(templateName);
 
-    // Create a complete variables object with content
+    // Create a complete variables object with content.
+    // `footer` is supplied here rather than per caller so every page type -
+    // homepage, static pages, blog posts, nested supplements - gets the same
+    // markup from the same file, through both the build and the dev server.
     const allVariables: TemplateVariables = {
       ...variables,
       content,
+      footer: this.loadPartial("footer.html"),
     };
 
     return this.engine.render(template, allVariables);

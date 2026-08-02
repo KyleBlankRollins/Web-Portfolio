@@ -5,6 +5,7 @@ import {
   typographyStyles,
   buttonStyles,
   layoutStyles,
+  reducedMotionStyles,
 } from "../../styles/shared-styles.js";
 
 /**
@@ -64,6 +65,7 @@ export class KbrPostCard extends LitElement {
     buttonStyles,
     layoutStyles,
     postCardStyles,
+    reducedMotionStyles,
   ];
 
   render() {
@@ -112,10 +114,6 @@ export class KbrPostCard extends LitElement {
                 </div>
               `
             : ""}
-
-          <footer class="post-card-footer">
-            <a href="${this.displayUrl}" class="read-more-link">Read more →</a>
-          </footer>
         </div>
       </article>
     `;

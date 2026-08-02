@@ -1,8 +1,33 @@
 /**
  * Prism.js Syntax Highlighting Styles
- * 
- * Custom theme that integrates with the KBR Portfolio design system.
- * Based on VS Code's default theme with theme-aware variations.
+ *
+ * Prism is run at build time by source/builder/modules/markdown-renderer.ts,
+ * which bakes <span class="token ..."> into the static HTML. Prism has no
+ * color API - a "theme" is only ever CSS targeting .token.* class names, and
+ * this file is that theme. No stock Prism theme is imported.
+ *
+ * THE SYNTAX PALETTE IS DELIBERATELY THEME-INDEPENDENT.
+ *
+ * It does not vary by --theme, and it must never be aliased back onto the
+ * semantic tokens (--color-success, --color-warning, --color-error,
+ * --color-accent). It was, and that caused two problems:
+ *
+ *   1. Those colors are tuned to read as UI signals on a page background,
+ *      not as small monospace text on --color-background-secondary. Five of
+ *      eight token groups failed WCAG AA, as low as 1.71:1.
+ *   2. It coupled unrelated systems - retuning --color-warning for a warning
+ *      admonition silently restyled every code block on the site.
+ *
+ * Syntax highlighting has its own constraint that brand palettes do not:
+ * token colors must be distinguishable *from each other*, not just from the
+ * background. Values below come from GitHub Light and GitHub Dark, which are
+ * well tested for hue separation at small sizes, adjusted where they missed
+ * AA against the code-block background.
+ *
+ * Contrast is verified against --color-background-secondary in BOTH themes,
+ * since that is what .blog-post-content pre uses (blog-post.css:87):
+ * base #f8f9fa / #1e293b, canney-valley #eef0ec / #263238.
+ * Worst case: 4.67:1 light, 5.22:1 dark.
  */
 
 /* Base code styling - integrates with existing blog-post.css */
@@ -24,29 +49,31 @@
   hyphens: none;
 }
 
-/* Prism token color definitions - using theme system */
+/* Light syntax palette - GitHub Light.
+   Ratios listed as base (#f8f9fa) / canney-valley (#eef0ec). */
 :root {
-  /* Light mode Prism colors (using theme tokens) */
-  --prism-comment: var(--color-text-tertiary, #6a737d);
-  --prism-punctuation: var(--color-text-secondary, #586069);
-  --prism-property: var(--color-error, #d73a49);
-  --prism-string: var(--color-success, #28a745);
-  --prism-operator: var(--color-warning, #e36209);
-  --prism-keyword: var(--color-primary, #0366d6);
-  --prism-function: var(--color-accent, #6f42c1);
-  --prism-variable: var(--color-warning, #e36209);
+  --prism-comment: #5f6673; /* 5.48 / 5.04 - darkened from GitHub's #6e7781, which was 3.96 on canney */
+  --prism-punctuation: #24292f; /* 13.90 / 12.78 */
+  --prism-property: #cf222e; /* 5.08 / 4.67 */
+  --prism-string: #116329; /* 7.01 / 6.45 */
+  --prism-operator: #953800; /* 7.01 / 6.44 */
+  --prism-keyword: #0550ae; /* 7.20 / 6.62 */
+  --prism-function: #6f42c1; /* 6.18 / 5.68 - darkened from GitHub's #8250df, which was 4.40 on canney */
+  --prism-variable: #953800; /* 7.01 / 6.44 - shares the operator hue by design */
 }
 
-/* Dark mode Prism color overrides */
+/* Dark syntax palette - GitHub Dark. Same hue per group as the light set,
+   so the two schemes read as one theme.
+   Ratios listed as base (#1e293b) / canney-valley (#263238). */
 [data-color-scheme="dark"] {
-  --prism-comment: #8b949e;
-  --prism-punctuation: #c9d1d9;
-  --prism-property: #ff7b72;
-  --prism-string: #7ee787;
-  --prism-operator: #ffa657;
-  --prism-keyword: #79c0ff;
-  --prism-function: #d2a8ff;
-  --prism-variable: #ffa657;
+  --prism-comment: #9ba7b0; /* 5.95 / 5.36 - lifted from GitHub's #8b949e, which was 4.28 on canney */
+  --prism-punctuation: #c9d1d9; /* 9.48 / 8.53 */
+  --prism-property: #ff7b72; /* 5.80 / 5.22 */
+  --prism-string: #7ee787; /* 9.52 / 8.56 */
+  --prism-operator: #ffa657; /* 7.55 / 6.80 */
+  --prism-keyword: #79c0ff; /* 7.52 / 6.77 */
+  --prism-function: #d2a8ff; /* 7.51 / 6.76 */
+  --prism-variable: #ffa657; /* 7.55 / 6.80 - shares the operator hue by design */
 }
 
 /* Token colors - using CSS custom properties */
@@ -58,7 +85,10 @@
   font-style: italic;
 }
 
-.token.punctuation {
+/* attr-equals is the `=` in HTML attributes. Prism emits it as a sibling of
+   punctuation rather than as one, so it needs listing explicitly. */
+.token.punctuation,
+.token.attr-equals {
   color: var(--prism-punctuation);
 }
 
@@ -93,13 +123,13 @@
 .token.attr-value,
 .token.keyword {
   color: var(--prism-keyword);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .token.function,
 .token.class-name {
   color: var(--prism-function);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .token.regex,
@@ -153,6 +183,19 @@
   color: var(--prism-property);
 }
 
+/* `${` and `}` inside a template string - same delimiter treatment as the
+   backticks above, so the interpolation boundary is visible. */
+.token.interpolation-punctuation {
+  color: var(--prism-property);
+}
+
+/* The expression between those delimiters. Reset to plain code text so it
+   does not inherit the surrounding template-string color; tokens nested
+   inside it still set their own. */
+.token.interpolation {
+  color: var(--color-text);
+}
+
 .language-bash .token.function {
   color: var(--prism-keyword);
 }
@@ -162,32 +205,60 @@
 }
 
 /* Language badges for different languages */
-.blog-post-content pre.language-javascript::before { content: "JS"; }
-.blog-post-content pre.language-typescript::before { content: "TS"; }
-.blog-post-content pre.language-css::before { content: "CSS"; }
-.blog-post-content pre.language-scss::before { content: "SCSS"; }
-.blog-post-content pre.language-json::before { content: "JSON"; }
-.blog-post-content pre.language-bash::before { content: "BASH"; }
-.blog-post-content pre.language-shell::before { content: "SHELL"; }
-.blog-post-content pre.language-python::before { content: "PYTHON"; }
-.blog-post-content pre.language-yaml::before { content: "YAML"; }
-.blog-post-content pre.language-markdown::before { content: "MD"; }
-.blog-post-content pre.language-sql::before { content: "SQL"; }
-.blog-post-content pre.language-jsx::before { content: "JSX"; }
-.blog-post-content pre.language-tsx::before { content: "TSX"; }
-.blog-post-content pre.language-diff::before { content: "DIFF"; }
+.blog-post-content pre.language-javascript::before {
+  content: "JS";
+}
+.blog-post-content pre.language-typescript::before {
+  content: "TS";
+}
+.blog-post-content pre.language-css::before {
+  content: "CSS";
+}
+.blog-post-content pre.language-scss::before {
+  content: "SCSS";
+}
+.blog-post-content pre.language-json::before {
+  content: "JSON";
+}
+.blog-post-content pre.language-bash::before {
+  content: "BASH";
+}
+.blog-post-content pre.language-shell::before {
+  content: "SHELL";
+}
+.blog-post-content pre.language-python::before {
+  content: "PYTHON";
+}
+.blog-post-content pre.language-yaml::before {
+  content: "YAML";
+}
+.blog-post-content pre.language-markdown::before {
+  content: "MD";
+}
+.blog-post-content pre.language-sql::before {
+  content: "SQL";
+}
+.blog-post-content pre.language-jsx::before {
+  content: "JSX";
+}
+.blog-post-content pre.language-tsx::before {
+  content: "TSX";
+}
+.blog-post-content pre.language-diff::before {
+  content: "DIFF";
+}
 
 /* Language badge styling */
 .blog-post-content pre[class*="language-"]::before {
   position: absolute;
   top: 0;
   right: 0;
-  background: var(--color-background-tertiary, rgba(0, 0, 0, 0.1));
+  background: var(--color-background-tertiary);
   color: var(--color-text-secondary);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   padding: 0.25rem 0.5rem;
-  border-radius: 0 8px 0 4px;
+  border-radius: 0 var(--radius) 0 var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.75px;
   opacity: 0.6;
@@ -212,6 +283,8 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-[data-color-scheme="dark"] .blog-post-content pre[class*="language-"]:hover::before {
+[data-color-scheme="dark"]
+  .blog-post-content
+  pre[class*="language-"]:hover::before {
   color: rgba(255, 255, 255, 0.95);
 }

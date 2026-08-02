@@ -74,6 +74,70 @@ export class HtmlProcessingUtils {
   }
 
   /**
+   * Move asset tags that ended up inside <body> into their proper place.
+   *
+   * Pages under pages/ get their assets from injectAssets(), which already
+   * puts stylesheets in <head> and scripts before </body>. index.html is
+   * different: it is Vite's HTML entry, so Vite injects the bundle at the
+   * position of the <script type="module"> tag in the source file. That tag
+   * sits in the page content, which the base template drops inside
+   * <main class="page-content"> - so the stylesheet link landed in the middle
+   * of the body and the page painted unstyled before it arrived (DF-06).
+   *
+   * The script tag cannot simply be deleted from index.html: it is what marks
+   * the file as Vite's entry, and without it there is no bundle to emit. So
+   * the placement is corrected here instead, after templating, which also
+   * means it stays correct regardless of where the tag sits in the source.
+   *
+   * Idempotent: tags already in the right place are left alone.
+   */
+  static normalizeAssetPlacement(htmlContent: string): string {
+    const headEnd = htmlContent.indexOf("</head>");
+    if (headEnd === -1) return htmlContent;
+
+    const head = htmlContent.slice(0, headEnd);
+    let body = htmlContent.slice(headEnd);
+
+    const stylesheets: string[] = [];
+    const scripts: string[] = [];
+
+    // Stylesheets and modulepreload hints both belong in <head>: a preload
+    // hint placed after the markup it is meant to front-run does nothing.
+    body = body.replace(
+      /[ \t]*<link\b[^>]*rel=["'](?:stylesheet|modulepreload)["'][^>]*>\n?/gi,
+      (tag) => {
+        stylesheets.push(tag.trim());
+        return "";
+      }
+    );
+
+    body = body.replace(
+      /[ \t]*<script\b[^>]*\btype=["']module["'][^>]*><\/script>\n?/gi,
+      (tag) => {
+        scripts.push(tag.trim());
+        return "";
+      }
+    );
+
+    if (stylesheets.length === 0 && scripts.length === 0) {
+      return htmlContent;
+    }
+
+    const headBlock = stylesheets.length
+      ? `${stylesheets.map((t) => `    ${t}`).join("\n")}\n`
+      : "";
+
+    let result = head + headBlock + body;
+
+    if (scripts.length) {
+      const scriptBlock = `${scripts.map((t) => `    ${t}`).join("\n")}\n`;
+      result = result.replace("</body>", `${scriptBlock}  </body>`);
+    }
+
+    return result;
+  }
+
+  /**
    * Inject CSS and JS assets into HTML content
    */
   static injectAssets(
