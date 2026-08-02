@@ -90,47 +90,57 @@ export class AdminPostCard extends LitElement {
         <div class="post-title">${post.title}</div>
 
         <div class="post-metadata">
-          ${post.priority
-            ? html`
-                <span
-                  class="metadata-badge priority-badge priority-${post.priority}"
-                >
-                  ${post.priority === "high"
-                    ? "🔥"
-                    : post.priority === "medium"
-                      ? "⚡"
-                      : "📌"}
-                  ${post.priority}
-                </span>
-              `
-            : ""}
-          ${post.created
-            ? html`
-                <span class="metadata-badge">
-                  📅 ${this.formatDate(post.created)}
-                </span>
-              `
-            : ""}
+          ${
+            post.priority
+              ? html`
+                  <span
+                    class="metadata-badge priority-badge priority-${post.priority}"
+                  >
+                    ${
+                      post.priority === "high"
+                        ? "🔥"
+                        : post.priority === "medium"
+                          ? "⚡"
+                          : "📌"
+                    }
+                    ${post.priority}
+                  </span>
+                `
+              : ""
+          }
+          ${
+            post.created
+              ? html`
+                  <span class="metadata-badge">
+                    📅 ${this.formatDate(post.created)}
+                  </span>
+                `
+              : ""
+          }
         </div>
 
-        ${post.tags && post.tags.length > 0
-          ? html`
-              <div class="post-tags">
-                ${post.tags.map((tag) => html`<span class="tag">${tag}</span>`)}
-              </div>
-            `
-          : ""}
-        ${this.showPublishButton
-          ? html`
-              <button
-                class="publish-button"
-                @click=${this.handlePublish}
-                title="Mark as published"
-              >
-                ✓ Publish
-              </button>
-            `
-          : ""}
+        ${
+          post.tags && post.tags.length > 0
+            ? html`
+                <div class="post-tags">
+                  ${post.tags.map((tag) => html`<span class="tag">${tag}</span>`)}
+                </div>
+              `
+            : ""
+        }
+        ${
+          this.showPublishButton
+            ? html`
+                <button
+                  class="publish-button"
+                  @click=${this.handlePublish}
+                  title="Mark as published"
+                >
+                  ✓ Publish
+                </button>
+              `
+            : ""
+        }
       </div>
     `;
   }

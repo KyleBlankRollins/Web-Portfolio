@@ -12,9 +12,7 @@ import {
 } from "./frontmatter-parser.js";
 import type { SupplementManifestEntry } from "./blog-manifest.js";
 export type ContentDocumentKind =
-  | "standalone-post"
-  | "directory-post"
-  | "supplement-candidate";
+  "standalone-post" | "directory-post" | "supplement-candidate";
 
 export interface ContentDocument {
   sourcePath: string;

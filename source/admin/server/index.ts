@@ -46,9 +46,7 @@ export function startAdminServer() {
 
   // Logging middleware
   app.use((req: Request, _res: Response, next: NextFunction) => {
-    console.log(
-      `[${new Date().toISOString()}] ${req.method} ${req.path}`
-    );
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
     next();
   });
 
@@ -75,13 +73,9 @@ export function startAdminServer() {
 
   // Start server
   app.listen(ADMIN_PORT, () => {
-    console.log(
-      `✅ Admin server running on http://localhost:${ADMIN_PORT}`
-    );
+    console.log(`✅ Admin server running on http://localhost:${ADMIN_PORT}`);
     console.log(`📁 Backlog path: ${BACKLOG_PATH}`);
-    console.log(
-      `🌐 Admin UI should run on http://localhost:${ADMIN_UI_PORT}`
-    );
+    console.log(`🌐 Admin UI should run on http://localhost:${ADMIN_UI_PORT}`);
     console.log("");
     console.log("Available endpoints:");
     console.log(`  GET    /health`);

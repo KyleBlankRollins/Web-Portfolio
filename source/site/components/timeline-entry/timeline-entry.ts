@@ -76,18 +76,22 @@ export class KbrTimelineEntry extends LitElement {
           </div>
         </div>
 
-        ${formattedDescription
-          ? html` <div class="description">${formattedDescription}</div> `
-          : ""}
-        ${skills.length > 0
-          ? html`
-              <div class="skills">
-                ${skills.map(
-                  (skill) => html` <span class="skill-tag">${skill}</span> `
-                )}
-              </div>
-            `
-          : ""}
+        ${
+          formattedDescription
+            ? html` <div class="description">${formattedDescription}</div> `
+            : ""
+        }
+        ${
+          skills.length > 0
+            ? html`
+                <div class="skills">
+                  ${skills.map(
+                    (skill) => html` <span class="skill-tag">${skill}</span> `
+                  )}
+                </div>
+              `
+            : ""
+        }
       </div>
     `;
   }

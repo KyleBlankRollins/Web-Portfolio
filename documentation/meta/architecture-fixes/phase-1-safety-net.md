@@ -155,7 +155,7 @@ Leave `generatedFile: any` at `:229` alone — it becomes `GeneratedHtmlFile` in
 
 **AF-27.** In `tsconfig.json`, change `"include": ["source"]` to `"include": ["source", "scripts"]`. `scripts/lint-prose.ts` is 418 lines that `tsc` has never seen. If it now reports errors, fix them — they are real. If the fixes are more than mechanical, stop and report rather than reworking the script.
 
-**AF-30.** Create `.github/workflows/ci.yml`. Trigger on `push` and `pull_request`. One job on `ubuntu-latest`, Node 20 with `cache: npm`, running in order:
+**AF-30.** Create `.github/workflows/ci.yml`. Trigger on `push` and `pull_request`. One job on `ubuntu-latest`, Node 24 with `cache: npm`, running in order:
 
 ```
 npm ci

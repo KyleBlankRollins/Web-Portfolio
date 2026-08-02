@@ -144,9 +144,9 @@ export class KbrPostSeries extends LitElement {
           <p class="series-position">${positionText}</p>
         </div>
         <svg
-          class="series-toggle-icon ${this.isExpanded
-            ? "expanded"
-            : "collapsed"}"
+          class="series-toggle-icon ${
+            this.isExpanded ? "expanded" : "collapsed"
+          }"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -164,22 +164,26 @@ export class KbrPostSeries extends LitElement {
 
     return html`
       <div class="series-navigation">
-        ${prevPost
-          ? html`
-              <a href="${prevPost.url}" class="nav-button">
-                <span class="nav-text">${prevPost.title}</span>
-                <span class="nav-arrow">←</span>
-              </a>
-            `
-          : ""}
-        ${nextPost
-          ? html`
-              <a href="${nextPost.url}" class="nav-button">
-                <span class="nav-text">${nextPost.title}</span>
-                <span class="nav-arrow">→</span>
-              </a>
-            `
-          : ""}
+        ${
+          prevPost
+            ? html`
+                <a href="${prevPost.url}" class="nav-button">
+                  <span class="nav-text">${prevPost.title}</span>
+                  <span class="nav-arrow">←</span>
+                </a>
+              `
+            : ""
+        }
+        ${
+          nextPost
+            ? html`
+                <a href="${nextPost.url}" class="nav-button">
+                  <span class="nav-text">${nextPost.title}</span>
+                  <span class="nav-arrow">→</span>
+                </a>
+              `
+            : ""
+        }
       </div>
     `;
   }
@@ -192,14 +196,16 @@ export class KbrPostSeries extends LitElement {
             <li class="series-item">
               <a
                 href="${post.url}"
-                class="series-link ${post.series?.part === this.currentPart
-                  ? "current"
-                  : ""}"
+                class="series-link ${
+                  post.series?.part === this.currentPart ? "current" : ""
+                }"
               >
                 <span class="part-number"
-                  >${post.series?.part === 0
-                    ? "Series Summary:"
-                    : `Part ${post.series?.part}:`}</span
+                  >${
+                    post.series?.part === 0
+                      ? "Series Summary:"
+                      : `Part ${post.series?.part}:`
+                  }</span
                 >
                 <span class="post-title">${post.title}</span>
               </a>

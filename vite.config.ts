@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import { kbrBuilder } from "./source/builder/index";
+import { kbrBuilder } from "./source/builder/index.ts";
 
 export default defineConfig({
   root: "source/site",
@@ -17,10 +17,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Manual chunk splitting for better caching
-        manualChunks: {
-          // Separate vendor libraries
-          lit: ["lit"],
-          prism: ["prismjs"],
+        manualChunks: (id) => {
+          if (id.includes("node_modules/lit")) {
+            return "lit";
+          }
+
+          if (id.includes("node_modules/prismjs")) {
+            return "prism";
+          }
+
+          return undefined;
         },
         // Optimize chunk file names for caching
         chunkFileNames: "assets/[name]-[hash].js",

@@ -195,10 +195,23 @@ All themes meet WCAG AA accessibility standards:
 Each theme defines standardized gradient properties:
 
 ```css
---gradient-primary: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
---gradient-primary-light: /* Subtle transparent version */
---gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
---gradient-surface: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+--gradient-primary: linear-gradient(
+  90deg,
+  var(--color-primary) 0%,
+  var(--color-secondary) 50%,
+  var(--color-accent) 100%
+);
+--gradient-primary-light: /* Subtle transparent version */ --gradient-accent:
+  linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    var(--color-accent-hover) 100%
+  );
+--gradient-surface: linear-gradient(
+  180deg,
+  var(--color-surface) 0%,
+  var(--color-surface-hover) 100%
+);
 ```
 
 ### Gradient Utility Classes

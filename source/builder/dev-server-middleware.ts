@@ -1,4 +1,6 @@
 import type { ViteDevServer } from "vite";
+import type * as Connect from "connect";
+import type { ServerResponse } from "http";
 import * as fs from "fs";
 import * as path from "path";
 import {
@@ -14,7 +16,11 @@ import { ContentDiscovery } from "./modules/index.js";
  * Creates middleware that blocks direct access to source directories
  */
 function createBlockingMiddleware() {
-  return (req: any, res: any, next: any) => {
+  return (
+    req: Connect.IncomingMessage,
+    res: ServerResponse,
+    next: Connect.NextFunction
+  ) => {
     const url = req.url;
     if (!url) return next();
 
@@ -41,7 +47,11 @@ function createProcessingMiddleware(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor
 ) {
-  return (req: any, res: any, next: any) => {
+  return (
+    req: Connect.IncomingMessage,
+    res: ServerResponse,
+    next: Connect.NextFunction
+  ) => {
     const url = req.url;
     if (!url) return next();
 
@@ -83,9 +93,9 @@ function createProcessingMiddleware(
  */
 async function handleIndexRequest(
   templateProcessor: TemplateProcessor,
-  _req: any,
-  res: any,
-  next: any
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   const indexPath = path.join(process.cwd(), "source", "site", "index.html");
 
@@ -117,9 +127,9 @@ async function handleIndexRequest(
  * Handle requests for blog-manifest.json
  */
 function handleBlogManifestRequest(
-  _req: any,
-  res: any,
-  _next: any,
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  _next: Connect.NextFunction,
   markdownProcessor: MarkdownProcessor
 ) {
   try {
@@ -140,7 +150,11 @@ function handleBlogManifestRequest(
 /**
  * Handle requests for theme-manifest.json
  */
-function handleThemeManifestRequest(_req: any, res: any, _next: any) {
+function handleThemeManifestRequest(
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  _next: Connect.NextFunction
+) {
   try {
     // Import and process themes
     const { ThemeProcessor } = require("./theme-processor.js");
@@ -175,9 +189,9 @@ async function handleHtmlRequest(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor,
   url: string,
-  _req: any,
-  res: any,
-  next: any
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   const requestedPublicUrl = normalizePublicUrl(url);
   const fileName = requestedPublicUrl.slice(1);
@@ -227,8 +241,8 @@ async function handleHtmlRequest(
 async function processAndServeGeneratedFile(
   templateProcessor: TemplateProcessor,
   generatedFile: any,
-  res: any,
-  next: any
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   try {
     const processedContent = await HtmlProcessingUtils.processHtmlContent(
@@ -257,8 +271,8 @@ async function processAndServeGeneratedFile(
 async function processAndServeFile(
   templateProcessor: TemplateProcessor,
   filePath: string,
-  res: any,
-  next: any
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
@@ -286,8 +300,8 @@ async function processAndServeMarkdown(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor,
   mdFilePath: string,
-  res: any,
-  next: any
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   try {
     const mdContent = fs.readFileSync(mdFilePath, "utf-8");
@@ -444,7 +458,7 @@ function resolvePublishedMarkdownSourcePath(
   return matchedDocument?.sourcePath;
 }
 
-function sendNotFoundHtml(res: any): void {
+function sendNotFoundHtml(res: ServerResponse): void {
   res.statusCode = 404;
   res.setHeader("Content-Type", "text/html");
   res.end(`

@@ -37,9 +37,7 @@ export class ThemeProcessor {
    */
   public processThemes(): void {
     if (!fs.existsSync(this.themesDir)) {
-      BuildLogger.warn(
-        `Themes directory not found: ${this.themesDir}`
-      );
+      BuildLogger.warn(`Themes directory not found: ${this.themesDir}`);
       return;
     }
 
@@ -48,9 +46,7 @@ export class ThemeProcessor {
       (file) => file.startsWith("theme-") && file.endsWith(".css")
     );
 
-    BuildLogger.info(
-      `🎨 Processing ${themeFiles.length} theme files...`
-    );
+    BuildLogger.info(`🎨 Processing ${themeFiles.length} theme files...`);
 
     this.themes = [];
     for (const file of themeFiles) {
@@ -58,9 +54,7 @@ export class ThemeProcessor {
       const theme = this.processThemeFile(filePath, file);
       if (theme) {
         this.themes.push(theme);
-        BuildLogger.info(
-          `✓ Processed theme: ${theme.name} (${theme.id})`
-        );
+        BuildLogger.info(`✓ Processed theme: ${theme.name} (${theme.id})`);
       }
     }
   }
@@ -76,16 +70,11 @@ export class ThemeProcessor {
       const content = fs.readFileSync(filePath, "utf-8");
 
       // Extract theme ID from filename (theme-{id}.css)
-      const themeId = fileName
-        .replace(/^theme-/, "")
-        .replace(/\.css$/, "");
+      const themeId = fileName.replace(/^theme-/, "").replace(/\.css$/, "");
 
       // Find the theme selector block
       const selectorMatch = content.match(
-        new RegExp(
-          `\\[data-theme="${themeId}"\\]\\s*\\{([^}]+)\\}`,
-          "s"
-        )
+        new RegExp(`\\[data-theme="${themeId}"\\]\\s*\\{([^}]+)\\}`, "s")
       );
       if (!selectorMatch) {
         BuildLogger.warn(
@@ -111,9 +100,7 @@ export class ThemeProcessor {
 
       return theme;
     } catch (error) {
-      BuildLogger.error(
-        `Error processing theme file ${fileName}: ${error}`
-      );
+      BuildLogger.error(`Error processing theme file ${fileName}: ${error}`);
       return null;
     }
   }

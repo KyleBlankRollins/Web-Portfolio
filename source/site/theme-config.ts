@@ -40,9 +40,7 @@ export async function loadThemes(): Promise<ThemeConfig[]> {
   try {
     const response = await fetch("/data/theme-manifest.json");
     if (!response.ok) {
-      throw new Error(
-        `Failed to load theme manifest: ${response.status}`
-      );
+      throw new Error(`Failed to load theme manifest: ${response.status}`);
     }
 
     const manifest: ThemeManifest = await response.json();
@@ -85,9 +83,7 @@ async function setupThemes() {
     const themes = await loadThemes();
 
     // Find all theme switcher components
-    const themeSwitchers = document.querySelectorAll(
-      "kbr-theme-switcher"
-    );
+    const themeSwitchers = document.querySelectorAll("kbr-theme-switcher");
 
     themeSwitchers.forEach((switcher: any) => {
       // Configure themes

@@ -238,7 +238,6 @@ Example API response:
    Navigate to http://localhost:4001
 
 3. **Manage posts:**
-
    - View all posts organized by status in columns
    - Drag posts between columns to change status
    - Changes automatically sync to backlog.md

@@ -1,0 +1,242 @@
+{
+  "posts": [
+    {
+      "title": "AI Agent Workflows",
+      "description": "AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me.",
+      "date": "2026-07-31",
+      "formattedDate": "July 31, 2026",
+      "tags": [
+        "AI",
+        "coding agents",
+        "workflows"
+      ],
+      "url": "/ai-agent-workflows.html",
+      "filename": "ai-agent-workflows",
+      "keywords": "AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development"
+    },
+    {
+      "title": "Leading Through Change",
+      "description": "What three team reinventions in three years taught me about leading people through uncertainty",
+      "date": "2026-07-06",
+      "formattedDate": "July 6, 2026",
+      "tags": [
+        "leadership",
+        "management",
+        "career"
+      ],
+      "url": "/leading-through-change.html",
+      "filename": "leading-through-change",
+      "keywords": "leadership, management, technical writing, team building, change management"
+    },
+    {
+      "title": "Technical Storytelling and Drift at Machine Speed",
+      "description": "Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this.",
+      "date": "2026-03-31",
+      "formattedDate": "March 31, 2026",
+      "tags": [
+        "technical writing",
+        "AI",
+        "documentation"
+      ],
+      "url": "/docs-as-interface.html",
+      "filename": "docs-as-interface",
+      "keywords": "technical writing, AI agents, documentation, natural language, product interface"
+    },
+    {
+      "title": "Intentional Work Patterns",
+      "description": "Build intentional habits to prevent chaos from controlling your work or seeping into your personal life",
+      "date": "2025-12-26",
+      "formattedDate": "December 26, 2025",
+      "tags": [
+        "habits",
+        "intentionality",
+        "remote work"
+      ],
+      "url": "/intentional-work-patterns.html",
+      "filename": "intentional-work-patterns",
+      "keywords": "habits, intentionality, remote work",
+      "series": {
+        "name": "Intentional Work Patterns",
+        "part": 0
+      },
+      "supplements": [
+        {
+          "title": "Boundary Checklist",
+          "description": "A practical checklist for setting and maintaining healthy work boundaries.",
+          "url": "/intentional-work-patterns/supplements/boundary-checklist.html",
+          "filename": "intentional-work-patterns/supplements/boundary-checklist.html"
+        },
+        {
+          "title": "Boundary Conversation Script",
+          "description": "A practical script for discussing focus boundaries with your household.",
+          "url": "/intentional-work-patterns/supplements/boundary-conversation-script.html",
+          "filename": "intentional-work-patterns/supplements/boundary-conversation-script.html"
+        }
+      ]
+    },
+    {
+      "title": "Intentional Work Patterns - Boundaries",
+      "description": "Practical strategies for protecting your time and energy",
+      "date": "2025-12-26",
+      "formattedDate": "December 26, 2025",
+      "tags": [
+        "boundaries",
+        "intentionality",
+        "remote work"
+      ],
+      "url": "/intentional-work-patterns-boundaries.html",
+      "filename": "intentional-work-patterns-boundaries",
+      "keywords": "productivity, boundaries, remote work",
+      "series": {
+        "name": "Intentional Work Patterns",
+        "part": 1
+      }
+    },
+    {
+      "title": "The P&G Rule of Thirds",
+      "description": "How to adapt Sid Meier's Rule of Thirds to professional development and goal setting",
+      "date": "2025-10-01",
+      "formattedDate": "October 1, 2025",
+      "tags": [
+        "professional growth",
+        "goal setting",
+        "rule of thirds"
+      ],
+      "url": "/rule-of-thirds.html",
+      "filename": "rule-of-thirds",
+      "keywords": "professional growth, goal setting, rule of thirds"
+    },
+    {
+      "title": "LLM as SME",
+      "description": "While an LLM can't replace a truly knowledgeable human, its a better tool than not having an SME at all",
+      "date": "2025-09-26",
+      "formattedDate": "September 26, 2025",
+      "tags": [
+        "technical writing",
+        "research",
+        "LLM"
+      ],
+      "url": "/llm-as-sme.html",
+      "filename": "llm-as-sme",
+      "keywords": "technical writing, documentation, research, process, AI, LLM"
+    },
+    {
+      "title": "What Typography on KBR Looks Like",
+      "description": "A comprehensive test of all typography styles, font weights, and text formatting used across the KBR website",
+      "date": "2025-09-24",
+      "formattedDate": "September 24, 2025",
+      "tags": [
+        "design",
+        "typography",
+        "testing"
+      ],
+      "url": "/typography-test.html",
+      "filename": "typography-test"
+    }
+  ],
+  "totalPosts": 8,
+  "availableTags": [
+    "AI",
+    "intentionality",
+    "remote work",
+    "technical writing",
+    "boundaries",
+    "career",
+    "coding agents",
+    "design",
+    "documentation",
+    "goal setting",
+    "habits",
+    "leadership",
+    "LLM",
+    "management",
+    "professional growth",
+    "research",
+    "rule of thirds",
+    "testing",
+    "typography",
+    "workflows"
+  ],
+  "tagsWithCounts": [
+    {
+      "tag": "AI",
+      "count": 2
+    },
+    {
+      "tag": "intentionality",
+      "count": 2
+    },
+    {
+      "tag": "remote work",
+      "count": 2
+    },
+    {
+      "tag": "technical writing",
+      "count": 2
+    },
+    {
+      "tag": "boundaries",
+      "count": 1
+    },
+    {
+      "tag": "career",
+      "count": 1
+    },
+    {
+      "tag": "coding agents",
+      "count": 1
+    },
+    {
+      "tag": "design",
+      "count": 1
+    },
+    {
+      "tag": "documentation",
+      "count": 1
+    },
+    {
+      "tag": "goal setting",
+      "count": 1
+    },
+    {
+      "tag": "habits",
+      "count": 1
+    },
+    {
+      "tag": "leadership",
+      "count": 1
+    },
+    {
+      "tag": "LLM",
+      "count": 1
+    },
+    {
+      "tag": "management",
+      "count": 1
+    },
+    {
+      "tag": "professional growth",
+      "count": 1
+    },
+    {
+      "tag": "research",
+      "count": 1
+    },
+    {
+      "tag": "rule of thirds",
+      "count": 1
+    },
+    {
+      "tag": "testing",
+      "count": 1
+    },
+    {
+      "tag": "typography",
+      "count": 1
+    },
+    {
+      "tag": "workflows",
+      "count": 1
+    }
+  ]
+}

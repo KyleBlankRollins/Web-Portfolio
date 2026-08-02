@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme bootstrap - see the matching comment in base.html. Blocking on
+         purpose so [data-theme] and [data-color-scheme] exist before first
+         paint. Mirrors loadSavedTheme() in theme-switcher.ts; keep in sync. -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try {
+          d.setAttribute(
+            "data-theme",
+            localStorage.getItem("kbr-theme") || "base"
+          );
+          d.setAttribute(
+            "data-color-scheme",
+            localStorage.getItem("kbr-color-scheme") ||
+              (window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light")
+          );
+        } catch (e) {
+          d.setAttribute("data-theme", "base");
+          d.setAttribute("data-color-scheme", "light");
+        }
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>AI Agent Workflows</title>
+    
+    <meta name="description" content="AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me." />
+     
+    <meta name="keywords" content="AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development" />
+     
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+
+  <body>
+    <kbr-navigation>
+      <!-- Slotted into .header-content so the switcher sits at the far right
+           of the site header. It used to be a fixed-position floating control,
+           which overlapped page content at every viewport width. See DF-31. -->
+      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+    </kbr-navigation>
+
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+          
+          <kbr-table-of-contents></kbr-table-of-contents>
+           
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          <button class="blog-tag" data-tag="AI">AI</button><button class="blog-tag" data-tag="coding agents">coding agents</button><button class="blog-tag" data-tag="workflows">workflows</button>
+        </div>
+      </div>
+     
+        </div>
+      </aside>
+
+      <article class="blog-post-content glass-surface">
+        <h1 id="ai-agent-workflows">AI Agent Workflows</h1>
+
+        <div class="blog-post-metadata">
+          <div>
+            <time datetime="2026-07-31">July 31, 2026</time>
+          </div>
+        </div>
+      <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
+<p>For the last year or so, I have used AI tools and agents to help with work and personal projects. Most of the time, they augment work that I have already scoped and planned. They help me move faster, but they don&#39;t decide what I should be working on.</p>
+<p>Here are some of the workflows that have worked for me. Maybe they will help someone else streamline their work or get over a difficult learning curve.</p>
+<h2 id="drawing-boxes">Drawing boxes</h2><p>I&#39;ve long thought that drawing literal boxes around problems is a good way to break ambiguous work into chunks. The premise is simple: draw a box for everything you know now. Group the boxes, draw a larger box around the groups, and label the new boxes. Then draw a box around everything to define the problem space.</p>
+<p>While drawing the boxes, my brain makes connections I otherwise wouldn&#39;t have considered. I often move or delete boxes as my thinking gets more focused. The benefit is reducing ambiguity by defining borders around ideas. It is as much methodical as intuitive.</p>
+<p>Humans should draw the boxes for AI agents. Some people are methodical, some are intuitive, and some (like me) mix the two.</p>
+<p>In my experience with AI agents, I get significantly better results when I have well-drawn boxes that constrain the problem space.</p>
+<h2 id="discovery-and-implementation-are-different-jobs">Discovery and implementation are different jobs</h2><p>A common mistake is giving an agent too many jobs. For example: &quot;Figure out what changed in this product release and then write the release notes using this template.&quot; That might work for a small release, but it is likely to produce worse results for a substantial release. There are two jobs here: discovery and implementation. Conflating them creates ambiguity instead of reducing it.</p>
+<h3 id="discovery">Discovery</h3><p>Discovery requires deciding what matters, resolving ambiguity, finding missing context, and choosing among plausible directions.</p>
+<p>In this case, &quot;figure out what changed in this product release&quot; could be complicated. You could tell the agent to use project documents, such as requirements, scope, and specifications. A better approach might be to have it inspect the engineering repositories and understand what shipped. But then it would also need to understand the product&#39;s release process.</p>
+<p>You can provide agents with skills or other context to help with discovery. But humans still need to define the problem and draw the boxes that constrain the agent&#39;s scope. Agents can accelerate discovery by searching, summarizing, comparing, and asking questions. They should not define the problem.</p>
+<p>At the end of discovery, you should have a set of well-drawn boxes that can be documented in many ways. I usually use Markdown files. These artifacts are the input for implementation.</p>
+<h3 id="implementation">Implementation</h3><p>After discovery, hand the artifacts to a <em>different</em> AI agent for implementation. Agents are good at doing work when the requirements are well defined. User stories are a good example. Discovery artifacts should be explicit about constraints, interfaces, and acceptance criteria.</p>
+<p>For discovery, humans research, define scope, evaluate the plan, and validate what agents find. For implementation, agents inspect a bounded task, make changes, run checks, and report what happened. Humans review the result.</p>
+<h2 id="discovery-with-an-agent-under-human-direction">Discovery with an agent, under human direction</h2><p>Having separated the two jobs, here is how I do discovery. I use agents as research assistants rather than project owners. I&#39;ll give an agent a question, a bounded research target, and permission to surface uncertainty. I&#39;ll ask it to search a repository, compare approaches, summarize documents, or identify questions that I haven&#39;t thought to ask.</p>
+<p>The agent&#39;s research is evidence for a human decision, not a decision itself. An agent can find plausible context quickly. That does not mean all of it belongs in the project, or that the agent understands which tradeoffs matter to me.</p>
+<p>I also try to use deterministic sources and tools wherever possible. Repository search, Git history, issue trackers, static analysis, type information, and structured interfaces are all useful because they give the agent something concrete to inspect. The more the agent has to infer from vague prose or an incomplete memory of how a system works, the more room there is for it to confidently wander off course.</p>
+<p>When accuracy matters, I prefer to bring important source material into the repository. Web pages are sometimes an unreliable way to provide context to an agent. Depending on the tool, a page may be summarized, truncated, or passed through another model before it reaches the agent doing the work. That can be OK for a quick question. It is a poor foundation for a detailed implementation when a small omitted detail can change the outcome.</p>
+<p>Discovery is still discovery even when an agent helps with it. An agent can gather more information, but someone still needs to decide what matters and where the boundaries belong.</p>
+<h3 id="turn-research-into-a-source-of-truth">Turn research into a source of truth</h3><p>Once I understand the problem well enough, I turn the useful parts of the research into a project plan or specification. This is where the boxes become more concrete. I write down what needs to change, what should not change, which existing interfaces matter, and how I will know whether the work is complete.</p>
+<p>For larger projects, I break that plan into discrete Markdown files or phases. I use a larger model for research and planning, then a smaller or faster model to implement individual phases. The implementation agent does not need to understand every direction the project could have taken. It needs to understand the intended outcome.</p>
+<p>The repository for my website has an example in a refactor I did. I built a static site generator for the website. The plan<sup id="citation-ref-refactor-plan"><a href="#citation-refactor-plan" class="citation-ref">[1]</a></sup> analyzed the two large processors and mapped their responsibilities to focused modules. It described the proposed interfaces, the logic to move, and the reasons for the change. Later commits completed phases 2, 3, and 4, and the builder documentation was updated as the architecture settled.</p>
+<p>I can&#39;t prove from Git history which parts of that work were produced by an agent. That is not the point. The broad refactor became more manageable after I described the desired architecture and divided the work into independently reviewable phases.</p>
+<p>Markdown in a Git repository works well because it is versioned, searchable, and reviewable. It can be available to later agents, too. A plan becomes part of the project rather than a temporary instruction that disappears after an agent session. It is not a contract, though. Update it when discovery changes the problem or the intended solution.</p>
+<h2 id="agents-implement-bounded-work">Agents implement bounded work</h2><p>Once the work is defined, coding agents are good at implementation. The agent inspects a bounded task, makes the changes, runs checks, and reports what happened. I review the result before the next phase.</p>
+<p>Discrete phases reduce the context an agent has to hold, limit the blast radius of a mistake, and create review points. A phase does not need to be tiny, but it should have a coherent purpose. “Refactor the builder” is a poor implementation task. “Move citation parsing and validation into a focused module, preserve the existing public behavior, and run the builder checks” is easier to reason about.</p>
+<p>I prefer implementation requests that name the relevant files, expected behavior, constraints, and validation commands. The agent can still make decisions within those boundaries, but they should concern implementation rather than redefining the work. If an agent can access private data, credentials, or production systems, the boundaries should also define what it may read and modify.</p>
+<p>The citations feature in this repository is another example. The plan covered interfaces, frontmatter parsing, inline reference processing, generated HTML, templates, styles, and build-time validation. It mapped a feature that crossed several parts of the builder. The implementation could then proceed as concrete changes instead of one request to “add citations somehow.”</p>
+<p>There is a temptation to use the most capable model for every part of this process. I don&#39;t think that is necessary. Stronger models are most valuable when the problem is ambiguous, the research is difficult, or the plan needs judgment. Once the interfaces and acceptance criteria are clear, a smaller model can often implement the work just as well, especially with deterministic checks.</p>
+<h3 id="deterministic-tools-are-the-scaffolding">Deterministic tools are the scaffolding</h3><p>Agents become more reliable when important parts of the work can be checked mechanically. Tests, linters, static analysis, types, structured interfaces, and opinionated compilers expose facts and failures an agent should not have to infer from prose.</p>
+<p>For programming, an opinionated compiler can catch an entire class of mistakes before I review anything. Tests verify that a change does what was intended. Linters and static analysis identify problems that are easy to miss in a large diff. Large diffs are an anti-pattern, but they still happen<sup id="citation-ref-anti-patterns"><a href="#citation-anti-patterns" class="citation-ref">[2]</a></sup>. For prose, Vale provides similar friction. It does not decide whether prose is good, but it can catch patterns that are inconsistent, unclear, or contrary to your style.</p>
+<p>These tools turn part of the review into a repeatable workflow. An agent can run the checks, read the results, and fix straightforward problems without instructions from me.</p>
+<p>Passing checks does not make a change correct or useful. It narrows the space of possible mistakes. A test suite can pass while the wrong feature is being built. A compiler can be satisfied while the interface is confusing. Vale can approve a technically correct sentence that is unhelpful. Deterministic tools are scaffolding, not judgment.</p>
+<h3 id="human-review-required">Human review required</h3><p>My most important review step is reading the updated files. Sometimes that means looking at a Git diff. Sometimes it means opening the whole file and reading the surrounding code or prose. Understanding what changed matters more than the form.</p>
+<p>I also run tests and linters, check browser behavior for user interfaces, and ask another model to review the work. A reviewer from a different model family may be less likely to repeat the first agent&#39;s assumptions. I treat that review as another opinion, not an oracle.</p>
+<p>I treat review as a gate between phases. If a phase is wrong, it is easier to correct it before the next phase builds on it.</p>
+<h2 id="the-cost-of-too-much-context">The cost of too much context</h2><p>AI tools make it easy to keep adding context: an MCP server, a skill, an agent instruction file, a project prompt, a system prompt, and another document explaining how the others should be used. Some context is useful. Too much creates bureaucracy around a task that needed one clear paragraph.</p>
+<p>My preference is lean customization. I add context when it creates repeatability or closes a demonstrated gap. A skill that describes a recurring workflow is valuable. An instruction file that captures stable repository conventions saves time. A deterministic tool that gives an agent reliable project data is more useful than another page of general advice.</p>
+<p>During discovery and prototyping, I do little to manage context because the problem is still changing. Instructions that seem helpful at first can become a second system to design, maintain, and debug.</p>
+<p>The history of this repository&#39;s admin system<sup id="citation-ref-admin-system"><a href="#citation-admin-system" class="citation-ref">[3]</a></sup> illustrates the cost of broad scope. The initial implementation added a server and a basic user interface across many files. A later architecture and validation pass added structure and source-file validation. Subsequent commits fixed lifecycle behavior, formatting, and component organization.</p>
+<p>I don&#39;t read that history as evidence that the implementation failed. It is a normal record of software taking shape. But it shows how much surface area a broad first pass creates. When decisions are bundled together, later work has to sort out the original problem and the assumptions in the first solution. Smaller, better-defined phases make those assumptions easier to see.</p>
+<h2 id="humans-steer-agents-execute">Humans steer, agents execute</h2><p>As a default, humans should define the problem and direction, agents should implement bounded work, and humans should review the result.</p>
+<p>That does not mean humans should avoid agents during discovery. Research, comparison, summarization, and question generation are useful. An agent can support those activities, but a person still needs to decide what the work is, what constraints matter, and when it is complete. You should not cede your thinking or agency to an AI agent. This is a useful division of responsibility, not a rule that every task must follow. The boundary can move when the task, tools, or level of risk changes.</p>
+
+        <kbr-supplement-list></kbr-supplement-list>
+        
+        <div class="blog-citations-container"><section class="citations">
+  <h2>References</h2>
+  <ol class="citations-list">
+    <li id="citation-refactor-plan">
+      <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a></span>
+    </li>
+    <li id="citation-anti-patterns">
+      <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison <span class="citation-links"><a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a></span>
+    </li>
+    <li id="citation-admin-system">
+      <em>Web-Portfolio Admin System</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-admin-system" class="citation-backref">↩</a></span>
+    </li>
+  </ol>
+</section></div>
+        
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+
+    <!-- Shared markup from templates/partials/footer.html, injected by
+         template-processor.ts. Edit the partial, not this line. -->
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the {&lt;!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the  template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+--&gt;
+&lt;footer class=&quot;site-footer&quot;&gt;
+  &lt;nav class=&quot;site-footer-nav&quot; aria-label=&quot;Elsewhere on the web&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://www.linkedin.com/in/kyle-blank-rollins/&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;LinkedIn&lt;/a
+        &gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://github.com/KyleBlankRollins/Web-Portfolio&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;GitHub&lt;/a
+        &gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/footer&gt;} template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

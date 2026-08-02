@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+
+         The gradient behind every page comes from --gradient-primary, which
+         only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+         Those attributes used to be stamped by theme-switcher.ts in
+         connectedCallback - after the Lit bundle parses - so the page painted
+         once with the properties.css fallbacks and then visibly repainted.
+
+         This mirrors loadSavedTheme() in theme-switcher.ts exactly: same
+         storage keys, same "base" default, same matchMedia fallback. The
+         component reads the same values afterwards and re-applies them, which
+         is a no-op. Keep the two in sync. See DF-13. -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try {
+          d.setAttribute(
+            "data-theme",
+            localStorage.getItem("kbr-theme") || "base"
+          );
+          d.setAttribute(
+            "data-color-scheme",
+            localStorage.getItem("kbr-color-scheme") ||
+              (window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light")
+          );
+        } catch (e) {
+          // localStorage throws in private mode with cookies disabled.
+          d.setAttribute("data-theme", "base");
+          d.setAttribute("data-color-scheme", "light");
+        }
+      })();
+    </script>
+    <!-- Root-absolute so it resolves from nested paths such as
+         /<post>/supplements/<page>.html as well as from the site root. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Portfolio - Kyle Blank Rollins</title>
+    
+    <meta name="description" content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects." />
+     
+    <meta name="keywords" content="portfolio, technical writer, developer, Kyle Blank Rollins, projects" />
+     
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+
+  <body>
+    <kbr-navigation>
+      <!-- Slotted into .header-content so the switcher sits at the far right
+           of the site header. It used to be a fixed-position floating control,
+           which overlapped page content at every viewport width. See DF-31. -->
+      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+    </kbr-navigation>
+
+    <main class="page-content"><!-- Two-column rail, matching .blog-layout, .blog-post-layout and
+     .timeline: the table of contents reserves a grid track instead of
+     floating over the content. See phase 2. -->
+<div class="portfolio-layout">
+  <aside class="portfolio-toc">
+    <kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
+  </aside>
+
+  <div class="portfolio-content">
+    <section>
+      <h1>Samples of my work</h1>
+      <p class="lead">
+        A showcase of my work as a technical writer and developer, including
+        examples, experience timeline, and notable projects.
+      </p>
+    </section>
+
+    <section>
+      <h2>Writing samples</h2>
+      <p>
+        Most of my writing is covered under NDAs and not shareable. However, you
+        can find several documents below that showcase different types of
+        technical documentation.
+      </p>
+      <p>
+        If you're curious about these documents or my other work, contact me
+        through
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">LinkedIn</a>.
+      </p>
+
+      <div>
+        <h3>User Documentation</h3>
+        <div class="grid two-columns">
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/CScom-WN-Oct-2018.png"
+                alt="ChartScript.com What's New in this Release cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>3M™ ChartScript.com What's New</h4>
+              <p>
+                High-level overview of software changes for multiple audiences:
+                transcriptionists, system administrators, and primary care
+                providers.
+              </p>
+              <a
+                href="/samples/dcn300_cscom_rel_october_2018.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/EAPG-meth-overview-jan-2020.png"
+                alt="EAPG Methodology Overview cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>Enhanced Ambulatory Patient Grouping Systems</h4>
+              <p>
+                Publicly available methodology overview with historical context
+                and current implementation breakdown.
+              </p>
+              <a
+                href="/samples/grp403_eapg_meth_overview_v315.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/Provider-Client-WN-May-2019.png"
+                alt="Provider Client What's New cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>Provider Client Release Notes</h4>
+              <p>
+                Software changes documentation highlighting workflows and
+                intersections between providers, transcriptionists, and QA
+                staff.
+              </p>
+              <a
+                href="/samples/provider_client_rel_may_2019.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <h3>Developer Documentation</h3>
+        <div class="grid two-columns">
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/mf-WN-v2019.1.3.png"
+                alt="APCGP What's New cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>APCGP Software Release Overview</h4>
+              <p>
+                Comprehensive overview of software features and data structure
+                changes, serving as a central repository linking to detailed
+                technical documentation.
+              </p>
+              <a
+                href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/opps-pricer-manual-v20.3.0.png"
+                alt="TRICARE OPPS Pricer Software Manual cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>TRICARE OPPS Pricer Software Manual</h4>
+              <p>
+                Complete software manual covering download, installation,
+                interface, and reimbursement information for healthcare payment
+                processing.
+              </p>
+              <a
+                href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Web projects</h2>
+      <p>
+        I'm always looking for an excuse to further my design and functional
+        skills on the web. I don't always have the time to pursue projects (let
+        alone finish them), but I typically learn a lot along the way.
+      </p>
+      <p>
+        Below, you'll see the projects I've completed. I plan to add more
+        experimental things at a later date.
+      </p>
+
+      <div>
+        <h3>Redesigns</h3>
+        <div class="grid">
+          <article class="project-card card">
+            <div class="project-image-container">
+              <kbr-image-lightbox
+                src="/images/sites/support-site-before.png"
+                alt="3M HIS Support website before and after redesign"
+                caption="3M HIS Support Website - Before and after redesign comparison"
+                classes="project-image"
+              >
+              </kbr-image-lightbox>
+            </div>
+
+            <div class="project-info">
+              <div class="project-header">
+                <h4>3M HIS Support Website</h4>
+                <a href="https://support.3mhis.com/" class="project-link"
+                  >Visit Site →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Streamlined navigation.</strong> It's much easier
+                      for users to navigate and find what they're looking for.
+                    </li>
+                    <li>
+                      <strong>Visual hierarchy.</strong> Use of iconography,
+                      vertical placement, size, and color helps users better
+                      parse the site's more important aspects.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    I worked with the support organization's web team to update
+                    the look and feel of our support website.
+                  </p>
+                  <p>
+                    It was much harder than it seems, as we were working with an
+                    Oracle knowledgebase tool that doesn't like to expose its
+                    inner workings.
+                  </p>
+                  <p>
+                    We were able to get around most of the issues by writing
+                    custom JavaScript and overwriting default CSS styles. We
+                    also trimmed as much as possible from what the tool shipped
+                    by default. All in all, despite the custom logic and styles,
+                    the site performs better than it did before the redesign and
+                    ships less code.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h3>Greenfield Projects</h3>
+        <div class="grid">
+          <article class="project-card card">
+            <div class="project-image-container">
+              <kbr-image-lightbox
+                src="/images/sites/wx/webhelp-next-cover.png"
+                alt="Webhelp Next application interface"
+                caption="Webhelp Next - Modern help content delivery application"
+                classes="project-image"
+              >
+              </kbr-image-lightbox>
+            </div>
+
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Webhelp Next</h4>
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Announcements.</strong> Create announcements in
+                      Author-it and show them on the library's home page.
+                    </li>
+                    <li>
+                      <strong>Tutorials.</strong> Define select topics from
+                      Author-it in a sequential manner to guide users through
+                      specific task flows. This helps bring attention to
+                      workflows that may be buried in dense table of contents.
+                    </li>
+                    <li>
+                      <strong>Role-based filtering.</strong> Filter the table of
+                      contents based on roles that are defined in Author-it at a
+                      topic level.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Webhelp Next was a JavaScript single-page application (SPA)
+                    that understands custom transformed content from Author-it.
+                  </p>
+                  <p>
+                    The 3M HIS Technical Communications team uses Author-it to
+                    create and maintain documentation. In 2019, Author-it
+                    announced their intent to retire the SPA output the team had
+                    been using for product libraries.
+                  </p>
+                  <p>
+                    The proposed alternative didn't satisfy us. So, I set out to
+                    build our own SPA that could understand Author-it output on
+                    a deep level, yet only include the features customers
+                    needed. Enter Webhelp Next.
+                  </p>
+                  <p>
+                    <strong>Tools.</strong> Webhelp Next was built with Vue CLI.
+                    The content it consumes is transformed from XML to HTML via
+                    a custom XSLT file.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card card">
+            <div class="project-image-container">
+              <kbr-image-lightbox
+                src="/images/sites/overview_dark.png"
+                alt="Analytics page for Doc Dashboard showing the types of analytics available"
+                caption="Doc Dashboard - Analytics overview interface"
+                classes="project-image"
+              >
+              </kbr-image-lightbox>
+            </div>
+
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Doc Dashboard</h4>
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Metrics and internal sharing.</strong> In
+                      comparison to Google Analytics itself, Doc Dashboard is
+                      quite easy to use. More importantly, it's extremely easy
+                      to share within the company. Just copy a report's URL and
+                      send it to interested stakeholders.
+                    </li>
+                    <li>
+                      <strong>Analytics reports.</strong> Doc Dashboard has many
+                      reports that focus on specific data - and actions users
+                      can take based on that data. Each report processes the
+                      Google Analytics data independently to ensure it's
+                      reliable and usable.
+                    </li>
+                    <li>
+                      <strong>Plotly.js charts.</strong> Several types of charts
+                      visually present the report data. These charts are most
+                      often intentionally simple. The goal is to show concrete,
+                      actionable information.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Doc Dashboard v2.0 is a complete re-build of the first
+                    version. I completely re-worked the data structures to be
+                    innately flexible and expandable.
+                  </p>
+                  <p>
+                    The original version only collated and analyzed Google
+                    Analytics data for 3M Health Information Systems' online
+                    help. v2.0 serves as more of a hub, adding information from
+                    PDF documents and support content.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card card">
+            <div class="project-image-container">
+              <kbr-image-lightbox
+                src="/images/sites/dok-compare.png"
+                alt="Home page for the DoK Compare website"
+                caption="DoK Compare - Personal project comparison website"
+                classes="project-image"
+              >
+              </kbr-image-lightbox>
+            </div>
+
+            <div class="project-info">
+              <div class="project-header">
+                <h4>DoK Compare</h4>
+                <a
+                  href="https://dok-compare.kyleblankrollins.com/#/"
+                  class="project-link"
+                  >Visit Site →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Unit statistics.</strong> Every unit in Homeworld:
+                      Deserts of Kharak has a stats sheet. DoK Compare makes it
+                      easy to visualize those stats and see how different units
+                      stack up against each other.
+                    </li>
+                    <li>
+                      <strong>Dynamic value calculations.</strong> DoK Compare
+                      automatically calculates the difference in stat values,
+                      then indicates whether each units' stats are higher,
+                      lower, or equal.
+                    </li>
+                    <li>
+                      <strong>Responsive design.</strong> While small screens
+                      aren't ideal for comparing datasets, DoK Compare can
+                      shrink to a single-column view that maintains a usable
+                      format.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    DoK Compare is based on the real-time strategy game
+                    Homeworld: Deserts of Kharak. It allows users to view unit
+                    statistics side-by-side.
+                  </p>
+                  <p>
+                    The statistics comparison updates dynamically as new units
+                    are selected.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card card">
+            <div class="project-image-container">
+              <kbr-image-lightbox
+                src="/images/sites/the_canney_valley.png"
+                alt="The home page of The Canney Valley"
+                caption="The Canney Valley - Personal creative project website"
+                classes="project-image"
+              >
+              </kbr-image-lightbox>
+            </div>
+
+            <div class="project-info">
+              <div class="project-header">
+                <h4>The Canney Valley</h4>
+                <a
+                  href="https://the-canney-valley.kyleblankrollins.com/"
+                  class="project-link"
+                  >Visit Site →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Gridsome GraphQL layer.</strong> The GraphQL data
+                      layer in Gridsome makes all sorts of interesting things
+                      possible. For example, creating lists of posts that share
+                      a tag or a series. And none of it requires a server - it's
+                      all done during the build process.
+                    </li>
+                    <li>
+                      <strong>Dynamic navigation.</strong> The navigation
+                      throughout The Canney Valley updates based on the most
+                      recent posts.
+                    </li>
+                    <li>
+                      <strong>Responsive design.</strong> The Canney Valley is
+                      mobile-friendly and can be viewed comfortably at nearly
+                      all screen sizes.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    The Canney Valley (TCV) is where I publish technical
+                    tutorials and share my thoughts on life. Unfortunately, it
+                    hasn't gotten the attention it deserves in terms of content.
+                    Some day, I'll get to writing more.
+                  </p>
+                  <p>
+                    TCV is built with Gridsome, which is a static site generator
+                    that uses GraphQL and Vue.js.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+
+    <!-- Shared markup from templates/partials/footer.html, injected by
+         template-processor.ts. Edit the partial, not this line. -->
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the {&lt;!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the  template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+--&gt;
+&lt;footer class=&quot;site-footer&quot;&gt;
+  &lt;nav class=&quot;site-footer-nav&quot; aria-label=&quot;Elsewhere on the web&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://www.linkedin.com/in/kyle-blank-rollins/&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;LinkedIn&lt;/a
+        &gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://github.com/KyleBlankRollins/Web-Portfolio&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;GitHub&lt;/a
+        &gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/footer&gt;} template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

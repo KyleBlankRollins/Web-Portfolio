@@ -40,14 +40,10 @@ export class FileSystemHelper {
       if (entry.isDirectory()) {
         // Skip excluded directories
         if (excludeDirectories.includes(entry.name)) {
-          BuildLogger.info(
-            `Skipping excluded directory: ${entry.name}`
-          );
+          BuildLogger.info(`Skipping excluded directory: ${entry.name}`);
           continue;
         }
-        files.push(
-          ...this.findFiles(fullPath, extensions, excludeDirectories)
-        );
+        files.push(...this.findFiles(fullPath, extensions, excludeDirectories));
       } else if (
         entry.isFile() &&
         extensions.some((ext) => entry.name.endsWith(ext))

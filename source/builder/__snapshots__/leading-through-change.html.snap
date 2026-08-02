@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme bootstrap - see the matching comment in base.html. Blocking on
+         purpose so [data-theme] and [data-color-scheme] exist before first
+         paint. Mirrors loadSavedTheme() in theme-switcher.ts; keep in sync. -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try {
+          d.setAttribute(
+            "data-theme",
+            localStorage.getItem("kbr-theme") || "base"
+          );
+          d.setAttribute(
+            "data-color-scheme",
+            localStorage.getItem("kbr-color-scheme") ||
+              (window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light")
+          );
+        } catch (e) {
+          d.setAttribute("data-theme", "base");
+          d.setAttribute("data-color-scheme", "light");
+        }
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Leading Through Change</title>
+    
+    <meta name="description" content="What three team reinventions in three years taught me about leading people through uncertainty" />
+     
+    <meta name="keywords" content="leadership, management, technical writing, team building, change management" />
+     
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+
+  <body>
+    <kbr-navigation>
+      <!-- Slotted into .header-content so the switcher sits at the far right
+           of the site header. It used to be a fixed-position floating control,
+           which overlapped page content at every viewport width. See DF-31. -->
+      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+    </kbr-navigation>
+
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+          
+          <kbr-table-of-contents></kbr-table-of-contents>
+           
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          <button class="blog-tag" data-tag="leadership">leadership</button><button class="blog-tag" data-tag="management">management</button><button class="blog-tag" data-tag="career">career</button>
+        </div>
+      </div>
+     
+        </div>
+      </aside>
+
+      <article class="blog-post-content glass-surface">
+        <h1 id="leading-through-change">Leading Through Change</h1>
+
+        <div class="blog-post-metadata">
+          <div>
+            <time datetime="2026-07-06">July 6, 2026</time>
+          </div>
+        </div>
+      <p>In three years at MongoDB, my team has reinvented itself three times. The first two times, we didn&#39;t have much choice. This is the story of how we navigated that, and what I&#39;ve learned about leading people through uncertainty.</p>
+<h2 id="a-deliberate-regression">A deliberate regression</h2><p>In October 2022, I moved from a Senior Technical Writer role at Netlify to a Technical Writer role at MongoDB. While that may look like a step backward, the reasoning was solid. My new role at MongoDB required substantially more programming knowledge and skills.</p>
+<p>While I was a strong senior tech writer, my programming skills were not at a senior software engineer level. This new role was an opportunity to grow my programming and engineering skills. And I&#39;m all about learning and growth. I was also excited to work with a larger group of technical writers. The MongoDB docs org had ~45 people when I joined, with the team I joined having 8 people.</p>
+<p>My initial scope was limited to documenting the React Native SDK for Realm, a mobile database that was strongly integrated with MongoDB Atlas. It didn&#39;t take long before I increased my scope of work to the Node.js SDK, then the Go SDK. And some of the App Services, which was the platform that enabled the mobile database to integrate with Atlas.</p>
+<h2 id="leading-before-the-title">Leading before the title</h2><p>Less than a year later, in July of 2023, 3 of the 8 people on my team (including my manager) pivoted their focus to creating a new AI chatbot. Chatbots were all the rage at this point in the AI timeline. Their project got a lot of traction and their old docs responsibilities fell to the 5 of us who remained on the team.</p>
+<p>By December 2023, it was clear that we needed someone to step up and lead the team, as our official manager&#39;s attention was heavily divided and mostly focused on the chatbot project. My colleagues and I discussed it.</p>
+<p>I was hesitant to attempt leading the team, as I had just over a year of experience at the company and the products we documented. But the more senior folks on the team weren&#39;t interested in being a people manager. And we didn&#39;t want someone from outside the team to come in and start telling us how to do our jobs. I had also been considering going into the management track for years by this point.</p>
+<p>So, I began unofficially leading our team. Running team standups, setting strategy, and coordinating with stakeholders when there was any uncertainty. By January 2024, I had official buy-in from my leadership chain. But we had a small problem. I was still just a technical writer. Promoting directly from technical writer to lead technical writer (manager) wasn&#39;t actually possible due to HR processes.</p>
+<p>That meant I first needed to be promoted to Senior Technical Writer, which happened in February 2024. This was a small step in the right direction. But there was still a lot of awkwardness because I couldn&#39;t actually handle performance reviews or other things that a people manager does. I didn&#39;t officially have the title and we all would have gotten into hot water with HR quickly if I tried to do those things.</p>
+<p>This resulted in me working closely with my team to handle both strategic docs projects and the regular day-to-day work. While there was some weirdness and uncertainty, we managed to hit all of our docs deadlines despite the team having 3 fewer people but ever more work as engineers built new SDKs and tools that we needed to document.</p>
+<p>I also began participating in strategic planning and initiatives that spanned the ~50-person docs org at MongoDB and building relationships with the other docs leaders and other folks up the management chain. This was still a bit awkward because I wasn&#39;t officially a docs team manager, merely on the track to becoming one.</p>
+<p>In August 2024, I was finally promoted to Lead Technical Writer and could officially begin handling the people manager tasks. I redoubled my relationship-building efforts, with my direct reports, other docs leadership, and stakeholders. Things were looking really good. My team was already comfortable with me and they responded well to my leadership style for performance management and other people management tasks.</p>
+<h2 id="product-eols">Product EOLs</h2><p>About 3 weeks later, in September 2024, I learned that MongoDB was deprecating every product (with one minor exception) that my team documented. I can&#39;t overstate how much of a blow this was. I didn&#39;t learn about it through my leadership chain, but from the product managers over that product area.</p>
+<p>I had navigated my team through nearly a year of awkwardness and we had finally arrived at a good place with a good work cadence. I was building up strong relationships and we were settling in nicely as a team. And it felt like none of that mattered.</p>
+<p>Thankfully, our jobs were not directly tied to these products. We reported up to the docs org director, who reported to the Education organization&#39;s VP. We didn&#39;t need to go looking for new jobs.</p>
+<p>But we did need to figure out what we were going to do now that everything we had worked on in the past was going away. There was plenty of docs work to do related to EOL&#39;ing a product. But not enough to keep a team occupied full time.</p>
+<h2 id="reinventing-the-team">Reinventing the team</h2><p>Immediately after learning about the product deprecations, I found projects that other docs teams needed help with. I committed my team members to those projects for a couple of months. Due to the nature of the work we had done with Realm and App Services, we were all fairly technical at this point. We created apps and tests for the code examples we included in our docs. The projects I loaned my team members out to all dealt directly with code examples and testing, which the other docs teams didn&#39;t have as much experience with.</p>
+<p>By January 2025, I had a good idea of what our team had to offer. We created a new team charter that focused on developer experience in the docs. The biggest aspect of this was useful code examples that were properly tested. And not the way that engineering teams test code. We focused on testing our code examples in ways that replicate how people actually interact with MongoDB&#39;s products. These are generally more akin to integration tests than unit tests.</p>
+<p>In short, we took the things that only our team could do and figured out a way to scale that across the docs org instead of just our little piece of it. This took a lot of work. We needed to build robust tools that tech writers could use to create tested code examples. And cater to tech writers that weren&#39;t necessarily comfortable with code, let alone testing, which is yet another set of skills and knowledge.</p>
+<p>In August 2025, this culminated in us launching a code example test platform that we named Grove. The philosophy behind Grove was to make creating tests for code examples as easy as possible, yet keeping enough friction to make code example contributors think carefully about what, exactly, each code example is trying to accomplish. I won&#39;t get into the details here, but the platform launched with support for 5 of the many MongoDB Drivers and we added support for <code>mongosh</code> shortly after.</p>
+<p>In September 2025, Realm and App Services were officially EOL, though we couldn&#39;t stop supporting these products entirely. There were quite a few customers that had received extensions and we needed to keep the docs around for them. But by this point, our old products and ways of working were well and truly behind us - a small part of the work we were doing.</p>
+<h2 id="choosing-the-next-shift">Choosing the next shift</h2><p>Once again, a year after we were thrown into chaos, we had settled into a good place. We had a good understanding of the problems we needed to solve and were moving along quickly. Then, in November 2025, we got sucked into the AI agent world. Specifically, we began the long process of figuring out how AI agents consume product documentation. And the role that product documentation serves in various types of AI tools.</p>
+<p>The identity and work of the team began to shift again, but this time it was a voluntary and conscious decision. By January 2026, my team was established as AI tool experts, particularly with AI agents and skills. We began advising on many initiatives inside and outside of the docs org.</p>
+<p>Our work was noticed. In April 2026, our team was moved to a new AI and Emerging Technology group. I can&#39;t talk too much about what this means. Partly because we&#39;re still figuring it all out. But our focus on AI agent experience, research, and testing gives us a particular set of skills that we can use in this space.</p>
+<h2 id="what-i-learned">What I learned</h2><p>I&#39;m still early in my career as a people manager. I don&#39;t pretend to have this all figured out, but these are the things that mattered for me when facing uncertainty in a leadership role.</p>
+<h3 id="lead-before-you-have-the-title">Lead before you have the title</h3><p>Starting in December 2023, I ran standups, set strategy, and built relationships across the org months before I had any official authority to do so. It was a bit awkward. But doing the work of leading was necessary before anyone would have given me an official promotion to lead. The work of leading and the recognition of leading don&#39;t often arrive at the same time.</p>
+<h3 id="build-relationships-before-you-need-them">Build relationships before you need them</h3><p>I learned about the product deprecations from a product manager, not my leadership chain. That&#39;s not a criticism, but instead a reflection of the relationships I had built outside my immediate team. When I needed to quickly find loan projects for my team, relationships with other leaders made it possible. Relationships built under pressure feel transactional. Built early, they&#39;re genuine connections.</p>
+<h3 id="act-immediately-plan-later">Act immediately, plan later</h3><p>Within days of the deprecation announcement, I had my team committed to loan projects for other docs teams. I didn&#39;t have a long-term plan. I had no idea what the team&#39;s future looked like. But finding something concrete for everyone to do kept the team moving and kept morale from totally collapsing while we figured out the rest. The charter and Grove came later.</p>
+<h3 id="know-what-makes-your-team-irreplaceable">Know what makes your team irreplaceable</h3><p>The reinvention worked because it wasn&#39;t a pivot to something entirely new. It was an amplification of what we already were. The technical depth we&#39;d built documenting Realm and App Services became the foundation for a code example testing platform that served the whole docs org. When you&#39;re under pressure to change, it&#39;s worth looking inward before looking outward.</p>
+<p>Some of the best advice I&#39;ve received is to spend as much time as possible doing the things that only you can do. I think there&#39;s a corollary here for teams as a whole, though I haven&#39;t completely figured that out yet.</p>
+<h3 id="voluntary-change-feels-different">Voluntary change feels different</h3><p>The first two reinventions happened to us. The third one, we chose. The distinction between change that finds you and change you move toward matters. The team&#39;s energy going into the AI pivot felt different. We were ahead of the changes and not struggling to react to them.</p>
+<h2 id="personal-reflections">Personal reflections</h2><p>From starting as a technical writer in October 2022 to today, my team has gone through at least 3 major reinventions of itself.</p>
+<p>Part of me finds it amazing that my team stuck with me through it all. There were long periods of time where our future and the scope and nature of our work were very uncertain. I&#39;m incredibly grateful for the competent, capable, thoughtful, and kind people who weathered every setback and held together even when the ground beneath us shifted.</p>
+<p>Over the last ~2.5 years, I&#39;ve had a crash course in leading a team through change. And navigating shifting priorities and political weirdness in the workplace. In many ways, I still feel like I have no idea what I&#39;m doing. And it scares me that people willingly follow my lead. But I can confidently say that I at least understand how to lead my particular team through difficult times with compassion. Whether that&#39;s because of me, them, or a combination, I&#39;m grateful that we&#39;ve been able to learn and grow together. And do some really cool work along the way.</p>
+<h2 id="gratitude-for-the-team">Gratitude for the team</h2><p>I&#39;ve presented most of this article as things that I did, but the reality is that I wouldn&#39;t have been able to do half as much if the people I lead weren&#39;t so amazing. They were peers before I stepped into the manager role. Managing that transition is a whole other article.</p>
+<p>But whatever success I have had as a leader is a direct result of the people on my team being competent, caring, and incredibly prolific. I am indebted to them and grateful for the opportunity to lead them through some wild changes over a relatively short period of time.</p>
+<h2 id="concise-timeline">Concise timeline</h2><ul>
+<li><strong>October 2022.</strong> Join MongoDB as Technical Writer on the DevDocs team.</li>
+<li><strong>July 2023.</strong> 3 of 8 team members (including manager) pivot to a new AI chatbot project.</li>
+<li><strong>December 2023.</strong> Begin unofficially leading the team.</li>
+<li><strong>February 2024.</strong> Promoted to Senior Technical Writer.</li>
+<li><strong>August 2024.</strong> Promoted to Lead Technical Writer; officially take on people management.</li>
+<li><strong>September 2024.</strong> MongoDB announces deprecation of every product the team documents.</li>
+<li><strong>January 2025.</strong> Establish new team charter focused on developer experience and code example testing.</li>
+<li><strong>August 2025.</strong> Launch Grove, a code example test platform.</li>
+<li><strong>September 2025.</strong> App Services and Realm officially EOL&#39;d.</li>
+<li><strong>November 2025.</strong> Team shifts focus to how AI agents consume product documentation.</li>
+<li><strong>January 2026.</strong> Team establishes itself as AI tool experts, advising on initiatives across the docs org.</li>
+<li><strong>April 2026.</strong> Team moves to a new AI and Emerging Technology group.</li>
+</ul>
+
+        <kbr-supplement-list></kbr-supplement-list>
+        
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+
+    <!-- Shared markup from templates/partials/footer.html, injected by
+         template-processor.ts. Edit the partial, not this line. -->
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the {&lt;!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the  template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+--&gt;
+&lt;footer class=&quot;site-footer&quot;&gt;
+  &lt;nav class=&quot;site-footer-nav&quot; aria-label=&quot;Elsewhere on the web&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://www.linkedin.com/in/kyle-blank-rollins/&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;LinkedIn&lt;/a
+        &gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://github.com/KyleBlankRollins/Web-Portfolio&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;GitHub&lt;/a
+        &gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/footer&gt;} template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

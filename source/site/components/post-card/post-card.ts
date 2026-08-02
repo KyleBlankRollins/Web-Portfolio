@@ -78,42 +78,48 @@ export class KbrPostCard extends LitElement {
                 >${this.displayTitle}</a
               >
             </h3>
-            ${this.displayDate
-              ? html`
-                  <div class="post-card-date">
-                    <time datetime="${this.date || ""}"
-                      >${this.displayDate}</time
-                    >
-                  </div>
-                `
-              : ""}
+            ${
+              this.displayDate
+                ? html`
+                    <div class="post-card-date">
+                      <time datetime="${this.date || ""}"
+                        >${this.displayDate}</time
+                      >
+                    </div>
+                  `
+                : ""
+            }
           </header>
 
-          ${this.description
-            ? html`
-                <div class="post-card-description">
-                  <p>${this.description}</p>
-                </div>
-              `
-            : ""}
-          ${this.parsedTags.length > 0
-            ? html`
-                <div class="post-card-tags">
-                  <div class="tag-list">
-                    ${this.parsedTags.map(
-                      (tag) =>
-                        html`<button
-                          class="post-tag"
-                          data-tag="${tag}"
-                          @click="${this.handleTagClick}"
-                        >
-                          ${tag}
-                        </button>`
-                    )}
+          ${
+            this.description
+              ? html`
+                  <div class="post-card-description">
+                    <p>${this.description}</p>
                   </div>
-                </div>
-              `
-            : ""}
+                `
+              : ""
+          }
+          ${
+            this.parsedTags.length > 0
+              ? html`
+                  <div class="post-card-tags">
+                    <div class="tag-list">
+                      ${this.parsedTags.map(
+                        (tag) =>
+                          html`<button
+                            class="post-tag"
+                            data-tag="${tag}"
+                            @click="${this.handleTagClick}"
+                          >
+                            ${tag}
+                          </button>`
+                      )}
+                    </div>
+                  </div>
+                `
+              : ""
+          }
         </div>
       </article>
     `;

@@ -3,7 +3,7 @@
  * Configures marked.js with custom renderers for headings, links, and code blocks
  */
 
-import { marked } from "marked";
+import { marked, type Tokens } from "marked";
 import Prism from "prismjs";
 import { escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
 import {
@@ -64,7 +64,7 @@ export class MarkdownRenderer {
     this.activeRenderContext = context;
 
     try {
-      return marked(markdown);
+      return marked.parse(markdown, { async: false });
     } finally {
       this.activeRenderContext = undefined;
     }
@@ -77,24 +77,22 @@ export class MarkdownRenderer {
     const renderer = new marked.Renderer();
 
     // Override heading renderer to add IDs
-    renderer.heading = (text: string, level: number) => {
+    renderer.heading = ({ tokens, depth }: Tokens.Heading) => {
+      const text = marked.Parser.parseInline(tokens);
       const headingId = this.generateAnchorId(text);
-      return `<h${level} id="${escapeHtmlAttribute(headingId)}">${text}</h${level}>`;
+      return `<h${depth} id="${escapeHtmlAttribute(headingId)}">${text}</h${depth}>`;
     };
 
     // Override link renderer to transform .md to .html
-    renderer.link = (
-      href: string,
-      title: string | null | undefined,
-      text: string
-    ) => {
+    renderer.link = ({ href, title, tokens }: Tokens.Link) => {
       const transformedHref = this.resolveLinkHref(href);
+      const text = marked.Parser.parseInline(tokens);
       const titleAttr = title ? ` title="${escapeHtmlAttribute(title)}"` : "";
       return `<a href="${escapeHtmlAttribute(transformedHref)}"${titleAttr}>${text}</a>`;
     };
 
     // Override code renderer to add syntax highlighting
-    renderer.code = (code: string, language: string | undefined) => {
+    renderer.code = ({ text: code, lang: language }: Tokens.Code) => {
       if (!this.syntaxHighlighting) {
         const escapedCode = escapeHtml(code);
         const langClass = language

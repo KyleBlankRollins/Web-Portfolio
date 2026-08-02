@@ -85,11 +85,13 @@ export class KbrSupplementList extends LitElement {
                 <a class="supplement-link" href=${supplement.url}
                   >${supplement.title}</a
                 >
-                ${supplement.description
-                  ? html`<p class="supplement-description">
-                      ${supplement.description}
-                    </p>`
-                  : nothing}
+                ${
+                  supplement.description
+                    ? html`<p class="supplement-description">
+                        ${supplement.description}
+                      </p>`
+                    : nothing
+                }
               </li>
             `
           )}

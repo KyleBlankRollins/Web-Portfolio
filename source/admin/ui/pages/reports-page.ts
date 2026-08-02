@@ -26,8 +26,8 @@ export class ReportsPage extends LitElement {
           <div class="placeholder-icon">📊</div>
           <h2 class="placeholder-title">Reports Coming Soon</h2>
           <p class="placeholder-text">
-            This page will provide insights and analytics about your
-            blog post workflow and publishing patterns.
+            This page will provide insights and analytics about your blog post
+            workflow and publishing patterns.
           </p>
 
           <div class="feature-list">

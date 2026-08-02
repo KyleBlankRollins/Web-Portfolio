@@ -132,9 +132,11 @@ export class DiscardedPostsSection extends LitElement {
         </div>
 
         <div class="drop-zone-hint ${this.isDragOver ? "active" : ""}">
-          ${this.isDragOver
-            ? "Drop here to discard post..."
-            : "Drag posts here to discard them"}
+          ${
+            this.isDragOver
+              ? "Drop here to discard post..."
+              : "Drag posts here to discard them"
+          }
         </div>
 
         <div class="posts-list">
@@ -147,64 +149,70 @@ export class DiscardedPostsSection extends LitElement {
                     ${this.formatDate(post.discarded_date || post.updated)}
                   </div>
                 </div>
-                ${post.discard_reason
-                  ? html`
-                      <div class="discard-reason">
-                        <div class="reason-label">Reason:</div>
-                        ${post.discard_reason}
-                      </div>
-                    `
-                  : ""}
+                ${
+                  post.discard_reason
+                    ? html`
+                        <div class="discard-reason">
+                          <div class="reason-label">Reason:</div>
+                          ${post.discard_reason}
+                        </div>
+                      `
+                    : ""
+                }
               </div>
             `
           )}
         </div>
       </div>
 
-      ${this.showModal
-        ? html`
-            <div
-              class="modal-overlay"
-              @click=${(e: MouseEvent) => {
-                if (e.target === e.currentTarget) {
-                  this.handleModalCancel();
-                }
-              }}
-            >
-              <div class="modal" @keydown=${this.handleModalKeyDown}>
-                <h3 class="modal-title">Discard Post</h3>
-                <div class="modal-post-title">"${this.pendingPost?.title}"</div>
+      ${
+        this.showModal
+          ? html`
+              <div
+                class="modal-overlay"
+                @click=${(e: MouseEvent) => {
+                  if (e.target === e.currentTarget) {
+                    this.handleModalCancel();
+                  }
+                }}
+              >
+                <div class="modal" @keydown=${this.handleModalKeyDown}>
+                  <h3 class="modal-title">Discard Post</h3>
+                  <div class="modal-post-title">
+                    "${this.pendingPost?.title}"
+                  </div>
 
-                <label class="modal-label">
-                  Why are you discarding this post?
-                  <textarea
-                    class="modal-textarea"
-                    placeholder="e.g., Topic no longer relevant, Too broad in scope, Better covered by another post..."
-                    .value=${this.discardReason}
-                    @input=${this.handleReasonInput}
-                    autofocus
-                  ></textarea>
-                </label>
+                  <label class="modal-label">
+                    Why are you discarding this post?
+                    <textarea
+                      class="modal-textarea"
+                      placeholder="e.g., Topic no longer relevant, Too broad in scope, Better covered by another post..."
+                      .value=${this.discardReason}
+                      @input=${this.handleReasonInput}
+                      autofocus
+                    ></textarea>
+                  </label>
 
-                <div class="modal-actions">
-                  <button
-                    class="modal-button cancel"
-                    @click=${this.handleModalCancel}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    class="modal-button discard"
-                    @click=${this.handleModalConfirm}
-                    ?disabled=${!this.discardReason.trim()}
-                  >
-                    Discard Post
-                  </button>
+                  <div class="modal-actions">
+                    <button
+                      class="modal-button cancel"
+                      @click=${this.handleModalCancel}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="modal-button discard"
+                      @click=${this.handleModalConfirm}
+                      ?disabled=${!this.discardReason.trim()}
+                    >
+                      Discard Post
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          `
-        : ""}
+            `
+          : ""
+      }
     `;
   }
 }

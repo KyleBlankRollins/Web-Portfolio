@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme bootstrap - see the matching comment in base.html. Blocking on
+         purpose so [data-theme] and [data-color-scheme] exist before first
+         paint. Mirrors loadSavedTheme() in theme-switcher.ts; keep in sync. -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try {
+          d.setAttribute(
+            "data-theme",
+            localStorage.getItem("kbr-theme") || "base"
+          );
+          d.setAttribute(
+            "data-color-scheme",
+            localStorage.getItem("kbr-color-scheme") ||
+              (window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light")
+          );
+        } catch (e) {
+          d.setAttribute("data-theme", "base");
+          d.setAttribute("data-color-scheme", "light");
+        }
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Technical Storytelling and Drift at Machine Speed</title>
+    
+    <meta name="description" content="Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this." />
+     
+    <meta name="keywords" content="technical writing, AI agents, documentation, natural language, product interface" />
+     
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+
+  <body>
+    <kbr-navigation>
+      <!-- Slotted into .header-content so the switcher sits at the far right
+           of the site header. It used to be a fixed-position floating control,
+           which overlapped page content at every viewport width. See DF-31. -->
+      <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+    </kbr-navigation>
+
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+          
+          <kbr-table-of-contents></kbr-table-of-contents>
+           
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          <button class="blog-tag" data-tag="technical writing">technical writing</button><button class="blog-tag" data-tag="AI">AI</button><button class="blog-tag" data-tag="documentation">documentation</button>
+        </div>
+      </div>
+     
+        </div>
+      </aside>
+
+      <article class="blog-post-content glass-surface">
+        <h1 id="technical-storytelling-and-drift-at-machine-speed">Technical Storytelling and Drift at Machine Speed</h1>
+
+        <div class="blog-post-metadata">
+          <div>
+            <time datetime="2026-03-31">March 31, 2026</time>
+          </div>
+        </div>
+      <p><kbr-admonition type="note"><strong>tl;dr:</strong> Documentation has always been an interface between a product and its users. Now it&#39;s also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.</kbr-admonition></p>
+<h2 id="stories-as-technology">Stories as technology</h2><p>Storytelling is one of humanity&#39;s oldest knowledge systems. Long before people were writing things down, oral tradition was how communities preserved and transmitted what mattered. How to find water. Which plants would kill you. Who wronged whom three generations back.</p>
+<p>It worked, but stories drift. Every retelling introduces small changes. The teller interprets, omits, adapts for the audience. Details shift to fit the moment. Over time, the story serves the culture more than it serves the facts.</p>
+<p>That&#39;s a feature when the goal is cohesion and shared identity. It&#39;s a problem when the goal is accuracy. Particularly repeatable accuracy over time.</p>
+<p>Writing wasn&#39;t invented to fix the drift. The earliest writing systems, developed independently at least four times across different civilizations, weren&#39;t attempts to preserve stories more faithfully. They were invented to count grain, label goods, and track debts. Bureaucracy, not literature. The Sumerians weren&#39;t worried about narrative drift. They were worried about who owed what to whom.</p>
+<p>But precision turned out to be writing&#39;s superpower. Once you could pin information down in a form that didn&#39;t change with each reading, you could build contracts, laws, and shared records that held up over time and distance. The knowledge didn&#39;t drift anymore.</p>
+<p>Technical writing is the discipline that took that superpower seriously: not just fixing words in place, but doing so with deliberate attention to clarity, structure, and audience. It is, when done well, the practice of removing ambiguity from language so that a reader can act on what they read without guessing.</p>
+<h2 id="drift-at-machine-speed">Drift at machine speed</h2><p>That skill set matters more than it ever has because of our new AI coding agent audience.</p>
+<p>AI coding agents, tools like Codex, GitHub Copilot, and others, now consume documentation directly. Not as reference material that a person reads and interprets, but as runtime instructions that inform what the agent does next. Your API docs, configuration guides, and error messages aren&#39;t just being read. They&#39;re being parsed and acted on at superhuman speed.</p>
+<p>This is a meaningful shift. When a human encounters ambiguous documentation, they use judgment to fill in the gaps. They check Stack Overflow, ask a colleague, or make a reasonable guess based on experience. They might get it wrong, but they&#39;ll usually notice when something feels off.</p>
+<p>When an agent encounters ambiguous documentation, or can&#39;t access your docs, it doesn&#39;t hesitate. It acts confidently on whatever interpretation it arrives at. And if the docs are unclear, there are good odds the agent will interpret the docs poorly, which results in the agent running very quickly in the wrong direction. This is expensive for people trying to build with your products.</p>
+<p>For example, if your documentation site is not agent friendly, agents may not be able to find the information they&#39;re looking for. In that case, agents may fall back on model training data, which is guaranteed to be outdated if your company&#39;s products move with any real speed. If you&#39;re unlucky, the agent will do impressive mental gymnastics and pretend it found the information it wanted without telling anyone that it couldn&#39;t find what it was looking for.</p>
+<p>Or consider this case: A vague sentence about authentication flow in your API docs might confuse a human for ten minutes. That same sentence, consumed by an agent helping a developer build an integration, could produce broken code that gets committed and deployed before anyone notices. The ambiguity compounds because the agent doesn&#39;t flag uncertainty the way a person would. Code reviews are standard practice at most companies, but many software engineers are being flooded with PR reviews and probable-looking but wrong solutions may not get proper scrutiny.</p>
+<p>The skills that matter for this audience aren&#39;t creativity or flair. They&#39;re precision, audience awareness, and knowing what to leave out. These are the core skills of technical writing. Technical writers are still storytellers, but they tell stories designed to reduce drift over time rather than accumulate it. That&#39;s always been the job. The difference is that when agents hit ambiguity, they don&#39;t slow down. They act on it.</p>
+<h2 id="docs-are-a-product-interface">Docs are a product interface</h2><p>Documentation has always been an interface between a product and its users. It&#39;s how someone figures out what a product can do, how to use it, and what to do when something goes wrong. In that sense, it has always been part of the product experience.</p>
+<p>What&#39;s changed is that documentation is now also an interface between a product and automated systems. When an AI agent integrates with your product, the quality of your docs directly affects how well that integration works. Your product docs are the story you&#39;re telling to agents about what your product does and how it works. If that story is incomplete, ambiguous, or hard to access, the agent builds on a flawed understanding. Poor docs don&#39;t only frustrate users anymore. They degrade the performance of every agent-assisted workflow that depends on them.</p>
+<p>There&#39;s an emerging business case here. OpenAI noted that Codex&#39;s performance depends heavily on the quality of documentation and context it has access to.<sup id="citation-ref-openai-codex"><a href="#citation-openai-codex" class="citation-ref">[1]</a></sup> Andrew Filev, the CEO of Zencoder, made a bolder claim: that AI coding agents with access to well-structured documentation worked three times better than those without.<sup id="citation-ref-zencoder-docs"><a href="#citation-zencoder-docs" class="citation-ref">[2]</a></sup> You can take that specific number with some skepticism, but the direction is clear. Companies that invest in documentation quality are directly investing in how well AI-powered tools work with their products.</p>
+<p>This matters because it changes the conversation about documentation resources. For a long time, the case for investing in docs has been abstract: better user experience, fewer support tickets, improved onboarding. These are real benefits, but they&#39;re hard to attribute to revenue in ways that move budgets.</p>
+<p>The new framing is more concrete. Documentation is a programmatic interface. Its quality has downstream effects on agent performance, developer productivity, and integration reliability. That&#39;s a case you can make in terms that product and engineering leadership understand, because it connects docs to outcomes they&#39;re already tracking.</p>
+<p>For technical writers, this is an opportunity to advocate for the resources that documentation teams have always needed: headcount, cross-team relationships, and input into product decisions early enough to actually influence them. Not because the work has changed, but because the stakes have become more visible.</p>
+<h2 id="the-audience-changed">The audience changed</h2><p>If you&#39;re a technical writer, you&#39;ve spent your career managing the imprecision of natural language. Choosing the right word, cutting the unnecessary sentence, structuring information so that someone can find what they need and act on it without second-guessing.</p>
+<p>That&#39;s still the job, but your new audience uses your docs as machine instructions. The fundamentals haven&#39;t changed, but the consequences of getting it wrong, or right, have.</p>
+<p>This isn&#39;t a call to panic or to overhaul how you work. It&#39;s more of an observation: the thing you&#39;ve been doing all along turns out to be exactly what this moment requires.</p>
+<p>And here&#39;s where the storytelling comes back in. Technical writers need to tell this story to the people who control resources. Not the story about oral tradition and grain counting, but the one about what&#39;s happening right now: that documentation is a critical interface between your products and the AI systems your customers are already using. That the people who maintain that interface, the ones who have spent years learning to make natural language precise and actionable, are the single best gateway most companies have for model training and agentic workflows.</p>
+<p>That&#39;s a story worth telling clearly.</p>
+
+        <kbr-supplement-list></kbr-supplement-list>
+        
+        <div class="blog-citations-container"><section class="citations">
+  <h2>References</h2>
+  <ol class="citations-list">
+    <li id="citation-openai-codex">
+      <em>Introducing Codex</em> by OpenAI <span class="citation-links"><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-openai-codex" class="citation-backref">↩</a></span>
+    </li>
+    <li id="citation-zencoder-docs">
+      <em>How to improve technical documentation with generative AI</em> by Andrew Filev <span class="citation-links"><a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a></span>
+    </li>
+  </ol>
+</section></div>
+        
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+
+    <!-- Shared markup from templates/partials/footer.html, injected by
+         template-processor.ts. Edit the partial, not this line. -->
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the {&lt;!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html as the  template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+--&gt;
+&lt;footer class=&quot;site-footer&quot;&gt;
+  &lt;nav class=&quot;site-footer-nav&quot; aria-label=&quot;Elsewhere on the web&quot;&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://www.linkedin.com/in/kyle-blank-rollins/&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;LinkedIn&lt;/a
+        &gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;a
+          href=&quot;https://github.com/KyleBlankRollins/Web-Portfolio&quot;
+          target=&quot;_blank&quot;
+          rel=&quot;noopener noreferrer&quot;
+          &gt;GitHub&lt;/a
+        &gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/footer&gt;} template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

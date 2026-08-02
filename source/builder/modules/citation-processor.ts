@@ -4,7 +4,11 @@
  */
 
 import { BuildLogger } from "../helpers.js";
-import { escapeHtmlComment, escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
+import {
+  escapeHtmlComment,
+  escapeHtml,
+  escapeHtmlAttribute,
+} from "./html-utils.js";
 
 /**
  * Citation metadata structure

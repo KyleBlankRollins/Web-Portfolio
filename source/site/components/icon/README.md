@@ -75,16 +75,10 @@ The `classes` property applies CSS classes to the host element:
 
 ```html
 <!-- Apply utility classes -->
-<kbr-icon
-  name="document"
-  classes="text-primary icon-lg m-2"
-></kbr-icon>
+<kbr-icon name="document" classes="text-primary icon-lg m-2"></kbr-icon>
 
 <!-- Multiple classes -->
-<kbr-icon
-  name="code"
-  classes="card-icon icon-xl text-blue-500"
-></kbr-icon>
+<kbr-icon name="code" classes="card-icon icon-xl text-blue-500"></kbr-icon>
 ```
 
 ## Properties
@@ -187,10 +181,7 @@ The component processes loaded SVGs to:
 
 ```html
 <div class="status-item">
-  <kbr-icon
-    name="checkbox_checked"
-    classes="icon-sm text-success"
-  ></kbr-icon>
+  <kbr-icon name="checkbox_checked" classes="icon-sm text-success"></kbr-icon>
   Task completed
 </div>
 ```

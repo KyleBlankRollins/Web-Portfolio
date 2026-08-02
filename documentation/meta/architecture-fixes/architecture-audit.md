@@ -41,7 +41,7 @@ Update the status column as work lands.
 
 | ID    | Finding                                                         | Severity | Status |
 | ----- | --------------------------------------------------------------- | -------- | ------ |
-| AF-01 | No automated tests cover the build pipeline                     | Critical | open   |
+| AF-01 | No automated tests cover the build pipeline                     | Critical | fixed  |
 | AF-02 | Metadata is serialized to HTML comments and re-parsed           | High     | open   |
 | AF-03 | Builder and site share data contracts but no type definitions   | High     | open   |
 | AF-04 | `typographyStyles` duplicates `typography.css`, and has drifted | Medium   | open   |
@@ -65,12 +65,12 @@ Update the status column as work lands.
 | AF-22 | Two unused exports in `theme-config.ts`                         | Low      | open   |
 | AF-23 | `formStyles` has no importers                                   | Low      | open   |
 | AF-24 | `ContentDiscovery` re-walks the filesystem per request          | Medium   | open   |
-| AF-25 | Rollup and Connect APIs are typed as `any`                      | Medium   | open   |
+| AF-25 | Rollup and Connect APIs are typed as `any`                      | Medium   | fixed  |
 | AF-26 | `findFiles` guesses at path roots                               | Low      | open   |
-| AF-27 | `scripts/lint-prose.ts` is not type-checked                     | Low      | open   |
+| AF-27 | `scripts/lint-prose.ts` is not type-checked                     | Low      | fixed  |
 | AF-28 | Test and demo pages ship to production                          | Medium   | open   |
 | AF-29 | `netlify.toml` carries a stale branch context                   | Low      | open   |
-| AF-30 | No continuous integration                                       | Medium   | open   |
+| AF-30 | No continuous integration                                       | Medium   | fixed  |
 | AF-31 | Mojibake in build log output                                    | Low      | open   |
 | AF-32 | Untracked build artifacts in the repository root                | Low      | open   |
 

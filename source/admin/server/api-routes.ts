@@ -37,44 +37,47 @@ export function setupApiRoutes(
    * PATCH /api/posts/:id
    * Update a post's metadata
    */
-  app.patch("/api/posts/:id", async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const updates: UpdatePostRequest = req.body;
+  app.patch(
+    "/api/posts/:id",
+    async (req: Request<{ id: string }>, res: Response) => {
+      try {
+        const { id } = req.params;
+        const updates: UpdatePostRequest = req.body;
 
-      // For now, we only support status updates
-      if (updates.status) {
-        const success = await writer.updatePostStatus(id, updates.status);
+        // For now, we only support status updates
+        if (updates.status) {
+          const success = await writer.updatePostStatus(id, updates.status);
 
-        if (success) {
-          const response: ApiResponse<{ id: string }> = {
-            success: true,
-            data: { id },
-          };
-          res.json(response);
+          if (success) {
+            const response: ApiResponse<{ id: string }> = {
+              success: true,
+              data: { id },
+            };
+            res.json(response);
+          } else {
+            const response: ApiResponse<null> = {
+              success: false,
+              error: "Failed to update post status",
+            };
+            res.status(400).json(response);
+          }
         } else {
           const response: ApiResponse<null> = {
             success: false,
-            error: "Failed to update post status",
+            error: "No valid updates provided",
           };
           res.status(400).json(response);
         }
-      } else {
+      } catch (error) {
+        console.error("API Error: Failed to update post", error);
         const response: ApiResponse<null> = {
           success: false,
-          error: "No valid updates provided",
+          error: error instanceof Error ? error.message : "Unknown error",
         };
-        res.status(400).json(response);
+        res.status(500).json(response);
       }
-    } catch (error) {
-      console.error("API Error: Failed to update post", error);
-      const response: ApiResponse<null> = {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      };
-      res.status(500).json(response);
     }
-  });
+  );
 
   /**
    * POST /api/posts
@@ -122,31 +125,34 @@ export function setupApiRoutes(
    * DELETE /api/posts/:id
    * Remove a post from backlog
    */
-  app.delete("/api/posts/:id", async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const success = await writer.removePost(id);
+  app.delete(
+    "/api/posts/:id",
+    async (req: Request<{ id: string }>, res: Response) => {
+      try {
+        const { id } = req.params;
+        const success = await writer.removePost(id);
 
-      if (success) {
-        const response: ApiResponse<{ id: string }> = {
-          success: true,
-          data: { id },
-        };
-        res.json(response);
-      } else {
+        if (success) {
+          const response: ApiResponse<{ id: string }> = {
+            success: true,
+            data: { id },
+          };
+          res.json(response);
+        } else {
+          const response: ApiResponse<null> = {
+            success: false,
+            error: "Failed to remove post",
+          };
+          res.status(400).json(response);
+        }
+      } catch (error) {
+        console.error("API Error: Failed to remove post", error);
         const response: ApiResponse<null> = {
           success: false,
-          error: "Failed to remove post",
+          error: error instanceof Error ? error.message : "Unknown error",
         };
-        res.status(400).json(response);
+        res.status(500).json(response);
       }
-    } catch (error) {
-      console.error("API Error: Failed to remove post", error);
-      const response: ApiResponse<null> = {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      };
-      res.status(500).json(response);
     }
-  });
+  );
 }
