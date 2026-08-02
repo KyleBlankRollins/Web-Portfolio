@@ -102,15 +102,33 @@ Keep this proportionate. The content corpus is eight posts. This is about removi
 
 All four handlers in `admin/server/api-routes.ts` repeat one shape: `try`, do one thing, build `ApiResponse<T>`, `catch`, `console.error`, build `ApiResponse<null>`, respond. 152 lines expressing about four lines of behaviour.
 
-Introduce an `asyncHandler` wrapper and a single Express error-handling middleware in `admin/server/index.ts`. Preserve the existing status codes exactly — `400` for a failed write, `500` for a thrown error, `201` for create — because the admin UI branches on them.
+**Do not write an `asyncHandler` wrapper.** An earlier revision of this document prescribed one. That was correct for Express 4 and is wrong now. Express 5's router awaits a handler's returned promise and forwards rejections to `next` itself — see `node_modules/router/lib/layer.js:150-156`:
+
+```js
+const ret = fn(req, res, next);
+if (isPromise(ret)) {
+  /* ... rejection is routed to next ... */
+}
+```
+
+An `asyncHandler` would be a hand-rolled reimplementation of framework behaviour, which is exactly the kind of legacy pattern this plan exists to remove.
+
+**What to do instead.** Delete the `try`/`catch` from all four handlers and let them throw. Add one error-handling middleware — a four-argument `(err, req, res, next)` function — registered in `admin/server/index.ts` **after** the routes and **before** the 404 handler. It logs and emits the `ApiResponse<null>` shape.
+
+Preserve the existing status codes exactly — `400` for a failed write, `500` for a thrown error, `201` for create — because the admin UI branches on them. Note that this means the distinction survives: a _failed_ write returns `400` from the handler explicitly, while a _thrown_ error reaches the error middleware and becomes `500`. Do not collapse the two.
+
+Two Express 5 details to confirm while you are in this file:
+
+- The catch-all 404 at `index.ts:67` uses `app.use()` with no path. That is still valid in Express 5, but it must be registered after the error middleware for both to work.
+- `Request<{ id: string }>` annotations are already migrated for path-to-regexp 8. Leave them.
 
 > ### GATE 7.4 — The admin API behaves identically
 >
 > - **Trigger:** refactor applied.
-> - **Action:** start the admin server (`npm run admin:server`) and exercise all five endpoints with `curl`: `GET /health`, `GET /api/posts`, `POST /api/posts` with no title, `PATCH /api/posts/:id` with an empty body, `DELETE /api/posts/:id` with an unknown id.
-> - **Checkpoint:** status codes are `200`, `200`, `400`, `400`, `400` respectively, and every response body is JSON with a boolean `success` field.
-> - **Evidence:** paste the five status codes and the five bodies.
-> - **Blocked:** do not start Step 5. The admin app has no test coverage and no snapshot, so this manual sweep is the only verification it gets.
+> - **Action:** start the admin server (`npm run admin:server`) and exercise all five endpoints with `curl`: `GET /health`, `GET /api/posts`, `POST /api/posts` with no title, `PATCH /api/posts/:id` with an empty body, `DELETE /api/posts/:id` with an unknown id. Then force a throw — temporarily point `BACKLOG_PATH` at a directory instead of a file — and request `GET /api/posts` once more.
+> - **Checkpoint:** the five normal requests return `200`, `200`, `400`, `400`, `400`, and every body is JSON with a boolean `success` field. The forced-throw request returns **`500`** with the same body shape, proving the error middleware caught a rejection that no `try`/`catch` handled.
+> - **Evidence:** paste the six status codes and the six bodies.
+> - **Blocked:** do not start Step 5. The admin app has no test coverage and no snapshot, so this manual sweep is the only verification it gets. The sixth request is the one that proves the Express 5 behaviour actually works here — without it you have removed the `try`/`catch` on the strength of a documentation claim rather than an observation.
 
 ---
 

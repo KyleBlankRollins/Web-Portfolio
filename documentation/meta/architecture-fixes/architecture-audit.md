@@ -2,7 +2,7 @@
 
 Source of truth for structural and code-quality work on `kyleblankrollins.com`.
 
-Execution order lives in [`implementation-plan.md`](implementation-plan.md), which allocates all 32 findings across seven phases.
+Execution order lives in [`implementation-plan.md`](implementation-plan.md), which allocates all 44 findings across eight phases.
 
 This document records architectural defects, duplication, and dead code found in an audit of the Vite builder plugin, the Lit component site, the admin application, and the shared build configuration. It is a findings registry, not an implementation plan. Each finding is independently actionable and carries a stable ID so work can reference it across branches and sessions.
 
@@ -10,7 +10,9 @@ It is the structural counterpart to `design-fixes/design-audit.md`, which covers
 
 ## Scope of the audit
 
-Reviewed at the commit following `c6f33f71`:
+Findings `AF-01` through `AF-32` come from the original pass, reviewed at the commit following `c6f33f71`. Findings `AF-33` through `AF-44` were added in a second pass at `1f700841`, after Phase 1 and the dependency upgrade landed; see [Toolchain modernization](#toolchain-modernization).
+
+Areas covered:
 
 - `source/builder/` — the `kbr-builder` Vite plugin, roughly 2,800 lines
 - `source/site/` — Lit components, templates, pages, and styles, roughly 5,500 lines
@@ -73,6 +75,18 @@ Update the status column as work lands.
 | AF-30 | No continuous integration                                       | Medium   | fixed  |
 | AF-31 | Mojibake in build log output                                    | Low      | open   |
 | AF-32 | Untracked build artifacts in the repository root                | Low      | open   |
+| AF-33 | Three different Node version contracts, none enforced           | High     | open   |
+| AF-34 | `build.minify: "esbuild"` opts out of Vite 8's default          | Low      | open   |
+| AF-35 | `manualChunks` is Rolldown's compat shim, not its API           | Low      | open   |
+| AF-36 | `prismjs` is build-time only but sits in `dependencies`         | Medium   | open   |
+| AF-37 | `build.target` and tsconfig `target` disagree                   | Low      | open   |
+| AF-38 | Two type imports reach around Vite to its own dependencies      | Medium   | open   |
+| AF-39 | `emitDecoratorMetadata` ships reflection nothing reads          | Low      | open   |
+| AF-40 | Legacy decorators, where standard decorators are the successor  | Low      | open   |
+| AF-41 | `marked.setOptions` mutates global state across modules         | Medium   | open   |
+| AF-42 | Node builtins imported without the `node:` prefix               | Low      | open   |
+| AF-43 | `__dirname` used in an ESM-only package                         | Low      | open   |
+| AF-44 | `@types/glob` is redundant and five majors stale                | Low      | open   |
 
 ---
 
@@ -205,7 +219,9 @@ Sequence this **after** `AF-01` and `AF-02`. It is the lowest-risk-per-line chan
 
 All four handlers follow an identical shape: open a `try`, perform one operation, construct an `ApiResponse<T>`, `catch`, `console.error`, construct an `ApiResponse<null>`, and respond with a 4xx or 5xx. The file is 152 lines expressing roughly four lines of actual behaviour.
 
-**Fix direction.** One `asyncHandler` wrapper plus a single Express error-handling middleware. Worth doing whenever the admin application is next touched; there is no urgency.
+**Fix direction.** Delete the `try`/`catch` from all four handlers, let them throw, and add one Express error-handling middleware.
+
+> **Revised after the Express 5 upgrade.** This finding originally prescribed an `asyncHandler` wrapper. That is no longer correct. Express 5's router awaits a handler's returned promise and forwards rejections to `next` itself — see `node_modules/router/lib/layer.js:150-156`. Writing an `asyncHandler` now would be a hand-rolled reimplementation of framework behaviour, which is the exact category of legacy pattern this audit exists to remove. See the Toolchain modernization section for the rest of the upgrade's consequences.
 
 ---
 
@@ -487,6 +503,172 @@ A Unicode replacement character occupies the position of an intended emoji in th
 
 ---
 
+## Toolchain modernization
+
+Added in a second pass after the dependency upgrade that landed alongside Phase 1: Vite 8 (Rolldown), TypeScript 7, Express 5, Marked 18, Glob 13, Vitest 4, Prettier 3.9, and Node 24 in CI.
+
+Nothing in this group is broken. `npm run build` succeeds, `tsc --noEmit` exits zero, and all 35 tests pass. These are places where the code still uses the pattern an older major wanted, and where the new major has a first-class replacement. Every claim below was verified against the installed packages in `node_modules/`, not inferred from version numbers.
+
+### AF-33 — Three different Node version contracts, none enforced
+
+**Severity:** High
+**Location:** `package.json`, `.github/workflows/ci.yml`, repository root
+
+The local runtime is Node v22.19.0. CI pins Node 24. `@types/node` is `^26.1.2`. There is no `engines` field and no `.nvmrc`, so nothing records or enforces an intended version.
+
+The practical failure mode is that `tsc` accepts a Node 26-only API against types that neither the developer's runtime nor CI provides, and the error surfaces at runtime in whichever environment is behind.
+
+**Fix direction.** Pick one floor and state it three times: `"engines": { "node": ">=24" }`, an `.nvmrc` containing `24`, and `@types/node` at `^24` so the type surface matches what actually runs. This is listed High not because it breaks anything today but because every other finding is verified by running commands, and those commands need to mean the same thing everywhere.
+
+### AF-34 — `build.minify: "esbuild"` opts out of Vite 8's default
+
+**Severity:** Low
+**Location:** `vite.config.ts:14`
+
+```ts
+minify: "esbuild", // Fastest minifier (default, but explicit)
+```
+
+The comment was accurate through Vite 7. In Vite 8 the option type is `boolean | "oxc" | "terser" | "esbuild"` (`node_modules/vite/dist/node/index.d.ts:2163`) and the default is **oxc**. The line now does the opposite of what it claims: it opts out of the Rolldown-native minifier into a compatibility path.
+
+**Fix direction.** Delete the line and take the default.
+
+### AF-35 — `manualChunks` is Rolldown's compat shim, not its API
+
+**Severity:** Low
+**Location:** `vite.config.ts:20-30`
+
+The upgrade correctly converted `manualChunks` from the object form to a function, because Rolldown only accepts `ManualChunksFunction`. But `manualChunks` remains the compatibility surface — Rolldown's own types note it is ignored when `codeSplitting` is set. The native API is declarative:
+
+```ts
+output: {
+  advancedChunks: {
+    groups: [{ name: "lit", test: /node_modules[\\/]lit/ }],
+  },
+}
+```
+
+`advancedChunks` also exposes `minSize`, `maxSize`, `minShareCount`, and `includeDependenciesRecursively` (`node_modules/rolldown/dist/shared/define-config-DSMNXceb.d.mts:849-857`), none of which a `manualChunks` function can express.
+
+**Fix direction.** Move to `advancedChunks.groups`. Note that the `prism` group is dead regardless — see AF-36.
+
+### AF-36 — `prismjs` is build-time only but sits in `dependencies`
+
+**Severity:** Medium
+**Location:** `package.json`, `vite.config.ts:25-27`, `:44`
+
+`grep -rn "prismjs" source/site` returns nothing. Prism is imported only by `builder/modules/markdown-renderer.ts`, which runs at build time to produce pre-highlighted HTML. Confirmed in the output: `dist/assets/` contains `lit-*.js` and `index-*.js` and no `prism-*.js` chunk.
+
+Three consequences:
+
+1. `prismjs` is declared a runtime `dependency` when it never reaches the browser.
+2. The `prism` branch of `manualChunks` (`vite.config.ts:25-27`) can never fire.
+3. `optimizeDeps.include: ["lit", "prismjs"]` (`:44`) pre-bundles a package that never enters the client module graph.
+
+**Fix direction.** Move `prismjs` to `devDependencies` and delete both config entries. `prism-theme.css` stays — that styles the build-time output and is genuinely a site asset.
+
+### AF-37 — `build.target` and tsconfig `target` disagree
+
+**Severity:** Low
+**Location:** `vite.config.ts:13`, `tsconfig.json:3`
+
+Vite emits for `es2020`; TypeScript checks against `ES2022`. Two different language floors for one codebase, and the lower one causes downleveling the browsers you support do not need.
+
+**Fix direction.** Align both on `ES2022`, matching the tsconfig that the type checker already enforces.
+
+### AF-38 — Two type imports reach around Vite to its own dependencies
+
+**Severity:** Medium
+**Location:** `builder/dev-server-middleware.ts:2`, `builder/html-bundle-processor.ts:8`
+
+```ts
+import type * as Connect from "connect"; // not in package.json
+import type { OutputBundle, PluginContext } from "rolldown"; // duplicates Vite's copy
+```
+
+`connect` is a phantom dependency — it is not declared anywhere and resolves only through npm hoisting, so an installer change can break the build with a type error that names a package the project never asked for. `rolldown` is declared, but it is a second copy alongside the one Vite 8 bundles, which invites version skew between the types used to check the plugin and the bundler that actually runs it.
+
+Vite 8 exports both namespaces directly. The full export list at `node_modules/vite/dist/node/index.d.ts:4054` includes `type Connect`, `type Rolldown`, and `type Rollup`.
+
+**Fix direction.** `import type { Connect, Rolldown } from "vite"`, then remove `rolldown` from `devDependencies`. The plugin should depend on Vite's view of the bundler, not on the bundler directly.
+
+### AF-39 — `emitDecoratorMetadata` ships reflection nothing reads
+
+**Severity:** Low
+**Location:** `tsconfig.json:16`
+
+The production bundle contains **74 `design:type` and 6 `design:paramtypes`** `Reflect.metadata` calls. Nothing reads them: there is no `reflect-metadata` import, no dependency-injection container, and no `Reflect.getMetadata` call anywhere in `source/`.
+
+Measured by rebuilding with the flag disabled:
+
+| Configuration                  | bytes   | gzipped |
+| ------------------------------ | ------- | ------- |
+| Current                        | 122,770 | 27,486  |
+| `emitDecoratorMetadata: false` | 120,699 | 27,225  |
+
+`tsc --noEmit` still exits zero with the flag off.
+
+**Fix direction.** Set it to `false`. The saving is small; the point is that the flag advertises a reflection capability the project does not have and cannot use.
+
+### AF-40 — Legacy decorators, where standard decorators are the successor
+
+**Severity:** Low
+**Location:** `tsconfig.json:15`, `:4`, and every Lit component
+
+The project uses `experimentalDecorators: true` with `useDefineForClassFields: false`, and components declare reactive fields as `@state() declare private currentPath: string`. Lit 3.3 supports both this and TC39 standard decorators (`@state() accessor currentPath = ""`), and TypeScript 7 supports standard decorators natively. Legacy decorators are the older path.
+
+**This is not a flag flip, and it may not be possible yet.** Two things were established empirically:
+
+1. `transformWithOxc` leaves standard decorator syntax and the `accessor` keyword **completely untransformed**. No browser ships decorators, so that output would not parse.
+2. In a full build, a standard-decorator component was transformed — but into the **legacy** `__decorate` form, because `experimentalDecorators: true` makes Oxc apply TS-legacy semantics regardless of the source syntax.
+
+Whether Oxc can downlevel standard decorators when `experimentalDecorators` is off was not established.
+
+**Fix direction.** Treat as a spike, not a migration. Convert one component, build, and inspect the emitted bundle for raw `@` decorator syntax or a surviving `accessor` keyword. If either is present, Oxc cannot downlevel and the correct decision is to stay on experimental decorators and revisit later — shipping unparseable syntax is far worse than a legacy compiler flag. AF-39 is independent of this and should land regardless.
+
+### AF-41 — `marked.setOptions` mutates global state across modules
+
+**Severity:** Medium
+**Location:** `builder/modules/markdown-renderer.ts:51`, `:128`, `builder/modules/content-preprocessor.ts:60`
+
+`MarkdownRenderer`'s constructor calls `marked.setOptions` twice, configuring the **global** `marked` singleton. Two consequences:
+
+1. Constructing `MarkdownRenderer` more than once silently reconfigures shared state for everything else in the process.
+2. `ContentPreprocessor.preprocessAdmonitions` calls `marked.parseInline`, which reads whatever options the renderer happened to install. The two modules are coupled through a global with no import between them expressing it.
+
+The renderer is already migrated to the token-object API introduced in Marked 12, so the v9-to-v18 break is handled. This is the remaining v5-era pattern: Marked has exported a `Marked` class since v5 specifically to avoid the singleton.
+
+**Fix direction.** `private marked = new Marked({ gfm, breaks, renderer })` on `MarkdownRenderer`, and have `ContentPreprocessor` take a `Marked` instance rather than reaching for the global. The coupling becomes a constructor parameter, which is also what makes both modules independently testable.
+
+### AF-42 — Node builtins imported without the `node:` prefix
+
+**Severity:** Low
+**Location:** 35 import sites across `source/` and `scripts/`
+
+Bare specifiers: 16 × `"path"`, 15 × `"fs"`, 3 × `"child_process"`, 1 × `"os"`, 1 × `"http"`. The `node:` prefix is the current standard, guarantees the builtin rather than a shadowing package of the same name, and lets bundlers externalize without heuristics.
+
+**Fix direction.** Mechanical rewrite to `node:fs`, `node:path`, and so on.
+
+### AF-43 — `__dirname` used in an ESM-only package
+
+**Severity:** Low
+**Location:** `source/admin/vite.config.ts:11`, `:20`, `:26`, `:27`
+
+`__dirname` is a CommonJS global, and this package declares `"type": "module"`. It works today only because Vite shims config loading; it would fail under native ESM evaluation. `import.meta.dirname` has been available since Node 20.11.
+
+**Fix direction.** Replace all four uses with `import.meta.dirname`.
+
+### AF-44 — `@types/glob` is redundant and five majors stale
+
+**Severity:** Low
+**Location:** `package.json`
+
+`@types/glob@8.1.0` is installed alongside `glob@13.0.6`. Glob has shipped its own types since v8 — `require("glob/package.json").types` resolves to `./dist/commonjs/index.d.ts`. The stub package describes a five-major-versions-old API and can shadow the real types.
+
+**Fix direction.** Remove `@types/glob`.
+
+---
+
 ## Suggested sequencing
 
 1. **`AF-01`** — tests for the pure builder modules, plus one end-to-end golden-file snapshot. Everything below becomes verifiable rather than hopeful.
@@ -500,3 +682,5 @@ A Unicode replacement character occupies the position of an intended emoji in th
 Steps 1 through 3 are mechanical. Step 4 is the one genuinely difficult change, since it moves a seam shared by four files, and it is the one worth doing properly rather than working around again.
 
 Hygiene findings (`AF-24` through `AF-32`) are independent of this ordering and can land at any point. `AF-25` and `AF-30` pair naturally with step 1.
+
+Toolchain findings (`AF-33` through `AF-44`) were added after step 1 landed and are largely independent of the structural chain. Take them **next**, before step 2: they are low risk, and `AF-33` in particular makes every later gate mean the same thing on every machine. `AF-40` is the one exception — it is a spike that may correctly end in "not yet".
