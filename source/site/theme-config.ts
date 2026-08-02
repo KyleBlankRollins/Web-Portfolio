@@ -5,26 +5,17 @@
  * the theme switcher component. Themes are automatically discovered from CSS files.
  */
 
-export interface ThemeConfig {
-  name: string;
-  id: string;
-}
+import type {
+  ThemeConfig,
+  ThemeManifest,
+  ThemeManifestEntry,
+} from "../shared/manifest-types.js";
 
-export interface ThemeManifestEntry {
-  id: string;
-  name: string;
-  version?: string;
-  author?: string;
-  description?: string;
-  file: string;
-  metadata: Record<string, string>;
-}
-
-export interface ThemeManifest {
-  themes: ThemeManifestEntry[];
-  totalThemes: number;
-  generatedAt: string;
-}
+export type {
+  ThemeConfig,
+  ThemeManifest,
+  ThemeManifestEntry,
+} from "../shared/manifest-types.js";
 
 // Global cache for themes
 let themesCache: ThemeConfig[] | null = null;

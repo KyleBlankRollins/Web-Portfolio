@@ -4,48 +4,17 @@
  */
 
 import { BuildLogger } from "../helpers.js";
-import type { SeriesInfo } from "./frontmatter-parser.js";
+import type {
+  BlogManifest,
+  BlogPostManifestEntry,
+} from "../../shared/manifest-types.js";
 
-export interface SupplementManifestEntry {
-  title: string;
-  description: string;
-  url: string;
-  filename: string;
-}
-
-/**
- * Blog post manifest entry
- */
-export interface BlogPostManifestEntry {
-  title: string;
-  description: string;
-  date: string;
-  formattedDate: string;
-  tags: string[];
-  url: string;
-  filename: string;
-  keywords?: string;
-  series?: SeriesInfo;
-  supplements?: SupplementManifestEntry[];
-}
-
-/**
- * Tag with post count
- */
-export interface TagWithCount {
-  tag: string;
-  count: number;
-}
-
-/**
- * Complete blog manifest
- */
-export interface BlogManifest {
-  posts: BlogPostManifestEntry[];
-  totalPosts: number;
-  availableTags: string[];
-  tagsWithCounts: TagWithCount[];
-}
+export type {
+  BlogManifest,
+  BlogPostManifestEntry,
+  SupplementManifestEntry,
+  TagWithCount,
+} from "../../shared/manifest-types.js";
 
 /**
  * Blog manifest builder class

@@ -8,6 +8,8 @@ import {
   layoutStyles,
   reducedMotionStyles,
 } from "../../styles/shared-styles.js";
+import { loadBlogManifest } from "../../data/blog-manifest.js";
+import type { BlogPostManifestEntry as BlogPostMetadata } from "../../../shared/manifest-types.js";
 
 /**
  * Blog Post List Web Component
@@ -17,23 +19,6 @@ import {
  *
  * Usage: <kbr-post-list></kbr-post-list>
  */
-
-interface BlogPostMetadata {
-  title: string;
-  description: string;
-  date: string;
-  formattedDate: string;
-  tags: string[];
-  url: string;
-  filename: string;
-  keywords?: string;
-}
-
-interface BlogManifest {
-  posts: BlogPostMetadata[];
-  totalPosts: number;
-  generatedAt: string;
-}
 
 @customElement("kbr-post-list")
 export class KbrPostList extends LitElement {
@@ -112,12 +97,7 @@ export class KbrPostList extends LitElement {
     this.isLoading = true;
 
     try {
-      const response = await fetch("/data/blog-manifest.json");
-      if (!response.ok) {
-        throw new Error(`Failed to load blog posts: ${response.statusText}`);
-      }
-
-      const manifest: BlogManifest = await response.json();
+      const manifest = await loadBlogManifest();
       this.posts = manifest.posts;
       this.filteredPosts = [...this.posts];
 
@@ -161,11 +141,9 @@ export class KbrPostList extends LitElement {
     return html`
       <div class="post-list-container">
         ${this.currentFilter ? this.renderHeader() : ""}
-        ${
-          currentPosts.length > 0
-            ? this.renderPosts(currentPosts)
-            : this.renderEmpty()
-        }
+        ${currentPosts.length > 0
+          ? this.renderPosts(currentPosts)
+          : this.renderEmpty()}
         ${totalPages > 1 ? this.renderPagination(totalPages) : ""}
       </div>
     `;

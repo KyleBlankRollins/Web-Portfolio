@@ -45,7 +45,7 @@ Update the status column as work lands.
 | ----- | --------------------------------------------------------------- | -------- | ------- |
 | AF-01 | No automated tests cover the build pipeline                     | Critical | fixed   |
 | AF-02 | Metadata is serialized to HTML comments and re-parsed           | High     | fixed   |
-| AF-03 | Builder and site share data contracts but no type definitions   | High     | open    |
+| AF-03 | Builder and site share data contracts but no type definitions   | High     | fixed   |
 | AF-04 | `typographyStyles` duplicates `typography.css`, and has drifted | Medium   | open    |
 | AF-05 | The document head and theme bootstrap exist in three places     | Medium   | open    |
 | AF-06 | Processor facades delegate without adding behaviour             | Low      | open    |

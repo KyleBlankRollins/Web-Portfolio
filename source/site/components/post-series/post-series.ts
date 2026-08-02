@@ -2,6 +2,8 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { postSeriesStyles } from "./post-series.style.js";
 import { reducedMotionStyles } from "../../styles/shared-styles.js";
+import { loadBlogManifest } from "../../data/blog-manifest.js";
+import type { BlogPostManifestEntry } from "../../../shared/manifest-types.js";
 
 /**
  * Post Series Component
@@ -17,29 +19,6 @@ import { reducedMotionStyles } from "../../styles/shared-styles.js";
  *   - current-part: Current part number (1-based)
  */
 
-interface SeriesInfo {
-  name: string;
-  part: number;
-}
-
-interface BlogPost {
-  title: string;
-  description: string;
-  date: string;
-  formattedDate: string;
-  tags: string[];
-  url: string;
-  filename: string;
-  keywords?: string;
-  series?: SeriesInfo;
-}
-
-interface BlogManifest {
-  posts: BlogPost[];
-  totalPosts: number;
-  availableTags: string[];
-}
-
 @customElement("kbr-post-series")
 export class KbrPostSeries extends LitElement {
   @property({ type: String, attribute: "series-name" })
@@ -52,7 +31,7 @@ export class KbrPostSeries extends LitElement {
   declare private isExpanded: boolean;
 
   @state()
-  declare private seriesPosts: BlogPost[];
+  declare private seriesPosts: BlogPostManifestEntry[];
 
   @state()
   declare private loading: boolean;
@@ -82,12 +61,7 @@ export class KbrPostSeries extends LitElement {
       this.loading = true;
       this.error = null;
 
-      const response = await fetch("/data/blog-manifest.json");
-      if (!response.ok) {
-        throw new Error(`Failed to load blog manifest: ${response.statusText}`);
-      }
-
-      const manifest: BlogManifest = await response.json();
+      const manifest = await loadBlogManifest();
 
       // Filter posts by series name and sort by part number
       this.seriesPosts = manifest.posts
@@ -116,12 +90,12 @@ export class KbrPostSeries extends LitElement {
     );
   }
 
-  private getPrevPost(): BlogPost | null {
+  private getPrevPost(): BlogPostManifestEntry | null {
     const currentIndex = this.getCurrentIndex();
     return currentIndex > 0 ? this.seriesPosts[currentIndex - 1] : null;
   }
 
-  private getNextPost(): BlogPost | null {
+  private getNextPost(): BlogPostManifestEntry | null {
     const currentIndex = this.getCurrentIndex();
     return currentIndex < this.seriesPosts.length - 1
       ? this.seriesPosts[currentIndex + 1]
@@ -144,9 +118,9 @@ export class KbrPostSeries extends LitElement {
           <p class="series-position">${positionText}</p>
         </div>
         <svg
-          class="series-toggle-icon ${
-            this.isExpanded ? "expanded" : "collapsed"
-          }"
+          class="series-toggle-icon ${this.isExpanded
+            ? "expanded"
+            : "collapsed"}"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -164,26 +138,22 @@ export class KbrPostSeries extends LitElement {
 
     return html`
       <div class="series-navigation">
-        ${
-          prevPost
-            ? html`
-                <a href="${prevPost.url}" class="nav-button">
-                  <span class="nav-text">${prevPost.title}</span>
-                  <span class="nav-arrow">←</span>
-                </a>
-              `
-            : ""
-        }
-        ${
-          nextPost
-            ? html`
-                <a href="${nextPost.url}" class="nav-button">
-                  <span class="nav-text">${nextPost.title}</span>
-                  <span class="nav-arrow">→</span>
-                </a>
-              `
-            : ""
-        }
+        ${prevPost
+          ? html`
+              <a href="${prevPost.url}" class="nav-button">
+                <span class="nav-text">${prevPost.title}</span>
+                <span class="nav-arrow">←</span>
+              </a>
+            `
+          : ""}
+        ${nextPost
+          ? html`
+              <a href="${nextPost.url}" class="nav-button">
+                <span class="nav-text">${nextPost.title}</span>
+                <span class="nav-arrow">→</span>
+              </a>
+            `
+          : ""}
       </div>
     `;
   }
@@ -196,16 +166,14 @@ export class KbrPostSeries extends LitElement {
             <li class="series-item">
               <a
                 href="${post.url}"
-                class="series-link ${
-                  post.series?.part === this.currentPart ? "current" : ""
-                }"
+                class="series-link ${post.series?.part === this.currentPart
+                  ? "current"
+                  : ""}"
               >
                 <span class="part-number"
-                  >${
-                    post.series?.part === 0
-                      ? "Series Summary:"
-                      : `Part ${post.series?.part}:`
-                  }</span
+                  >${post.series?.part === 0
+                    ? "Series Summary:"
+                    : `Part ${post.series?.part}:`}</span
                 >
                 <span class="post-title">${post.title}</span>
               </a>
