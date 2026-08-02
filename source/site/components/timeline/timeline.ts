@@ -289,18 +289,20 @@ export class KbrTimeline extends LitElement {
             return html`
               <div>
                 <div class="company-header">
-                  ${company.companyWebsite
-                    ? html`<h2 class="company-name" id="${companyId}">
-                        <a
-                          href="${company.companyWebsite}"
-                          target="_blank"
-                          rel="noopener"
-                          >${heading}</a
-                        >
-                      </h2>`
-                    : html`<h2 class="company-name" id="${companyId}">
-                        ${heading}
-                      </h2>`}
+                  ${
+                    company.companyWebsite
+                      ? html`<h2 class="company-name" id="${companyId}">
+                          <a
+                            href="${company.companyWebsite}"
+                            target="_blank"
+                            rel="noopener"
+                            >${heading}</a
+                          >
+                        </h2>`
+                      : html`<h2 class="company-name" id="${companyId}">
+                          ${heading}
+                        </h2>`
+                  }
                 </div>
                 <div class="company-positions">
                   ${company.positions.map(

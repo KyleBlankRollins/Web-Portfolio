@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import { kbrBuilder } from "./source/builder/index";
+import { kbrBuilder } from "./source/builder/index.ts";
 
 export default defineConfig({
   root: "source/site",
@@ -10,17 +10,13 @@ export default defineConfig({
     outDir: "../../dist",
     emptyOutDir: process.env.GIT_AWARE !== "true",
     // Additional performance optimizations
-    target: "es2020", // Modern browsers for better tree shaking
-    minify: "esbuild", // Fastest minifier (default, but explicit)
+    target: "es2022",
     cssMinify: true,
     sourcemap: false, // Disable source maps in production for smaller files
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
-        manualChunks: {
-          // Separate vendor libraries
-          lit: ["lit"],
-          prism: ["prismjs"],
+        codeSplitting: {
+          groups: [{ name: "lit", test: /node_modules[\\/]lit/ }],
         },
         // Optimize chunk file names for caching
         chunkFileNames: "assets/[name]-[hash].js",
@@ -46,7 +42,7 @@ export default defineConfig({
   },
   // Optimize dependencies
   optimizeDeps: {
-    include: ["lit", "prismjs"],
+    include: ["lit"],
     exclude: [], // Add any deps you want to skip pre-bundling
   },
   plugins: [

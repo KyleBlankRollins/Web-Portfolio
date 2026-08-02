@@ -5,26 +5,17 @@
  * the theme switcher component. Themes are automatically discovered from CSS files.
  */
 
-export interface ThemeConfig {
-  name: string;
-  id: string;
-}
+import type {
+  ThemeConfig,
+  ThemeManifest,
+  ThemeManifestEntry,
+} from "../shared/manifest-types.js";
 
-export interface ThemeManifestEntry {
-  id: string;
-  name: string;
-  version?: string;
-  author?: string;
-  description?: string;
-  file: string;
-  metadata: Record<string, string>;
-}
-
-export interface ThemeManifest {
-  themes: ThemeManifestEntry[];
-  totalThemes: number;
-  generatedAt: string;
-}
+export type {
+  ThemeConfig,
+  ThemeManifest,
+  ThemeManifestEntry,
+} from "../shared/manifest-types.js";
 
 // Global cache for themes
 let themesCache: ThemeConfig[] | null = null;
@@ -40,9 +31,7 @@ export async function loadThemes(): Promise<ThemeConfig[]> {
   try {
     const response = await fetch("/data/theme-manifest.json");
     if (!response.ok) {
-      throw new Error(
-        `Failed to load theme manifest: ${response.status}`
-      );
+      throw new Error(`Failed to load theme manifest: ${response.status}`);
     }
 
     const manifest: ThemeManifest = await response.json();
@@ -85,9 +74,7 @@ async function setupThemes() {
     const themes = await loadThemes();
 
     // Find all theme switcher components
-    const themeSwitchers = document.querySelectorAll(
-      "kbr-theme-switcher"
-    );
+    const themeSwitchers = document.querySelectorAll("kbr-theme-switcher");
 
     themeSwitchers.forEach((switcher: any) => {
       // Configure themes
@@ -101,22 +88,4 @@ async function setupThemes() {
   } catch (error) {
     console.error("Failed to setup themes:", error);
   }
-}
-
-/**
- * Get theme configuration by ID
- */
-export async function getThemeById(
-  id: string
-): Promise<ThemeConfig | undefined> {
-  const themes = await loadThemes();
-  return themes.find((theme: ThemeConfig) => theme.id === id);
-}
-
-/**
- * Get all available theme IDs
- */
-export async function getAvailableThemeIds(): Promise<string[]> {
-  const themes = await loadThemes();
-  return themes.map((theme: ThemeConfig) => theme.id);
 }

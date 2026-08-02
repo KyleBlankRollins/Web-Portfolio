@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer } from "vite";
-import { existsSync, readdirSync, rmSync } from "fs";
-import { join, relative } from "path";
+import { existsSync, readdirSync, rmSync } from "node:fs";
+import { join, relative } from "node:path";
 import { MarkdownProcessor } from "./markdown-processor.js";
 import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
@@ -22,8 +22,6 @@ import { HtmlBundleProcessor } from "./html-bundle-processor.js";
 export interface KBRBuilderOptions {
   /** Enable git-aware building to only process changed markdown files */
   gitAware?: boolean;
-  /** Base branch to compare against when using git-aware mode */
-  baseBranch?: string;
   /** Force processing of all files regardless of git status */
   forceAll?: boolean;
 }
@@ -293,29 +291,43 @@ function normalizePathForOutput(pathValue: string): string {
   return pathValue.replace(/\\/g, "/");
 }
 
+let markdownRebuildPromise: Promise<void> | undefined;
+
 async function rebuildAllMarkdownDocuments(
   markdownProcessor: MarkdownProcessor
 ): Promise<void> {
-  const discoveryResult = new ContentDiscovery().discover();
-  const localDocumentLinkIndex = createLocalDocumentLinkIndex(
-    discoveryResult.documents,
-    discoveryResult.publishableDocuments,
-    discoveryResult.publishedRootPath
-  );
-
-  markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
-  markdownProcessor.resetBuildState();
-  markdownProcessor.rebuildManifestFromDocuments(
-    discoveryResult.publishableDocuments
-  );
-
-  for (const document of discoveryResult.publishableDocuments) {
-    markdownProcessor.processContentDocument(document);
+  if (markdownRebuildPromise) {
+    return markdownRebuildPromise;
   }
 
-  markdownProcessor.rebuildManifestFromDocuments(
-    discoveryResult.publishableDocuments
-  );
+  markdownRebuildPromise = (async () => {
+    const discoveryResult = new ContentDiscovery().discover();
+    const localDocumentLinkIndex = createLocalDocumentLinkIndex(
+      discoveryResult.documents,
+      discoveryResult.publishableDocuments,
+      discoveryResult.publishedRootPath
+    );
+
+    markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
+    markdownProcessor.resetBuildState();
+    markdownProcessor.rebuildManifestFromDocuments(
+      discoveryResult.publishableDocuments
+    );
+
+    for (const document of discoveryResult.publishableDocuments) {
+      markdownProcessor.processContentDocument(document);
+    }
+
+    markdownProcessor.rebuildManifestFromDocuments(
+      discoveryResult.publishableDocuments
+    );
+  })();
+
+  try {
+    await markdownRebuildPromise;
+  } finally {
+    markdownRebuildPromise = undefined;
+  }
 }
 
 /**
@@ -337,7 +349,6 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
   // Set default options
   const builderOptions: KBRBuilderOptions = {
     gitAware: false,
-    baseBranch: "main",
     forceAll: false,
     ...options,
   };

@@ -3,6 +3,11 @@ import { customElement, property, state } from "lit/decorators.js";
 import { themeSwitcherStyles } from "./theme-switcher.style.js";
 import type { ThemeConfig } from "../../theme-config.js";
 import { reducedMotionStyles } from "../../styles/shared-styles.js";
+import {
+  COLOR_SCHEME_STORAGE_KEY,
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+} from "../../theme-constants.js";
 
 /**
  * Theme Switcher Component
@@ -55,8 +60,8 @@ export class KbrThemeSwitcher extends LitElement {
    * Storage keys for persistence
    */
   private readonly STORAGE_KEYS = {
-    theme: "kbr-theme",
-    colorScheme: "kbr-color-scheme",
+    theme: THEME_STORAGE_KEY,
+    colorScheme: COLOR_SCHEME_STORAGE_KEY,
   };
 
   constructor() {
@@ -87,7 +92,8 @@ export class KbrThemeSwitcher extends LitElement {
   private loadSavedTheme() {
     // Load theme preference
     const savedTheme = localStorage.getItem(this.STORAGE_KEYS.theme);
-    this.currentTheme = savedTheme || "base";
+    // The blocking bootstrap in templates/partials/head.html uses the same constants.
+    this.currentTheme = savedTheme || DEFAULT_THEME;
 
     // Load color scheme preference or detect system preference
     const savedColorScheme = localStorage.getItem(
@@ -106,18 +112,6 @@ export class KbrThemeSwitcher extends LitElement {
 
     // Apply theme to document
     this.applyTheme();
-
-    // Dispatch loaded event
-    this.dispatchEvent(
-      new CustomEvent("theme-loaded", {
-        bubbles: true,
-        composed: true,
-        detail: {
-          theme: this.currentTheme,
-          colorScheme: this.currentColorScheme,
-        },
-      })
-    );
   }
 
   /**
@@ -254,61 +248,67 @@ export class KbrThemeSwitcher extends LitElement {
           <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
           <span class="trigger-text">Themes</span>
         </button>
-        ${this.isCollapsed
-          ? null
-          : html`
-              <div class="theme-panel">
-                <div class="theme-controls">
-                  <!-- Theme Selection -->
-                  <div class="theme-select">
-                    <label for="theme-dropdown">Theme:</label>
-                    <select
-                      id="theme-dropdown"
-                      class="theme-dropdown"
-                      .value=${this.currentTheme}
-                      @change=${this.handleThemeChange}
-                    >
-                      ${this.themes.map(
-                        (theme) => html`
-                          <option
-                            value=${theme.id}
-                            ?selected=${theme.id === this.currentTheme}
-                          >
-                            ${theme.name}
-                          </option>
-                        `
-                      )}
-                    </select>
-                  </div>
-
-                  <!-- Color Scheme Toggle -->
-                  <div class="color-scheme-toggle">
-                    <label for="color-scheme-toggle">
-                      Mode:
-                      <span class="mode-indicator"
-                        >${this.currentColorScheme === "dark"
-                          ? "Dark"
-                          : "Light"}</span
+        ${
+          this.isCollapsed
+            ? null
+            : html`
+                <div class="theme-panel">
+                  <div class="theme-controls">
+                    <!-- Theme Selection -->
+                    <div class="theme-select">
+                      <label for="theme-dropdown">Theme:</label>
+                      <select
+                        id="theme-dropdown"
+                        class="theme-dropdown"
+                        .value=${this.currentTheme}
+                        @change=${this.handleThemeChange}
                       >
-                    </label>
-                    <div class="toggle-switch">
-                      <input
-                        type="checkbox"
-                        id="color-scheme-toggle"
-                        class="toggle-input"
-                        .checked=${this.currentColorScheme === "dark"}
-                        @click=${this.handleColorSchemeToggle}
-                        aria-label=${this.currentColorScheme === "dark"
-                          ? "Switch to light mode"
-                          : "Switch to dark mode"}
-                      />
-                      <div class="toggle-track"></div>
-                      <div class="toggle-thumb"></div>
+                        ${this.themes.map(
+                          (theme) => html`
+                            <option
+                              value=${theme.id}
+                              ?selected=${theme.id === this.currentTheme}
+                            >
+                              ${theme.name}
+                            </option>
+                          `
+                        )}
+                      </select>
+                    </div>
+
+                    <!-- Color Scheme Toggle -->
+                    <div class="color-scheme-toggle">
+                      <label for="color-scheme-toggle">
+                        Mode:
+                        <span class="mode-indicator"
+                          >${
+                            this.currentColorScheme === "dark"
+                              ? "Dark"
+                              : "Light"
+                          }</span
+                        >
+                      </label>
+                      <div class="toggle-switch">
+                        <input
+                          type="checkbox"
+                          id="color-scheme-toggle"
+                          class="toggle-input"
+                          .checked=${this.currentColorScheme === "dark"}
+                          @click=${this.handleColorSchemeToggle}
+                          aria-label=${
+                            this.currentColorScheme === "dark"
+                              ? "Switch to light mode"
+                              : "Switch to dark mode"
+                          }
+                        />
+                        <div class="toggle-track"></div>
+                        <div class="toggle-thumb"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            `}
+              `
+        }
       </div>
     `;
   }

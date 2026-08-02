@@ -3,9 +3,9 @@
  * Configures marked.js with custom renderers for headings, links, and code blocks
  */
 
-import { marked } from "marked";
+import { Marked, Parser, Renderer, type Tokens } from "marked";
 import Prism from "prismjs";
-import { escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
+import { escapeHtml } from "./html-utils.js";
 import {
   resolveLocalDocumentLink,
   type LocalDocumentLinkIndex,
@@ -41,14 +41,19 @@ export interface MarkdownRenderContext {
  * Markdown renderer class
  */
 export class MarkdownRenderer {
+  private marked: Marked;
   private syntaxHighlighting: boolean;
   private activeRenderContext?: MarkdownRenderContext;
 
-  constructor(options: MarkdownRendererOptions = {}) {
+  constructor(
+    markedInstance: Marked = new Marked(),
+    options: MarkdownRendererOptions = {}
+  ) {
+    this.marked = markedInstance;
     this.syntaxHighlighting = options.syntaxHighlighting !== false;
 
     // Configure marked options
-    marked.setOptions({
+    this.marked.setOptions({
       gfm: options.gfm !== false,
       breaks: options.breaks || false,
     });
@@ -64,7 +69,7 @@ export class MarkdownRenderer {
     this.activeRenderContext = context;
 
     try {
-      return marked(markdown);
+      return this.marked.parse(markdown, { async: false });
     } finally {
       this.activeRenderContext = undefined;
     }
@@ -74,31 +79,29 @@ export class MarkdownRenderer {
    * Setup custom renderer for headings, links, and code blocks
    */
   private setupCustomRenderer(): void {
-    const renderer = new marked.Renderer();
+    const renderer = new Renderer();
 
     // Override heading renderer to add IDs
-    renderer.heading = (text: string, level: number) => {
+    renderer.heading = ({ tokens, depth }: Tokens.Heading) => {
+      const text = Parser.parseInline(tokens);
       const headingId = this.generateAnchorId(text);
-      return `<h${level} id="${escapeHtmlAttribute(headingId)}">${text}</h${level}>`;
+      return `<h${depth} id="${escapeHtml(headingId)}">${text}</h${depth}>`;
     };
 
     // Override link renderer to transform .md to .html
-    renderer.link = (
-      href: string,
-      title: string | null | undefined,
-      text: string
-    ) => {
+    renderer.link = ({ href, title, tokens }: Tokens.Link) => {
       const transformedHref = this.resolveLinkHref(href);
-      const titleAttr = title ? ` title="${escapeHtmlAttribute(title)}"` : "";
-      return `<a href="${escapeHtmlAttribute(transformedHref)}"${titleAttr}>${text}</a>`;
+      const text = Parser.parseInline(tokens);
+      const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
+      return `<a href="${escapeHtml(transformedHref)}"${titleAttr}>${text}</a>`;
     };
 
     // Override code renderer to add syntax highlighting
-    renderer.code = (code: string, language: string | undefined) => {
+    renderer.code = ({ text: code, lang: language }: Tokens.Code) => {
       if (!this.syntaxHighlighting) {
         const escapedCode = escapeHtml(code);
         const langClass = language
-          ? ` class="language-${escapeHtmlAttribute(language)}"`
+          ? ` class="language-${escapeHtml(language)}"`
           : "";
         return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
       }
@@ -112,7 +115,7 @@ export class MarkdownRenderer {
             Prism.languages[lang],
             lang
           );
-          const escapedLang = escapeHtmlAttribute(lang);
+          const escapedLang = escapeHtml(lang);
           return `<pre class="language-${escapedLang}"><code class="language-${escapedLang}">${highlighted}</code></pre>`;
         } catch (error) {
           console.error(`Error highlighting ${lang}:`, error);
@@ -121,13 +124,11 @@ export class MarkdownRenderer {
 
       // Default behavior for unsupported languages or errors
       const escapedCode = escapeHtml(code);
-      const langClass = lang
-        ? ` class="language-${escapeHtmlAttribute(lang)}"`
-        : "";
+      const langClass = lang ? ` class="language-${escapeHtml(lang)}"` : "";
       return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
     };
 
-    marked.setOptions({ renderer });
+    this.marked.setOptions({ renderer });
   }
 
   private resolveLinkHref(href: string): string {

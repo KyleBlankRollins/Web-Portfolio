@@ -1,0 +1,42 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
+
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>{{title}}</title>
+{{#description}}
+<meta name="description" content="{{description}}" />
+{{/description}} {{#keywords}}
+<meta name="keywords" content="{{keywords}}" />
+{{/keywords}} {{#additionalHead}} {{{additionalHead}}} {{/additionalHead}}

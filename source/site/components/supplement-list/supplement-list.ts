@@ -4,23 +4,9 @@ import {
   typographyStyles,
   reducedMotionStyles,
 } from "../../styles/shared-styles.js";
+import { loadBlogManifest } from "../../data/blog-manifest.js";
+import type { SupplementManifestEntry } from "../../../shared/manifest-types.js";
 import { supplementListStyles } from "./supplement-list.style.js";
-
-interface SupplementManifestEntry {
-  title: string;
-  description: string;
-  url: string;
-  filename: string;
-}
-
-interface BlogPostManifestEntry {
-  url: string;
-  supplements?: SupplementManifestEntry[];
-}
-
-interface BlogManifest {
-  posts: BlogPostManifestEntry[];
-}
 
 @customElement("kbr-supplement-list")
 export class KbrSupplementList extends LitElement {
@@ -42,12 +28,7 @@ export class KbrSupplementList extends LitElement {
 
   private async loadSupplements(): Promise<void> {
     try {
-      const response = await fetch("/data/blog-manifest.json");
-      if (!response.ok) {
-        throw new Error(`Failed to load blog manifest: ${response.statusText}`);
-      }
-
-      const manifest: BlogManifest = await response.json();
+      const manifest = await loadBlogManifest();
       const currentPath = window.location.pathname;
       const currentPost = manifest.posts.find(
         (post) => this.normalizePath(post.url) === currentPath
@@ -85,11 +66,13 @@ export class KbrSupplementList extends LitElement {
                 <a class="supplement-link" href=${supplement.url}
                   >${supplement.title}</a
                 >
-                ${supplement.description
-                  ? html`<p class="supplement-description">
-                      ${supplement.description}
-                    </p>`
-                  : nothing}
+                ${
+                  supplement.description
+                    ? html`<p class="supplement-description">
+                        ${supplement.description}
+                      </p>`
+                    : nothing
+                }
               </li>
             `
           )}

@@ -5,18 +5,8 @@ import {
   typographyStyles,
   reducedMotionStyles,
 } from "../../styles/shared-styles.js";
-
-interface BlogPostSummary {
-  title: string;
-  description: string;
-  date: string;
-  formattedDate: string;
-  url: string;
-}
-
-interface BlogManifest {
-  posts: BlogPostSummary[];
-}
+import { loadBlogManifest } from "../../data/blog-manifest.js";
+import type { BlogPostManifestEntry as BlogPostSummary } from "../../../shared/manifest-types.js";
 
 interface CareerPosition {
   title: string;
@@ -112,16 +102,15 @@ export class KbrHomeHighlights extends LitElement {
 
   private async loadHighlights(): Promise<void> {
     try {
-      const [manifestResponse, careerResponse] = await Promise.all([
-        fetch("/data/blog-manifest.json"),
+      const [manifest, careerResponse] = await Promise.all([
+        loadBlogManifest(),
         fetch("/data/experience-data.json"),
       ]);
 
-      if (!manifestResponse.ok || !careerResponse.ok) {
+      if (!careerResponse.ok) {
         throw new Error("Unable to load homepage highlights");
       }
 
-      const manifest = (await manifestResponse.json()) as BlogManifest;
       const career = (await careerResponse.json()) as CareerCompany[];
 
       this.latestPost = manifest.posts?.[0] || null;

@@ -20,9 +20,9 @@
  *   tsx scripts/lint-prose.ts --help
  */
 
-import { spawn } from "child_process";
-import { existsSync, statSync } from "fs";
-import { join, relative } from "path";
+import { spawn } from "node:child_process";
+import { existsSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import { glob } from "glob";
 
 // ANSI color codes for output formatting
@@ -125,12 +125,7 @@ function parseArgs(): LintOptions {
  */
 async function getChangedFiles(): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    const gitArgs = [
-      "diff",
-      "--name-only",
-      "HEAD",
-      "--diff-filter=ACM",
-    ];
+    const gitArgs = ["diff", "--name-only", "HEAD", "--diff-filter=ACM"];
 
     const git = spawn("git", gitArgs, { cwd: PROJECT_ROOT });
     let output = "";
@@ -155,8 +150,7 @@ async function getChangedFiles(): Promise<string[]> {
         .filter((line) => line.trim())
         .filter(
           (file) =>
-            file.startsWith("source/site/content/") &&
-            file.endsWith(".md")
+            file.startsWith("source/site/content/") && file.endsWith(".md")
         )
         .map((file) => join(PROJECT_ROOT, file))
         .filter((file) => existsSync(file));
@@ -169,9 +163,7 @@ async function getChangedFiles(): Promise<string[]> {
 /**
  * Discover markdown files to lint based on options
  */
-async function discoverFiles(
-  options: LintOptions
-): Promise<string[]> {
+async function discoverFiles(options: LintOptions): Promise<string[]> {
   let files: string[] = [];
 
   if (options.changedOnly) {
@@ -232,9 +224,7 @@ async function runVale(
 
     if (options.verbose) {
       console.log(
-        `${colors.gray}Running: vale ${valeArgs.join(" ")}${
-          colors.reset
-        }`
+        `${colors.gray}Running: vale ${valeArgs.join(" ")}${colors.reset}`
       );
     }
 
@@ -323,20 +313,14 @@ function displayResults(
     console.log(`${colors.gray}Files processed:${colors.reset}`);
     files.forEach((file) => {
       console.log(
-        `  ${colors.gray}${relative(PROJECT_ROOT, file)}${
-          colors.reset
-        }`
+        `  ${colors.gray}${relative(PROJECT_ROOT, file)}${colors.reset}`
       );
     });
     console.log();
   }
 
   // Show statistics with colors
-  if (
-    result.errors > 0 ||
-    result.warnings > 0 ||
-    result.suggestions > 0
-  ) {
+  if (result.errors > 0 || result.warnings > 0 || result.suggestions > 0) {
     const parts = [];
     if (result.errors > 0) {
       parts.push(
@@ -362,9 +346,7 @@ function displayResults(
 
     console.log(`Found: ${parts.join(", ")}`);
   } else {
-    console.log(
-      `${colors.green}✅ All prose looks good!${colors.reset}`
-    );
+    console.log(`${colors.green}✅ All prose looks good!${colors.reset}`);
   }
 }
 
@@ -389,9 +371,7 @@ async function main(): Promise<void> {
     const files = await discoverFiles(options);
 
     if (options.verbose) {
-      console.log(
-        `${colors.cyan}📝 Running Vale linting...${colors.reset}`
-      );
+      console.log(`${colors.cyan}📝 Running Vale linting...${colors.reset}`);
     }
 
     const result = await runVale(files, options);

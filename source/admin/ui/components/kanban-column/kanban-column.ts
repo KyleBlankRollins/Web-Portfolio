@@ -99,13 +99,15 @@ export class AdminKanbanColumn extends LitElement {
         </div>
 
         <div class="column-body ${isEmpty ? "empty" : ""}">
-          ${isEmpty
-            ? html` <div class="empty-message">No posts in this stage</div> `
-            : this.posts.map(
-                (post) => html`
-                  <admin-post-card .post=${post}></admin-post-card>
-                `
-              )}
+          ${
+            isEmpty
+              ? html` <div class="empty-message">No posts in this stage</div> `
+              : this.posts.map(
+                  (post) => html`
+                    <admin-post-card .post=${post}></admin-post-card>
+                  `
+                )
+          }
         </div>
       </div>
     `;

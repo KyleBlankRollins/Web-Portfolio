@@ -1,20 +1,36 @@
 import type { ViteDevServer } from "vite";
-import * as fs from "fs";
-import * as path from "path";
-import {
-  TemplateProcessor,
-  type TemplateVariables,
-} from "./template-processor.js";
+import type { Connect } from "vite";
+import type { ServerResponse } from "node:http";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
-import type { MarkdownProcessor } from "./markdown-processor.js";
-import { ContentDiscovery } from "./modules/index.js";
+import type {
+  GeneratedHtmlFile,
+  MarkdownProcessor,
+} from "./markdown-processor.js";
+import { ThemeProcessor } from "./theme-processor.js";
+
+const themesDir = path.join(
+  process.cwd(),
+  "source",
+  "site",
+  "styles",
+  "themes"
+);
+const themeProcessor = new ThemeProcessor(themesDir);
+themeProcessor.processThemes();
 
 /**
  * Creates middleware that blocks direct access to source directories
  */
 function createBlockingMiddleware() {
-  return (req: any, res: any, next: any) => {
+  return (
+    req: Connect.IncomingMessage,
+    res: ServerResponse,
+    next: Connect.NextFunction
+  ) => {
     const url = req.url;
     if (!url) return next();
 
@@ -41,7 +57,11 @@ function createProcessingMiddleware(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor
 ) {
-  return (req: any, res: any, next: any) => {
+  return (
+    req: Connect.IncomingMessage,
+    res: ServerResponse,
+    next: Connect.NextFunction
+  ) => {
     const url = req.url;
     if (!url) return next();
 
@@ -83,9 +103,9 @@ function createProcessingMiddleware(
  */
 async function handleIndexRequest(
   templateProcessor: TemplateProcessor,
-  _req: any,
-  res: any,
-  next: any
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   const indexPath = path.join(process.cwd(), "source", "site", "index.html");
 
@@ -95,7 +115,7 @@ async function handleIndexRequest(
       const processedContent = await HtmlProcessingUtils.processHtmlContent(
         templateProcessor,
         content,
-        "Development Server"
+        { defaultTitle: "Development Server" }
       );
 
       // Inject development assets (consistent with other HTML handlers)
@@ -117,9 +137,9 @@ async function handleIndexRequest(
  * Handle requests for blog-manifest.json
  */
 function handleBlogManifestRequest(
-  _req: any,
-  res: any,
-  _next: any,
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  _next: Connect.NextFunction,
   markdownProcessor: MarkdownProcessor
 ) {
   try {
@@ -140,21 +160,12 @@ function handleBlogManifestRequest(
 /**
  * Handle requests for theme-manifest.json
  */
-function handleThemeManifestRequest(_req: any, res: any, _next: any) {
+function handleThemeManifestRequest(
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  _next: Connect.NextFunction
+) {
   try {
-    // Import and process themes
-    const { ThemeProcessor } = require("./theme-processor.js");
-    const themesDir = path.join(
-      process.cwd(),
-      "source",
-      "site",
-      "styles",
-      "themes"
-    );
-    const themeProcessor = new ThemeProcessor(themesDir);
-
-    // Process themes and generate manifest
-    themeProcessor.processThemes();
     const manifestJson = themeProcessor.generateThemeManifestJson();
 
     res.setHeader("Content-Type", "application/json");
@@ -175,9 +186,9 @@ async function handleHtmlRequest(
   templateProcessor: TemplateProcessor,
   markdownProcessor: MarkdownProcessor,
   url: string,
-  _req: any,
-  res: any,
-  next: any
+  _req: Connect.IncomingMessage,
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   const requestedPublicUrl = normalizePublicUrl(url);
   const fileName = requestedPublicUrl.slice(1);
@@ -206,18 +217,6 @@ async function handleHtmlRequest(
     );
   }
 
-  const markdownSourcePath =
-    resolvePublishedMarkdownSourcePath(requestedPublicUrl);
-  if (markdownSourcePath) {
-    return await processAndServeMarkdown(
-      templateProcessor,
-      markdownProcessor,
-      markdownSourcePath,
-      res,
-      next
-    );
-  }
-
   sendNotFoundHtml(res);
 }
 
@@ -226,15 +225,18 @@ async function handleHtmlRequest(
  */
 async function processAndServeGeneratedFile(
   templateProcessor: TemplateProcessor,
-  generatedFile: any,
-  res: any,
-  next: any
+  generatedFile: GeneratedHtmlFile,
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   try {
     const processedContent = await HtmlProcessingUtils.processHtmlContent(
       templateProcessor,
       generatedFile.content,
-      generatedFile.metadata.title || "Generated Content"
+      {
+        defaultTitle: generatedFile.metadata.title || "Generated Content",
+        metadata: generatedFile.metadata,
+      }
     );
 
     // Inject development assets
@@ -257,8 +259,8 @@ async function processAndServeGeneratedFile(
 async function processAndServeFile(
   templateProcessor: TemplateProcessor,
   filePath: string,
-  res: any,
-  next: any
+  res: ServerResponse,
+  next: Connect.NextFunction
 ) {
   try {
     const content = fs.readFileSync(filePath, "utf-8");
@@ -280,53 +282,6 @@ async function processAndServeFile(
 }
 
 /**
- * Process and serve a Markdown file as HTML
- */
-async function processAndServeMarkdown(
-  templateProcessor: TemplateProcessor,
-  markdownProcessor: MarkdownProcessor,
-  mdFilePath: string,
-  res: any,
-  next: any
-) {
-  try {
-    const mdContent = fs.readFileSync(mdFilePath, "utf-8");
-
-    // Extract frontmatter and convert markdown to HTML
-    const { metadata, content } =
-      templateProcessor.extractMarkdownFrontmatter(mdContent);
-    const htmlContent = markdownProcessor.renderMarkdownBody(
-      content,
-      mdFilePath
-    );
-
-    // Create template variables
-    const templateVariables: TemplateVariables = {
-      title: metadata.title || "Development Server",
-      description: metadata.description,
-      keywords: metadata.keywords,
-      additionalHead: metadata.additionalHead,
-      content: "", // This will be overridden by processTemplate
-    };
-
-    const processedContent = templateProcessor.processTemplate(
-      htmlContent,
-      templateVariables
-    );
-
-    // Inject development assets
-    const devContent = injectDevAssets(processedContent);
-
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "no-cache");
-    res.end(devContent);
-  } catch (error) {
-    BuildLogger.error(`Error processing markdown ${mdFilePath}: ${error}`);
-    next(error);
-  }
-}
-
-/**
  * Sets up file watcher for template, include, and page files
  */
 function setupFileWatcher(
@@ -335,7 +290,10 @@ function setupFileWatcher(
   onPublishedMarkdownChanged?: (changedFilePath: string) => Promise<void>
 ) {
   server.ws.on("file-changed", ({ file }) => {
-    if (file.includes("/templates/") || file.includes("/includes/")) {
+    if (file.includes("/styles/themes/") && file.endsWith(".css")) {
+      BuildLogger.info(`🔄 Theme file changed: ${file}`);
+      themeProcessor.processThemes();
+    } else if (file.includes("/templates/") || file.includes("/includes/")) {
       BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
       templateProcessor.clearCache();
 
@@ -433,18 +391,7 @@ function normalizePublicUrl(url: string): string {
   return url;
 }
 
-function resolvePublishedMarkdownSourcePath(
-  requestedPublicUrl: string
-): string | undefined {
-  const discoveryResult = new ContentDiscovery().discover();
-  const matchedDocument = discoveryResult.publishableDocuments.find(
-    (document) => document.publicUrl === requestedPublicUrl
-  );
-
-  return matchedDocument?.sourcePath;
-}
-
-function sendNotFoundHtml(res: any): void {
+function sendNotFoundHtml(res: ServerResponse): void {
   res.statusCode = 404;
   res.setHeader("Content-Type", "text/html");
   res.end(`

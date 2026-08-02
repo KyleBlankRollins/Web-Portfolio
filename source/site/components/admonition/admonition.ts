@@ -76,26 +76,28 @@ export class KbrAdmonition extends LitElement {
 
     return html`
       <div class="admonition ${config.class} ${hasTitle ? "" : "compact"}">
-        ${hasTitle
-          ? html`
-              <!-- Header layout -->
-              <div class="admonition-header">
-                <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
-                <strong>${this.admonitionTitle}</strong>
-              </div>
-              <div class="admonition-content">
-                <slot></slot>
-              </div>
-            `
-          : html`
-              <!-- Compact layout -->
-              <div class="admonition-icon">
-                <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
-              </div>
-              <div class="admonition-content">
-                <slot></slot>
-              </div>
-            `}
+        ${
+          hasTitle
+            ? html`
+                <!-- Header layout -->
+                <div class="admonition-header">
+                  <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
+                  <strong>${this.admonitionTitle}</strong>
+                </div>
+                <div class="admonition-content">
+                  <slot></slot>
+                </div>
+              `
+            : html`
+                <!-- Compact layout -->
+                <div class="admonition-icon">
+                  <kbr-icon name="${config.icon}" size="1.5rem"></kbr-icon>
+                </div>
+                <div class="admonition-content">
+                  <slot></slot>
+                </div>
+              `
+        }
       </div>
     `;
   }

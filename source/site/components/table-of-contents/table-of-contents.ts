@@ -354,15 +354,15 @@ export class KbrTableOfContents extends LitElement {
           class="toc-toggle"
           @click="${this.toggleCollapse}"
           aria-expanded="${!this.isCollapsed}"
-          aria-label="${this.isCollapsed
-            ? "Expand"
-            : "Collapse"} table of contents"
+          aria-label="${
+            this.isCollapsed ? "Expand" : "Collapse"
+          } table of contents"
         >
           <span class="toc-toggle-text">Table of Contents</span>
           <svg
-            class="toc-toggle-icon ${this.isCollapsed
-              ? "collapsed"
-              : "expanded"}"
+            class="toc-toggle-icon ${
+              this.isCollapsed ? "collapsed" : "expanded"
+            }"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -376,9 +376,9 @@ export class KbrTableOfContents extends LitElement {
         <div class="toc-content ${this.isCollapsed ? "hidden" : "visible"}">
           <!-- Top scroll indicator -->
           <div
-            class="scroll-indicator scroll-indicator-top ${this.showTopIndicator
-              ? "visible"
-              : ""}"
+            class="scroll-indicator scroll-indicator-top ${
+              this.showTopIndicator ? "visible" : ""
+            }"
           >
             <svg
               class="scroll-indicator-icon"
@@ -405,10 +405,9 @@ export class KbrTableOfContents extends LitElement {
 
           <!-- Bottom scroll indicator -->
           <div
-            class="scroll-indicator scroll-indicator-bottom ${this
-              .showBottomIndicator
-              ? "visible"
-              : ""}"
+            class="scroll-indicator scroll-indicator-bottom ${
+              this.showBottomIndicator ? "visible" : ""
+            }"
           >
             <svg
               class="scroll-indicator-icon"

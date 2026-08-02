@@ -6,13 +6,9 @@
 import { BuildLogger } from "../helpers.js";
 import { CitationProcessor, type Citation } from "./citation-processor.js";
 
-/**
- * Series information for blog posts
- */
-export interface SeriesInfo {
-  name: string;
-  part: number;
-}
+import type { SeriesInfo } from "../../shared/manifest-types.js";
+
+export type { SeriesInfo } from "../../shared/manifest-types.js";
 
 /**
  * Parsed frontmatter data structure

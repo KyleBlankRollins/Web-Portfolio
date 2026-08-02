@@ -1,0 +1,28 @@
+{
+  "themes": [
+    {
+      "id": "base",
+      "name": "Basic Blue",
+      "version": "1.0.0",
+      "file": "theme-base.css",
+      "metadata": {
+        "name": "Basic Blue",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "id": "canney-valley",
+      "name": "Canney Valley",
+      "version": "1.0.0",
+      "author": "Kyle Blank Rollins",
+      "file": "theme-canney-valley.css",
+      "metadata": {
+        "name": "Canney Valley",
+        "version": "1.0.0",
+        "author": "Kyle Blank Rollins"
+      }
+    }
+  ],
+  "totalThemes": 2,
+  "generatedAt": "NORMALIZED"
+}

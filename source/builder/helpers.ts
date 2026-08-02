@@ -1,5 +1,5 @@
-import { readFileSync, existsSync, readdirSync } from "fs";
-import { join } from "path";
+import { existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 
 /**
  * Utility class for file system operations related to the build process
@@ -13,41 +13,28 @@ export class FileSystemHelper {
     extensions: string[],
     excludeDirectories: string[] = []
   ): string[] {
-    let directoryPath: string;
-
-    // Avoid concatenating the path for every recursive call
-    if (directory.includes(join("source", "site"))) {
-      directoryPath = directory;
-    } else {
-      directoryPath = join("source", "site", directory);
-    }
-
     const files: string[] = [];
 
-    if (!existsSync(directoryPath)) {
+    if (!existsSync(directory)) {
       BuildLogger.info(`🛑 directory path doesn't exist`);
 
       return files;
     }
 
-    const entries = readdirSync(directoryPath, {
+    const entries = readdirSync(directory, {
       withFileTypes: true,
     });
 
     for (const entry of entries) {
-      const fullPath = join(directoryPath, entry.name);
+      const fullPath = join(directory, entry.name);
 
       if (entry.isDirectory()) {
         // Skip excluded directories
         if (excludeDirectories.includes(entry.name)) {
-          BuildLogger.info(
-            `Skipping excluded directory: ${entry.name}`
-          );
+          BuildLogger.info(`Skipping excluded directory: ${entry.name}`);
           continue;
         }
-        files.push(
-          ...this.findFiles(fullPath, extensions, excludeDirectories)
-        );
+        files.push(...this.findFiles(fullPath, extensions, excludeDirectories));
       } else if (
         entry.isFile() &&
         extensions.some((ext) => entry.name.endsWith(ext))
@@ -57,13 +44,6 @@ export class FileSystemHelper {
     }
 
     return files;
-  }
-
-  /**
-   * Read file content synchronously
-   */
-  public static async readFile(filePath: string): Promise<string> {
-    return readFileSync(filePath, "utf-8");
   }
 }
 

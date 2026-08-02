@@ -3,12 +3,18 @@
  * Transforms content before markdown rendering
  */
 
-import { marked } from "marked";
+import { Marked } from "marked";
 
 /**
  * Content preprocessor class
  */
 export class ContentPreprocessor {
+  private marked: Marked;
+
+  constructor(markedInstance: Marked = new Marked()) {
+    this.marked = markedInstance;
+  }
+
   /**
    * Remove JavaScript/CSS comments from markdown content before processing
    * Only removes comments outside of code blocks - preserves comments within fenced code blocks
@@ -17,11 +23,12 @@ export class ContentPreprocessor {
     // Split content by code blocks to preserve comments inside them
     const codeBlockPattern = /```[\s\S]*?```/g;
     const codeBlocks: string[] = [];
+    const placeholderPrefix = "\uE000KBR_CODE_BLOCK_";
     let processed = content;
 
     // Extract code blocks and replace with placeholders
     processed = processed.replace(codeBlockPattern, (match) => {
-      const placeholder = `__CODE_BLOCK_${codeBlocks.length}__`;
+      const placeholder = `${placeholderPrefix}${codeBlocks.length}\uE001`;
       codeBlocks.push(match);
       return placeholder;
     });
@@ -34,7 +41,10 @@ export class ContentPreprocessor {
 
     // Restore code blocks
     codeBlocks.forEach((codeBlock, index) => {
-      processed = processed.replace(`__CODE_BLOCK_${index}__`, codeBlock);
+      processed = processed.replace(
+        `${placeholderPrefix}${index}\uE001`,
+        () => codeBlock
+      );
     });
 
     // Clean up multiple consecutive newlines
@@ -57,7 +67,7 @@ export class ContentPreprocessor {
       const trimmedContent = innerContent.trim();
 
       // Process markdown content with parseInline to avoid wrapping in <p> tags
-      const processedContent = marked.parseInline(trimmedContent);
+      const processedContent = this.marked.parseInline(trimmedContent);
 
       // Return admonition with processed content, preserving original attributes
       return `\n\n<kbr-admonition${attributes}>${processedContent}</kbr-admonition>\n\n`;

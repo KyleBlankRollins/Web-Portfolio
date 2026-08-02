@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
+
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>Intentional Work Patterns - Boundaries</title>
+
+<meta name="description" content="Practical strategies for protecting your time and energy" />
+ 
+<meta name="keywords" content="productivity, boundaries, remote work" />
+ 
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+  <body>
+    <kbr-navigation>
+  <!-- Slotted into .header-content so the switcher sits at the far right
+       of the site header. It used to be a fixed-position floating control,
+       which overlapped page content at every viewport width. See DF-31. -->
+  <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+</kbr-navigation>
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+          
+          <kbr-post-series
+            series-name="Intentional Work Patterns"
+            current-part="1"
+          >
+          </kbr-post-series>
+          
+          <kbr-table-of-contents></kbr-table-of-contents>
+           
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          <button class="blog-tag" data-tag="boundaries">boundaries</button><button class="blog-tag" data-tag="intentionality">intentionality</button><button class="blog-tag" data-tag="remote work">remote work</button>
+        </div>
+      </div>
+     
+        </div>
+      </aside>
+      <article class="blog-post-content glass-surface">
+        <h1 id="intentional-work-patterns-boundaries">Intentional Work Patterns - Boundaries</h1>
+
+        <div class="blog-post-metadata">
+          <div>
+            <time datetime="2025-12-26">December 26, 2025</time>
+          </div>
+        </div>
+      <p>If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn&#39;t so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you&#39;re setting them: you&#39;re creating a social contract that allows you and those around you to communicate what&#39;s important.</p>
+<p>In the context of working from home, your work is likely the most important thing you&#39;ll be doing from 9 to 5 (or whatever your regular work pattern looks like). Yes, family is important and you should make yourself available for emergencies. But you need to set boundaries around when you can be interrupted. Otherwise, people will interfere with your ability to do your job and, ultimately, bring home money.</p>
+<p>Setting boundaries at home can be more difficult than it is in an office. The people around you at home may not understand how disruptive they might be to your work. They may see you as available anytime because you&#39;re at home, a place that they associate with just about anything other than work. It&#39;s hard to change their thinking about this, but you can do it by setting those boundaries and sticking to them.</p>
+<p>Sticking to them is the hardest part. Being consistent and reinforcing those boundaries over time is a major test of willpower. There will be many small things that seem reasonable to make exceptions for. But you can&#39;t let yourself do that. Because then the people around you will see that your boundaries are permeable - liable to change. And, through no malicious intent on their part, they&#39;ll continue to erode those boundaries until you&#39;re back where you started: with no boundaries.</p>
+<h2 id="boundary-setting-example">Boundary setting example</h2><p>My partner enjoys checking on me throughout the day. It&#39;s one of the ways she shows that she cares. She also knows that I love our two cats. So, she started bringing a cat with her and getting me to engage with her and the cat. I did like this, but it also frustrated me because I was usually focused on a task at work. After they left, it would take me some time to gather all of the context that I dropped to talk with them.</p>
+<p>After I recognized how disruptive this was, my partner and I had a simple conversation. I explained that, while I wasn&#39;t in a meeting, I was still focused on my work and that the checkups were distracting. We agreed that instead I would check on my partner when I took my breaks. This had the added bonus of encouraging me to actually take breaks.</p>
+<h2 id="separating-personal-life-and-work-life">Separating personal life and work life</h2><p>Boundaries aren&#39;t just about when people can interrupt you. They&#39;re also about creating mental separation between your work and personal life. Everyone&#39;s personal situation is different. This means that when you work from home, your personal life gets mixed with your work life more or less than it does for others. The more mixed up it is, the more difficult it will be to disentangle the two.</p>
+<p>Physical separation helps. If you can dedicate a room (or even just a corner) exclusively to work, do it. Cal Newport argues in <em>Deep Work</em> that knowledge workers need the ability to focus without distraction on cognitively demanding tasks<sup id="citation-ref-deep-work-1"><a href="#citation-deep-work" class="citation-ref">[1]</a></sup>. Having a specific place that your brain associates with this kind of focused work makes it easier to get into that mode. When you leave that space, you leave work behind. This works in reverse too: your household members start to recognize that when you&#39;re in that space, you&#39;re doing deep work that shouldn&#39;t be interrupted.</p>
+<p>If a dedicated space isn&#39;t possible, other markers can help. Some remote workers change their clothes when they start work, even if it&#39;s just switching from pajamas to jeans. Others use noise-canceling headphones as a visual signal that they&#39;re unavailable.</p>
+<p>But physical separation alone isn&#39;t enough. Time boundaries matter just as much as physical ones. Set specific work hours and communicate them clearly to your household. Even when you&#39;re not in meetings, you&#39;re still working.</p>
+<h3 id="having-difficult-conversations">Having difficult conversations</h3><p>Communicating these boundaries isn&#39;t always straightforward. Sometimes, the people you live with won&#39;t understand why you need these boundaries, even after you&#39;ve explained them. They might take it personally or see your boundaries as rejection. This is where you need to have difficult conversations.</p>
+<p>These conversations work better when you frame them around your needs rather than their behavior. Instead of &quot;You keep interrupting me,&quot; try &quot;I need uninterrupted focus time to do my job well.&quot; Instead of &quot;Stop bothering me during work hours,&quot; try &quot;I want to be fully present when we spend time together, which means I need to protect my work time.&quot;</p>
+<p>You might also need to explain what your work actually involves. Your partner might not realize that answering a quick question actually costs you 15-30 minutes of refocusing time<sup id="citation-ref-attention-residue"><a href="#citation-attention-residue" class="citation-ref">[2]</a></sup>. Newport calls this &quot;attention residue&quot; - when you switch from Task A to Task B, your attention doesn&#39;t immediately follow. A residue of your attention remains stuck thinking about the original task<sup id="citation-ref-deep-work-2"><a href="#citation-deep-work" class="citation-ref">[1]</a></sup>. This residue gets especially thick if your work on Task A was unbounded and of low intensity before you switched. Help them understand that knowledge work requires sustained concentration, not just being physically present at a computer.</p>
+<p>Sometimes, even after these careful explanations, people still don&#39;t respect your boundaries. When this happens, you may need to address them more directly. This doesn&#39;t make you a bad partner, parent, or roommate. It makes you someone who takes their professional commitments seriously. And ultimately, maintaining your income and career growth benefits everyone in your household.</p>
+<h2 id="the-curse-of-flexibility">The curse of flexibility</h2><p>Once you&#39;ve established boundaries with the people you live with, there&#39;s another challenge to navigate: the boundaries you set with yourself. Working from home gives you an amazing amount of flexibility. Theoretically, you <em>could</em> both pick up and drop off your kids from school. You <em>could</em> meal prep, do the laundry, go grocery shopping, or any of the million other things that make up life outside of work. And it&#39;s incredibly tempting to do it all. And you may even feel like you&#39;re morally obligated to.</p>
+<p>But you have to be careful about what you agree to do during your typical work hours. As a knowledge worker, your time and focus are your most important resources. You can&#39;t do everything. Spending your time and focus on daily household tasks means you can&#39;t use them for work.</p>
+<p>The problem isn&#39;t just about time. It&#39;s also about energy. Your peak cognitive hours are limited. If you spend your morning mental clarity on meal prep or organizing the garage, you&#39;re left doing complex technical work when your brain is already drained. You might have spent eight hours &quot;at work,&quot; but only three of them were during your actual high-performance window.</p>
+<p>Newport distinguishes between deep work (professional activities performed in a state of distraction-free concentration) and shallow work (non-cognitively demanding tasks often performed while distracted)<sup id="citation-ref-deep-work-3"><a href="#citation-deep-work" class="citation-ref">[1]</a></sup>. The problem with doing household tasks during your peak hours isn&#39;t just that they take time. They train your brain to crave distraction. Every time you break focus to throw in a load of laundry or check on dinner, you make it harder to sustain the deep work that actually moves your career forward. Save household tasks for when your brain needs a break anyway, not when you should be tackling your most challenging work.</p>
+<h2 id="breaking-the-guilt-cycle">Breaking the guilt cycle</h2><p>Worse, constantly switching between household tasks and work can create a guilt cycle that&#39;s hard to escape. You feel guilty for ignoring household tasks during work hours. Then you feel guilty for not being fully focused at work because you&#39;re thinking about those tasks. You end up doing neither thing well.</p>
+<p>Breaking this cycle requires accepting an uncomfortable truth: you can&#39;t optimize for everything simultaneously. During work hours, your job gets priority. After work hours, your household gets priority. Trying to blend them means both suffer.</p>
+<p>I&#39;ll never advocate for putting everything you have into work. Life is more than work. But most people need the income from work to keep life running in a way that they&#39;re comfortable with. Don&#39;t let the flexibility of remote work undermine your performance at work.</p>
+<h2 id="building-sustainable-boundaries">Building sustainable boundaries</h2><p>Boundaries aren&#39;t something you set once and forget. They&#39;re living agreements that need maintenance and adjustment as your circumstances change. For example, the boundaries you need when your kids are young will look different from those you need when they&#39;re in school. The boundaries that work in winter might not work in summer.</p>
+<p>The key is to stay intentional about them. Check in regularly with yourself and your household. Are your current boundaries serving you? Are there new friction points that need addressing? Are you honoring the boundaries you&#39;ve set, or have you slowly let them erode?</p>
+<p>Boundaries aren&#39;t walls that isolate you from others. They&#39;re the framework that lets you be fully present both at work and at home. When you protect your work time, you&#39;re also protecting your ability to genuinely disconnect when the workday ends. That&#39;s better for everyone.</p>
+<p>Start small if you need to. Pick one boundary to implement. Have one conversation. Reclaim one block of deep work time and then build from there.</p>
+
+        <kbr-supplement-list></kbr-supplement-list>
+        
+        <div class="blog-citations-container"><section class="citations">
+  <h2>References</h2>
+  <ol class="citations-list">
+    <li id="citation-deep-work">
+      <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport <span class="citation-links"><a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a><span class="citation-separator"> | </span><a href="https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b" target="_blank" rel="noopener">Buy</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-deep-work-1" class="citation-backref">↩1</a> <a href="#citation-ref-deep-work-2" class="citation-backref">↩2</a> <a href="#citation-ref-deep-work-3" class="citation-backref">↩3</a></span>
+    </li>
+    <li id="citation-attention-residue">
+      <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke <span class="citation-links"><a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a></span>
+      <span class="citation-backrefs"> <a href="#citation-ref-attention-residue" class="citation-backref">↩</a></span>
+    </li>
+  </ol>
+</section></div>
+        
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html through the footer template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

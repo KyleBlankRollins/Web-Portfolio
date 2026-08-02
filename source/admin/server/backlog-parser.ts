@@ -1,8 +1,5 @@
-import * as fs from "fs";
-import type {
-  PostMetadata,
-  PostStatus,
-} from "../types/post-metadata.js";
+import * as fs from "node:fs";
+import type { PostMetadata, PostStatus } from "../types/post-metadata.js";
 
 /**
  * Backlog Parser
@@ -51,9 +48,7 @@ export class BacklogParser {
   parse(): PostMetadata[] {
     try {
       if (!this.exists()) {
-        console.warn(
-          `Admin: Backlog file not found at ${this.backlogPath}`
-        );
+        console.warn(`Admin: Backlog file not found at ${this.backlogPath}`);
         return [];
       }
 
@@ -118,9 +113,7 @@ export class BacklogParser {
     // Section is not valid - log a warning
     console.warn(
       `Admin: Unexpected section heading "${section}" in backlog.md. ` +
-        `Valid sections are: ${Object.keys(VALID_SECTIONS).join(
-          ", "
-        )}. ` +
+        `Valid sections are: ${Object.keys(VALID_SECTIONS).join(", ")}. ` +
         `Posts under this section will be ignored.`
     );
 

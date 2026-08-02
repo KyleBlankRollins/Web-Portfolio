@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
+
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>The P&amp;G Rule of Thirds</title>
+
+<meta name="description" content="How to adapt Sid Meier&#39;s Rule of Thirds to professional development and goal setting" />
+ 
+<meta name="keywords" content="professional growth, goal setting, rule of thirds" />
+ 
+      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+</head>
+  <body>
+    <kbr-navigation>
+  <!-- Slotted into .header-content so the switcher sits at the far right
+       of the site header. It used to be a fixed-position floating control,
+       which overlapped page content at every viewport width. See DF-31. -->
+  <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+</kbr-navigation>
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+          
+          <kbr-table-of-contents></kbr-table-of-contents>
+           
+      <div class="blog-post-tags">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-list">
+          <button class="blog-tag" data-tag="professional growth">professional growth</button><button class="blog-tag" data-tag="goal setting">goal setting</button><button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
+        </div>
+      </div>
+     
+        </div>
+      </aside>
+      <article class="blog-post-content glass-surface">
+        <h1 id="the-pg-rule-of-thirds">The P&G Rule of Thirds</h1>
+
+        <div class="blog-post-metadata">
+          <div>
+            <time datetime="2025-10-01">October 1, 2025</time>
+          </div>
+        </div>
+      <p><kbr-admonition type="note">tl;dr: The <a href="#the-personal-growth-rule-of-thirds">personal growth rule of thirds</a> is a tool that helps define goals.</kbr-admonition></p>
+<p>This blog post starts with a bit of a ramble and it takes a while to get to the main point of the post. But stick with it, as I believe the lead up is important in this case.</p>
+<p>Setting and tracking personal growth goals at work can be difficult and stressful. No company does Performance and Growth (P&amp;G) evaluations the same way. And even if they did, it&#39;s still difficult to create highly personal goals that align with the highly impersonal business-level goals. And we haven&#39;t even talked about tracking progress on your personal goals...</p>
+<p>All of this adds up to an awful lot of what I call meta work - work that&#39;s about work. Over my career, I&#39;ve found all the effort spent on meta work frustrating. I could almost always use that time and energy more effectively elsewhere.</p>
+<p>Don&#39;t misunderstand me though. I&#39;m a strong advocate for learning and always improving yourself. Some sort of framework is typically necessary for that. What always bothers me is the <em>wasted</em> time and effort. Things move so quickly in the tech industry that setting personal goals for even the next 6 months is a fraught proposition. In some workplaces, company and product priorities change much more often than every 6 months.</p>
+<p>So, how to effectively own your growth while also not wasting time and effort on goals that won&#39;t be relevant by your next P&amp;G discussion?</p>
+<p>You need a higher-level goal framework that gives you enough direction to be useful, but also gives you enough wiggle room to react to new priorities.</p>
+<p>As an individual contributor, I&#39;ve been thinking about what framework might make sense in this context for a long time. Having been a manager for over a year now, I&#39;ve been thinking about it from the other side of the P&amp;G conversation as well. This post details a framework that I think makes sense. It&#39;s still very much a work in progress though.</p>
+<p>So, without further ado, let me introduce you to video game designer Sid Meier.</p>
+<h2 id="sid-meier">Sid Meier</h2><p>Sid Meier is a fairly famous video game designer. If you pay attention to that space, you&#39;ve probably heard of him. Even if you haven&#39;t, his name is on one of the most popular video game series of the 90s: Sid Meier&#39;s Civilization. Lots of people who didn&#39;t play video games or care much for them adored this game and got bit by the &quot;one more turn&quot; bug.</p>
+<h3 id="sid-meier39s-rule-of-thirds">Sid Meier&#39;s rule of thirds</h3><p>Civilization has gone on to be a successful series. Sid Meier was directly involved in most of the sequels. Creating sequels is hard. In an <a href="https://arstechnica.com/gaming/2014/10/the-road-to-civilization-a-conversation-with-sid-meier/">interview with Ars Technica</a>, Meier had this to say:</p>
+<blockquote>
+<p>We&#39;ve focused on listening to Civ players and trying to think about, with the next iteration, what are we going to do to keep it fresh and new but also have those core qualities that appeal to Civ players.</p>
+</blockquote>
+<p>To solve for this in a repeatable way, Meier and Firaxis (the studio Meier works at) created a framework called the &quot;rule of thirds&quot;. Essentially, the rule of thirds breaks a sequel down into “one-third traditional gameplay, one-third is improved from the last version, and one-third is brand new.”</p>
+<p>This formula has served the Civilization series (and other Firaxis games) well. I think it can also serve people well in a personal growth context.</p>
+<h2 id="the-personal-growth-rule-of-thirds">The personal growth rule of thirds</h2><p>While struggling with my personal goals last year, it occurred to me that Meier&#39;s rule of thirds could provide an excellent foundation for thinking about goals. If you consider yourself to be the thing that is iterated on, you&#39;re kind of delivering a sequel of yourself in every P&amp;G conversation. And your manager and leadership are your target audience.</p>
+<p>Applying the rule of thirds to personal goals gave me this formula with 3 high-level goals:</p>
+<ul>
+<li>Maintain something you&#39;re currently doing well and want to continue</li>
+<li>Improve something you&#39;re currently doing but not as well as you&#39;d like</li>
+<li>Innovate with something completely new and that is outside of your comfort zone</li>
+</ul>
+<p>This high-level framework made it much easier for me to think about what goals I wanted to set and how to communicate about them.</p>
+<h3 id="example">Example</h3><p>For this example, assume I&#39;m a senior tech writer who is responsible for writing external feature documentation for a somewhat large but simple product.</p>
+<p>I&#39;ve done a great job staying on top of internal communications and making sure that docs ship on time for new features. I work in a docs-as-code environment with several other tech writers, which means using git to manage content in a git repository. I&#39;m generally comfortable with git, but have made a couple of mistakes that affected other people. I&#39;m also excited and nervous to begin contributing UI text to the product - something I&#39;ve never done before.</p>
+<p>With this background, a set of sample goals could be:</p>
+<ul>
+<li>Maintain: ensure that documentation for the next 3 features are released on time.</li>
+<li>Improve: educate myself on git in a team setting and practice good git hygiene.</li>
+<li>Innovate: learn about UX writing and contribute my first microcopy to the product UI.</li>
+</ul>
+<h2 id="smart-goals">SMART goals</h2><p>Many workplaces encourage or require SMART goals for the P&amp;G cycle. The rule of thirds is not only compatible with SMART goals, but I think makes them easier to create and reason about.</p>
+<p>SMART goals for personal growth are useful, but only when they&#39;re informed by a greater and usually less measurable purpose. The rule of thirds framework is a tool to define that purpose. This makes it easier to define SMART goals and stick with them.</p>
+<h2 id="summary">Summary</h2><p>A personal growth rule of thirds framework makes defining goals easier and P&amp;G preparation less stressful. I&#39;m still refining how to talk about and present this framework. It isn&#39;t robust, but maybe it doesn&#39;t need to be. Perhaps it&#39;s enough to be a lightweight layer on top of other goal setting strategies - a way to narrow the scope of unlimited possibility.</p>
+
+        <kbr-supplement-list></kbr-supplement-list>
+        
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html through the footer template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/kyle-blank-rollins/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/KyleBlankRollins/Web-Portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </li>
+    </ul>
+  </nav>
+</footer>
+      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
+    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+</body>
+</html>

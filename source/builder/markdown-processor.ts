@@ -1,5 +1,6 @@
-import { readFileSync } from "fs";
-import { basename } from "path";
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
+import { Marked } from "marked";
 import { BuildLogger } from "./helpers.js";
 import {
   MarkdownRenderer,
@@ -11,7 +12,6 @@ import {
   type BlogPostManifestEntry,
   type SupplementManifestEntry,
   type LocalDocumentLinkIndex,
-  escapeHtmlComment,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
 
@@ -40,28 +40,12 @@ export class MarkdownProcessor {
   private generatedFilesByPublicUrl: Map<string, GeneratedHtmlFile> = new Map();
 
   constructor() {
-    this.renderer = new MarkdownRenderer();
-    this.preprocessor = new ContentPreprocessor();
+    const markedInstance = new Marked();
+    this.renderer = new MarkdownRenderer(markedInstance);
+    this.preprocessor = new ContentPreprocessor(markedInstance);
     this.citationProcessor = new CitationProcessor();
     this.frontmatterParser = new FrontmatterParser();
     this.manifestBuilder = new BlogManifestBuilder();
-  }
-
-  /**
-   * Process a single Markdown file and convert it to HTML content (without template)
-   * The template will be applied later by the HtmlBundleProcessor
-   */
-  public processMarkdownFile(filePath: string): string {
-    const fileName = basename(filePath).replace(/\.md$/, ".html");
-    const contentDocument: ContentDocument = {
-      sourcePath: filePath,
-      outputPath: fileName,
-      publicUrl: `/${fileName}`,
-      kind: "standalone-post",
-      metadata: {},
-    };
-
-    return this.processContentDocument(contentDocument);
   }
 
   /**
@@ -120,54 +104,24 @@ export class MarkdownProcessor {
       this.addToBlogManifest(contentDocument, metadata);
     }
 
-    // Create HTML content with metadata comments for later processing
-    const htmlWithMetadata = [
-      metadata.title ? `<!-- title: ${metadata.title} -->` : "",
-      metadata.description
-        ? `<!-- description: ${metadata.description} -->`
-        : "",
-      metadata.keywords ? `<!-- keywords: ${metadata.keywords} -->` : "",
-      metadata.date ? `<!-- date: ${metadata.date} -->` : "",
-      metadata.formattedDate
-        ? `<!-- formattedDate: ${metadata.formattedDate} -->`
-        : "",
-      metadata.tags && metadata.tags.length > 0
-        ? `<!-- tags: ${metadata.tags.join(", ")} -->`
-        : "",
-      metadata.isBlogPost ? `<!-- isBlogPost: true -->` : "",
-      metadata.series?.name
-        ? `<!-- series.name: ${metadata.series.name} -->`
-        : "",
-      metadata.series?.part !== undefined
-        ? `<!-- series.part: ${metadata.series.part} -->`
-        : "",
-      metadata.citationsHtml
-        ? `<!-- citationsHtml: ${escapeHtmlComment(metadata.citationsHtml)} -->`
-        : "",
-      processedContent,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
     // Use normalized output filename and store in memory
     const fileName = contentDocument.outputPath;
 
     // Store the generated file in memory
-    this.generatedFiles.set(fileName, {
+    const generatedFile: GeneratedHtmlFile = {
       filename: fileName,
       sourcePath: contentDocument.sourcePath,
       publicUrl: contentDocument.publicUrl,
-      content: htmlWithMetadata,
+      content: processedContent,
       metadata: metadata,
-    });
+    };
 
-    this.generatedFilesByPublicUrl.set(contentDocument.publicUrl, {
-      filename: fileName,
-      sourcePath: contentDocument.sourcePath,
-      publicUrl: contentDocument.publicUrl,
-      content: htmlWithMetadata,
-      metadata: metadata,
-    });
+    this.generatedFiles.set(fileName, generatedFile);
+
+    this.generatedFilesByPublicUrl.set(
+      contentDocument.publicUrl,
+      generatedFile
+    );
 
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 
@@ -206,20 +160,6 @@ export class MarkdownProcessor {
 
       this.addToBlogManifest(contentDocument, contentDocument.metadata);
     }
-  }
-
-  /**
-   * Render markdown content in development fallback paths using the same resolver.
-   */
-  public renderMarkdownBody(content: string, sourcePath: string): string {
-    const commentFreeContent = this.preprocessor.stripComments(content);
-    const preprocessedContent =
-      this.preprocessor.preprocessAdmonitions(commentFreeContent);
-
-    return this.renderer.render(preprocessedContent, {
-      currentSourcePath: sourcePath,
-      documentLinkIndex: this.localDocumentLinkIndex,
-    });
   }
 
   /**
@@ -335,24 +275,10 @@ export class MarkdownProcessor {
   }
 
   /**
-   * Get the current blog post manifest
-   */
-  public getBlogManifest(): BlogPostManifestEntry[] {
-    return this.manifestBuilder.getPosts();
-  }
-
-  /**
    * Get all generated HTML files from memory
    */
   public getGeneratedFiles(): Map<string, GeneratedHtmlFile> {
     return this.generatedFiles;
-  }
-
-  /**
-   * Get a specific generated file by filename
-   */
-  public getGeneratedFile(filename: string): GeneratedHtmlFile | undefined {
-    return this.generatedFiles.get(filename);
   }
 
   /**
@@ -362,14 +288,6 @@ export class MarkdownProcessor {
     publicUrl: string
   ): GeneratedHtmlFile | undefined {
     return this.generatedFilesByPublicUrl.get(publicUrl);
-  }
-
-  /**
-   * Clear all generated files from memory
-   */
-  public clearGeneratedFiles(): void {
-    this.generatedFiles.clear();
-    this.generatedFilesByPublicUrl.clear();
   }
 
   /**

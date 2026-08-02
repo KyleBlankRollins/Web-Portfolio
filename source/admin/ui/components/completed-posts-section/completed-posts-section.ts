@@ -162,9 +162,9 @@ export class CompletedPostsSection extends LitElement {
         ${this.filteredPosts.map(
           (post) => html`
             <div
-              class="post-item ${this.draggingPost?.id === post.id
-                ? "dragging"
-                : ""}"
+              class="post-item ${
+                this.draggingPost?.id === post.id ? "dragging" : ""
+              }"
               draggable="true"
               @dragstart=${(e: DragEvent) => this.handleDragStart(e, post)}
               @dragend=${this.handleDragEnd}

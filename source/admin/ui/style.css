@@ -16,7 +16,10 @@ body {
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   background: #f5f5f5;
   color: #333;
 }
@@ -86,6 +89,6 @@ code {
   background: #f5f5f5;
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
-  font-family: 'Monaco', 'Courier New', monospace;
+  font-family: "Monaco", "Courier New", monospace;
   font-size: 0.875em;
 }

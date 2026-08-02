@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import { resolve } from "node:path";
 
 /**
  * Vite configuration for Admin UI
@@ -8,7 +8,7 @@ import { resolve } from "path";
  * It's completely isolated from the main blog build.
  */
 export default defineConfig({
-  root: resolve(__dirname, "ui"),
+  root: resolve(import.meta.dirname, "ui"),
 
   server: {
     port: 4001,
@@ -17,14 +17,14 @@ export default defineConfig({
   },
 
   build: {
-    outDir: resolve(__dirname, "../../dist-admin"),
+    outDir: resolve(import.meta.dirname, "../../dist-admin"),
     emptyOutDir: true,
   },
 
   resolve: {
     alias: {
-      "@admin": resolve(__dirname),
-      "@types": resolve(__dirname, "../types"),
+      "@admin": resolve(import.meta.dirname),
+      "@types": resolve(import.meta.dirname, "../types"),
     },
   },
 });

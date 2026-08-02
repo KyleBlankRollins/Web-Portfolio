@@ -3,8 +3,8 @@
  * Handles template loading, caching, and variable substitution
  */
 
-import { readFileSync, existsSync } from "fs";
-import { join } from "path";
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 import { BuildLogger, StringHelper } from "../helpers.js";
 import { escapeHtml } from "./html-utils.js";
 
@@ -23,6 +23,7 @@ export interface TemplateVariables {
  */
 export class TemplateEngine {
   private templateCache: Map<string, string> = new Map();
+  private partialCache: Map<string, string> = new Map();
   private templateDir: string;
 
   constructor(templateDir: string = "source/site/templates") {
@@ -63,6 +64,24 @@ export class TemplateEngine {
   }
 
   /**
+   * Load a shared markup partial with caching.
+   */
+  public loadPartial(
+    partialName: string,
+    partialDir: string = "source/site/templates/partials"
+  ): string {
+    const cached = this.partialCache.get(partialName);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const partialPath = join(partialDir, partialName);
+    const partial = readFileSync(partialPath, "utf-8").trim();
+    this.partialCache.set(partialName, partial);
+    return partial;
+  }
+
+  /**
    * Render template with variables
    */
   public render(template: string, variables: TemplateVariables): string {
@@ -78,6 +97,15 @@ export class TemplateEngine {
     variables: TemplateVariables
   ): string {
     let result = template;
+    const rawHtmlVariableNames = new Set([
+      "content",
+      "head",
+      "header",
+      "footer",
+      "tagsHtml",
+      "citationsHtml",
+      "additionalHead",
+    ]);
 
     // Flatten nested objects for dot notation support
     const flatVariables = this.flattenObject(variables);
@@ -104,7 +132,11 @@ export class TemplateEngine {
 
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
     Object.entries(flatVariables).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        !rawHtmlVariableNames.has(key)
+      ) {
         const escapedKey = StringHelper.escapeRegex(key);
         const tripleRegex = new RegExp(`\\{\\{\\{${escapedKey}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
@@ -113,7 +145,11 @@ export class TemplateEngine {
 
     // Handle double-brace variables (escaped: {{variable}})
     Object.entries(flatVariables).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        !rawHtmlVariableNames.has(key)
+      ) {
         const escapedKey = StringHelper.escapeRegex(key);
         const doubleRegex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, "g");
         const escapedValue = escapeHtml(String(value));
@@ -121,8 +157,27 @@ export class TemplateEngine {
       }
     });
 
-    // Clean up any remaining unmatched template variables
-    result = result.replace(/\{\{\{?\w+\}?\}\}/g, "");
+    // Clean up unmatched template variables while preserving deferred raw HTML placeholders.
+    result = result.replace(
+      /\{\{\{(\w+)\}\}\}|\{\{(\w+)\}\}/g,
+      (match, tripleKey: string, doubleKey: string) => {
+        const key = tripleKey || doubleKey;
+        return rawHtmlVariableNames.has(key) ? match : "";
+      }
+    );
+
+    // Inject raw HTML after cleanup so literal template syntax in content survives.
+    Object.entries(flatVariables).forEach(([key, value]) => {
+      if (
+        value !== undefined &&
+        value !== null &&
+        rawHtmlVariableNames.has(key)
+      ) {
+        const escapedKey = StringHelper.escapeRegex(key);
+        const tripleRegex = new RegExp(`\\{\\{\\{${escapedKey}\\}\\}\\}`, "g");
+        result = result.replace(tripleRegex, () => String(value));
+      }
+    });
 
     return result;
   }
@@ -161,5 +216,6 @@ export class TemplateEngine {
    */
   public clearCache(): void {
     this.templateCache.clear();
+    this.partialCache.clear();
   }
 }

@@ -7,6 +7,8 @@ import {
   layoutStyles,
   reducedMotionStyles,
 } from "../../styles/shared-styles.js";
+import { loadBlogManifest } from "../../data/blog-manifest.js";
+import type { TagWithCount } from "../../../shared/manifest-types.js";
 
 /**
  * Blog Tag Filter Web Component
@@ -17,21 +19,13 @@ import {
  * Usage: <kbr-tag-filter></kbr-tag-filter>
  */
 
-interface BlogManifest {
-  posts: any[];
-  totalPosts: number;
-  availableTags: string[];
-  tagsWithCounts: { tag: string; count: number }[];
-  generatedAt: string;
-}
-
 @customElement("kbr-tag-filter")
 export default class KbrTagFilter extends LitElement {
   @property({ type: String, attribute: "active-tag" })
   declare activeTag: string | null;
 
   @state()
-  declare private tagsWithCounts: { tag: string; count: number }[];
+  declare private tagsWithCounts: TagWithCount[];
 
   @state()
   declare private isLoading: boolean;
@@ -43,12 +37,12 @@ export default class KbrTagFilter extends LitElement {
   declare private isExpanded: boolean;
 
   @state()
-  declare private orderedTags: { tag: string; count: number }[];
+  declare private orderedTags: TagWithCount[];
 
   @state()
   declare private animatingTags: Set<string>;
 
-  private originalTagsOrder: { tag: string; count: number }[] = [];
+  private originalTagsOrder: TagWithCount[] = [];
   private previousActiveTag: string | null = null;
 
   static styles = [
@@ -127,18 +121,8 @@ export default class KbrTagFilter extends LitElement {
     this.isLoading = true;
 
     try {
-      // Use relative URL for manifest
-      const manifestUrl = `/data/blog-manifest.json`;
-
-      const response = await fetch(manifestUrl);
-      if (!response.ok) {
-        throw new Error(
-          `Failed to load tags: ${response.status} ${response.statusText}`
-        );
-      }
-
-      const manifest: BlogManifest = await response.json();
-      this.tagsWithCounts = manifest.tagsWithCounts || [];
+      const manifest = await loadBlogManifest();
+      this.tagsWithCounts = manifest.tagsWithCounts;
 
       // Store original order and initialize ordered tags
       this.originalTagsOrder = [...this.tagsWithCounts];
@@ -234,15 +218,17 @@ export default class KbrTagFilter extends LitElement {
       <div class="tag-filter-container">
         <div class="filter-header">
           <div class="ui-label filter-title">Filter by Tag</div>
-          ${this.activeTag
-            ? html`<button
-                class="clear-filter-btn"
-                type="button"
-                @click="${this.clearFilter}"
-              >
-                Clear filter
-              </button>`
-            : ""}
+          ${
+            this.activeTag
+              ? html`<button
+                  class="clear-filter-btn"
+                  type="button"
+                  @click="${this.clearFilter}"
+                >
+                  Clear filter
+                </button>`
+              : ""
+          }
         </div>
         <div class="tags-grid">
           ${tagsToShow.map(({ tag, count }) => {
@@ -260,9 +246,9 @@ export default class KbrTagFilter extends LitElement {
             }
 
             return html`<button
-              class="tag-button ${isActive
-                ? "active"
-                : ""} ${animationClass} ${isAnimating ? "animating" : ""}"
+              class="tag-button ${
+                isActive ? "active" : ""
+              } ${animationClass} ${isAnimating ? "animating" : ""}"
               @click="${() => this.handleTagClick(tag)}"
               @keydown="${(e: KeyboardEvent) => this.handleTagKeydown(e, tag)}"
               data-tag="${tag}"
@@ -273,11 +259,13 @@ export default class KbrTagFilter extends LitElement {
             </button>`;
           })}
         </div>
-        ${orderedTagsToUse.length > this.visibleTagCount
-          ? html`<div class="expand-controls">
-              ${this.renderExpandButton()}
-            </div>`
-          : ""}
+        ${
+          orderedTagsToUse.length > this.visibleTagCount
+            ? html`<div class="expand-controls">
+                ${this.renderExpandButton()}
+              </div>`
+            : ""
+        }
       </div>
     `;
   }

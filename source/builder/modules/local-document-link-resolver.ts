@@ -3,7 +3,7 @@
  * Resolves relative Markdown links using discovered content source paths.
  */
 
-import { dirname, relative, resolve, sep } from "path";
+import { dirname, relative, resolve, sep } from "node:path";
 import type { ContentDocument } from "./content-discovery.js";
 
 export interface LocalDocumentLinkIndexEntry {
