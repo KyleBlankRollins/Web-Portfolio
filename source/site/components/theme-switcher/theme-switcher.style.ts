@@ -145,6 +145,11 @@ export const themeSwitcherStyles = css`
     min-width: 48px;
   }
 
+  .mode-indicator {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+  }
+
   .toggle-switch {
     position: relative;
     display: inline-flex;
@@ -182,7 +187,7 @@ export const themeSwitcherStyles = css`
     left: 2px;
     width: 20px;
     height: 20px;
-    background: white;
+    background: var(--color-text-inverse);
     border-radius: var(--radius-full);
     box-shadow: 0 2px 4px var(--color-shadow);
     transition: transform var(--transition-normal);

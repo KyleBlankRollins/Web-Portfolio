@@ -229,6 +229,15 @@ export default class KbrTagFilter extends LitElement {
       <div class="tag-filter-container">
         <div class="filter-header">
           <div class="ui-label filter-title">Filter by Tag</div>
+          ${this.activeTag
+            ? html`<button
+                class="clear-filter-btn"
+                type="button"
+                @click="${this.clearFilter}"
+              >
+                Clear filter
+              </button>`
+            : ""}
         </div>
         <div class="tags-grid">
           ${tagsToShow.map(({ tag, count }) => {

@@ -249,7 +249,7 @@ export class KbrThemeSwitcher extends LitElement {
           class="collapsed-trigger"
           @click=${this.handleToggle}
           aria-expanded=${this.isCollapsed ? "false" : "true"}
-          aria-label="Theme settings"
+          aria-label="Theme settings, ${this.currentColorScheme} mode"
         >
           <kbr-icon name="projector" classes="trigger-icon"></kbr-icon>
           <span class="trigger-text">Themes</span>
@@ -270,7 +270,12 @@ export class KbrThemeSwitcher extends LitElement {
                     >
                       ${this.themes.map(
                         (theme) => html`
-                          <option value=${theme.id}>${theme.name}</option>
+                          <option
+                            value=${theme.id}
+                            ?selected=${theme.id === this.currentTheme}
+                          >
+                            ${theme.name}
+                          </option>
                         `
                       )}
                     </select>
@@ -278,7 +283,14 @@ export class KbrThemeSwitcher extends LitElement {
 
                   <!-- Color Scheme Toggle -->
                   <div class="color-scheme-toggle">
-                    <label for="color-scheme-toggle">Mode:</label>
+                    <label for="color-scheme-toggle">
+                      Mode:
+                      <span class="mode-indicator"
+                        >${this.currentColorScheme === "dark"
+                          ? "Dark"
+                          : "Light"}</span
+                      >
+                    </label>
                     <div class="toggle-switch">
                       <input
                         type="checkbox"
@@ -286,7 +298,9 @@ export class KbrThemeSwitcher extends LitElement {
                         class="toggle-input"
                         .checked=${this.currentColorScheme === "dark"}
                         @click=${this.handleColorSchemeToggle}
-                        aria-label="Toggle between light and dark mode"
+                        aria-label=${this.currentColorScheme === "dark"
+                          ? "Switch to light mode"
+                          : "Switch to dark mode"}
                       />
                       <div class="toggle-track"></div>
                       <div class="toggle-thumb"></div>

@@ -359,8 +359,8 @@ export const buttonStyles = css`
   }
 
   .tag-button.active .tag-count {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--color-text-inverse);
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
   }
 `;
 

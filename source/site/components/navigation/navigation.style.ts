@@ -127,28 +127,23 @@ export const navigationStyles = css`
 
   @media (max-width: 480px) {
     .header-content {
-      flex-direction: column;
-      gap: var(--space-sm);
-      text-align: center;
+      gap: var(--space-xs);
+      padding-inline: var(--space-xs);
     }
 
-    /* Stack the cluster too. Kept as a row, the three nav links plus the
-       switcher exceed the width of a phone and force the link list to wrap
-       onto a second line underneath the button. */
     .header-actions {
-      flex-direction: column;
-      gap: var(--space-sm);
+      gap: var(--space-xs);
     }
 
     .main-nav ul {
-      gap: var(--space-sm);
+      gap: 0;
       flex-wrap: wrap;
       justify-content: center;
     }
 
     .main-nav a {
-      padding: var(--space-xs) var(--space-sm);
-      font-size: 0.85rem;
+      padding: var(--space-xs);
+      font-size: var(--font-size-xs);
     }
   }
 
