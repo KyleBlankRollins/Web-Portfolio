@@ -12,7 +12,6 @@ import {
   type BlogPostManifestEntry,
   type SupplementManifestEntry,
   type LocalDocumentLinkIndex,
-  escapeHtmlComment,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
 
@@ -105,54 +104,24 @@ export class MarkdownProcessor {
       this.addToBlogManifest(contentDocument, metadata);
     }
 
-    // Create HTML content with metadata comments for later processing
-    const htmlWithMetadata = [
-      metadata.title ? `<!-- title: ${metadata.title} -->` : "",
-      metadata.description
-        ? `<!-- description: ${metadata.description} -->`
-        : "",
-      metadata.keywords ? `<!-- keywords: ${metadata.keywords} -->` : "",
-      metadata.date ? `<!-- date: ${metadata.date} -->` : "",
-      metadata.formattedDate
-        ? `<!-- formattedDate: ${metadata.formattedDate} -->`
-        : "",
-      metadata.tags && metadata.tags.length > 0
-        ? `<!-- tags: ${metadata.tags.join(", ")} -->`
-        : "",
-      metadata.isBlogPost ? `<!-- isBlogPost: true -->` : "",
-      metadata.series?.name
-        ? `<!-- series.name: ${metadata.series.name} -->`
-        : "",
-      metadata.series?.part !== undefined
-        ? `<!-- series.part: ${metadata.series.part} -->`
-        : "",
-      metadata.citationsHtml
-        ? `<!-- citationsHtml: ${escapeHtmlComment(metadata.citationsHtml)} -->`
-        : "",
-      processedContent,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
     // Use normalized output filename and store in memory
     const fileName = contentDocument.outputPath;
 
     // Store the generated file in memory
-    this.generatedFiles.set(fileName, {
+    const generatedFile: GeneratedHtmlFile = {
       filename: fileName,
       sourcePath: contentDocument.sourcePath,
       publicUrl: contentDocument.publicUrl,
-      content: htmlWithMetadata,
+      content: processedContent,
       metadata: metadata,
-    });
+    };
 
-    this.generatedFilesByPublicUrl.set(contentDocument.publicUrl, {
-      filename: fileName,
-      sourcePath: contentDocument.sourcePath,
-      publicUrl: contentDocument.publicUrl,
-      content: htmlWithMetadata,
-      metadata: metadata,
-    });
+    this.generatedFiles.set(fileName, generatedFile);
+
+    this.generatedFilesByPublicUrl.set(
+      contentDocument.publicUrl,
+      generatedFile
+    );
 
     BuildLogger.success(`Generated blog post: ${fileName} (stored in memory)`);
 

@@ -4,7 +4,7 @@
  */
 
 import { BuildLogger } from "../helpers.js";
-import { escapeHtmlComment, escapeHtml } from "./html-utils.js";
+import { escapeHtml } from "./html-utils.js";
 
 /**
  * Citation metadata structure
@@ -263,13 +263,6 @@ export class CitationProcessor {
 ${citationItems}
   </ol>
 </section>`;
-  }
-
-  /**
-   * Escape citations HTML for storage in HTML comments
-   */
-  public escapeCitationsForComment(citationsHtml: string): string {
-    return escapeHtmlComment(citationsHtml);
   }
 
   /**

@@ -90,7 +90,8 @@ export class HtmlBundleProcessor {
         try {
           const processedContent = await HtmlProcessingUtils.processHtmlContent(
             this.templateProcessor,
-            htmlAsset.source
+            htmlAsset.source,
+            {}
           );
 
           // Vite injected this file's assets at the source script tag's
@@ -125,8 +126,7 @@ export class HtmlBundleProcessor {
         const processedContent = await HtmlProcessingUtils.processHtmlContent(
           this.templateProcessor,
           content,
-          "Untitled",
-          assets
+          { defaultTitle: "Untitled", assets }
         );
 
         // Get the output filename (flatten the directory structure)
@@ -164,8 +164,11 @@ export class HtmlBundleProcessor {
           await HtmlProcessingUtils.processHtmlContent(
             this.templateProcessor,
             fileData.content,
-            fileData.metadata.title || "Untitled",
-            assets
+            {
+              defaultTitle: fileData.metadata.title || "Untitled",
+              assets,
+              metadata: fileData.metadata,
+            }
           )
         );
 

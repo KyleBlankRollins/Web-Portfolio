@@ -6,7 +6,10 @@ import * as path from "node:path";
 import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
-import type { MarkdownProcessor } from "./markdown-processor.js";
+import type {
+  GeneratedHtmlFile,
+  MarkdownProcessor,
+} from "./markdown-processor.js";
 import { ThemeProcessor } from "./theme-processor.js";
 
 /**
@@ -102,7 +105,7 @@ async function handleIndexRequest(
       const processedContent = await HtmlProcessingUtils.processHtmlContent(
         templateProcessor,
         content,
-        "Development Server"
+        { defaultTitle: "Development Server" }
       );
 
       // Inject development assets (consistent with other HTML handlers)
@@ -223,7 +226,7 @@ async function handleHtmlRequest(
  */
 async function processAndServeGeneratedFile(
   templateProcessor: TemplateProcessor,
-  generatedFile: any,
+  generatedFile: GeneratedHtmlFile,
   res: ServerResponse,
   next: Connect.NextFunction
 ) {
@@ -231,7 +234,10 @@ async function processAndServeGeneratedFile(
     const processedContent = await HtmlProcessingUtils.processHtmlContent(
       templateProcessor,
       generatedFile.content,
-      generatedFile.metadata.title || "Generated Content"
+      {
+        defaultTitle: generatedFile.metadata.title || "Generated Content",
+        metadata: generatedFile.metadata,
+      }
     );
 
     // Inject development assets

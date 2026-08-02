@@ -59,7 +59,6 @@ Pure utility functions for HTML manipulation:
 
 - `escapeHtml()` - Escape HTML characters for safe display
 - `escapeHtml()` - Escape text for use in HTML content and attributes (XSS prevention)
-- `escapeHtmlComment()` / `unescapeHtmlComment()` - Handle `--` in HTML comments
 
 #### citation-processor.ts
 

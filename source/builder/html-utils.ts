@@ -33,19 +33,25 @@ export class HtmlProcessingUtils {
   static async processHtmlContent(
     templateProcessor: TemplateProcessor,
     content: string,
-    defaultTitle: string = "Untitled",
-    assets?: { css: string[]; js: string[] }
+    options: {
+      defaultTitle?: string;
+      assets?: { css: string[]; js: string[] };
+      metadata?: Partial<TemplateVariables>;
+    } = {}
   ): Promise<string> {
-    // Extract metadata from HTML comments and get cleaned content
-    const { metadata, content: cleanedContent } =
-      templateProcessor.extractMetadata(content);
+    // Hand-written pages use metadata comments; generated documents provide
+    // their already-parsed metadata directly.
+    const { metadata, content: cleanedContent } = options.metadata
+      ? { metadata: options.metadata, content }
+      : templateProcessor.extractMetadata(content);
 
     // Create template variables - if no title found, try to extract from content
     const templateVariables: TemplateVariables = {
       title:
         metadata.title ||
         this.extractTitleFromContent(cleanedContent) ||
-        defaultTitle,
+        options.defaultTitle ||
+        "Untitled",
       description: metadata.description,
       keywords: metadata.keywords,
       additionalHead: metadata.additionalHead,
@@ -57,6 +63,7 @@ export class HtmlProcessingUtils {
       isBlogPost: metadata.isBlogPost,
       series: metadata.series, // Include series metadata
       citationsHtml: metadata.citationsHtml, // Include citations HTML
+      supplements: metadata.supplements,
       // Generate tags HTML for sidebar
       tagsHtml: this.generateTagsHtml(metadata.tags),
     };
@@ -67,8 +74,8 @@ export class HtmlProcessingUtils {
     );
 
     // Inject assets if provided (for non-index HTML files)
-    if (assets) {
-      return this.injectAssets(processedContent, assets);
+    if (options.assets) {
+      return this.injectAssets(processedContent, options.assets);
     }
 
     return processedContent;

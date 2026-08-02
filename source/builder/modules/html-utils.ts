@@ -14,19 +14,3 @@ export function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
-
-/**
- * Escape HTML for use in HTML comments
- * Converts -- to &#45;&#45; to avoid breaking comment syntax
- */
-export function escapeHtmlComment(html: string): string {
-  return html.replace(/--/g, "&#45;&#45;");
-}
-
-/**
- * Unescape HTML comment escaping
- * Converts &#45;&#45; back to --
- */
-export function unescapeHtmlComment(html: string): string {
-  return html.replace(/&#45;&#45;/g, "--");
-}

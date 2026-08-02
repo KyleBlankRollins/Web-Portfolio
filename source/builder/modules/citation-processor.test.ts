@@ -40,14 +40,6 @@ describe("CitationProcessor", () => {
     });
   });
 
-  it("escapes citation HTML for comments", () => {
-    expect(
-      processor.escapeCitationsForComment(
-        "<section>References -- now</section>"
-      )
-    ).toContain("&#45;&#45;");
-  });
-
   it("currently throws for an unknown reference", () => {
     // AF-03: asserts current (incorrect) behaviour, see phase 3.
     expect(() =>
