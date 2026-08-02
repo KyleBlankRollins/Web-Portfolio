@@ -21,10 +21,6 @@ export class GitAwareBuildPipeline {
     this.gitAware = options.gitAware ?? false;
     this.forceAll = options.forceAll ?? false;
     this.isGitRepo = GitUtils.isGitRepository();
-
-    if (this.gitAware && this.isGitRepo) {
-      GitUtils.logRepositoryStatus();
-    }
   }
 
   /**

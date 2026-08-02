@@ -30,16 +30,3 @@ export function escapeHtmlComment(html: string): string {
 export function unescapeHtmlComment(html: string): string {
   return html.replace(/&#45;&#45;/g, "--");
 }
-
-/**
- * Escape text for use in HTML attributes
- * More comprehensive than basic escaping
- */
-export function escapeHtmlAttribute(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;");
-}

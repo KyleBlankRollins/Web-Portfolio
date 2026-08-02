@@ -78,6 +78,13 @@ export class TemplateEngine {
     variables: TemplateVariables
   ): string {
     let result = template;
+    const rawHtmlVariableNames = new Set([
+      "content",
+      "footer",
+      "tagsHtml",
+      "citationsHtml",
+      "additionalHead",
+    ]);
 
     // Flatten nested objects for dot notation support
     const flatVariables = this.flattenObject(variables);
@@ -104,7 +111,11 @@ export class TemplateEngine {
 
     // Handle triple-brace variables (unescaped HTML: {{{variable}}})
     Object.entries(flatVariables).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        !rawHtmlVariableNames.has(key)
+      ) {
         const escapedKey = StringHelper.escapeRegex(key);
         const tripleRegex = new RegExp(`\\{\\{\\{${escapedKey}\\}\\}\\}`, "g");
         result = result.replace(tripleRegex, String(value));
@@ -113,7 +124,11 @@ export class TemplateEngine {
 
     // Handle double-brace variables (escaped: {{variable}})
     Object.entries(flatVariables).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      if (
+        value !== undefined &&
+        value !== null &&
+        !rawHtmlVariableNames.has(key)
+      ) {
         const escapedKey = StringHelper.escapeRegex(key);
         const doubleRegex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, "g");
         const escapedValue = escapeHtml(String(value));
@@ -121,8 +136,27 @@ export class TemplateEngine {
       }
     });
 
-    // Clean up any remaining unmatched template variables
-    result = result.replace(/\{\{\{?\w+\}?\}\}/g, "");
+    // Clean up unmatched template variables while preserving deferred raw HTML placeholders.
+    result = result.replace(
+      /\{\{\{(\w+)\}\}\}|\{\{(\w+)\}\}/g,
+      (match, tripleKey: string, doubleKey: string) => {
+        const key = tripleKey || doubleKey;
+        return rawHtmlVariableNames.has(key) ? match : "";
+      }
+    );
+
+    // Inject raw HTML after cleanup so literal template syntax in content survives.
+    Object.entries(flatVariables).forEach(([key, value]) => {
+      if (
+        value !== undefined &&
+        value !== null &&
+        rawHtmlVariableNames.has(key)
+      ) {
+        const escapedKey = StringHelper.escapeRegex(key);
+        const tripleRegex = new RegExp(`\\{\\{\\{${escapedKey}\\}\\}\\}`, "g");
+        result = result.replace(tripleRegex, () => String(value));
+      }
+    });
 
     return result;
   }

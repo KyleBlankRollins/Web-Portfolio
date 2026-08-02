@@ -5,7 +5,7 @@
 
 import { Marked, Parser, Renderer, type Tokens } from "marked";
 import Prism from "prismjs";
-import { escapeHtml, escapeHtmlAttribute } from "./html-utils.js";
+import { escapeHtml } from "./html-utils.js";
 import {
   resolveLocalDocumentLink,
   type LocalDocumentLinkIndex,
@@ -85,15 +85,15 @@ export class MarkdownRenderer {
     renderer.heading = ({ tokens, depth }: Tokens.Heading) => {
       const text = Parser.parseInline(tokens);
       const headingId = this.generateAnchorId(text);
-      return `<h${depth} id="${escapeHtmlAttribute(headingId)}">${text}</h${depth}>`;
+      return `<h${depth} id="${escapeHtml(headingId)}">${text}</h${depth}>`;
     };
 
     // Override link renderer to transform .md to .html
     renderer.link = ({ href, title, tokens }: Tokens.Link) => {
       const transformedHref = this.resolveLinkHref(href);
       const text = Parser.parseInline(tokens);
-      const titleAttr = title ? ` title="${escapeHtmlAttribute(title)}"` : "";
-      return `<a href="${escapeHtmlAttribute(transformedHref)}"${titleAttr}>${text}</a>`;
+      const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
+      return `<a href="${escapeHtml(transformedHref)}"${titleAttr}>${text}</a>`;
     };
 
     // Override code renderer to add syntax highlighting
@@ -101,7 +101,7 @@ export class MarkdownRenderer {
       if (!this.syntaxHighlighting) {
         const escapedCode = escapeHtml(code);
         const langClass = language
-          ? ` class="language-${escapeHtmlAttribute(language)}"`
+          ? ` class="language-${escapeHtml(language)}"`
           : "";
         return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
       }
@@ -115,7 +115,7 @@ export class MarkdownRenderer {
             Prism.languages[lang],
             lang
           );
-          const escapedLang = escapeHtmlAttribute(lang);
+          const escapedLang = escapeHtml(lang);
           return `<pre class="language-${escapedLang}"><code class="language-${escapedLang}">${highlighted}</code></pre>`;
         } catch (error) {
           console.error(`Error highlighting ${lang}:`, error);
@@ -124,9 +124,7 @@ export class MarkdownRenderer {
 
       // Default behavior for unsupported languages or errors
       const escapedCode = escapeHtml(code);
-      const langClass = lang
-        ? ` class="language-${escapeHtmlAttribute(lang)}"`
-        : "";
+      const langClass = lang ? ` class="language-${escapeHtml(lang)}"` : "";
       return `<pre${langClass}><code${langClass}>${escapedCode}</code></pre>`;
     };
 

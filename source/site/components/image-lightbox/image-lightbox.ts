@@ -101,19 +101,6 @@ export class KbrImageLightbox extends LitElement {
   private openModal() {
     this.isModalOpen = true;
     document.body.style.overflow = "hidden"; // Prevent background scrolling
-
-    // Dispatch custom event for any parent components that might need to know
-    this.dispatchEvent(
-      new CustomEvent("lightbox-opened", {
-        bubbles: true,
-        composed: true,
-        detail: {
-          src: this.src,
-          alt: this.alt,
-          caption: this.caption,
-        },
-      })
-    );
   }
 
   /**
@@ -122,14 +109,6 @@ export class KbrImageLightbox extends LitElement {
   private closeModal() {
     this.isModalOpen = false;
     document.body.style.overflow = ""; // Restore scrolling
-
-    // Dispatch custom event
-    this.dispatchEvent(
-      new CustomEvent("lightbox-closed", {
-        bubbles: true,
-        composed: true,
-      })
-    );
   }
 
   /**
@@ -190,34 +169,28 @@ export class KbrImageLightbox extends LitElement {
         role="button"
         aria-label="Click to enlarge image: ${this.alt}"
       >
-        ${
-          this.isLoading
-            ? html` <div class="loading">Loading...</div> `
-            : nothing
-        }
-        ${
-          this.hasError
-            ? html` <div class="error">Failed to load image</div> `
-            : nothing
-        }
-        ${
-          !this.hasError
-            ? html`
-                <img
-                  class="image ${this.classes}"
-                  src="${this.src}"
-                  alt="${this.alt}"
-                  @load=${this.handleImageLoad}
-                  @error=${this.handleImageError}
-                  style="display: ${this.isLoading ? "none" : "block"}"
-                />
+        ${this.isLoading
+          ? html` <div class="loading">Loading...</div> `
+          : nothing}
+        ${this.hasError
+          ? html` <div class="error">Failed to load image</div> `
+          : nothing}
+        ${!this.hasError
+          ? html`
+              <img
+                class="image ${this.classes}"
+                src="${this.src}"
+                alt="${this.alt}"
+                @load=${this.handleImageLoad}
+                @error=${this.handleImageError}
+                style="display: ${this.isLoading ? "none" : "block"}"
+              />
 
-                <div class="zoom-overlay">
-                  <span class="zoom-icon">🔍</span>
-                </div>
-              `
-            : nothing
-        }
+              <div class="zoom-overlay">
+                <span class="zoom-icon">🔍</span>
+              </div>
+            `
+          : nothing}
       </div>
 
       <!-- Modal -->
@@ -236,11 +209,9 @@ export class KbrImageLightbox extends LitElement {
         <div class="modal-content" @click=${this.stopPropagation}>
           <img class="modal-image" src="${this.src}" alt="${this.alt}" />
 
-          ${
-            this.caption
-              ? html` <div class="modal-caption">${this.caption}</div> `
-              : nothing
-          }
+          ${this.caption
+            ? html` <div class="modal-caption">${this.caption}</div> `
+            : nothing}
         </div>
       </div>
     `;

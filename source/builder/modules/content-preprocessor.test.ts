@@ -15,6 +15,13 @@ describe("ContentPreprocessor", () => {
     expect(preprocessor.stripComments(content)).toBe(content);
   });
 
+  it("round-trips dollar replacement sequences and literal placeholders", () => {
+    const content = '```sh\necho "$&" && sed \'s/x/$1/\' && printf "$`"\n```';
+    const markdown = `Before __CODE_BLOCK_0__\n\n${content}`;
+
+    expect(preprocessor.stripComments(markdown)).toBe(markdown);
+  });
+
   it("renders inline markdown inside admonitions", () => {
     const result = preprocessor.preprocessAdmonitions(
       '<kbr-admonition type="note">Use **bold** text.</kbr-admonition>'

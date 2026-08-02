@@ -50,14 +50,14 @@ Update the status column as work lands.
 | AF-05 | The document head and theme bootstrap exist in three places     | Medium   | open    |
 | AF-06 | Processor facades delegate without adding behaviour             | Low      | open    |
 | AF-07 | Admin API routes repeat one try/catch four times                | Low      | open    |
-| AF-08 | Template cleanup regex deletes literal braces from content      | High     | open    |
-| AF-09 | Code block restoration corrupts content containing `$`          | Medium   | open    |
-| AF-10 | Two near-identical HTML escape functions                        | Low      | open    |
-| AF-11 | `generateTagsHtml` is the one generator that skips escaping     | Low      | open    |
-| AF-12 | `require()` calls in an ESM package                             | Low      | partial |
-| AF-13 | Dev server markdown fallback renders differently from build     | Medium   | open    |
-| AF-14 | Build status is logged twice per git-aware build                | Low      | open    |
-| AF-15 | Three custom events are dispatched with no listeners            | Low      | open    |
+| AF-08 | Template cleanup regex deletes literal braces from content      | High     | fixed   |
+| AF-09 | Code block restoration corrupts content containing `$`          | Medium   | fixed   |
+| AF-10 | Two near-identical HTML escape functions                        | Low      | fixed   |
+| AF-11 | `generateTagsHtml` is the one generator that skips escaping     | Low      | fixed   |
+| AF-12 | `require()` calls in an ESM package                             | Low      | fixed   |
+| AF-13 | Dev server markdown fallback renders differently from build     | Medium   | fixed   |
+| AF-14 | Build status is logged twice per git-aware build                | Low      | fixed   |
+| AF-15 | Three custom events are dispatched with no listeners            | Low      | fixed   |
 | AF-16 | `GitAwareBuildPipeline` has an unreachable subsystem            | Low      | fixed   |
 | AF-17 | `GitUtils` base-branch comparison is entirely unused            | Low      | fixed   |
 | AF-18 | `KBRBuilderOptions.baseBranch` is declared and never read       | Low      | fixed   |

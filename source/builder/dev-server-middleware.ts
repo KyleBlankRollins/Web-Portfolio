@@ -3,14 +3,11 @@ import type { Connect } from "vite";
 import type { ServerResponse } from "node:http";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import {
-  TemplateProcessor,
-  type TemplateVariables,
-} from "./template-processor.js";
+import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 import { HtmlProcessingUtils } from "./html-utils.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
-import { ContentDiscovery } from "./modules/index.js";
+import { ThemeProcessor } from "./theme-processor.js";
 
 /**
  * Creates middleware that blocks direct access to source directories
@@ -156,8 +153,6 @@ function handleThemeManifestRequest(
   _next: Connect.NextFunction
 ) {
   try {
-    // Import and process themes
-    const { ThemeProcessor } = require("./theme-processor.js");
     const themesDir = path.join(
       process.cwd(),
       "source",
@@ -220,18 +215,6 @@ async function handleHtmlRequest(
     );
   }
 
-  const markdownSourcePath =
-    resolvePublishedMarkdownSourcePath(requestedPublicUrl);
-  if (markdownSourcePath) {
-    return await processAndServeMarkdown(
-      templateProcessor,
-      markdownProcessor,
-      markdownSourcePath,
-      res,
-      next
-    );
-  }
-
   sendNotFoundHtml(res);
 }
 
@@ -289,53 +272,6 @@ async function processAndServeFile(
     res.end(devContent);
   } catch (error) {
     BuildLogger.error(`Error processing ${filePath}: ${error}`);
-    next(error);
-  }
-}
-
-/**
- * Process and serve a Markdown file as HTML
- */
-async function processAndServeMarkdown(
-  templateProcessor: TemplateProcessor,
-  markdownProcessor: MarkdownProcessor,
-  mdFilePath: string,
-  res: ServerResponse,
-  next: Connect.NextFunction
-) {
-  try {
-    const mdContent = fs.readFileSync(mdFilePath, "utf-8");
-
-    // Extract frontmatter and convert markdown to HTML
-    const { metadata, content } =
-      templateProcessor.extractMarkdownFrontmatter(mdContent);
-    const htmlContent = markdownProcessor.renderMarkdownBody(
-      content,
-      mdFilePath
-    );
-
-    // Create template variables
-    const templateVariables: TemplateVariables = {
-      title: metadata.title || "Development Server",
-      description: metadata.description,
-      keywords: metadata.keywords,
-      additionalHead: metadata.additionalHead,
-      content: "", // This will be overridden by processTemplate
-    };
-
-    const processedContent = templateProcessor.processTemplate(
-      htmlContent,
-      templateVariables
-    );
-
-    // Inject development assets
-    const devContent = injectDevAssets(processedContent);
-
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "no-cache");
-    res.end(devContent);
-  } catch (error) {
-    BuildLogger.error(`Error processing markdown ${mdFilePath}: ${error}`);
     next(error);
   }
 }
@@ -445,17 +381,6 @@ function normalizePublicUrl(url: string): string {
   }
 
   return url;
-}
-
-function resolvePublishedMarkdownSourcePath(
-  requestedPublicUrl: string
-): string | undefined {
-  const discoveryResult = new ContentDiscovery().discover();
-  const matchedDocument = discoveryResult.publishableDocuments.find(
-    (document) => document.publicUrl === requestedPublicUrl
-  );
-
-  return matchedDocument?.sourcePath;
 }
 
 function sendNotFoundHtml(res: ServerResponse): void {

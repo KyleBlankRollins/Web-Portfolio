@@ -58,7 +58,7 @@ The `modules/` directory contains focused, reusable components that handle speci
 Pure utility functions for HTML manipulation:
 
 - `escapeHtml()` - Escape HTML characters for safe display
-- `escapeHtmlAttribute()` - Escape text for use in HTML attributes (XSS prevention)
+- `escapeHtml()` - Escape text for use in HTML content and attributes (XSS prevention)
 - `escapeHtmlComment()` / `unescapeHtmlComment()` - Handle `--` in HTML comments
 
 #### citation-processor.ts

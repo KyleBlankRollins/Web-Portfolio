@@ -2,6 +2,7 @@ import {
   TemplateProcessor,
   type TemplateVariables,
 } from "./template-processor.js";
+import { escapeHtml } from "./modules/html-utils.js";
 
 /**
  * Shared utility functions for HTML processing
@@ -186,7 +187,8 @@ export class HtmlProcessingUtils {
 
     const tagButtons = tags
       .map(
-        (tag) => `<button class="blog-tag" data-tag="${tag}">${tag}</button>`
+        (tag) =>
+          `<button class="blog-tag" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`
       )
       .join("");
 

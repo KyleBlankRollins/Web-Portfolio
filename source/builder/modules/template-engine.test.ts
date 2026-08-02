@@ -37,6 +37,14 @@ describe("TemplateEngine", () => {
     expect(engine.render("before {{foo}} after", {})).toBe("before  after");
   });
 
+  it("preserves literal template syntax in injected content", () => {
+    const content = "{{title}} {{{raw}}} {{#cond}}x{{/cond}}";
+
+    expect(engine.render("{{{content}}} | {{missing}}", { content })).toBe(
+      `${content} | `
+    );
+  });
+
   it("recognizes complete HTML documents", () => {
     expect(engine.isCompleteHtmlDocument("<!doctype html><html></html>")).toBe(
       true

@@ -120,42 +120,7 @@
   Shared site footer.
 
   This is the single source of the footer markup. It is injected into both
-  base.html and blog-post.html as the {&lt;!--
-  Shared site footer.
-
-  This is the single source of the footer markup. It is injected into both
-  base.html and blog-post.html as the  template variable, wired up
-  in source/builder/template-processor.ts - which is the one choke point both
-  the production build and the dev server render through. Do not paste this
-  markup into a template; add the variable instead, or every page type grows
-  its own copy.
-
-  Light DOM on purpose, not a Lit component: the footer has to be present in
-  the generated HTML for crawlers and for readers without JavaScript, and a
-  shadow root would leave only an empty custom element in the static output.
---&gt;
-&lt;footer class=&quot;site-footer&quot;&gt;
-  &lt;nav class=&quot;site-footer-nav&quot; aria-label=&quot;Elsewhere on the web&quot;&gt;
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;a
-          href=&quot;https://www.linkedin.com/in/kyle-blank-rollins/&quot;
-          target=&quot;_blank&quot;
-          rel=&quot;noopener noreferrer&quot;
-          &gt;LinkedIn&lt;/a
-        &gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;a
-          href=&quot;https://github.com/KyleBlankRollins/Web-Portfolio&quot;
-          target=&quot;_blank&quot;
-          rel=&quot;noopener noreferrer&quot;
-          &gt;GitHub&lt;/a
-        &gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-&lt;/footer&gt;} template variable, wired up
+  base.html and blog-post.html as the {{{footer}}} template variable, wired up
   in source/builder/template-processor.ts - which is the one choke point both
   the production build and the dev server render through. Do not paste this
   markup into a template; add the variable instead, or every page type grows
