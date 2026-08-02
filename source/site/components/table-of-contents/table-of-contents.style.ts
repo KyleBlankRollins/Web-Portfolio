@@ -158,8 +158,13 @@ export const tableOfContentsStyles = css`
   }
 
   /* Links */
+  /* Regular serif, not the caps face. The entries pick up .ui-label from
+     shared-styles.ts, which is the caps face - so a contents list rendered in
+     the same small caps as the headings it points at, competing with them.
+     Size, indentation and the active state carry the emphasis instead. */
   .toc-link {
     display: block;
+    font-family: var(--font-family-primary);
     color: var(--color-text);
     text-decoration: none;
     padding: var(--space-xs) var(--space-sm);

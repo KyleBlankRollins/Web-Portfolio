@@ -108,8 +108,8 @@ export class KbrTimeline extends LitElement {
     }
   }
 
-  private generateCompanyId(companyName: string): string {
-    // Create a URL-friendly ID from the company name
+  private slugifyCompany(companyName: string): string {
+    // Create a URL-friendly slug from the company name
     let id = companyName
       .toLowerCase()
       .replace(/[^\w\s-]/g, "") // Remove special characters
@@ -125,6 +125,79 @@ export class KbrTimeline extends LitElement {
     return id || "company";
   }
 
+  /**
+   * Anchor IDs for the company headings, aligned to experienceData by index.
+   *
+   * The slug alone is not unique: this history has two separate stints at
+   * Purch, and both headings were rendering id="purch". Duplicate IDs meant
+   * the TOC built two entries that resolved to the same element, so both
+   * highlighted together and the second was unreachable.
+   *
+   * Suffixes are assigned in data order, and the first occurrence keeps the
+   * bare slug - so existing links to #purch still land where they did.
+   */
+  private get companyIds(): string[] {
+    const seen = new Map<string, number>();
+
+    return this.experienceData.map((company) => {
+      const base = this.slugifyCompany(company.company);
+      const occurrence = (seen.get(base) ?? 0) + 1;
+      seen.set(base, occurrence);
+
+      return occurrence === 1 ? base : `${base}-${occurrence}`;
+    });
+  }
+
+  /**
+   * The span of years a company covers, e.g. "2013-2016" or "2021-Present".
+   * Dates in the data are "YYYY-MM"; a missing endDate means the role is
+   * current.
+   */
+  private companyYearSpan(company: CompanyData): string {
+    const years = company.positions
+      .map((position) => position.startDate)
+      .filter(Boolean)
+      .map((date) => String(date).slice(0, 4))
+      .filter((year) => /^\d{4}$/.test(year));
+
+    if (years.length === 0) {
+      return "";
+    }
+
+    const start = years.reduce((a, b) => (a < b ? a : b));
+    const ongoing = company.positions.some((position) => !position.endDate);
+    const endYears = company.positions
+      .map((position) => String(position.endDate ?? "").slice(0, 4))
+      .filter((year) => /^\d{4}$/.test(year));
+
+    const end = ongoing
+      ? "Present"
+      : endYears.length > 0
+        ? endYears.reduce((a, b) => (a > b ? a : b))
+        : start;
+
+    return start === end ? start : `${start}-${end}`;
+  }
+
+  /**
+   * Heading text for a company. Repeated employers get their year span
+   * appended, so two "Purch" entries are tellable apart in the heading and in
+   * the table of contents - not only by their anchor.
+   */
+  private companyHeading(index: number): string {
+    const company = this.experienceData[index];
+    const isRepeated =
+      this.experienceData.filter((other) => other.company === company.company)
+        .length > 1;
+
+    if (!isRepeated) {
+      return company.company;
+    }
+
+    const span = this.companyYearSpan(company);
+    return span ? `${company.company} (${span})` : company.company;
+  }
+
   private updateTableOfContents(): void {
     // Create heading data from our content
     const headingsData = [
@@ -136,14 +209,15 @@ export class KbrTimeline extends LitElement {
           ".timeline-title"
         ) as HTMLElement,
       },
-      ...this.experienceData.map((company) => ({
-        id: this.generateCompanyId(company.company),
-        text: company.company,
-        level: 3,
-        element: this.shadowRoot?.querySelector(
-          `#${this.generateCompanyId(company.company)}`
-        ) as HTMLElement,
-      })),
+      ...this.experienceData.map((_company, index) => {
+        const id = this.companyIds[index];
+        return {
+          id,
+          text: this.companyHeading(index),
+          level: 3,
+          element: this.shadowRoot?.querySelector(`#${id}`) as HTMLElement,
+        };
+      }),
     ].filter((item) => item.element);
 
     // Find the TOC component in our shadow DOM
@@ -209,8 +283,9 @@ export class KbrTimeline extends LitElement {
         </div>
 
         <div class="timeline-content">
-          ${this.experienceData.map((company) => {
-            const companyId = this.generateCompanyId(company.company);
+          ${this.experienceData.map((company, index) => {
+            const companyId = this.companyIds[index];
+            const heading = this.companyHeading(index);
             return html`
               <div>
                 <div class="company-header">
@@ -220,11 +295,11 @@ export class KbrTimeline extends LitElement {
                           href="${company.companyWebsite}"
                           target="_blank"
                           rel="noopener"
-                          >${company.company}</a
+                          >${heading}</a
                         >
                       </h2>`
                     : html`<h2 class="company-name" id="${companyId}">
-                        ${company.company}
+                        ${heading}
                       </h2>`}
                 </div>
                 <div class="company-positions">

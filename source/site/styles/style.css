@@ -443,40 +443,40 @@ body {
   }
 }
 
-/* Portfolio Page Styles */
-.portfolio-toc {
-  margin: var(--space-xl) 0;
+/* Portfolio Page Styles
+
+   The table of contents is a grid rail, the same model as .blog-layout,
+   .blog-post-layout and .timeline. It used to be position: fixed with the
+   space reserved by a margin on main - an overlay rather than a layout - and
+   that reservation stopped working once .page-content gained width: 100%,
+   dropping the content underneath the panel at both 1200px and 1440px. A
+   grid track cannot be overlapped, so there is nothing to keep in sync. */
+.portfolio-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: var(--space-xl);
+  align-items: start;
 }
 
-@media (min-width: 1200px) {
-  .portfolio-toc {
-    position: fixed;
-    top: calc(var(--header-height) + var(--space-lg));
-    right: var(--space-lg);
-    width: 340px;
-    max-width: 340px;
-    margin: 0;
-    z-index: 100; /* Ensure it's above other content */
-  }
+.portfolio-toc {
+  position: sticky;
+  top: var(--space-lg);
+  min-width: 0;
+}
 
-  /* Reserve the fixed TOC's column with one mechanism, not two.
-
-     This was `margin-right: 400px` AND `max-width: calc(100% - 500px)`. Both
-     reserve space for the same 340px sidebar, so the reservation was counted
-     twice and left roughly 100px of dead gap between the content and the TOC.
-
-     Derived from the TOC's own width now, rather than a rounded-up guess:
-     340px of sidebar, its right offset, and one more gutter between the two. */
-  body:has(.portfolio-toc) main {
-    margin-right: calc(340px + var(--space-lg) * 2);
-  }
+.portfolio-content {
+  min-width: 0; /* Prevent grid overflow */
 }
 
 @media (max-width: 1199px) {
+  /* Collapse to one column, TOC first - matching the other layouts. */
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
   .portfolio-toc {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    position: static;
     margin-bottom: var(--space-xl);
   }
 

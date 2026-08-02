@@ -126,7 +126,15 @@ html,
 .root {
   font-family: var(--font-family-primary);
   font-size: 18px;
-  line-height: 23px;
+  /* Body-copy leading comes from the token, which is the abstraction that
+     owns it - and which theme-base.css raises to 1.6 in the dark scheme.
+     This was a hard 23px (1.278 at an 18px root), part of an older baseline
+     grid; that is tight for long-form serif text and it meant the dark-mode
+     value was defined but never applied.
+
+     Headings, code blocks and component controls set their own line-height
+     and are unaffected. */
+  line-height: var(--line-height-normal);
   /* Consumes --font-weight-normal so the dark-scheme override in
      theme-base.css (450, "increased font weight for better readability in
      dark mode") actually reaches the page. Nothing referenced this token
@@ -146,15 +154,22 @@ html,
 .article {
   font-family: var(--font-family-primary);
   font-size: 1rem;
-  line-height: 1.2777778rem;
+  line-height: var(--line-height-normal);
   margin: auto;
 }
+/* Small caps are reserved for h1 and h2, where they mark the top of the
+   hierarchy. Applying the caps face to every heading level plus the TOC and
+   UI labels made it ambient rather than a signal - a page could show four
+   ranks of small caps and no clear order. h3-h5 use the regular serif and are
+   distinguished by size and weight instead. */
 h1,
-h2,
+h2 {
+  font-family: var(--font-family-heading);
+}
 h3,
 h4,
 h5 {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-primary);
 }
 h1,
 .h1 {

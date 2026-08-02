@@ -52,12 +52,16 @@ export const typographyStyles = css`
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* See typography.css: small caps stop at h2 so they stay a signal. */
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-family-heading);
+  }
+
   h3,
   h4,
   h5 {
-    font-family: var(--font-family-heading);
+    font-family: var(--font-family-primary);
   }
   h1,
   .h1 {
