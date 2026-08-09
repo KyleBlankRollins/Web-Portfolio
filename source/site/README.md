@@ -229,6 +229,43 @@ Tags are used for:
 
 Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them. When you're ready to publish, move the file to `/source/site/content/published/`.
 
+Drafts are never rendered, routed, or added to the build. Frontmatter (including `published`) is not required on draft files.
+
+**Flat draft files remain supported.** A single Markdown file at the draft root is a standalone draft:
+
+```text
+source/site/content/__drafts/
+└── my-post.research.md
+```
+
+**Optional directory layout.** For a multi-document draft, use the same parent-file convention as published posts: one directory whose parent Markdown file matches the directory name, with supporting Markdown nested under `supplements/`:
+
+```text
+source/site/content/__drafts/
+└── my-post/
+    ├── my-post.md
+    └── supplements/
+        ├── research.md
+        └── semiotics/
+            └── prior-art.md
+```
+
+Rules:
+
+- Each draft directory must contain exactly one direct Markdown file, named `<directory>.md`.
+- Supporting files live under `supplements/` (recursively). They have no public URL or publication status in this phase.
+- `supplements/` and `media/` are reserved directory names; `media/` is left opaque.
+- `backlog.md` at the draft root is reserved for the admin work-tracking board and is never treated as a draft.
+- Any other subdirectory inside a draft directory is reported as a warning and is not traversed.
+
+**Validate draft structure** without running a site build:
+
+```bash
+npm run validate:drafts
+```
+
+It reports the discovered draft count and classifications, or a structural error naming the offending directory and the expected parent filename. Nested draft Markdown is also covered by `npm run lint:prose:drafts`.
+
 ### Supplements (Optional)
 
 Supplements are additional markdown pages associated with a directory-based parent post.

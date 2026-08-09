@@ -21,6 +21,7 @@
     "lint:prose:all": "tsx scripts/lint-prose.ts",
     "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
     "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose",
+    "validate:drafts": "tsx scripts/validate-drafts.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
