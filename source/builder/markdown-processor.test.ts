@@ -32,7 +32,9 @@ describe("MarkdownProcessor title ownership", () => {
   it("keeps a post without a Markdown H1 as body-only HTML", () => {
     const processor = new MarkdownProcessor();
     processor.processContentDocument(
-      createPost("+++\ntitle = \"Template title\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\ntags = []\n+++\nBody text.\n")
+      createPost(
+        '+++\ntitle = "Template title"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []\n+++\nBody text.\n'
+      )
     );
 
     expect(processor.getGeneratedFiles().get("post.html")?.content).toBe(
@@ -43,7 +45,7 @@ describe("MarkdownProcessor title ownership", () => {
   it("rejects a post whose Markdown begins with an H1", () => {
     const processor = new MarkdownProcessor();
     const post = createPost(
-      "+++\ntitle = \"Template title\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\ntags = []\n+++\n# Duplicate title\n"
+      '+++\ntitle = "Template title"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []\n+++\n# Duplicate title\n'
     );
 
     expect(() => processor.processContentDocument(post)).toThrow(

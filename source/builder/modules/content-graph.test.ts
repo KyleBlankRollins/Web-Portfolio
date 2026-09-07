@@ -67,10 +67,9 @@ describe("buildContentGraph", () => {
       ["docs", 2],
       ["ai", 1],
     ]);
-    expect(graph.series.get("Series")?.map(({ document }) => document.publicUrl)).toEqual([
-      "/part-2.html",
-      "/intro.html",
-    ]);
+    expect(
+      graph.series.get("Series")?.map(({ document }) => document.publicUrl)
+    ).toEqual(["/part-2.html", "/intro.html"]);
   });
 
   it("rejects supplements with missing parents", () => {

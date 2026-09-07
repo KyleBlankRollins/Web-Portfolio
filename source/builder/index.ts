@@ -56,9 +56,7 @@ async function processMarkdownFiles(
 
     markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
     markdownProcessor.resetBuildState();
-    markdownProcessor.rebuildManifestFromDocuments(
-      graphDocuments
-    );
+    markdownProcessor.rebuildManifestFromDocuments(graphDocuments);
 
     let documentsToProcess = [...graphDocuments];
 
@@ -115,9 +113,7 @@ async function processMarkdownFiles(
         );
       }
 
-      const missingOutputPaths = getMissingGeneratedOutputPaths(
-        graphDocuments
-      );
+      const missingOutputPaths = getMissingGeneratedOutputPaths(graphDocuments);
       if (missingOutputPaths.size > 0) {
         for (const document of graphDocuments) {
           if (missingOutputPaths.has(document.outputPath)) {
@@ -152,9 +148,7 @@ async function processMarkdownFiles(
       markdownProcessor.processContentDocument(document);
     }
 
-    markdownProcessor.rebuildManifestFromDocuments(
-      graphDocuments
-    );
+    markdownProcessor.rebuildManifestFromDocuments(graphDocuments);
   } catch (error) {
     BuildLogger.error(`Failed to process Markdown files: ${error}`);
     throw error;
@@ -321,17 +315,13 @@ async function rebuildAllMarkdownDocuments(
 
     markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
     markdownProcessor.resetBuildState();
-    markdownProcessor.rebuildManifestFromDocuments(
-      graphDocuments
-    );
+    markdownProcessor.rebuildManifestFromDocuments(graphDocuments);
 
     for (const document of graphDocuments) {
       markdownProcessor.processContentDocument(document);
     }
 
-    markdownProcessor.rebuildManifestFromDocuments(
-      graphDocuments
-    );
+    markdownProcessor.rebuildManifestFromDocuments(graphDocuments);
   })();
 
   try {

@@ -74,7 +74,10 @@ export class ThemeProcessor {
   /**
    * Process a single theme CSS file and extract metadata
    */
-  private processThemeContent(content: string, fileName: string): ThemeManifestEntry | null {
+  private processThemeContent(
+    content: string,
+    fileName: string
+  ): ThemeManifestEntry | null {
     try {
       // Extract theme ID from filename (theme-{id}.css)
       const themeId = fileName.replace(/^theme-/, "").replace(/\.css$/, "");

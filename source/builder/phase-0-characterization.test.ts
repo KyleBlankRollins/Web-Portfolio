@@ -80,10 +80,13 @@ Literal {{ value }} text with a citation[^source-1].`;
       "example.md"
     );
     mkdirSync(join(supplementPath, ".."), { recursive: true });
-    writeFileSync(parentPath, "+++\ntitle = \"Guide\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\ntags = []\n+++\nBody\n");
+    writeFileSync(
+      parentPath,
+      '+++\ntitle = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []\n+++\nBody\n'
+    );
     writeFileSync(
       supplementPath,
-      "+++\ntitle = \"Example\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\npublished = true\n+++\nBody\n"
+      '+++\ntitle = "Example"\ndescription = "Description"\ndate = "2025-01-01"\npublished = true\n+++\nBody\n'
     );
 
     const result = new ContentDiscovery(root).discover();

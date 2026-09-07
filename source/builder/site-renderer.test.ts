@@ -150,7 +150,9 @@ describe("loadSiteSource", () => {
 
   it("loads experience data from the explicit public root", () => {
     temporarySiteRoot = mkdtempSync(join(process.cwd(), "tmp-site-source-"));
-    const temporaryPublicRoot = mkdtempSync(join(process.cwd(), "tmp-public-source-"));
+    const temporaryPublicRoot = mkdtempSync(
+      join(process.cwd(), "tmp-public-source-")
+    );
     mkdirSync(join(temporaryPublicRoot, "data"), { recursive: true });
     writeFileSync(
       join(temporaryPublicRoot, "data", "experience-data.json"),

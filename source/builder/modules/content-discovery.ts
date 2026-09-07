@@ -336,7 +336,10 @@ export class ContentDiscovery {
   ): ContentDocument {
     const normalizedOutputPath = this.normalizeOutputPath(outputPath);
     const markdownContent = readFileSync(sourcePath, "utf-8");
-    const { metadata } = this.frontmatterParser.parse(markdownContent, sourcePath);
+    const { metadata } = this.frontmatterParser.parse(
+      markdownContent,
+      sourcePath
+    );
 
     return {
       sourcePath,

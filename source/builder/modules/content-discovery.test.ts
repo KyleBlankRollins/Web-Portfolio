@@ -31,7 +31,11 @@ afterEach(() => {
 describe("ContentDiscovery", () => {
   it("discovers a standalone post", () => {
     const root = fixtureRoot();
-    writePost(root, "hello.md", 'title = "Hello"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []');
+    writePost(
+      root,
+      "hello.md",
+      'title = "Hello"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
 
     const result = new ContentDiscovery(root).discover();
     expect(
@@ -42,7 +46,11 @@ describe("ContentDiscovery", () => {
 
   it("discovers a directory post", () => {
     const root = fixtureRoot();
-    writePost(root, "guide/guide.md", 'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []');
+    writePost(
+      root,
+      "guide/guide.md",
+      'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
 
     const result = new ContentDiscovery(root).discover();
     expect(result.documents[0]).toMatchObject({
@@ -53,7 +61,11 @@ describe("ContentDiscovery", () => {
 
   it("classifies supplements as candidates and publishes valid ones", () => {
     const root = fixtureRoot();
-    writePost(root, "guide/guide.md", 'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []');
+    writePost(
+      root,
+      "guide/guide.md",
+      'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
     writePost(
       root,
       "guide/supplements/example.md",

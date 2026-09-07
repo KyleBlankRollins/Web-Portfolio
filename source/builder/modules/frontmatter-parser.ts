@@ -46,7 +46,12 @@ export type FrontmatterMode = "published" | "draft";
 
 const citationSchema = z
   .object({
-    id: z.string().regex(/^[a-z0-9-]+$/, "must contain lowercase letters, numbers, and hyphens only"),
+    id: z
+      .string()
+      .regex(
+        /^[a-z0-9-]+$/,
+        "must contain lowercase letters, numbers, and hyphens only"
+      ),
     title: z.string().min(1),
     author: z.string().min(1),
     url: z.url().optional(),
@@ -54,19 +59,21 @@ const citationSchema = z
   })
   .strict();
 
-const citationsSchema = z.array(citationSchema).superRefine((citations, context) => {
-  const seen = new Set<string>();
-  for (const [index, citation] of citations.entries()) {
-    if (seen.has(citation.id)) {
-      context.addIssue({
-        code: "custom",
-        path: [index, "id"],
-        message: `duplicate citation ID "${citation.id}"`,
-      });
+const citationsSchema = z
+  .array(citationSchema)
+  .superRefine((citations, context) => {
+    const seen = new Set<string>();
+    for (const [index, citation] of citations.entries()) {
+      if (seen.has(citation.id)) {
+        context.addIssue({
+          code: "custom",
+          path: [index, "id"],
+          message: `duplicate citation ID "${citation.id}"`,
+        });
+      }
+      seen.add(citation.id);
     }
-    seen.add(citation.id);
-  }
-});
+  });
 
 const seriesSchema = z
   .object({
@@ -142,11 +149,17 @@ export class FrontmatterParser {
       );
     }
 
-    const schema = this.mode === "published" ? baseFrontmatterSchema : draftFrontmatterSchema;
+    const schema =
+      this.mode === "published"
+        ? baseFrontmatterSchema
+        : draftFrontmatterSchema;
     const validation = schema.safeParse(parsed);
     if (!validation.success) {
       const details = validation.error.issues
-        .map((issue) => `${issue.path.join(".") || "frontmatter"}: ${issue.message}`)
+        .map(
+          (issue) =>
+            `${issue.path.join(".") || "frontmatter"}: ${issue.message}`
+        )
         .join("; ");
       throw new Error(`Invalid frontmatter in "${sourcePath}": ${details}`);
     }
@@ -170,8 +183,18 @@ export class FrontmatterParser {
   private formatDate(dateStr: string): string {
     const [year, month, day] = dateStr.split("-").map(Number);
     const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December",
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
     return `${monthNames[month - 1]} ${day}, ${year}`;
   }
@@ -184,7 +207,9 @@ export class FrontmatterParser {
       date.getUTCMonth() !== month - 1 ||
       date.getUTCDate() !== day
     ) {
-      throw new Error(`Invalid frontmatter in "${sourcePath}": date: invalid calendar date`);
+      throw new Error(
+        `Invalid frontmatter in "${sourcePath}": date: invalid calendar date`
+      );
     }
   }
 

@@ -59,8 +59,10 @@ export class MarkdownProcessor {
     const markdownContent = readFileSync(contentDocument.sourcePath, "utf-8");
 
     // Extract frontmatter metadata and content
-    const { metadata: parsedMetadata, content } =
-      this.frontmatterParser.parse(markdownContent, contentDocument.sourcePath);
+    const { metadata: parsedMetadata, content } = this.frontmatterParser.parse(
+      markdownContent,
+      contentDocument.sourcePath
+    );
     const metadata = { ...parsedMetadata, ...contentDocument.metadata };
 
     // Supplements are independently published pages and should use blog rendering.

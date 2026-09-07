@@ -74,7 +74,12 @@ export function buildContentGraph(
     const seriesInfo = post.document.metadata.series as SeriesInfo | undefined;
     if (seriesInfo) {
       const seriesPosts = series.get(seriesInfo.name) ?? [];
-      if (seriesPosts.some((candidate) => candidate.document.metadata.series?.part === seriesInfo.part)) {
+      if (
+        seriesPosts.some(
+          (candidate) =>
+            candidate.document.metadata.series?.part === seriesInfo.part
+        )
+      ) {
         throw new Error(
           `Series "${seriesInfo.name}" has duplicate part ${seriesInfo.part}.`
         );
