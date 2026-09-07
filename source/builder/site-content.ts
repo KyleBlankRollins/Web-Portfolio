@@ -1,4 +1,3 @@
-import { join } from "node:path";
 import type { MarkdownProcessor } from "./markdown-processor.js";
 import { ThemeProcessor } from "./theme-processor.js";
 import type {
@@ -33,10 +32,8 @@ export function collectSiteContent(
     kind: "raw",
   });
 
-  const themeProcessor = new ThemeProcessor(
-    join(process.cwd(), "source", "site", "styles", "themes")
-  );
-  themeProcessor.processThemes();
+  const themeProcessor = new ThemeProcessor();
+  themeProcessor.processThemeSources(source.themes ?? new Map());
   content.push({
     outputPath: "data/theme-manifest.json",
     content: themeProcessor.generateThemeManifestJson(),

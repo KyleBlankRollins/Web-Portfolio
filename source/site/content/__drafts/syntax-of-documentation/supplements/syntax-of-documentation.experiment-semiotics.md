@@ -1,9 +1,9 @@
----
-title: "Communicability Under Transduction: Design and Pre-Registration"
-description: "Pre-registered design measuring whether explicitly marked pragmatic relations survive a documentation delivery pipeline better than the same relations left implicit in prose."
-keywords: "experiment design, pre-registration, technical writing, documentation, semiotics, communicability, transduction, retrieval, AI agents"
-date: ""
-tags: [technical writing, documentation, AI, research, experiment]
++++
+title = "Communicability Under Transduction: Design and Pre-Registration"
+description = "Pre-registered design measuring whether explicitly marked pragmatic relations survive a documentation delivery pipeline better than the same relations left implicit in prose."
+keywords = "experiment design, pre-registration, technical writing, documentation, semiotics, communicability, transduction, retrieval, AI agents"
+date = ""
+tags = ["technical writing", "documentation", "AI", "research", "experiment"]
 status: "design"
 design_version: "0.7"
 registered: "2026-08-02"
@@ -11,7 +11,7 @@ registration_commit: "75667a9a494b076e79e9f5aba5bd0dc932d890a1"
 instrument_locked: ""
 instrument_lock_commit: ""
 repository: "docs-transduction-study — separate repository, not this one"
----
++++
 
 ## Status
 

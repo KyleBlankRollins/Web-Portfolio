@@ -1,8 +1,8 @@
----
-title: "The Syntax of Documentation"
-description: "How syntax, semantics, and pragmatics shape the way humans and AI systems understand and use documentation."
-published: true
----
++++
+title = "The Syntax of Documentation"
+description = "How syntax, semantics, and pragmatics shape the way humans and AI systems understand and use documentation."
+published = true
++++
 
 ## Working thesis
 

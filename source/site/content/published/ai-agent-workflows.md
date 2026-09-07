@@ -1,23 +1,25 @@
----
-title: "AI Agent Workflows"
-description: "AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me."
-keywords: "AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development"
-date: "2026-07-31"
-tags: [AI, coding agents, workflows]
-citations:
-  - id: refactor-plan
-    title: "Refactor Plan: Processors Modularization"
-    author: "Kyle Rollins"
-    url: "https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md"
-  - id: anti-patterns
-    title: "Agentic Engineering Patterns: Anti-Patterns"
-    author: "Simon Willison"
-    url: "https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/"
-  - id: admin-system
-    title: "Web-Portfolio Admin System"
-    author: "Kyle Rollins"
-    url: "https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin"
----
++++
+title = "AI Agent Workflows"
+description = "AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me."
+keywords = "AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development"
+date = "2026-07-31"
+tags = ["AI", "coding agents", "workflows"]
+[[citations]]
+id = "refactor-plan"
+title = "Refactor Plan: Processors Modularization"
+author = "Kyle Rollins"
+url = "https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md"
+[[citations]]
+id = "anti-patterns"
+title = "Agentic Engineering Patterns: Anti-Patterns"
+author = "Simon Willison"
+url = "https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/"
+[[citations]]
+id = "admin-system"
+title = "Web-Portfolio Admin System"
+author = "Kyle Rollins"
+url = "https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin"
++++
 
 <kbr-admonition type="note">
 tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.

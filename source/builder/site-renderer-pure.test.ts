@@ -17,6 +17,7 @@ const { renderSite } = await import("./site-renderer.js");
 describe("renderSite filesystem boundary", () => {
   it("does not access the filesystem while rendering in-memory inputs", () => {
     const source = {
+      experienceData: "{}",
       pages: new Map(),
       templates: new Map([
         [

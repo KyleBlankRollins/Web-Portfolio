@@ -56,7 +56,7 @@ export class ContentDiscovery {
     )
   ) {
     this.publishedRoot = publishedRoot;
-    this.frontmatterParser = new FrontmatterParser();
+    this.frontmatterParser = new FrontmatterParser("published");
   }
 
   /**
@@ -184,12 +184,6 @@ export class ContentDiscovery {
   private validateSupplementPublicationMetadata(
     supplement: ContentDocument
   ): void {
-    if (supplement.metadata.publishedRawValue !== undefined) {
-      throw new Error(
-        `Invalid supplement frontmatter in "${supplement.sourcePath}": published must be a boolean true or false, received "${supplement.metadata.publishedRawValue}".`
-      );
-    }
-
     if (supplement.metadata.published === undefined) {
       throw new Error(
         `Invalid supplement frontmatter in "${supplement.sourcePath}": missing required boolean field "published".`
@@ -342,7 +336,7 @@ export class ContentDiscovery {
   ): ContentDocument {
     const normalizedOutputPath = this.normalizeOutputPath(outputPath);
     const markdownContent = readFileSync(sourcePath, "utf-8");
-    const { metadata } = this.frontmatterParser.parse(markdownContent);
+    const { metadata } = this.frontmatterParser.parse(markdownContent, sourcePath);
 
     return {
       sourcePath,

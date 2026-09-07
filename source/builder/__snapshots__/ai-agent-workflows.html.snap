@@ -67,6 +67,7 @@
     
   </div>
 </div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -76,6 +77,7 @@
     <time datetime="2026-07-31">July 31, 2026</time>
   </div>
 </div>
+
         <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
 <p>For the last year or so, I have used AI tools and agents to help with work and personal projects. Most of the time, they augment work that I have already scoped and planned. They help me move faster, but they don&#39;t decide what I should be working on.</p>
 <p>Here are some of the workflows that have worked for me. Maybe they will help someone else streamline their work or get over a difficult learning curve.</p>
@@ -174,6 +176,7 @@
     </ol>
   </section>
 </div>
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

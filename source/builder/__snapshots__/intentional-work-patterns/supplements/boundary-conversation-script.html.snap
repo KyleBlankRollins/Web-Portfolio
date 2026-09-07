@@ -56,6 +56,7 @@
           
           <kbr-table-of-contents></kbr-table-of-contents>
           
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -65,6 +66,7 @@
     <time datetime="2026-08-01">August 1, 2026</time>
   </div>
 </div>
+
         <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>This script helps you hold a direct but respectful boundary conversation.</p>
 <h2 id="conversation-outline">Conversation outline</h2><ol>
@@ -79,6 +81,7 @@
 
         <kbr-supplement-list></kbr-supplement-list>
         
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

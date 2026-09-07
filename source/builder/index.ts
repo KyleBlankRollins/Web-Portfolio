@@ -13,6 +13,7 @@ import { collectSiteContent } from "./site-content.js";
 import { developmentSiteAssets } from "./site-assets.js";
 import {
   ContentDiscovery,
+  buildContentGraph,
   type ContentDiscoveryResult,
   createLocalDocumentLinkIndex,
   normalizePathForComparison,
@@ -45,22 +46,24 @@ async function processMarkdownFiles(
   try {
     const contentDiscovery = new ContentDiscovery();
     const discoveryResult = contentDiscovery.discover();
+    const contentGraph = buildContentGraph(discoveryResult);
+    const graphDocuments = contentGraph.renderDocuments;
     const localDocumentLinkIndex = createLocalDocumentLinkIndex(
       discoveryResult.documents,
-      discoveryResult.publishableDocuments,
+      graphDocuments,
       discoveryResult.publishedRootPath
     );
 
     markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
     markdownProcessor.resetBuildState();
     markdownProcessor.rebuildManifestFromDocuments(
-      discoveryResult.publishableDocuments
+      graphDocuments
     );
 
-    let documentsToProcess = [...discoveryResult.publishableDocuments];
+    let documentsToProcess = [...graphDocuments];
 
     BuildLogger.info(
-      `🧭 Discovered ${discoveryResult.publishableDocuments.length} publishable content documents`
+      `🧭 Discovered ${graphDocuments.length} publishable content documents`
     );
 
     if (discoveryResult.supplementCandidates.length > 0) {
@@ -104,7 +107,7 @@ async function processMarkdownFiles(
           }
         }
 
-        documentsToProcess = discoveryResult.publishableDocuments.filter(
+        documentsToProcess = graphDocuments.filter(
           (document) =>
             normalizedChangedPaths.has(
               normalizePathForComparison(document.sourcePath)
@@ -113,10 +116,10 @@ async function processMarkdownFiles(
       }
 
       const missingOutputPaths = getMissingGeneratedOutputPaths(
-        discoveryResult.publishableDocuments
+        graphDocuments
       );
       if (missingOutputPaths.size > 0) {
-        for (const document of discoveryResult.publishableDocuments) {
+        for (const document of graphDocuments) {
           if (missingOutputPaths.has(document.outputPath)) {
             documentsToProcess.push(document);
           }
@@ -150,7 +153,7 @@ async function processMarkdownFiles(
     }
 
     markdownProcessor.rebuildManifestFromDocuments(
-      discoveryResult.publishableDocuments
+      graphDocuments
     );
   } catch (error) {
     BuildLogger.error(`Failed to process Markdown files: ${error}`);
@@ -308,24 +311,26 @@ async function rebuildAllMarkdownDocuments(
 
   markdownRebuildPromise = (async () => {
     const discoveryResult = new ContentDiscovery().discover();
+    const contentGraph = buildContentGraph(discoveryResult);
+    const graphDocuments = contentGraph.renderDocuments;
     const localDocumentLinkIndex = createLocalDocumentLinkIndex(
       discoveryResult.documents,
-      discoveryResult.publishableDocuments,
+      graphDocuments,
       discoveryResult.publishedRootPath
     );
 
     markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
     markdownProcessor.resetBuildState();
     markdownProcessor.rebuildManifestFromDocuments(
-      discoveryResult.publishableDocuments
+      graphDocuments
     );
 
-    for (const document of discoveryResult.publishableDocuments) {
+    for (const document of graphDocuments) {
       markdownProcessor.processContentDocument(document);
     }
 
     markdownProcessor.rebuildManifestFromDocuments(
-      discoveryResult.publishableDocuments
+      graphDocuments
     );
   })();
 

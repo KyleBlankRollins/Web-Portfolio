@@ -1,8 +1,8 @@
----
-title: "The Syntax of Documentation"
-description: "Semiotics research: prior art connecting syntactics, semantics, and pragmatics to information systems, agent communication, and documentation for AI."
-published: true
----
++++
+title = "The Syntax of Documentation"
+description = "Semiotics research: prior art connecting syntactics, semantics, and pragmatics to information systems, agent communication, and documentation for AI."
+published = true
++++
 
 ## What this document is
 

@@ -10,6 +10,7 @@ import {
 import { normalizeDom } from "./test-support/normalized-dom.js";
 
 const source: LoadedSiteSource = {
+  experienceData: "{}",
   pages: new Map([["fixture.html", "<p>Fixture page</p>"]]),
   templates: new Map([
     [
@@ -73,6 +74,7 @@ describe("renderSite", () => {
   it("keeps generated Markdown body content in the blog layout", () => {
     const result = renderSite(
       {
+        experienceData: "{}",
         templates: new Map([
           [
             "blog-post.html",
@@ -144,5 +146,22 @@ describe("loadSiteSource", () => {
     );
     expect(loaded.templates.get("base.html")).toBe("<!-- base template -->");
     expect(loaded.partials.get("head.html")).toBe("<!-- head partial -->");
+  });
+
+  it("loads experience data from the explicit public root", () => {
+    temporarySiteRoot = mkdtempSync(join(process.cwd(), "tmp-site-source-"));
+    const temporaryPublicRoot = mkdtempSync(join(process.cwd(), "tmp-public-source-"));
+    mkdirSync(join(temporaryPublicRoot, "data"), { recursive: true });
+    writeFileSync(
+      join(temporaryPublicRoot, "data", "experience-data.json"),
+      '{"experience":[]}'
+    );
+
+    try {
+      const loaded = loadSiteSource(temporarySiteRoot, temporaryPublicRoot);
+      expect(loaded.experienceData).toBe('{"experience":[]}');
+    } finally {
+      rmSync(temporaryPublicRoot, { recursive: true, force: true });
+    }
   });
 });

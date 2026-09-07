@@ -43,6 +43,13 @@ export {
   normalizePathForComparison,
 } from "./content-discovery.js";
 
+// Typed content graph
+export {
+  buildContentGraph,
+  type ContentGraph,
+  type ContentGraphPost,
+} from "./content-graph.js";
+
 // Local document link resolver
 export {
   createLocalDocumentLinkIndex,

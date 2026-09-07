@@ -1,10 +1,10 @@
----
-title: "Practical Advice for Code Examples in Software Documentation"
-description: "Learn about what makes up a code example and why code examples matter in software documentation."
-keywords: "code examples, advice, technical writing"
-date: "2025-10-04"
-tags: [code examples, advice, technical writing]
----
++++
+title = "Practical Advice for Code Examples in Software Documentation"
+description = "Learn about what makes up a code example and why code examples matter in software documentation."
+keywords = "code examples, advice, technical writing"
+date = "2025-10-04"
+tags = ["code examples", "advice", "technical writing"]
++++
 
 - What is a code example
 - Why use code examples?

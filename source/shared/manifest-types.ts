@@ -53,5 +53,4 @@ export interface ThemeManifestEntry {
 export interface ThemeManifest {
   themes: ThemeManifestEntry[];
   totalThemes: number;
-  generatedAt: string;
 }

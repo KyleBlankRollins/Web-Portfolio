@@ -43,6 +43,24 @@
       "keywords": "technical writing, AI agents, documentation, natural language, product interface"
     },
     {
+      "title": "Intentional Work Patterns - Boundaries",
+      "description": "Practical strategies for protecting your time and energy",
+      "date": "2025-12-26",
+      "formattedDate": "December 26, 2025",
+      "tags": [
+        "boundaries",
+        "intentionality",
+        "remote work"
+      ],
+      "url": "/intentional-work-patterns-boundaries.html",
+      "filename": "intentional-work-patterns-boundaries",
+      "keywords": "productivity, boundaries, remote work",
+      "series": {
+        "name": "Intentional Work Patterns",
+        "part": 1
+      }
+    },
+    {
       "title": "Intentional Work Patterns",
       "description": "Build intentional habits to prevent chaos from controlling your work or seeping into your personal life",
       "date": "2025-12-26",
@@ -73,24 +91,6 @@
           "filename": "intentional-work-patterns/supplements/boundary-conversation-script.html"
         }
       ]
-    },
-    {
-      "title": "Intentional Work Patterns - Boundaries",
-      "description": "Practical strategies for protecting your time and energy",
-      "date": "2025-12-26",
-      "formattedDate": "December 26, 2025",
-      "tags": [
-        "boundaries",
-        "intentionality",
-        "remote work"
-      ],
-      "url": "/intentional-work-patterns-boundaries.html",
-      "filename": "intentional-work-patterns-boundaries",
-      "keywords": "productivity, boundaries, remote work",
-      "series": {
-        "name": "Intentional Work Patterns",
-        "part": 1
-      }
     },
     {
       "title": "The P&G Rule of Thirds",

@@ -41,18 +41,19 @@ describe("Phase 0 characterization", () => {
   });
 
   it("preserves Markdown tags, series part zero, citations, and literal expressions", () => {
-    const markdown = `---
-title: Characterization post
-date: 2025-01-01
-tags: ["testing", "rendering"]
-series:
-  name: Renderer migration
-  part: 0
-citations:
-  - id: source-1
-    title: A source
-    author: An author
----
+    const markdown = `+++
+title = "Characterization post"
+description = "Description"
+date = "2025-01-01"
+tags = ["testing", "rendering"]
+[series]
+name = "Renderer migration"
+part = 0
+[[citations]]
+id = "source-1"
+title = "A source"
+author = "An author"
++++
 Literal {{ value }} text with a citation[^source-1].`;
     const parser = new FrontmatterParser();
     const parsed = parser.parse(markdown);
@@ -79,10 +80,10 @@ Literal {{ value }} text with a citation[^source-1].`;
       "example.md"
     );
     mkdirSync(join(supplementPath, ".."), { recursive: true });
-    writeFileSync(parentPath, "---\ntitle: Guide\n---\nBody\n");
+    writeFileSync(parentPath, "+++\ntitle = \"Guide\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\ntags = []\n+++\nBody\n");
     writeFileSync(
       supplementPath,
-      "---\ntitle: Example\npublished: true\n---\nBody\n"
+      "+++\ntitle = \"Example\"\ndescription = \"Description\"\ndate = \"2025-01-01\"\npublished = true\n+++\nBody\n"
     );
 
     const result = new ContentDiscovery(root).discover();
@@ -107,7 +108,7 @@ Literal {{ value }} text with a citation[^source-1].`;
       "canney-valley",
     ]);
     expect(manifest.themes[0]).toHaveProperty("metadata");
-    expect(manifest.generatedAt).toEqual(expect.any(String));
+    expect(manifest).not.toHaveProperty("generatedAt");
   });
 
   it("ignores serializer whitespace and attribute order only", () => {

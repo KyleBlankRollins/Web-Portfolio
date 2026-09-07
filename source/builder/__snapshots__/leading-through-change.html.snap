@@ -67,6 +67,7 @@
     
   </div>
 </div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -76,6 +77,7 @@
     <time datetime="2026-07-06">July 6, 2026</time>
   </div>
 </div>
+
         <p>In three years at MongoDB, my team has reinvented itself three times. The first two times, we didn&#39;t have much choice. This is the story of how we navigated that, and what I&#39;ve learned about leading people through uncertainty.</p>
 <h2 id="a-deliberate-regression">A deliberate regression</h2><p>In October 2022, I moved from a Senior Technical Writer role at Netlify to a Technical Writer role at MongoDB. While that may look like a step backward, the reasoning was solid. My new role at MongoDB required substantially more programming knowledge and skills.</p>
 <p>While I was a strong senior tech writer, my programming skills were not at a senior software engineer level. This new role was an opportunity to grow my programming and engineering skills. And I&#39;m all about learning and growth. I was also excited to work with a larger group of technical writers. The MongoDB docs org had ~45 people when I joined, with the team I joined having 8 people.</p>
@@ -129,6 +131,7 @@
 
         <kbr-supplement-list></kbr-supplement-list>
         
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

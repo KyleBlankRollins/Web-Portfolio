@@ -27,10 +27,6 @@ function normalizeAssets(content: string): string {
   return content.replace(/-[A-Za-z0-9_-]{8}\.(js|css)/g, "-HASH.$1");
 }
 
-function normalizeThemeTimestamp(content: string): string {
-  return content.replace(/("generatedAt"\s*:\s*)"[^"]*"/, '$1"NORMALIZED"');
-}
-
 function normalizeServedDocument(content: string) {
   // Asset structure is covered by the dedicated Gate 1.2 assertions below;
   // this comparison isolates document DOM from expected dev/prod asset URLs.
@@ -84,7 +80,6 @@ describe("built site output", () => {
       const relativePath = relative(distDirectory, filePath);
       let normalized = normalizeAssets(readFileSync(filePath, "utf-8"));
       if (relativePath === "data/theme-manifest.json") {
-        normalized = normalizeThemeTimestamp(normalized);
       }
 
       await expect(normalized).toMatchFileSnapshot(

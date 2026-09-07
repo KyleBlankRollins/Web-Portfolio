@@ -1,9 +1,9 @@
----
-title: "Boundary Private Notes"
-description: "Personal notes for future revisions to the boundary guidance."
-date: "2026-08-01"
-published: false
----
++++
+title = "Boundary Private Notes"
+description = "Personal notes for future revisions to the boundary guidance."
+date = "2026-08-01"
+published = false
++++
 
 _AI disclosure: This post was generated with AI to help me test the site's supplementary files features._
 

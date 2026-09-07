@@ -67,6 +67,7 @@
     
   </div>
 </div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -76,6 +77,7 @@
     <time datetime="2025-09-26">September 26, 2025</time>
   </div>
 </div>
+
         <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
 <p>Interacting with subject matter experts (SMEs) is a primary responsibility for most technical writers. Even if you happen to be an SME in a product or domain, you should have another SME validate your information and review documentation you write.</p>
 <p>SME roles can range from product manager to customer support to CEO. Unfortunately, many SMEs are often in demand and have little time for reviewing documentation, even it&#39;s important to them. This can create a bottleneck in your documentation processes, as you might be blocked until you can get specific information from an SME.</p>
@@ -195,6 +197,7 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
 
         <kbr-supplement-list></kbr-supplement-list>
         
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

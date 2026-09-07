@@ -1,10 +1,10 @@
----
-title: "Leading Through Change"
-description: "What three team reinventions in three years taught me about leading people through uncertainty"
-keywords: "leadership, management, technical writing, team building, change management"
-date: "2026-07-06"
-tags: ["leadership", "management", "career"]
----
++++
+title = "Leading Through Change"
+description = "What three team reinventions in three years taught me about leading people through uncertainty"
+keywords = "leadership, management, technical writing, team building, change management"
+date = "2026-07-06"
+tags = ["leadership", "management", "career"]
++++
 
 In three years at MongoDB, my team has reinvented itself three times. The first two times, we didn't have much choice. This is the story of how we navigated that, and what I've learned about leading people through uncertainty.
 

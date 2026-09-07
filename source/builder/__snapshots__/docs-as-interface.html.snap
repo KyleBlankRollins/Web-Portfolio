@@ -67,6 +67,7 @@
     
   </div>
 </div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -76,6 +77,7 @@
     <time datetime="2026-03-31">March 31, 2026</time>
   </div>
 </div>
+
         <p><kbr-admonition type="note"><strong>tl;dr:</strong> Documentation has always been an interface between a product and its users. Now it&#39;s also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.</kbr-admonition></p>
 <h2 id="stories-as-technology">Stories as technology</h2><p>Storytelling is one of humanity&#39;s oldest knowledge systems. Long before people were writing things down, oral tradition was how communities preserved and transmitted what mattered. How to find water. Which plants would kill you. Who wronged whom three generations back.</p>
 <p>It worked, but stories drift. Every retelling introduces small changes. The teller interprets, omits, adapts for the audience. Details shift to fit the moment. Over time, the story serves the culture more than it serves the facts.</p>
@@ -141,6 +143,7 @@
     </ol>
   </section>
 </div>
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
