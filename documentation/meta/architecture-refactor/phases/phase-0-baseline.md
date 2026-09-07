@@ -14,6 +14,68 @@ Create a verified baseline and lock the renderer contract before modifying build
 
 Do not change Vite input, template syntax, frontmatter syntax, rendering behavior, or runtime components in this phase.
 
+## Verified Baseline
+
+The baseline commands were run from the repository root:
+
+- `npm test` initially exposed stale expected heading IDs in two existing output
+  snapshots. The renderer already removes apostrophes when generating anchor IDs,
+  so [llm-as-sme.html.snap](../../../../source/builder/__snapshots__/llm-as-sme.html.snap)
+  and [rule-of-thirds.html.snap](../../../../source/builder/__snapshots__/rule-of-thirds.html.snap)
+  were narrowly regenerated. The full test suite then passed with 52 tests.
+- `npm run build` exited with code `0` and generated the production output.
+
+The existing output snapshot test covers these HTML documents:
+
+- `index.html`
+- `blog.html`
+- `career.html`
+- `portfolio.html`
+- `ai-agent-workflows.html`
+- `docs-as-interface.html`
+- `intentional-work-patterns.html`
+- `intentional-work-patterns-boundaries.html`
+- `intentional-work-patterns/supplements/boundary-checklist.html`
+- `intentional-work-patterns/supplements/boundary-conversation-script.html`
+- `leading-through-change.html`
+- `llm-as-sme.html`
+- `rule-of-thirds.html`
+
+It also covers these JSON manifests:
+
+- `data/blog-manifest.json`
+- `data/theme-manifest.json`
+
+The focused characterization tests are in
+[phase-0-characterization.test.ts](../../../../source/builder/phase-0-characterization.test.ts).
+The normalized DOM helper is in
+[normalized-dom.ts](../../../../source/builder/test-support/normalized-dom.ts). It
+ignores whitespace-only text nodes and attribute ordering, while preserving
+element names, meaningful text, comments, and attribute values.
+
+## Closed Template-Directive Contract
+
+- Page metadata uses a `<template data-kbr-page data-layout="...">` element with
+  meta-style child elements.
+- Layouts insert a fully rendered page fragment through
+  `<template data-kbr-slot="content"></template>`.
+- `data-kbr-if` treats only `null`, `undefined`, `false`, empty strings, and
+  empty arrays as false. `0` is true.
+- Template expressions contain only identifiers and dot paths. Conditional
+  attributes and derived class names are prepared in view models.
+- `{{ path }}` is escaped in text and attribute nodes, but never in `script` or
+  `style` nodes.
+- `<template data-kbr-html="path"></template>` inserts a typed trusted fragment
+  verbatim after surrounding-document serialization. It is never parsed,
+  traversed, interpolated, or reserialized.
+- Include paths resolve from the including source file but must remain under the
+  site source root.
+- Invalid directives, include cycles, unresolved required values, and paths
+  outside the source root are errors with source path and location.
+
+This contract is closed for Phase 1. None of these behaviors is optional or
+deferred.
+
 ## Required Contract Decisions
 
 The implementation record must state all of the following without placeholders:
