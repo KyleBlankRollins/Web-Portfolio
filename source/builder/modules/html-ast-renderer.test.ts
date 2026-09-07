@@ -21,6 +21,49 @@ describe("HtmlAstRenderer", () => {
     expect(result.html).toBe("<p>zero</p>");
   });
 
+  it("expands zero, one, and multiple loop iterations with local scope", () => {
+    const renderer = new HtmlAstRenderer();
+
+    expect(
+      renderer.render(
+        '<ul><template data-kbr-for="item of items"><li>{{item.name}}</li></template></ul>',
+        { items: [] }
+      ).html
+    ).toBe("<ul></ul>");
+    expect(
+      renderer.render(
+        '<ol><template data-kbr-for="item of items"><li>{{item.name}}</li></template></ol>',
+        { items: [{ name: "one" }] }
+      ).html
+    ).toBe("<ol><li>one</li></ol>");
+    expect(
+      renderer.render(
+        '<ul><template data-kbr-for="item of data.items"><li data-kbr-if="item.visible">{{item.name}}</li></template></ul>',
+        {
+          data: {
+            items: [
+              { name: "one", visible: true },
+              { name: "two", visible: false },
+              { name: "three", visible: true },
+            ],
+          },
+        }
+      ).html
+    ).toBe("<ul><li>one</li><li>three</li></ul>");
+  });
+
+  it("rejects invalid loop expressions with the source origin", () => {
+    expect(() =>
+      new HtmlAstRenderer().render(
+        '<template data-kbr-for="item in items"><p>{{item}}</p></template>',
+        { items: [] },
+        { sourcePath: "templates/list.html" }
+      )
+    ).toThrow(
+      'data-kbr-for requires the form "item of collection" (templates/list.html:line 1)'
+    );
+  });
+
   it("does not interpolate script or style contents", () => {
     const result = new HtmlAstRenderer().render(
       "<script>const value = '{{ value }}';</script><style>.x::after{content:'{{ value }}'}</style>",

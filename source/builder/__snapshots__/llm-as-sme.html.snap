@@ -55,25 +55,28 @@
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-          
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="technical writing">technical writing</button><button class="blog-tag" data-tag="research">research</button><button class="blog-tag" data-tag="LLM">LLM</button>
-        </div>
-      </div>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
     
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+    
+      <button class="blog-tag" data-tag="research">research</button>
+    
+      <button class="blog-tag" data-tag="LLM">LLM</button>
+    
+  </div>
+</div>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="llm-as-sme">LLM as SME</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-09-26">September 26, 2025</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
+  <div>
+    <time datetime="2025-09-26">September 26, 2025</time>
+  </div>
+</div>
+        <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
 <p>Interacting with subject matter experts (SMEs) is a primary responsibility for most technical writers. Even if you happen to be an SME in a product or domain, you should have another SME validate your information and review documentation you write.</p>
 <p>SME roles can range from product manager to customer support to CEO. Unfortunately, many SMEs are often in demand and have little time for reviewing documentation, even it&#39;s important to them. This can create a bottleneck in your documentation processes, as you might be blocked until you can get specific information from an SME.</p>
 <p>This is an area where LLMs can streamline your documentation authoring process. You can feed them project docs that project managers and engineers create and have them simulate being an SME. Specifically, Google&#39;s NotebookLM is great at this.</p>

@@ -55,25 +55,28 @@
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-          
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="professional growth">professional growth</button><button class="blog-tag" data-tag="goal setting">goal setting</button><button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
-        </div>
-      </div>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
     
+      <button class="blog-tag" data-tag="professional growth">professional growth</button>
+    
+      <button class="blog-tag" data-tag="goal setting">goal setting</button>
+    
+      <button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
+    
+  </div>
+</div>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
-        <h1 id="the-pg-rule-of-thirds">The P&G Rule of Thirds</h1>
-
+        <h1 id="the-pg-rule-of-thirds">The P&amp;G Rule of Thirds</h1>
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-10-01">October 1, 2025</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: The <a href="#the-personal-growth-rule-of-thirds">personal growth rule of thirds</a> is a tool that helps define goals.</kbr-admonition></p>
+  <div>
+    <time datetime="2025-10-01">October 1, 2025</time>
+  </div>
+</div>
+        <p><kbr-admonition type="note">tl;dr: The <a href="#the-personal-growth-rule-of-thirds">personal growth rule of thirds</a> is a tool that helps define goals.</kbr-admonition></p>
 <p>This blog post starts with a bit of a ramble and it takes a while to get to the main point of the post. But stick with it, as I believe the lead up is important in this case.</p>
 <p>Setting and tracking personal growth goals at work can be difficult and stressful. No company does Performance and Growth (P&amp;G) evaluations the same way. And even if they did, it&#39;s still difficult to create highly personal goals that align with the highly impersonal business-level goals. And we haven&#39;t even talked about tracking progress on your personal goals...</p>
 <p>All of this adds up to an awful lot of what I call meta work - work that&#39;s about work. Over my career, I&#39;ve found all the effort spent on meta work frustrating. I could almost always use that time and energy more effectively elsewhere.</p>

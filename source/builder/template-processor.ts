@@ -2,6 +2,7 @@ import {
   HtmlAstRenderer,
   type SeriesInfo,
   type Citation,
+  type CitationDisplay,
   type SupplementManifestEntry,
 } from "./modules/index.js";
 import type {
@@ -26,11 +27,11 @@ export interface TemplateVariables {
   date?: string;
   tags?: string[];
   formattedDate?: string; // Human-readable date format
+  titleAnchorId?: string;
   isBlogPost?: boolean; // Flag to identify blog posts
-  tagsHtml?: string; // Rendered tags HTML for sidebar
   series?: SeriesInfo; // Optional series information
   citations?: Citation[]; // Optional citations array
-  citationsHtml?: string; // Rendered citations HTML for footnotes section
+  citationItems?: CitationDisplay[]; // Structured citation display data
   supplements?: SupplementManifestEntry[]; // Optional published supplements for parent posts
   [key: string]:
     | string
@@ -39,6 +40,7 @@ export interface TemplateVariables {
     | string[]
     | SeriesInfo
     | Citation[]
+    | CitationDisplay[]
     | SupplementManifestEntry[]
     | undefined; // Allow additional custom fields with constrained types
 }

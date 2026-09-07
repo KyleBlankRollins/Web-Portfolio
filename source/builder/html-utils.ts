@@ -2,7 +2,6 @@ import {
   TemplateProcessor,
   type TemplateVariables,
 } from "./template-processor.js";
-import { escapeHtml } from "./modules/html-utils.js";
 import type { SiteAssets } from "./site-renderer.js";
 
 /**
@@ -51,12 +50,12 @@ export class HtmlProcessingUtils {
       content: cleanedContent,
       date: metadata.date,
       formattedDate: metadata.formattedDate,
+      titleAnchorId: metadata.titleAnchorId,
       tags: metadata.tags,
       isBlogPost: metadata.isBlogPost,
       series: metadata.series,
-      citationsHtml: metadata.citationsHtml,
+      citationItems: metadata.citationItems,
       supplements: metadata.supplements,
-      tagsHtml: this.generateTagsHtml(metadata.tags),
     };
     const processedContent = templateProcessor.processTemplate(
       cleanedContent,
@@ -66,30 +65,5 @@ export class HtmlProcessingUtils {
     );
 
     return processedContent;
-  }
-
-  /**
-   * Generate HTML for blog post tags
-   */
-  static generateTagsHtml(tags?: string[]): string {
-    if (!tags || tags.length === 0) {
-      return "";
-    }
-
-    const tagButtons = tags
-      .map(
-        (tag) =>
-          `<button class="blog-tag" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`
-      )
-      .join("");
-
-    return `
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          ${tagButtons}
-        </div>
-      </div>
-    `;
   }
 }

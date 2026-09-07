@@ -60,13 +60,12 @@
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="boundary-conversation-script">Boundary Conversation Script</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2026-08-01">August 1, 2026</time>
-          </div>
-        </div>
-      <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
+  <div>
+    <time datetime="2026-08-01">August 1, 2026</time>
+  </div>
+</div>
+        <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>This script helps you hold a direct but respectful boundary conversation.</p>
 <h2 id="conversation-outline">Conversation outline</h2><ol>
 <li>State your intent clearly: &quot;I want to protect focused work time and still be fully present after work.&quot;</li>

@@ -55,25 +55,28 @@
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-          
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="technical writing">technical writing</button><button class="blog-tag" data-tag="AI">AI</button><button class="blog-tag" data-tag="documentation">documentation</button>
-        </div>
-      </div>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
     
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+    
+      <button class="blog-tag" data-tag="AI">AI</button>
+    
+      <button class="blog-tag" data-tag="documentation">documentation</button>
+    
+  </div>
+</div>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="technical-storytelling-and-drift-at-machine-speed">Technical Storytelling and Drift at Machine Speed</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2026-03-31">March 31, 2026</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note"><strong>tl;dr:</strong> Documentation has always been an interface between a product and its users. Now it&#39;s also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.</kbr-admonition></p>
+  <div>
+    <time datetime="2026-03-31">March 31, 2026</time>
+  </div>
+</div>
+        <p><kbr-admonition type="note"><strong>tl;dr:</strong> Documentation has always been an interface between a product and its users. Now it&#39;s also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.</kbr-admonition></p>
 <h2 id="stories-as-technology">Stories as technology</h2><p>Storytelling is one of humanity&#39;s oldest knowledge systems. Long before people were writing things down, oral tradition was how communities preserved and transmitted what mattered. How to find water. Which plants would kill you. Who wronged whom three generations back.</p>
 <p>It worked, but stories drift. Every retelling introduces small changes. The teller interprets, omits, adapts for the audience. Details shift to fit the moment. Over time, the story serves the culture more than it serves the facts.</p>
 <p>That&#39;s a feature when the goal is cohesion and shared identity. It&#39;s a problem when the goal is accuracy. Particularly repeatable accuracy over time.</p>
@@ -101,20 +104,43 @@
 
         <kbr-supplement-list></kbr-supplement-list>
         <div class="blog-citations-container">
-          <section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-    <li id="citation-openai-codex">
-      <em>Introducing Codex</em> by OpenAI <span class="citation-links"><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-openai-codex" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-zencoder-docs">
-      <em>How to improve technical documentation with generative AI</em> by Andrew Filev <span class="citation-links"><a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a></span>
-    </li>
-  </ol>
-</section>
-        </div>
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+      
+        <li id="citation-openai-codex">
+          <em>Introducing Codex</em> by OpenAI
+          <span class="citation-links">
+            
+              
+              <a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-openai-codex" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+        <li id="citation-zencoder-docs">
+          <em>How to improve technical documentation with generative AI</em> by Andrew Filev
+          <span class="citation-links">
+            
+              
+              <a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+    </ol>
+  </section>
+</div>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

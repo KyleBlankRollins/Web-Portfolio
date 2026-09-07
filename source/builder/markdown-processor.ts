@@ -72,16 +72,15 @@ export class MarkdownProcessor {
     const commentFreeContent = this.preprocessor.stripComments(content);
 
     // Process citations before markdown conversion
-    const { content: citationProcessedContent, citationsHtml } =
+    const { content: citationProcessedContent, citationItems } =
       this.citationProcessor.processCitationReferences(
         commentFreeContent,
         metadata.citations,
         contentDocument.sourcePath
       );
 
-    // Store citations HTML in metadata
-    if (citationsHtml) {
-      metadata.citationsHtml = citationsHtml;
+    if (citationItems) {
+      metadata.citationItems = citationItems;
     }
 
     // Preprocess admonitions to handle markdown within HTML tags
@@ -95,10 +94,16 @@ export class MarkdownProcessor {
       documentLinkIndex: this.localDocumentLinkIndex,
     });
 
-    // For blog posts, inject title as H1 and add metadata
+    // Layouts own blog titles; Markdown contributes only the post body.
     let processedContent = htmlContent;
     if (metadata.isBlogPost) {
-      processedContent = this.injectTitleAndMetadata(htmlContent, metadata);
+      this.rejectLeadingMarkdownH1(
+        commentFreeContent,
+        contentDocument.sourcePath
+      );
+      metadata.titleAnchorId = this.renderer.generateAnchorId(
+        metadata.title || "Untitled Post"
+      );
 
       // Add to blog post manifest
       this.addToBlogManifest(contentDocument, metadata);
@@ -162,47 +167,12 @@ export class MarkdownProcessor {
     }
   }
 
-  /**
-   * Inject title as H1 and add blog metadata below it
-   */
-  private injectTitleAndMetadata(
-    htmlContent: string,
-    metadata: Partial<TemplateVariables>
-  ): string {
-    const title = metadata.title || "Untitled Post";
-    const titleId = this.renderer.generateAnchorId(title);
-    const titleH1 = `<h1 id="${titleId}">${title}</h1>`;
-    const metadataHTML = this.createBlogMetadataHTML(metadata);
-
-    // Check if content already has an H1 at the start
-    const h1Match = htmlContent.trim().match(/^(<h1[^>]*>.*?<\/h1>)/i);
-
-    if (h1Match) {
-      const existingH1 = h1Match[1];
-      const afterH1Index = htmlContent.indexOf(existingH1) + existingH1.length;
-      const afterH1 = htmlContent.substring(afterH1Index);
-
-      return existingH1 + "\n" + metadataHTML + afterH1;
+  private rejectLeadingMarkdownH1(content: string, filePath: string): void {
+    if (/^#(?!#)\s+/.test(content.trim())) {
+      throw new Error(
+        `Markdown blog posts must not begin with an H1; the title is template-owned (${filePath})`
+      );
     }
-
-    return titleH1 + "\n" + metadataHTML + htmlContent;
-  }
-
-  /**
-   * Create HTML for blog post metadata (date only - tags moved to sidebar)
-   */
-  private createBlogMetadataHTML(metadata: Partial<TemplateVariables>): string {
-    if (metadata.formattedDate) {
-      return `
-        <div class="blog-post-metadata">
-          <div>
-            <time datetime="${metadata.date}">${metadata.formattedDate}</time>
-          </div>
-        </div>
-      `;
-    }
-
-    return "";
   }
 
   /**

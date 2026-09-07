@@ -64,6 +64,22 @@ Before deleting `injectTitleAndMetadata`:
 - Deleted TypeScript HTML builders with no remaining imports.
 - Passing `npm test` and `npm run build`.
 
+## Completion Status
+
+Completed. Phase 3 is ready for the Phase 4 handoff.
+
+### Gate Evidence
+
+- **Gate 3.1:** `source/builder/modules/html-ast-renderer.test.ts` covers zero, one, and multiple iterations; nested collection paths; conditionals inside loops; `<ul>` and `<ol>` output; and invalid loop diagnostics. The renderer replaces loop templates with their cloned children, preserves nested `template.content`, and detaches cloned parent links.
+- **Gate 3.2:** `source/builder/modules/citation-processor.test.ts` covers no links, View-only, Buy-only, both links and separator state, single and multiple references, missing IDs, duplicate IDs, unused IDs, and typed display data. Citation reference anchors and display back-reference targets are asserted together.
+- **Gate 3.3:** `source/builder/markdown-processor.test.ts` covers body-only posts and leading Markdown H1 rejection with the source path. Built blog output owns the title H1 in `source/site/templates/blog-post.html`.
+
+### Verification
+
+- `npm test`: 75 tests passed across 14 files.
+- `npm run build`: passed with TypeScript compilation and production output generation.
+- No production references remain to `injectTitleAndMetadata`, `generateTagsHtml`, or `citationsHtml`.
+
 ## Handoff To Phase 4
 
 Proceed only after all gates pass. The next phase replaces untyped metadata with validated TOML-backed content records; do not broaden template expressions to compensate for missing types.

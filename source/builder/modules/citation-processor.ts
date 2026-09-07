@@ -4,7 +4,6 @@
  */
 
 import { BuildLogger } from "../helpers.js";
-import { escapeHtml } from "./html-utils.js";
 
 /**
  * Citation metadata structure
@@ -25,12 +24,34 @@ export interface CitationUsage {
   positions: number[];
 }
 
+export interface CitationLink {
+  label: "View" | "Buy";
+  url: string;
+  showSeparator: boolean;
+}
+
+export interface CitationBackReference {
+  href: string;
+  label: string;
+}
+
+export interface CitationDisplay {
+  id: string;
+  title: string;
+  author: string;
+  url?: string;
+  purchaseUrl?: string;
+  links: CitationLink[];
+  backReferences: CitationBackReference[];
+  number: number;
+}
+
 /**
  * Result of processing citation references
  */
 export interface CitationProcessingResult {
   content: string;
-  citationsHtml: string | undefined;
+  citationItems: CitationDisplay[] | undefined;
 }
 
 /**
@@ -114,7 +135,7 @@ export class CitationProcessor {
 
   /**
    * Process citation references in content ([^id] → numbered superscript links)
-   * Returns processed content and generated citations HTML
+   * Returns processed content and structured citation display data
    */
   public processCitationReferences(
     content: string,
@@ -122,7 +143,7 @@ export class CitationProcessor {
     filePath: string
   ): CitationProcessingResult {
     if (!citations || citations.length === 0) {
-      return { content, citationsHtml: undefined };
+      return { content, citationItems: undefined };
     }
 
     // Track citation usage
@@ -193,18 +214,18 @@ export class CitationProcessor {
     segments.push(content.substring(lastIndex));
 
     const processedContent = segments.join("");
-    const citationsHtml = this.generateCitationsHtml(citations, citationUsage);
+    const citationItems = this.createCitationDisplayItems(
+      citations,
+      citationUsage
+    );
 
-    return { content: processedContent, citationsHtml };
+    return { content: processedContent, citationItems };
   }
 
-  /**
-   * Generate HTML for the citations/footnotes section
-   */
-  public generateCitationsHtml(
+  private createCitationDisplayItems(
     citations: Citation[],
     citationUsage: Map<string, CitationUsage>
-  ): string {
+  ): CitationDisplay[] {
     // Filter to only used citations and sort by number
     const usedCitations = Array.from(citationUsage.entries())
       .map(([id, usage]) => ({
@@ -214,55 +235,41 @@ export class CitationProcessor {
       }))
       .sort((a, b) => a.number - b.number);
 
-    if (usedCitations.length === 0) {
-      return "";
-    }
-
-    const citationItems = usedCitations
-      .map(({ citation, positions }) => {
-        const links: string[] = [];
-
-        if (citation.url) {
-          links.push(
-            `<a href="${escapeHtml(citation.url)}" target="_blank" rel="noopener">View</a>`
-          );
-        }
-
-        if (citation.purchaseUrl) {
-          links.push(
-            `<a href="${escapeHtml(citation.purchaseUrl)}" target="_blank" rel="noopener">Buy</a>`
-          );
-        }
-
-        const linksHtml =
-          links.length > 0
-            ? ` <span class="citation-links">${links.join('<span class="citation-separator"> | </span>')}</span>`
-            : "";
-
-        // Generate back-reference links
-        const backRefs =
+    return usedCitations.map(({ citation, number, positions }) => ({
+      id: citation.id,
+      title: citation.title,
+      author: citation.author,
+      url: citation.url,
+      purchaseUrl: citation.purchaseUrl,
+      number,
+      links: [
+        ...(citation.url
+          ? [
+              {
+                label: "View" as const,
+                url: citation.url,
+                showSeparator: false,
+              },
+            ]
+          : []),
+        ...(citation.purchaseUrl
+          ? [
+              {
+                label: "Buy" as const,
+                url: citation.purchaseUrl,
+                showSeparator: Boolean(citation.url),
+              },
+            ]
+          : []),
+      ],
+      backReferences: positions.map((_, index) => ({
+        href:
           positions.length > 1
-            ? positions
-                .map(
-                  (_, idx) =>
-                    `<a href="#citation-ref-${citation.id}-${idx + 1}" class="citation-backref">↩${idx + 1}</a>`
-                )
-                .join(" ")
-            : `<a href="#citation-ref-${citation.id}" class="citation-backref">↩</a>`;
-
-        return `    <li id="citation-${citation.id}">
-      <em>${escapeHtml(citation.title)}</em> by ${escapeHtml(citation.author)}${linksHtml}
-      <span class="citation-backrefs"> ${backRefs}</span>
-    </li>`;
-      })
-      .join("\n");
-
-    return `<section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-${citationItems}
-  </ol>
-</section>`;
+            ? `#citation-ref-${citation.id}-${index + 1}`
+            : `#citation-ref-${citation.id}`,
+        label: positions.length > 1 ? `↩${index + 1}` : "↩",
+      })),
+    }));
   }
 
   /**

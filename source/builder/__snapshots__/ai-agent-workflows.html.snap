@@ -55,25 +55,28 @@
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-          
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="AI">AI</button><button class="blog-tag" data-tag="coding agents">coding agents</button><button class="blog-tag" data-tag="workflows">workflows</button>
-        </div>
-      </div>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
     
+      <button class="blog-tag" data-tag="AI">AI</button>
+    
+      <button class="blog-tag" data-tag="coding agents">coding agents</button>
+    
+      <button class="blog-tag" data-tag="workflows">workflows</button>
+    
+  </div>
+</div>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="ai-agent-workflows">AI Agent Workflows</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2026-07-31">July 31, 2026</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
+  <div>
+    <time datetime="2026-07-31">July 31, 2026</time>
+  </div>
+</div>
+        <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
 <p>For the last year or so, I have used AI tools and agents to help with work and personal projects. Most of the time, they augment work that I have already scoped and planned. They help me move faster, but they don&#39;t decide what I should be working on.</p>
 <p>Here are some of the workflows that have worked for me. Maybe they will help someone else streamline their work or get over a difficult learning curve.</p>
 <h2 id="drawing-boxes">Drawing boxes</h2><p>I&#39;ve long thought that drawing literal boxes around problems is a good way to break ambiguous work into chunks. The premise is simple: draw a box for everything you know now. Group the boxes, draw a larger box around the groups, and label the new boxes. Then draw a box around everything to define the problem space.</p>
@@ -119,24 +122,58 @@
 
         <kbr-supplement-list></kbr-supplement-list>
         <div class="blog-citations-container">
-          <section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-    <li id="citation-refactor-plan">
-      <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-anti-patterns">
-      <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison <span class="citation-links"><a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-admin-system">
-      <em>Web-Portfolio Admin System</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-admin-system" class="citation-backref">↩</a></span>
-    </li>
-  </ol>
-</section>
-        </div>
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+      
+        <li id="citation-refactor-plan">
+          <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins
+          <span class="citation-links">
+            
+              
+              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+        <li id="citation-anti-patterns">
+          <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison
+          <span class="citation-links">
+            
+              
+              <a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+        <li id="citation-admin-system">
+          <em>Web-Portfolio Admin System</em> by Kyle Rollins
+          <span class="citation-links">
+            
+              
+              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-admin-system" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+    </ol>
+  </section>
+</div>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

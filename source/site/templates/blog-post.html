@@ -17,15 +17,15 @@
             </kbr-post-series>
           </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-          <template data-kbr-if="tagsHtml" data-kbr-html="tagsHtml"></template>
+          <template data-kbr-include="partials/blog-tags.html"></template>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
+        <h1 id="{{titleAnchorId}}">{{title}}</h1>
+        <template data-kbr-include="partials/blog-metadata.html"></template>
         <template data-kbr-slot="content"></template>
         <kbr-supplement-list></kbr-supplement-list>
-        <div class="blog-citations-container" data-kbr-if="citationsHtml">
-          <template data-kbr-html="citationsHtml"></template>
-        </div>
+        <template data-kbr-include="partials/blog-citations.html"></template>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

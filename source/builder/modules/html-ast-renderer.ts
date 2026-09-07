@@ -200,6 +200,50 @@ export class HtmlAstRenderer {
       if (node.nodeName !== "#comment" && node.nodeName !== "#documentType") {
         const element = node as Element;
         this.validateDirectiveAttributes(element, options.sourcePath);
+        const loop = this.attribute(element, "data-kbr-for");
+        if (loop !== undefined) {
+          this.requireTemplateDirective(
+            element,
+            "data-kbr-for",
+            options.sourcePath
+          );
+          const { itemName, collectionPath } = this.parseLoopDirective(
+            loop,
+            element,
+            options.sourcePath
+          );
+          const collection = this.resolve(variables, collectionPath);
+          if (!Array.isArray(collection)) {
+            throw this.error(
+              element,
+              `data-kbr-for requires an array value at "${collectionPath}"`,
+              options.sourcePath
+            );
+          }
+          const loopNodes = collection.flatMap((item) => {
+            const clone = this.cloneNode(element);
+            const content = (
+              clone as Element & {
+                content?: { childNodes: Node[] };
+              }
+            ).content;
+            const children = [
+              ...(content?.childNodes ??
+                (clone as Element & { childNodes: Node[] }).childNodes),
+            ];
+            this.walk(
+              children,
+              { ...variables, [itemName]: item },
+              options,
+              metadata,
+              state
+            );
+            return children;
+          });
+          nodes.splice(index, 1, ...loopNodes);
+          index += loopNodes.length - 1;
+          continue;
+        }
         const include = this.attribute(element, "data-kbr-include");
         if (include !== undefined) {
           this.requireTemplateDirective(
@@ -682,6 +726,7 @@ export class HtmlAstRenderer {
   ): void {
     const requiredTargets = [
       "data-kbr-if",
+      "data-kbr-for",
       "data-kbr-include",
       "data-kbr-html",
       "data-kbr-slot",
@@ -695,6 +740,15 @@ export class HtmlAstRenderer {
           sourcePath
         );
       }
+    }
+
+    const loop = this.attribute(element, "data-kbr-for");
+    if (loop !== undefined && element.nodeName !== "template") {
+      throw this.error(
+        element,
+        "data-kbr-for is only valid on template elements",
+        sourcePath
+      );
     }
 
     const slot = this.attribute(element, "data-kbr-slot");
@@ -717,5 +771,69 @@ export class HtmlAstRenderer {
         sourcePath
       );
     }
+  }
+
+  private parseLoopDirective(
+    value: string,
+    element: Element,
+    sourcePath?: string
+  ): { itemName: string; collectionPath: string } {
+    const match = value.trim().match(/^([A-Za-z_$][\w$]*)\s+of\s+([\w.-]+)$/);
+    if (!match) {
+      throw this.error(
+        element,
+        'data-kbr-for requires the form "item of collection"',
+        sourcePath
+      );
+    }
+    return { itemName: match[1], collectionPath: match[2] };
+  }
+
+  private cloneNode(node: Node): ChildNode {
+    const source = node as Node & {
+      attrs?: Element["attrs"];
+      childNodes?: ChildNode[];
+      content?: DocumentFragment;
+    };
+    const clone = {
+      ...source,
+      parentNode: null,
+      attrs: source.attrs
+        ? source.attrs.map((attribute) => ({ ...attribute }))
+        : source.attrs,
+      childNodes: undefined,
+      content: undefined,
+    } as unknown as ChildNode & {
+      attrs?: Element["attrs"];
+      childNodes?: ChildNode[];
+      content?: DocumentFragment;
+    };
+
+    this.origins.set(clone, this.origins.get(node) ?? this.createOrigin(node));
+
+    if (source.childNodes) {
+      clone.childNodes = source.childNodes.map((child) =>
+        this.cloneNode(child)
+      );
+      for (const child of clone.childNodes) {
+        (child as unknown as { parentNode: unknown }).parentNode = clone;
+      }
+    }
+
+    if (source.content) {
+      const content = {
+        ...source.content,
+        parentNode: null,
+        childNodes: source.content.childNodes.map((child) =>
+          this.cloneNode(child)
+        ),
+      } as unknown as DocumentFragment;
+      clone.content = content;
+      for (const child of content.childNodes) {
+        (child as unknown as { parentNode: unknown }).parentNode = content;
+      }
+    }
+
+    return clone;
   }
 }

@@ -58,25 +58,28 @@
             </kbr-post-series>
           </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-          
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="habits">habits</button><button class="blog-tag" data-tag="intentionality">intentionality</button><button class="blog-tag" data-tag="remote work">remote work</button>
-        </div>
-      </div>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
     
+      <button class="blog-tag" data-tag="habits">habits</button>
+    
+      <button class="blog-tag" data-tag="intentionality">intentionality</button>
+    
+      <button class="blog-tag" data-tag="remote work">remote work</button>
+    
+  </div>
+</div>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-12-26">December 26, 2025</time>
-          </div>
-        </div>
-      <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
+  <div>
+    <time datetime="2025-12-26">December 26, 2025</time>
+  </div>
+</div>
+        <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
 <p>While these patterns emerged from remote work, many of them apply to any work environment.</p>
 <ol>
 <li><a href="/intentional-work-patterns-boundaries.html">Setting boundaries</a>: Practical strategies for protecting your time and energy</li>

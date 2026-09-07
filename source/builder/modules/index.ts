@@ -12,6 +12,9 @@ export {
   type Citation,
   type CitationUsage,
   type CitationProcessingResult,
+  type CitationLink,
+  type CitationBackReference,
+  type CitationDisplay,
 } from "./citation-processor.js";
 
 // Frontmatter parsing

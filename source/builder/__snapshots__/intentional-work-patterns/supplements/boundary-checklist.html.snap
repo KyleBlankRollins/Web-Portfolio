@@ -60,13 +60,12 @@
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="boundary-checklist">Boundary Checklist</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2026-08-01">August 1, 2026</time>
-          </div>
-        </div>
-      <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
+  <div>
+    <time datetime="2026-08-01">August 1, 2026</time>
+  </div>
+</div>
+        <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>Use this checklist before you renegotiate your home-work boundaries.</p>
 <h2 id="boundary-checklist">Boundary checklist</h2><ul>
 <li>Define your protected work window and write it down.<sup id="citation-ref-deep-work"><a href="#citation-deep-work" class="citation-ref">[1]</a></sup></li>
@@ -81,20 +80,43 @@
 
         <kbr-supplement-list></kbr-supplement-list>
         <div class="blog-citations-container">
-          <section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-    <li id="citation-deep-work">
-      <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport <span class="citation-links"><a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-deep-work" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-attention-residue">
-      <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke <span class="citation-links"><a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-attention-residue" class="citation-backref">↩</a></span>
-    </li>
-  </ol>
-</section>
-        </div>
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+      
+        <li id="citation-deep-work">
+          <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport
+          <span class="citation-links">
+            
+              
+              <a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-deep-work" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+        <li id="citation-attention-residue">
+          <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke
+          <span class="citation-links">
+            
+              
+              <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a>
+            
+          </span>
+          <span class="citation-backrefs">
+            
+              <a href="#citation-ref-attention-residue" class="citation-backref">↩</a>
+            
+          </span>
+        </li>
+      
+    </ol>
+  </section>
+</div>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>

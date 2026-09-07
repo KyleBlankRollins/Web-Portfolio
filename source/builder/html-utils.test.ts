@@ -9,14 +9,4 @@ describe("HtmlProcessingUtils", () => {
       )
     ).toBe("Heading");
   });
-
-  it("returns an empty tag list when tags are absent", () => {
-    expect(HtmlProcessingUtils.generateTagsHtml()).toBe("");
-  });
-
-  it("renders tag buttons", () => {
-    expect(HtmlProcessingUtils.generateTagsHtml(["docs"])).toContain(
-      'data-tag="docs"'
-    );
-  });
 });
