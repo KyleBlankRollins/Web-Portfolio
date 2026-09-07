@@ -2,9 +2,15 @@ import type { Plugin, ViteDevServer } from "vite";
 import { existsSync, readdirSync, rmSync } from "node:fs";
 import { join, relative } from "node:path";
 import { MarkdownProcessor } from "./markdown-processor.js";
-import { TemplateProcessor } from "./template-processor.js";
 import { BuildLogger } from "./helpers.js";
 import { GitAwareBuildPipeline } from "./git-aware-pipeline.js";
+import {
+  loadSiteSource,
+  renderSite,
+  type RenderedSite,
+} from "./site-renderer.js";
+import { collectSiteContent } from "./site-content.js";
+import { developmentSiteAssets } from "./site-assets.js";
 import {
   ContentDiscovery,
   type ContentDiscoveryResult,
@@ -14,7 +20,7 @@ import {
 
 // Import our modular components
 import { setupDevServer } from "./dev-server-middleware.js";
-import { HtmlBundleProcessor } from "./html-bundle-processor.js";
+import { writeSite } from "./html-bundle-processor.js";
 
 /**
  * Configuration options for the KBR Builder
@@ -330,21 +336,25 @@ async function rebuildAllMarkdownDocuments(
   }
 }
 
+function renderDevelopmentSite(
+  markdownProcessor: MarkdownProcessor
+): RenderedSite {
+  const source = loadSiteSource();
+
+  return renderSite(
+    source,
+    collectSiteContent(source, markdownProcessor),
+    developmentSiteAssets()
+  );
+}
+
 /**
- * KBR Builder - Comprehensive Vite plugin for Kyle Blank Rollins portfolio site
- * Handles HTML includes, Markdown processing, and site generation
- *
- * Architecture:
- * - PluginConfig: Handles configuration and file discovery
- * - DevServerMiddleware: Handles development server routing and processing
- * - MarkdownBuildProcessor: Handles Markdown to HTML conversion during build
- * - HtmlBundleProcessor: Handles HTML processing and bundle generation
+ * KBR Builder plugin for HTML templating, Markdown processing, and site generation.
  */
 export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
   // Initialize processors and components
   const markdownProcessor = new MarkdownProcessor();
-  const htmlBundleProcessor = new HtmlBundleProcessor();
-  const templateProcessor = new TemplateProcessor();
+  let renderedSite: RenderedSite = { outputs: new Map() };
 
   // Set default options
   const builderOptions: KBRBuilderOptions = {
@@ -366,40 +376,18 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
      */
     configureServer(server: ViteDevServer) {
       isDevelopmentServer = true;
-      setupDevServer(server, templateProcessor, markdownProcessor, async () => {
+      const rebuildRenderedSite = async () => {
         await rebuildAllMarkdownDocuments(markdownProcessor);
-      });
+        markdownProcessor.generateBlogManifest();
+        renderedSite = renderDevelopmentSite(markdownProcessor);
+      };
+      setupDevServer(server, () => renderedSite, rebuildRenderedSite);
     },
 
     /**
      * Handle hot updates for custom file types
      */
-    handleHotUpdate({ file, server }) {
-      if (file.includes("/pages/") && file.endsWith(".html")) {
-        BuildLogger.info(`🔄 Page file changed: ${file}`);
-        templateProcessor.clearCache();
-
-        // Trigger full reload for page changes
-        server.ws.send({
-          type: "full-reload",
-        });
-
-        // Return empty array to prevent default handling
-        return [];
-      }
-
-      if (file.includes("/templates/") || file.includes("/includes/")) {
-        BuildLogger.info(`🔄 Template/Include file changed: ${file}`);
-        templateProcessor.clearCache();
-
-        // Trigger full reload for template/include changes
-        server.ws.send({
-          type: "full-reload",
-        });
-
-        return [];
-      }
-
+    handleHotUpdate() {
       // Let Vite handle other file types normally
       return undefined;
     },
@@ -416,6 +404,7 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
         );
         await rebuildAllMarkdownDocuments(markdownProcessor);
         markdownProcessor.generateBlogManifest();
+        renderedSite = renderDevelopmentSite(markdownProcessor);
         return;
       }
 
@@ -435,15 +424,9 @@ export function kbrBuilder(options: KBRBuilderOptions = {}): Plugin {
       }
     },
 
-    /**
-     * Process HTML files and generate final bundle
-     */
-    async generateBundle(_options, bundle) {
-      await htmlBundleProcessor.processBundle(
-        bundle,
-        this.emitFile.bind(this),
-        markdownProcessor // Pass the processor for accessing generated files
-      );
+    async writeBundle(options) {
+      const outputDirectory = options.dir || join(process.cwd(), "dist");
+      await writeSite(outputDirectory, markdownProcessor);
     },
   };
 }

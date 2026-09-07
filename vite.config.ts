@@ -5,7 +5,7 @@ import { kbrBuilder } from "./source/builder/index.ts";
 export default defineConfig({
   root: "source/site",
   publicDir: "../../public",
-  base: "./", // Use relative paths for assets
+  base: "/",
   build: {
     outDir: "../../dist",
     emptyOutDir: process.env.GIT_AWARE !== "true",
@@ -14,6 +14,7 @@ export default defineConfig({
     cssMinify: true,
     sourcemap: false, // Disable source maps in production for smaller files
     rollupOptions: {
+      input: "main.ts",
       output: {
         codeSplitting: {
           groups: [{ name: "lit", test: /node_modules[\\/]lit/ }],
@@ -24,6 +25,7 @@ export default defineConfig({
         assetFileNames: "assets/[name]-[hash].[ext]",
       },
     },
+    manifest: true,
     // Enable compression
     reportCompressedSize: true,
     chunkSizeWarningLimit: 500, // Warn for chunks > 500KB

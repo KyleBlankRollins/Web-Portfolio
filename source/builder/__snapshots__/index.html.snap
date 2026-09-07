@@ -43,8 +43,8 @@
  
 <meta name="keywords" content="Kyle Blank Rollins, technical manager, technical writer, developer, portfolio" />
  
-      <link rel="modulepreload" crossorigin href="./assets/lit-HASH.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-HASH.css">
+      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
+    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
 </head>
 
   <body>
@@ -55,12 +55,7 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
-    <main class="page-content">
-
-
-
-
-<section class="hero home">
+    <main class="page-content"><section class="hero home">
   <div class="hero-content glass-surface">
     <p class="hero-subtitle">Hello there!</p>
     <p>
@@ -111,7 +106,6 @@
     </a>
   </div>
 </section>
-
 </main>
 
     <!-- Shared markup from templates/partials/footer.html, injected by
@@ -152,6 +146,6 @@
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="./assets/index-HASH.js"></script>
-  </body>
+      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
+</body>
 </html>

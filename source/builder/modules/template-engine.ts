@@ -18,6 +18,11 @@ export interface TemplateVariables {
   [key: string]: any;
 }
 
+export interface TemplateSource {
+  templates?: ReadonlyMap<string, string>;
+  partials?: ReadonlyMap<string, string>;
+}
+
 /**
  * Template engine class
  */
@@ -25,9 +30,14 @@ export class TemplateEngine {
   private templateCache: Map<string, string> = new Map();
   private partialCache: Map<string, string> = new Map();
   private templateDir: string;
+  private source: TemplateSource;
 
-  constructor(templateDir: string = "source/site/templates") {
+  constructor(
+    templateDir: string = "source/site/templates",
+    source: TemplateSource
+  ) {
     this.templateDir = templateDir;
+    this.source = source;
   }
 
   /**
@@ -48,6 +58,16 @@ export class TemplateEngine {
   public loadTemplate(templateName: string): string {
     if (this.templateCache.has(templateName)) {
       return this.templateCache.get(templateName)!;
+    }
+
+    const inMemoryTemplate = this.source.templates?.get(templateName);
+    if (inMemoryTemplate !== undefined) {
+      this.templateCache.set(templateName, inMemoryTemplate);
+      return inMemoryTemplate;
+    }
+
+    if (this.source.templates) {
+      throw new Error(`Template not found in loaded source: ${templateName}`);
     }
 
     const templatePath = join(this.templateDir, templateName);
@@ -73,6 +93,17 @@ export class TemplateEngine {
     const cached = this.partialCache.get(partialName);
     if (cached !== undefined) {
       return cached;
+    }
+
+    const inMemoryPartial = this.source.partials?.get(partialName);
+    if (inMemoryPartial !== undefined) {
+      const partial = inMemoryPartial.trim();
+      this.partialCache.set(partialName, partial);
+      return partial;
+    }
+
+    if (this.source.partials) {
+      throw new Error(`Partial not found in loaded source: ${partialName}`);
     }
 
     const partialPath = join(partialDir, partialName);

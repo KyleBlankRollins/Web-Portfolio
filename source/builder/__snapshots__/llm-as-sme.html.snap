@@ -43,7 +43,8 @@
  
 <meta name="keywords" content="technical writing, documentation, research, process, AI, LLM" />
  
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
+    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
 </head>
   <body>
     <kbr-navigation>
@@ -234,7 +235,6 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
+      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
 </body>
 </html>

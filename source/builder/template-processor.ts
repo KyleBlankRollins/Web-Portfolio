@@ -4,6 +4,7 @@ import {
   type Citation,
   type SupplementManifestEntry,
 } from "./modules/index.js";
+import type { TemplateSource } from "./modules/template-engine.js";
 
 // Re-export types for backward compatibility
 export type { SeriesInfo, Citation };
@@ -45,8 +46,8 @@ export class TemplateProcessor {
   private engine: TemplateEngine;
   private defaultTemplate: string = "base.html";
 
-  constructor() {
-    this.engine = new TemplateEngine();
+  constructor(source: TemplateSource) {
+    this.engine = new TemplateEngine("source/site/templates", source);
   }
 
   /**

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { TemplateEngine } from "./template-engine.js";
 
 describe("TemplateEngine", () => {
-  const engine = new TemplateEngine();
+  const engine = new TemplateEngine("source/site/templates", {});
 
   it("escapes double-brace variables", () => {
     expect(engine.render("{{value}}", { value: "<strong>safe</strong>" })).toBe(
@@ -54,5 +54,19 @@ describe("TemplateEngine", () => {
 
   it("removes null variables", () => {
     expect(engine.render("A{{value}}B", { value: null })).toBe("AB");
+  });
+
+  it("does not fall back to the filesystem for a supplied source", () => {
+    const sourceEngine = new TemplateEngine("source/site/templates", {
+      templates: new Map([["base.html", "<main></main>"]]),
+      partials: new Map(),
+    });
+
+    expect(() => sourceEngine.loadTemplate("missing.html")).toThrow(
+      "Template not found in loaded source: missing.html"
+    );
+    expect(() => sourceEngine.loadPartial("missing.html")).toThrow(
+      "Partial not found in loaded source: missing.html"
+    );
   });
 });
