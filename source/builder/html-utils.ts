@@ -3,10 +3,7 @@ import {
   type TemplateVariables,
 } from "./template-processor.js";
 import { escapeHtml } from "./modules/html-utils.js";
-import { MetadataExtractor } from "./modules/metadata-extractor.js";
 import type { SiteAssets } from "./site-renderer.js";
-
-const metadataExtractor = new MetadataExtractor();
 
 /**
  * Shared utility functions for HTML processing
@@ -40,11 +37,8 @@ export class HtmlProcessingUtils {
       metadata?: Partial<TemplateVariables>;
     } = {}
   ): string {
-    const extracted = options.metadata
-      ? { metadata: options.metadata, content }
-      : metadataExtractor.extract(content);
-    const metadata = extracted.metadata as Partial<TemplateVariables>;
-    const cleanedContent = extracted.content;
+    const metadata = options.metadata ?? {};
+    const cleanedContent = content;
     const templateVariables: TemplateVariables = {
       title:
         metadata.title ||
@@ -54,7 +48,7 @@ export class HtmlProcessingUtils {
       description: metadata.description,
       keywords: metadata.keywords,
       additionalHead: metadata.additionalHead,
-      content: "",
+      content: cleanedContent,
       date: metadata.date,
       formattedDate: metadata.formattedDate,
       tags: metadata.tags,
@@ -66,57 +60,12 @@ export class HtmlProcessingUtils {
     };
     const processedContent = templateProcessor.processTemplate(
       cleanedContent,
-      templateVariables
+      templateVariables,
+      undefined,
+      { assets: options.assets }
     );
 
-    if (!options.assets) {
-      return processedContent;
-    }
-
-    return this.injectAssets(processedContent, options.assets);
-  }
-
-  /**
-   * Inject CSS and JS assets into HTML content
-   */
-  static injectAssets(
-    htmlContent: string,
-    assets: SiteAssets
-  ): string {
-    let modifiedContent = htmlContent;
-
-    // Inject CSS links before closing </head>
-    if (assets.head.length > 0) {
-      const headTags = assets.head
-        .map((asset) =>
-          asset.kind === "stylesheet"
-            ? `    <link rel="stylesheet" crossorigin href="${asset.href}">`
-            : `    <link rel="modulepreload" crossorigin href="${asset.href}">`
-        )
-        .join("\n");
-
-      modifiedContent = modifiedContent.replace(
-        "</head>",
-        `${headTags}\n</head>`
-      );
-    }
-
-    // Inject JS scripts before closing </body>
-    if (assets.body.length > 0) {
-      const jsScripts = assets.body
-        .map(
-          (asset) =>
-            `    <script type="module" crossorigin src="${asset.src}"></script>`
-        )
-        .join("\n");
-
-      modifiedContent = modifiedContent.replace(
-        "</body>",
-        `${jsScripts}\n</body>`
-      );
-    }
-
-    return modifiedContent;
+    return processedContent;
   }
 
   /**

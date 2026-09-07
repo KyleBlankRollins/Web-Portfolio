@@ -15,9 +15,7 @@ export function siteAssetsFromManifest(manifest: ViteManifest): SiteAssets {
   }
 
   const head = new Map<string, SiteAssets["head"][number]>();
-  const body: SiteAssets["body"] = [
-    { kind: "module", src: `/${entry.file}` },
-  ];
+  const body: SiteAssets["body"] = [{ kind: "module", src: `/${entry.file}` }];
   const visited = new Set<string>();
 
   const visit = (entryKey: string): void => {

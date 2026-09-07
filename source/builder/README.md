@@ -28,13 +28,12 @@ source/builder/
     ├── markdown-renderer.ts    # Marked.js configuration with custom renderers
     ├── content-preprocessor.ts # Content transformation before rendering
     ├── blog-manifest.ts        # Blog manifest building and validation
-    ├── metadata-extractor.ts   # HTML comment metadata extraction
-    └── template-engine.ts      # Template loading and variable substitution
+    └── html-ast-renderer.ts    # parse5-based directive renderer
 ```
 
 ### Modular Design
 
-The builder follows a **modular architecture** where complex processors (markdown and template) delegate to focused, single-responsibility modules:
+The builder follows a **modular architecture** where complex processors delegate to focused, single-responsibility modules:
 
 - **Processors** (`markdown-processor.ts`, `template-processor.ts`): Thin orchestrators that coordinate module interactions
 - **Modules** (`modules/`): Reusable, testable components with clear boundaries
@@ -115,25 +114,11 @@ Blog manifest building and validation:
 - Validate series (check for duplicates, detect gaps in part numbers)
 - Generate JSON manifest output
 
-### Template Processing Modules
+### Template Processing
 
-#### metadata-extractor.ts
-
-Extract metadata from HTML comments:
-
-- Parse `<!-- key: value -->` comments
-- Extract blog-specific metadata (date, tags, series)
-- Remove metadata comments from content
-- Support for multi-line values
-
-#### template-engine.ts
-
-Template loading and variable substitution:
-
-- Load templates with caching
-- Variable substitution: `{{var}}` (escaped), `{{{var}}}` (unescaped), `{{#var}}...{{/var}}` (conditional)
-- Flatten objects for dot notation support (`user.name`)
-- Detect complete HTML documents
+`html-ast-renderer.ts` parses templates with `parse5` and applies the closed
+`data-kbr-*` directive contract for includes, page metadata, layouts, slots,
+conditionals, escaped interpolation, raw fragments, and asset placement.
 
 ## Core Features
 
@@ -606,25 +591,13 @@ graph TD
 
 **Responsibilities**:
 
-- Load and cache HTML templates
-- Perform variable substitution ({{variable}})
-- Handle template inheritance
-- Manage template cache invalidation
+- Apply the `data-kbr-*` directive contract through the AST renderer
+- Render page content into layout slots
+- Pass assets to head and body placeholders
 
 **Key Methods**:
 
-- `processTemplate()` - Apply template with variables
-- `loadTemplate()` - Load template from filesystem
-- `clearCache()` - Invalidate template cache
-- **Template Integration**: Cleaned content is used in template processing to avoid showing metadata comments in final HTML
-
-**Metadata Comment Format**:
-
-```html
-<!-- title: Page Title -->
-<!-- description: Page description for SEO -->
-<!-- keywords: seo, keywords, comma separated -->
-<!-- template: custom-template.html -->
+- `processTemplate()` - Render content with the selected AST layout
 
 <!-- Content starts here - comments above are stripped -->
 <section class="hero">...</section>

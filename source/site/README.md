@@ -28,9 +28,11 @@ source/site/
 ### Page Structure
 
 ```html
-<!-- title: Page Title -->
-<!-- description: SEO description for search engines -->
-<!-- keywords: seo, keywords, comma separated -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="Page Title" />
+  <meta name="description" content="SEO description for search engines" />
+  <meta name="keywords" content="seo, keywords, comma separated" />
+</template>
 
 <section class="hero">
   <h1>Your Page Title</h1>
@@ -54,9 +56,14 @@ source/site/
 **Simple About Page:**
 
 ```html
-<!-- title: About Kyle -->
-<!-- description: Learn about Kyle Blank Rollins, technical writer and developer -->
-<!-- keywords: about, bio, technical writer, developer -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="About Kyle" />
+  <meta
+    name="description"
+    content="Learn about Kyle Blank Rollins, technical writer and developer"
+  />
+  <meta name="keywords" content="about, bio, technical writer, developer" />
+</template>
 
 <section class="about-hero">
   <h1>About Me</h1>
@@ -75,8 +82,13 @@ source/site/
 **Portfolio Page with Components:**
 
 ```html
-<!-- title: Portfolio -->
-<!-- description: Showcase of technical writing and development projects -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="Portfolio" />
+  <meta
+    name="description"
+    content="Showcase of technical writing and development projects"
+  />
+</template>
 
 <section class="portfolio-hero">
   <h1>My Work</h1>

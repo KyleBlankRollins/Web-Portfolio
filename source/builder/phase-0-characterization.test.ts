@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { MarkdownRenderer } from "./modules/markdown-renderer.js";
 import { ContentDiscovery } from "./modules/content-discovery.js";
 import { FrontmatterParser } from "./modules/frontmatter-parser.js";
-import { MetadataExtractor } from "./modules/metadata-extractor.js";
+import { HtmlAstRenderer } from "./modules/html-ast-renderer.js";
 import { ThemeProcessor } from "./theme-processor.js";
 import { normalizeDom } from "./test-support/normalized-dom.js";
 
@@ -19,17 +19,23 @@ afterEach(() => {
 
 describe("Phase 0 characterization", () => {
   it("preserves static page metadata and page content", () => {
-    const result = new MetadataExtractor().extract(`<!-- title: About -->
-<!-- description: A page description. -->
-<!-- keywords: about, portfolio -->
-<main><h1>About</h1></main>`);
+    const result = new HtmlAstRenderer().render(
+      `<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="About">
+  <meta name="description" content="A page description.">
+  <meta name="keywords" content="about, portfolio">
+</template>
+<main><h1>About</h1></main>`,
+      {}
+    );
 
     expect(result.metadata).toEqual({
       title: "About",
       description: "A page description.",
       keywords: "about, portfolio",
+      layout: "base.html",
     });
-    expect(normalizeDom(result.content)).toEqual(
+    expect(normalizeDom(result.html)).toEqual(
       normalizeDom("<main><h1>About</h1></main>")
     );
   });

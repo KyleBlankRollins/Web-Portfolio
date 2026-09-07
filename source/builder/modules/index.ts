@@ -59,12 +59,13 @@ export {
   type BlogManifest,
 } from "./blog-manifest.js";
 
-// Metadata extraction
+// AST template renderer
 export {
-  MetadataExtractor,
-  type ExtractedMetadata,
-  type MetadataExtractionResult,
-} from "./metadata-extractor.js";
-
-// Template engine
-export { TemplateEngine, type TemplateVariables } from "./template-engine.js";
+  HtmlAstRenderer,
+  type HtmlAstNode,
+  type HtmlAstOrigin,
+  type HtmlAstPageRenderOptions,
+  type HtmlAstRenderOptions,
+  type HtmlAstRenderResult,
+  type HtmlAstSource,
+} from "./html-ast-renderer.js";

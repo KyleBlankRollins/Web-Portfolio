@@ -21,7 +21,7 @@ describe("renderSite filesystem boundary", () => {
       templates: new Map([
         [
           "base.html",
-          "<!doctype html><html><head></head><body>{{{content}}}</body></html>",
+          '<!doctype html><html><head><template data-kbr-assets="head"></template></head><body><main data-kbr-slot="content"></main><template data-kbr-assets="body"></template></body></html>',
         ],
       ]),
       partials: new Map([

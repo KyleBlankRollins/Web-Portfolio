@@ -1,34 +1,36 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {{{head}}}
+    <template data-kbr-include="partials/head.html"></template>
+    <template data-kbr-assets="head"></template>
   </head>
   <body>
-    {{{header}}}
+    <template data-kbr-include="partials/header.html"></template>
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          {{#series}}
-          <kbr-post-series
-            series-name="{{series.name}}"
-            current-part="{{series.part}}"
-          >
-          </kbr-post-series>
-          {{/series}}
+          <template data-kbr-if="series">
+            <kbr-post-series
+              series-name="{{series.name}}"
+              current-part="{{series.part}}"
+            >
+            </kbr-post-series>
+          </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-          {{#tagsHtml}} {{{tagsHtml}}} {{/tagsHtml}}
+          <template data-kbr-if="tagsHtml" data-kbr-html="tagsHtml"></template>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
-        {{{content}}}
+        <template data-kbr-slot="content"></template>
         <kbr-supplement-list></kbr-supplement-list>
-        {{#citationsHtml}}
-        <div class="blog-citations-container">{{{citationsHtml}}}</div>
-        {{/citationsHtml}}
+        <div class="blog-citations-container" data-kbr-if="citationsHtml">
+          <template data-kbr-html="citationsHtml"></template>
+        </div>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
     </main>
-    {{{footer}}}
+    <template data-kbr-include="partials/footer.html"></template>
+    <template data-kbr-assets="body"></template>
   </body>
 </html>

@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,16 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>LLM as SME</title>
+<meta name="description" content="While an LLM can't replace a truly knowledgeable human, its a better tool than not having an SME at all">
+<meta name="keywords" content="technical writing, documentation, research, process, AI, LLM">
 
-<meta name="description" content="While an LLM can&#39;t replace a truly knowledgeable human, its a better tool than not having an SME at all" />
- 
-<meta name="keywords" content="technical writing, documentation, research, process, AI, LLM" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
-    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -53,19 +49,20 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-           
+          
       <div class="blog-post-tags">
         <span class="tags-label">Tags:</span>
         <div class="tag-list">
           <button class="blog-tag" data-tag="technical writing">technical writing</button><button class="blog-tag" data-tag="research">research</button><button class="blog-tag" data-tag="LLM">LLM</button>
         </div>
       </div>
-     
+    
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -217,24 +214,16 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+  
+
+</body></html>

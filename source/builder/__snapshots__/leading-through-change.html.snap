@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,16 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Leading Through Change</title>
+<meta name="description" content="What three team reinventions in three years taught me about leading people through uncertainty">
+<meta name="keywords" content="leadership, management, technical writing, team building, change management">
 
-<meta name="description" content="What three team reinventions in three years taught me about leading people through uncertainty" />
- 
-<meta name="keywords" content="leadership, management, technical writing, team building, change management" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
-    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -53,19 +49,20 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
           
           <kbr-table-of-contents></kbr-table-of-contents>
-           
+          
       <div class="blog-post-tags">
         <span class="tags-label">Tags:</span>
         <div class="tag-list">
           <button class="blog-tag" data-tag="leadership">leadership</button><button class="blog-tag" data-tag="management">management</button><button class="blog-tag" data-tag="career">career</button>
         </div>
       </div>
-     
+    
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
@@ -151,24 +148,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+  
+
+</body></html>

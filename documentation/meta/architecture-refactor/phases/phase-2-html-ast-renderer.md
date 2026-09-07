@@ -13,6 +13,42 @@ Replace regex template substitution with a `parse5`-based renderer that implemen
 
 Do not add loops, migrate frontmatter to TOML, or statically render collection components in this phase.
 
+## In Progress
+
+**Status:** AST integration, site migration, parity coverage, and legacy deletion are complete.
+
+### Completed
+
+- [x] Added the initial `parse5` AST renderer in `source/builder/modules/html-ast-renderer.ts`.
+- [x] Added escaped dot-path interpolation for text and attribute nodes.
+- [x] Added `data-kbr-if` conditionals, including the `0` and empty-array cases.
+- [x] Added `data-kbr-html` opaque raw-fragment replacement.
+- [x] Added relative include resolution, source-root escape protection, and include-cycle detection.
+- [x] Added `data-kbr-page` metadata extraction from `template.content`.
+- [x] Added `data-kbr-assets="head|body"` placeholder handling.
+- [x] Added source/origin types and source-aware diagnostics for parsed nodes and directives.
+- [x] Added metadata-driven layout selection and `data-kbr-slot="content"` composition.
+- [x] Routed all template processing through the AST renderer.
+- [x] Migrated `base.html`, `blog-post.html`, and the shared partials to directive syntax.
+- [x] Migrated authored page metadata to `data-kbr-page` directives.
+- [x] Added focused directive and failure fixtures in `source/builder/modules/html-ast-renderer.test.ts`.
+- [x] Added complete-layout raw-fragment coverage with entities, custom elements, and literal interpolation text.
+- [x] Added regression coverage for Markdown body insertion, raw-token uniqueness, and single-pass include interpolation.
+- [x] Added regression coverage proving raw fragments cannot hijack later placeholder replacements.
+- [x] Added source-located diagnostics for include escapes, cycles, and missing templates.
+- [x] Separated page metadata extraction from interpolation so authored pages are parsed and walked once.
+- [x] Removed the legacy regex asset-injection path from `html-utils.ts`.
+- [x] Updated and reviewed build-output snapshots, including restored Markdown post bodies.
+- [x] Removed the legacy template engine, metadata extractor, processor compatibility path, and raw-variable allowlist.
+- [x] Confirmed the focused Phase 2 suite passes (`20` renderer tests plus `2` processor regressions) and TypeScript compilation passes.
+- [x] Confirmed the full test suite passes (`66` tests), TypeScript compilation passes, and the production build succeeds after legacy deletion.
+
+### Next
+
+- [x] None for Phase 2; proceed to Phase 3 after reviewing the completed gate evidence below.
+
+Phase 2 is ready for final verification. Phase 3 should not begin until Gates 2.1 through 2.3 pass.
+
 ## Implementation Steps
 
 1. Define renderer node/origin types around the `parse5` AST. Every parsed node records source path and location.
@@ -53,9 +89,9 @@ Before rendering Markdown through `data-kbr-html`:
 
 Before deleting the legacy renderer:
 
-1. Render every Phase 0 fixture with the old implementation and the AST renderer.
-2. Compare outputs using the normalized DOM comparator.
-3. Review exact snapshot diffs for intentional directive/asset changes only.
+1. Render representative Phase 0 fixtures through the AST renderer and compare them with normalized expected DOM.
+2. Review exact snapshot diffs for intentional directive, asset, and restored-content changes only.
+3. Confirm the legacy renderer has no production callers before deletion.
 4. Run `npm test` and `npm run build`.
 
 **Pass condition:** No unexplained semantic output difference remains, and the legacy template modules have no production callers.

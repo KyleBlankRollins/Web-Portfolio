@@ -1,10 +1,14 @@
 import {
-  TemplateEngine,
+  HtmlAstRenderer,
   type SeriesInfo,
   type Citation,
   type SupplementManifestEntry,
 } from "./modules/index.js";
-import type { TemplateSource } from "./modules/template-engine.js";
+import type {
+  HtmlAstPreparedPage,
+  HtmlAstSource,
+} from "./modules/html-ast-renderer.js";
+import type { SiteAssets } from "./site-renderer.js";
 
 // Re-export types for backward compatibility
 export type { SeriesInfo, Citation };
@@ -43,11 +47,13 @@ export interface TemplateVariables {
  * Template processor for handling page templates with variable substitution
  */
 export class TemplateProcessor {
-  private engine: TemplateEngine;
+  private astRenderer: HtmlAstRenderer;
   private defaultTemplate: string = "base.html";
+  private readonly templateNames: ReadonlyMap<string, string>;
 
-  constructor(source: TemplateSource) {
-    this.engine = new TemplateEngine("source/site/templates", source);
+  constructor(source: HtmlAstSource) {
+    this.astRenderer = new HtmlAstRenderer(source);
+    this.templateNames = source.templates ?? new Map();
   }
 
   /**
@@ -56,10 +62,16 @@ export class TemplateProcessor {
   public processTemplate(
     content: string,
     variables: TemplateVariables,
-    templateName?: string
+    templateName?: string,
+    options: { assets?: SiteAssets } = {}
   ): string {
-    // If content is already a complete HTML document, return it as-is
-    if (this.engine.isCompleteHtmlDocument(content)) {
+    // Complete documents cannot safely bypass directive processing.
+    if (this.isCompleteHtmlDocument(content)) {
+      if (content.includes("data-kbr-")) {
+        throw new Error(
+          "Complete HTML documents cannot contain data-kbr-* directives"
+        );
+      }
       return content;
     }
 
@@ -70,27 +82,33 @@ export class TemplateProcessor {
         : this.defaultTemplate;
     }
 
-    const template = this.engine.loadTemplate(templateName);
+    if (!this.templateNames.has(templateName)) {
+      throw new Error(`Template not found in loaded source: ${templateName}`);
+    }
 
-    // Create a complete variables object with content.
-    // `footer` is supplied here rather than per caller so every page type -
-    // homepage, static pages, blog posts, nested supplements - gets the same
-    // markup from the same file, through both the build and the dev server.
-    const allVariables: TemplateVariables = {
-      ...variables,
-      content,
-      head: this.engine.render(this.engine.loadPartial("head.html"), variables),
-      header: this.engine.loadPartial("header.html"),
-      footer: this.engine.loadPartial("footer.html"),
-    };
-
-    return this.engine.render(template, allVariables);
+    const pageContent = '<template data-kbr-html="content"></template>';
+    let astVariables = variables;
+    let preparedPage: HtmlAstPreparedPage | undefined;
+    if (content.includes("data-kbr-page")) {
+      preparedPage = this.astRenderer.preparePage(content);
+      astVariables = { ...variables, ...preparedPage.metadata };
+    }
+    return this.astRenderer.renderPage(
+      preparedPage ?? pageContent,
+      astVariables,
+      {
+        layout: templateName,
+        assets: options.assets,
+      }
+    ).html;
   }
 
-  /**
-   * Clear template cache
-   */
-  public clearCache(): void {
-    this.engine.clearCache();
+  private isCompleteHtmlDocument(content: string): boolean {
+    const trimmedContent = content.trim().toLowerCase();
+    return (
+      (trimmedContent.startsWith("<!doctype html>") ||
+        trimmedContent.startsWith("<html")) &&
+      trimmedContent.includes("</html>")
+    );
   }
 }

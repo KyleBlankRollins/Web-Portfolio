@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,16 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Portfolio - Kyle Blank Rollins</title>
+<meta name="description" content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects.">
+<meta name="keywords" content="portfolio, technical writer, developer, Kyle Blank Rollins, projects">
 
-<meta name="description" content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects." />
- 
-<meta name="keywords" content="portfolio, technical writer, developer, Kyle Blank Rollins, projects" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
-    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
 
   <body>
     <kbr-navigation>
@@ -55,7 +51,10 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
-    <main class="page-content"><!-- Two-column rail, matching .blog-layout, .blog-post-layout and
+
+    <main class="page-content">
+
+<!-- Two-column rail, matching .blog-layout, .blog-post-layout and
      .timeline: the table of contents reserves a grid track instead of
      floating over the content. See phase 2. -->
 <div class="portfolio-layout">
@@ -90,11 +89,7 @@
         <div class="grid two-columns">
           <article class="sample-card card">
             <div class="sample-image-container">
-              <img
-                src="/images/samples/CScom-WN-Oct-2018.png"
-                alt="ChartScript.com What's New in this Release cover"
-                class="sample-image"
-              />
+              <img src="/images/samples/CScom-WN-Oct-2018.png" alt="ChartScript.com What's New in this Release cover" class="sample-image">
             </div>
             <div class="sample-content">
               <h4>3M™ ChartScript.com What's New</h4>
@@ -103,10 +98,7 @@
                 transcriptionists, system administrators, and primary care
                 providers.
               </p>
-              <a
-                href="/samples/dcn300_cscom_rel_october_2018.pdf"
-                class="sample-link"
-              >
+              <a href="/samples/dcn300_cscom_rel_october_2018.pdf" class="sample-link">
                 View Document →
               </a>
             </div>
@@ -114,11 +106,7 @@
 
           <article class="sample-card card">
             <div class="sample-image-container">
-              <img
-                src="/images/samples/EAPG-meth-overview-jan-2020.png"
-                alt="EAPG Methodology Overview cover"
-                class="sample-image"
-              />
+              <img src="/images/samples/EAPG-meth-overview-jan-2020.png" alt="EAPG Methodology Overview cover" class="sample-image">
             </div>
             <div class="sample-content">
               <h4>Enhanced Ambulatory Patient Grouping Systems</h4>
@@ -126,10 +114,7 @@
                 Publicly available methodology overview with historical context
                 and current implementation breakdown.
               </p>
-              <a
-                href="/samples/grp403_eapg_meth_overview_v315.pdf"
-                class="sample-link"
-              >
+              <a href="/samples/grp403_eapg_meth_overview_v315.pdf" class="sample-link">
                 View Document →
               </a>
             </div>
@@ -137,11 +122,7 @@
 
           <article class="sample-card card">
             <div class="sample-image-container">
-              <img
-                src="/images/samples/Provider-Client-WN-May-2019.png"
-                alt="Provider Client What's New cover"
-                class="sample-image"
-              />
+              <img src="/images/samples/Provider-Client-WN-May-2019.png" alt="Provider Client What's New cover" class="sample-image">
             </div>
             <div class="sample-content">
               <h4>Provider Client Release Notes</h4>
@@ -150,10 +131,7 @@
                 intersections between providers, transcriptionists, and QA
                 staff.
               </p>
-              <a
-                href="/samples/provider_client_rel_may_2019.pdf"
-                class="sample-link"
-              >
+              <a href="/samples/provider_client_rel_may_2019.pdf" class="sample-link">
                 View Document →
               </a>
             </div>
@@ -164,11 +142,7 @@
         <div class="grid two-columns">
           <article class="sample-card card">
             <div class="sample-image-container">
-              <img
-                src="/images/samples/mf-WN-v2019.1.3.png"
-                alt="APCGP What's New cover"
-                class="sample-image"
-              />
+              <img src="/images/samples/mf-WN-v2019.1.3.png" alt="APCGP What's New cover" class="sample-image">
             </div>
             <div class="sample-content">
               <h4>APCGP Software Release Overview</h4>
@@ -177,10 +151,7 @@
                 changes, serving as a central repository linking to detailed
                 technical documentation.
               </p>
-              <a
-                href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
-                class="sample-link"
-              >
+              <a href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf" class="sample-link">
                 View Document →
               </a>
             </div>
@@ -188,11 +159,7 @@
 
           <article class="sample-card card">
             <div class="sample-image-container">
-              <img
-                src="/images/samples/opps-pricer-manual-v20.3.0.png"
-                alt="TRICARE OPPS Pricer Software Manual cover"
-                class="sample-image"
-              />
+              <img src="/images/samples/opps-pricer-manual-v20.3.0.png" alt="TRICARE OPPS Pricer Software Manual cover" class="sample-image">
             </div>
             <div class="sample-content">
               <h4>TRICARE OPPS Pricer Software Manual</h4>
@@ -201,10 +168,7 @@
                 interface, and reimbursement information for healthcare payment
                 processing.
               </p>
-              <a
-                href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
-                class="sample-link"
-              >
+              <a href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf" class="sample-link">
                 View Document →
               </a>
             </div>
@@ -230,21 +194,14 @@
         <div class="grid">
           <article class="project-card card">
             <div class="project-image-container">
-              <kbr-image-lightbox
-                src="/images/sites/support-site-before.png"
-                alt="3M HIS Support website before and after redesign"
-                caption="3M HIS Support Website - Before and after redesign comparison"
-                classes="project-image"
-              >
+              <kbr-image-lightbox src="/images/sites/support-site-before.png" alt="3M HIS Support website before and after redesign" caption="3M HIS Support Website - Before and after redesign comparison" classes="project-image">
               </kbr-image-lightbox>
             </div>
 
             <div class="project-info">
               <div class="project-header">
                 <h4>3M HIS Support Website</h4>
-                <a href="https://support.3mhis.com/" class="project-link"
-                  >Visit Site →</a
-                >
+                <a href="https://support.3mhis.com/" class="project-link">Visit Site →</a>
               </div>
 
               <div class="project-content">
@@ -290,12 +247,7 @@
         <div class="grid">
           <article class="project-card card">
             <div class="project-image-container">
-              <kbr-image-lightbox
-                src="/images/sites/wx/webhelp-next-cover.png"
-                alt="Webhelp Next application interface"
-                caption="Webhelp Next - Modern help content delivery application"
-                classes="project-image"
-              >
+              <kbr-image-lightbox src="/images/sites/wx/webhelp-next-cover.png" alt="Webhelp Next application interface" caption="Webhelp Next - Modern help content delivery application" classes="project-image">
               </kbr-image-lightbox>
             </div>
 
@@ -354,12 +306,7 @@
 
           <article class="project-card card">
             <div class="project-image-container">
-              <kbr-image-lightbox
-                src="/images/sites/overview_dark.png"
-                alt="Analytics page for Doc Dashboard showing the types of analytics available"
-                caption="Doc Dashboard - Analytics overview interface"
-                classes="project-image"
-              >
+              <kbr-image-lightbox src="/images/sites/overview_dark.png" alt="Analytics page for Doc Dashboard showing the types of analytics available" caption="Doc Dashboard - Analytics overview interface" classes="project-image">
               </kbr-image-lightbox>
             </div>
 
@@ -413,23 +360,14 @@
 
           <article class="project-card card">
             <div class="project-image-container">
-              <kbr-image-lightbox
-                src="/images/sites/dok-compare.png"
-                alt="Home page for the DoK Compare website"
-                caption="DoK Compare - Personal project comparison website"
-                classes="project-image"
-              >
+              <kbr-image-lightbox src="/images/sites/dok-compare.png" alt="Home page for the DoK Compare website" caption="DoK Compare - Personal project comparison website" classes="project-image">
               </kbr-image-lightbox>
             </div>
 
             <div class="project-info">
               <div class="project-header">
                 <h4>DoK Compare</h4>
-                <a
-                  href="https://dok-compare.kyleblankrollins.com/#/"
-                  class="project-link"
-                  >Visit Site →</a
-                >
+                <a href="https://dok-compare.kyleblankrollins.com/#/" class="project-link">Visit Site →</a>
               </div>
 
               <div class="project-content">
@@ -473,23 +411,14 @@
 
           <article class="project-card card">
             <div class="project-image-container">
-              <kbr-image-lightbox
-                src="/images/sites/the_canney_valley.png"
-                alt="The home page of The Canney Valley"
-                caption="The Canney Valley - Personal creative project website"
-                classes="project-image"
-              >
+              <kbr-image-lightbox src="/images/sites/the_canney_valley.png" alt="The home page of The Canney Valley" caption="The Canney Valley - Personal creative project website" classes="project-image">
               </kbr-image-lightbox>
             </div>
 
             <div class="project-info">
               <div class="project-header">
                 <h4>The Canney Valley</h4>
-                <a
-                  href="https://the-canney-valley.kyleblankrollins.com/"
-                  class="project-link"
-                  >Visit Site →</a
-                >
+                <a href="https://the-canney-valley.kyleblankrollins.com/" class="project-link">Visit Site →</a>
               </div>
 
               <div class="project-content">
@@ -537,8 +466,6 @@
 </div>
 </main>
 
-    <!-- Shared markup from templates/partials/footer.html, injected by
-         template-processor.ts. Edit the partial, not this line. -->
     <!--
   Shared site footer.
 
@@ -557,24 +484,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+  
+
+</body></html>

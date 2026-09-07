@@ -1,7 +1,10 @@
 import { join } from "node:path";
 import type { MarkdownProcessor } from "./markdown-processor.js";
 import { ThemeProcessor } from "./theme-processor.js";
-import type { LoadedSiteSource, RenderableSiteContent } from "./site-renderer.js";
+import type {
+  LoadedSiteSource,
+  RenderableSiteContent,
+} from "./site-renderer.js";
 
 export function collectSiteContent(
   source: LoadedSiteSource,

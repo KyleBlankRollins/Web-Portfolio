@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,16 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Career - Kyle Blank Rollins</title>
+<meta name="description" content="My professional experiences. In timeline format!">
+<meta name="keywords" content="Kyle Rollins, experience, career, technical writer">
 
-<meta name="description" content="My professional experiences. In timeline format!" />
- 
-<meta name="keywords" content="Kyle Rollins, experience, career, technical writer" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/main-HASH.css">
-    <link rel="modulepreload" crossorigin href="/assets/lit-HASH.js">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
 
   <body>
     <kbr-navigation>
@@ -55,13 +51,14 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
-    <main class="page-content"><section>
+
+    <main class="page-content">
+
+<section>
   <kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
 </section>
 </main>
 
-    <!-- Shared markup from templates/partials/footer.html, injected by
-         template-processor.ts. Edit the partial, not this line. -->
     <!--
   Shared site footer.
 
@@ -80,24 +77,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/main-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+  
+
+</body></html>

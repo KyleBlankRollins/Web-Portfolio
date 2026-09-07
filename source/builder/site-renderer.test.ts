@@ -14,7 +14,7 @@ const source: LoadedSiteSource = {
   templates: new Map([
     [
       "base.html",
-      "<!doctype html><html><head>{{{head}}}</head><body>{{{content}}}{{{footer}}}</body></html>",
+      '<!doctype html><html><head><template data-kbr-include="head.html"></template><template data-kbr-assets="head"></template></head><body><main data-kbr-slot="content"></main><template data-kbr-include="footer.html"></template><template data-kbr-assets="body"></template></body></html>',
     ],
   ]),
   partials: new Map([
@@ -44,10 +44,10 @@ describe("renderSite", () => {
 
     expect(first).toEqual(second);
     expect(first.outputs.get("fixture.html")).toContain(
-      '<link rel="stylesheet" crossorigin href="/assets/site.css">'
+      '<link rel="stylesheet" crossorigin="" href="/assets/site.css">'
     );
     expect(first.outputs.get("fixture.html")).toContain(
-      '<script type="module" crossorigin src="/assets/site.js"></script>'
+      '<script type="module" crossorigin="" src="/assets/site.js"></script>'
     );
   });
 
@@ -67,6 +67,33 @@ describe("renderSite", () => {
       normalizeDom(development.outputs.get("nested/supplement.html") ?? "")
     ).toEqual(
       normalizeDom(production.outputs.get("nested/supplement.html") ?? "")
+    );
+  });
+
+  it("keeps generated Markdown body content in the blog layout", () => {
+    const result = renderSite(
+      {
+        templates: new Map([
+          [
+            "blog-post.html",
+            '<html><body><article><template data-kbr-slot="content"></template></article></body></html>',
+          ],
+        ]),
+        partials: new Map(),
+        pages: new Map(),
+      },
+      [
+        {
+          outputPath: "post.html",
+          content: "<p>Markdown body survives</p>",
+          metadata: { isBlogPost: true },
+        },
+      ],
+      { head: [], body: [] }
+    );
+
+    expect(result.outputs.get("post.html")).toContain(
+      "<p>Markdown body survives</p>"
     );
   });
 });
