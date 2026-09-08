@@ -116,6 +116,45 @@ describe("built site output", () => {
     }
   });
 
+  it("emits static blog and homepage content without legacy renderers", () => {
+    const distDirectory = join(process.cwd(), "dist");
+    const blogHtml = readFileSync(join(distDirectory, "blog.html"), "utf-8");
+    const homeHtml = readFileSync(join(distDirectory, "index.html"), "utf-8");
+    const careerHtml = readFileSync(
+      join(distDirectory, "career.html"),
+      "utf-8"
+    );
+    const blogManifest = JSON.parse(
+      readFileSync(join(distDirectory, "data", "blog-manifest.json"), "utf-8")
+    ) as { posts: unknown[] };
+    const experienceData = JSON.parse(
+      readFileSync(
+        join(process.cwd(), "public", "data", "experience-data.json"),
+        "utf-8"
+      )
+    ) as { positions: unknown[] }[];
+
+    expect(blogHtml.match(/data-static-blog/g)).toHaveLength(1);
+    expect(blogHtml.match(/data-post-card/g)).toHaveLength(
+      blogManifest.posts.length
+    );
+    expect(blogHtml).not.toMatch(/<kbr-(?:post-list|post-card|tag-filter)\b/i);
+
+    expect(homeHtml).toContain('class="home-highlights"');
+    expect(homeHtml).toContain("AI Agent Workflows");
+    expect(homeHtml).toContain("Documentation Team Lead");
+    expect(homeHtml).not.toMatch(/<kbr-home-highlights\b/i);
+
+    expect(careerHtml.match(/data-static-timeline/g)).toHaveLength(1);
+    expect(careerHtml.match(/class="timeline-entry"/g)).toHaveLength(
+      experienceData.reduce(
+        (count, company) => count + company.positions.length,
+        0
+      )
+    );
+    expect(careerHtml).not.toMatch(/<kbr-(?:timeline|timeline-entry)\b/i);
+  });
+
   it("preserves DOM parity between served production and development pages", async () => {
     const distDirectory = join(process.cwd(), "dist");
     const outputPaths = [

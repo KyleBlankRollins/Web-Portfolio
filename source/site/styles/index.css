@@ -9,4 +9,7 @@
 @import "./typography.css";
 @import "./style.css";
 @import "./blog-post.css";
+@import "./static-blog.css";
+@import "./static-blog-post.css";
+@import "./static-timeline.css";
 @import "./prism-theme.css";

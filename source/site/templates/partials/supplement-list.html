@@ -1,0 +1,15 @@
+<section class="supplements" aria-labelledby="supplements-heading">
+  <h2 id="supplements-heading">Supplements</h2>
+  <ul class="supplement-list">
+    <template data-kbr-for="supplement of supplements">
+      <li class="supplement-item">
+        <a class="supplement-link" href="{{supplement.url}}"
+          >{{supplement.title}}</a
+        >
+        <p class="supplement-description" data-kbr-if="supplement.description">
+          {{supplement.description}}
+        </p>
+      </li>
+    </template>
+  </ul>
+</section>

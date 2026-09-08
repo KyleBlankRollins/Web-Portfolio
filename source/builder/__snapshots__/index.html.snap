@@ -68,7 +68,34 @@
   </div>
 </section>
 
-<kbr-home-highlights></kbr-home-highlights>
+<section class="home-highlights" aria-labelledby="home-highlights-title">
+  <div class="home-highlights-heading">
+    <p class="eyebrow">Recently</p>
+    <h2 id="home-highlights-title">Recent writing and experience</h2>
+  </div>
+  <div class="home-highlights-grid">
+    <template>
+      <article class="highlight-item">
+        <p class="eyebrow">Latest writing</p>
+        <h3><a href="/ai-agent-workflows.html">AI Agent Workflows</a></h3>
+        <p>AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me.</p>
+        <time datetime="2026-07-31">July 31, 2026</time>
+      </article>
+    </template>
+    <template>
+      <article class="highlight-item">
+        <p class="eyebrow">Current role</p>
+        <h3>Documentation Team Lead</h3>
+        <p>
+          MongoDB <span aria-hidden="true"> · </span>
+          <a href="https://www.mongodb.com">Company site</a>
+        </p>
+        <a class="highlight-link" href="/career.html">View career timeline</a>
+      </article>
+    </template>
+  </div>
+</section>
+
 
 <section class="cards-container">
   <div class="cards grid three-columns">

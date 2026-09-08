@@ -10,11 +10,7 @@
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
           <template data-kbr-if="series">
-            <kbr-post-series
-              series-name="{{series.name}}"
-              current-part="{{series.part}}"
-            >
-            </kbr-post-series>
+            <template data-kbr-include="partials/post-series.html"></template>
           </template>
           <kbr-table-of-contents></kbr-table-of-contents>
           <template data-kbr-include="partials/blog-tags.html"></template>
@@ -24,7 +20,9 @@
         <h1 id="{{titleAnchorId}}">{{title}}</h1>
         <template data-kbr-include="partials/blog-metadata.html"></template>
         <template data-kbr-slot="content"></template>
-        <kbr-supplement-list></kbr-supplement-list>
+        <template data-kbr-if="supplements">
+          <template data-kbr-include="partials/supplement-list.html"></template>
+        </template>
         <template data-kbr-include="partials/blog-citations.html"></template>
 
         <kbr-anchor-copy></kbr-anchor-copy>

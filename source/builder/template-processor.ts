@@ -33,16 +33,11 @@ export interface TemplateVariables {
   citations?: Citation[]; // Optional citations array
   citationItems?: CitationDisplay[]; // Structured citation display data
   supplements?: SupplementManifestEntry[]; // Optional published supplements for parent posts
-  [key: string]:
-    | string
-    | number
-    | boolean
-    | string[]
-    | SeriesInfo
-    | Citation[]
-    | CitationDisplay[]
-    | SupplementManifestEntry[]
-    | undefined; // Allow additional custom fields with constrained types
+  blogStaticContent?: string;
+  seriesStaticContent?: string;
+  supplementStaticContent?: string;
+  timelineStaticContent?: string;
+  [key: string]: unknown;
 }
 
 /**

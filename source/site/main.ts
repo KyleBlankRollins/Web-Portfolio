@@ -3,16 +3,9 @@ import "./styles/index.css";
 
 // Import components
 import "./components/navigation/navigation";
-import "./components/post-list/post-list";
-import "./components/post-card/post-card";
-import "./components/home-highlights/home-highlights";
-import "./components/post-series/post-series";
-import "./components/supplement-list/supplement-list";
 import "./components/table-of-contents/table-of-contents";
 import "./components/anchor-copy";
-import "./components/tag-filter/tag-filter";
-import "./components/timeline/timeline";
-import "./components/timeline-entry/timeline-entry";
+import "./static-blog-enhancement";
 import "./components/icon/icon";
 import "./components/image-lightbox/image-lightbox";
 import "./components/theme-switcher/theme-switcher";

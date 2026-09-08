@@ -1,0 +1,24 @@
+<nav class="post-series" aria-labelledby="post-series-title">
+  <h2 id="post-series-title">{{seriesName}}</h2>
+  <p>Part {{currentIndex}} of {{totalParts}}</p>
+  <div class="series-navigation">
+    <a class="nav-button" data-kbr-if="previous" href="{{previous.url}}"
+      ><span class="nav-text">Previous: {{previous.title}}</span
+      ><span class="nav-arrow">←</span></a
+    >
+    <a class="nav-button" data-kbr-if="next" href="{{next.url}}"
+      ><span class="nav-text">Next: {{next.title}}</span
+      ><span class="nav-arrow">→</span></a
+    >
+  </div>
+  <ol class="series-list">
+    <template data-kbr-for="post of posts">
+      <li class="series-item">
+        <a class="series-link {{post.currentClass}}" href="{{post.url}}">
+          <span class="part-number">{{post.partLabel}}</span>
+          <span>{{post.title}}</span>
+        </a>
+      </li>
+    </template>
+  </ol>
+</nav>

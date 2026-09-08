@@ -1,15 +1,15 @@
 # Icon Component (`kbr-icon`)
 
-A flexible SVG icon component that dynamically loads and renders SVG files from the `/public/assets/icons/` directory.
+A flexible SVG icon component that bundles and renders SVG files from the `/public/assets/icons/` directory.
 
 ## Features
 
-- **Dynamic Loading**: Fetches SVG files at runtime based on the `name` property
+- **Bundled Assets**: Includes SVG content in the application bundle, with no runtime icon requests
 - **CSS Integration**: Applies custom CSS classes and supports size variants
 - **Error Handling**: Shows fallback icons when loading fails
 - **Loading States**: Visual feedback during icon loading
 - **Accessibility**: Uses `currentColor` for automatic color inheritance
-- **Performance**: Caches loaded SVGs and processes them for optimal rendering
+- **Performance**: Processes bundled SVGs for immediate rendering
 
 ## Usage
 
@@ -35,8 +35,13 @@ The following icons are available (matching SVG files in `/public/assets/icons/`
 - `document` - Document/file icon
 - `filter_circle` - Circular filter symbol
 - `hierarchy` - Tree/hierarchy structure
+- `info_circle` - Information indicator
 - `link` - Chain link symbol
+- `projector` - Theme switcher indicator
+- `question_circle` - Help indicator
 - `terminal` - Command line terminal
+- `warning_hex` - Hexagonal warning indicator
+- `warning_triangle` - Triangular warning indicator
 
 ### Size Variants
 
@@ -120,7 +125,7 @@ When an icon fails to load:
 ## Adding New Icons
 
 1. **Add SVG File**: Place the SVG file in `/public/assets/icons/`
-2. **Update Component**: Add the filename (without extension) to the `availableIcons` array in `icon.ts`
+2. **Update Icon Data**: Add a raw SVG import and map entry in `icon-data.ts`
 3. **Use Icon**: Reference by filename in the `name` property
 
 ### SVG Requirements
@@ -143,10 +148,10 @@ The component processes loaded SVGs to:
 
 ### Performance Considerations
 
-- **Async Loading**: SVGs are loaded asynchronously to avoid blocking render
+- **Bundled Loading**: SVGs are available without a network request
 - **Error Recovery**: Failed loads don't break the component
-- **Memory Efficient**: SVG content is cached in component state
-- **Network Efficient**: Each SVG is only loaded once per component instance
+- **Memory Efficient**: SVG content is retained in component state after processing
+- **Network Efficient**: Icon rendering does not require a request
 
 ### Browser Compatibility
 

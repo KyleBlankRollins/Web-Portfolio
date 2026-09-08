@@ -104,7 +104,7 @@
 <p>And here&#39;s where the storytelling comes back in. Technical writers need to tell this story to the people who control resources. Not the story about oral tradition and grain counting, but the one about what&#39;s happening right now: that documentation is a critical interface between your products and the AI systems your customers are already using. That the people who maintain that interface, the ones who have spent years learning to make natural language precise and actionable, are the single best gateway most companies have for model training and agentic workflows.</p>
 <p>That&#39;s a story worth telling clearly.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
+        
         <div class="blog-citations-container">
   <section class="citations">
     <h2>References</h2>

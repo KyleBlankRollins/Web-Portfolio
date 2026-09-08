@@ -97,8 +97,7 @@ source/site/
 <!-- Include table of contents component -->
 <kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
 
-<!-- Include timeline component -->
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
+<!-- Career timeline content is emitted statically by the builder. -->
 ```
 
 ## Writing Blog Posts
@@ -372,11 +371,10 @@ Automatically generates navigation from page headings.
 
 ### Timeline
 
-```html
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
-```
-
-Displays career timeline from JSON data.
+Career timeline markup is emitted as static light DOM from
+`public/data/experience-data.json` during the build. The page-level timeline
+styles are included automatically, and the table of contents is the only
+client-side enhancement.
 
 ### Post List (Blog Page)
 

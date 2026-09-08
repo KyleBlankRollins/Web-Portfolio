@@ -237,14 +237,15 @@ export class KbrTableOfContents extends LitElement {
     let targetElement;
     let headings: NodeList;
 
-    // Special handling for kbr-timeline component
+    // Support both the legacy shadow-DOM timeline and the static timeline wrapper.
     if (this.targetSelector === ".timeline") {
-      // Find the timeline component in the document
       const timelineElement = document.querySelector("kbr-timeline");
 
       if (timelineElement && timelineElement.shadowRoot) {
         // Search within the timeline's shadow DOM
         targetElement = timelineElement.shadowRoot.querySelector(".timeline");
+      } else {
+        targetElement = document.querySelector(".timeline");
       }
     } else {
       // Find the target container (default to main, article, or .content)

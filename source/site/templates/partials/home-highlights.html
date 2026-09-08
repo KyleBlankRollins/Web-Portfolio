@@ -1,0 +1,27 @@
+<section class="home-highlights" aria-labelledby="home-highlights-title">
+  <div class="home-highlights-heading">
+    <p class="eyebrow">Recently</p>
+    <h2 id="home-highlights-title">Recent writing and experience</h2>
+  </div>
+  <div class="home-highlights-grid">
+    <template data-kbr-if="latestPost">
+      <article class="highlight-item">
+        <p class="eyebrow">Latest writing</p>
+        <h3><a href="{{latestPost.url}}">{{latestPost.title}}</a></h3>
+        <p>{{latestPost.description}}</p>
+        <time datetime="{{latestPost.date}}">{{latestPost.displayDate}}</time>
+      </article>
+    </template>
+    <template data-kbr-if="currentRole">
+      <article class="highlight-item">
+        <p class="eyebrow">Current role</p>
+        <h3>{{currentRole.title}}</h3>
+        <p>
+          {{currentRole.company}} <span aria-hidden="true"> · </span>
+          <a href="{{currentRole.companyWebsite}}">Company site</a>
+        </p>
+        <a class="highlight-link" href="/career.html">View career timeline</a>
+      </article>
+    </template>
+  </div>
+</section>

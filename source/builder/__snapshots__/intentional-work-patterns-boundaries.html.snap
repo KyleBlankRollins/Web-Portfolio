@@ -54,8 +54,32 @@
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
           <template>
-            <kbr-post-series series-name="Intentional Work Patterns" current-part="1">
-            </kbr-post-series>
+            <nav class="post-series" aria-labelledby="post-series-title">
+  <h2 id="post-series-title">Intentional Work Patterns</h2>
+  <p>Part 2 of 2</p>
+  <div class="series-navigation">
+    <a class="nav-button" href="/intentional-work-patterns.html"><span class="nav-text">Previous: Intentional Work Patterns</span><span class="nav-arrow">←</span></a>
+    
+  </div>
+  <ol class="series-list">
+    
+      <li class="series-item">
+        <a class="series-link " href="/intentional-work-patterns.html">
+          <span class="part-number">Series Summary:</span>
+          <span>Intentional Work Patterns</span>
+        </a>
+      </li>
+    
+      <li class="series-item">
+        <a class="series-link current" href="/intentional-work-patterns-boundaries.html">
+          <span class="part-number">Part 1</span>
+          <span>Intentional Work Patterns - Boundaries</span>
+        </a>
+      </li>
+    
+  </ol>
+</nav>
+
           </template>
           <kbr-table-of-contents></kbr-table-of-contents>
           <div class="blog-post-tags">
@@ -107,7 +131,7 @@
 <p>Boundaries aren&#39;t walls that isolate you from others. They&#39;re the framework that lets you be fully present both at work and at home. When you protect your work time, you&#39;re also protecting your ability to genuinely disconnect when the workday ends. That&#39;s better for everyone.</p>
 <p>Start small if you need to. Pick one boundary to implement. Have one conversation. Reclaim one block of deep work time and then build from there.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
+        
         <div class="blog-citations-container">
   <section class="citations">
     <h2>References</h2>

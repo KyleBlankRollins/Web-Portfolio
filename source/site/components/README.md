@@ -27,25 +27,13 @@ Each component uses:
 
 #### Career Timeline
 
-- `timeline.ts/css` - Main timeline component that loads and displays career data
-- `timeline-entry.ts/css` - Individual job/position entry in the timeline
+Timeline markup is rendered by the builder from `public/data/experience-data.json`.
+`static-timeline.css` provides page-level styling; the table of contents is the only client-side enhancement.
 
-### Timeline Components Example
+### Timeline Markup
 
-The timeline components work together to display career history:
-
-```html
-<!-- Main timeline component -->
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
-
-<!-- Individual entries are created automatically -->
-<kbr-timeline-entry
-  company="MongoDB"
-  title="Documentation Team Lead"
-  skills='["Team Management", "CI/CD"]'
->
-</kbr-timeline-entry>
-```
+The career page includes the `timeline-static-content.html` partial, which is
+expanded by the AST renderer, and does not mount a timeline custom element.
 
 ## Workflow
 

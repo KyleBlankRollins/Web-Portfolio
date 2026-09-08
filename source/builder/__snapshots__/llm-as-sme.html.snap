@@ -195,7 +195,7 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
 <p>This approach often surfaces insights you wouldn&#39;t get from direct questioning. The LLM can spot inconsistencies, suggest improvements, and identify gaps in your logic.</p>
 <p>Remember: this workflow isn&#39;t meant to replace human SME review. It&#39;s meant to get you to a point where your human SMEs can provide more valuable, targeted feedback on a more complete draft rather than starting from scratch.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
+        
         
 
 

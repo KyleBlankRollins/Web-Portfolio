@@ -1,0 +1,81 @@
+<div class="blog-layout" data-static-blog>
+  <aside class="blog-sidebar">
+    <div class="tag-filter-container" data-tag-filter>
+      <div class="filter-header">
+        <div class="ui-label filter-title" id="blog-filter-title">
+          Filter by Tag
+        </div>
+        <button class="clear-filter-btn" type="button" data-clear-filter hidden>
+          Clear filter
+        </button>
+      </div>
+      <div class="tags-grid" aria-labelledby="blog-filter-title">
+        <template data-kbr-for="tag of tagsWithCounts">
+          <button
+            class="tag-button"
+            type="button"
+            data-tag="{{tag.tag}}"
+            aria-pressed="false"
+          >
+            {{tag.tag}} <span class="tag-count">({{tag.count}})</span>
+          </button>
+        </template>
+      </div>
+    </div>
+  </aside>
+  <div class="blog-posts">
+    <div class="post-list-container">
+      <div class="post-list-grid" data-post-list>
+        <template data-kbr-for="post of posts">
+          <article
+            class="post-card"
+            data-post-card
+            data-tags="{{post.tagsAttribute}}"
+          >
+            <div class="post-card-content">
+              <header class="post-card-header">
+                <h2 class="post-card-title">
+                  <a href="{{post.url}}" class="post-title-link"
+                    >{{post.title}}</a
+                  >
+                </h2>
+                <div class="post-card-date">
+                  <time datetime="{{post.date}}">{{post.displayDate}}</time>
+                </div>
+              </header>
+              <div class="post-card-description">
+                <p>{{post.description}}</p>
+              </div>
+              <div class="post-card-tags">
+                <div class="tag-list">
+                  <template data-kbr-for="tag of post.tags">
+                    <button class="post-tag" type="button" data-tag="{{tag}}">
+                      {{tag}}
+                    </button>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <p
+        class="post-list-empty"
+        data-post-list-empty
+        hidden
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        No blog posts found with the selected tag.
+      </p>
+      <p
+        class="filter-results"
+        data-filter-results
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+    </div>
+  </div>
+</div>

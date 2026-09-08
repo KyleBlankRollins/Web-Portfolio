@@ -1,6 +1,32 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { kbrBuilder } from "./source/builder/index.ts";
+
+function bundleIconData() {
+  const iconDirectory = resolve(process.cwd(), "public/assets/icons");
+
+  return {
+    name: "kbr-bundle-icon-data",
+    transform(_code: string, id: string) {
+      if (!id.endsWith("/source/site/components/icon/icon-data.ts")) {
+        return;
+      }
+
+      const icons = Object.fromEntries(
+        readdirSync(iconDirectory)
+          .filter((filename) => filename.endsWith(".svg"))
+          .map((filename) => [
+            filename.replace(/\.svg$/, ""),
+            readFileSync(resolve(iconDirectory, filename), "utf-8"),
+          ])
+      );
+
+      return `export const ICONS = ${JSON.stringify(icons)};`;
+    },
+  };
+}
 
 export default defineConfig({
   root: "source/site",
@@ -48,6 +74,7 @@ export default defineConfig({
     exclude: [], // Add any deps you want to skip pre-bundling
   },
   plugins: [
+    bundleIconData(),
     kbrBuilder({
       gitAware: process.env.GIT_AWARE === "true",
       forceAll: process.env.FORCE_ALL === "true",

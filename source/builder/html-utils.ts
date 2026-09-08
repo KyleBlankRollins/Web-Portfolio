@@ -39,6 +39,7 @@ export class HtmlProcessingUtils {
     const metadata = options.metadata ?? {};
     const cleanedContent = content;
     const templateVariables: TemplateVariables = {
+      ...metadata,
       title:
         metadata.title ||
         this.extractTitleFromContent(cleanedContent) ||
@@ -56,6 +57,10 @@ export class HtmlProcessingUtils {
       series: metadata.series,
       citationItems: metadata.citationItems,
       supplements: metadata.supplements,
+      blogStaticContent: metadata.blogStaticContent,
+      seriesStaticContent: metadata.seriesStaticContent,
+      supplementStaticContent: metadata.supplementStaticContent,
+      timelineStaticContent: metadata.timelineStaticContent,
     };
     const processedContent = templateProcessor.processTemplate(
       cleanedContent,

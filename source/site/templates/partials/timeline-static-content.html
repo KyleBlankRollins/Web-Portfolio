@@ -1,0 +1,64 @@
+<div class="timeline" data-static-timeline>
+  <header class="timeline-header">
+    <h1 class="timeline-title" id="career-timeline">Career Timeline</h1>
+    <p class="timeline-subtitle">
+      Where I've worked and what I did there, most recent first.
+    </p>
+  </header>
+  <div class="timeline-sidebar">
+    <kbr-table-of-contents
+      min-level="2"
+      max-level="3"
+      target-selector=".timeline"
+    ></kbr-table-of-contents>
+  </div>
+  <div class="timeline-content">
+    <template data-kbr-for="company of timelineCompanies">
+      <section class="timeline-company">
+        <div class="company-header">
+          <h2 class="company-name" id="{{company.id}}">
+            <a
+              data-kbr-if="company.website"
+              href="{{company.website}}"
+              target="_blank"
+              rel="noopener"
+              >{{company.heading}}</a
+            ><span data-kbr-if="company.noWebsite">{{company.heading}}</span>
+          </h2>
+        </div>
+        <div class="company-positions">
+          <template data-kbr-for="position of company.positions">
+            <article class="timeline-entry">
+              <div class="entry-header">
+                <div class="entry-title">
+                  <h3 class="job-title">{{position.title}}</h3>
+                </div>
+                <div class="entry-meta">
+                  <div class="date-range">{{position.dateRange}}</div>
+                  <div class="duration">{{position.duration}}</div>
+                  <div class="employment-type">{{position.employmentType}}</div>
+                  <div class="location">{{position.location}}</div>
+                </div>
+              </div>
+              <div class="description" data-kbr-if="position.description">
+                <template data-kbr-for="block of position.blocks">
+                  <p data-kbr-if="block.paragraph">{{block.paragraph}}</p>
+                  <ul data-kbr-if="block.items">
+                    <template data-kbr-for="item of block.items"
+                      ><li>{{item}}</li></template
+                    >
+                  </ul>
+                </template>
+              </div>
+              <div class="skills" data-kbr-if="position.skills">
+                <template data-kbr-for="skill of position.skills"
+                  ><span class="skill-tag">{{skill}}</span></template
+                >
+              </div>
+            </article>
+          </template>
+        </div>
+      </section>
+    </template>
+  </div>
+</div>
