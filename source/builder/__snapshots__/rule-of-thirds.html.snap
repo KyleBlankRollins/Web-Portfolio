@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,15 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>The P&amp;G Rule of Thirds</title>
+<meta name="description" content="How to adapt Sid Meier's Rule of Thirds to professional development and goal setting">
+<meta name="keywords" content="professional growth, goal setting, rule of thirds">
 
-<meta name="description" content="How to adapt Sid Meier&#39;s Rule of Thirds to professional development and goal setting" />
- 
-<meta name="keywords" content="professional growth, goal setting, rule of thirds" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -52,30 +49,36 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
-           
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="professional growth">professional growth</button><button class="blog-tag" data-tag="goal setting">goal setting</button><button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
-        </div>
-      </div>
-     
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="professional growth">professional growth</button>
+
+      <button class="blog-tag" data-tag="goal setting">goal setting</button>
+
+      <button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
+
+  </div>
+</div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
-        <h1 id="the-pg-rule-of-thirds">The P&G Rule of Thirds</h1>
-
+        <h1 id="the-pg-rule-of-thirds">The P&amp;G Rule of Thirds</h1>
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-10-01">October 1, 2025</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: The <a href="#the-personal-growth-rule-of-thirds">personal growth rule of thirds</a> is a tool that helps define goals.</kbr-admonition></p>
+  <div>
+    <time datetime="2025-10-01">October 1, 2025</time>
+  </div>
+</div>
+
+        <p><kbr-admonition type="note">tl;dr: The <a href="#the-personal-growth-rule-of-thirds">personal growth rule of thirds</a> is a tool that helps define goals.</kbr-admonition></p>
 <p>This blog post starts with a bit of a ramble and it takes a while to get to the main point of the post. But stick with it, as I believe the lead up is important in this case.</p>
 <p>Setting and tracking personal growth goals at work can be difficult and stressful. No company does Performance and Growth (P&amp;G) evaluations the same way. And even if they did, it&#39;s still difficult to create highly personal goals that align with the highly impersonal business-level goals. And we haven&#39;t even talked about tracking progress on your personal goals...</p>
 <p>All of this adds up to an awful lot of what I call meta work - work that&#39;s about work. Over my career, I&#39;ve found all the effort spent on meta work frustrating. I could almost always use that time and energy more effectively elsewhere.</p>
@@ -85,7 +88,7 @@
 <p>As an individual contributor, I&#39;ve been thinking about what framework might make sense in this context for a long time. Having been a manager for over a year now, I&#39;ve been thinking about it from the other side of the P&amp;G conversation as well. This post details a framework that I think makes sense. It&#39;s still very much a work in progress though.</p>
 <p>So, without further ado, let me introduce you to video game designer Sid Meier.</p>
 <h2 id="sid-meier">Sid Meier</h2><p>Sid Meier is a fairly famous video game designer. If you pay attention to that space, you&#39;ve probably heard of him. Even if you haven&#39;t, his name is on one of the most popular video game series of the 90s: Sid Meier&#39;s Civilization. Lots of people who didn&#39;t play video games or care much for them adored this game and got bit by the &quot;one more turn&quot; bug.</p>
-<h3 id="sid-meier39s-rule-of-thirds">Sid Meier&#39;s rule of thirds</h3><p>Civilization has gone on to be a successful series. Sid Meier was directly involved in most of the sequels. Creating sequels is hard. In an <a href="https://arstechnica.com/gaming/2014/10/the-road-to-civilization-a-conversation-with-sid-meier/">interview with Ars Technica</a>, Meier had this to say:</p>
+<h3 id="sid-meiers-rule-of-thirds">Sid Meier&#39;s rule of thirds</h3><p>Civilization has gone on to be a successful series. Sid Meier was directly involved in most of the sequels. Creating sequels is hard. In an <a href="https://arstechnica.com/gaming/2014/10/the-road-to-civilization-a-conversation-with-sid-meier/">interview with Ars Technica</a>, Meier had this to say:</p>
 <blockquote>
 <p>We&#39;ve focused on listening to Civ players and trying to think about, with the next iteration, what are we going to do to keep it fresh and new but also have those core qualities that appeal to Civ players.</p>
 </blockquote>
@@ -111,8 +114,9 @@
 <p>SMART goals for personal growth are useful, but only when they&#39;re informed by a greater and usually less measurable purpose. The rule of thirds framework is a tool to define that purpose. This makes it easier to define SMART goals and stick with them.</p>
 <h2 id="summary">Summary</h2><p>A personal growth rule of thirds framework makes defining goals easier and P&amp;G preparation less stressful. I&#39;m still refining how to talk about and present this framework. It isn&#39;t robust, but maybe it doesn&#39;t need to be. Perhaps it&#39;s enough to be a lightweight layer on top of other goal setting strategies - a way to narrow the scope of unlimited possibility.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
-        
+
+
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
@@ -135,25 +139,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>

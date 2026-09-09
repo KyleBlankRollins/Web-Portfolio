@@ -12,6 +12,9 @@ export {
   type Citation,
   type CitationUsage,
   type CitationProcessingResult,
+  type CitationLink,
+  type CitationBackReference,
+  type CitationDisplay,
 } from "./citation-processor.js";
 
 // Frontmatter parsing
@@ -20,6 +23,7 @@ export {
   type SeriesInfo,
   type FrontmatterData,
   type FrontmatterParseResult,
+  type CareerFrontmatter,
 } from "./frontmatter-parser.js";
 
 // Markdown rendering
@@ -37,8 +41,14 @@ export {
   type ContentDocument,
   type ContentDocumentKind,
   type ContentDiscoveryResult,
-  normalizePathForComparison,
 } from "./content-discovery.js";
+
+// Typed content graph
+export {
+  buildContentGraph,
+  type ContentGraph,
+  type ContentGraphPost,
+} from "./content-graph.js";
 
 // Local document link resolver
 export {
@@ -59,12 +69,13 @@ export {
   type BlogManifest,
 } from "./blog-manifest.js";
 
-// Metadata extraction
+// AST template renderer
 export {
-  MetadataExtractor,
-  type ExtractedMetadata,
-  type MetadataExtractionResult,
-} from "./metadata-extractor.js";
-
-// Template engine
-export { TemplateEngine, type TemplateVariables } from "./template-engine.js";
+  HtmlAstRenderer,
+  type HtmlAstNode,
+  type HtmlAstOrigin,
+  type HtmlAstPageRenderOptions,
+  type HtmlAstRenderOptions,
+  type HtmlAstRenderResult,
+  type HtmlAstSource,
+} from "./html-ast-renderer.js";

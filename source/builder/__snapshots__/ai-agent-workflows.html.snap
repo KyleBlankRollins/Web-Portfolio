@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,15 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>AI Agent Workflows</title>
+<meta name="description" content="AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me.">
+<meta name="keywords" content="AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development">
 
-<meta name="description" content="AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me." />
- 
-<meta name="keywords" content="AI agents, coding agents, AI-assisted workflows, software development, technical writing, AI-assisted development" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -52,30 +49,36 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
-           
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="AI">AI</button><button class="blog-tag" data-tag="coding agents">coding agents</button><button class="blog-tag" data-tag="workflows">workflows</button>
-        </div>
-      </div>
-     
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="AI">AI</button>
+
+      <button class="blog-tag" data-tag="coding agents">coding agents</button>
+
+      <button class="blog-tag" data-tag="workflows">workflows</button>
+
+  </div>
+</div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="ai-agent-workflows">AI Agent Workflows</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2026-07-31">July 31, 2026</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
+  <div>
+    <time datetime="2026-07-31">July 31, 2026</time>
+  </div>
+</div>
+
+        <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
 <p>For the last year or so, I have used AI tools and agents to help with work and personal projects. Most of the time, they augment work that I have already scoped and planned. They help me move faster, but they don&#39;t decide what I should be working on.</p>
 <p>Here are some of the workflows that have worked for me. Maybe they will help someone else streamline their work or get over a difficult learning curve.</p>
 <h2 id="drawing-boxes">Drawing boxes</h2><p>I&#39;ve long thought that drawing literal boxes around problems is a good way to break ambiguous work into chunks. The premise is simple: draw a box for everything you know now. Group the boxes, draw a larger box around the groups, and label the new boxes. Then draw a box around everything to define the problem space.</p>
@@ -119,26 +122,61 @@
 <h2 id="humans-steer-agents-execute">Humans steer, agents execute</h2><p>As a default, humans should define the problem and direction, agents should implement bounded work, and humans should review the result.</p>
 <p>That does not mean humans should avoid agents during discovery. Research, comparison, summarization, and question generation are useful. An agent can support those activities, but a person still needs to decide what the work is, what constraints matter, and when it is complete. You should not cede your thinking or agency to an AI agent. This is a useful division of responsibility, not a rule that every task must follow. The boundary can move when the task, tools, or level of risk changes.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
-        
-        <div class="blog-citations-container"><section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-    <li id="citation-refactor-plan">
-      <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-anti-patterns">
-      <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison <span class="citation-links"><a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a></span>
-    </li>
-    <li id="citation-admin-system">
-      <em>Web-Portfolio Admin System</em> by Kyle Rollins <span class="citation-links"><a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-admin-system" class="citation-backref">↩</a></span>
-    </li>
-  </ol>
-</section></div>
-        
+
+        <div class="blog-citations-container">
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+
+        <li id="citation-refactor-plan">
+          <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins
+          <span class="citation-links">
+
+
+              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a>
+
+          </span>
+          <span class="citation-backrefs">
+
+              <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a>
+
+          </span>
+        </li>
+
+        <li id="citation-anti-patterns">
+          <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison
+          <span class="citation-links">
+
+
+              <a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a>
+
+          </span>
+          <span class="citation-backrefs">
+
+              <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a>
+
+          </span>
+        </li>
+
+        <li id="citation-admin-system">
+          <em>Web-Portfolio Admin System</em> by Kyle Rollins
+          <span class="citation-links">
+
+
+              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a>
+
+          </span>
+          <span class="citation-backrefs">
+
+              <a href="#citation-ref-admin-system" class="citation-backref">↩</a>
+
+          </span>
+        </li>
+
+    </ol>
+  </section>
+</div>
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
@@ -161,25 +199,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>

@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,15 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Intentional Work Patterns - Boundaries</title>
+<meta name="description" content="Practical strategies for protecting your time and energy">
+<meta name="keywords" content="productivity, boundaries, remote work">
 
-<meta name="description" content="Practical strategies for protecting your time and energy" />
- 
-<meta name="keywords" content="productivity, boundaries, remote work" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -52,36 +49,63 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
-          <kbr-post-series
-            series-name="Intentional Work Patterns"
-            current-part="1"
-          >
-          </kbr-post-series>
-          
+          <template>
+            <nav class="post-series" aria-labelledby="post-series-title">
+  <h2 id="post-series-title">Intentional Work Patterns</h2>
+  <p>Part 2 of 2</p>
+  <div class="series-navigation">
+    <a class="nav-button" href="/intentional-work-patterns.html"><span class="nav-text">Previous: Intentional Work Patterns</span><span class="nav-arrow">←</span></a>
+
+  </div>
+  <ol class="series-list">
+
+      <li class="series-item">
+        <a class="series-link " href="/intentional-work-patterns.html">
+          <span class="part-number">Series Summary:</span>
+          <span>Intentional Work Patterns</span>
+        </a>
+      </li>
+
+      <li class="series-item">
+        <a class="series-link current" href="/intentional-work-patterns-boundaries.html">
+          <span class="part-number">Part 1</span>
+          <span>Intentional Work Patterns - Boundaries</span>
+        </a>
+      </li>
+
+  </ol>
+</nav>
+
+          </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-           
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="boundaries">boundaries</button><button class="blog-tag" data-tag="intentionality">intentionality</button><button class="blog-tag" data-tag="remote work">remote work</button>
-        </div>
-      </div>
-     
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="boundaries">boundaries</button>
+
+      <button class="blog-tag" data-tag="intentionality">intentionality</button>
+
+      <button class="blog-tag" data-tag="remote work">remote work</button>
+
+  </div>
+</div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="intentional-work-patterns-boundaries">Intentional Work Patterns - Boundaries</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-12-26">December 26, 2025</time>
-          </div>
-        </div>
-      <p>If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn&#39;t so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you&#39;re setting them: you&#39;re creating a social contract that allows you and those around you to communicate what&#39;s important.</p>
+  <div>
+    <time datetime="2025-12-26">December 26, 2025</time>
+  </div>
+</div>
+
+        <p>If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn&#39;t so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you&#39;re setting them: you&#39;re creating a social contract that allows you and those around you to communicate what&#39;s important.</p>
 <p>In the context of working from home, your work is likely the most important thing you&#39;ll be doing from 9 to 5 (or whatever your regular work pattern looks like). Yes, family is important and you should make yourself available for emergencies. But you need to set boundaries around when you can be interrupted. Otherwise, people will interfere with your ability to do your job and, ultimately, bring home money.</p>
 <p>Setting boundaries at home can be more difficult than it is in an office. The people around you at home may not understand how disruptive they might be to your work. They may see you as available anytime because you&#39;re at home, a place that they associate with just about anything other than work. It&#39;s hard to change their thinking about this, but you can do it by setting those boundaries and sticking to them.</p>
 <p>Sticking to them is the hardest part. Being consistent and reinforcing those boundaries over time is a major test of willpower. There will be many small things that seem reasonable to make exceptions for. But you can&#39;t let yourself do that. Because then the people around you will see that your boundaries are permeable - liable to change. And, through no malicious intent on their part, they&#39;ll continue to erode those boundaries until you&#39;re back where you started: with no boundaries.</p>
@@ -107,22 +131,55 @@
 <p>Boundaries aren&#39;t walls that isolate you from others. They&#39;re the framework that lets you be fully present both at work and at home. When you protect your work time, you&#39;re also protecting your ability to genuinely disconnect when the workday ends. That&#39;s better for everyone.</p>
 <p>Start small if you need to. Pick one boundary to implement. Have one conversation. Reclaim one block of deep work time and then build from there.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
-        
-        <div class="blog-citations-container"><section class="citations">
-  <h2>References</h2>
-  <ol class="citations-list">
-    <li id="citation-deep-work">
-      <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport <span class="citation-links"><a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a><span class="citation-separator"> | </span><a href="https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b" target="_blank" rel="noopener">Buy</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-deep-work-1" class="citation-backref">↩1</a> <a href="#citation-ref-deep-work-2" class="citation-backref">↩2</a> <a href="#citation-ref-deep-work-3" class="citation-backref">↩3</a></span>
-    </li>
-    <li id="citation-attention-residue">
-      <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke <span class="citation-links"><a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a></span>
-      <span class="citation-backrefs"> <a href="#citation-ref-attention-residue" class="citation-backref">↩</a></span>
-    </li>
-  </ol>
-</section></div>
-        
+
+        <div class="blog-citations-container">
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+
+        <li id="citation-deep-work">
+          <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport
+          <span class="citation-links">
+
+
+              <a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a>
+
+              <span class="citation-separator">
+                |
+              </span>
+              <a href="https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b" target="_blank" rel="noopener">Buy</a>
+
+          </span>
+          <span class="citation-backrefs">
+
+              <a href="#citation-ref-deep-work-1" class="citation-backref">↩1</a>
+
+              <a href="#citation-ref-deep-work-2" class="citation-backref">↩2</a>
+
+              <a href="#citation-ref-deep-work-3" class="citation-backref">↩3</a>
+
+          </span>
+        </li>
+
+        <li id="citation-attention-residue">
+          <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke
+          <span class="citation-links">
+
+
+              <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a>
+
+          </span>
+          <span class="citation-backrefs">
+
+              <a href="#citation-ref-attention-residue" class="citation-backref">↩</a>
+
+          </span>
+        </li>
+
+    </ol>
+  </section>
+</div>
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
@@ -145,25 +202,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>

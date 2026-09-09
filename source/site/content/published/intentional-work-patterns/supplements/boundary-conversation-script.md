@@ -1,9 +1,9 @@
----
-title: "Boundary Conversation Script"
-description: "A practical script for discussing focus boundaries with your household."
-date: "2026-08-01"
-published: true
----
++++
+title = "Boundary Conversation Script"
+description = "A practical script for discussing focus boundaries with your household."
+date = "2026-08-01"
+published = true
++++
 
 _AI disclosure: This post was generated with AI to help me test the site's supplementary files features._
 

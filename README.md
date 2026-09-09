@@ -202,7 +202,7 @@ Deep dive into the KBR Builder - the custom Vite plugin that powers the site's s
 - HTML templating engine with variable substitution
 - Markdown processing and blog manifest generation
 - Development server enhancements and live reloading
-- Production build optimization and asset injection
+- Explicit asset compilation and renderer-owned production output
 
 ### 📝 [Content Creation](source/site/README.md)
 
@@ -221,9 +221,8 @@ User-friendly guide for creating and editing site content, including HTML pages 
 
 - **Navigation** (`kbr-navigation`) - Site navigation with active state management
 - **Table of Contents** (`kbr-table-of-contents`) - Auto-generated TOC with scroll indicators
-- **Tag Filter** (`kbr-tag-filter`) - Interactive blog post filtering with animations
-- **Timeline** (`kbr-timeline`) - Career timeline with expandable entries
-- **Post List** (`kbr-post-list`) - Blog post listing with search and filtering
+- **Static Blog Content** - Build-time blog markup with progressive enhancement
+- **Static Timeline** - Build-time career timeline markup from Markdown
 - **Anchor Copy** (`kbr-anchor-copy`) - Automatic anchor links for headings
 
 ### Build System (KBR Builder)
@@ -231,7 +230,7 @@ User-friendly guide for creating and editing site content, including HTML pages 
 - **Template Processor** - HTML templating with variable substitution and includes
 - **Markdown Processor** - Convert Markdown to HTML with frontmatter parsing
 - **Dev Server Middleware** - Live processing and hot reloading during development
-- **HTML Bundle Processor** - Production build optimization and asset injection
+- **HTML Bundle Processor** - Manifest-driven production rendering and output
 
 ## 🎯 Development Philosophy
 

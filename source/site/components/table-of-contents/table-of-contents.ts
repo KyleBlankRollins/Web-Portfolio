@@ -237,19 +237,8 @@ export class KbrTableOfContents extends LitElement {
     let targetElement;
     let headings: NodeList;
 
-    // Special handling for kbr-timeline component
-    if (this.targetSelector === ".timeline") {
-      // Find the timeline component in the document
-      const timelineElement = document.querySelector("kbr-timeline");
-
-      if (timelineElement && timelineElement.shadowRoot) {
-        // Search within the timeline's shadow DOM
-        targetElement = timelineElement.shadowRoot.querySelector(".timeline");
-      }
-    } else {
-      // Find the target container (default to main, article, or .content)
-      targetElement = document.querySelector(this.targetSelector);
-    }
+    // Find the target container (default to main, article, or .content)
+    targetElement = document.querySelector(this.targetSelector);
 
     if (!targetElement) {
       console.warn(
@@ -272,6 +261,9 @@ export class KbrTableOfContents extends LitElement {
 
     headings.forEach((heading, index) => {
       const element = heading as HTMLElement;
+      if (element.closest(".description")) {
+        return;
+      }
       const level = parseInt(element.tagName.charAt(1), 10);
       const text = element.textContent?.trim() || "";
 

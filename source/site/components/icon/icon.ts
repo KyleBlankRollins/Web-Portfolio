@@ -2,10 +2,11 @@ import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { iconStyles } from "./icon.style.js";
+import { ICONS, type IconName } from "./icon-data.js";
 import { reducedMotionStyles } from "../../styles/shared-styles.js";
 
 /**
- * Available icon names (matches files in assets/icons/)
+ * Available icon names (matches bundled files in assets/icons/)
  */
 const AVAILABLE_ICONS = [
   "bookmark",
@@ -23,13 +24,15 @@ const AVAILABLE_ICONS = [
   "warning_triangle",
   "projector",
   "terminal",
+  "info_circle",
+  "question_circle",
 ];
 
 /**
  * Icon Component
  *
- * Renders SVG icons from the assets/icons directory.
- * Supports dynamic loading, error handling, and CSS class application.
+ * Renders bundled SVG icons from the assets/icons directory.
+ * Supports error handling and CSS class application.
  *
  * @example
  * ```html
@@ -136,7 +139,7 @@ export class KbrIcon extends LitElement {
   }
 
   /**
-   * Load SVG content from the icons directory
+   * Load bundled SVG content for the requested icon.
    */
   private async loadIcon() {
     if (!this.name) {
@@ -163,18 +166,14 @@ export class KbrIcon extends LitElement {
     this.updateClasses();
 
     try {
-      const response = await fetch(`/assets/icons/${this.name}.svg`);
-
-      if (!response.ok) {
-        throw new Error(`Failed to load icon: ${response.status}`);
+      const svgText = ICONS[this.name as IconName];
+      if (!svgText) {
+        throw new Error(`Icon data is unavailable for "${this.name}"`);
       }
-
-      let svgText = await response.text();
-
       // Process the SVG to ensure it works well in our component
-      svgText = this.processSvg(svgText);
+      const processedSvg = this.processSvg(svgText);
 
-      this.svgContent = svgText;
+      this.svgContent = processedSvg;
       this.hasError = false;
     } catch (error) {
       console.error(`Error loading icon "${this.name}":`, error);

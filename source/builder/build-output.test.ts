@@ -1,7 +1,14 @@
 import { execSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
-import { beforeAll, describe, expect, it } from "vitest";
+import { createServer, type ViteDevServer } from "vite";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { normalizeDom } from "./test-support/normalized-dom.js";
+import { loadSiteSource } from "./site-renderer.js";
+import { parseCareerContent } from "./career-content.js";
+
+let devServer: ViteDevServer | undefined;
+let devServerBaseUrl: string;
 
 function findHtmlFiles(directory: string): string[] {
   const files: string[] = [];
@@ -19,20 +26,58 @@ function findHtmlFiles(directory: string): string[] {
 }
 
 function normalizeAssets(content: string): string {
-  return content.replace(/-[A-Za-z0-9_-]{8}\.(js|css)/g, "-HASH.$1");
+  return content
+    .replace(/-[A-Za-z0-9_-]{8}\.(js|css)/g, "-HASH.$1")
+    .replace(/^[ \t]+$/gm, "");
 }
 
-function normalizeThemeTimestamp(content: string): string {
-  return content.replace(/("generatedAt"\s*:\s*)"[^"]*"/, '$1"NORMALIZED"');
+function normalizeCareerDurations(content: string): string {
+  return content.replace(
+    /(<div class="duration">)[^<]*(<\/div>)/g,
+    "$1DURATION$2"
+  );
+}
+
+function normalizeServedDocument(content: string) {
+  // Asset structure is covered by the dedicated Gate 1.2 assertions below;
+  // this comparison isolates document DOM from expected dev/prod asset URLs.
+  return normalizeDom(
+    content
+      .replace(
+        /[ \t]*<link\b[^>]*rel=["'](?:stylesheet|modulepreload)["'][^>]*>\s*/gi,
+        ""
+      )
+      .replace(
+        /[ \t]*<script\b[^>]*type=["']module["'][^>]*src=["'][^"']*(?:\/@vite\/client|\/main\.ts|\/assets\/)[^"']*["'][^>]*><\/script>\s*/gi,
+        ""
+      )
+  );
 }
 
 describe("built site output", () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     execSync("npm run build", {
       cwd: process.cwd(),
       stdio: "pipe",
     });
+
+    devServer = await createServer({
+      configFile: join(process.cwd(), "vite.config.ts"),
+      server: { host: "127.0.0.1", port: 0 },
+      logLevel: "error",
+    });
+    await devServer.listen();
+
+    const address = devServer.httpServer?.address();
+    if (!address || typeof address === "string") {
+      throw new Error("Vite dev server did not expose a TCP address");
+    }
+    devServerBaseUrl = `http://127.0.0.1:${address.port}`;
   }, 180_000);
+
+  afterAll(async () => {
+    await devServer?.close();
+  });
 
   it("matches the built HTML pages and manifests", async () => {
     const distDirectory = join(process.cwd(), "dist");
@@ -45,13 +90,108 @@ describe("built site output", () => {
     for (const filePath of [...htmlFiles, ...manifestFiles]) {
       const relativePath = relative(distDirectory, filePath);
       let normalized = normalizeAssets(readFileSync(filePath, "utf-8"));
-      if (relativePath === "data/theme-manifest.json") {
-        normalized = normalizeThemeTimestamp(normalized);
+      if (relativePath === "career.html") {
+        normalized = normalizeCareerDurations(normalized);
       }
 
       await expect(normalized).toMatchFileSnapshot(
         `./__snapshots__/${relativePath}.snap`
       );
     }
+  });
+
+  it("places root and nested page assets from the Vite manifest", () => {
+    const distDirectory = join(process.cwd(), "dist");
+    const outputPaths = [
+      "index.html",
+      "portfolio.html",
+      "intentional-work-patterns/supplements/boundary-checklist.html",
+    ];
+
+    for (const outputPath of outputPaths) {
+      const content = readFileSync(join(distDirectory, outputPath), "utf-8");
+      const head = content.slice(0, content.indexOf("</head>"));
+      const body = content.slice(content.indexOf("</head>"));
+
+      expect(content).not.toContain("/main.ts");
+      expect(content).not.toMatch(
+        /<(?:link|script)\b[^>]+(?:href|src)=["'](?!\/)/
+      );
+      expect(head).toMatch(/<link rel="stylesheet"[^>]+href="\/[^"]+"/);
+      expect(head).toMatch(/<link rel="modulepreload"[^>]+href="\/[^"]+"/);
+      expect(body).toMatch(
+        /<script type="module"[^>]+src="\/[^"]+"><\/script>/
+      );
+      expect(body.match(/<script type="module"/g)).toHaveLength(1);
+      expect(body.indexOf("</body>")).toBeGreaterThan(
+        body.indexOf('<script type="module"')
+      );
+    }
+  });
+
+  it("emits static blog and homepage content without legacy renderers", () => {
+    const distDirectory = join(process.cwd(), "dist");
+    const blogHtml = readFileSync(join(distDirectory, "blog.html"), "utf-8");
+    const homeHtml = readFileSync(join(distDirectory, "index.html"), "utf-8");
+    const careerHtml = readFileSync(
+      join(distDirectory, "career.html"),
+      "utf-8"
+    );
+    const blogManifest = JSON.parse(
+      readFileSync(join(distDirectory, "data", "blog-manifest.json"), "utf-8")
+    ) as { posts: unknown[] };
+
+    expect(blogHtml.match(/data-static-blog/g)).toHaveLength(1);
+    expect(blogHtml.match(/data-post-card/g)).toHaveLength(
+      blogManifest.posts.length
+    );
+    expect(blogHtml).not.toMatch(/<kbr-(?:post-list|post-card|tag-filter)\b/i);
+
+    expect(homeHtml).toContain('class="home-highlights"');
+    expect(homeHtml).toContain("AI Agent Workflows");
+    expect(homeHtml).toContain("Documentation Team Lead");
+    expect(homeHtml).not.toMatch(/<kbr-home-highlights\b/i);
+
+    expect(careerHtml.match(/data-static-timeline/g)).toHaveLength(1);
+    const careerSource = parseCareerContent(loadSiteSource().careerContent);
+    expect(careerHtml.match(/class="timeline-entry"/g)).toHaveLength(
+      careerSource.reduce(
+        (count, company) => count + company.positions.length,
+        0
+      )
+    );
+    expect(careerHtml).not.toContain("\\n");
+    expect(careerHtml).not.toMatch(/<kbr-(?:timeline|timeline-entry)\b/i);
+  });
+
+  it("preserves DOM parity between served production and development pages", async () => {
+    const distDirectory = join(process.cwd(), "dist");
+    const outputPaths = [
+      "index.html",
+      "portfolio.html",
+      "intentional-work-patterns/supplements/boundary-checklist.html",
+    ];
+
+    for (const outputPath of outputPaths) {
+      const route = outputPath === "index.html" ? "/" : `/${outputPath}`;
+      const response = await fetch(`${devServerBaseUrl}${route}`);
+      expect(response.status).toBe(200);
+      const developmentHtml = await response.text();
+      const productionHtml = readFileSync(
+        join(distDirectory, outputPath),
+        "utf-8"
+      );
+
+      expect(developmentHtml).toContain("/@vite/client");
+      expect(normalizeServedDocument(developmentHtml)).toEqual(
+        normalizeServedDocument(productionHtml)
+      );
+    }
+  });
+
+  it("leaves unknown routes to Vite's fallback handling", async () => {
+    const response = await fetch(`${devServerBaseUrl}/does-not-exist.html`);
+    expect(response.status).toBe(200);
+    expect(await response.text()).toContain("Hello there!");
   });
 });

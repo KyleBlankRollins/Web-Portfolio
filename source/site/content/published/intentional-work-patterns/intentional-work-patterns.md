@@ -1,13 +1,13 @@
----
-title: "Intentional Work Patterns"
-description: "Build intentional habits to prevent chaos from controlling your work or seeping into your personal life"
-keywords: "habits, intentionality, remote work"
-date: "2025-12-26"
-tags: [habits, intentionality, remote work]
-series:
-  name: "Intentional Work Patterns"
-  part: 0
----
++++
+title = "Intentional Work Patterns"
+description = "Build intentional habits to prevent chaos from controlling your work or seeping into your personal life"
+keywords = "habits, intentionality, remote work"
+date = "2025-12-26"
+tags = ["habits", "intentionality", "remote work"]
+[series]
+name = "Intentional Work Patterns"
+part = 0
++++
 
 Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I've developed to maintain both productivity and work-life balance.
 

@@ -35,8 +35,9 @@
      /<post>/supplements/<page>.html as well as from the site root. -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>{{title}}</title>
-{{#description}}
-<meta name="description" content="{{description}}" />
-{{/description}} {{#keywords}}
-<meta name="keywords" content="{{keywords}}" />
-{{/keywords}} {{#additionalHead}} {{{additionalHead}}} {{/additionalHead}}
+<meta data-kbr-if="description" name="description" content="{{description}}" />
+<meta data-kbr-if="keywords" name="keywords" content="{{keywords}}" />
+<template
+  data-kbr-if="additionalHead"
+  data-kbr-html="additionalHead"
+></template>

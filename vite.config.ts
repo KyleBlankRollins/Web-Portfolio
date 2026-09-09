@@ -1,19 +1,46 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { kbrBuilder } from "./source/builder/index.ts";
 
+function bundleIconData() {
+  const iconDirectory = resolve(process.cwd(), "public/assets/icons");
+
+  return {
+    name: "kbr-bundle-icon-data",
+    transform(_code: string, id: string) {
+      if (!id.endsWith("/source/site/components/icon/icon-data.ts")) {
+        return;
+      }
+
+      const icons = Object.fromEntries(
+        readdirSync(iconDirectory)
+          .filter((filename) => filename.endsWith(".svg"))
+          .map((filename) => [
+            filename.replace(/\.svg$/, ""),
+            readFileSync(resolve(iconDirectory, filename), "utf-8"),
+          ])
+      );
+
+      return `export const ICONS = ${JSON.stringify(icons)};`;
+    },
+  };
+}
+
 export default defineConfig({
   root: "source/site",
   publicDir: "../../public",
-  base: "./", // Use relative paths for assets
+  base: "/",
   build: {
     outDir: "../../dist",
-    emptyOutDir: process.env.GIT_AWARE !== "true",
+    emptyOutDir: true,
     // Additional performance optimizations
     target: "es2022",
     cssMinify: true,
     sourcemap: false, // Disable source maps in production for smaller files
     rollupOptions: {
+      input: "main.ts",
       output: {
         codeSplitting: {
           groups: [{ name: "lit", test: /node_modules[\\/]lit/ }],
@@ -24,6 +51,7 @@ export default defineConfig({
         assetFileNames: "assets/[name]-[hash].[ext]",
       },
     },
+    manifest: true,
     // Enable compression
     reportCompressedSize: true,
     chunkSizeWarningLimit: 500, // Warn for chunks > 500KB
@@ -46,10 +74,8 @@ export default defineConfig({
     exclude: [], // Add any deps you want to skip pre-bundling
   },
   plugins: [
-    kbrBuilder({
-      gitAware: process.env.GIT_AWARE === "true",
-      forceAll: process.env.FORCE_ALL === "true",
-    }),
+    bundleIconData(),
+    kbrBuilder(),
     // Bundle analyzer (only when ANALYZE=true)
     ...(process.env.ANALYZE
       ? [

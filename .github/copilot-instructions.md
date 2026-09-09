@@ -22,13 +22,13 @@ This is a modern portfolio website built with **Vite + TypeScript + Lit Element 
 
 A custom Vite plugin that acts as a static site generator with a modular architecture:
 
-- **Entry point**: `source/builder/index.ts` - orchestrates all processing
+- **Development integration**: `source/builder/index.ts` - configures rendered-document middleware
+- **Production entry point**: `scripts/build-site.ts` - loads, graphs, renders, and writes the site after Vite builds assets
 - **Processors** (thin orchestrators):
   - `markdown-processor.ts` - Orchestrates markdown conversion (delegates to modules)
   - `template-processor.ts` - Orchestrates HTML templating (delegates to modules)
-  - `html-bundle-processor.ts` - Production build HTML processing
+  - `html-bundle-processor.ts` - Production output writing
   - `dev-server-middleware.ts` - Dev server routing and live reload
-  - `git-aware-pipeline.ts` - Intelligent change detection for incremental builds
 
 - **Processing Modules** (`source/builder/modules/`):
   - `html-utils.ts` - HTML escaping and manipulation utilities
@@ -37,8 +37,6 @@ A custom Vite plugin that acts as a static site generator with a modular archite
   - `markdown-renderer.ts` - Marked.js configuration with custom renderers
   - `content-preprocessor.ts` - Content transformation before rendering
   - `blog-manifest.ts` - Blog manifest building and validation
-  - `metadata-extractor.ts` - HTML comment metadata extraction
-  - `template-engine.ts` - Template loading and variable substitution
   - `index.ts` - Barrel export for all modules
 
 **Architecture Pattern**: Processors are thin orchestrators (~100-250 lines) that coordinate interactions between focused, single-responsibility modules. Each module can be tested and maintained independently.
@@ -58,9 +56,7 @@ Local-only blog management interface (isolated from main site):
 
 ```bash
 npm run dev              # Standard dev server (port 3000)
-npm run dev:git-aware    # Only processes changed files (faster)
 npm run build            # Production build to dist/
-npm run build:git-aware  # Incremental production build
 ```
 
 ### Running the Admin System
@@ -211,15 +207,6 @@ All components have access to CSS custom properties:
 --transition-fast, --transition-normal
 ```
 
-## Git-Aware Building
-
-The builder supports incremental builds via `GitAwareBuildPipeline`:
-
-- Enable with: `GIT_AWARE=true npm run dev` or `npm run dev:git-aware`
-- Only processes files changed since last commit
-- Significantly faster for large blogs
-- Falls back to full processing if not a git repo
-
 ## Data Flow
 
 ### Blog Post Processing
@@ -232,7 +219,7 @@ The builder supports incremental builds via `GitAwareBuildPipeline`:
    - `MarkdownRenderer` converts to HTML
    - `BlogManifestBuilder` adds to manifest
 3. → Generated files: `public/blog-post-title.html` + `public/data/blog-manifest.json`
-4. → `blog-manifest.json` consumed by `<kbr-post-list>` component
+4. → static blog markup and `blog-manifest.json` are emitted into the rendered site
 5. → Production: Files copied to `dist/`
 
 ### Admin System Data Flow
@@ -305,4 +292,3 @@ The builder supports incremental builds via `GitAwareBuildPipeline`:
 - **Backlog.md is authoritative**: Don't manually edit generated JSON files
 - **Shadow DOM encapsulation**: Component styles don't leak; use shared styles for consistency
 - **Template processing**: HTML in `pages/` is processed through `template-processor.ts`, don't expect raw HTML
-- **Git-aware mode**: Only works in git repositories; falls back gracefully otherwise

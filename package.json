@@ -9,10 +9,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:git-aware": "GIT_AWARE=true vite",
-    "build": "tsc && vite build",
-    "build:analyze": "tsc && ANALYZE=true vite build",
-    "build:git-aware": "tsc && GIT_AWARE=true vite build",
+    "build": "tsc && vite build && tsx scripts/build-site.ts",
+    "build:analyze": "tsc && ANALYZE=true vite build && tsx scripts/build-site.ts",
     "preview": "vite preview",
     "admin": "npm run admin:server & npm run admin:ui",
     "admin:server": "tsx source/admin/server/index.ts",
@@ -21,6 +19,7 @@
     "lint:prose:all": "tsx scripts/lint-prose.ts",
     "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
     "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose",
+    "validate:drafts": "tsx scripts/validate-drafts.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -32,8 +31,9 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "glob": "^13.0.6",
-    "prismjs": "^1.30.0",
+    "parse5": "^8.0.1",
     "prettier": "^3.9.6",
+    "prismjs": "^1.30.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2",
@@ -42,6 +42,8 @@
   },
   "dependencies": {
     "lit": "^3.3.3",
-    "marked": "^18.0.7"
+    "marked": "^18.0.7",
+    "toml": "^5.0.0",
+    "zod": "^4.5.4"
   }
 }

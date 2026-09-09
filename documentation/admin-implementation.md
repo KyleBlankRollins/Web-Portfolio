@@ -64,6 +64,8 @@ All endpoints are available at `http://localhost:4000`:
 
 The admin system uses `source/site/content/__drafts/backlog.md` as its single source of truth. Posts are organized by markdown sections that correspond to the content lifecycle stages.
 
+`backlog.md` tracks work status only. It is not an index of draft files: the admin system does not discover, validate, or manage the draft documents that live alongside it in `__drafts/`. Draft document structure is handled separately by draft discovery (`npm run validate:drafts`), which excludes `backlog.md`.
+
 ### Valid Section Headings
 
 The parser only accepts the following exact section headings (case-sensitive):

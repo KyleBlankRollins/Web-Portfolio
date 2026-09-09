@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,15 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Intentional Work Patterns</title>
+<meta name="description" content="Build intentional habits to prevent chaos from controlling your work or seeping into your personal life">
+<meta name="keywords" content="habits, intentionality, remote work">
 
-<meta name="description" content="Build intentional habits to prevent chaos from controlling your work or seeping into your personal life" />
- 
-<meta name="keywords" content="habits, intentionality, remote work" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -52,36 +49,63 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
-          <kbr-post-series
-            series-name="Intentional Work Patterns"
-            current-part="0"
-          >
-          </kbr-post-series>
-          
+          <template>
+            <nav class="post-series" aria-labelledby="post-series-title">
+  <h2 id="post-series-title">Intentional Work Patterns</h2>
+  <p>Part 1 of 2</p>
+  <div class="series-navigation">
+
+    <a class="nav-button" href="/intentional-work-patterns-boundaries.html"><span class="nav-text">Next: Intentional Work Patterns - Boundaries</span><span class="nav-arrow">→</span></a>
+  </div>
+  <ol class="series-list">
+
+      <li class="series-item">
+        <a class="series-link current" href="/intentional-work-patterns.html">
+          <span class="part-number">Series Summary:</span>
+          <span>Intentional Work Patterns</span>
+        </a>
+      </li>
+
+      <li class="series-item">
+        <a class="series-link " href="/intentional-work-patterns-boundaries.html">
+          <span class="part-number">Part 1</span>
+          <span>Intentional Work Patterns - Boundaries</span>
+        </a>
+      </li>
+
+  </ol>
+</nav>
+
+          </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-           
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="habits">habits</button><button class="blog-tag" data-tag="intentionality">intentionality</button><button class="blog-tag" data-tag="remote work">remote work</button>
-        </div>
-      </div>
-     
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="habits">habits</button>
+
+      <button class="blog-tag" data-tag="intentionality">intentionality</button>
+
+      <button class="blog-tag" data-tag="remote work">remote work</button>
+
+  </div>
+</div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-12-26">December 26, 2025</time>
-          </div>
-        </div>
-      <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
+  <div>
+    <time datetime="2025-12-26">December 26, 2025</time>
+  </div>
+</div>
+
+        <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
 <p>While these patterns emerged from remote work, many of them apply to any work environment.</p>
 <ol>
 <li><a href="/intentional-work-patterns-boundaries.html">Setting boundaries</a>: Practical strategies for protecting your time and energy</li>
@@ -92,8 +116,31 @@
 </ol>
 <p>If you are looking for practical implementation details, see the companion supplements below.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
-        
+        <template>
+          <section class="supplements" aria-labelledby="supplements-heading">
+  <h2 id="supplements-heading">Supplements</h2>
+  <ul class="supplement-list">
+
+      <li class="supplement-item">
+        <a class="supplement-link" href="/intentional-work-patterns/supplements/boundary-checklist.html">Boundary Checklist</a>
+        <p class="supplement-description">
+          A practical checklist for setting and maintaining healthy work boundaries.
+        </p>
+      </li>
+
+      <li class="supplement-item">
+        <a class="supplement-link" href="/intentional-work-patterns/supplements/boundary-conversation-script.html">Boundary Conversation Script</a>
+        <p class="supplement-description">
+          A practical script for discussing focus boundaries with your household.
+        </p>
+      </li>
+
+  </ul>
+</section>
+
+        </template>
+
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
@@ -116,25 +163,16 @@
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>

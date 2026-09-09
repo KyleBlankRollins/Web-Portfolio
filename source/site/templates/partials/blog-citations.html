@@ -1,0 +1,29 @@
+<div class="blog-citations-container" data-kbr-if="citationItems">
+  <section class="citations">
+    <h2>References</h2>
+    <ol class="citations-list">
+      <template data-kbr-for="citation of citationItems">
+        <li id="citation-{{citation.id}}">
+          <em>{{citation.title}}</em> by {{citation.author}}
+          <span class="citation-links" data-kbr-if="citation.links">
+            <template data-kbr-for="link of citation.links">
+              <span class="citation-separator" data-kbr-if="link.showSeparator">
+                |
+              </span>
+              <a href="{{link.url}}" target="_blank" rel="noopener"
+                >{{link.label}}</a
+              >
+            </template>
+          </span>
+          <span class="citation-backrefs">
+            <template data-kbr-for="backReference of citation.backReferences">
+              <a href="{{backReference.href}}" class="citation-backref"
+                >{{backReference.label}}</a
+              >
+            </template>
+          </span>
+        </li>
+      </template>
+    </ol>
+  </section>
+</div>

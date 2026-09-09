@@ -1,10 +1,10 @@
----
-title: "Agent summaries and how they affect documentation retrieval"
-description: ""
-keywords: ""
-date: "2026-04-04"
-tags: []
----
++++
+title = "Agent summaries and how they affect documentation retrieval"
+description = ""
+keywords = ""
+date = "2026-04-04"
+tags = []
++++
 
 - Agents use different retrival methods. How, exactly, those methods work isn't always clear.
 - One of the retrieval methods is webfetch. Dachary has explored this.

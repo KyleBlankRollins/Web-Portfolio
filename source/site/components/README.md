@@ -13,12 +13,6 @@ Each component uses:
 
 ### Available Components
 
-#### Blog Components
-
-- `post-list.ts/css` - Displays a list of blog posts with filtering
-- `post-card.ts/css` - Individual blog post card
-- `tag-filter.ts/css` - Tag filtering for blog posts
-
 #### Navigation & UI
 
 - `navigation.ts/css` - Site navigation component
@@ -27,25 +21,13 @@ Each component uses:
 
 #### Career Timeline
 
-- `timeline.ts/css` - Main timeline component that loads and displays career data
-- `timeline-entry.ts/css` - Individual job/position entry in the timeline
+Timeline markup is rendered by the builder from Markdown files in `source/site/content/career/`.
+`static-timeline.css` provides page-level styling; the table of contents is the only client-side enhancement.
 
-### Timeline Components Example
+### Timeline Markup
 
-The timeline components work together to display career history:
-
-```html
-<!-- Main timeline component -->
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
-
-<!-- Individual entries are created automatically -->
-<kbr-timeline-entry
-  company="MongoDB"
-  title="Documentation Team Lead"
-  skills='["Team Management", "CI/CD"]'
->
-</kbr-timeline-entry>
-```
+The career page includes the `timeline-static-content.html` partial, which is
+expanded by the AST renderer, and does not mount a timeline custom element.
 
 ## Workflow
 

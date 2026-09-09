@@ -1,18 +1,19 @@
----
-title: "Boundary Checklist"
-description: "A practical checklist for setting and maintaining healthy work boundaries."
-date: "2026-08-01"
-published: true
-citations:
-  - id: deep-work
-    title: "Deep Work: Rules for Focused Success in a Distracted World"
-    author: "Cal Newport"
-    url: "https://calnewport.com/writing/"
-  - id: attention-residue
-    title: "The cost of interrupted work: More speed and stress"
-    author: "Gloria Mark, Daniela Gudith, and Ulrich Klocke"
-    url: "https://www.ics.uci.edu/~gmark/chi08-mark.pdf"
----
++++
+title = "Boundary Checklist"
+description = "A practical checklist for setting and maintaining healthy work boundaries."
+date = "2026-08-01"
+published = true
+[[citations]]
+id = "deep-work"
+title = "Deep Work: Rules for Focused Success in a Distracted World"
+author = "Cal Newport"
+url = "https://calnewport.com/writing/"
+[[citations]]
+id = "attention-residue"
+title = "The cost of interrupted work: More speed and stress"
+author = "Gloria Mark, Daniela Gudith, and Ulrich Klocke"
+url = "https://www.ics.uci.edu/~gmark/chi08-mark.pdf"
++++
 
 _AI disclosure: This post was generated with AI to help me test the site's supplementary files features._
 

@@ -1,35 +1,34 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {{{head}}}
+    <template data-kbr-include="partials/head.html"></template>
+    <template data-kbr-assets="head"></template>
   </head>
   <body>
-    {{{header}}}
+    <template data-kbr-include="partials/header.html"></template>
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          {{#series}}
-          <kbr-post-series
-            series-name="{{series.name}}"
-            current-part="{{series.part}}"
-          >
-          </kbr-post-series>
-          {{/series}}
+          <template data-kbr-if="series">
+            <template data-kbr-include="partials/post-series.html"></template>
+          </template>
           <kbr-table-of-contents></kbr-table-of-contents>
-          {{#tagsHtml}} {{{tagsHtml}}} {{/tagsHtml}}
+          <template data-kbr-include="partials/blog-tags.html"></template>
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
-        {{{content}}}
-        <kbr-supplement-list></kbr-supplement-list>
-        {{#citationsHtml}}
-        <div class="blog-citations-container">{{{citationsHtml}}}</div>
-        {{/citationsHtml}}
+        <h1 id="{{titleAnchorId}}">{{title}}</h1>
+        <template data-kbr-include="partials/blog-metadata.html"></template>
+        <template data-kbr-slot="content"></template>
+        <template data-kbr-if="supplements">
+          <template data-kbr-include="partials/supplement-list.html"></template>
+        </template>
+        <template data-kbr-include="partials/blog-citations.html"></template>
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
     </main>
-    {{{footer}}}
-    <script type="module" src="/main.ts"></script>
+    <template data-kbr-include="partials/footer.html"></template>
+    <template data-kbr-assets="body"></template>
   </body>
 </html>

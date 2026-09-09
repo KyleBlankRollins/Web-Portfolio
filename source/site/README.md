@@ -28,9 +28,11 @@ source/site/
 ### Page Structure
 
 ```html
-<!-- title: Page Title -->
-<!-- description: SEO description for search engines -->
-<!-- keywords: seo, keywords, comma separated -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="Page Title" />
+  <meta name="description" content="SEO description for search engines" />
+  <meta name="keywords" content="seo, keywords, comma separated" />
+</template>
 
 <section class="hero">
   <h1>Your Page Title</h1>
@@ -54,9 +56,14 @@ source/site/
 **Simple About Page:**
 
 ```html
-<!-- title: About Kyle -->
-<!-- description: Learn about Kyle Blank Rollins, technical writer and developer -->
-<!-- keywords: about, bio, technical writer, developer -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="About Kyle" />
+  <meta
+    name="description"
+    content="Learn about Kyle Blank Rollins, technical writer and developer"
+  />
+  <meta name="keywords" content="about, bio, technical writer, developer" />
+</template>
 
 <section class="about-hero">
   <h1>About Me</h1>
@@ -75,8 +82,13 @@ source/site/
 **Portfolio Page with Components:**
 
 ```html
-<!-- title: Portfolio -->
-<!-- description: Showcase of technical writing and development projects -->
+<template data-kbr-page data-layout="base.html">
+  <meta name="title" content="Portfolio" />
+  <meta
+    name="description"
+    content="Showcase of technical writing and development projects"
+  />
+</template>
 
 <section class="portfolio-hero">
   <h1>My Work</h1>
@@ -85,8 +97,7 @@ source/site/
 <!-- Include table of contents component -->
 <kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
 
-<!-- Include timeline component -->
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
+<!-- Career timeline content is emitted statically by the builder. -->
 ```
 
 ## Writing Blog Posts
@@ -229,6 +240,43 @@ Tags are used for:
 
 Place draft posts in `/source/site/content/__drafts/` to exclude them from the published site while working on them. When you're ready to publish, move the file to `/source/site/content/published/`.
 
+Drafts are never rendered, routed, or added to the build. Frontmatter (including `published`) is not required on draft files.
+
+**Flat draft files remain supported.** A single Markdown file at the draft root is a standalone draft:
+
+```text
+source/site/content/__drafts/
+└── my-post.research.md
+```
+
+**Optional directory layout.** For a multi-document draft, use the same parent-file convention as published posts: one directory whose parent Markdown file matches the directory name, with supporting Markdown nested under `supplements/`:
+
+```text
+source/site/content/__drafts/
+└── my-post/
+    ├── my-post.md
+    └── supplements/
+        ├── research.md
+        └── semiotics/
+            └── prior-art.md
+```
+
+Rules:
+
+- Each draft directory must contain exactly one direct Markdown file, named `<directory>.md`.
+- Supporting files live under `supplements/` (recursively). They have no public URL or publication status in this phase.
+- `supplements/` and `media/` are reserved directory names; `media/` is left opaque.
+- `backlog.md` at the draft root is reserved for the admin work-tracking board and is never treated as a draft.
+- Any other subdirectory inside a draft directory is reported as a warning and is not traversed.
+
+**Validate draft structure** without running a site build:
+
+```bash
+npm run validate:drafts
+```
+
+It reports the discovered draft count and classifications, or a structural error naming the offending directory and the expected parent filename. Nested draft Markdown is also covered by `npm run lint:prose:drafts`.
+
 ### Supplements (Optional)
 
 Supplements are additional markdown pages associated with a directory-based parent post.
@@ -278,7 +326,7 @@ Templates automatically handle:
 - HTML document structure (`<html>`, `<head>`, `<body>`)
 - Page metadata (title, description, keywords)
 - Navigation component inclusion
-- CSS and JavaScript asset injection
+- Vite-managed CSS and JavaScript assets
 
 ### Using a Custom Template
 
@@ -323,27 +371,10 @@ Automatically generates navigation from page headings.
 
 ### Timeline
 
-```html
-<kbr-timeline data-url="/data/experience-data.json"></kbr-timeline>
-```
-
-Displays career timeline from JSON data.
-
-### Post List (Blog Page)
-
-```html
-<kbr-post-list></kbr-post-list>
-```
-
-Automatically displays all published blog posts with filtering.
-
-### Tag Filter (Blog Page)
-
-```html
-<kbr-tag-filter></kbr-tag-filter>
-```
-
-Provides tag-based filtering for blog posts.
+Career timeline markup is emitted as static light DOM from
+`source/site/content/career/` during the build. The page-level timeline
+styles are included automatically, and the table of contents is the only
+client-side enhancement.
 
 ## Development Workflow
 

@@ -1,8 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
@@ -36,15 +34,14 @@
 </script>
 <!-- Root-absolute so it resolves from nested paths such as
      /<post>/supplements/<page>.html as well as from the site root. -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>LLM as SME</title>
+<meta name="description" content="While an LLM can't replace a truly knowledgeable human, its a better tool than not having an SME at all">
+<meta name="keywords" content="technical writing, documentation, research, process, AI, LLM">
 
-<meta name="description" content="While an LLM can&#39;t replace a truly knowledgeable human, its a better tool than not having an SME at all" />
- 
-<meta name="keywords" content="technical writing, documentation, research, process, AI, LLM" />
- 
-      <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
-</head>
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
   <body>
     <kbr-navigation>
   <!-- Slotted into .header-content so the switcher sits at the far right
@@ -52,30 +49,36 @@
        which overlapped page content at every viewport width. See DF-31. -->
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
+
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
-           
-      <div class="blog-post-tags">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-list">
-          <button class="blog-tag" data-tag="technical writing">technical writing</button><button class="blog-tag" data-tag="research">research</button><button class="blog-tag" data-tag="LLM">LLM</button>
-        </div>
-      </div>
-     
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+
+      <button class="blog-tag" data-tag="research">research</button>
+
+      <button class="blog-tag" data-tag="LLM">LLM</button>
+
+  </div>
+</div>
+
         </div>
       </aside>
       <article class="blog-post-content glass-surface">
         <h1 id="llm-as-sme">LLM as SME</h1>
-
         <div class="blog-post-metadata">
-          <div>
-            <time datetime="2025-09-26">September 26, 2025</time>
-          </div>
-        </div>
-      <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
+  <div>
+    <time datetime="2025-09-26">September 26, 2025</time>
+  </div>
+</div>
+
+        <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
 <p>Interacting with subject matter experts (SMEs) is a primary responsibility for most technical writers. Even if you happen to be an SME in a product or domain, you should have another SME validate your information and review documentation you write.</p>
 <p>SME roles can range from product manager to customer support to CEO. Unfortunately, many SMEs are often in demand and have little time for reviewing documentation, even it&#39;s important to them. This can create a bottleneck in your documentation processes, as you might be blocked until you can get specific information from an SME.</p>
 <p>This is an area where LLMs can streamline your documentation authoring process. You can feed them project docs that project managers and engineers create and have them simulate being an SME. Specifically, Google&#39;s NotebookLM is great at this.</p>
@@ -131,7 +134,7 @@ While one use case mentioned is &quot;Edge and Mobile,&quot; the details provide
 <p>You could also provide NotebookLM with a style guide and ask it to audit one or more documents.</p>
 <p>For example, I used the following prompt to generate a report called &quot;Report: Strategic Enhancements for Client-Side Field Level Encryption (CSFLE) Documentation&quot;.</p>
 <pre><code>You are a product manager at MongoDB and and expert in field level encryption. Review the MongoDB documentation sources and identify areas of improvement. Specifically areas where we can edit or add documentation to highlight aspects of field level encryption that don&#39;t have much documentation coverage. Generate a report with your findings.</code></pre><p>While the report is rather verbose, it does hit on some high-level improvements we could evaluate. If you want to see the report, you can access it in my <a href="https://notebooklm.google.com/notebook/4d865419-ac0f-4bd7-bb03-8692efc8dd01">demonstration notebook</a>.</p>
-<h2 id="what-notebooklm-can39t-do">What NotebookLM can&#39;t do</h2><p>While LLMs and AI tools like NotebookLM can be useful, they can&#39;t replace human reasoning. In order for these tools to be worthwhile, you need to do the hard parts for them: defining the problem space, specifying important connections, and planning the work to be done.
+<h2 id="what-notebooklm-cant-do">What NotebookLM can&#39;t do</h2><p>While LLMs and AI tools like NotebookLM can be useful, they can&#39;t replace human reasoning. In order for these tools to be worthwhile, you need to do the hard parts for them: defining the problem space, specifying important connections, and planning the work to be done.
 NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audience because it can&#39;t know anything. You need to direct it.</p>
 <p>There are some other things that NotebookLM can&#39;t do and you should now about:</p>
 <ul>
@@ -192,8 +195,9 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
 <p>This approach often surfaces insights you wouldn&#39;t get from direct questioning. The LLM can spot inconsistencies, suggest improvements, and identify gaps in your logic.</p>
 <p>Remember: this workflow isn&#39;t meant to replace human SME review. It&#39;s meant to get you to a point where your human SMEs can provide more valuable, targeted feedback on a more complete draft rather than starting from scratch.</p>
 
-        <kbr-supplement-list></kbr-supplement-list>
-        
+
+
+
 
         <kbr-anchor-copy></kbr-anchor-copy>
       </article>
@@ -216,25 +220,16 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
   <nav class="site-footer-nav" aria-label="Elsewhere on the web">
     <ul>
       <li>
-        <a
-          href="https://www.linkedin.com/in/kyle-blank-rollins/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </li>
       <li>
-        <a
-          href="https://github.com/KyleBlankRollins/Web-Portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
       </li>
     </ul>
   </nav>
 </footer>
-      <script type="module" crossorigin src="/assets/index-HASH.js"></script>
-    <script type="module" crossorigin src="/assets/lit-HASH.js"></script>
-</body>
-</html>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>

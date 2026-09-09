@@ -1,23 +1,24 @@
----
-title: "Intentional Work Patterns - Boundaries"
-description: "Practical strategies for protecting your time and energy"
-keywords: "productivity, boundaries, remote work"
-date: "2025-12-26"
-tags: [boundaries, intentionality, remote work]
-series:
-  name: "Intentional Work Patterns"
-  part: 1
-citations:
-  - id: deep-work
-    title: "Deep Work: Rules for Focused Success in a Distracted World"
-    author: "Cal Newport"
-    url: "https://calnewport.com/writing/"
-    purchaseUrl: "https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b"
-  - id: attention-residue
-    title: "The cost of interrupted work: More speed and stress"
-    author: "Gloria Mark, Daniela Gudith, and Ulrich Klocke"
-    url: "https://www.ics.uci.edu/~gmark/chi08-mark.pdf"
----
++++
+title = "Intentional Work Patterns - Boundaries"
+description = "Practical strategies for protecting your time and energy"
+keywords = "productivity, boundaries, remote work"
+date = "2025-12-26"
+tags = ["boundaries", "intentionality", "remote work"]
+[series]
+name = "Intentional Work Patterns"
+part = 1
+[[citations]]
+id = "deep-work"
+title = "Deep Work: Rules for Focused Success in a Distracted World"
+author = "Cal Newport"
+url = "https://calnewport.com/writing/"
+purchaseUrl = "https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b"
+[[citations]]
+id = "attention-residue"
+title = "The cost of interrupted work: More speed and stress"
+author = "Gloria Mark, Daniela Gudith, and Ulrich Klocke"
+url = "https://www.ics.uci.edu/~gmark/chi08-mark.pdf"
++++
 
 If you share your workspace with other people (like partners, kids, or roommates), setting boundaries is essential. This isn't so different from working in an office. The mechanism is the same, but the actual boundaries will be different. The point of setting boundaries is the same regardless of where you're setting them: you're creating a social contract that allows you and those around you to communicate what's important.
 

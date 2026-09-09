@@ -4,13 +4,21 @@
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { basename, join, posix, relative, sep } from "node:path";
+import { basename, join, posix, relative } from "node:path";
 import { BuildLogger } from "../helpers.js";
 import {
   FrontmatterParser,
   type FrontmatterData,
 } from "./frontmatter-parser.js";
 import type { SupplementManifestEntry } from "./blog-manifest.js";
+import {
+  RESERVED_DIRECTORY_NAMES,
+  collectMarkdownFiles,
+  directMarkdownFileNames,
+  resolveDirectoryParent,
+  toForwardSlashPath,
+} from "./content-structure.js";
+
 export type ContentDocumentKind =
   "standalone-post" | "directory-post" | "supplement-candidate";
 
@@ -22,7 +30,6 @@ export interface ContentDocument {
   parentUrl?: string;
   metadata: FrontmatterData;
 }
-
 export interface ContentDiscoveryResult {
   publishedRootPath: string;
   documents: ContentDocument[];
@@ -30,15 +37,12 @@ export interface ContentDiscoveryResult {
   supplementCandidates: ContentDocument[];
   publishedSupplements: ContentDocument[];
 }
-
-const RESERVED_DIRECTORY_NAMES = new Set(["supplements", "media"]);
-
 /**
  * Discovers publishable content documents from source/site/content/published.
  */
 export class ContentDiscovery {
   private publishedRoot: string;
-  private frontmatterParser: FrontmatterParser;
+  private frontmatterParser: FrontmatterParser<"published">;
 
   constructor(
     publishedRoot: string = join(
@@ -50,7 +54,7 @@ export class ContentDiscovery {
     )
   ) {
     this.publishedRoot = publishedRoot;
-    this.frontmatterParser = new FrontmatterParser();
+    this.frontmatterParser = new FrontmatterParser("published");
   }
 
   /**
@@ -178,12 +182,6 @@ export class ContentDiscovery {
   private validateSupplementPublicationMetadata(
     supplement: ContentDocument
   ): void {
-    if (supplement.metadata.publishedRawValue !== undefined) {
-      throw new Error(
-        `Invalid supplement frontmatter in "${supplement.sourcePath}": published must be a boolean true or false, received "${supplement.metadata.publishedRawValue}".`
-      );
-    }
-
     if (supplement.metadata.published === undefined) {
       throw new Error(
         `Invalid supplement frontmatter in "${supplement.sourcePath}": missing required boolean field "published".`
@@ -253,34 +251,30 @@ export class ContentDiscovery {
       withFileTypes: true,
     });
 
-    const directMarkdownFiles = directEntries.filter(
-      (entry) => entry.isFile() && entry.name.endsWith(".md")
+    const parentResult = resolveDirectoryParent(
+      directMarkdownFileNames(directEntries),
+      directoryName
     );
 
-    if (directMarkdownFiles.length === 0) {
+    if (!parentResult.ok) {
+      if (parentResult.reason === "missing") {
+        throw new Error(
+          `Invalid post directory "${directoryPath}": missing parent Markdown file. Add "${directoryName}.md".`
+        );
+      }
+
+      if (parentResult.reason === "multiple") {
+        throw new Error(
+          `Invalid post directory "${directoryPath}": multiple parent candidates found (${parentResult.candidates.join(", ")}). Keep exactly one parent file named "${directoryName}.md".`
+        );
+      }
+
       throw new Error(
-        `Invalid post directory "${directoryPath}": missing parent Markdown file. Add "${directoryName}.md".`
+        `Invalid post directory "${directoryPath}": parent file name mismatch. Expected "${directoryName}.md", found "${parentResult.foundName}".`
       );
     }
 
-    if (directMarkdownFiles.length > 1) {
-      const fileList = directMarkdownFiles
-        .map((file) => file.name)
-        .sort()
-        .join(", ");
-      throw new Error(
-        `Invalid post directory "${directoryPath}": multiple parent candidates found (${fileList}). Keep exactly one parent file named "${directoryName}.md".`
-      );
-    }
-
-    const parentMarkdownFile = directMarkdownFiles[0];
-    if (parentMarkdownFile.name !== `${directoryName}.md`) {
-      throw new Error(
-        `Invalid post directory "${directoryPath}": parent file name mismatch. Expected "${directoryName}.md", found "${parentMarkdownFile.name}".`
-      );
-    }
-
-    const parentSourcePath = join(directoryPath, parentMarkdownFile.name);
+    const parentSourcePath = join(directoryPath, parentResult.parentFileName);
     const parentDocument = this.createDocument(
       parentSourcePath,
       `${directoryName}.html`,
@@ -302,13 +296,13 @@ export class ContentDiscovery {
       }
 
       const supplementRoot = join(directoryPath, entry.name);
-      const supplementMarkdownFiles = this.collectMarkdownFiles(supplementRoot);
+      const supplementMarkdownFiles = collectMarkdownFiles(supplementRoot);
 
       for (const supplementPath of supplementMarkdownFiles) {
-        const relativeFromParent = this.toForwardSlashPath(
+        const relativeFromParent = toForwardSlashPath(
           relative(directoryPath, supplementPath)
         );
-        const outputPath = this.toForwardSlashPath(
+        const outputPath = toForwardSlashPath(
           posix.join(
             directoryName,
             "supplements",
@@ -332,41 +326,6 @@ export class ContentDiscovery {
     return documents;
   }
 
-  private collectMarkdownFiles(directoryPath: string): string[] {
-    if (!existsSync(directoryPath)) {
-      return [];
-    }
-
-    const markdownFiles: string[] = [];
-    const stack: string[] = [directoryPath];
-
-    while (stack.length > 0) {
-      const currentDirectory = stack.pop();
-      if (!currentDirectory) {
-        continue;
-      }
-
-      const entries = readdirSync(currentDirectory, {
-        withFileTypes: true,
-      });
-
-      for (const entry of entries) {
-        const fullPath = join(currentDirectory, entry.name);
-
-        if (entry.isDirectory()) {
-          stack.push(fullPath);
-          continue;
-        }
-
-        if (entry.isFile() && entry.name.endsWith(".md")) {
-          markdownFiles.push(fullPath);
-        }
-      }
-    }
-
-    return markdownFiles.sort();
-  }
-
   private createDocument(
     sourcePath: string,
     outputPath: string,
@@ -375,7 +334,10 @@ export class ContentDiscovery {
   ): ContentDocument {
     const normalizedOutputPath = this.normalizeOutputPath(outputPath);
     const markdownContent = readFileSync(sourcePath, "utf-8");
-    const { metadata } = this.frontmatterParser.parse(markdownContent);
+    const { metadata } = this.frontmatterParser.parse(
+      markdownContent,
+      sourcePath
+    );
 
     return {
       sourcePath,
@@ -388,7 +350,7 @@ export class ContentDiscovery {
   }
 
   private normalizeOutputPath(outputPath: string): string {
-    const forwardSlashPath = this.toForwardSlashPath(outputPath);
+    const forwardSlashPath = toForwardSlashPath(outputPath);
     const normalizedPath = posix.normalize(forwardSlashPath);
 
     if (
@@ -426,12 +388,4 @@ export class ContentDiscovery {
       seenByPublicUrl.set(document.publicUrl, document);
     }
   }
-
-  private toForwardSlashPath(pathValue: string): string {
-    return pathValue.split(sep).join("/");
-  }
-}
-
-export function normalizePathForComparison(pathValue: string): string {
-  return pathValue.split(sep).join("/");
 }

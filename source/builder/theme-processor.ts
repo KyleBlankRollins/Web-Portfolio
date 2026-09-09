@@ -15,7 +15,6 @@ export interface ThemeManifestEntry {
 export interface ThemeManifest {
   themes: ThemeManifestEntry[];
   totalThemes: number;
-  generatedAt: string;
 }
 
 /**
@@ -28,7 +27,7 @@ export class ThemeProcessor {
   private themes: ThemeManifestEntry[] = [];
   private themesDir: string;
 
-  constructor(themesDir: string) {
+  constructor(themesDir = "") {
     this.themesDir = themesDir;
   }
 
@@ -48,10 +47,23 @@ export class ThemeProcessor {
 
     BuildLogger.info(`🎨 Processing ${themeFiles.length} theme files...`);
 
+    this.processThemeSources(
+      new Map(
+        themeFiles.map((file) => [
+          file,
+          fs.readFileSync(path.join(this.themesDir, file), "utf-8"),
+        ])
+      )
+    );
+  }
+
+  public processThemeSources(themeSources: ReadonlyMap<string, string>): void {
     this.themes = [];
-    for (const file of themeFiles) {
-      const filePath = path.join(this.themesDir, file);
-      const theme = this.processThemeFile(filePath, file);
+    for (const [file, content] of themeSources) {
+      if (!file.startsWith("theme-") || !file.endsWith(".css")) {
+        continue;
+      }
+      const theme = this.processThemeContent(content, file);
       if (theme) {
         this.themes.push(theme);
         BuildLogger.info(`✓ Processed theme: ${theme.name} (${theme.id})`);
@@ -62,13 +74,11 @@ export class ThemeProcessor {
   /**
    * Process a single theme CSS file and extract metadata
    */
-  private processThemeFile(
-    filePath: string,
+  private processThemeContent(
+    content: string,
     fileName: string
   ): ThemeManifestEntry | null {
     try {
-      const content = fs.readFileSync(filePath, "utf-8");
-
       // Extract theme ID from filename (theme-{id}.css)
       const themeId = fileName.replace(/^theme-/, "").replace(/\.css$/, "");
 
@@ -141,7 +151,6 @@ export class ThemeProcessor {
     const manifest: ThemeManifest = {
       themes: this.themes,
       totalThemes: this.themes.length,
-      generatedAt: new Date().toISOString(),
     };
 
     return JSON.stringify(manifest, null, 2);
@@ -154,7 +163,6 @@ export class ThemeProcessor {
     return {
       themes: this.themes,
       totalThemes: this.themes.length,
-      generatedAt: new Date().toISOString(),
     };
   }
 }

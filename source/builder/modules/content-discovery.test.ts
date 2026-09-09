@@ -15,11 +15,11 @@ function fixtureRoot(): string {
 function writePost(
   root: string,
   relativePath: string,
-  frontmatter = "title: Post"
+  frontmatter = 'title = "Post"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
 ): void {
   const filePath = join(root, relativePath);
   mkdirSync(join(filePath, ".."), { recursive: true });
-  writeFileSync(filePath, `---\n${frontmatter}\n---\nBody\n`);
+  writeFileSync(filePath, `+++\n${frontmatter}\n+++\nBody\n`);
 }
 
 afterEach(() => {
@@ -31,7 +31,11 @@ afterEach(() => {
 describe("ContentDiscovery", () => {
   it("discovers a standalone post", () => {
     const root = fixtureRoot();
-    writePost(root, "hello.md", "title: Hello\ndate: 2025-01-01");
+    writePost(
+      root,
+      "hello.md",
+      'title = "Hello"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
 
     const result = new ContentDiscovery(root).discover();
     expect(
@@ -42,7 +46,11 @@ describe("ContentDiscovery", () => {
 
   it("discovers a directory post", () => {
     const root = fixtureRoot();
-    writePost(root, "guide/guide.md", "title: Guide");
+    writePost(
+      root,
+      "guide/guide.md",
+      'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
 
     const result = new ContentDiscovery(root).discover();
     expect(result.documents[0]).toMatchObject({
@@ -53,11 +61,15 @@ describe("ContentDiscovery", () => {
 
   it("classifies supplements as candidates and publishes valid ones", () => {
     const root = fixtureRoot();
-    writePost(root, "guide/guide.md", "title: Guide");
+    writePost(
+      root,
+      "guide/guide.md",
+      'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []'
+    );
     writePost(
       root,
       "guide/supplements/example.md",
-      "title: Example\npublished: true"
+      'title = "Example"\ndescription = "Description"\ndate = "2025-01-01"\npublished = true'
     );
 
     const result = new ContentDiscovery(root).discover();

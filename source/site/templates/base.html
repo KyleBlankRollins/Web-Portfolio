@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {{{head}}}
+    <template data-kbr-include="partials/head.html"></template>
+    <template data-kbr-assets="head"></template>
   </head>
 
   <body>
-    {{{header}}}
+    <template data-kbr-include="partials/header.html"></template>
 
-    <main class="page-content">{{{content}}}</main>
+    <main class="page-content" data-kbr-slot="content"></main>
 
-    <!-- Shared markup from templates/partials/footer.html, injected by
-         template-processor.ts. Edit the partial, not this line. -->
-    {{{footer}}}
+    <template data-kbr-include="partials/footer.html"></template>
+    <template data-kbr-assets="body"></template>
   </body>
 </html>

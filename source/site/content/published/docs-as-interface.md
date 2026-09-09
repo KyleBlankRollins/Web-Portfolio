@@ -1,19 +1,20 @@
----
-title: "Technical Storytelling and Drift at Machine Speed"
-description: "Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this."
-keywords: "technical writing, AI agents, documentation, natural language, product interface"
-date: "2026-03-31"
-tags: [technical writing, AI, documentation]
-citations:
-  - id: openai-codex
-    title: "Introducing Codex"
-    author: "OpenAI"
-    url: "https://openai.com/index/introducing-codex/"
-  - id: zencoder-docs
-    title: "How to improve technical documentation with generative AI"
-    author: "Andrew Filev"
-    url: "https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html"
----
++++
+title = "Technical Storytelling and Drift at Machine Speed"
+description = "Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this."
+keywords = "technical writing, AI agents, documentation, natural language, product interface"
+date = "2026-03-31"
+tags = ["technical writing", "AI", "documentation"]
+[[citations]]
+id = "openai-codex"
+title = "Introducing Codex"
+author = "OpenAI"
+url = "https://openai.com/index/introducing-codex/"
+[[citations]]
+id = "zencoder-docs"
+title = "How to improve technical documentation with generative AI"
+author = "Andrew Filev"
+url = "https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html"
++++
 
 <kbr-admonition type="note">
 **tl;dr:** Documentation has always been an interface between a product and its users. Now it's also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.

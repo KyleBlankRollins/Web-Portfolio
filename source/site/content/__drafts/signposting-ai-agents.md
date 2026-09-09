@@ -1,10 +1,10 @@
----
-title: "Signposting for AI Agents"
-description: ""
-keywords: "information architecture, ai agent, technical writing"
-date: "2026-03-04"
-tags: [information architecture, ai agent, technical writing]
----
++++
+title = "Signposting for AI Agents"
+description = ""
+keywords = "information architecture, ai agent, technical writing"
+date = "2026-03-04"
+tags = ["information architecture", "ai agent", "technical writing"]
++++
 
 Is there a difference in how humans and AI agents interpret signposting in writing? Does signposting help agents? If yes, why? If no, does it hinder and how can writers serve both human and agent audiences?
 
