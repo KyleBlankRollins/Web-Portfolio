@@ -4,6 +4,8 @@ import { join, relative } from "node:path";
 import { createServer, type ViteDevServer } from "vite";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { normalizeDom } from "./test-support/normalized-dom.js";
+import { loadSiteSource } from "./site-renderer.js";
+import { parseCareerContent } from "./career-content.js";
 
 let devServer: ViteDevServer | undefined;
 let devServerBaseUrl: string;
@@ -24,7 +26,16 @@ function findHtmlFiles(directory: string): string[] {
 }
 
 function normalizeAssets(content: string): string {
-  return content.replace(/-[A-Za-z0-9_-]{8}\.(js|css)/g, "-HASH.$1");
+  return content
+    .replace(/-[A-Za-z0-9_-]{8}\.(js|css)/g, "-HASH.$1")
+    .replace(/^[ \t]+$/gm, "");
+}
+
+function normalizeCareerDurations(content: string): string {
+  return content.replace(
+    /(<div class="duration">)[^<]*(<\/div>)/g,
+    "$1DURATION$2"
+  );
 }
 
 function normalizeServedDocument(content: string) {
@@ -79,7 +90,8 @@ describe("built site output", () => {
     for (const filePath of [...htmlFiles, ...manifestFiles]) {
       const relativePath = relative(distDirectory, filePath);
       let normalized = normalizeAssets(readFileSync(filePath, "utf-8"));
-      if (relativePath === "data/theme-manifest.json") {
+      if (relativePath === "career.html") {
+        normalized = normalizeCareerDurations(normalized);
       }
 
       await expect(normalized).toMatchFileSnapshot(
@@ -127,12 +139,6 @@ describe("built site output", () => {
     const blogManifest = JSON.parse(
       readFileSync(join(distDirectory, "data", "blog-manifest.json"), "utf-8")
     ) as { posts: unknown[] };
-    const experienceData = JSON.parse(
-      readFileSync(
-        join(process.cwd(), "public", "data", "experience-data.json"),
-        "utf-8"
-      )
-    ) as { positions: unknown[] }[];
 
     expect(blogHtml.match(/data-static-blog/g)).toHaveLength(1);
     expect(blogHtml.match(/data-post-card/g)).toHaveLength(
@@ -146,12 +152,14 @@ describe("built site output", () => {
     expect(homeHtml).not.toMatch(/<kbr-home-highlights\b/i);
 
     expect(careerHtml.match(/data-static-timeline/g)).toHaveLength(1);
+    const careerSource = parseCareerContent(loadSiteSource().careerContent);
     expect(careerHtml.match(/class="timeline-entry"/g)).toHaveLength(
-      experienceData.reduce(
+      careerSource.reduce(
         (count, company) => count + company.positions.length,
         0
       )
     );
+    expect(careerHtml).not.toContain("\\n");
     expect(careerHtml).not.toMatch(/<kbr-(?:timeline|timeline-entry)\b/i);
   });
 

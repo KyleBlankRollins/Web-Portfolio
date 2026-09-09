@@ -40,15 +40,13 @@
                   <div class="location">{{position.location}}</div>
                 </div>
               </div>
-              <div class="description" data-kbr-if="position.description">
-                <template data-kbr-for="block of position.blocks">
-                  <p data-kbr-if="block.paragraph">{{block.paragraph}}</p>
-                  <ul data-kbr-if="block.items">
-                    <template data-kbr-for="item of block.items"
-                      ><li>{{item}}</li></template
-                    >
-                  </ul>
-                </template>
+              <div
+                class="description"
+                data-kbr-if="position.renderedDescription"
+              >
+                <template
+                  data-kbr-html="position.renderedDescription"
+                ></template>
               </div>
               <div class="skills" data-kbr-if="position.skills">
                 <template data-kbr-for="skill of position.skills"

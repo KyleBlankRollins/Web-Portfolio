@@ -59,54 +59,90 @@
   <aside class="blog-sidebar">
     <div class="tag-filter-container" data-tag-filter="">
       <div class="filter-header">
-        <div class="ui-label filter-title" id="blog-filter-title">Filter by Tag</div>
+        <div class="ui-label filter-title" id="blog-filter-title">
+          Filter by Tag
+        </div>
         <button class="clear-filter-btn" type="button" data-clear-filter="" hidden="">
           Clear filter
         </button>
       </div>
       <div class="tags-grid" aria-labelledby="blog-filter-title">
-        
-          <button class="tag-button" type="button" data-tag="AI" aria-pressed="false">AI <span class="tag-count">(2)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="intentionality" aria-pressed="false">intentionality <span class="tag-count">(2)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="remote work" aria-pressed="false">remote work <span class="tag-count">(2)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="technical writing" aria-pressed="false">technical writing <span class="tag-count">(2)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="boundaries" aria-pressed="false">boundaries <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="career" aria-pressed="false">career <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="coding agents" aria-pressed="false">coding agents <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="documentation" aria-pressed="false">documentation <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="goal setting" aria-pressed="false">goal setting <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="habits" aria-pressed="false">habits <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="leadership" aria-pressed="false">leadership <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="LLM" aria-pressed="false">LLM <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="management" aria-pressed="false">management <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="professional growth" aria-pressed="false">professional growth <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="research" aria-pressed="false">research <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="rule of thirds" aria-pressed="false">rule of thirds <span class="tag-count">(1)</span></button>
-        
-          <button class="tag-button" type="button" data-tag="workflows" aria-pressed="false">workflows <span class="tag-count">(1)</span></button>
-        
+
+          <button class="tag-button" type="button" data-tag="AI" aria-pressed="false">
+            AI <span class="tag-count">(2)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="intentionality" aria-pressed="false">
+            intentionality <span class="tag-count">(2)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="remote work" aria-pressed="false">
+            remote work <span class="tag-count">(2)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="technical writing" aria-pressed="false">
+            technical writing <span class="tag-count">(2)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="boundaries" aria-pressed="false">
+            boundaries <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="career" aria-pressed="false">
+            career <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="coding agents" aria-pressed="false">
+            coding agents <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="documentation" aria-pressed="false">
+            documentation <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="goal setting" aria-pressed="false">
+            goal setting <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="habits" aria-pressed="false">
+            habits <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="leadership" aria-pressed="false">
+            leadership <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="LLM" aria-pressed="false">
+            LLM <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="management" aria-pressed="false">
+            management <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="professional growth" aria-pressed="false">
+            professional growth <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="research" aria-pressed="false">
+            research <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="rule of thirds" aria-pressed="false">
+            rule of thirds <span class="tag-count">(1)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="workflows" aria-pressed="false">
+            workflows <span class="tag-count">(1)</span>
+          </button>
+
       </div>
     </div>
   </aside>
   <div class="blog-posts">
     <div class="post-list-container">
       <div class="post-list-grid" data-post-list="">
-        
+
           <article class="post-card" data-post-card="" data-tags="AI|coding agents|workflows">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -122,18 +158,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="AI">AI</button>
-                  
-                    <button class="post-tag" type="button" data-tag="coding agents">coding agents</button>
-                  
-                    <button class="post-tag" type="button" data-tag="workflows">workflows</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="AI">
+                      AI
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="coding agents">
+                      coding agents
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="workflows">
+                      workflows
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="leadership|management|career">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -149,18 +191,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="leadership">leadership</button>
-                  
-                    <button class="post-tag" type="button" data-tag="management">management</button>
-                  
-                    <button class="post-tag" type="button" data-tag="career">career</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="leadership">
+                      leadership
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="management">
+                      management
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="career">
+                      career
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="technical writing|AI|documentation">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -176,18 +224,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="technical writing">technical writing</button>
-                  
-                    <button class="post-tag" type="button" data-tag="AI">AI</button>
-                  
-                    <button class="post-tag" type="button" data-tag="documentation">documentation</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="technical writing">
+                      technical writing
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="AI">
+                      AI
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="documentation">
+                      documentation
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="boundaries|intentionality|remote work">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -203,18 +257,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="boundaries">boundaries</button>
-                  
-                    <button class="post-tag" type="button" data-tag="intentionality">intentionality</button>
-                  
-                    <button class="post-tag" type="button" data-tag="remote work">remote work</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="boundaries">
+                      boundaries
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="intentionality">
+                      intentionality
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="remote work">
+                      remote work
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="habits|intentionality|remote work">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -230,18 +290,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="habits">habits</button>
-                  
-                    <button class="post-tag" type="button" data-tag="intentionality">intentionality</button>
-                  
-                    <button class="post-tag" type="button" data-tag="remote work">remote work</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="habits">
+                      habits
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="intentionality">
+                      intentionality
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="remote work">
+                      remote work
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="professional growth|goal setting|rule of thirds">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -257,18 +323,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="professional growth">professional growth</button>
-                  
-                    <button class="post-tag" type="button" data-tag="goal setting">goal setting</button>
-                  
-                    <button class="post-tag" type="button" data-tag="rule of thirds">rule of thirds</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="professional growth">
+                      professional growth
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="goal setting">
+                      goal setting
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="rule of thirds">
+                      rule of thirds
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
           <article class="post-card" data-post-card="" data-tags="technical writing|research|LLM">
             <div class="post-card-content">
               <header class="post-card-header">
@@ -284,18 +356,24 @@
               </div>
               <div class="post-card-tags">
                 <div class="tag-list">
-                  
-                    <button class="post-tag" type="button" data-tag="technical writing">technical writing</button>
-                  
-                    <button class="post-tag" type="button" data-tag="research">research</button>
-                  
-                    <button class="post-tag" type="button" data-tag="LLM">LLM</button>
-                  
+
+                    <button class="post-tag" type="button" data-tag="technical writing">
+                      technical writing
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="research">
+                      research
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="LLM">
+                      LLM
+                    </button>
+
                 </div>
               </div>
             </div>
           </article>
-        
+
       </div>
       <p class="post-list-empty" data-post-list-empty="" hidden="" role="status" aria-live="polite" aria-atomic="true">
         No blog posts found with the selected tag.
@@ -336,6 +414,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

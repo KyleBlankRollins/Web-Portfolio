@@ -66,7 +66,7 @@
     <kbr-table-of-contents min-level="2" max-level="3" target-selector=".timeline"></kbr-table-of-contents>
   </div>
   <div class="timeline-content">
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="mongodb">
@@ -74,7 +74,7 @@
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -82,22 +82,20 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Aug 2024 - Present</div>
-                  <div class="duration">1 yr 2 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>Manage a team of engineers and technical writers.</p>
-                  
-                
+                <p>Manage a team of engineers and technical writers.</p>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Team Management</span><span class="skill-tag">Team Planning</span><span class="skill-tag">Engineering Management</span><span class="skill-tag">CI/CD</span>
               </div>
             </article>
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -105,17 +103,17 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Feb 2024 - Aug 2024</div>
-                  <div class="duration">7 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
-              
+
               <div class="skills">
                 <span class="skill-tag">Software Testing</span><span class="skill-tag">Developer Education</span><span class="skill-tag">Technical Project Management</span>
               </div>
             </article>
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -123,30 +121,27 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Oct 2022 - Feb 2024</div>
-                  <div class="duration">1 year 5 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>At MongoDB, I started out helping document the Realm mobile database and how it integrates with Atlas Device Sync. I quickly moved into owning the doc sets and test suites for the React Native and Node.js SDKs.</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Lead test-driven documentation for the Realm React Native SDK, Node.js SDK, and Flutter SDK.</li><li>Build and maintain tested apps that are the source for code examples in the SDK documentation.</li>
-                  </ul>
-                
+                <p>At MongoDB, I started out helping document the Realm mobile database and how it integrates with Atlas Device Sync. I quickly moved into owning the doc sets and test suites for the React Native and Node.js SDKs.</p>
+<ul>
+<li>Lead test-driven documentation for the Realm React Native SDK, Node.js SDK, and Flutter SDK.</li>
+<li>Build and maintain tested apps that are the source for code examples in the SDK documentation.</li>
+</ul>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">TypeScript</span><span class="skill-tag">Jest</span><span class="skill-tag">Mobile Applications</span><span class="skill-tag">Technical Documentation</span><span class="skill-tag">Software Development</span><span class="skill-tag">Flutter</span><span class="skill-tag">React Native</span>
               </div>
             </article>
-          
+
         </div>
       </section>
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="netlify">
@@ -154,7 +149,7 @@
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -162,23 +157,24 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Jun 2021 - Oct 2022</div>
-                  <div class="duration">1 yr 5 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>As part of a docs team, I used a docs-as-code approach to contribute to the Netlify docs (https://docs.netlify.com/). I used the same tools that developers do so that I could be closer to their work and they could more easily contribute to mine. When I started at Netlify, I covered the core build system and integrations, like build plugins. Later, I documented Netlify's ecosystem integrations. This means I spent a lot of time in the wider web development community and figuring out how various tools and frameworks do their magic on Netlify.</p>
-                  
-                
+                <p>As part of a docs team, I used a docs-as-code approach to contribute to the <a href="https://docs.netlify.com/">Netlify docs</a>. I used the same tools that developers do so that I could be closer to their work and they could more easily contribute to mine.</p>
+<p>When I started at Netlify, I covered the core build system and integrations, like build plugins. Later, I documented Netlify&#39;s ecosystem integrations. This means I spent a lot of time in the wider web development community and figuring out how various tools and frameworks do their magic on Netlify.</p>
+
               </div>
-              
+              <div class="skills">
+                <span class="skill-tag">Severless Functions</span><span class="skill-tag">Hosting</span><span class="skill-tag">Technical Documentation</span><span class="skill-tag">Software Development</span>
+              </div>
             </article>
-          
+
         </div>
       </section>
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="3m">
@@ -186,7 +182,7 @@
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -194,30 +190,26 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Mar 2020 - Jun 2021</div>
-                  <div class="duration">1 yr 4 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>I stepped down as Scrum Master so that I could focus on building a new web platform for the team's documentation. The platform is made up of two primary pieces:</p>
-                  
-                
-                  
-                  <ul>
-                    <li>A publishing process that transforms Author-it XML into HTML and JSON output.</li><li>A single-page web application built with Vue that consumes the transformed output.</li>
-                  </ul>
-                
-                  <p>This development work is in addition to my regular documentation responsibilities.</p>
-                  
-                
+                <p>I stepped down as Scrum Master so that I could focus on building a new web platform for the team&#39;s documentation.</p>
+<p>The platform is made up of two primary pieces:</p>
+<ul>
+<li>A publishing process that transforms Author-it XML into HTML and JSON output.</li>
+<li>A single-page web application built with Vue that consumes the transformed output.</li>
+</ul>
+<p>This development work is in addition to my regular documentation responsibilities.</p>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Vue.js</span><span class="skill-tag">JavaScript</span><span class="skill-tag">XML</span><span class="skill-tag">XSL</span><span class="skill-tag">Technical Documentation</span>
               </div>
             </article>
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -225,17 +217,17 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Aug 2019 - Mar 2020</div>
-                  <div class="duration">8 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
-              
+
               <div class="skills">
                 <span class="skill-tag">Agile Process</span><span class="skill-tag">Coaching</span>
               </div>
             </article>
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -243,22 +235,20 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Mar 2019 - Jul 2019</div>
-                  <div class="duration">8 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>In addition to my technical writer duties, I serve as Scrum Master for one of the two Scrum teams in the Documentation Department. In this role, I enable others to do their jobs more effectively.</p>
-                  
-                
+                <p>In addition to my technical writer duties, I serve as Scrum Master for one of the two Scrum teams in the Documentation Department. In this role, I enable others to do their jobs more effectively.</p>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Agile</span><span class="skill-tag">SCRUM</span><span class="skill-tag">Team Leadership</span>
               </div>
             </article>
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -266,54 +256,38 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Apr 2017 - Mar 2019</div>
-                  <div class="duration">2 years</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Greater Salt Lake City Area</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>Technical writing</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Document mainframe and provider software for 3M HIS' healthcare clients (documents include everything from What's New to reference manuals)</li><li>Collaborate with agile development teams to ensure features are properly documented for each release</li><li>Target various audiences from system administrators to transcriptionists</li>
-                  </ul>
-                
-                  <p>Web development</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Improve and maintain HTML, CSS, and JavaScript for online help</li><li>Create and maintain a Vue.js web app that serves as a team dashboard for online help. Uses Google Analytics APIs to populate relevant data for various reports</li>
-                  </ul>
-                
-                  <p>Analytics</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Restructure and maintain department Google Analytics account</li><li>Define metrics terms and disseminate information about how metrics can benefit the team and readers</li>
-                  </ul>
-                
-                  <p>Graphics</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Lead the department graphics team. Use various tools, including Visio, to create professional workflows and system diagrams for product documentation</li>
-                  </ul>
-                
+                <h3 id="technical-writing">Technical writing</h3><ul>
+<li>Document mainframe and provider software for 3M HIS&#39; healthcare clients (documents include everything from What&#39;s New to reference manuals)</li>
+<li>Collaborate with agile development teams to ensure features are properly documented for each release</li>
+<li>Target various audiences from system administrators to transcriptionists</li>
+</ul>
+<h3 id="web-development">Web development</h3><ul>
+<li>Improve and maintain HTML, CSS, and JavaScript for online help</li>
+<li>Create and maintain a Vue.js web app that serves as a team dashboard for online help. Uses Google Analytics APIs to populate relevant data for various reports</li>
+</ul>
+<h3 id="analytics">Analytics</h3><ul>
+<li>Restructure and maintain department Google Analytics account</li>
+<li>Define metrics terms and disseminate information about how metrics can benefit the team and readers</li>
+</ul>
+<h3 id="graphics">Graphics</h3><ul>
+<li>Lead the department graphics team. Use various tools, including Visio, to create professional workflows and system diagrams for product documentation</li>
+</ul>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Author-it</span><span class="skill-tag">Technical Documentation</span><span class="skill-tag">Interviewing</span><span class="skill-tag">Stakeholder management</span>
               </div>
             </article>
-          
+
         </div>
       </section>
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="ebay">
@@ -321,7 +295,7 @@
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -329,25 +303,25 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Nov 2016 - Apr 2017</div>
-                  <div class="duration">6 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Contract</div>
                   <div class="location">Greater Salt Lake City Area</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>As part of the HR User Experience team, I gathered, curated, wrote, and edited content for a complete site overhaul. Primary goals of the project were to simplify the user experience and bring the \"human\" aspect into eBay's Human Resources content. I coordinated with dozens of HR SMEs to revamp their content. I also worked with designers and technical experts to ensure that the new content satisfied HR SMEs.</p>
-                  
-                
+                <p>As part of the HR User Experience team, I gathered, curated, wrote, and edited content for a complete site overhaul.</p>
+<p>Primary goals of the project were to simplify the user experience and bring the &quot;human&quot; aspect into eBay&#39;s Human Resources content.</p>
+<p>I coordinated with dozens of HR SMEs to revamp their content. I also worked with designers and technical experts to ensure that the new content satisfied HR SMEs.</p>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Stakeholder management</span><span class="skill-tag">HR Policy Writiing</span><span class="skill-tag">Information Architecture</span><span class="skill-tag">UX Design</span>
               </div>
             </article>
-          
+
         </div>
       </section>
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="lightcast">
@@ -355,7 +329,7 @@
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -363,62 +337,53 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Mar 2016 - Oct 2016</div>
-                  <div class="duration">8 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-Time</div>
                   <div class="location">Moscow, Idaho</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>My work at Emsi was multi-faceted and crossed several disciplines. Blog Content</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Create content for many audiences, primarily higher education institutions</li><li>Write various content types including case studies, data analysis, and product announcements</li><li>Conduct SEO research to ensure the content is easy to find and drives traffic</li><li>Collaborate with design and video team members to create exciting content</li>
-                  </ul>
-                
-                  <p>Research &amp; Data Analysis</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Research primary audiences and their markets</li><li>Collect data and identify key trends that audiences find valuable</li><li>Analyze large amounts of data for media (newspapers, etc.) requests</li><li>Create graphs and charts using Plot.ly and Tableau</li>
-                  </ul>
-                
-                  <p>Content Marketing</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Increase conversion rates by employing inbound content marketing concepts</li><li>Align content with needs of clients and sales team</li><li>Contribute to and maintain company voice and brand</li><li>Manage social media channels, engaging audiences through interesting posts</li>
-                  </ul>
-                
-                  <p>Technical Work</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Understand and employ Emsi's complex software products to inform content creation</li><li>Create, edit, and maintain RFPs and RFP templates</li>
-                  </ul>
-                
+                <p>My work at Emsi was multi-faceted and crossed several disciplines.</p>
+<h3 id="blog-content">Blog Content</h3><ul>
+<li>Create content for many audiences, primarily higher education institutions</li>
+<li>Write various content types including case studies, data analysis, and product announcements</li>
+<li>Conduct SEO research to ensure the content is easy to find and drives traffic</li>
+<li>Collaborate with design and video team members to create exciting content</li>
+</ul>
+<h3 id="research-data-analysis">Research &amp; Data Analysis</h3><ul>
+<li>Research primary audiences and their markets</li>
+<li>Collect data and identify key trends that audiences find valuable</li>
+<li>Analyze large amounts of data for media (newspapers, etc.) requests</li>
+<li>Create graphs and charts using Plot.ly and Tableau</li>
+</ul>
+<h3 id="content-marketing">Content Marketing</h3><ul>
+<li>Increase conversion rates by employing inbound content marketing concepts</li>
+<li>Align content with needs of clients and sales team</li>
+<li>Contribute to and maintain company voice and brand</li>
+<li>Manage social media channels, engaging audiences through interesting posts</li>
+</ul>
+<h3 id="technical-work">Technical Work</h3><ul>
+<li>Understand and employ Emsi&#39;s complex software products to inform content creation</li>
+<li>Create, edit, and maintain RFPs and RFP templates</li>
+</ul>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">Interviewing</span><span class="skill-tag">Technical Narrative</span><span class="skill-tag">Economics Writing</span>
               </div>
             </article>
-          
+
         </div>
       </section>
-    
+
       <section class="timeline-company">
         <div class="company-header">
           <h2 class="company-name" id="purch">
-            <a href="https://www.purch.com" target="_blank" rel="noopener">Purch (2013-2016)</a>
+            <a href="https://www.purch.com" target="_blank" rel="noopener">Purch</a>
           </h2>
         </div>
         <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -426,144 +391,48 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Sep 2013 - Jan 2016</div>
-                  <div class="duration">2 yrs 5 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Ogden, Utah</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>Even though my title at Top Ten Reviews was Writer, my day-to-day tasks involved project management, research, and much more. I often switched gears quickly to meet deadlines. Project Management</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Evaluate current markets in a given category and request products for review</li><li>Follow-up with submissions team to ensure I receive products before they are needed</li><li>Schedule time for research, writing, editing and publication</li><li>Work with Managing and Copy Editors to get ahead of projects before they start</li><li>Follow-up with web producers and graphics designers to ensure timeliness</li><li>Meet with stakeholders from other departments to ensure my project satisfies demands</li>
-                  </ul>
-                
-                  <p>Research</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Evaluate a given audience with tools such as the Adobe Marketing Cloud</li><li>Seek out new trends in a given area to identify innovations in technology</li><li>Identify top brands in a given area and find what sets them apart from the marketplace</li>
-                  </ul>
-                
-                  <p>Hardware Benchmarking</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Develop hardware testing strategies to evaluate a developer's claims of efficacy</li><li>Compare manufacturer specifications with a product's functionality</li><li>Accumulate quantifiable datasets that allow for an apples-to-apples comparisons</li>
-                  </ul>
-                
-                  <p>Graphic Design</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Have a keen eye for presenting hardware appropriately</li><li>Apply Adobe Photoshop to properly frame images</li>
-                  </ul>
-                
-                  <p>Writing</p>
-                  
-                
-                  
-                  <ul>
-                    <li>Curate 20 websites, each of which I optimize for SEO and audiences</li><li>Generate over 6,100 words across 11 pages of research-based content for each site</li><li>Write captions for over 56 images taken during testing on each site</li><li>Create engaging content that both satisfies Google search parameters and the readers curiosity</li>
-                  </ul>
-                
+                <p>Even though my title at Top Ten Reviews was Writer, my day-to-day tasks involved project management, research, and much more. I often switched gears quickly to meet deadlines.</p>
+<h3 id="project-management">Project Management</h3><ul>
+<li>Evaluate current markets in a given category and request products for review</li>
+<li>Follow-up with submissions team to ensure I receive products before they are needed</li>
+<li>Schedule time for research, writing, editing and publication</li>
+<li>Work with Managing and Copy Editors to get ahead of projects before they start</li>
+<li>Follow-up with web producers and graphics designers to ensure timeliness</li>
+<li>Meet with stakeholders from other departments to ensure my project satisfies demands</li>
+</ul>
+<h3 id="research">Research</h3><ul>
+<li>Evaluate a given audience with tools such as the Adobe Marketing Cloud</li>
+<li>Seek out new trends in a given area to identify innovations in technology</li>
+<li>Identify top brands in a given area and find what sets them apart from the marketplace</li>
+</ul>
+<h3 id="hardware-benchmarking">Hardware Benchmarking</h3><ul>
+<li>Develop hardware testing strategies to evaluate a developer&#39;s claims of efficacy</li>
+<li>Compare manufacturer specifications with a product&#39;s functionality</li>
+<li>Accumulate quantifiable datasets that allow for an apples-to-apples comparisons</li>
+</ul>
+<h3 id="graphic-design">Graphic Design</h3><ul>
+<li>Have a keen eye for presenting hardware appropriately</li>
+<li>Apply Adobe Photoshop to properly frame images</li>
+</ul>
+<h3 id="writing">Writing</h3><ul>
+<li>Curate 20 websites, each of which I optimize for SEO and audiences</li>
+<li>Generate over 6,100 words across 11 pages of research-based content for each site</li>
+<li>Write captions for over 56 images taken during testing on each site</li>
+<li>Create engaging content that both satisfies Google search parameters and the readers curiosity</li>
+</ul>
+
               </div>
               <div class="skills">
                 <span class="skill-tag">SEO</span><span class="skill-tag">Product Research</span><span class="skill-tag">Product Testing</span><span class="skill-tag">Technical Writing</span>
               </div>
             </article>
-          
-        </div>
-      </section>
-    
-      <section class="timeline-company">
-        <div class="company-header">
-          <h2 class="company-name" id="weber-state-university">
-            <a href="https://www.weber.edu" target="_blank" rel="noopener">Weber State University</a>
-          </h2>
-        </div>
-        <div class="company-positions">
-          
-            <article class="timeline-entry">
-              <div class="entry-header">
-                <div class="entry-title">
-                  <h3 class="job-title">Building Manager</h3>
-                </div>
-                <div class="entry-meta">
-                  <div class="date-range">Aug 2011 - Sep 2013</div>
-                  <div class="duration">2 yrs 2 mos</div>
-                  <div class="employment-type">Part-time</div>
-                  <div class="location">Ogden, Utah</div>
-                </div>
-              </div>
-              <div class="description">
-                
-                  <p>Ensured that events after 4 p.m. began and proceeded smoothly at the student union, which often included troubleshooting A/V problems. Managed multiple concurrent events that were scheduled throughout the building on a regular basis.</p>
-                  
-                
-              </div>
-              
-            </article>
-          
-            <article class="timeline-entry">
-              <div class="entry-header">
-                <div class="entry-title">
-                  <h3 class="job-title">Writing Tutor</h3>
-                </div>
-                <div class="entry-meta">
-                  <div class="date-range">Aug 2009 - Aug 2011</div>
-                  <div class="duration">2 yrs 1 mo</div>
-                  <div class="employment-type">Part-time</div>
-                  <div class="location">Ogden, Utah</div>
-                </div>
-              </div>
-              <div class="description">
-                
-                  <p>Assisted students in creating and correcting essays and other writing material. Designed and edited brochures for the MLA, APA, and Chicago style guides. Worked closely with students to help them develop writing skills and habits.</p>
-                  
-                
-              </div>
-              
-            </article>
-          
-            <article class="timeline-entry">
-              <div class="entry-header">
-                <div class="entry-title">
-                  <h3 class="job-title">Copy Editor</h3>
-                </div>
-                <div class="entry-meta">
-                  <div class="date-range">May 2012 - Jan 2013</div>
-                  <div class="duration">9 mos</div>
-                  <div class="employment-type">Part-time</div>
-                  <div class="location">Ogden, Utah</div>
-                </div>
-              </div>
-              <div class="description">
-                
-                  <p>Edited articles to make sure that they met the standards of The Signpost and AP style.</p>
-                  
-                
-              </div>
-              
-            </article>
-          
-        </div>
-      </section>
-    
-      <section class="timeline-company">
-        <div class="company-header">
-          <h2 class="company-name" id="purch-2">
-            <a href="https://www.purch.com" target="_blank" rel="noopener">Purch (2011-2012)</a>
-          </h2>
-        </div>
-        <div class="company-positions">
-          
+
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
@@ -571,23 +440,89 @@
                 </div>
                 <div class="entry-meta">
                   <div class="date-range">Apr 2011 - Jan 2012</div>
-                  <div class="duration">10 mos</div>
+                  <div class="duration">DURATION</div>
                   <div class="employment-type">Internship</div>
                   <div class="location">Ogden, Utah</div>
                 </div>
               </div>
               <div class="description">
-                
-                  <p>Completed writing internship, creating online content for TopTenReviews.com. Worked with others to create high-quality and engaging content. Researched and compiled an in-depth white paper.</p>
-                  
-                
+                <p>Completed writing internship, creating online content for TopTenReviews.com. Worked with others to create high-quality and engaging content. Researched and compiled an in-depth white paper.</p>
+
               </div>
-              
+
             </article>
-          
+
         </div>
       </section>
-    
+
+      <section class="timeline-company">
+        <div class="company-header">
+          <h2 class="company-name" id="weber-state-university">
+            <a href="https://www.weber.edu" target="_blank" rel="noopener">Weber State University</a>
+          </h2>
+        </div>
+        <div class="company-positions">
+
+            <article class="timeline-entry">
+              <div class="entry-header">
+                <div class="entry-title">
+                  <h3 class="job-title">Building Manager</h3>
+                </div>
+                <div class="entry-meta">
+                  <div class="date-range">Aug 2011 - Sep 2013</div>
+                  <div class="duration">DURATION</div>
+                  <div class="employment-type">Part-time</div>
+                  <div class="location">Ogden, Utah</div>
+                </div>
+              </div>
+              <div class="description">
+                <p>Ensured that events after 4 p.m. began and proceeded smoothly at the student union, which often included troubleshooting A/V problems. Managed multiple concurrent events that were scheduled throughout the building on a regular basis.</p>
+
+              </div>
+
+            </article>
+
+            <article class="timeline-entry">
+              <div class="entry-header">
+                <div class="entry-title">
+                  <h3 class="job-title">Writing Tutor</h3>
+                </div>
+                <div class="entry-meta">
+                  <div class="date-range">Aug 2009 - Aug 2011</div>
+                  <div class="duration">DURATION</div>
+                  <div class="employment-type">Part-time</div>
+                  <div class="location">Ogden, Utah</div>
+                </div>
+              </div>
+              <div class="description">
+                <p>Assisted students in creating and correcting essays and other writing material. Designed and edited brochures for the MLA, APA, and Chicago style guides. Worked closely with students to help them develop writing skills and habits.</p>
+
+              </div>
+
+            </article>
+
+            <article class="timeline-entry">
+              <div class="entry-header">
+                <div class="entry-title">
+                  <h3 class="job-title">Copy Editor</h3>
+                </div>
+                <div class="entry-meta">
+                  <div class="date-range">May 2012 - Jan 2013</div>
+                  <div class="duration">DURATION</div>
+                  <div class="employment-type">Part-time</div>
+                  <div class="location">Ogden, Utah</div>
+                </div>
+              </div>
+              <div class="description">
+                <p>Edited articles to make sure that they met the standards of The Signpost and AP style.</p>
+
+              </div>
+
+            </article>
+
+        </div>
+      </section>
+
   </div>
 </div>
 
@@ -622,6 +557,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

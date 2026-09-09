@@ -53,18 +53,18 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="professional growth">professional growth</button>
-    
+
       <button class="blog-tag" data-tag="goal setting">goal setting</button>
-    
+
       <button class="blog-tag" data-tag="rule of thirds">rule of thirds</button>
-    
+
   </div>
 </div>
 
@@ -114,8 +114,8 @@
 <p>SMART goals for personal growth are useful, but only when they&#39;re informed by a greater and usually less measurable purpose. The rule of thirds framework is a tool to define that purpose. This makes it easier to define SMART goals and stick with them.</p>
 <h2 id="summary">Summary</h2><p>A personal growth rule of thirds framework makes defining goals easier and P&amp;G preparation less stressful. I&#39;m still refining how to talk about and present this framework. It isn&#39;t robust, but maybe it doesn&#39;t need to be. Perhaps it&#39;s enough to be a lightweight layer on top of other goal setting strategies - a way to narrow the scope of unlimited possibility.</p>
 
-        
-        
+
+
 
 
         <kbr-anchor-copy></kbr-anchor-copy>
@@ -149,6 +149,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

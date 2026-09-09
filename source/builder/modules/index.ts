@@ -23,6 +23,7 @@ export {
   type SeriesInfo,
   type FrontmatterData,
   type FrontmatterParseResult,
+  type CareerFrontmatter,
 } from "./frontmatter-parser.js";
 
 // Markdown rendering

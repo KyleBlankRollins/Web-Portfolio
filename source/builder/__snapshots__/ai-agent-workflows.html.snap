@@ -53,18 +53,18 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="AI">AI</button>
-    
+
       <button class="blog-tag" data-tag="coding agents">coding agents</button>
-    
+
       <button class="blog-tag" data-tag="workflows">workflows</button>
-    
+
   </div>
 </div>
 
@@ -122,57 +122,57 @@
 <h2 id="humans-steer-agents-execute">Humans steer, agents execute</h2><p>As a default, humans should define the problem and direction, agents should implement bounded work, and humans should review the result.</p>
 <p>That does not mean humans should avoid agents during discovery. Research, comparison, summarization, and question generation are useful. An agent can support those activities, but a person still needs to decide what the work is, what constraints matter, and when it is complete. You should not cede your thinking or agency to an AI agent. This is a useful division of responsibility, not a rule that every task must follow. The boundary can move when the task, tools, or level of risk changes.</p>
 
-        
+
         <div class="blog-citations-container">
   <section class="citations">
     <h2>References</h2>
     <ol class="citations-list">
-      
+
         <li id="citation-refactor-plan">
           <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins
           <span class="citation-links">
-            
-              
+
+
               <a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
         <li id="citation-anti-patterns">
           <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison
           <span class="citation-links">
-            
-              
+
+
               <a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
         <li id="citation-admin-system">
           <em>Web-Portfolio Admin System</em> by Kyle Rollins
           <span class="citation-links">
-            
-              
+
+
               <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-admin-system" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
     </ol>
   </section>
 </div>
@@ -209,6 +209,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

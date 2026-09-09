@@ -53,18 +53,18 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="leadership">leadership</button>
-    
+
       <button class="blog-tag" data-tag="management">management</button>
-    
+
       <button class="blog-tag" data-tag="career">career</button>
-    
+
   </div>
 </div>
 
@@ -129,8 +129,8 @@
 <li><strong>April 2026.</strong> Team moves to a new AI and Emerging Technology group.</li>
 </ul>
 
-        
-        
+
+
 
 
         <kbr-anchor-copy></kbr-anchor-copy>
@@ -164,6 +164,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

@@ -53,9 +53,9 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
-          
+
 
         </div>
       </aside>
@@ -79,8 +79,8 @@
 <p>Sibling supplement: <a href="/intentional-work-patterns/supplements/boundary-checklist.html#boundary-checklist">Boundary checklist</a></p>
 <p>Back to parent post: <a href="/intentional-work-patterns.html#supplements-heading">Intentional Work Patterns</a></p>
 
-        
-        
+
+
 
 
         <kbr-anchor-copy></kbr-anchor-copy>
@@ -114,6 +114,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

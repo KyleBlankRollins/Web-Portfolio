@@ -5,6 +5,7 @@ import type {
   RenderableSiteContent,
 } from "./site-renderer.js";
 import type { TemplateVariables } from "./template-processor.js";
+import { parseCareerContent } from "./career-content.js";
 import {
   buildBlogStaticModel,
   buildHomeStaticModel,
@@ -20,14 +21,14 @@ export function collectSiteContent(
   const content: RenderableSiteContent[] = [];
   const blogManifestJson = markdownProcessor.generateBlogManifestJson();
   const blogManifest = JSON.parse(blogManifestJson);
-  const experienceData = JSON.parse(source.experienceData);
+  const careerContent = parseCareerContent(source.careerContent);
   const pageMetadata = new Map<string, Partial<TemplateVariables>>([
     [
       "career.html",
-      { timelineCompanies: buildTimelineStaticModel(experienceData) },
+      { timelineCompanies: buildTimelineStaticModel(careerContent) },
     ],
     ["blog.html", { ...buildBlogStaticModel(blogManifest) }],
-    ["index.html", { ...buildHomeStaticModel(blogManifest, experienceData) }],
+    ["index.html", { ...buildHomeStaticModel(blogManifest, careerContent) }],
   ]);
 
   for (const [outputPath, pageContent] of source.pages) {

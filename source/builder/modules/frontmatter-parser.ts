@@ -37,12 +37,16 @@ export interface FrontmatterData {
 /**
  * Result of frontmatter parsing
  */
-export interface FrontmatterParseResult {
-  metadata: FrontmatterData;
+export interface FrontmatterParseResult<TMetadata = FrontmatterData> {
+  metadata: TMetadata;
   content: string;
 }
 
-export type FrontmatterMode = "published" | "draft";
+export type FrontmatterMode = "published" | "draft" | "career";
+
+type MetadataFor<Mode extends FrontmatterMode> = Mode extends "career"
+  ? CareerFrontmatter
+  : FrontmatterData;
 
 const citationSchema = z
   .object({
@@ -108,13 +112,52 @@ const draftFrontmatterSchema = z
   })
   .strict();
 
+export const careerPositionSchema = z
+  .object({
+    title: z.string().min(1),
+    startDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "must use YYYY-MM"),
+    endDate: z
+      .string()
+      .regex(
+        /^(\d{4}-(0[1-9]|1[0-2])|Present)$/,
+        "must use YYYY-MM or Present"
+      ),
+    location: z.string().min(1),
+    employmentType: z.string().min(1),
+    skills: z.array(z.string()).optional(),
+  })
+  .strict()
+  .superRefine((position, context) => {
+    if (
+      position.endDate !== "Present" &&
+      position.endDate < position.startDate
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["endDate"],
+        message: "must not precede startDate",
+      });
+    }
+  });
+
+export const careerFrontmatterSchema = z
+  .object({
+    company: z.string().min(1),
+    companyWebsite: z.url().optional(),
+    sortOrder: z.number().int().nonnegative(),
+    positions: z.array(careerPositionSchema).min(1),
+  })
+  .strict();
+
+export type CareerFrontmatter = z.infer<typeof careerFrontmatterSchema>;
+
 /**
  * Frontmatter parser class
  */
-export class FrontmatterParser {
-  private mode: FrontmatterMode;
+export class FrontmatterParser<Mode extends FrontmatterMode> {
+  private mode: Mode;
 
-  constructor(mode: FrontmatterMode = "draft") {
+  constructor(mode: Mode) {
     this.mode = mode;
   }
 
@@ -125,7 +168,7 @@ export class FrontmatterParser {
   public parse(
     markdownContent: string,
     sourcePath = "<inline frontmatter>"
-  ): FrontmatterParseResult {
+  ): FrontmatterParseResult<MetadataFor<Mode>> {
     let content = markdownContent;
 
     // Frontmatter must occupy the leading block and use TOML delimiters.
@@ -134,7 +177,12 @@ export class FrontmatterParser {
     );
 
     if (!frontmatterMatch) {
-      return { metadata: {}, content };
+      if (this.mode === "career") {
+        throw new Error(
+          `Invalid frontmatter in "${sourcePath}": frontmatter is required`
+        );
+      }
+      return { metadata: {} as MetadataFor<Mode>, content };
     }
 
     const frontmatter = frontmatterMatch[1];
@@ -149,10 +197,12 @@ export class FrontmatterParser {
       );
     }
 
-    const schema =
-      this.mode === "published"
-        ? baseFrontmatterSchema
-        : draftFrontmatterSchema;
+    const schemaByMode = {
+      published: baseFrontmatterSchema,
+      draft: draftFrontmatterSchema,
+      career: careerFrontmatterSchema,
+    } as const;
+    const schema = schemaByMode[this.mode];
     const validation = schema.safeParse(parsed);
     if (!validation.success) {
       const details = validation.error.issues
@@ -164,12 +214,16 @@ export class FrontmatterParser {
       throw new Error(`Invalid frontmatter in "${sourcePath}": ${details}`);
     }
 
-    const metadata = validation.data as FrontmatterData;
-    if (metadata.date !== undefined) {
-      const hasDateShape = /^\d{4}-\d{2}-\d{2}$/.test(metadata.date);
-      if (this.mode === "published" || hasDateShape) {
-        this.validateCalendarDate(metadata.date, sourcePath);
-        metadata.formattedDate = this.formatDate(metadata.date);
+    const metadata = validation.data as MetadataFor<Mode>;
+    if (this.mode === "career") {
+      return { metadata, content };
+    }
+    const blogMetadata = metadata as FrontmatterData;
+    if (blogMetadata.date !== undefined) {
+      const hasDateShape = /^\d{4}-\d{2}-\d{2}$/.test(blogMetadata.date);
+      if (hasDateShape) {
+        this.validateCalendarDate(blogMetadata.date, sourcePath);
+        blogMetadata.formattedDate = this.formatDate(blogMetadata.date);
       }
     }
 

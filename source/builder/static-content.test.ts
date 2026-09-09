@@ -44,28 +44,10 @@ describe("static content view models", () => {
         availableTags: [],
         tagsWithCounts: [],
       }),
-      JSON.stringify([
+      [
         {
           company: "Example Co",
           companyWebsite: "https://example.com",
-          positions: [{ title: "Lead", endDate: "Present" }],
-        },
-      ])
-    );
-
-    expect(model.latestPost?.title).toBe(post.title);
-    expect(model.currentRole).toMatchObject({
-      company: "Example Co",
-      title: "Lead",
-    });
-  });
-
-  it("prepares timeline descriptions as paragraphs and bullets", () => {
-    const [company] = buildTimelineStaticModel(
-      JSON.stringify([
-        {
-          company: "Example <Company>",
-          companyWebsite: "https://example.com/?x=1&y=2",
           positions: [
             {
               title: "Lead",
@@ -75,45 +57,18 @@ describe("static content view models", () => {
               duration: "2 years",
               location: "Remote",
               employmentType: "Full-time",
-              description: "Built <systems>\\n\\n• Tested <examples>",
+              renderedDescription: "<p>Role</p>",
             },
           ],
         },
-      ])
+      ]
     );
 
-    expect(company.id).toBe("example-company");
-    expect(company.positions[0].blocks).toEqual([
-      { paragraph: "Built <systems>" },
-      { items: ["Tested <examples>"] },
-    ]);
-  });
-
-  it("preserves interleaved paragraphs and bullet groups", () => {
-    const [position] = buildTimelineStaticModel([
-      {
-        company: "Example Co",
-        positions: [
-          {
-            title: "Lead",
-            startDate: "2024-01",
-            endDate: "Present",
-            dateRange: "Jan 2024 - Present",
-            duration: "2 years",
-            location: "Remote",
-            employmentType: "Full-time",
-            description: "Intro\\n• First\\n• Second\\nDetails\\n• Third",
-          },
-        ],
-      },
-    ]).flatMap((company) => company.positions);
-
-    expect(position.blocks).toEqual([
-      { paragraph: "Intro" },
-      { items: ["First", "Second"] },
-      { paragraph: "Details" },
-      { items: ["Third"] },
-    ]);
+    expect(model.latestPost?.title).toBe(post.title);
+    expect(model.currentRole).toMatchObject({
+      company: "Example Co",
+      title: "Lead",
+    });
   });
 
   it("orders series posts and identifies adjacent navigation", () => {
@@ -151,5 +106,52 @@ describe("static content view models", () => {
         },
       ])?.supplements
     ).toHaveLength(1);
+  });
+
+  it("builds stable timeline IDs and headings for repeated companies", () => {
+    const companies = buildTimelineStaticModel([
+      {
+        company: "Example <Company>",
+        companyWebsite: "https://example.com/?x=1&y=2",
+        positions: [
+          {
+            title: "Earlier",
+            startDate: "2018-01",
+            endDate: "2020-01",
+            dateRange: "Jan 2018 - Jan 2020",
+            duration: "2 yrs 1 mo",
+            location: "Remote",
+            employmentType: "Full-time",
+            renderedDescription: "<p>Earlier</p>",
+            skills: [],
+          },
+        ],
+      },
+      {
+        company: "Example <Company>",
+        positions: [
+          {
+            title: "Later",
+            startDate: "2021-01",
+            endDate: "Present",
+            dateRange: "Jan 2021 - Present",
+            duration: "6 yrs 9 mos",
+            location: "Remote",
+            employmentType: "Full-time",
+            renderedDescription: "<p>Later</p>",
+            skills: [],
+          },
+        ],
+      },
+    ]);
+
+    expect(companies.map(({ id, heading }) => ({ id, heading }))).toEqual([
+      { id: "example-company", heading: "Example <Company> (2018-2020)" },
+      { id: "example-company-2", heading: "Example <Company> (2021-Present)" },
+    ]);
+    expect(companies[0].website).toBe("https://example.com/?x=1&y=2");
+    expect(companies[0].positions[0].renderedDescription).toBe(
+      "<p>Earlier</p>"
+    );
   });
 });

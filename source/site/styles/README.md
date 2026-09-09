@@ -17,11 +17,12 @@ The site uses a **hybrid CSS architecture** that combines:
 
 ```
 public/
-├── data/
-│   └── experience-data.json    # Career timeline data (served at /data/)
+├── data/                       # Generated public data
 ├── styles/                     # Static CSS files copied during build
 ├── components/                 # Legacy component CSS (if any remain)
 └── fonts/                      # Web fonts and typography assets
+
+source/site/content/career/      # Career timeline Markdown source
 
 source/site/styles/
 ├── theme.css                    # Design tokens and CSS custom properties

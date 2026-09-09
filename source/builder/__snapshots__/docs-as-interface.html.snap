@@ -53,18 +53,18 @@
     <main class="blog-post-layout">
       <aside class="blog-toc-sidebar">
         <div class="blog-toc-sticky-container">
-          
+
           <kbr-table-of-contents></kbr-table-of-contents>
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="technical writing">technical writing</button>
-    
+
       <button class="blog-tag" data-tag="AI">AI</button>
-    
+
       <button class="blog-tag" data-tag="documentation">documentation</button>
-    
+
   </div>
 </div>
 
@@ -104,42 +104,42 @@
 <p>And here&#39;s where the storytelling comes back in. Technical writers need to tell this story to the people who control resources. Not the story about oral tradition and grain counting, but the one about what&#39;s happening right now: that documentation is a critical interface between your products and the AI systems your customers are already using. That the people who maintain that interface, the ones who have spent years learning to make natural language precise and actionable, are the single best gateway most companies have for model training and agentic workflows.</p>
 <p>That&#39;s a story worth telling clearly.</p>
 
-        
+
         <div class="blog-citations-container">
   <section class="citations">
     <h2>References</h2>
     <ol class="citations-list">
-      
+
         <li id="citation-openai-codex">
           <em>Introducing Codex</em> by OpenAI
           <span class="citation-links">
-            
-              
+
+
               <a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-openai-codex" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
         <li id="citation-zencoder-docs">
           <em>How to improve technical documentation with generative AI</em> by Andrew Filev
           <span class="citation-links">
-            
-              
+
+
               <a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
     </ol>
   </section>
 </div>
@@ -176,6 +176,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

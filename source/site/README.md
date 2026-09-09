@@ -372,7 +372,7 @@ Automatically generates navigation from page headings.
 ### Timeline
 
 Career timeline markup is emitted as static light DOM from
-`public/data/experience-data.json` during the build. The page-level timeline
+`source/site/content/career/` during the build. The page-level timeline
 styles are included automatically, and the table of contents is the only
 client-side enhancement.
 

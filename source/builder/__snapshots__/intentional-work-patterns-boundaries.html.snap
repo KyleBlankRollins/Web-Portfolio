@@ -59,24 +59,24 @@
   <p>Part 2 of 2</p>
   <div class="series-navigation">
     <a class="nav-button" href="/intentional-work-patterns.html"><span class="nav-text">Previous: Intentional Work Patterns</span><span class="nav-arrow">←</span></a>
-    
+
   </div>
   <ol class="series-list">
-    
+
       <li class="series-item">
         <a class="series-link " href="/intentional-work-patterns.html">
           <span class="part-number">Series Summary:</span>
           <span>Intentional Work Patterns</span>
         </a>
       </li>
-    
+
       <li class="series-item">
         <a class="series-link current" href="/intentional-work-patterns-boundaries.html">
           <span class="part-number">Part 1</span>
           <span>Intentional Work Patterns - Boundaries</span>
         </a>
       </li>
-    
+
   </ol>
 </nav>
 
@@ -85,13 +85,13 @@
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="boundaries">boundaries</button>
-    
+
       <button class="blog-tag" data-tag="intentionality">intentionality</button>
-    
+
       <button class="blog-tag" data-tag="remote work">remote work</button>
-    
+
   </div>
 </div>
 
@@ -131,51 +131,51 @@
 <p>Boundaries aren&#39;t walls that isolate you from others. They&#39;re the framework that lets you be fully present both at work and at home. When you protect your work time, you&#39;re also protecting your ability to genuinely disconnect when the workday ends. That&#39;s better for everyone.</p>
 <p>Start small if you need to. Pick one boundary to implement. Have one conversation. Reclaim one block of deep work time and then build from there.</p>
 
-        
+
         <div class="blog-citations-container">
   <section class="citations">
     <h2>References</h2>
     <ol class="citations-list">
-      
+
         <li id="citation-deep-work">
           <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport
           <span class="citation-links">
-            
-              
+
+
               <a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a>
-            
+
               <span class="citation-separator">
                 |
               </span>
               <a href="https://bookshop.org/p/books/deep-work-rules-for-focused-success-in-a-distracted-world-cal-newport/9a219b4ccc99d60b" target="_blank" rel="noopener">Buy</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-deep-work-1" class="citation-backref">↩1</a>
-            
+
               <a href="#citation-ref-deep-work-2" class="citation-backref">↩2</a>
-            
+
               <a href="#citation-ref-deep-work-3" class="citation-backref">↩3</a>
-            
+
           </span>
         </li>
-      
+
         <li id="citation-attention-residue">
           <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke
           <span class="citation-links">
-            
-              
+
+
               <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a>
-            
+
           </span>
           <span class="citation-backrefs">
-            
+
               <a href="#citation-ref-attention-residue" class="citation-backref">↩</a>
-            
+
           </span>
         </li>
-      
+
     </ol>
   </section>
 </div>
@@ -212,6 +212,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

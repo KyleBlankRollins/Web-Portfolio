@@ -44,7 +44,7 @@ export interface ContentDiscoveryResult {
  */
 export class ContentDiscovery {
   private publishedRoot: string;
-  private frontmatterParser: FrontmatterParser;
+  private frontmatterParser: FrontmatterParser<"published">;
 
   constructor(
     publishedRoot: string = join(

@@ -11,7 +11,7 @@ export interface LoadedSiteSource {
   readonly templates: ReadonlyMap<string, string>;
   readonly partials: ReadonlyMap<string, string>;
   readonly themes?: ReadonlyMap<string, string>;
-  readonly experienceData: string;
+  readonly careerContent: ReadonlyMap<string, string>;
 }
 
 export type SiteHeadAsset =
@@ -40,8 +40,7 @@ export interface RenderableSiteContent {
 }
 
 export function loadSiteSource(
-  siteRoot = join(process.cwd(), "source", "site"),
-  publicRoot = join(process.cwd(), "public")
+  siteRoot = join(process.cwd(), "source", "site")
 ): LoadedSiteSource {
   const pages = readDirectoryFiles(join(siteRoot, "pages"), ".html");
   const indexPath = join(siteRoot, "index.html");
@@ -54,9 +53,11 @@ export function loadSiteSource(
     ".html"
   );
   const themes = readDirectoryFiles(join(siteRoot, "styles", "themes"), ".css");
-  const experiencePath = join(publicRoot, "data", "experience-data.json");
-  const experienceData = readFileSync(experiencePath, "utf-8");
-  return { pages, templates, partials, themes, experienceData };
+  const careerContent = readDirectoryFiles(
+    join(siteRoot, "content", "career"),
+    ".md"
+  );
+  return { pages, templates, partials, themes, careerContent };
 }
 
 export function renderSite(

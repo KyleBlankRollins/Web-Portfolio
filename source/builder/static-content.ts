@@ -4,6 +4,7 @@ import type {
   SupplementManifestEntry,
   TagWithCount,
 } from "../shared/manifest-types.js";
+import type { CareerCompany, CareerPosition } from "./career-content.js";
 
 export interface StaticBlogPost extends BlogPostManifestEntry {
   readonly displayDate: string;
@@ -25,16 +26,12 @@ export interface StaticHomeModel {
 }
 
 export interface StaticTimelinePosition extends Omit<
-  TimelinePosition,
-  "description" | "skills"
+  CareerPosition,
+  "renderedDescription" | "skills"
 > {
-  readonly description: string;
-  readonly blocks: readonly TimelineDescriptionBlock[];
   readonly skills: readonly string[];
+  readonly renderedDescription?: string;
 }
-
-export type TimelineDescriptionBlock =
-  { readonly paragraph: string } | { readonly items: readonly string[] };
 
 export interface StaticTimelineCompany {
   readonly id: string;
@@ -64,10 +61,9 @@ export function buildBlogStaticModel(
 
 export function buildHomeStaticModel(
   manifestJson: string | BlogManifest,
-  experienceJson: string | TimelineCompany[]
+  companies: readonly CareerCompany[]
 ): StaticHomeModel {
   const blog = buildBlogStaticModel(manifestJson);
-  const companies = parseValue<TimelineCompany[]>(experienceJson);
   const currentCompany = companies.find((company) =>
     company.positions.some(
       (position) => position.endDate.toLowerCase() === "present"
@@ -90,9 +86,8 @@ export function buildHomeStaticModel(
 }
 
 export function buildTimelineStaticModel(
-  experienceJson: string | TimelineCompany[]
+  companies: readonly CareerCompany[]
 ): readonly StaticTimelineCompany[] {
-  const companies = parseValue<TimelineCompany[]>(experienceJson);
   return companies.map((company, index) => {
     const baseId = slugify(company.company);
     const occurrence = companies
@@ -109,55 +104,12 @@ export function buildTimelineStaticModel(
         : company.company,
       website: company.companyWebsite,
       noWebsite: !company.companyWebsite,
-      positions: company.positions.map((position) => {
-        const lines = position.description
-          .replace(/\\n/g, "\n")
-          .split(/\r?\n/)
-          .map((line) => line.trim())
-          .filter(Boolean);
-        return {
-          ...position,
-          blocks: buildTimelineDescriptionBlocks(lines),
-          skills: position.skills ?? [],
-        };
-      }),
+      positions: company.positions.map((position) => ({
+        ...position,
+        skills: position.skills ?? [],
+      })),
     };
   });
-}
-
-function buildTimelineDescriptionBlocks(
-  lines: readonly string[]
-): readonly TimelineDescriptionBlock[] {
-  const blocks: TimelineDescriptionBlock[] = [];
-  let paragraphLines: string[] = [];
-  let bulletItems: string[] = [];
-
-  const flushParagraph = () => {
-    if (paragraphLines.length > 0) {
-      blocks.push({ paragraph: paragraphLines.join(" ") });
-      paragraphLines = [];
-    }
-  };
-  const flushBullets = () => {
-    if (bulletItems.length > 0) {
-      blocks.push({ items: bulletItems });
-      bulletItems = [];
-    }
-  };
-
-  for (const line of lines) {
-    if (line.startsWith("•")) {
-      flushParagraph();
-      bulletItems.push(line.slice(1).trim());
-    } else {
-      flushBullets();
-      paragraphLines.push(line);
-    }
-  }
-
-  flushParagraph();
-  flushBullets();
-  return blocks;
 }
 
 export interface StaticSeriesModel {
@@ -217,25 +169,7 @@ export function buildSupplementStaticModel(
     : undefined;
 }
 
-interface TimelinePosition {
-  title: string;
-  dateRange: string;
-  duration: string;
-  location: string;
-  employmentType: string;
-  description: string;
-  skills?: string[];
-  startDate: string;
-  endDate: string;
-}
-
-interface TimelineCompany {
-  company: string;
-  companyWebsite?: string;
-  positions: TimelinePosition[];
-}
-
-function companyYearSpan(company: TimelineCompany): string {
+function companyYearSpan(company: CareerCompany): string {
   const startYears = company.positions
     .map((position) => position.startDate.slice(0, 4))
     .filter((year) => /^\d{4}$/.test(year));

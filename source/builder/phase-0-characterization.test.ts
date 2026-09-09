@@ -55,7 +55,7 @@ title = "A source"
 author = "An author"
 +++
 Literal {{ value }} text with a citation[^source-1].`;
-    const parser = new FrontmatterParser();
+    const parser = new FrontmatterParser("draft");
     const parsed = parser.parse(markdown);
     const rendered = new MarkdownRenderer().render(parsed.content);
 

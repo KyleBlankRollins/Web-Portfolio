@@ -58,25 +58,25 @@
   <h2 id="post-series-title">Intentional Work Patterns</h2>
   <p>Part 1 of 2</p>
   <div class="series-navigation">
-    
+
     <a class="nav-button" href="/intentional-work-patterns-boundaries.html"><span class="nav-text">Next: Intentional Work Patterns - Boundaries</span><span class="nav-arrow">→</span></a>
   </div>
   <ol class="series-list">
-    
+
       <li class="series-item">
         <a class="series-link current" href="/intentional-work-patterns.html">
           <span class="part-number">Series Summary:</span>
           <span>Intentional Work Patterns</span>
         </a>
       </li>
-    
+
       <li class="series-item">
         <a class="series-link " href="/intentional-work-patterns-boundaries.html">
           <span class="part-number">Part 1</span>
           <span>Intentional Work Patterns - Boundaries</span>
         </a>
       </li>
-    
+
   </ol>
 </nav>
 
@@ -85,13 +85,13 @@
           <div class="blog-post-tags">
   <span class="tags-label">Tags:</span>
   <div class="tag-list">
-    
+
       <button class="blog-tag" data-tag="habits">habits</button>
-    
+
       <button class="blog-tag" data-tag="intentionality">intentionality</button>
-    
+
       <button class="blog-tag" data-tag="remote work">remote work</button>
-    
+
   </div>
 </div>
 
@@ -120,26 +120,26 @@
           <section class="supplements" aria-labelledby="supplements-heading">
   <h2 id="supplements-heading">Supplements</h2>
   <ul class="supplement-list">
-    
+
       <li class="supplement-item">
         <a class="supplement-link" href="/intentional-work-patterns/supplements/boundary-checklist.html">Boundary Checklist</a>
         <p class="supplement-description">
           A practical checklist for setting and maintaining healthy work boundaries.
         </p>
       </li>
-    
+
       <li class="supplement-item">
         <a class="supplement-link" href="/intentional-work-patterns/supplements/boundary-conversation-script.html">Boundary Conversation Script</a>
         <p class="supplement-description">
           A practical script for discussing focus boundaries with your household.
         </p>
       </li>
-    
+
   </ul>
 </section>
 
         </template>
-        
+
 
 
         <kbr-anchor-copy></kbr-anchor-copy>
@@ -173,6 +173,6 @@
 </footer>
 
     <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
-  
+
 
 </body></html>

@@ -27,7 +27,7 @@ Each component uses:
 
 #### Career Timeline
 
-Timeline markup is rendered by the builder from `public/data/experience-data.json`.
+Timeline markup is rendered by the builder from Markdown files in `source/site/content/career/`.
 `static-timeline.css` provides page-level styling; the table of contents is the only client-side enhancement.
 
 ### Timeline Markup

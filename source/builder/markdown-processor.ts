@@ -33,7 +33,7 @@ export class MarkdownProcessor {
   private renderer: MarkdownRenderer;
   private preprocessor: ContentPreprocessor;
   private citationProcessor: CitationProcessor;
-  private frontmatterParser: FrontmatterParser;
+  private frontmatterParser: FrontmatterParser<"draft">;
   private manifestBuilder: BlogManifestBuilder;
   private localDocumentLinkIndex?: LocalDocumentLinkIndex;
   private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
@@ -44,7 +44,7 @@ export class MarkdownProcessor {
     this.renderer = new MarkdownRenderer(markedInstance);
     this.preprocessor = new ContentPreprocessor(markedInstance);
     this.citationProcessor = new CitationProcessor();
-    this.frontmatterParser = new FrontmatterParser();
+    this.frontmatterParser = new FrontmatterParser("draft");
     this.manifestBuilder = new BlogManifestBuilder();
   }
 

@@ -10,7 +10,7 @@ import {
 import { normalizeDom } from "./test-support/normalized-dom.js";
 
 const source: LoadedSiteSource = {
-  experienceData: "{}",
+  careerContent: new Map(),
   pages: new Map([["fixture.html", "<p>Fixture page</p>"]]),
   templates: new Map([
     [
@@ -74,7 +74,7 @@ describe("renderSite", () => {
   it("keeps generated Markdown body content in the blog layout", () => {
     const result = renderSite(
       {
-        experienceData: "{}",
+        careerContent: new Map(),
         templates: new Map([
           [
             "blog-post.html",
@@ -148,22 +148,24 @@ describe("loadSiteSource", () => {
     expect(loaded.partials.get("head.html")).toBe("<!-- head partial -->");
   });
 
-  it("loads experience data from the explicit public root", () => {
+  it("loads career Markdown content from the site source", () => {
     temporarySiteRoot = mkdtempSync(join(process.cwd(), "tmp-site-source-"));
-    const temporaryPublicRoot = mkdtempSync(
-      join(process.cwd(), "tmp-public-source-")
-    );
-    mkdirSync(join(temporaryPublicRoot, "data"), { recursive: true });
+    mkdirSync(join(temporarySiteRoot, "content", "career"), {
+      recursive: true,
+    });
     writeFileSync(
-      join(temporaryPublicRoot, "data", "experience-data.json"),
-      '{"experience":[]}'
+      join(temporarySiteRoot, "content", "career", "example.md"),
+      '+++\ncompany = "Example"\n\n[[positions]]\ntitle = "Role"\nstartDate = "2024-01"\nendDate = "Present"\ndateRange = "Jan 2024 - Present"\nduration = "2 years"\nlocation = "Remote"\nemploymentType = "Full-time"\n+++\n\n## Role\nDescription.'
     );
 
-    try {
-      const loaded = loadSiteSource(temporarySiteRoot, temporaryPublicRoot);
-      expect(loaded.experienceData).toBe('{"experience":[]}');
-    } finally {
-      rmSync(temporaryPublicRoot, { recursive: true, force: true });
-    }
+    const loaded = loadSiteSource(temporarySiteRoot);
+    expect(loaded.careerContent).toEqual(
+      new Map([
+        [
+          "example.md",
+          '+++\ncompany = "Example"\n\n[[positions]]\ntitle = "Role"\nstartDate = "2024-01"\nendDate = "Present"\ndateRange = "Jan 2024 - Present"\nduration = "2 years"\nlocation = "Remote"\nemploymentType = "Full-time"\n+++\n\n## Role\nDescription.',
+        ],
+      ])
+    );
   });
 });
