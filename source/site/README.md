@@ -326,7 +326,7 @@ Templates automatically handle:
 - HTML document structure (`<html>`, `<head>`, `<body>`)
 - Page metadata (title, description, keywords)
 - Navigation component inclusion
-- CSS and JavaScript asset injection
+- Vite-managed CSS and JavaScript assets
 
 ### Using a Custom Template
 
@@ -375,22 +375,6 @@ Career timeline markup is emitted as static light DOM from
 `source/site/content/career/` during the build. The page-level timeline
 styles are included automatically, and the table of contents is the only
 client-side enhancement.
-
-### Post List (Blog Page)
-
-```html
-<kbr-post-list></kbr-post-list>
-```
-
-Automatically displays all published blog posts with filtering.
-
-### Tag Filter (Blog Page)
-
-```html
-<kbr-tag-filter></kbr-tag-filter>
-```
-
-Provides tag-based filtering for blog posts.
 
 ## Development Workflow
 

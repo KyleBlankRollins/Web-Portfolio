@@ -262,20 +262,20 @@
                 </div>
               </div>
               <div class="description">
-                <h3 id="technical-writing">Technical writing</h3><ul>
+                <h4 id="technical-writing">Technical writing</h4><ul>
 <li>Document mainframe and provider software for 3M HIS&#39; healthcare clients (documents include everything from What&#39;s New to reference manuals)</li>
 <li>Collaborate with agile development teams to ensure features are properly documented for each release</li>
 <li>Target various audiences from system administrators to transcriptionists</li>
 </ul>
-<h3 id="web-development">Web development</h3><ul>
+<h4 id="web-development">Web development</h4><ul>
 <li>Improve and maintain HTML, CSS, and JavaScript for online help</li>
 <li>Create and maintain a Vue.js web app that serves as a team dashboard for online help. Uses Google Analytics APIs to populate relevant data for various reports</li>
 </ul>
-<h3 id="analytics">Analytics</h3><ul>
+<h4 id="analytics">Analytics</h4><ul>
 <li>Restructure and maintain department Google Analytics account</li>
 <li>Define metrics terms and disseminate information about how metrics can benefit the team and readers</li>
 </ul>
-<h3 id="graphics">Graphics</h3><ul>
+<h4 id="graphics">Graphics</h4><ul>
 <li>Lead the department graphics team. Use various tools, including Visio, to create professional workflows and system diagrams for product documentation</li>
 </ul>
 
@@ -344,25 +344,25 @@
               </div>
               <div class="description">
                 <p>My work at Emsi was multi-faceted and crossed several disciplines.</p>
-<h3 id="blog-content">Blog Content</h3><ul>
+<h4 id="blog-content">Blog Content</h4><ul>
 <li>Create content for many audiences, primarily higher education institutions</li>
 <li>Write various content types including case studies, data analysis, and product announcements</li>
 <li>Conduct SEO research to ensure the content is easy to find and drives traffic</li>
 <li>Collaborate with design and video team members to create exciting content</li>
 </ul>
-<h3 id="research-data-analysis">Research &amp; Data Analysis</h3><ul>
+<h4 id="research-data-analysis">Research &amp; Data Analysis</h4><ul>
 <li>Research primary audiences and their markets</li>
 <li>Collect data and identify key trends that audiences find valuable</li>
 <li>Analyze large amounts of data for media (newspapers, etc.) requests</li>
 <li>Create graphs and charts using Plot.ly and Tableau</li>
 </ul>
-<h3 id="content-marketing">Content Marketing</h3><ul>
+<h4 id="content-marketing">Content Marketing</h4><ul>
 <li>Increase conversion rates by employing inbound content marketing concepts</li>
 <li>Align content with needs of clients and sales team</li>
 <li>Contribute to and maintain company voice and brand</li>
 <li>Manage social media channels, engaging audiences through interesting posts</li>
 </ul>
-<h3 id="technical-work">Technical Work</h3><ul>
+<h4 id="technical-work">Technical Work</h4><ul>
 <li>Understand and employ Emsi&#39;s complex software products to inform content creation</li>
 <li>Create, edit, and maintain RFPs and RFP templates</li>
 </ul>
@@ -398,7 +398,7 @@
               </div>
               <div class="description">
                 <p>Even though my title at Top Ten Reviews was Writer, my day-to-day tasks involved project management, research, and much more. I often switched gears quickly to meet deadlines.</p>
-<h3 id="project-management">Project Management</h3><ul>
+<h4 id="project-management">Project Management</h4><ul>
 <li>Evaluate current markets in a given category and request products for review</li>
 <li>Follow-up with submissions team to ensure I receive products before they are needed</li>
 <li>Schedule time for research, writing, editing and publication</li>
@@ -406,21 +406,21 @@
 <li>Follow-up with web producers and graphics designers to ensure timeliness</li>
 <li>Meet with stakeholders from other departments to ensure my project satisfies demands</li>
 </ul>
-<h3 id="research">Research</h3><ul>
+<h4 id="research">Research</h4><ul>
 <li>Evaluate a given audience with tools such as the Adobe Marketing Cloud</li>
 <li>Seek out new trends in a given area to identify innovations in technology</li>
 <li>Identify top brands in a given area and find what sets them apart from the marketplace</li>
 </ul>
-<h3 id="hardware-benchmarking">Hardware Benchmarking</h3><ul>
+<h4 id="hardware-benchmarking">Hardware Benchmarking</h4><ul>
 <li>Develop hardware testing strategies to evaluate a developer&#39;s claims of efficacy</li>
 <li>Compare manufacturer specifications with a product&#39;s functionality</li>
 <li>Accumulate quantifiable datasets that allow for an apples-to-apples comparisons</li>
 </ul>
-<h3 id="graphic-design">Graphic Design</h3><ul>
+<h4 id="graphic-design">Graphic Design</h4><ul>
 <li>Have a keen eye for presenting hardware appropriately</li>
 <li>Apply Adobe Photoshop to properly frame images</li>
 </ul>
-<h3 id="writing">Writing</h3><ul>
+<h4 id="writing">Writing</h4><ul>
 <li>Curate 20 websites, each of which I optimize for SEO and audiences</li>
 <li>Generate over 6,100 words across 11 pages of research-based content for each site</li>
 <li>Write captions for over 56 images taken during testing on each site</li>

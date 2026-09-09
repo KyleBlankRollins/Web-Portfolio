@@ -13,12 +13,6 @@ Each component uses:
 
 ### Available Components
 
-#### Blog Components
-
-- `post-list.ts/css` - Displays a list of blog posts with filtering
-- `post-card.ts/css` - Individual blog post card
-- `tag-filter.ts/css` - Tag filtering for blog posts
-
 #### Navigation & UI
 
 - `navigation.ts/css` - Site navigation component

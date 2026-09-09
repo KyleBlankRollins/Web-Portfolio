@@ -38,24 +38,12 @@ source/site/components/
 ├── navigation/
 │   ├── navigation.ts          # Lit component logic
 │   └── navigation.style.ts    # Dedicated component styles
-├── post-card/
-│   ├── post-card.ts           # Lit component logic
-│   └── post-card.style.ts     # Dedicated component styles
-├── post-list/
-│   ├── post-list.ts           # Lit component logic
-│   └── post-list.style.ts     # Dedicated component styles
 ├── table-of-contents/
 │   ├── table-of-contents.ts   # Lit component logic
 │   └── table-of-contents.style.ts # Dedicated component styles
-├── tag-filter/
-│   ├── tag-filter.ts          # Lit component logic
-│   └── tag-filter.style.ts    # Dedicated component styles
-├── timeline/
-│   ├── timeline.ts            # Lit component logic
-│   └── timeline.style.ts      # Dedicated component styles
-└── timeline-entry/
-    ├── timeline-entry.ts      # Lit component logic
-    └── timeline-entry.style.ts # Dedicated component styles
+└── theme-switcher/
+  ├── theme-switcher.ts      # Lit component logic
+  └── theme-switcher.style.ts # Dedicated component styles
 ```
 
 **Note**: Data files are now properly located in the `public/` directory for static asset serving, separate from source code.
@@ -289,38 +277,7 @@ export const timelineStyles = css`
 `;
 ```
 
-**Component Logic** (`timeline.ts`):
-
-```typescript
-import { LitElement, html } from "lit";
-import { customElement } from "lit/decorators.js";
-import { timelineStyles } from "./timeline-styles.js";
-import {
-  typographyStyles,
-  buttonStyles,
-  layoutStyles,
-} from "../../styles/shared-styles.js";
-
-@customElement("kbr-timeline")
-export class KbrTimeline extends LitElement {
-  static styles = [
-    typographyStyles,
-    buttonStyles,
-    layoutStyles,
-    timelineStyles, // Component styles from dedicated file
-  ];
-
-  render() {
-    return html`
-      <div class="timeline-header">
-        <h2 class="timeline-title heading-h2">Career Timeline</h2>
-      </div>
-    `;
-  }
-}
-```
-
-#### 2. Simple Components with Inline Styles
+#### 1. Simple Components with Inline Styles
 
 Simple components like `anchor-copy` may still use inline styles when the styling is minimal:
 

@@ -5,12 +5,9 @@ import typographyCss from "./typography.css?inline";
  * Reduced Motion
  *
  * One universal rule, adopted by every component that animates. Reduced-motion
- * handling used to be per-component and inconsistent: post-card scoped rules
- * to individual selectors, post-list used `* { transition: none !important }`,
- * table-of-contents guarded a single class, tag-filter had nothing at all, and
- * navigation inverted the query with `no-preference` - which means its
- * animations were the only ones that stayed off by default and switched on
- * only when a preference was expressed.
+ * handling used to be per-component and inconsistent, with some selectors
+ * disabling transitions and others inverting the media query with
+ * `no-preference`.
  *
  * This has to live inside each shadow root. A rule in styles/style.css does
  * not cross the shadow boundary, which is why per-component blocks existed in

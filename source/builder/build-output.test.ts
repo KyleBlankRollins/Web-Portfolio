@@ -104,6 +104,7 @@ describe("built site output", () => {
     const distDirectory = join(process.cwd(), "dist");
     const outputPaths = [
       "index.html",
+      "portfolio.html",
       "intentional-work-patterns/supplements/boundary-checklist.html",
     ];
 
@@ -167,6 +168,7 @@ describe("built site output", () => {
     const distDirectory = join(process.cwd(), "dist");
     const outputPaths = [
       "index.html",
+      "portfolio.html",
       "intentional-work-patterns/supplements/boundary-checklist.html",
     ];
 
@@ -185,5 +187,11 @@ describe("built site output", () => {
         normalizeServedDocument(productionHtml)
       );
     }
+  });
+
+  it("leaves unknown routes to Vite's fallback handling", async () => {
+    const response = await fetch(`${devServerBaseUrl}/does-not-exist.html`);
+    expect(response.status).toBe(200);
+    expect(await response.text()).toContain("Hello there!");
   });
 });

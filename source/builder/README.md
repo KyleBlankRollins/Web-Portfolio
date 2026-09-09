@@ -10,15 +10,16 @@ The builder is implemented as a modular Vite plugin with the following structure
 
 ```
 source/builder/
-├── index.ts                    # Main plugin entry point and orchestration
+├── index.ts                    # Development plugin integration
 ├── dev-server-middleware.ts    # Development server routing and live processing
 ├── markdown-processor.ts       # Markdown orchestrator (uses modules)
 ├── template-processor.ts       # Template orchestrator (uses modules)
-├── html-bundle-processor.ts    # Production build HTML processing
-├── git-aware-pipeline.ts       # Git-aware build coordination and file detection
-├── git-utils.ts               # Git repository utilities and change detection
-├── helpers.ts                  # File system utilities and logging
-├── types.ts                   # TypeScript type definitions
+├── html-bundle-processor.ts    # Production output writing
+├── helpers.ts                  # Build logging utilities
+├── site-content.ts             # Site content model construction
+├── site-renderer.ts            # Rendered site model
+├── static-content.ts           # Static page and blog content
+├── static-blog-enhancement.ts  # Client-side blog enhancement
 └── modules/                    # Focused, reusable processing modules
     ├── index.ts                # Barrel export for all modules
     ├── html-utils.ts           # HTML escaping and manipulation utilities
@@ -56,8 +57,7 @@ The `modules/` directory contains focused, reusable components that handle speci
 
 Pure utility functions for HTML manipulation:
 
-- `escapeHtml()` - Escape HTML characters for safe display
-- `escapeHtml()` - Escape text for use in HTML content and attributes (XSS prevention)
+- `escapeHtml()` - Escape text for use in HTML content and attributes
 
 #### citation-processor.ts
 
@@ -229,24 +229,21 @@ Local markdown link behavior:
 
 ### 3. Development Server Enhancements
 
-**Purpose**: Provide live reloading and processing during development
+**Purpose**: Provide live reloading for renderer-owned documents during development.
 
 **Key Features**:
 
-- **Route Processing**: Automatically process `.html` files through templates
+- **Rendered Map**: Build every page and publishable Markdown document in memory
 - **Public URL Resolution**: Resolve generated content by normalized public URL, including nested supplement routes
-- **Markdown Live Processing**: Real-time Markdown to HTML conversion
-- **Template Hot Reloading**: Changes to templates trigger full page reload
-- **Directory Blocking**: Prevent direct access to source directories (`/pages/`, `/content/`, and `/published/`)
-- **Cache Management**: Intelligent template cache invalidation
+- **Renderer-Owned Reloads**: Changes to pages, templates, content, themes, data, or the site index rebuild the complete map and trigger a full reload
+- **Vite Ownership**: Vite serves client assets and owns MIME types, source paths, and not-found responses
 
 **Live Processing Workflow**:
 
-1. Request for `/example.html` received
-2. Check for `source/site/pages/example.html`
-3. Process through template system with variable substitution
-4. Serve processed HTML with proper headers
-5. Cache results for performance
+1. Vite starts the asset pipeline and HMR server.
+2. The builder discovers and renders the complete site map.
+3. Requests matching a rendered document are passed through `transformIndexHtml()` and served from memory.
+4. Renderer-owned file changes rebuild the complete map and send a full reload.
 
 ### 4. Production Build Processing
 
@@ -257,118 +254,14 @@ Local markdown link behavior:
 1. **Markdown Processing**: Convert all `.md` files to `.html`
 2. **Asset Discovery**: Extract CSS and JS files from Vite bundle
 3. **HTML Processing**: Process all HTML files through template system
-4. **Asset Injection**: Automatically inject discovered assets into templates
+4. **Asset Rendering**: Resolve Vite manifest assets in renderer-owned placeholders
 5. **Bundle Generation**: Output final static files to `dist/`
 
-### 5. Asset Injection System
+### 5. Asset Handling
 
-**Purpose**: Coordinate CSS and JavaScript asset injection between Vite's bundling system and the KBR Builder's template processing
+Vite owns client asset compilation and development transforms. The production workflow reads Vite's `.vite/manifest.json` through `siteAssetsFromManifest()` and passes the resulting asset URLs to `renderSite()`. The renderer writes those tags into every generated document, so asset placement is deterministic and independent of plugin lifecycle hooks.
 
-**Critical Design Challenge**:
-
-The KBR Builder processes HTML files through a template system, which can interfere with Vite's ability to detect entry points and properly bundle assets. This system addresses the dual requirements of:
-
-1. **Template-based HTML processing** for consistent layouts and variable substitution
-2. **Vite entry point detection** for proper CSS/JS bundling and injection
-
-**Development vs Production Asset Handling**:
-
-#### Development Server Asset Injection
-
-**Mechanism**: The dev server middleware (`dev-server-middleware.ts`) handles asset injection using Vite's built-in development asset resolution.
-
-**Process**:
-
-1. HTML requests are intercepted by the middleware
-2. Files are processed through the template system
-3. `injectDevAssets()` function automatically injects Vite's development assets:
-   - `<script type="module">` tags for hot module replacement
-   - CSS imports through JavaScript modules
-   - Development-time asset resolution
-
-**Key Implementation**:
-
-```typescript
-// Development asset injection
-const processedHtml = await this.templateProcessor.processTemplate(
-  templateName,
-  variables
-);
-return injectDevAssets(processedHtml); // Injects Vite dev assets
-```
-
-**Assets Injected**:
-
-- `/main.ts` entry point as ES module
-- Hot reload client code
-- CSS imports through JS modules
-- Development-time source maps
-
-#### Production Build Asset Injection
-
-**Mechanism**: Production builds require special handling to ensure Vite can detect entry points while maintaining template processing.
-
-**Entry Point Detection Strategy**:
-
-- **Template-based files** (like `index.html`) include a `<script type="module" src="/main.ts"></script>` tag
-- This tag **must be present in the source file** for Vite to detect the entry point during build
-- The template system preserves this tag during processing
-- Vite processes the entry point and generates bundled assets with hashed filenames
-
-**Production Build Process**:
-
-1. **Entry Point Detection**: Vite scans processed HTML files for `<script>` tags
-2. **Asset Bundling**: Vite bundles CSS/JS into hashed files (e.g., `index-ABC123.js`, `index-DEF456.css`)
-3. **Asset Discovery**: `HtmlBundleProcessor` extracts bundled assets from Vite's bundle object
-4. **Asset Injection**: Bundled assets are automatically injected into all HTML templates
-
-**Key Implementation**:
-
-```typescript
-// Extract assets from Vite bundle
-const cssFiles = Object.keys(bundle).filter((file) => file.endsWith(".css"));
-const jsFiles = Object.keys(bundle).filter((file) => file.endsWith(".js"));
-
-// Inject into all processed HTML
-const finalHtml = injectProductionAssets(processedHtml, {
-  cssFiles,
-  jsFiles,
-});
-```
-
-**Critical Requirements for Entry Point Detection**:
-
-1. **Source File Script Tag**: Template-based HTML files **must** include the entry point script tag:
-
-   ```html
-   <!-- In source/site/index.html -->
-   <script type="module" src="/main.ts"></script>
-   ```
-
-2. **Template Preservation**: The template system **must not** remove or relocate this script tag during processing
-
-3. **Build Order**: Template processing happens **after** Vite's initial bundle analysis but **before** final asset injection
-
-**Template vs Entry Point Balance**:
-
-The system successfully balances these competing requirements:
-
-- **Templates**: `base.html` and other templates do **not** contain script tags (to avoid duplication)
-- **Entry Points**: Only files that serve as Vite entry points (like `index.html`) contain script tags
-- **Asset Injection**: Production builds automatically inject bundled assets into **all** processed HTML files, regardless of whether they originally contained script tags
-
-**Troubleshooting Asset Injection**:
-
-**Development Issues**:
-
-- **No CSS/JS loading**: Check that `injectDevAssets()` is being called in middleware
-- **Hot reload not working**: Verify Vite dev server is properly configured with middleware
-
-**Production Issues**:
-
-- **No bundled assets generated**: Ensure entry point files contain `<script type="module" src="/main.ts"></script>`
-- **Assets not injected**: Check that `HtmlBundleProcessor` is discovering assets from Vite bundle
-- **Build shows "✓ 1 modules transformed"**: Indicates Vite cannot detect entry point - verify script tag placement
+Development documents use `/main.ts` and Vite's normal HMR transform. The builder does not inject or remove development scripts.
 
 ### 6. Blog System
 
@@ -398,99 +291,27 @@ The system successfully balances these competing requirements:
 }
 ```
 
-### 6. Git-Aware Build Pipeline
+### 6. Production and Development Workflows
 
-**Purpose**: Optimize build performance by only processing files that have actually changed in the git repository
+Production uses one explicit sequence:
 
-**Key Capabilities**:
+1. `vite build` compiles the client assets and writes `.vite/manifest.json`.
+2. `scripts/build-site.ts` discovers the complete content graph and renders every document.
+3. The renderer reads the Vite manifest and writes the complete site to `dist/`.
 
-- **Intelligent File Detection**: Automatically detect changed markdown and HTML files
-- **Conditional Processing**: Skip processing when no relevant files have changed
-- **Coordinated Systems**: Unified pipeline that coordinates all git-aware decisions
-- **Performance Optimization**: Dramatically reduce build times for incremental changes
-- **Flexible Modes**: Support for git-aware, force-all, and standard build modes
+Development runs `vite` with the builder's rendered-document middleware. It builds the complete in-memory render map, passes HTML through `transformIndexHtml()`, and rebuilds the map on renderer-owned source changes.
 
-**Build Modes**:
+The supported commands are:
 
 ```bash
-# Git-aware build (only process changed files)
-npm run build:git-aware
-GIT_AWARE=true vite build
-
-# Force all files (ignore git status)
-npm run build:force-all
-GIT_AWARE=true FORCE_ALL=true vite build
-
-# Standard build (process all files)
+npm run dev
 npm run build
+npm run preview
 ```
 
-**Git-Aware Pipeline Architecture**:
+### Legacy Incremental Building
 
-```typescript
-GitAwareBuildPipeline
-├── shouldProcessMarkdown() → Only when .md files change
-├── shouldGenerateBlogManifest() → Only when markdown changes/deletions
-├── shouldClearTemplateCache() → Only when templates change
-└── Centralized file change detection with caching
-```
-
-**Conditional Processing Logic**:
-
-1. **Markdown Processing**: Only runs when `.md` files in `source/site/content/published/` are modified
-2. **HTML Processing**: Only runs when `.html` files in `source/site/pages/` or `source/site/index.html` are modified
-3. **Blog Manifest Generation**: Rebuilt from discovery so parent metadata remains complete in incremental mode
-4. **Template Cache**: Intelligently cleared when templates, includes, or pages change
-5. **Deletion Awareness**: Changed markdown path detection includes deleted files to trigger required parent/manifest updates
-6. **Stale Output Cleanup**: Incremental builds remove generated markdown HTML files that no longer exist in discovery
-
-**File Exclusions**:
-
-- **Generated Files**: Files in `/public` directory are excluded from change detection
-- **Draft Posts**: Files in `__drafts/` directories are excluded from production
-- **Non-Source Files**: Only source files are considered for git-aware processing
-
-**Performance Benefits**:
-
-- **No Changes**: ~540ms build time (skips all processing except core Vite bundle)
-- **Markdown Only**: Processes only changed markdown files + generates blog manifest
-- **HTML Only**: Processes only changed HTML source files
-- **Mixed Changes**: Intelligently processes both markdown and HTML as needed
-
-**Build Logging**:
-
-```
-[Build] 🔧 Git repository detected (branch: main)
-[Build] 📊 Found 5 changed files
-[Build] 📝 Found 2 changed markdown files:
-[Build]   - source/site/content/published/blog-post.md
-[Build]   - source/site/content/published/another-post.md
-[Build] 🌐 Found 1 changed HTML files:
-[Build]   - source/site/pages/about.html
-[Build] ⚡ Git-aware mode: processing 2 changed markdown files
-[Build] ⚡ Git-aware mode: processing 1 changed HTML files
-[Build] ✓ Generated blog manifest: public/data/blog-manifest.json (5 posts, 8 tags)
-```
-
-**Configuration Options**:
-
-```typescript
-// vite.config.ts
-export default defineConfig({
-  plugins: [
-    kbrBuilder({
-      gitAware: true, // Enable git-aware processing
-      baseBranch: "main", // Base branch for comparison
-      forceAll: false, // Force process all files
-    }),
-  ],
-});
-```
-
-**Environment Variables**:
-
-- `GIT_AWARE=true`: Enable git-aware processing
-- `FORCE_ALL=true`: Force processing of all files (overrides git-aware)
+Incremental processing is not supported. Builds always process the complete content graph so generated HTML, manifests, and stale-output behavior remain deterministic.
 
 ## Plugin Integration
 
@@ -504,36 +325,21 @@ import { kbrBuilder } from "./source/builder/index";
 export default defineConfig({
   root: "source/site",
   publicDir: "../../public",
-  base: "./",
+  base: "/",
   build: {
     outDir: "../../dist",
-    emptyOutDir: process.env.GIT_AWARE !== "true",
+    emptyOutDir: true,
+    manifest: true,
   },
   server: {
     port: 3000,
-    open: true,
     watch: {
       ignored: ["!**/pages/**"],
     },
   },
-  plugins: [
-    kbrBuilder({
-      gitAware: process.env.GIT_AWARE === "true",
-      forceAll: process.env.FORCE_ALL === "true",
-      baseBranch: "main",
-    }),
-  ],
+  plugins: [kbrBuilder()],
 });
 ```
-
-### Plugin Hooks Used
-
-The KBR Builder leverages several Vite plugin hooks:
-
-1. **`configureServer`**: Setup development middleware for route processing
-2. **`handleHotUpdate`**: Manage hot reloading for templates and pages
-3. **`buildStart`**: Process Markdown files and generate blog manifest
-4. **`generateBundle`**: Process HTML files and inject assets during build
 
 ## File Processing Workflows
 
@@ -541,33 +347,23 @@ The KBR Builder leverages several Vite plugin hooks:
 
 ```mermaid
 graph TD
-    A[HTTP Request] --> B{Route exists?}
-    B -->|Yes| C[Check cache]
-    B -->|No| D[Check pages/]
-    C -->|Hit| E[Return cached]
-    C -->|Miss| F[Process template]
-    D -->|Found| F
-    D -->|Not found| G[404 Response]
-    F --> H[Cache result]
-    H --> I[Return HTML]
-    E --> I
-    I --> J[Serve to browser]
+  A[Vite starts assets and HMR] --> B[Build complete render map]
+  B --> C{Rendered route?}
+  C -->|Yes| D[transformIndexHtml and serve]
+  C -->|No| E[Vite fallback handling]
+  F[Renderer-owned source change] --> B
+  B --> G[Full reload]
 ```
 
 ### Build Workflow
 
 ```mermaid
 graph TD
-    A[Build Start] --> B[Discover Markdown files]
-    B --> C[Process each .md file]
-    C --> D[Extract frontmatter]
-    D --> E[Convert to HTML]
-    E --> F[Apply template]
-    F --> G[Generate blog manifest]
-    G --> H[Process HTML pages]
-    H --> I[Extract Vite assets]
-    I --> J[Inject assets into templates]
-    J --> K[Emit final files]
+  A[vite build] --> B[Write Vite asset manifest]
+  B --> C[scripts/build-site.ts]
+  C --> D[Discover content graph]
+  D --> E[Render pages, posts, and JSON]
+  E --> F[Write dist]
 ```
 
 ## Component Details
@@ -614,35 +410,29 @@ This enhancement ensures that:
 **Responsibilities**:
 
 - Intercept HTTP requests during development
-- Process HTML files through template system
-- Handle Markdown file processing
-- Block access to restricted directories
-- Manage live reloading
+- Serve documents from the complete in-memory render map
+- Pass HTML through Vite's `transformIndexHtml()`
+- Rebuild and reload when renderer-owned files change
 
 **Middleware Stack**:
 
-1. **Blocking Middleware** - Prevent direct access to source directories
-2. **Processing Middleware** - Handle template processing and Markdown conversion
-3. **Vite Default** - Handle static assets and other files
+1. **Rendered Document Middleware** - Serve renderer-owned HTML from memory
+2. **Vite Default** - Handle assets, source files, and errors
 
 ### HtmlBundleProcessor
 
 **Responsibilities**:
 
-- Process HTML files during production build
-- Extract CSS and JS assets from Vite bundle
-- Inject assets into HTML templates
-- Generate final static files
-- Handle file emission to output directory
+- Read Vite's asset manifest after production compilation
+- Render the complete site through `renderSite()`
+- Write generated HTML and renderer-owned JSON to `dist/`
 
 **Build Steps**:
 
-1. Extract assets from Vite bundle
-2. Process existing HTML files in bundle
-3. Discover additional HTML files from pages/
-4. Process through template system
-5. Inject discovered assets
-6. Emit final files to dist/
+1. Read `.vite/manifest.json`
+2. Load source and collect the validated content graph
+3. Render pages, posts, and JSON outputs
+4. Emit final files to `dist/`
 
 ### HtmlProcessingUtils
 
@@ -651,65 +441,6 @@ This enhancement ensures that:
 - Shared HTML processing functions
 - Title extraction from content
 - Template variable preparation
-- Asset injection utilities
-
-### GitAwareBuildPipeline
-
-**Responsibilities**:
-
-- Centralized coordination of all git-aware build decisions
-- Efficient file change detection with caching
-- Conditional processing logic for different file types
-- Build strategy logging and reporting
-
-**Key Methods**:
-
-- `shouldProcessMarkdown()` - Determine if markdown processing should run
-- `shouldGenerateBlogManifest()` - Determine if blog manifest generation should run
-- `getChangedMarkdownFiles()` - Get list of changed markdown files
-- `getChangedMarkdownPaths()` - Get changed markdown files including deletions
-- `getChangedHtmlFiles()` - Get list of changed HTML files
-- `logBuildStrategy()` - Log the current build approach and detected changes
-
-**Git-Aware Logic**:
-
-- **Non-Git Repository**: Always process all files
-- **Standard Mode**: Always process all files
-- **Git-Aware Mode**: Only process files that have changed
-- **Force-All Mode**: Process all files but with git-aware logging
-
-### GitUtils
-
-**Responsibilities**:
-
-- Low-level git repository operations
-- File change detection using git commands
-- Repository status and branch information
-- File filtering and path resolution
-
-**Key Methods**:
-
-- `isGitRepository()` - Check if current directory is a git repository
-- `getCurrentBranch()` - Get the current git branch name
-- `getChangedFiles()` - Get all files that have been modified, added, or renamed
-- `getChangedMarkdownFiles()` - Get changed markdown files in content directory
-- `getChangedHtmlFiles()` - Get changed HTML files (excludes /public directory)
-- `logRepositoryStatus()` - Log current repository status and branch information
-
-**File Detection Logic**:
-
-- Uses `git diff --name-only HEAD` to detect changed files
-- Filters results by file extension and directory
-- Excludes generated files in `/public` directory
-- Handles both modified and newly added files
-
-### FileSystemHelper & BuildLogger
-
-**FileSystemHelper**:
-
-- Recursive file discovery with filtering
-- File reading utilities
-- Path resolution helpers
 
 **BuildLogger**:
 
@@ -765,8 +496,7 @@ keywords: "optional, seo, keywords"
 1. **Variable Substitution**: Process all template variables using regex replacement
 2. **Conditional Rendering**: Handle `{{#variable}}...{{/variable}}` blocks
 3. **HTML Escaping**: Apply HTML escaping to `{{variable}}` but not `{{{variable}}}`
-4. **Asset Injection**: Automatically inject CSS and JS assets during build
-5. **Cache Management**: Cache processed templates for performance
+4. **Asset Placeholders**: Resolve renderer-owned Vite asset URLs from the production manifest
 
 ### Directory Structure Requirements
 
@@ -797,30 +527,14 @@ public/
 - Files starting with `_` (underscore)
 - Non-Markdown files in content processing
 
-## Performance Optimizations
-
-### Template Caching
-
-Templates are cached in memory during development to improve performance:
-
-- Cache hit: Instant template serving
-- Cache miss: Load from filesystem and cache
-- Cache invalidation: Triggered by file changes
-
-### Selective Processing
-
-- Only process files that match specific patterns
-- Skip unnecessary file processing during development
-- Efficient file discovery with extension filtering
-
 ### Hot Module Replacement
 
-Intelligent HMR for different file types:
+Renderer-owned changes trigger a complete render-map rebuild and full reload:
 
 - **Templates/Includes**: Full page reload (affects multiple pages)
 - **Pages**: Full page reload (structural changes)
 - **CSS/JS**: Standard Vite HMR (fast updates)
-- **Markdown**: Process and reload affected pages
+- **Markdown**: Rebuild all rendered documents and reload
 
 ## Error Handling
 
@@ -829,7 +543,7 @@ Intelligent HMR for different file types:
 - Template parsing errors with file references
 - Markdown processing errors with line numbers
 - Missing file warnings with helpful suggestions
-- Asset injection errors with fallback handling
+- Asset URLs that are missing from the Vite manifest
 
 ### Production Build Errors
 
@@ -851,8 +565,7 @@ Intelligent HMR for different file types:
 
 - File discovery logging
 - Template processing steps
-- Asset injection details
-- Cache hit/miss reporting
+- Asset manifest entries
 - Build timing information
 
 ## Extension Points
@@ -880,27 +593,23 @@ Intelligent HMR for different file types:
 
 ## NPM Scripts
 
-The KBR Builder supports several npm scripts for different build scenarios:
+The KBR Builder uses one production command and one development command:
 
 ### Build Scripts
 
 ```json
 {
   "scripts": {
-    "build": "tsc && vite build",
-    "build:git-aware": "tsc && GIT_AWARE=true vite build",
-    "build:force-all": "tsc && GIT_AWARE=true FORCE_ALL=true vite build",
-    "clean:public": "tsx scripts/clean-public.ts"
+    "build": "tsc && vite build && tsx scripts/build-site.ts",
+    "dev": "vite"
   }
 }
 ```
 
 **Script Descriptions**:
 
-- **`npm run build`**: Standard build - processes all files regardless of git status
-- **`npm run build:git-aware`**: Git-aware build - only processes changed files for optimal performance
-- **`npm run build:force-all`**: Force all build - processes all files but with git-aware logging
-- **`npm run clean:public`**: Clean orphaned HTML files from public directory
+- **`npm run build`**: Compile assets, render the complete content graph, and write `dist/`
+- **`npm run dev`**: Run Vite with the complete rendered development site
 
 ### Development Scripts
 
@@ -909,7 +618,9 @@ The KBR Builder supports several npm scripts for different build scenarios:
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "lint:prose": "tsx scripts/lint-prose.ts"
+    "lint:prose": "tsx scripts/lint-prose.ts --changed-only",
+    "lint:prose:all": "tsx scripts/lint-prose.ts",
+    "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only"
   }
 }
 ```
@@ -923,19 +634,10 @@ npm run dev
 # Production build (all files)
 npm run build
 
-# Optimized build (only changed files)
-npm run build:git-aware
-
-# Force build all files with git logging
-npm run build:force-all
-
-# Clean generated files
-npm run clean:public
-
 # Lint prose content
-npm run lint:prose --changed  # Only changed files
-npm run lint:prose --drafts   # Only draft files
-npm run lint:prose --all      # All files
+npm run lint:prose            # Changed files
+npm run lint:prose:drafts     # Draft files
+npm run lint:prose:all        # All files
 ```
 
 ## Troubleshooting
@@ -958,7 +660,7 @@ npm run lint:prose --all      # All files
 
 - Check file is in watched directory
 - Verify Vite configuration includes correct paths
-- Clear template cache manually if needed
+- Confirm the changed path is renderer-owned: pages, templates, content, themes, or the site index
 
 **Build Failures**:
 
@@ -966,55 +668,19 @@ npm run lint:prose --all      # All files
 - Verify all referenced templates exist
 - Ensure no circular template dependencies
 
-**Asset Injection Issues**:
-
-**Development Server - No CSS/JS Loading**:
-
-- Verify `injectDevAssets()` is being called in dev server middleware
-- Check that processed HTML includes proper Vite script tags
-- Ensure Vite dev server configuration includes correct middleware setup
-
-**Production Build - No Bundled Assets Generated** (shows "✓ 1 modules transformed"):
-
-- **Root Cause**: Vite cannot detect entry point for bundling
-- **Solution**: Ensure template-based HTML files include script tag: `<script type="module" src="/main.ts"></script>`
-- **Key Files**: Especially `source/site/index.html` which serves as main entry point
-- **Verification**: Check that build output shows "✓ XX modules transformed" (where XX > 1)
-
-**Production Build - Assets Generated But Not Injected**:
-
-- Check `HtmlBundleProcessor` is discovering assets from Vite bundle
-- Verify asset extraction logic in `generateBundle` hook
-- Confirm final HTML includes `<link>` and `<script>` tags for bundled assets
-
-**Template vs Entry Point Conflicts**:
-
-- **Issue**: Template system processing interferes with Vite entry point detection
-- **Solution**: Place script tags in source files (not templates) that serve as Vite entry points
-- **Pattern**: Use `base.html` template for structure, but keep entry point scripts in actual page files
-
 ### Performance Issues
 
 **Slow Development Server**:
 
-- Check template cache hit rate in logs
-- Reduce number of files being processed
-- Optimize file discovery patterns
+- Reduce unrelated file discovery and keep renderer-owned source changes focused
 
 **Large Build Times**:
 
 - Profile Markdown processing steps
 - Check for unnecessary file processing
-- Optimize asset injection logic
+- Profile Markdown processing and graph discovery before adding caching
 
 ## Future Enhancements
-
-### Implemented Features
-
-- **✅ Git-Aware Build Pipeline**: Intelligent file change detection and conditional processing
-- **✅ Incremental Builds**: Only process changed files during production builds
-- **✅ Blog Manifest Optimization**: Generate blog metadata only when needed
-- **✅ Coordinated Processing**: Unified pipeline for all build systems
 
 ### Potential Future Improvements
 
@@ -1022,7 +688,6 @@ npm run lint:prose --all      # All files
 2. **Asset Optimization**: Automatic image optimization and WebP conversion
 3. **SEO Enhancements**: Automatic sitemap generation and meta tag optimization
 4. **Performance Monitoring**: Build time analytics and optimization suggestions
-5. **Advanced Git Integration**: Support for comparing against different base branches
 
 ### Plugin Architecture
 

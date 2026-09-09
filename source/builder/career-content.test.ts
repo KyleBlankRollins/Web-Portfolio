@@ -60,6 +60,41 @@ employmentType = "Full-time"
     );
   });
 
+  it("renders description headings below the position title level", () => {
+    const [company] = parseCareerContent(
+      new Map([
+        [
+          "headings.md",
+          `+++
+company = "Headings"
+sortOrder = 1
+
+[[positions]]
+title = "Role"
+startDate = "2024-01"
+endDate = "Present"
+location = "Remote"
+employmentType = "Full-time"
++++
+
+## Role
+
+### Responsibilities
+
+Description.
+`,
+        ],
+      ])
+    );
+
+    expect(company.positions[0].renderedDescription).toContain(
+      '<h4 id="responsibilities">Responsibilities</h4>'
+    );
+    expect(company.positions[0].renderedDescription).not.toContain(
+      '<h3 id="responsibilities">'
+    );
+  });
+
   it("rejects a mismatch between position metadata and Markdown sections", () => {
     expect(() =>
       parseCareerContent(

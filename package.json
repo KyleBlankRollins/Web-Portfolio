@@ -9,10 +9,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:git-aware": "GIT_AWARE=true vite",
-    "build": "tsc && vite build",
-    "build:analyze": "tsc && ANALYZE=true vite build",
-    "build:git-aware": "tsc && GIT_AWARE=true vite build",
+    "build": "tsc && vite build && tsx scripts/build-site.ts",
+    "build:analyze": "tsc && ANALYZE=true vite build && tsx scripts/build-site.ts",
     "preview": "vite preview",
     "admin": "npm run admin:server & npm run admin:ui",
     "admin:server": "tsx source/admin/server/index.ts",

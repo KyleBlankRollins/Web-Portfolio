@@ -41,7 +41,6 @@ export {
   type ContentDocument,
   type ContentDocumentKind,
   type ContentDiscoveryResult,
-  normalizePathForComparison,
 } from "./content-discovery.js";
 
 // Typed content graph

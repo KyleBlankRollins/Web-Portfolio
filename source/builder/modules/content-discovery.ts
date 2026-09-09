@@ -30,7 +30,6 @@ export interface ContentDocument {
   parentUrl?: string;
   metadata: FrontmatterData;
 }
-
 export interface ContentDiscoveryResult {
   publishedRootPath: string;
   documents: ContentDocument[];
@@ -38,7 +37,6 @@ export interface ContentDiscoveryResult {
   supplementCandidates: ContentDocument[];
   publishedSupplements: ContentDocument[];
 }
-
 /**
  * Discovers publishable content documents from source/site/content/published.
  */
@@ -390,8 +388,4 @@ export class ContentDiscovery {
       seenByPublicUrl.set(document.publicUrl, document);
     }
   }
-}
-
-export function normalizePathForComparison(pathValue: string): string {
-  return toForwardSlashPath(pathValue);
 }

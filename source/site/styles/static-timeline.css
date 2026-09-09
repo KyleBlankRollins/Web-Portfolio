@@ -93,6 +93,14 @@
   color: var(--color-text);
   line-height: 1.6;
 }
+[data-static-timeline] .description h2,
+[data-static-timeline] .description h3,
+[data-static-timeline] .description h4 {
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  margin: var(--space-md) 0 var(--space-xs);
+}
 [data-static-timeline] .description p,
 [data-static-timeline] .description ul {
   margin: 0 0 var(--space-sm);

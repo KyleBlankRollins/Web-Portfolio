@@ -34,7 +34,7 @@ export default defineConfig({
   base: "/",
   build: {
     outDir: "../../dist",
-    emptyOutDir: process.env.GIT_AWARE !== "true",
+    emptyOutDir: true,
     // Additional performance optimizations
     target: "es2022",
     cssMinify: true,
@@ -75,10 +75,7 @@ export default defineConfig({
   },
   plugins: [
     bundleIconData(),
-    kbrBuilder({
-      gitAware: process.env.GIT_AWARE === "true",
-      forceAll: process.env.FORCE_ALL === "true",
-    }),
+    kbrBuilder(),
     // Bundle analyzer (only when ANALYZE=true)
     ...(process.env.ANALYZE
       ? [

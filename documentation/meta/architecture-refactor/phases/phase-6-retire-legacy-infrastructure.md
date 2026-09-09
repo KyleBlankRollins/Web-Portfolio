@@ -61,9 +61,14 @@ Before marking the refactor complete:
 ## Completion Evidence
 
 - Clean-checkout production build output and test results.
-- Development route/change matrix results.
-- Search results for retired modules/symbols.
+- Development route/change matrix results: `build-output.test.ts` covers the root page, a regular page, a Markdown post, a nested supplement, and Vite fallback handling; `dev-server-middleware.test.ts` covers page, template, content, theme, and site-index changes, including full-reload dispatch and ignored client-component changes.
+- Browser smoke check: the documented dev command served the root page with the Vite HMR client connected.
+- Search results for retired modules/symbols, including deletion of orphaned site components and obsolete builder helpers.
 - Updated script and deployment documentation paths.
+
+Gate 6.3 is complete: the remaining orphaned code, stale component documentation,
+cache/incremental workflow claims, and obsolete build examples were removed. The
+full suite, TypeScript compilation, and production build pass after the cleanup.
 
 ## Definition Of Done
 

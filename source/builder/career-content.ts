@@ -24,7 +24,7 @@ export function parseCareerContent(
   now = new Date()
 ): readonly CareerCompany[] {
   const parser = new FrontmatterParser("career");
-  const renderer = new MarkdownRenderer(new Marked());
+  const renderer = new MarkdownRenderer(new Marked(), { headingOffset: 1 });
 
   return [...careerFiles.entries()]
     .sort(([left], [right]) => left.localeCompare(right))

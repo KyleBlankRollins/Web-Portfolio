@@ -30,6 +30,7 @@ export interface MarkdownRendererOptions {
   gfm?: boolean;
   breaks?: boolean;
   syntaxHighlighting?: boolean;
+  headingOffset?: number;
 }
 
 export interface MarkdownRenderContext {
@@ -43,6 +44,7 @@ export interface MarkdownRenderContext {
 export class MarkdownRenderer {
   private marked: Marked;
   private syntaxHighlighting: boolean;
+  private headingOffset: number;
   private activeRenderContext?: MarkdownRenderContext;
 
   constructor(
@@ -51,6 +53,7 @@ export class MarkdownRenderer {
   ) {
     this.marked = markedInstance;
     this.syntaxHighlighting = options.syntaxHighlighting !== false;
+    this.headingOffset = options.headingOffset ?? 0;
 
     // Configure marked options
     this.marked.setOptions({
@@ -83,13 +86,14 @@ export class MarkdownRenderer {
 
     // Override heading renderer to add IDs
     renderer.heading = ({ tokens, depth }: Tokens.Heading) => {
+      const renderedDepth = Math.min(depth + this.headingOffset, 6);
       const renderedHeading = Parser.parseInline(tokens);
       const headingHtml =
         typeof renderedHeading === "string"
           ? renderedHeading
           : escapeHtml(this.extractHeadingText(tokens));
       const headingId = this.generateAnchorId(this.extractHeadingText(tokens));
-      return `<h${depth} id="${escapeHtml(headingId)}">${headingHtml}</h${depth}>`;
+      return `<h${renderedDepth} id="${escapeHtml(headingId)}">${headingHtml}</h${renderedDepth}>`;
     };
 
     // Override link renderer to transform .md to .html
