@@ -222,7 +222,7 @@ Then the sentence part 1 should probably be built around:
 
 That is the series' entire problem, stated in 1968 vocabulary and published in 2003. **Prose is a notation syntactically and not semantically.** Which is precisely why structure survives transformation and meaning does not — the syntactic layer meets the criteria for reliable identification and the semantic layer never did.
 
-It also explains *why RFC 2119 works.* Capitalizing MUST manufactures **syntactic disjointness** — `MUST` and `must` become different characters rather than one ambiguous mark. Defining each keyword against a single conformance level manufactures **semantic unambiguity**. RFC 2119 is an attempt to carve a small notation out of a sign set that is not one. That is a much deeper account than "it's a useful convention," and it predicts the limit: you can only do this for a small closed vocabulary, never for prose in general.
+It also explains _why RFC 2119 works._ Capitalizing MUST manufactures **syntactic disjointness** — `MUST` and `must` become different characters rather than one ambiguous mark. Defining each keyword against a single conformance level manufactures **semantic unambiguity**. RFC 2119 is an attempt to carve a small notation out of a sign set that is not one. That is a much deeper account than "it's a useful convention," and it predicts the limit: you can only do this for a small closed vocabulary, never for prose in general.
 
 **4. The musical score.** Goodman's example, quoted in the paper: a score "has as a primary function the authoritative identification of a work from performance to performance." That is the transduction problem in one line, from 1968 — how a work stays identifiable across renderings. It is a better anchor image than the Markdown-to-HTML pipeline, and a reader will hold onto it.
 
@@ -418,7 +418,7 @@ What the theory supplies instead is worth more than a borrowed procedure:
 - **Communicability is the construct being measured.** Not accuracy, not readability — whether the intended interpreter can recover the writer's intent. That is the citation, and it belongs to the theory rather than to either method.
 - **The analyst-side stance.** SIM inspects without users on purpose. A judgment about what an artifact affords is a claim about the artifact, and it does not expire when models change — which is how the series honors its own rule that no piece depends on a claim about current models.
 - **The three sign classes are a manipulable variable**, not just a description. See below.
-- **The loud/silent breakdown distinction** decides how loss must be scored. A relation replaced by a *wrong* relation is a worse outcome than one that is merely absent, and any rubric that collapses both into "lost" discards the finding.
+- **The loud/silent breakdown distinction** decides how loss must be scored. A relation replaced by a _wrong_ relation is a worse outcome than one that is merely absent, and any rubric that collapses both into "lost" discards the finding.
 
 ### Redundancy collapse — the argument part 2 should be built on
 
@@ -428,7 +428,7 @@ For a human reader, documentation is one of **three redundant channels**. The do
 
 For an agent operating on a retrieval chunk, **two of those three channels are gone.** The channel that was one of three supports becomes the only one.
 
-That explains why documentation matters *more* for agents than for humans, in the theory's own vocabulary, **without any appeal to model capability** — which is exactly what the series' design rules demand. It also generates the experiment's central hypothesis: explicit marking should matter little when the product is available and a great deal when it is not. If that holds, it explains why the trade conversation keeps concluding documentation is not the bottleneck. Evaluations are run with full product access, where redundancy masks the loss.
+That explains why documentation matters _more_ for agents than for humans, in the theory's own vocabulary, **without any appeal to model capability** — which is exactly what the series' design rules demand. It also generates the experiment's central hypothesis: explicit marking should matter little when the product is available and a great deal when it is not. If that holds, it explains why the trade conversation keeps concluding documentation is not the bottleneck. Evaluations are run with full product access, where redundancy masks the loss.
 
 ### The deixis convergence
 

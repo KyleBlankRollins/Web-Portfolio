@@ -19,10 +19,10 @@ repository: "docs-transduction-study — separate repository, not this one"
 
 Registration happens in **two locks**, because two different things need protecting and they are ready at different times:
 
-| Lock | Frontmatter fields | What it freezes | When |
-| ---- | ------------------ | --------------- | ---- |
-| **L1 — design freeze** | `registered`, `registration_commit` | Hypotheses, relation taxonomy, survival rubric, de-marking rules, pipeline stage definitions, analysis plan, disconfirming outcomes | Before any specimen is selected |
-| **L2 — instrument lock** | `instrument_locked`, `instrument_lock_commit` | Specimen list, relation inventory, probes with foils, the gate exclusion log, de-marking templates, the coding-order seed | After variants exist and every probe has passed the both-arms gate; before any downstream artifact of a study specimen is generated |
+| Lock                     | Frontmatter fields                            | What it freezes                                                                                                                     | When                                                                                                                                |
+| ------------------------ | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **L1 — design freeze**   | `registered`, `registration_commit`           | Hypotheses, relation taxonomy, survival rubric, de-marking rules, pipeline stage definitions, analysis plan, disconfirming outcomes | Before any specimen is selected                                                                                                     |
+| **L2 — instrument lock** | `instrument_locked`, `instrument_lock_commit` | Specimen list, relation inventory, probes with foils, the gate exclusion log, de-marking templates, the coding-order seed           | After variants exist and every probe has passed the both-arms gate; before any downstream artifact of a study specimen is generated |
 
 L1 protects the hypotheses from being fitted to the data. L2 protects the instrument from being fitted to the artifacts. After L1, changes to anything in the L1 row are amendments; after L2, the same for the L2 row. Amendments go in the [Amendment log](#amendment-log), never silent edits.
 
@@ -54,11 +54,11 @@ Version 0.4 froze the right things; writing the implementation plan against it s
 
 Version 0.3 was internally consistent as an argument but under-specified as a procedure: three things it left to be decided during execution were decisions that must exist before execution, and one had contradicted itself. Nothing here changes a hypothesis, the taxonomy, or the rubric. It is all operational.
 
-- **Registration split into two locks.** The 0.3 Procedure froze the design at step 1; the 0.3 execution checklist froze it *after* probes were locked. Both could not hold, and the ambiguity was about which commit constitutes the registration — the one thing pre-registration exists to make unambiguous. The [two-lock model](#status) resolves it without weakening either commitment, because the design and the instrument genuinely become final at different moments.
+- **Registration split into two locks.** The 0.3 Procedure froze the design at step 1; the 0.3 execution checklist froze it _after_ probes were locked. Both could not hold, and the ambiguity was about which commit constitutes the registration — the one thing pre-registration exists to make unambiguous. The [two-lock model](#status) resolves it without weakening either commitment, because the design and the instrument genuinely become final at different moments.
 - **The A4 unit of scoring is now specified.** A page yields many chunks, and 0.3 never said which one a probe is answered against — leaving the question "did this relation survive chunking?" resting on a choice that would have been made after seeing the artifacts. It is now [fixed in advance](#what-is-scored-at-a4), with straddled host passages recorded rather than worked around.
 - **Relation instances now carry anchors.** The unit of analysis was scored "per stage, per arm" with no rule for locating it in an artifact. Anchors and host passages make that mechanical and checkable at lock time.
-- **De-marking rules D2, D3, and D4 are bound to a fixed template set.** These three rules *insert* words rather than only removing structure, so left unconstrained they were an invitation to hand-tune the implicit arm sentence by sentence — which is precisely the strawman threat the design rates High. Templates are committed and frozen at L2.
-- **D4 now de-marks by lowercasing the keyword** ("MUST" → "must") rather than substituting a paraphrase ("needs to"). The 0.3 phrasing was an illustration that does not survive mechanical application: "You MUST restart" becomes "You needs to restart", and broken grammar in the implicit arm only would let the arms be told apart on fluency rather than on marking. Lowercasing is what RFC 8174 itself makes the marking, so removing capitalization *is* the de-marking. The cost is that D4 becomes the smallest manipulation in the set and is [reported separately from D3](#analysis-plan). Reasoning recorded in the experiment repository as ADR-0001.
+- **De-marking rules D2, D3, and D4 are bound to a fixed template set.** These three rules _insert_ words rather than only removing structure, so left unconstrained they were an invitation to hand-tune the implicit arm sentence by sentence — which is precisely the strawman threat the design rates High. Templates are committed and frozen at L2.
+- **D4 now de-marks by lowercasing the keyword** ("MUST" → "must") rather than substituting a paraphrase ("needs to"). The 0.3 phrasing was an illustration that does not survive mechanical application: "You MUST restart" becomes "You needs to restart", and broken grammar in the implicit arm only would let the arms be told apart on fluency rather than on marking. Lowercasing is what RFC 8174 itself makes the marking, so removing capitalization _is_ the de-marking. The cost is that D4 becomes the smallest manipulation in the set and is [reported separately from D3](#analysis-plan). Reasoning recorded in the experiment repository as ADR-0001.
 
 ## What changed from 0.2 and why
 
@@ -68,7 +68,7 @@ Version 0.2 had two principled commitments that turned out to be mutually exclus
 - **Server-mediated retrieval (the old A4b and H6) is demoted from hypothesis to [observational annex](#annex-the-server-mediated-snapshot).** It can only ever carry the explicit arm, and it conflates retrieval failure (the relevant passage was never returned) with transduction loss (it was returned, degraded). The annex keeps the snapshot and adds a retrieval gate; it makes no comparative claims.
 - **De-marking rules D5 (names → pronouns) and D6 (relocating prerequisites) are cut.** D5 manufactures ambiguity that violates the propositional-equivalence constraint by construction, for exactly the instances that matter most. D6 changes which chunk information lands in — an information manipulation disguised as a marking manipulation. What remains is a clean test of **component syntax versus prose**, which is also the Goodman argument stated operationally.
 - **Probes are now closed-form, with pre-written foils.** Free-text probe answers had no specified scorer: an LLM judge would use pragmatic competence to measure pragmatic failure, and an author judge would reimport the bias the measure existed to remove. Forced-choice probes are scored by exact match, and the foil option operationalizes the corrupted-versus-absent distinction directly.
-- **The blinding claims are rewritten to what is actually achievable.** The manipulation is visible in the artifact — an admonition block versus an inline sentence *is* the treatment — so "blind to arm" was never available. The design now claims only the controls that work.
+- **The blinding claims are rewritten to what is actually achievable.** The manipulation is visible in the artifact — an admonition block versus an inline sentence _is_ the treatment — so "blind to arm" was never available. The design now claims only the controls that work.
 - **Relation types split into manipulated and observed.** Force, sequence, alternatives, and prerequisites can be re-marked mechanically. Reference and deixis cannot be de-marked without changing content, so they are tracked as naturally occurring instances instead. The 0.2 design blurred these and inherited a confound.
 
 ## The question
@@ -99,19 +99,19 @@ Categories are external — the four phenomena from the PUB benchmark for the ob
 
 **Manipulated relations** — markable by component syntax, and mechanically de-markable without touching content:
 
-| ID | Relation | Explicit marking | Implicit carrier |
-| -- | -------- | ---------------- | ---------------- |
-| R1 | Sequence — steps that must occur in order | Step components | Prose paragraph, order in sentence sequence |
-| R2 | Membership — mutually exclusive alternatives | Tabbed panels | Prose enumeration |
-| R3 | Force — how mandatory an action is, scope of warnings | Admonitions, normative keywords | Modal verbs in running prose |
-| R4 | Precondition — what must hold before an action | Prerequisite blocks, tables | Prose statement in place |
+| ID  | Relation                                              | Explicit marking                | Implicit carrier                            |
+| --- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------- |
+| R1  | Sequence — steps that must occur in order             | Step components                 | Prose paragraph, order in sentence sequence |
+| R2  | Membership — mutually exclusive alternatives          | Tabbed panels                   | Prose enumeration                           |
+| R3  | Force — how mandatory an action is, scope of warnings | Admonitions, normative keywords | Modal verbs in running prose                |
+| R4  | Precondition — what must hold before an action        | Prerequisite blocks, tables     | Prose statement in place                    |
 
 **Observed relations** — naturally occurring, identical in both arms, tracked but never manipulated:
 
-| ID | Phenomenon | In documentation |
-| -- | ---------- | ---------------- |
-| O1 | Reference | "the key," "your existing config" |
-| O2 | Deixis | "this step," "as described above," "see below" |
+| ID  | Phenomenon | In documentation                               |
+| --- | ---------- | ---------------------------------------------- |
+| O1  | Reference  | "the key," "your existing config"              |
+| O2  | Deixis     | "this step," "as described above," "see below" |
 
 A **relation instance** is one occurrence of one of these in one specimen. It is the unit of analysis.
 
@@ -130,14 +130,14 @@ Subjective coding of "was meaning preserved?" is not measurable. Each relation i
 
 - **The question.** Phrased without vocabulary unique to either arm.
 - **The correct answer**, verified against A0.
-- **One or two foils** — specific, plausible *wrong* relations the degradation could produce. The cap exists so option-set size stays comparable across probes.
+- **One or two foils** — specific, plausible _wrong_ relations the degradation could produce. The cap exists so option-set size stays comparable across probes.
 - **"The text does not say"** — always available.
 
 > **Probe:** Are the three package-manager commands alternatives to each other, or steps to run in sequence?
 > **Correct:** Alternatives — run exactly one.
 > **Foil:** Sequence — run all three in order.
 
-Answer options are presented in randomized order. Scoring is exact match: no judge model, no post-hoc interpretation. Choosing the foil *is* the corrupted outcome, observed directly rather than inferred from a transcript.
+Answer options are presented in randomized order. Scoring is exact match: no judge model, no post-hoc interpretation. Choosing the foil _is_ the corrupted outcome, observed directly rather than inferred from a transcript.
 
 Authoring rules, fixed in advance: one probe per instance; answerable unambiguously from **both** A0 variants (this is the propositional-equivalence gate — instances that fail it are excluded and logged before locking); no probe quotes a distinctive string from either variant; a designated subset are [version-change probes](#contamination).
 
@@ -145,16 +145,16 @@ Authoring rules, fixed in advance: one probe per instance; answerable unambiguou
 
 Ordinal, per probe per artifact:
 
-| Score | Label | Criterion |
-| ----- | ----- | --------- |
-| 3 | Preserved | Correct answer, supported explicitly |
-| 2 | Degraded | Correct answer, but only by inference or outside knowledge |
-| 1 | Absent | "The text does not say" — the loss is visible |
-| 0 | Corrupted | A foil — the artifact supports a wrong relation, and nothing signals the loss |
+| Score | Label     | Criterion                                                                     |
+| ----- | --------- | ----------------------------------------------------------------------------- |
+| 3     | Preserved | Correct answer, supported explicitly                                          |
+| 2     | Degraded  | Correct answer, but only by inference or outside knowledge                    |
+| 1     | Absent    | "The text does not say" — the loss is visible                                 |
+| 0     | Corrupted | A foil — the artifact supports a wrong relation, and nothing signals the loss |
 
 **Corrupted scores below Absent, on purpose.** A reader who generates no interpretation fails loudly and recoverably; a reader who generates the wrong one fails silently and expensively. A rubric that pools them discards the finding the series most wants.
 
-The worked case: package-manager tabs encode membership. Strip the tab structure in plain-text extraction and three consecutive command blocks read as sequence. That is not absence — the relation was *replaced*, and nothing marks the substitution.
+The worked case: package-manager tabs encode membership. Strip the tab structure in plain-text extraction and three consecutive command blocks read as sequence. That is not absence — the relation was _replaced_, and nothing marks the substitution.
 
 {# Verify this behavior on actual specimens before using it as part 3's opener. It is the best example available if it holds. #}
 
@@ -175,24 +175,24 @@ Selection rules, fixed in advance: specimens span Diátaxis types so the sample 
 
 Explicit variants are Astro's pages as authored. Implicit variants apply these rules **mechanically, without hand-tuning**:
 
-| Rule | Transformation |
-| ---- | -------------- |
-| D1 | Step components → prose paragraph, order preserved in sentence sequence |
-| D2 | Tabbed alternatives → prose enumeration, with the alternative relation stated once in prose |
-| D3 | Admonitions → inline sentences in surrounding prose, in place |
-| D4 | Normative keywords → ordinary modals: the keyword is lowercased ("MUST" → "must"), in place |
-| D7 | Tables → prose enumeration, in place |
-| D8 | Prerequisite-heading blocks → heading removed; content unchanged and in place, introduced by a template sentence stating the precondition relation. *Added by amendment A1.* |
+| Rule | Transformation                                                                                                                                                               |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1   | Step components → prose paragraph, order preserved in sentence sequence                                                                                                      |
+| D2   | Tabbed alternatives → prose enumeration, with the alternative relation stated once in prose                                                                                  |
+| D3   | Admonitions → inline sentences in surrounding prose, in place                                                                                                                |
+| D4   | Normative keywords → ordinary modals: the keyword is lowercased ("MUST" → "must"), in place                                                                                  |
+| D7   | Tables → prose enumeration, in place                                                                                                                                         |
+| D8   | Prerequisite-heading blocks → heading removed; content unchanged and in place, introduced by a template sentence stating the precondition relation. _Added by amendment A1._ |
 
-*(D5 and D6 from the 0.2 design are deliberately absent — see [What changed](#what-changed-from-02-and-why). Rule IDs are kept stable rather than renumbered.)*
+_(D5 and D6 from the 0.2 design are deliberately absent — see [What changed](#what-changed-from-02-and-why). Rule IDs are kept stable rather than renumbered.)_
 
 **D2, D3, and D8 insert words; they do not only remove structure.** D2 must state the alternative relation in prose, D3 must land an admonition's content in a surrounding sentence, and D8 must assert the precondition relation in a sentence once its heading is gone. (D4 inserts nothing — it lowercases the keyword in place, per the 0.4 decision and ADR-0001.) Each insertion is a writing act, and a writing act performed freely, specimen by specimen, is exactly how an implicit arm becomes a strawman without anyone intending it.
 
-So the inserted language comes from a **small, fixed, committed template set** — a frozen phrase inventory for D2, D3, and D8 (`"Choose one of the following options:"`, `"Before you begin, you need the following:"`). Templates are applied uniformly across all specimens, are committed as data rather than embedded in prose, and are frozen at L2. *(An earlier version of this paragraph described a D4 paraphrase mapping; that contradicted the 0.4 lowercasing rule and was repaired by amendment A2.)*
+So the inserted language comes from a **small, fixed, committed template set** — a frozen phrase inventory for D2, D3, and D8 (`"Choose one of the following options:"`, `"Before you begin, you need the following:"`). Templates are applied uniformly across all specimens, are committed as data rather than embedded in prose, and are frozen at L2. _(An earlier version of this paragraph described a D4 paraphrase mapping; that contradicted the 0.4 lowercasing rule and was repaired by amendment A2.)_
 
 If a specimen genuinely cannot be de-marked without a bespoke sentence, that is recorded as an exception naming the specimen — and if exceptions turn out to be frequent, the claim that the manipulation is mechanical is **false and must be reported as such**, not quietly patched with better sentences.
 
-**Propositional content must be identical between variants.** The implicit variant may not omit information — including relational information: if tabs assert "these are alternatives," the prose must assert it too, in words. The manipulation is *how* the relation is encoded, never *whether*.
+**Propositional content must be identical between variants.** The implicit variant may not omit information — including relational information: if tabs assert "these are alternatives," the prose must assert it too, in words. The manipulation is _how_ the relation is encoded, never _whether_.
 
 This constraint is the entire safeguard against strawmanning, and it is enforced by the probe gate: every probe must be answerable from both A0 variants by a careful reader. An implicit variant that simply says less proves nothing, and the design must be able to show it didn't.
 
@@ -200,14 +200,14 @@ This constraint is the entire safeguard against strawmanning, and it is enforced
 
 Every stage is study-controlled and both arms pass through all of it. Implicit variants are valid MDX and build through Starlight like the originals.
 
-| ID | Stage | Nature | Artifact |
-| -- | ----- | ------ | -------- |
-| A0 | Authored MDX | Reference | Both variants. Defines the inventory; probes gated here. Not scored. |
-| A1 | Compiled HTML | Deterministic | Starlight build output |
-| A2 | Accessibility tree | Deterministic | Playwright snapshot of the served page |
-| A3 | Plain-text extraction | Deterministic | Named, versioned extractor in plain-text mode; no structure preserved |
-| A4 | Retrieval chunks | Deterministic | Fixed-size, no overlap, parameters recorded, script committed |
-| A5 | Model summary | **Stochastic** | Fixed prompt, ≥3 models, ≥2 vendors, temperature and IDs recorded |
+| ID  | Stage                 | Nature         | Artifact                                                              |
+| --- | --------------------- | -------------- | --------------------------------------------------------------------- |
+| A0  | Authored MDX          | Reference      | Both variants. Defines the inventory; probes gated here. Not scored.  |
+| A1  | Compiled HTML         | Deterministic  | Starlight build output                                                |
+| A2  | Accessibility tree    | Deterministic  | Playwright snapshot of the served page                                |
+| A3  | Plain-text extraction | Deterministic  | Named, versioned extractor in plain-text mode; no structure preserved |
+| A4  | Retrieval chunks      | Deterministic  | Fixed-size, no overlap, parameters recorded, script committed         |
+| A5  | Model summary         | **Stochastic** | Fixed prompt, ≥3 models, ≥2 vendors, temperature and IDs recorded     |
 
 A0 is MDX, not Markdown: components compile away before HTML, so the pipeline has a transformation stage plain-Markdown mental models omit. It is where component-level marking either survives or does not.
 
@@ -221,7 +221,7 @@ A5 is the only stage with a model inside the artifact-generation step, which is 
 
 ### What is scored at A4
 
-At A1–A3 the artifact is the whole page, so an instance is trivially present in it. A4 is different: a page becomes many chunks, and *which chunk a probe is answered against* determines the answer. Left unfixed, that choice would be made after the artifacts exist, which makes it an analytic degree of freedom in the stage the design cares most about.
+At A1–A3 the artifact is the whole page, so an instance is trivially present in it. A4 is different: a page becomes many chunks, and _which chunk a probe is answered against_ determines the answer. Left unfixed, that choice would be made after the artifacts exist, which makes it an analytic degree of freedom in the stage the design cares most about.
 
 Fixed in advance: **the A4 artifact for an instance is exactly one chunk — the chunk containing the first character of that instance's host passage for that arm.** Where the host passage crosses a chunk boundary, a `spans_chunks` flag is recorded alongside the score.
 
@@ -233,14 +233,14 @@ No retriever is involved at A4. Selecting chunks by relevance would make a deter
 
 Directional, each paired with the observation that would disconfirm it.
 
-| ID | Hypothesis | Disconfirmed if |
-| -- | ---------- | --------------- |
-| H1 | **The survival gap between explicit and implicit arms widens down the pipeline.** Arms are equal at A0 by construction; explicit marking's advantage appears and grows across A3, A4, A5. | The trajectories stay parallel (marking never matters), or the implicit arm survives equal or better at every stage. |
-| H2 | Among observed instances, deixis (O2) is the most fragile type, and chunking (A4) is where it breaks. | Another type is reliably more fragile, or deixis survives chunking comparably to the rest. |
-| H3 | At A4, loss more often produces a wrong relation (Corrupted) than a visible gap (Absent). | Absence dominates, or the two are comparable. |
-| H4 | *(Phase 2)* Prior intrusion — answering from memorized behavior rather than the artifact — rises as artifact recoverability falls. | Intrusion is flat across recoverability levels, or falls. |
+| ID  | Hypothesis                                                                                                                                                                                | Disconfirmed if                                                                                                      |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| H1  | **The survival gap between explicit and implicit arms widens down the pipeline.** Arms are equal at A0 by construction; explicit marking's advantage appears and grows across A3, A4, A5. | The trajectories stay parallel (marking never matters), or the implicit arm survives equal or better at every stage. |
+| H2  | Among observed instances, deixis (O2) is the most fragile type, and chunking (A4) is where it breaks.                                                                                     | Another type is reliably more fragile, or deixis survives chunking comparably to the rest.                           |
+| H3  | At A4, loss more often produces a wrong relation (Corrupted) than a visible gap (Absent).                                                                                                 | Absence dominates, or the two are comparable.                                                                        |
+| H4  | _(Phase 2)_ Prior intrusion — answering from memorized behavior rather than the artifact — rises as artifact recoverability falls.                                                        | Intrusion is flat across recoverability levels, or falls.                                                            |
 
-**H1 is the recommendation under test.** If it fails, the series' central practical advice is unsupported in the form it is stated, and every part must say so plainly. Stating it as a *trajectory divergence* rather than a main effect does two jobs: the A0 equality is guaranteed by the propositional-equivalence gate, so any downstream gap is attributable to the pipeline acting on marking; and a difference-of-trajectories is a structural claim that does not expire with any particular model.
+**H1 is the recommendation under test.** If it fails, the series' central practical advice is unsupported in the form it is stated, and every part must say so plainly. Stating it as a _trajectory divergence_ rather than a main effect does two jobs: the A0 equality is guaranteed by the propositional-equivalence gate, so any downstream gap is attributable to the pipeline acting on marking; and a difference-of-trajectories is a structural claim that does not expire with any particular model.
 
 H2 converts the deixis convergence — two literatures independently naming deixis the fragile category — from a coincidence of citations into a prediction. H3 is the CEM loud/silent distinction made countable. H4 treats training-data contamination as a phenomenon with a number rather than a nuisance.
 
@@ -251,9 +251,9 @@ H2 converts the deixis convergence — two literatures independently naming deix
 Per relation instance, per stage, per arm, on the four-level rubric. Two passes:
 
 - **M1a — analyst-judged. Phase 1. Model-free.** The analyst answers each probe from the artifact alone, choosing among the locked options, and flags whether a correct answer was explicit or inferred. A claim about the artifact, so it does not expire.
-- **M1b — model-judged. Phase 2.** Artifact plus probe in; the model selects an option; scored by exact match. Run across ≥3 models from ≥2 vendors. Multi-model consistency of the *H1 divergence* — not absolute scores — is the only claim carried forward.
+- **M1b — model-judged. Phase 2.** Artifact plus probe in; the model selects an option; scored by exact match. Run across ≥3 models from ≥2 vendors. Multi-model consistency of the _H1 divergence_ — not absolute scores — is the only claim carried forward.
 
-Where M1a and M1b diverge is itself a finding: information present in the artifact but not recoverable *by this kind of interpreter* is the three-place predicate — a representation of x for z — made concrete.
+Where M1a and M1b diverge is itself a finding: information present in the artifact but not recoverable _by this kind of interpreter_ is the three-place predicate — a representation of x for z — made concrete.
 
 ### M2 — Redundancy inventory (descriptive)
 
@@ -290,7 +290,7 @@ Pre-specified. Anything not listed is exploratory and labeled as such.
 - **Primary (H1):** mean and full distribution of survival by arm × stage; the trajectory figure with both arms overlaid; the gap (explicit minus implicit) per stage. Reported pooled **and per specimen** — nested data means pooled counts can be driven by two atypical pages, and the reader gets to see whether the effect is broad or concentrated.
 - **H2:** survival by observed type × stage. The fragility ranking is **descriptive** — probes differ across types and are not calibrated for difficulty — and is compared to the PUB ordering with that caveat stated.
 - **R3 is reported split by marking device, never pooled.** Force is carried by two very different manipulations: admonitions (D3), which restructure a block, and normative keywords (D4), which change only capitalization. Pooling them would let D3's effect present as a property of force marking in general, and would let a null on D4 dilute a result on D3. Capitalization survives every deterministic stage intact, so a flat D4 trajectory is the expected outcome and is not evidence against H1.
-- **H3:** among non-Preserved instances at A4, the Corrupted : Absent ratio, reported overall **and split by `spans_chunks`** — whether the host passage survived intact in one chunk or was cut across a boundary. Note in publication that offering a foil measures *endorsement* of the wrong relation and may run higher than spontaneous error; the comparison across stages and arms is symmetric, which is what H3 needs.
+- **H3:** among non-Preserved instances at A4, the Corrupted : Absent ratio, reported overall **and split by `spans_chunks`** — whether the host passage survived intact in one chunk or was cut across a boundary. Note in publication that offering a foil measures _endorsement_ of the wrong relation and may run higher than spontaneous error; the comparison across stages and arms is symmetric, which is what H3 needs.
 - **H4:** prior-intrusion rate on version-change probes against M1a recoverability of the artifact shown.
 - **M1a vs M1b divergence**, by type and stage. **M2:** channels per relation, descriptive.
 - **Reporting rules:** raw counts and full distributions, not only central tendency; effect sizes and distributions lead, not p-values; no unpre-specified subgroups; the coded dataset, logs, and analysis scripts are published.
@@ -312,12 +312,12 @@ Ordering matters: variants exist before probes are locked, so the no-distinctive
 11. **Randomize coding order** across specimens, stages, and arms with the recorded seed; artifacts renamed to opaque IDs, mapping sealed until analysis.
 12. **Run M1a.** Answer options only; source consulted only at scoring.
 13. **Re-code a 20% sample after ≥7 days**; compute intra-rater kappa. Below ~0.6 the instrument is too noisy to support conclusions — report the failure, not the findings.
-14. *(Phase 2)* **Generate A5** and **run M1b** across models; record model IDs, versions, temperature, toolchain versions.
+14. _(Phase 2)_ **Generate A5** and **run M1b** across models; record model IDs, versions, temperature, toolchain versions.
 15. **Analyze per plan.** Everything else is exploratory and labeled.
 
 ### Blinding, honestly
 
-The manipulation is visible in the artifact — a step component versus a prose paragraph *is* the treatment — so no procedure makes the coder blind to arm, and this design does not claim one. What the controls actually do:
+The manipulation is visible in the artifact — a step component versus a prose paragraph _is_ the treatment — so no procedure makes the coder blind to arm, and this design does not claim one. What the controls actually do:
 
 - **Locked closed-form probes remove scoring discretion.** The coder picks from pre-written options; the room for motivated interpretation is the choice among them, not a free-text judgment.
 - **Randomized order and opaque IDs** prevent drift and specimen-level anchoring, which is what they can actually prevent.
@@ -326,18 +326,18 @@ The manipulation is visible in the artifact — a step component versus a prose 
 
 ## Threats to validity
 
-| Threat | Severity | Mitigation |
-| ------ | -------- | ---------- |
-| Experimenter bias — author codes own hypotheses | **High** | Closed-form probes locked before artifacts; exact-match scoring; sealed mapping; kappa; published dataset |
-| Strawman implicit variant | **High** | Mechanical rules only; inserted language drawn from a frozen template set; relational content preserved in words; per-probe gate against both A0 variants; exceptions logged and reported |
-| Training-data familiarity favors the explicit arm in M1b | **High** | M1a carries the primary claim; M1b reported by stratum with the confound named; M1a–M1b consistency is the evidence |
-| Foils prime the corrupted reading | Medium | Symmetric across arms and stages; endorsement framing stated in publication |
-| Chunker parameters determine A4 | Medium | Parameters recorded, script committed; chunk-selection rule fixed before artifacts exist; reported as a configured choice |
-| Nested data — instances cluster within pages | Medium | Per-specimen reporting alongside pooled; minimum instances per cell set in advance |
-| Ceiling — Astro's docs are genuinely good | Medium | The design measures divergence under degradation, not doc quality; chunk-level stages break structure regardless |
-| Model stochasticity at A5 / M1b | Medium | Multiple runs with a pre-recorded reducer; multi-model replication; only the divergence claimed |
-| Small sample | Medium | Distributions reported; claims scoped as mechanism demonstration, not population estimate |
-| Corpus drift | Low | SHA-pinned; artifacts archived |
+| Threat                                                   | Severity | Mitigation                                                                                                                                                                                |
+| -------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Experimenter bias — author codes own hypotheses          | **High** | Closed-form probes locked before artifacts; exact-match scoring; sealed mapping; kappa; published dataset                                                                                 |
+| Strawman implicit variant                                | **High** | Mechanical rules only; inserted language drawn from a frozen template set; relational content preserved in words; per-probe gate against both A0 variants; exceptions logged and reported |
+| Training-data familiarity favors the explicit arm in M1b | **High** | M1a carries the primary claim; M1b reported by stratum with the confound named; M1a–M1b consistency is the evidence                                                                       |
+| Foils prime the corrupted reading                        | Medium   | Symmetric across arms and stages; endorsement framing stated in publication                                                                                                               |
+| Chunker parameters determine A4                          | Medium   | Parameters recorded, script committed; chunk-selection rule fixed before artifacts exist; reported as a configured choice                                                                 |
+| Nested data — instances cluster within pages             | Medium   | Per-specimen reporting alongside pooled; minimum instances per cell set in advance                                                                                                        |
+| Ceiling — Astro's docs are genuinely good                | Medium   | The design measures divergence under degradation, not doc quality; chunk-level stages break structure regardless                                                                          |
+| Model stochasticity at A5 / M1b                          | Medium   | Multiple runs with a pre-recorded reducer; multi-model replication; only the divergence claimed                                                                                           |
+| Small sample                                             | Medium   | Distributions reported; claims scoped as mechanism demonstration, not population estimate                                                                                                 |
+| Corpus drift                                             | Low      | SHA-pinned; artifacts archived                                                                                                                                                            |
 
 ## Disconfirming outcomes
 
@@ -355,9 +355,9 @@ A null result here is worth more to the series than a confirmation, because nobo
 
 ## Annex: the server-mediated snapshot
 
-*Observational, explicit-arm only, no hypothesis.* The dominant delivery path for this corpus is Astro's MCP server — a third-party retrieval service the docs team does not control, which replaced the `llms.txt` files Astro published and then [removed](https://github.com/withastro/docs/pull/13538). That history is itself citable for part 5: the trade conversation's previous answer lasted about a year and was deleted in favor of another syntactic-layer protocol.
+_Observational, explicit-arm only, no hypothesis._ The dominant delivery path for this corpus is Astro's MCP server — a third-party retrieval service the docs team does not control, which replaced the `llms.txt` files Astro published and then [removed](https://github.com/withastro/docs/pull/13538). That history is itself citable for part 5: the trade conversation's previous answer lasted about a year and was deleted in favor of another syntactic-layer protocol.
 
-The annex, if run: submit a locked query set targeting the specimen pages; archive every request and response verbatim in one tight window with dates. Score in two steps — **first a retrieval gate** (do the returned snippets contain the relation's host passage at all?), then rubric scoring **only for retrieved instances**. Retrieval misses are reported as their own category, never pooled with transduction loss. Findings are a dated snapshot of one vendor's service, framed as the category *server-mediated retrieval the author does not control* — not a claim about MCP and not a benchmark of anyone's product.
+The annex, if run: submit a locked query set targeting the specimen pages; archive every request and response verbatim in one tight window with dates. Score in two steps — **first a retrieval gate** (do the returned snippets contain the relation's host passage at all?), then rubric scoring **only for retrieved instances**. Retrieval misses are reported as their own category, never pooled with transduction loss. Findings are a dated snapshot of one vendor's service, framed as the category _server-mediated retrieval the author does not control_ — not a claim about MCP and not a benchmark of anyone's product.
 
 This cannot test the marking factor and never will — the server indexes only the docs as authored. That limit is structural, which is exactly why 0.2's comparative hypotheses about it were cut.
 
@@ -365,22 +365,22 @@ This cannot test the marking factor and never will — the server indexes only t
 
 **The channel-availability experiment.** The best idea in the 0.2 design: for a human, documentation is one of three redundant sign channels — docs, CLI surface, runtime behavior — and for an agent on a retrieval chunk the other two are gone, so explicit marking should matter little with full product access and a lot without it. That predicts why evaluations run with full product access keep concluding documentation is not the bottleneck.
 
-It is deferred, not abandoned, because it cannot share this experiment's spine: testing marking × channels requires serving *both* arms through the delivery path, which forces a study-controlled retriever and an agent-task outcome measure (sandbox, machine-checked build success, multi-model runs) — a second experiment's worth of apparatus and its own design document. This experiment's M2 redundancy map is its natural starting point, and its machine-checked outcomes would remove the single-coder limitation this design can only mitigate.
+It is deferred, not abandoned, because it cannot share this experiment's spine: testing marking × channels requires serving _both_ arms through the delivery path, which forces a study-controlled retriever and an agent-task outcome measure (sandbox, machine-checked build success, multi-model runs) — a second experiment's worth of apparatus and its own design document. This experiment's M2 redundancy map is its natural starting point, and its machine-checked outcomes would remove the single-coder limitation this design can only mitigate.
 
 ## Deliverables
 
-| Output | Feeds |
-| ------ | ----- |
+| Output                                              | Feeds                               |
+| --------------------------------------------------- | ----------------------------------- |
 | Survival trajectory figure, both arms overlaid (H1) | Part 3; referenced by parts 1 and 2 |
-| Survival by relation type and stage (H2) | Part 3, part 4 |
-| Corrupted-versus-absent breakdown at A4 (H3) | Part 4 |
-| Prior-intrusion rate on version-change probes (H4) | Part 4 |
-| Redundancy map (M2) | Part 2 |
-| Worked before/after of one corrupted relation | Part 3 opener |
-| M1a–M1b divergence note | Part 4 |
-| Server-mediated snapshot (annex, if run) | Part 3, part 5 |
-| Coded dataset, logs, analysis scripts | Published with part 3 |
-| Run log with all deviations | Published as an appendix |
+| Survival by relation type and stage (H2)            | Part 3, part 4                      |
+| Corrupted-versus-absent breakdown at A4 (H3)        | Part 4                              |
+| Prior-intrusion rate on version-change probes (H4)  | Part 4                              |
+| Redundancy map (M2)                                 | Part 2                              |
+| Worked before/after of one corrupted relation       | Part 3 opener                       |
+| M1a–M1b divergence note                             | Part 4                              |
+| Server-mediated snapshot (annex, if run)            | Part 3, part 5                      |
+| Coded dataset, logs, analysis scripts               | Published with part 3               |
+| Run log with all deviations                         | Published as an appendix            |
 
 ## Phasing
 
@@ -433,10 +433,10 @@ Write these into part 3 rather than leaving a reader to discover them.
 
 Every change after registration: date, what changed, why, and whether results had been seen. An amendment made after seeing results is not disqualifying, but an unlabeled one is the difference between a study and a story.
 
-| Date | Change | Rationale | Results seen? |
-| ---- | ------ | --------- | ------------- |
-| 2026-08-02 | **A1** — Added de-marking rule D8: prerequisite-heading blocks lose their heading; content stays in place, introduced by a template sentence asserting the precondition relation. | The corpus's dominant R4 idiom — "Prerequisites" headings, 48 of 417 English pages — had no applicable rule after D6 was cut at 0.3. Without D8 the manipulated R4 cell draws only from aside-carried preconditions and ~3 table pages and cannot approach its minimum. D8 avoids D6's flaw: nothing relocates. | No |
-| 2026-08-02 | **A2** — Repaired stale D4 wording in *The marking manipulation*: two paragraphs still prescribed the 0.3 paraphrase mapping (`MUST` → "needs to"), contradicting the 0.4 lowercasing rule and ADR-0001. | Internal inconsistency in the registered text, discovered while drafting A1. The rule table and 0.4 changelog were correct; the templates paragraph was not. No behavior of the study changes — the transform was always specified to lowercase. | No |
+| Date       | Change                                                                                                                                                                                                   | Rationale                                                                                                                                                                                                                                                                                                       | Results seen? |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| 2026-08-02 | **A1** — Added de-marking rule D8: prerequisite-heading blocks lose their heading; content stays in place, introduced by a template sentence asserting the precondition relation.                        | The corpus's dominant R4 idiom — "Prerequisites" headings, 48 of 417 English pages — had no applicable rule after D6 was cut at 0.3. Without D8 the manipulated R4 cell draws only from aside-carried preconditions and ~3 table pages and cannot approach its minimum. D8 avoids D6's flaw: nothing relocates. | No            |
+| 2026-08-02 | **A2** — Repaired stale D4 wording in _The marking manipulation_: two paragraphs still prescribed the 0.3 paraphrase mapping (`MUST` → "needs to"), contradicting the 0.4 lowercasing rule and ADR-0001. | Internal inconsistency in the registered text, discovered while drafting A1. The rule table and 0.4 changelog were correct; the templates paragraph was not. No behavior of the study changes — the transform was always specified to lowercase.                                                                | No            |
 
 ## Execution checklist
 
@@ -455,9 +455,9 @@ Every change after registration: date, what changed, why, and whether results ha
 - [ ] M1a coding complete
 - [ ] 20% re-code after ≥7 days; kappa computed and reported
 - [ ] **Phase 1 analysis run; part 3 draftable**
-- [ ] *(Phase 2)* Inspect tasks written; Inspect version pinned alongside model IDs
-- [ ] *(Phase 2)* A5 generated across ≥3 models, ≥2 vendors
-- [ ] *(Phase 2)* M1b run; closed-book covariate collected
-- [ ] *(Phase 2)* analysis per plan
+- [ ] _(Phase 2)_ Inspect tasks written; Inspect version pinned alongside model IDs
+- [ ] _(Phase 2)_ A5 generated across ≥3 models, ≥2 vendors
+- [ ] _(Phase 2)_ M1b run; closed-book covariate collected
+- [ ] _(Phase 2)_ analysis per plan
 - [ ] Run log complete including deviations
 - [ ] Dataset, logs, and scripts published
