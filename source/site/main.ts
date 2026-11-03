@@ -6,6 +6,7 @@ import "./components/navigation/navigation";
 import "./components/table-of-contents/table-of-contents";
 import "./components/anchor-copy";
 import "./static-blog-enhancement";
+import "./post-masthead";
 import "./components/icon/icon";
 import "./components/image-lightbox/image-lightbox";
 import "./components/theme-switcher/theme-switcher";

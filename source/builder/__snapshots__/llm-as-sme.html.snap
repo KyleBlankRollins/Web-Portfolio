@@ -65,7 +65,16 @@
 </div>
 
 
-        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            LLM as SME
+          </p>
+        </kbr-table-of-contents>
         <p><kbr-admonition type="note">tl;dr: skip to <a href="#example-workflow">Example workflow</a>.</kbr-admonition></p>
 <p>Interacting with subject matter experts (SMEs) is a primary responsibility for most technical writers. Even if you happen to be an SME in a product or domain, you should have another SME validate your information and review documentation you write.</p>
 <p>SME roles can range from product manager to customer support to CEO. Unfortunately, many SMEs are often in demand and have little time for reviewing documentation, even it&#39;s important to them. This can create a bottleneck in your documentation processes, as you might be blocked until you can get specific information from an SME.</p>

@@ -65,7 +65,16 @@
 </div>
 
 
-        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            The Docs Tool I Wanted
+          </p>
+        </kbr-table-of-contents>
         <p><kbr-admonition type="note">tl;dr: I wanted docs-as-code to get the support programming languages get in an IDE: checks as you type, hints, a CLI and a UI that agree. Ascribe is my opinionated take on what that looks like. It&#39;s 0.4, early, and open source under the MPL.</kbr-admonition></p>
 <p>Docs-as-code is an approach to documentation that pairs technical writing process and knowledge with the environments and tools software engineers use. There are other definitions, but I find this one most useful.</p>
 <p>In my experience, docs-as-code has hewed strongly towards software engineering tools, process, and paradigms. But I&#39;ve missed features that dedicated tech writing tools like Flare or DITA have had for years: content reuse, conditional content, structured page types, and templates.</p>

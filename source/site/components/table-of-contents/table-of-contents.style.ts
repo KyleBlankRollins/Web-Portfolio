@@ -22,9 +22,16 @@ export const tableOfContentsStyles = css`
     overflow: hidden;
   }
 
+  .toc-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
   /* Toggle button for mobile */
   .toc-toggle {
     display: none; /* Hidden by default on desktop */
+    flex: 1 1 auto;
     width: 100%;
     padding: var(--space-md);
     background: var(--color-background-secondary);
@@ -244,8 +251,19 @@ export const tableOfContentsStyles = css`
     border-radius: 0;
   }
 
+  /* With something slotted beside it the toggle gives up the row: the
+     slotted element takes the space and the toggle sits at the right. */
+  :host([collapsible]) ::slotted([slot="leading"]) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   :host([collapsible]) .toc-toggle {
     display: flex;
+    flex: 0 0 auto;
+    width: auto;
+    margin-left: auto;
+    gap: var(--space-2);
     padding: var(--space-2) 0;
     background: transparent;
     border-bottom: 0;
@@ -267,10 +285,12 @@ export const tableOfContentsStyles = css`
     height: 16px;
   }
 
+  /* Capped so an open list inside a stuck bar never outgrows the
+     viewport; it scrolls instead. */
   :host([collapsible]) .toc-container {
     margin: var(--space-2xs) 0 var(--space-sm);
-    max-height: none;
-    overflow: visible;
+    max-height: min(60vh, 24rem);
+    overflow-y: auto;
   }
 
   :host([collapsible]) .scroll-indicator {

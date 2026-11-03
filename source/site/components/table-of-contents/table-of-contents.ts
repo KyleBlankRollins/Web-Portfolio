@@ -352,28 +352,33 @@ export class KbrTableOfContents extends LitElement {
 
     return html`
       <div class="toc-wrapper ${this.isCollapsed ? "collapsed" : "expanded"}">
-        <!-- Collapse/Expand Header (always visible on mobile) -->
-        <button
-          class="toc-toggle"
-          @click="${this.toggleCollapse}"
-          aria-expanded="${!this.isCollapsed}"
-          aria-label="${
-            this.isCollapsed ? "Expand" : "Collapse"
-          } table of contents"
-        >
-          <span class="toc-toggle-text">Contents</span>
-          <svg
-            class="toc-toggle-icon ${
-              this.isCollapsed ? "collapsed" : "expanded"
-            }"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
+        <!-- Toggle bar. The "leading" slot lets a host put something
+             beside the toggle - the post page slots a compact copy of the
+             title in, which it reveals once the bar is stuck. -->
+        <div class="toc-bar">
+          <slot name="leading"></slot>
+          <button
+            class="toc-toggle"
+            @click="${this.toggleCollapse}"
+            aria-expanded="${!this.isCollapsed}"
+            aria-label="${
+              this.isCollapsed ? "Expand" : "Collapse"
+            } table of contents"
           >
-            <polyline points="6,9 12,15 18,9"></polyline>
-          </svg>
-        </button>
+            <span class="toc-toggle-text">Contents</span>
+            <svg
+              class="toc-toggle-icon ${
+                this.isCollapsed ? "collapsed" : "expanded"
+              }"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </button>
+        </div>
 
         <!-- TOC Content (hidden when collapsed on mobile) -->
         <div class="toc-content ${this.isCollapsed ? "hidden" : "visible"}">

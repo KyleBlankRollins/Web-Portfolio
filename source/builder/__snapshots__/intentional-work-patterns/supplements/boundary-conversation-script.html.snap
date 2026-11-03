@@ -65,7 +65,16 @@
 </div>
 
 
-        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            Boundary Conversation Script
+          </p>
+        </kbr-table-of-contents>
         <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>This script helps you hold a direct but respectful boundary conversation.</p>
 <h2 id="conversation-outline">Conversation outline</h2><ol>
