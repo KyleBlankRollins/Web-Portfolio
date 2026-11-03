@@ -7,11 +7,24 @@ export const navigationStyles = css`
   }
 
   /* Main navigation header */
+  /* Sits on the flat page surface and is separated from it by a hairline,
+     not a drop shadow - a shadow under a transparent bar reads as a floating
+     strip once there is no gradient behind it. The brand gradient survives
+     as the band along the top edge: the one place it still appears. */
   .site-header {
-    background: transparent; /* No background - rely on page-level gradient */
+    background: transparent;
     padding: var(--space-md) 0;
-    box-shadow: 0 2px 4px var(--color-shadow);
+    border-bottom: 1px solid var(--color-border);
     position: relative;
+  }
+
+  .site-header::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--gradient-primary);
   }
 
   /* Header content container */
@@ -60,23 +73,16 @@ export const navigationStyles = css`
     position: relative;
   }
 
+  /* Hover is the filled chip from .nav-link in shared-styles.ts. The lift
+     and drop shadow that used to accompany it are gone with the gradient. */
   .main-nav a {
     color: var(--color-text);
     display: block;
-    transform: translateY(0);
-    box-shadow: none;
-    transition: all var(--transition-fast);
   }
 
-  .main-nav a:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px var(--color-shadow-strong);
-  }
-
-  /* The current-page marker sits 2px below the link box, on the header
-     gradient - not on the hover chip - so it is measured against the
-     gradient. --color-text-inverse was 1.58:1 to 2.09:1 there; --color-text
-     is 4.76:1 at worst. */
+  /* The current-page marker sits 2px below the link box, on the page
+     surface - not on the hover chip - so it is measured against
+     --color-background, where --color-text is the body text colour. */
   .main-nav a.active::after {
     content: "";
     position: absolute;

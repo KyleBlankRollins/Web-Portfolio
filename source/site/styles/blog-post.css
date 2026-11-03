@@ -39,16 +39,25 @@
   overflow-y: auto; /* Allow scrolling if content is too tall */
 }
 
-/* Blog post content area */
-/* The article carries .glass-surface, whose 1rem padding is a utility default
-   sized for small frosted panels. At article length that leaves body copy
-   almost against the container edge, so the measure is overridden here. See
-   DF-28. */
+/* Blog post content area. Plain text on the page surface: the article used
+   to carry .glass-surface, a frosted panel over the page gradient, with
+   padding to keep the copy off the panel edge. With no panel there is no
+   edge, so the padding goes and a measure takes its place - the column could
+   otherwise run past 85 characters at 18px on a 1200px layout. */
 .blog-post-content {
   grid-area: content;
   min-width: 0; /* Prevent grid overflow */
-  max-width: none;
-  padding: var(--space-xl) var(--space-lg);
+  max-width: 72ch;
+  padding: 0;
+}
+
+/* One step below the global h1: the caps face at 3rem wrapped a five-word
+   title to four lines in this column. */
+.blog-post-content h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  text-wrap: balance;
 }
 
 /* Blog post heading spacing (scoped to article content only) */
@@ -197,17 +206,13 @@
   }
 }
 
-/* Blog post metadata - visual styling only */
+/* Blog post metadata - visual styling only. The date is .meta (mono) from
+   typography.css; a hairline closes the title block. */
 .blog-post-metadata {
-  border-bottom: 2px solid var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border-strong);
   padding: 0 0 var(--space-sm) 0;
-  margin-top: var(--space-md);
+  margin-top: 0;
   margin-bottom: var(--space-lg);
-}
-
-.blog-post-date time {
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
 }
 
 .blog-post-tags {
@@ -273,10 +278,6 @@
 @media (max-width: 480px) {
   .blog-post-layout {
     padding: var(--space-xs);
-  }
-
-  .blog-post-content {
-    padding: var(--space-sm);
   }
 }
 

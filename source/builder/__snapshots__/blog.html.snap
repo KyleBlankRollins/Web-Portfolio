@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -59,7 +60,7 @@
   <aside class="blog-sidebar">
     <div class="tag-filter-container" data-tag-filter="">
       <div class="filter-header">
-        <div class="ui-label filter-title" id="blog-filter-title">
+        <div class="eyebrow filter-title" id="blog-filter-title">
           Filter by Tag
         </div>
         <button class="clear-filter-btn" type="button" data-clear-filter="" hidden="">
@@ -154,7 +155,7 @@
                   <a href="/the-docs-tool-i-wanted.html" class="post-title-link">The Docs Tool I Wanted</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2026-11-03">November 3, 2026</time>
+                  <time class="meta" datetime="2026-11-03">November 3, 2026</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -187,7 +188,7 @@
                   <a href="/ai-agent-workflows.html" class="post-title-link">AI Agent Workflows</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2026-07-31">July 31, 2026</time>
+                  <time class="meta" datetime="2026-07-31">July 31, 2026</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -220,7 +221,7 @@
                   <a href="/leading-through-change.html" class="post-title-link">Leading Through Change</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2026-07-06">July 6, 2026</time>
+                  <time class="meta" datetime="2026-07-06">July 6, 2026</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -253,7 +254,7 @@
                   <a href="/docs-as-interface.html" class="post-title-link">Technical Storytelling and Drift at Machine Speed</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2026-03-31">March 31, 2026</time>
+                  <time class="meta" datetime="2026-03-31">March 31, 2026</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -286,7 +287,7 @@
                   <a href="/intentional-work-patterns-boundaries.html" class="post-title-link">Intentional Work Patterns - Boundaries</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2025-12-26">December 26, 2025</time>
+                  <time class="meta" datetime="2025-12-26">December 26, 2025</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -319,7 +320,7 @@
                   <a href="/intentional-work-patterns.html" class="post-title-link">Intentional Work Patterns</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2025-12-26">December 26, 2025</time>
+                  <time class="meta" datetime="2025-12-26">December 26, 2025</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -352,7 +353,7 @@
                   <a href="/rule-of-thirds.html" class="post-title-link">The P&amp;G Rule of Thirds</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2025-10-01">October 1, 2025</time>
+                  <time class="meta" datetime="2025-10-01">October 1, 2025</time>
                 </div>
               </header>
               <div class="post-card-description">
@@ -385,7 +386,7 @@
                   <a href="/llm-as-sme.html" class="post-title-link">LLM as SME</a>
                 </h2>
                 <div class="post-card-date">
-                  <time datetime="2025-09-26">September 26, 2025</time>
+                  <time class="meta" datetime="2025-09-26">September 26, 2025</time>
                 </div>
               </header>
               <div class="post-card-description">

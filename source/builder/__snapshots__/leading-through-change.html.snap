@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -70,11 +71,11 @@
 
         </div>
       </aside>
-      <article class="blog-post-content glass-surface">
+      <article class="blog-post-content">
         <h1 id="leading-through-change">Leading Through Change</h1>
         <div class="blog-post-metadata">
-  <div>
-    <time datetime="2026-07-06">July 6, 2026</time>
+  <div class="blog-post-date">
+    <time class="meta" datetime="2026-07-06">July 6, 2026</time>
   </div>
 </div>
 

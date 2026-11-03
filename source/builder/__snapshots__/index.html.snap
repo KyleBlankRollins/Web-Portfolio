@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -54,18 +55,20 @@
 
     <main class="page-content">
 
+<!-- Plain text on the page surface. This was a frosted panel floating over
+     a full-page gradient, followed by three cards that repeated the header
+     navigation. The type now carries the hero, and the links into the rest
+     of the site live in the copy instead of in cards. -->
 <section class="hero home">
-  <div class="hero-content glass-surface">
-    <p class="hero-subtitle">Hello there!</p>
-    <p>
-      My name is Kyle. I'm a technical manager, technical writer, and developer.
-      I always enjoy solving challenging problems and look for the opportunities
-      in ambiguity.
-    </p>
-    <p>
-      While you're here, take a look at some of my work samples and projects.
-    </p>
-  </div>
+  <p class="eyebrow">Hello there!</p>
+  <h1>I'm Kyle, a technical manager, technical writer, and developer.</h1>
+  <p class="lead">
+    I enjoy solving challenging problems and look for the opportunities in
+    ambiguity. While you're here, take a look at my
+    <a href="/blog.html">writing</a>, my
+    <a href="/portfolio.html">work samples and projects</a>, and
+    <a href="/career.html">where I've worked</a>.
+  </p>
 </section>
 
 <section class="home-highlights" aria-labelledby="home-highlights-title">
@@ -79,7 +82,7 @@
         <p class="eyebrow">Latest writing</p>
         <h3><a href="/the-docs-tool-i-wanted.html">The Docs Tool I Wanted</a></h3>
         <p>I wanted a docs-as-code setup that gave docs the support programming languages get in an IDE, so I built Ascribe.</p>
-        <time datetime="2026-11-03">November 3, 2026</time>
+        <time class="meta" datetime="2026-11-03">November 3, 2026</time>
       </article>
 
 
@@ -90,48 +93,12 @@
           MongoDB <span aria-hidden="true"> · </span>
           <a href="https://www.mongodb.com">Company site</a>
         </p>
-        <a class="highlight-link" href="/career.html">View career timeline</a>
+        <a class="highlight-link meta" href="/career.html">View career timeline</a>
       </article>
 
   </div>
 </section>
 
-
-<section class="cards-container">
-  <div class="cards grid three-columns">
-    <a href="/blog.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="document" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Blog</h2>
-      </div>
-
-      <p>
-        Thoughts on technical writing, web development, and professional
-        insights.
-      </p>
-    </a>
-
-    <a href="/portfolio.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="code" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Portfolio</h2>
-      </div>
-
-      <p>
-        Examples of my work, timeline of experience, and interesting projects.
-      </p>
-    </a>
-
-    <a href="/career.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="hierarchy" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Career</h2>
-      </div>
-
-      <p>A timeline of where I've worked and what I've done.</p>
-    </a>
-  </div>
-</section>
 </main>
 
     <!--

@@ -9,7 +9,9 @@
         <p class="eyebrow">Latest writing</p>
         <h3><a href="{{latestPost.url}}">{{latestPost.title}}</a></h3>
         <p>{{latestPost.description}}</p>
-        <time datetime="{{latestPost.date}}">{{latestPost.displayDate}}</time>
+        <time class="meta" datetime="{{latestPost.date}}"
+          >{{latestPost.displayDate}}</time
+        >
       </article>
     </template>
     <template data-kbr-if="currentRole">
@@ -20,7 +22,9 @@
           {{currentRole.company}} <span aria-hidden="true"> · </span>
           <a href="{{currentRole.companyWebsite}}">Company site</a>
         </p>
-        <a class="highlight-link" href="/career.html">View career timeline</a>
+        <a class="highlight-link meta" href="/career.html"
+          >View career timeline</a
+        >
       </article>
     </template>
   </div>
