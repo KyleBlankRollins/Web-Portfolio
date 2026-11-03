@@ -267,13 +267,22 @@
   }
 }
 
-/* Special blog post elements that need layout/visual styling */
+/* Quotations: a thin rule down the left, italic, a touch smaller, no
+   fill. This was a filled panel with 32px of padding on every side plus
+   the last paragraph's own bottom margin inside it, so a one-paragraph
+   quote carried 55px of empty panel below its last line. The quote's
+   spacing now comes from the same paragraph margin as the text around it. */
 .blog-post-content blockquote {
-  background: var(--color-background-secondary);
-  border-left: 4px solid var(--color-on-surface);
-  padding: var(--space-lg);
+  margin: 0 0 var(--space-md);
+  padding: 0 0 0 var(--space-md);
+  border-left: 2px solid var(--color-border-strong);
+  font-size: 0.95em;
   font-style: italic;
-  color: var(--color-text-secondary);
+  color: var(--color-text);
+}
+
+.blog-post-content blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 /* Images from a post's media/ directory are often screenshots wider than the
