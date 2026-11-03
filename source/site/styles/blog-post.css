@@ -50,8 +50,11 @@
 
 /* The lede: the first paragraph of the text, a step up, so the piece has an
    entry point. The metadata and contents blocks are divs and custom
-   elements, so first-of-type lands on the first real paragraph. */
-.blog-post-content > p:first-of-type {
+   elements, so first-of-type lands on the first paragraph - unless that
+   paragraph is the one the markdown renderer wraps around a leading
+   admonition, in which case the lede is the paragraph after it. */
+.blog-post-content > p:first-of-type:not(:has(kbr-admonition)),
+.blog-post-content > p:first-of-type:has(kbr-admonition) + p {
   font-size: 1.1em;
   line-height: 1.45;
   hyphens: manual;
@@ -100,9 +103,24 @@
   top: 0;
   z-index: 10;
   background: var(--color-background);
+  margin-bottom: var(--space-md);
 }
 
+/* An aside directly under the bar keeps only its bottom rule; its top one
+   would sit a few lines below the bar's. The markdown renderer wraps the
+   element in a paragraph, so that is the sibling; the custom property
+   inherits down to the admonition, which reads it in admonition.style.ts. */
+.post-masthead + p:has(> kbr-admonition:only-child) {
+  --admonition-rule-top: 0;
+  margin-top: 0;
+}
+
+/* In flow the title takes no room, so the toggle sits at the left where
+   the eye is. Once stuck the title fills the row and pushes the toggle to
+   the right as it fades in. */
 .post-masthead-title {
+  flex: 0 0 0;
+  width: 0;
   margin: 0;
   font-family: var(--font-family-heading);
   font-size: 1.05em;
@@ -119,6 +137,9 @@
 }
 
 .post-masthead[data-stuck] .post-masthead-title {
+  flex: 1 1 auto;
+  width: auto;
+  margin-right: var(--space-sm);
   opacity: 1;
   transform: none;
 }
@@ -373,12 +394,11 @@
 }
 
 /* Blog post metadata - visual styling only. The date is .meta (mono) from
-   typography.css; a hairline closes the title block. */
+   typography.css. No rule of its own: the contents bar below closes the
+   front matter with the one hairline, and a second one here read as a
+   ladder. */
 .blog-post-metadata {
-  border-bottom: 1px solid var(--color-border-strong);
-  padding: 0 0 var(--space-sm) 0;
-  margin-top: 0;
-  margin-bottom: var(--space-lg);
+  margin: 0 0 var(--space-sm);
 }
 
 /* Tags sit after the text, above the references, on a hairline. They used

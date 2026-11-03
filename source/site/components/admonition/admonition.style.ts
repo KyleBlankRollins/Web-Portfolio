@@ -10,7 +10,9 @@ export const admonitionStyles = css`
      panel with a 4px coloured edge, which pulled more attention than the
      text around it; the type colour now lives in the icon alone. */
   .admonition {
-    border-top: 1px solid var(--color-border);
+    /* The host page may zero the top rule when the aside sits directly
+       under another hairline (see .post-masthead + kbr-admonition). */
+    border-top: var(--admonition-rule-top, 1px) solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     padding: var(--space-sm) 0;
     font-size: 0.95em;

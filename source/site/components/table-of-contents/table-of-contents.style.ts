@@ -22,10 +22,11 @@ export const tableOfContentsStyles = css`
     overflow: hidden;
   }
 
+  /* No gap: the slotted leading element carries its own margin, so an
+     empty or zero-width slot does not indent the toggle. */
   .toc-bar {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
   }
 
   /* Toggle button for mobile */
@@ -262,7 +263,6 @@ export const tableOfContentsStyles = css`
     display: flex;
     flex: 0 0 auto;
     width: auto;
-    margin-left: auto;
     gap: var(--space-2);
     padding: var(--space-2) 0;
     background: transparent;
