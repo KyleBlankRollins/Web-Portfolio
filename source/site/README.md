@@ -421,7 +421,7 @@ client-side enhancement.
 - Write clear, descriptive titles
 - Include relevant tags for discoverability
 - Use headings (H2, H3) to structure content
-- Add alt text to images
+- Add alt text to images, and follow the [image standard](../../documentation/images.md)
 - Link to related content when relevant
 
 ### Content Guidelines
@@ -486,6 +486,7 @@ client-side enhancement.
 - [ ] Add relevant tags
 - [ ] If using supplements, add them under `/content/published/<post>/supplements/`
 - [ ] Set `published: true` or `published: false` on every supplement
+- [ ] If using images, put them in `/content/published/<post>/media/` and run `npm run images:optimize` ([image standard](../../documentation/images.md))
 - [ ] Preview in development server
 - [ ] Move from drafts to `/content/published/` when ready to publish
 

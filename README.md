@@ -215,6 +215,16 @@ User-friendly guide for creating and editing site content, including HTML pages 
 - Using web components in content
 - SEO best practices and troubleshooting
 
+### 🖼️ [Blog Images](documentation/images.md)
+
+The standard for screenshots and other images in blog posts, enforced by `npm run images:check`.
+
+**Key Topics**:
+
+- Where images go (a post directory's `media/` folder) and how to name them
+- Formats, capture settings, and alt text
+- Lossless PNG optimization with oxipng (`npm run images:optimize`)
+
 ## 🧩 Key Components
 
 ### Web Components (Lit Element)
