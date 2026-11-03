@@ -1,27 +1,43 @@
+<!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
 <div class="blog-citations-container" data-kbr-if="citationItems">
-  <section class="citations">
-    <h2>References</h2>
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
       <template data-kbr-for="citation of citationItems">
-        <li id="citation-{{citation.id}}">
-          <em>{{citation.title}}</em> by {{citation.author}}
-          <span class="citation-links" data-kbr-if="citation.links">
-            <template data-kbr-for="link of citation.links">
-              <span class="citation-separator" data-kbr-if="link.showSeparator">
-                |
-              </span>
-              <a href="{{link.url}}" target="_blank" rel="noopener"
-                >{{link.label}}</a
-              >
-            </template>
-          </span>
-          <span class="citation-backrefs">
-            <template data-kbr-for="backReference of citation.backReferences">
-              <a href="{{backReference.href}}" class="citation-backref"
-                >{{backReference.label}}</a
-              >
-            </template>
-          </span>
+        <li id="citation-{{citation.id}}" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">{{citation.title}}</cite>,
+            <span class="citation-author">{{citation.author}}</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links" data-kbr-if="citation.links">
+              <template data-kbr-for="link of citation.links">
+                <a
+                  class="citation-link"
+                  href="{{link.url}}"
+                  target="_blank"
+                  rel="noopener"
+                  >{{link.label}}</a
+                >
+              </template>
+            </span>
+            <span class="citation-backrefs">
+              <template data-kbr-for="backReference of citation.backReferences">
+                <a
+                  class="citation-backref"
+                  href="{{backReference.href}}"
+                  aria-label="{{backReference.ariaLabel}}"
+                  >{{backReference.label}}</a
+                >
+              </template>
+            </span>
+          </p>
         </li>
       </template>
     </ol>

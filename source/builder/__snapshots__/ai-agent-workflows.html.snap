@@ -124,54 +124,73 @@
 <p>That does not mean humans should avoid agents during discovery. Research, comparison, summarization, and question generation are useful. An agent can support those activities, but a person still needs to decide what the work is, what constraints matter, and when it is complete. You should not cede your thinking or agency to an AI agent. This is a useful division of responsibility, not a rule that every task must follow. The boundary can move when the task, tools, or level of risk changes.</p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-refactor-plan">
-          <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins
-          <span class="citation-links">
+        <li id="citation-refactor-plan" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Refactor Plan: Processors Modularization</cite>,
+            <span class="citation-author">Kyle Rollins</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-refactor-plan" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-anti-patterns">
-          <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison
-          <span class="citation-links">
+        <li id="citation-anti-patterns" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Agentic Engineering Patterns: Anti-Patterns</cite>,
+            <span class="citation-author">Simon Willison</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-anti-patterns" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-admin-system">
-          <em>Web-Portfolio Admin System</em> by Kyle Rollins
-          <span class="citation-links">
+        <li id="citation-admin-system" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Web-Portfolio Admin System</cite>,
+            <span class="citation-author">Kyle Rollins</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-admin-system" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-admin-system" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>

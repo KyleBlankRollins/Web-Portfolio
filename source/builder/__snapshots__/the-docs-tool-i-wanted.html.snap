@@ -190,6 +190,13 @@ The {product} agent watches your docs repository and syncs changes to {product}.
 <p>If you&#39;ve also wanted docs work to feel like working in a good IDE, try Ascribe on a small project and tell me where it breaks. The <a href="https://github.com/ascribed-dev/ascribe">repository</a> has the docs, the examples, and the <a href="https://github.com/ascribed-dev/ascribe/issues">issue tracker</a>.</p>
 
 
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
 
 
 

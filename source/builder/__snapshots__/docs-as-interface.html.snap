@@ -106,39 +106,54 @@
 <p>That&#39;s a story worth telling clearly.</p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-openai-codex">
-          <em>Introducing Codex</em> by OpenAI
-          <span class="citation-links">
+        <li id="citation-openai-codex" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Introducing Codex</cite>,
+            <span class="citation-author">OpenAI</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-openai-codex" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-openai-codex" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-zencoder-docs">
-          <em>How to improve technical documentation with generative AI</em> by Andrew Filev
-          <span class="citation-links">
+        <li id="citation-zencoder-docs" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">How to improve technical documentation with generative AI</cite>,
+            <span class="citation-author">Andrew Filev</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-zencoder-docs" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>

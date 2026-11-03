@@ -293,117 +293,165 @@
 
 /* ===================================
    Citations and Footnotes
+   Markup: templates/partials/blog-citations.html. Inline references are
+   emitted by citation-processor.ts as <sup><a class="citation-ref">.
    =================================== */
 
-/* Citation inline references (superscript numbers) */
+/* Inline reference: the bracketed number in the running text. No underline
+   so it reads as a mark, not a link; the colour says it is one. */
 .citation-ref {
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-size: 0.75em;
+  font-weight: var(--font-weight-normal);
   text-decoration: none;
   color: var(--color-on-surface);
-  margin-left: 0.1em;
+  padding: 0 0.1em;
+  border-radius: var(--radius-sm);
   transition: color var(--transition-fast);
 }
 
 .citation-ref:hover {
   text-decoration: underline;
+  text-underline-offset: 0.2em;
   color: var(--color-on-surface-hover);
 }
 
-/* Citations section container */
+/* Section: a hairline and then the References heading, which keeps the
+   blog-level h2 size from above but is pulled in to mark an appendix. */
 .blog-citations-container {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 2px solid var(--color-border);
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-strong);
 }
-
-/* Citations section */
 
 .citations h2 {
-  font-size: var(--font-size-lg);
-  color: var(--color-text);
-  margin-bottom: var(--space-md);
-  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-md);
 }
 
-/* Citations list */
+/* Entries: the ordinal is a mono counter in a narrow hanging column, so the
+   numbers line up with the body text's left edge and the entries hang from
+   them - the same relationship as the inline [1] to the sentence it follows.
+   A UA list marker would be serif, decimal-with-period, and sized to the
+   body. */
 .citations-list {
-  padding-left: var(--space-xl);
-  list-style-type: decimal;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: citation;
+  display: grid;
+  gap: var(--space-sm);
 }
 
-.citations-list li {
-  /* margin-bottom: var(--space-md); */
-  line-height: 1.6;
-  padding-left: var(--space-xs);
+.citation {
+  counter-increment: citation;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  column-gap: var(--space-2);
+  padding: 0;
 }
 
-.citations-list li:last-child {
-  margin-bottom: 0;
+.citation::before {
+  content: counter(citation);
+  grid-row: 1 / span 2;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  padding-top: 0.15em;
 }
 
-/* Citation title (italicized) */
-.citations em {
+.citation-source,
+.citation-actions {
+  margin: 0;
+}
+
+.citation-source {
+  line-height: var(--line-height-normal);
+}
+
+.citation-title {
   font-style: italic;
   color: var(--color-text);
-  font-weight: var(--font-weight-medium);
 }
 
-/* Citation links */
-.citation-links {
-  margin-left: var(--space-sm);
-  white-space: nowrap;
-}
-
-.citations a {
+/* The actions line is the site's metadata voice (see .meta in
+   typography.css): mono, small, secondary. Outbound links and return arrows
+   are two groups, spaced apart rather than separated by a bar. */
+.citation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-md);
+  row-gap: var(--space-2xs);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
   color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all var(--transition-fast);
 }
 
-.citations a:hover {
-  text-decoration: underline;
-  color: var(--color-on-surface-hover);
-}
-
-/* Separator between links */
-.citation-separator {
-  margin: 0 var(--space-xs);
-  color: var(--color-text-tertiary);
-}
-
-/* Back-to-reference links */
+.citation-links,
 .citation-backrefs {
-  margin-left: var(--space-sm);
-  font-size: 1.2rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-sm);
 }
 
+.citation-link,
 .citation-backref {
   color: var(--color-text-secondary);
   text-decoration: none;
-  margin-left: var(--space-2xs);
   transition: color var(--transition-fast);
 }
 
+.citation-link:hover,
 .citation-backref:hover {
-  color: var(--color-on-surface);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
-/* Responsive adjustments for citations */
+/* Outbound links carry the north-east arrow; the return arrow is in the
+   label text already so it survives without CSS. */
+.citation-link::after {
+  content: " ↗";
+}
+
+/* Jump targets: when a reader follows a [1] down or an arrow back up, the
+   landing element is tinted for a moment so the eye finds it. The inline
+   target is the <sup>, but the tint goes on the link inside it: typography
+   .css gives sup a zero line-height, so a background on the sup itself
+   collapses to a sliver. */
+.citation:target,
+sup:target .citation-ref {
+  animation: citation-target-fade 2.5s ease-out forwards;
+  border-radius: var(--radius-sm);
+}
+
+.citation:target {
+  margin: 0 calc(-1 * var(--space-2));
+  padding: var(--space-2xs) var(--space-2);
+}
+
+@keyframes citation-target-fade {
+  0%,
+  40% {
+    background-color: var(--color-accent-subtle);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .citation:target,
+  sup:target .citation-ref {
+    animation: none;
+    background-color: var(--color-accent-subtle);
+  }
+}
+
 @media (max-width: 768px) {
-  .citations-list {
-    padding-left: var(--space-lg);
-  }
-
-  .citation-links {
-    display: block;
-    margin-left: 0;
-    margin-top: var(--space-2xs);
-  }
-
-  .citation-backrefs {
-    display: block;
-    margin-left: 0;
-    margin-top: var(--space-2xs);
+  .citation {
+    grid-template-columns: 2rem minmax(0, 1fr);
   }
 }

@@ -197,6 +197,13 @@ NotebookLM can&#39;t know what&#39;s important to you, your SMEs, or your audien
 <p>Remember: this workflow isn&#39;t meant to replace human SME review. It&#39;s meant to get you to a point where your human SMEs can provide more valuable, targeted feedback on a more complete draft rather than starting from scratch.</p>
 
 
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
 
 
 

@@ -82,39 +82,54 @@
 <p>Back to parent post: <a href="/intentional-work-patterns.html#supplements-heading">Intentional Work Patterns</a></p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-deep-work">
-          <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport
-          <span class="citation-links">
+        <li id="citation-deep-work" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Deep Work: Rules for Focused Success in a Distracted World</cite>,
+            <span class="citation-author">Cal Newport</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://calnewport.com/writing/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-deep-work" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-deep-work" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-attention-residue">
-          <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke
-          <span class="citation-links">
+        <li id="citation-attention-residue" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">The cost of interrupted work: More speed and stress</cite>,
+            <span class="citation-author">Gloria Mark, Daniela Gudith, and Ulrich Klocke</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-attention-residue" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-attention-residue" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>
