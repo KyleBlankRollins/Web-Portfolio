@@ -1,10 +1,11 @@
 /**
  * Local document link resolver
- * Resolves relative Markdown links using discovered content source paths.
+ * Resolves relative Markdown links and image sources using discovered content
+ * source paths.
  */
 
 import { dirname, relative, resolve, sep } from "node:path";
-import type { ContentDocument } from "./content-discovery.js";
+import type { ContentDocument, MediaAsset } from "./content-discovery.js";
 
 export interface LocalDocumentLinkIndexEntry {
   sourcePath: string;
@@ -16,6 +17,7 @@ export interface LocalDocumentLinkIndexEntry {
 export interface LocalDocumentLinkIndex {
   publishedRootPath: string;
   entriesBySourcePath: Map<string, LocalDocumentLinkIndexEntry[]>;
+  mediaUrlsBySourcePath: Map<string, string>;
 }
 
 export interface ResolveLocalDocumentLinkInput {
@@ -29,6 +31,12 @@ export interface ResolveLocalDocumentLinkResult {
   didRewrite: boolean;
 }
 
+export interface ResolveLocalMediaSourceInput {
+  currentSourcePath: string;
+  targetSrc: string;
+  documentIndex: LocalDocumentLinkIndex;
+}
+
 const EXTERNAL_URL_PATTERN = /^[a-zA-Z][a-zA-Z\d+.-]*:/;
 
 /**
@@ -37,7 +45,8 @@ const EXTERNAL_URL_PATTERN = /^[a-zA-Z][a-zA-Z\d+.-]*:/;
 export function createLocalDocumentLinkIndex(
   documents: ContentDocument[],
   publishableDocuments: ContentDocument[],
-  publishedRootPath: string
+  publishedRootPath: string,
+  mediaAssets: MediaAsset[] = []
 ): LocalDocumentLinkIndex {
   const normalizedPublishedRootPath = normalizeAbsolutePath(publishedRootPath);
   const publishedSourcePaths = new Set(
@@ -62,9 +71,17 @@ export function createLocalDocumentLinkIndex(
     entriesBySourcePath.set(normalizedSourcePath, existingEntries);
   }
 
+  const mediaUrlsBySourcePath = new Map(
+    mediaAssets.map((asset) => [
+      normalizeAbsolutePath(asset.sourcePath),
+      asset.publicUrl,
+    ])
+  );
+
   return {
     publishedRootPath: normalizedPublishedRootPath,
     entriesBySourcePath,
+    mediaUrlsBySourcePath,
   };
 }
 
@@ -136,6 +153,38 @@ export function resolveLocalDocumentLink({
   };
 }
 
+/**
+ * Resolve a relative image source to the public URL of a published media file.
+ * Sources that are already public or external are returned unchanged.
+ */
+export function resolveLocalMediaSource({
+  currentSourcePath,
+  targetSrc,
+  documentIndex,
+}: ResolveLocalMediaSourceInput): string {
+  const { pathPart, suffix } = splitHrefComponents(targetSrc);
+
+  if (!isRelativePath(pathPart)) {
+    return targetSrc;
+  }
+
+  const normalizedCurrentSourcePath = normalizeAbsolutePath(currentSourcePath);
+  const resolvedTargetSourcePath = normalizeAbsolutePath(
+    resolve(dirname(normalizedCurrentSourcePath), pathPart)
+  );
+  const publicUrl = documentIndex.mediaUrlsBySourcePath.get(
+    resolvedTargetSourcePath
+  );
+
+  if (!publicUrl) {
+    throw new Error(
+      `Invalid local image in "${toDisplayPath(normalizedCurrentSourcePath)}": source "${targetSrc}" resolves to "${toDisplayPath(resolvedTargetSourcePath)}", which isn't a file in a published post's media/ directory.`
+    );
+  }
+
+  return `${publicUrl}${suffix}`;
+}
+
 function splitHrefComponents(targetHref: string): {
   pathPart: string;
   suffix: string;
@@ -159,6 +208,10 @@ function splitHrefComponents(targetHref: string): {
 }
 
 function shouldResolveMarkdownTarget(pathPart: string): boolean {
+  return isRelativePath(pathPart) && pathPart.toLowerCase().endsWith(".md");
+}
+
+function isRelativePath(pathPart: string): boolean {
   if (!pathPart) {
     return false;
   }
@@ -175,11 +228,7 @@ function shouldResolveMarkdownTarget(pathPart: string): boolean {
     return false;
   }
 
-  if (EXTERNAL_URL_PATTERN.test(pathPart)) {
-    return false;
-  }
-
-  return pathPart.toLowerCase().endsWith(".md");
+  return !EXTERNAL_URL_PATTERN.test(pathPart);
 }
 
 function normalizeAbsolutePath(pathValue: string): string {

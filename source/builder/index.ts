@@ -52,10 +52,12 @@ async function processDiscoveredMarkdownDocuments(
   const localDocumentLinkIndex = createLocalDocumentLinkIndex(
     discoveryResult.documents,
     graphDocuments,
-    discoveryResult.publishedRootPath
+    discoveryResult.publishedRootPath,
+    discoveryResult.mediaAssets
   );
 
   markdownProcessor.setLocalDocumentLinkIndex(localDocumentLinkIndex);
+  markdownProcessor.setMediaAssets(discoveryResult.mediaAssets);
   markdownProcessor.resetBuildState();
   markdownProcessor.rebuildManifestFromDocuments(graphDocuments);
 

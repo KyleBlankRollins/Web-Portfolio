@@ -1,6 +1,7 @@
 /**
  * Markdown Renderer Module
- * Configures marked.js with custom renderers for headings, links, and code blocks
+ * Configures marked.js with custom renderers for headings, links, images, and
+ * code blocks
  */
 
 import { Marked, Parser, Renderer, type Tokens } from "marked";
@@ -8,6 +9,7 @@ import Prism from "prismjs";
 import { escapeHtml } from "./html-utils.js";
 import {
   resolveLocalDocumentLink,
+  resolveLocalMediaSource,
   type LocalDocumentLinkIndex,
 } from "./local-document-link-resolver.js";
 
@@ -108,6 +110,13 @@ export class MarkdownRenderer {
       return `<a href="${escapeHtml(transformedHref)}"${titleAttr}>${text}</a>`;
     };
 
+    // Override image renderer to point local images at published media files
+    renderer.image = ({ href, title, text }: Tokens.Image) => {
+      const src = this.resolveImageSource(href);
+      const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
+      return `<img src="${escapeHtml(src)}" alt="${escapeHtml(text)}"${titleAttr}>`;
+    };
+
     // Override code renderer to add syntax highlighting
     renderer.code = ({ text: code, lang: language }: Tokens.Code) => {
       if (!this.syntaxHighlighting) {
@@ -169,6 +178,19 @@ export class MarkdownRenderer {
       targetHref: href,
       documentIndex: renderContext.documentLinkIndex,
     }).resolvedHref;
+  }
+
+  private resolveImageSource(src: string): string {
+    const renderContext = this.activeRenderContext;
+    if (!renderContext?.documentLinkIndex) {
+      return src;
+    }
+
+    return resolveLocalMediaSource({
+      currentSourcePath: renderContext.currentSourcePath,
+      targetSrc: src,
+      documentIndex: renderContext.documentLinkIndex,
+    });
   }
 
   /**

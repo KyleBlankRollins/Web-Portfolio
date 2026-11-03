@@ -1,5 +1,5 @@
 import { dirname, join } from "node:path";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { BuildLogger } from "./helpers.js";
 import type { MarkdownProcessor } from "./markdown-processor.js";
 import { loadSiteSource, renderSite } from "./site-renderer.js";
@@ -26,6 +26,11 @@ export async function writeSite(
       const outputPathOnDisk = join(outputDirectory, outputPath);
       mkdirSync(dirname(outputPathOnDisk), { recursive: true });
       writeFileSync(outputPathOnDisk, output);
+    }
+    for (const [outputPath, sourcePath] of renderedSite.files ?? []) {
+      const outputPathOnDisk = join(outputDirectory, outputPath);
+      mkdirSync(dirname(outputPathOnDisk), { recursive: true });
+      copyFileSync(sourcePath, outputPathOnDisk);
     }
 
     BuildLogger.success("🎉 KBR Builder completed successfully!");

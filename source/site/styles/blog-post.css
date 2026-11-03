@@ -70,6 +70,17 @@
   color: var(--color-text-secondary);
 }
 
+/* Images from a post's media/ directory are often screenshots wider than the
+   column, so they scale down to fit. The border keeps a light screenshot's
+   edge visible on a light surface. */
+.blog-post-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
 /* Inline code styling */
 .blog-post-content code {
   background: var(--color-background-secondary);

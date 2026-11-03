@@ -12,6 +12,7 @@ import {
   type BlogPostManifestEntry,
   type SupplementManifestEntry,
   type LocalDocumentLinkIndex,
+  type MediaAsset,
 } from "./modules/index.js";
 import type { TemplateVariables } from "./template-processor.js";
 
@@ -36,6 +37,7 @@ export class MarkdownProcessor {
   private frontmatterParser: FrontmatterParser<"draft">;
   private manifestBuilder: BlogManifestBuilder;
   private localDocumentLinkIndex?: LocalDocumentLinkIndex;
+  private mediaAssets: MediaAsset[] = [];
   private generatedFiles: Map<string, GeneratedHtmlFile> = new Map();
   private generatedFilesByPublicUrl: Map<string, GeneratedHtmlFile> = new Map();
 
@@ -140,6 +142,20 @@ export class MarkdownProcessor {
    */
   public setLocalDocumentLinkIndex(documentLinkIndex: LocalDocumentLinkIndex) {
     this.localDocumentLinkIndex = documentLinkIndex;
+  }
+
+  /**
+   * Configure the media files published alongside the processed documents.
+   */
+  public setMediaAssets(mediaAssets: MediaAsset[]): void {
+    this.mediaAssets = mediaAssets;
+  }
+
+  /**
+   * Get the media files published alongside the processed documents.
+   */
+  public getMediaAssets(): readonly MediaAsset[] {
+    return this.mediaAssets;
   }
 
   /**

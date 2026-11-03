@@ -13,6 +13,7 @@ import {
 import type { SupplementManifestEntry } from "./blog-manifest.js";
 import {
   RESERVED_DIRECTORY_NAMES,
+  collectFiles,
   collectMarkdownFiles,
   directMarkdownFileNames,
   resolveDirectoryParent,
@@ -30,12 +31,25 @@ export interface ContentDocument {
   parentUrl?: string;
   metadata: FrontmatterData;
 }
+
+/**
+ * A file under a post directory's `media/` folder, copied verbatim into the
+ * output next to the post's other nested pages.
+ */
+export interface MediaAsset {
+  sourcePath: string;
+  outputPath: string;
+  publicUrl: string;
+  parentUrl: string;
+}
+
 export interface ContentDiscoveryResult {
   publishedRootPath: string;
   documents: ContentDocument[];
   publishableDocuments: ContentDocument[];
   supplementCandidates: ContentDocument[];
   publishedSupplements: ContentDocument[];
+  mediaAssets: MediaAsset[];
 }
 /**
  * Discovers publishable content documents from source/site/content/published.
@@ -72,10 +86,12 @@ export class ContentDiscovery {
         publishableDocuments: [],
         supplementCandidates: [],
         publishedSupplements: [],
+        mediaAssets: [],
       };
     }
 
     const documents: ContentDocument[] = [];
+    const discoveredMediaAssets: MediaAsset[] = [];
 
     const topLevelEntries = readdirSync(this.publishedRoot, {
       withFileTypes: true,
@@ -103,7 +119,8 @@ export class ContentDiscovery {
         const directoryPath = join(this.publishedRoot, entry.name);
         const directoryDocuments = this.discoverPostDirectory(
           directoryPath,
-          entry.name
+          entry.name,
+          discoveredMediaAssets
         );
         documents.push(...directoryDocuments);
       }
@@ -170,12 +187,20 @@ export class ContentDiscovery {
         publishedSupplements.includes(document)
     );
 
+    const publishableParentUrls = new Set(
+      publishableParentDocuments.map((document) => document.publicUrl)
+    );
+    const mediaAssets = discoveredMediaAssets.filter((asset) =>
+      publishableParentUrls.has(asset.parentUrl)
+    );
+
     return {
       publishedRootPath: this.publishedRoot,
       documents,
       publishableDocuments,
       supplementCandidates,
       publishedSupplements,
+      mediaAssets,
     };
   }
 
@@ -244,7 +269,8 @@ export class ContentDiscovery {
 
   private discoverPostDirectory(
     directoryPath: string,
-    directoryName: string
+    directoryName: string,
+    mediaAssets: MediaAsset[]
   ): ContentDocument[] {
     const documents: ContentDocument[] = [];
     const directEntries = readdirSync(directoryPath, {
@@ -291,6 +317,17 @@ export class ContentDiscovery {
         continue;
       }
 
+      if (entry.name === "media") {
+        mediaAssets.push(
+          ...this.discoverMediaAssets(
+            join(directoryPath, entry.name),
+            directoryName,
+            parentDocument.publicUrl
+          )
+        );
+        continue;
+      }
+
       if (entry.name !== "supplements") {
         continue;
       }
@@ -326,6 +363,36 @@ export class ContentDiscovery {
     return documents;
   }
 
+  private discoverMediaAssets(
+    mediaRoot: string,
+    directoryName: string,
+    parentUrl: string
+  ): MediaAsset[] {
+    // Dotfiles such as .DS_Store are never published.
+    const mediaFiles = collectFiles(
+      mediaRoot,
+      (fileName) => !fileName.startsWith(".")
+    );
+
+    return mediaFiles.map((sourcePath) => {
+      const outputPath = this.normalizeOutputPath(
+        posix.join(
+          directoryName,
+          "media",
+          toForwardSlashPath(relative(mediaRoot, sourcePath))
+        ),
+        false
+      );
+
+      return {
+        sourcePath,
+        outputPath,
+        publicUrl: `/${outputPath}`,
+        parentUrl,
+      };
+    });
+  }
+
   private createDocument(
     sourcePath: string,
     outputPath: string,
@@ -349,7 +416,7 @@ export class ContentDiscovery {
     };
   }
 
-  private normalizeOutputPath(outputPath: string): string {
+  private normalizeOutputPath(outputPath: string, requireHtml = true): string {
     const forwardSlashPath = toForwardSlashPath(outputPath);
     const normalizedPath = posix.normalize(forwardSlashPath);
 
@@ -365,7 +432,7 @@ export class ContentDiscovery {
       );
     }
 
-    if (!normalizedPath.endsWith(".html")) {
+    if (requireHtml && !normalizedPath.endsWith(".html")) {
       throw new Error(
         `Invalid output path "${outputPath}": expected an .html output.`
       );

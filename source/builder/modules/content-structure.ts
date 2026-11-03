@@ -12,7 +12,8 @@ import { join, sep } from "node:path";
 
 /**
  * Directory names that are never treated as parent-document candidates.
- * `supplements` holds supporting material; `media` remains opaque.
+ * `supplements` holds supporting Markdown pages; `media` holds files that a
+ * published post copies verbatim, such as images.
  */
 export const RESERVED_DIRECTORY_NAMES = new Set(["supplements", "media"]);
 
@@ -45,11 +46,23 @@ export function directMarkdownFileNames(entries: Dirent[]): string[] {
  * deterministic ordering. Returns an empty list when the directory is absent.
  */
 export function collectMarkdownFiles(directoryPath: string): string[] {
+  return collectFiles(directoryPath, (fileName) => fileName.endsWith(".md"));
+}
+
+/**
+ * Recursively collect file paths beneath a directory, optionally filtered by
+ * file name, sorted for deterministic ordering. Returns an empty list when the
+ * directory is absent.
+ */
+export function collectFiles(
+  directoryPath: string,
+  includeFile: (fileName: string) => boolean = () => true
+): string[] {
   if (!existsSync(directoryPath)) {
     return [];
   }
 
-  const markdownFiles: string[] = [];
+  const files: string[] = [];
   const stack: string[] = [directoryPath];
 
   while (stack.length > 0) {
@@ -68,13 +81,13 @@ export function collectMarkdownFiles(directoryPath: string): string[] {
         continue;
       }
 
-      if (entry.isFile() && entry.name.endsWith(".md")) {
-        markdownFiles.push(fullPath);
+      if (entry.isFile() && includeFile(entry.name)) {
+        files.push(fullPath);
       }
     }
   }
 
-  return markdownFiles.sort();
+  return files.sort();
 }
 
 /**

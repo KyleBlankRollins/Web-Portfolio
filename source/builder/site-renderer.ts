@@ -30,14 +30,22 @@ export interface SiteAssets {
 
 export interface RenderedSite {
   readonly outputs: ReadonlyMap<string, string>;
+  /** Files copied verbatim, keyed by output path, valued by source path. */
+  readonly files?: ReadonlyMap<string, string>;
 }
 
-export interface RenderableSiteContent {
-  readonly outputPath: string;
-  readonly content: string;
-  readonly metadata?: Partial<TemplateVariables>;
-  readonly kind?: "html" | "raw";
-}
+export type RenderableSiteContent =
+  | {
+      readonly outputPath: string;
+      readonly content: string;
+      readonly metadata?: Partial<TemplateVariables>;
+      readonly kind?: "html" | "raw";
+    }
+  | {
+      readonly outputPath: string;
+      readonly sourcePath: string;
+      readonly kind: "file";
+    };
 
 export function loadSiteSource(
   siteRoot = join(process.cwd(), "source", "site")
@@ -70,8 +78,14 @@ export function renderSite(
     partials: source.partials,
   });
   const outputs = new Map<string, string>();
+  const files = new Map<string, string>();
 
   for (const page of content) {
+    if (page.kind === "file") {
+      files.set(page.outputPath, page.sourcePath);
+      continue;
+    }
+
     if (page.kind === "raw") {
       outputs.set(page.outputPath, page.content);
       continue;
@@ -89,7 +103,7 @@ export function renderSite(
     outputs.set(page.outputPath, rendered);
   }
 
-  return { outputs };
+  return { outputs, files };
 }
 
 function readDirectoryFiles(

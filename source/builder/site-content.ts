@@ -64,6 +64,14 @@ export function collectSiteContent(
     });
   }
 
+  for (const mediaAsset of markdownProcessor.getMediaAssets()) {
+    content.push({
+      outputPath: mediaAsset.outputPath,
+      sourcePath: mediaAsset.sourcePath,
+      kind: "file",
+    });
+  }
+
   content.push({
     outputPath: "data/blog-manifest.json",
     content: blogManifestJson,

@@ -168,6 +168,7 @@ Template syntax:
 - GitHub Flavored Markdown (GFM) support
 - Frontmatter parsing for metadata (title, date, tags, description)
 - Supplement publishing for `post-directory/supplements/*.md` files using required `published` boolean frontmatter
+- Media publishing for files under `post-directory/media/`, copied verbatim for published posts
 - Source-aware local markdown links for parent/supplement relationships with fragment/query preservation
 - Build-blocking validation for missing, unpublished, ambiguous, or traversal local markdown targets
 - Automatic heading ID generation for anchor links
@@ -194,6 +195,7 @@ Your markdown content starts here.
 - Processed HTML: `source/site/content/published/**/*.md` → in-memory generated files → emitted to `dist/`
 - Standalone output example: `published/post.md` → `/post.html`
 - Directory supplement output example: `published/post/supplements/notes.md` → `/post/supplements/notes.html`
+- Directory media output example: `published/post/media/diagram.png` → `/post/media/diagram.png`
 - Blog Manifest output: `data/blog-manifest.json` (served at `/data/blog-manifest.json`)
 
 ### Discovery and URL Normalization Contract
@@ -226,6 +228,13 @@ Local markdown link behavior:
 - Fragments and query strings are preserved when rewritten to public URLs.
 - External URLs and already-public URLs are not rewritten.
 - Invalid targets throw actionable build errors with source document, original target, and resolved source location.
+
+Media behavior:
+
+- Every file under a directory post's `media/` folder (nested folders included, dotfiles excluded) is copied verbatim to `/post/media/...` when the parent post is published.
+- Relative Markdown image sources (for example `![Alt](media/diagram.png)` in the parent, or `../media/diagram.png` in a supplement) are resolved from the current source document path and rewritten to the media file's public URL.
+- A relative image source that doesn't resolve to a published media file throws a build error. Absolute, external, and `data:` sources are not rewritten.
+- Images in raw HTML (`<img>`) are not rewritten; use Markdown image syntax for media files.
 
 ### 3. Development Server Enhancements
 
