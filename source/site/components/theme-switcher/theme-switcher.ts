@@ -185,11 +185,15 @@ export class KbrThemeSwitcher extends LitElement {
   }
 
   /**
-   * Handle color scheme toggle
+   * Handle a color scheme choice from the segmented control
    */
-  private handleColorSchemeToggle() {
-    this.currentColorScheme =
-      this.currentColorScheme === "light" ? "dark" : "light";
+  private handleColorSchemeChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const scheme = input.value === "dark" ? "dark" : "light";
+    if (scheme === this.currentColorScheme) {
+      return;
+    }
+    this.currentColorScheme = scheme;
 
     this.applyTheme();
     this.saveThemePreferences();
@@ -253,59 +257,52 @@ export class KbrThemeSwitcher extends LitElement {
             ? null
             : html`
                 <div class="theme-panel">
-                  <div class="theme-controls">
-                    <!-- Theme Selection -->
-                    <div class="theme-select">
-                      <label for="theme-dropdown">Theme:</label>
-                      <select
-                        id="theme-dropdown"
-                        class="theme-dropdown"
-                        .value=${this.currentTheme}
-                        @change=${this.handleThemeChange}
-                      >
-                        ${this.themes.map(
-                          (theme) => html`
-                            <option
-                              value=${theme.id}
-                              ?selected=${theme.id === this.currentTheme}
-                            >
-                              ${theme.name}
-                            </option>
-                          `
-                        )}
-                      </select>
-                    </div>
-
-                    <!-- Color Scheme Toggle -->
-                    <div class="color-scheme-toggle">
-                      <label for="color-scheme-toggle">
-                        Mode:
-                        <span class="mode-indicator"
-                          >${
-                            this.currentColorScheme === "dark"
-                              ? "Dark"
-                              : "Light"
-                          }</span
-                        >
-                      </label>
-                      <div class="toggle-switch">
-                        <input
-                          type="checkbox"
-                          id="color-scheme-toggle"
-                          class="toggle-input"
-                          .checked=${this.currentColorScheme === "dark"}
-                          @click=${this.handleColorSchemeToggle}
-                          aria-label=${
-                            this.currentColorScheme === "dark"
-                              ? "Switch to light mode"
-                              : "Switch to dark mode"
-                          }
-                        />
-                        <div class="toggle-track"></div>
-                        <div class="toggle-thumb"></div>
-                      </div>
-                    </div>
+                  <!-- Two stacked fields. Labels sit above their controls
+                       in the site's mono metadata voice, so the panel reads
+                       top to bottom with no colons or inline state text:
+                       the controls show their own state. -->
+                  <div class="field">
+                    <label class="field-label" for="theme-dropdown"
+                      >Theme</label
+                    >
+                    <select
+                      id="theme-dropdown"
+                      class="theme-dropdown"
+                      .value=${this.currentTheme}
+                      @change=${this.handleThemeChange}
+                    >
+                      ${this.themes.map(
+                        (theme) => html`
+                          <option
+                            value=${theme.id}
+                            ?selected=${theme.id === this.currentTheme}
+                          >
+                            ${theme.name}
+                          </option>
+                        `
+                      )}
+                    </select>
                   </div>
+
+                  <fieldset class="field">
+                    <legend class="field-label">Appearance</legend>
+                    <div class="segmented">
+                      ${(["light", "dark"] as const).map(
+                        (scheme) => html`
+                          <label class="segment">
+                            <input
+                              type="radio"
+                              name="color-scheme"
+                              value=${scheme}
+                              .checked=${this.currentColorScheme === scheme}
+                              @change=${this.handleColorSchemeChange}
+                            />
+                            <span>${scheme === "dark" ? "Dark" : "Light"}</span>
+                          </label>
+                        `
+                      )}
+                    </div>
+                  </fieldset>
                 </div>
               `
         }
