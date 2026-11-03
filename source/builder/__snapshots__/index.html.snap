@@ -74,15 +74,15 @@
     <h2 id="home-highlights-title">Recent writing and experience</h2>
   </div>
   <div class="home-highlights-grid">
-    <template>
+
       <article class="highlight-item">
         <p class="eyebrow">Latest writing</p>
         <h3><a href="/the-docs-tool-i-wanted.html">The Docs Tool I Wanted</a></h3>
         <p>I wanted a docs-as-code setup that gave docs the support programming languages get in an IDE, so I built Ascribe.</p>
         <time datetime="2026-11-03">November 3, 2026</time>
       </article>
-    </template>
-    <template>
+
+
       <article class="highlight-item">
         <p class="eyebrow">Current role</p>
         <h3>Documentation Team Lead</h3>
@@ -92,7 +92,7 @@
         </p>
         <a class="highlight-link" href="/career.html">View career timeline</a>
       </article>
-    </template>
+
   </div>
 </section>
 
