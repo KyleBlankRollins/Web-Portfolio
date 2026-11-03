@@ -139,7 +139,7 @@ describe("built site output", () => {
     );
     const blogManifest = JSON.parse(
       readFileSync(join(distDirectory, "data", "blog-manifest.json"), "utf-8")
-    ) as { posts: unknown[] };
+    ) as { posts: { title: string }[] };
 
     expect(blogHtml.match(/data-static-blog/g)).toHaveLength(1);
     expect(blogHtml.match(/data-post-card/g)).toHaveLength(
@@ -148,7 +148,8 @@ describe("built site output", () => {
     expect(blogHtml).not.toMatch(/<kbr-(?:post-list|post-card|tag-filter)\b/i);
 
     expect(homeHtml).toContain('class="home-highlights"');
-    expect(homeHtml).toContain("AI Agent Workflows");
+    // The homepage highlights the newest post, which changes with each publish.
+    expect(homeHtml).toContain(blogManifest.posts[0].title);
     expect(homeHtml).toContain("Documentation Team Lead");
     expect(homeHtml).not.toMatch(/<kbr-home-highlights\b/i);
 

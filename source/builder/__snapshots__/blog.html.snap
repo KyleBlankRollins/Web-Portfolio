@@ -68,8 +68,16 @@
       </div>
       <div class="tags-grid" aria-labelledby="blog-filter-title">
 
+          <button class="tag-button" type="button" data-tag="technical writing" aria-pressed="false">
+            technical writing <span class="tag-count">(3)</span>
+          </button>
+
           <button class="tag-button" type="button" data-tag="AI" aria-pressed="false">
             AI <span class="tag-count">(2)</span>
+          </button>
+
+          <button class="tag-button" type="button" data-tag="documentation" aria-pressed="false">
+            documentation <span class="tag-count">(2)</span>
           </button>
 
           <button class="tag-button" type="button" data-tag="intentionality" aria-pressed="false">
@@ -78,10 +86,6 @@
 
           <button class="tag-button" type="button" data-tag="remote work" aria-pressed="false">
             remote work <span class="tag-count">(2)</span>
-          </button>
-
-          <button class="tag-button" type="button" data-tag="technical writing" aria-pressed="false">
-            technical writing <span class="tag-count">(2)</span>
           </button>
 
           <button class="tag-button" type="button" data-tag="boundaries" aria-pressed="false">
@@ -94,10 +98,6 @@
 
           <button class="tag-button" type="button" data-tag="coding agents" aria-pressed="false">
             coding agents <span class="tag-count">(1)</span>
-          </button>
-
-          <button class="tag-button" type="button" data-tag="documentation" aria-pressed="false">
-            documentation <span class="tag-count">(1)</span>
           </button>
 
           <button class="tag-button" type="button" data-tag="goal setting" aria-pressed="false">
@@ -132,6 +132,10 @@
             rule of thirds <span class="tag-count">(1)</span>
           </button>
 
+          <button class="tag-button" type="button" data-tag="tooling" aria-pressed="false">
+            tooling <span class="tag-count">(1)</span>
+          </button>
+
           <button class="tag-button" type="button" data-tag="workflows" aria-pressed="false">
             workflows <span class="tag-count">(1)</span>
           </button>
@@ -142,6 +146,39 @@
   <div class="blog-posts">
     <div class="post-list-container">
       <div class="post-list-grid" data-post-list="">
+
+          <article class="post-card" data-post-card="" data-tags="technical writing|documentation|tooling">
+            <div class="post-card-content">
+              <header class="post-card-header">
+                <h2 class="post-card-title">
+                  <a href="/the-docs-tool-i-wanted.html" class="post-title-link">The Docs Tool I Wanted</a>
+                </h2>
+                <div class="post-card-date">
+                  <time datetime="2026-11-03">November 3, 2026</time>
+                </div>
+              </header>
+              <div class="post-card-description">
+                <p>I wanted a docs-as-code setup that gave docs the support programming languages get in an IDE, so I built Ascribe.</p>
+              </div>
+              <div class="post-card-tags">
+                <div class="tag-list">
+
+                    <button class="post-tag" type="button" data-tag="technical writing">
+                      technical writing
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="documentation">
+                      documentation
+                    </button>
+
+                    <button class="post-tag" type="button" data-tag="tooling">
+                      tooling
+                    </button>
+
+                </div>
+              </div>
+            </div>
+          </article>
 
           <article class="post-card" data-post-card="" data-tags="AI|coding agents|workflows">
             <div class="post-card-content">

@@ -1,6 +1,20 @@
 {
   "posts": [
     {
+      "title": "The Docs Tool I Wanted",
+      "description": "I wanted a docs-as-code setup that gave docs the support programming languages get in an IDE, so I built Ascribe.",
+      "date": "2026-11-03",
+      "formattedDate": "November 3, 2026",
+      "tags": [
+        "technical writing",
+        "documentation",
+        "tooling"
+      ],
+      "url": "/the-docs-tool-i-wanted.html",
+      "filename": "the-docs-tool-i-wanted",
+      "keywords": "docs as code, Ascribe, technical writing, documentation tooling, language server"
+    },
+    {
       "title": "AI Agent Workflows",
       "description": "AI agents are most useful when humans define the problem, guide the work, and review the result. These are the workflows that have worked for me.",
       "date": "2026-07-31",
@@ -121,16 +135,16 @@
       "keywords": "technical writing, documentation, research, process, AI, LLM"
     }
   ],
-  "totalPosts": 7,
+  "totalPosts": 8,
   "availableTags": [
+    "technical writing",
     "AI",
+    "documentation",
     "intentionality",
     "remote work",
-    "technical writing",
     "boundaries",
     "career",
     "coding agents",
-    "documentation",
     "goal setting",
     "habits",
     "leadership",
@@ -139,11 +153,20 @@
     "professional growth",
     "research",
     "rule of thirds",
+    "tooling",
     "workflows"
   ],
   "tagsWithCounts": [
     {
+      "tag": "technical writing",
+      "count": 3
+    },
+    {
       "tag": "AI",
+      "count": 2
+    },
+    {
+      "tag": "documentation",
       "count": 2
     },
     {
@@ -152,10 +175,6 @@
     },
     {
       "tag": "remote work",
-      "count": 2
-    },
-    {
-      "tag": "technical writing",
       "count": 2
     },
     {
@@ -168,10 +187,6 @@
     },
     {
       "tag": "coding agents",
-      "count": 1
-    },
-    {
-      "tag": "documentation",
       "count": 1
     },
     {
@@ -204,6 +219,10 @@
     },
     {
       "tag": "rule of thirds",
+      "count": 1
+    },
+    {
+      "tag": "tooling",
       "count": 1
     },
     {

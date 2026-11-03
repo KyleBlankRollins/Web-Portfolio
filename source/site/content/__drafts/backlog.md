@@ -36,7 +36,6 @@ Valid section headings (must match exactly):
 ## Outlining
 
 - Syntax of documentation
-- The docs tool I wanted (Ascribe)
 
 ## Writing
 
@@ -44,6 +43,7 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- The docs tool I wanted (Ascribe)
 - AI Agent Workflows
 - Leading Through Change
 - Technical storytelling and drift at machine speed

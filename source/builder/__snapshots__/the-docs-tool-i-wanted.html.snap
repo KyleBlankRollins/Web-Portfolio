@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
+
+     The gradient behind every page comes from --gradient-primary, which
+     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     Those attributes used to be stamped by theme-switcher.ts in
+     connectedCallback - after the Lit bundle parses - so the page painted
+     once with the properties.css fallbacks and then visibly repainted.
+
+     This mirrors THEME_STORAGE_KEY, COLOR_SCHEME_STORAGE_KEY, and
+     DEFAULT_THEME in theme-constants.ts, as well as loadSavedTheme() in
+     theme-switcher.ts. Keep the literals and constants in sync. See DF-13. -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      d.setAttribute("data-theme", localStorage.getItem("kbr-theme") || "base");
+      d.setAttribute(
+        "data-color-scheme",
+        localStorage.getItem("kbr-color-scheme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light")
+      );
+    } catch (e) {
+      // localStorage throws in private mode with cookies disabled.
+      d.setAttribute("data-theme", "base");
+      d.setAttribute("data-color-scheme", "light");
+    }
+  })();
+</script>
+<!-- Root-absolute so it resolves from nested paths such as
+     /<post>/supplements/<page>.html as well as from the site root. -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>The Docs Tool I Wanted</title>
+<meta name="description" content="I wanted a docs-as-code setup that gave docs the support programming languages get in an IDE, so I built Ascribe.">
+<meta name="keywords" content="docs as code, Ascribe, technical writing, documentation tooling, language server">
+
+
+    <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
+  </head>
+  <body>
+    <kbr-navigation>
+  <!-- Slotted into .header-content so the switcher sits at the far right
+       of the site header. It used to be a fixed-position floating control,
+       which overlapped page content at every viewport width. See DF-31. -->
+  <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
+</kbr-navigation>
+
+    <main class="blog-post-layout">
+      <aside class="blog-toc-sidebar">
+        <div class="blog-toc-sticky-container">
+
+          <kbr-table-of-contents></kbr-table-of-contents>
+          <div class="blog-post-tags">
+  <span class="tags-label">Tags:</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+
+      <button class="blog-tag" data-tag="documentation">documentation</button>
+
+      <button class="blog-tag" data-tag="tooling">tooling</button>
+
+  </div>
+</div>
+
+        </div>
+      </aside>
+      <article class="blog-post-content glass-surface">
+        <h1 id="the-docs-tool-i-wanted">The Docs Tool I Wanted</h1>
+        <div class="blog-post-metadata">
+  <div>
+    <time datetime="2026-11-03">November 3, 2026</time>
+  </div>
+</div>
+
+        <p><kbr-admonition type="note">tl;dr: I wanted docs-as-code to get the support programming languages get in an IDE: checks as you type, hints, a CLI and a UI that agree. Ascribe is my opinionated take on what that looks like. It&#39;s 0.4, early, and open source under the MPL.</kbr-admonition></p>
+<p>Docs-as-code is an approach to documentation that pairs technical writing process and knowledge with the environments and tools software engineers use. There are other definitions, but I find this one most useful.</p>
+<p>In my experience, docs-as-code has hewed strongly towards software engineering tools, process, and paradigms. But I&#39;ve missed features that dedicated tech writing tools like Flare or DITA have had for years: content reuse, conditional content, structured page types, and templates.</p>
+<p>Tech writers using docs-as-code often rebuild those features for their site generator or build tool. In Docusaurus, reusing content means an MDX import. In Sphinx, it&#39;s an include directive. In Hugo, it&#39;s a shortcode. Each one only works in its own generator, and the editor treats it as text it doesn&#39;t understand. Writers find out an include path is wrong when the build fails, or when a reader finds the gap.</p>
+<p>Ascribe moves those features out of the site generator and into the Markdown itself. Includes, variants, variables, and page types are part of the file format and its content model, and a spec defines what each one means. The compiler that builds the docs also runs in the editor, the CLI, and CI, so it understands them everywhere. Mistype an include path and the editor underlines it as you type, the way a code editor underlines a misspelled import.</p>
+<p>That&#39;s what I mean by IDE support for docs. Not a nicer text editor, but tooling that understands what you wrote.</p>
+<p>It also means those features don&#39;t depend on a site generator. I&#39;ve only built an Astro integration so far, but Ascribe writes its output in a documented format so others can be added.</p>
+<h2 id="ascribe-everywhere">Ascribe everywhere</h2><p>Ascribe comes in a few forms. The VS Code extension brings everything together with a UI. The CLI exposes the same tools for scripts and CI like GitHub Actions. The MCP server gives AI agents a map to the Ascribe tools.</p>
+<p>All of them run the same binary and report the same information about your docs.</p>
+<h2 id="why-build-something-new">Why build something new?</h2><p>There are plenty of good documentation tools already, and I&#39;ve used many of them. But most make tradeoffs I wasn&#39;t happy with.</p>
+<p>I&#39;ll be upfront: I used AI tools to build Ascribe. I couldn&#39;t have created the project without them. Not because I&#39;m incapable of building something equivalent. Working full time, being a dad, trying to contribute to my community and be a useful human being in general... there just isn&#39;t enough time.</p>
+<p>What this means is I can finally take the things I enjoyed about DITA, Sphinx, AsciiDoc, Flare, and Markdown and bring them together in a package that works the way I want.</p>
+<h2 id="my-opinionated-choices">My opinionated choices</h2><p>So, what does the docs tool of my dreams look like? Here&#39;s a non-exhaustive list:</p>
+<ul>
+<li>No whitespace sensitivity. I greatly dislike whitespace-sensitive languages. They feel fiddly to me. So Ascribe&#39;s Markdown directives (mostly) ignore whitespace. Markdown&#39;s own rules still apply: a directive indented four spaces is a code block, and one inside a list item sits at the item&#39;s indent. But the spacing inside a directive line, and the indentation between a block directive and its <code>@end</code>, mean nothing. The downside is that block-level directives need an explicit <code>@end</code>. It&#39;s noisier than I&#39;d like, but it&#39;s the best way to avoid making whitespace carry meaning.</li>
+<li>Plain Markdown. Ascribe adds directives to Markdown, but the goal was to make them read as naturally as possible. They shouldn&#39;t feel like programming or need a build to make sense.</li>
+<li>One compiler. Every interface (UI, CLI) uses the same binary, because I wanted every Ascribe surface to agree on the state of the docs.</li>
+<li>Deterministic tools. Ascribe is opinionated about how to do things, but it has no built-in AI. It never makes judgement calls about your docs. It only runs well-defined tasks and reports what it finds.</li>
+<li>Careful with your files. Every command that writes, like <code>fmt</code> or <code>check --fix</code>, refuses to touch a file git couldn&#39;t restore unless you pass <code>--force</code>. Each one takes <code>--dry-run</code> too.</li>
+</ul>
+<h2 id="what-ascribe-looks-like">What Ascribe looks like</h2><p>Here&#39;s a trimmed page from Quill, the example project in the Ascribe repository. Quill is a made-up product, but the page is a common type: install steps that differ by package manager, a section shared with other pages, and the product&#39;s name kept in one place.</p>
+<pre class="language-markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml">type: page
+title: Install the Quill agent
+available: cloud, self-managed preview 3.3</span>
+<span class="token punctuation">---</span></span>
+
+The {product} agent watches your docs repository and syncs changes to {product}.
+
+<span class="token title important"><span class="token punctuation">##</span> Prerequisites</span>
+
+@id {permalink=true}: prerequisites
+
+@include: _fragments/prerequisites.md
+
+<span class="token title important"><span class="token punctuation">##</span> Install the agent</span>
+
+@variant {pm=npm}:
+
+<span class="token code"><span class="token punctuation">```</span><span class="token code-language">shell</span>
+<span class="token code-block language-shell"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> @quill/agent</span>
+<span class="token punctuation">```</span></span>
+
+@variant {pm=pnpm}:
+
+<span class="token code"><span class="token punctuation">```</span><span class="token code-language">shell</span>
+<span class="token code-block language-shell"><span class="token function">pnpm</span> <span class="token function">add</span> <span class="token parameter variable">-g</span> @quill/agent</span>
+<span class="token punctuation">```</span></span>
+
+@end</code></pre><p><code>{product}</code> is a phrase declared in <code>ascribe.toml</code>. <code>@include</code> pulls in a shared file. The <code>@variant</code> blocks become tabs on the site, and separate sections in the plain Markdown output. The <code>available</code> line says which release lines the page applies to, and Ascribe builds one site per line from the same source. <code>@id {permalink=true}</code> gives the section a stable <code>go/prerequisites</code> address that the product can link to, and that Ascribe checks never breaks.</p>
+<h3 id="in-the-editor">In the editor</h3><p>Say I mistype the include path as <code>_fragments/prerequisite.md</code>, without the &quot;s&quot;. The VS Code extension underlines the path as I type, and hovering over it shows the problem.</p>
+<p><img src="/the-docs-tool-i-wanted/media/editor-include-error.png" alt="VS Code with the mistyped include path underlined in red, and a hover beneath it: the included file _fragments/prerequisite.md doesn&#39;t exist, ascribe ASC021, Not found: _fragments/prerequisite.md"></p>
+<p>The same check from the command line, trimmed to the two problems that matter here:</p>
+<pre><code>[ASC021] Error: the included file `_fragments/prerequisite.md` doesn&#39;t exist
+    ╭─[ docs/install-agent.md:17:11 ]
+    │
+ 17 │ @include: _fragments/prerequisite.md
+    │           ─────────────┬────────────
+    │                        ╰────────────── include-target-missing
+    │
+    │ Help: Include `_fragments/prerequisites.md`
+────╯
+[ASC155] Advice: no file includes this fragment, so nothing publishes it
+   ╭─[ docs/_fragments/prerequisites.md:1:1 ]
+   │
+ 1 │ Before you install the agent, make sure you have:
+   │ ────────────────────────┬────────────────────────
+   │                         ╰────────────────────────── fragment-unused
+   │
+   │ Help: Include the fragment where it belongs with `@include`, or delete it when nothing needs it any more.
+───╯</code></pre><p>The first problem&#39;s help names the file I meant. The second follows from the first: Ascribe checks the whole project, not only the file I&#39;m editing, so it notices the real fragment is no longer used.</p>
+<h3 id="in-ci">In CI</h3><p>The same checks run in CI. The GitHub Actions workflow in the docs runs two commands on every pull request:</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npx ascribe check <span class="token punctuation">-</span><span class="token punctuation">-</span>deny<span class="token punctuation">-</span>warnings <span class="token punctuation">-</span><span class="token punctuation">-</span>format github
+<span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npx ascribe fmt <span class="token punctuation">-</span><span class="token punctuation">-</span>check <span class="token punctuation">-</span><span class="token punctuation">-</span>format github</code></pre><p><code>--format github</code> turns each problem into an annotation on the pull request&#39;s line, the way a code linter&#39;s problems show up. If I&#39;d missed the underline in the editor, the pull request would fail and point at the <code>@include</code> line. And because <code>npx</code> runs the version of Ascribe that <code>package.json</code> pins, CI and the editor run the same checks.</p>
+<p><img src="/the-docs-tool-i-wanted/media/ci-annotation.png" alt="The pull request&#39;s changed include line, with a GitHub Actions check failure beneath it: include-target-missing (ASC021), the included file _fragments/prerequisite.md doesn&#39;t exist"></p>
+<h3 id="in-review">In review</h3><p>Checks don&#39;t catch everything. Someone still has to read the docs, and reviewing them as a source diff can be awkward.</p>
+<p>Ascribe&#39;s review compares resolved pages, not files, and shows the pull request as rendered pages with the changes marked. If I edit the prerequisites fragment, the change shows on every page that includes it. Reformatting shows on none. A reviewer sees what readers will see.</p>
+<p>Here&#39;s the HTML preview, from <code>ascribe diff --format html</code>, for a one-phrase change to the prerequisites fragment. The install page&#39;s file didn&#39;t change, but the preview shows the change where it lands:</p>
+<p><img src="/the-docs-tool-i-wanted/media/review-fragment-change.png" alt="Ascribe&#39;s review report for install-agent.md, changed only through _fragments/prerequisites.md. The rendered page shows the Prerequisites list, with one item marked Changed: &quot;A docs repository that Quill can read&quot; now says &quot;clone over HTTPS&quot;, with the removed word struck through and the added words highlighted"></p>
+<p>Comments left on a rendered page are ordinary GitHub review comments on the source lines, posted through your GitHub sign-in or the <code>gh</code> CLI. Ascribe doesn&#39;t store them. The pull request is the record, and anyone can reply on GitHub. Review runs in the VS Code page preview and in the site preview under <code>astro dev</code>. CI produces the HTML preview, which shows the changes but not the comments.</p>
+<h3 id="the-pieces">The pieces</h3><p>Put together, Ascribe is:</p>
+<ul>
+<li><code>ascribe</code>, a command-line tool written in Rust, with <code>check</code>, <code>build</code>, <code>fmt</code>, <code>diff</code>, and a language server.</li>
+<li>A VS Code extension with the page preview, site preview, and review. Other editors get the checks through the language server.</li>
+<li>An MCP server, editing hooks, and an <code>agents sync</code> command that writes <code>AGENTS.md</code> and a skill, for AI agents working on the docs. The hooks support Claude Code, Codex, and Copilot.</li>
+<li>An Astro integration for publishing the site.</li>
+<li>Optional hookups to Vale for prose style and lychee for external links, which you install separately.</li>
+</ul>
+<p>That&#39;s the part this post shows. There&#39;s more I haven&#39;t covered: versioned builds from one source, code examples pulled from real files with <code>@snippet</code> and checked against recorded test runs, links to OpenAPI operations checked against the spec, redirects recorded when a page moves, and page templates. The <a href="https://ascribed-dev.com/go/docs/">docs</a> cover the rest.</p>
+<h2 id="its-not-for-everyone">It&#39;s not for everyone</h2><p>Ascribe is opinionated, it&#39;s changing quickly, and there&#39;s one person (me) building it on fractional time. Some of its limits are deliberate, and some are just where the project is today. Both are worth knowing before you try it.</p>
+<h3 id="by-design">By design</h3><ul>
+<li><strong>It&#39;s Markdown, not MDX.</strong> If your docs rely on React components in the page, Ascribe won&#39;t run them. Directives in the source and web components in the output cover things like tabs, notes, and steps, but not arbitrary components. I don&#39;t plan to change this, because MDX makes every author work in JSX.</li>
+<li><strong>Block directives need <code>@end</code>.</strong> That&#39;s the cost of not making whitespace meaningful. If you like indentation-based syntax, like reStructuredText, Ascribe may feel noisier.</li>
+<li><strong>It&#39;s for people who work in an editor and git.</strong> There&#39;s no WYSIWYG editor or CMS. Writers and reviewers work in Markdown files and pull requests. If your contributors don&#39;t, Ascribe isn&#39;t a good fit.</li>
+</ul>
+<h3 id="for-now">For now</h3><ul>
+<li><strong>It&#39;s 0.x.</strong> Any release can still change behavior, and the changelog marks each change that does. The spec calls itself a draft until 1.0. Pin the version, as the CI recipe does, and read the changelog before you upgrade.</li>
+<li><strong>I maintain it on my own.</strong> Time is limited, but I&#39;ll do my best to keep building and supporting it.</li>
+<li><strong>Publishing a site needs Astro.</strong> <code>@ascribed/astro</code> is the only site integration. <code>ascribe preview</code> serves your pages without Astro while you write, and the output format is documented so other site generators can be added, but nobody has built one yet.</li>
+<li><strong>The full editor experience is VS Code only.</strong> The page preview, site preview, sidebar, and review are in the VS Code extension. Other editors, like Neovim, get the checks through the language server.</li>
+<li><strong>Review comments are GitHub only.</strong> Review&#39;s comparison works in any git repository, but its comments are GitHub pull request comments, GitHub Enterprise included. A team on GitLab or Bitbucket gets the marked-up pages without the comments.</li>
+<li><strong>There&#39;s no migration tool.</strong> <code>ascribe init</code> adopts a folder of Markdown as it is, <code>check --fix</code> converts GitHub alerts to <code>@note</code>, and <code>ascribe baseline</code> parks existing advice so CI reports only new problems. But moving from Docusaurus, MkDocs, or Sphinx means converting includes, tabs, admonitions, and front matter by hand, or with your own script or AI tools.</li>
+<li><strong>No translations and no built-in search.</strong> Ascribe has no i18n support, and the site integration doesn&#39;t ship a search. If you need either, you add it yourself.</li>
+<li><strong>It runs on macOS on Apple silicon, Linux with glibc, and Windows.</strong> Intel Macs and Alpine Linux aren&#39;t supported. The npm package needs Node 24 or newer, and the site needs Astro 7.3.5 or newer. The standalone binary needs neither.</li>
+</ul>
+<h3 id="leaving">Leaving</h3><p>Ascribe hosts nothing, and nothing it needs lives outside your repository, so leaving is a matter of files. Your source pages are still Markdown, but other tools show directives like <code>@variant</code> and phrases like <code>{product}</code> as literal text. <code>ascribe build</code> also writes a plain CommonMark version of every page, with includes resolved, phrases filled in, and variants turned into sections. It&#39;s a clean export, but it&#39;s a snapshot: the reuse is flattened into each page, so you&#39;d lose single-sourcing on the way out.</p>
+<h2 id="conclusion">Conclusion</h2><p>When I write code, my editor tells me I&#39;m wrong before anyone else has to. I wanted the same for docs. Ascribe is my attempt at it: the features tech writers rely on, built into the Markdown itself, and checked the same way in the editor, the CLI, CI, and review.</p>
+<p>None of that makes docs good on its own. As I wrote in <a href="/ai-agent-workflows.html">AI Agent Workflows</a>, deterministic tools are scaffolding, not judgment. A page can pass every check and still answer the wrong question. The checks take the mechanical mistakes off the table, like a broken include, an undeclared phrase, or a link to a page that moved, so reviewers can spend their attention on whether the docs say the right thing.</p>
+<p>If you&#39;ve also wanted docs work to feel like working in a good IDE, try Ascribe on a small project and tell me where it breaks. The <a href="https://github.com/ascribed-dev/ascribe">repository</a> has the docs, the examples, and the <a href="https://github.com/ascribed-dev/ascribe/issues">issue tracker</a>.</p>
+
+
+
+
+
+        <kbr-anchor-copy></kbr-anchor-copy>
+      </article>
+    </main>
+    <!--
+  Shared site footer.
+
+  This is the single source of the footer markup. It is injected into both
+  base.html and blog-post.html through the footer template variable, wired up
+  in source/builder/template-processor.ts - which is the one choke point both
+  the production build and the dev server render through. Do not paste this
+  markup into a template; add the variable instead, or every page type grows
+  its own copy.
+
+  Light DOM on purpose, not a Lit component: the footer has to be present in
+  the generated HTML for crawlers and for readers without JavaScript, and a
+  shadow root would leave only an empty custom element in the static output.
+-->
+<footer class="site-footer">
+  <nav class="site-footer-nav" aria-label="Elsewhere on the web">
+    <ul>
+      <li>
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </li>
+      <li>
+        <a href="https://github.com/KyleBlankRollins/Web-Portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </li>
+    </ul>
+  </nav>
+</footer>
+
+    <script type="module" crossorigin="" src="/assets/main-HASH.js"></script>
+
+
+</body></html>
