@@ -153,33 +153,45 @@ The [docs](https://ascribed-dev.com/go/docs/) cover the rest.
 
 ## It's not for everyone
 
-.
+Ascribe is opinionated, it's changing quickly, and there's one person (me) building it on fractional time. Some of its limits are choices I made on purpose, and some are just where the project is today. Both are worth knowing before you try it.
+
+### By design
+
+- **It's Markdown, not MDX.** If your docs rely on React components in the page, Ascribe won't run them. Directives in the source and web components in the output cover things like tabs, notes, and steps, but not arbitrary components. I don't plan to change this, because MDX makes every author work in JSX.
+- **Block directives need `@end`.** That's the cost of not making whitespace meaningful. If you like indentation-based syntax, like reStructuredText, Ascribe may feel a bit noisier.
+- **It's for people who work in an editor and git.** There's no WYSIWYG editor or CMS. Writers and reviewers work in Markdown files and pull requests. If your contributors don't, Ascribe isn't a good fit.
+
+### For now
+
+- **It's 0.x.** A minor version can still change behavior, and the changelog marks each change that does. Pin the version, as the CI recipe does, and read the changelog before you upgrade.
+- **I maintain it on my own.** Time is limited, but I will do my best to continue building and supporting Ascribe.
+- **Publishing a site needs Astro.** `@ascribed/astro` is the only site integration. `ascribe preview` serves your pages without Astro while you write, and the output format is documented so other site generators can be added, but nobody has built one yet.
+- **The full editor experience is VS Code only.** The page preview, site preview, sidebar, and review are in the VS Code extension. Other editors, like Neovim, get the checks through the language server.
+- **Review comments are GitHub only.** Review's comparison works in any git repository, but its comments are GitHub pull request comments, GitHub Enterprise included. A team on GitLab or Bitbucket gets the marked-up pages without the comments.
+- **There's no migration tool.** Moving from Docusaurus, MkDocs, or Sphinx means converting includes, tabs, admonitions, and front matter by hand, or with your own script or AI tools.
+- **It runs on macOS on Apple silicon, Linux with glibc, and Windows.** Intel Macs and Alpine Linux aren't supported.
+
+### Leaving
+
+Ascribe hosts nothing, and nothing it needs lives outside your repository, so leaving is a matter of files. Your source pages are still Markdown, but other tools show directives like `@variant` and phrases like `{product}` as literal text. `ascribe build` also writes a plain CommonMark version of every page, with includes resolved, phrases filled in, and variants turned into sections. It's a clean export, but it's a snapshot: the reuse is flattened into each page, so you'd lose single-sourcing on the way out.
 
 ## Conclusion
 
-.
+When I write code, my editor tells me I'm wrong before anyone else has to. I wanted the same for docs. Ascribe is my attempt at it: the features tech writers rely on, built into the Markdown itself, and checked the same way in the editor, the CLI, CI, and review.
+
+None of that makes docs good on its own. As I wrote in [AI Agent Workflows](../ai-agent-workflows.md), deterministic tools are scaffolding, not judgment. A page can pass every check and still answer the wrong question. What the checks do is take the mechanical mistakes off the table, like a broken include, an undeclared phrase, or a link to a page that moved, so reviewers can spend their attention on whether the docs say the right thing.
+
+If you've also wanted docs work to feel like working in a good IDE, try Ascribe on a small project and tell me where it breaks. The [repository](https://github.com/ascribed-dev/ascribe) has the docs, the examples, and the [issue tracker](https://github.com/ascribed-dev/ascribe/issues).
 
 ---
-
-- What that looks like
-  - One worked example: an editor error, the same error in CI, then the PR shown as rendered pages
-  - Use real diagnostic output, not polished screenshots. Link the rest of the docs.
-  - Short "what it is" paragraph: a Rust CLI with a language server, a VS Code extension, publishing through Astro, alongside Vale and lychee
-- What preferences cost
-  - Opinionated means it won't fit everyone
-  - The full UI is VS Code only (the LSP works elsewhere), publishing requires Astro 7, review is GitHub only
-  - No migration path from MDX or other Markdown setups
-  - 0.x: a minor version can still break things
-  - Leaving keeps your source pages, but the plain output is a flattened snapshot, so you lose single-sourcing
-- Close
-  - If you also wanted docs work to feel like working in a good IDE, try it and tell me where it breaks
-  - Link the repo, not an install command
 
 ## Notes
 
 - Expected objection: Markdown is somewhat whitespace-sensitive (indented code blocks, nested lists). Say how far the rule goes, or whether Ascribe changes Markdown's own behavior there.
 - Decide: "me" or "Bryo Studio" (README says "Made by Bryo Studio").
+  - Answer: Me (Kyle Rollins) because I am Bryo Studio.
 - Decide: mention that Ascribe was built with agents? First commit 2026-09-09, ~2,400 commits by 0.4.3. If yes, link AI Agent Workflows.
+  - Answer: Already mentioned in the blog post.
 - Avoid: a "Code has / Docs now have" table, "different category" positioning, type-system/generics analogies, claiming docs as code failed.
 - Fact-check results (Ascribe repo, as of 0.4.3):
   - Update: OpenAPI and `ascribe.addresses` (redirects) shipped in 0.4.4. `check --format github` shipped in 0.4.5.
