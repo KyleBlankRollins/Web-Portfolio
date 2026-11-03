@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -50,13 +51,25 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-          <template>
-            <nav class="post-series" aria-labelledby="post-series-title">
-  <h2 id="post-series-title">Intentional Work Patterns</h2>
-  <p>Part 1 of 2</p>
+      <article class="blog-post-content">
+        <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
+        <div class="blog-post-metadata">
+  <div class="blog-post-date">
+    <time class="meta" datetime="2025-12-26">December 26, 2025</time>
+  </div>
+</div>
+
+
+          <nav class="post-series" aria-labelledby="post-series-title">
+  <p class="post-series-heading">
+    <span class="post-series-title" id="post-series-title">Intentional Work Patterns</span>
+    <span class="post-series-part">Part 1 of 2</span>
+  </p>
   <div class="series-navigation">
 
     <a class="nav-button" href="/intentional-work-patterns-boundaries.html"><span class="nav-text">Next: Intentional Work Patterns - Boundaries</span><span class="nav-arrow">→</span></a>
@@ -80,31 +93,17 @@
   </ol>
 </nav>
 
-          </template>
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <div class="blog-post-tags">
-  <span class="tags-label">Tags:</span>
-  <div class="tag-list">
 
-      <button class="blog-tag" data-tag="habits">habits</button>
-
-      <button class="blog-tag" data-tag="intentionality">intentionality</button>
-
-      <button class="blog-tag" data-tag="remote work">remote work</button>
-
-  </div>
-</div>
-
-        </div>
-      </aside>
-      <article class="blog-post-content glass-surface">
-        <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
-        <div class="blog-post-metadata">
-  <div>
-    <time datetime="2025-12-26">December 26, 2025</time>
-  </div>
-</div>
-
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            Intentional Work Patterns
+          </p>
+        </kbr-table-of-contents>
         <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
 <p>While these patterns emerged from remote work, many of them apply to any work environment.</p>
 <ol>
@@ -116,7 +115,7 @@
 </ol>
 <p>If you are looking for practical implementation details, see the companion supplements below.</p>
 
-        <template>
+
           <section class="supplements" aria-labelledby="supplements-heading">
   <h2 id="supplements-heading">Supplements</h2>
   <ul class="supplement-list">
@@ -138,7 +137,27 @@
   </ul>
 </section>
 
-        </template>
+
+        <div class="blog-post-tags">
+  <span class="tags-label eyebrow">Tagged</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="habits">habits</button>
+
+      <button class="blog-tag" data-tag="intentionality">intentionality</button>
+
+      <button class="blog-tag" data-tag="remote work">remote work</button>
+
+  </div>
+</div>
+
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
 
 
 

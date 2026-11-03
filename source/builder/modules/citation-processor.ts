@@ -25,14 +25,17 @@ export interface CitationUsage {
 }
 
 export interface CitationLink {
-  label: "View" | "Buy";
+  label: "Source" | "Buy";
   url: string;
-  showSeparator: boolean;
 }
 
 export interface CitationBackReference {
   href: string;
+  /* Visible text: the return arrow, numbered when a source is cited more
+     than once. The arrow alone means nothing to a screen reader, so
+     ariaLabel carries the full description. */
   label: string;
+  ariaLabel: string;
 }
 
 export interface CitationDisplay {
@@ -244,31 +247,25 @@ export class CitationProcessor {
       number,
       links: [
         ...(citation.url
-          ? [
-              {
-                label: "View" as const,
-                url: citation.url,
-                showSeparator: false,
-              },
-            ]
+          ? [{ label: "Source" as const, url: citation.url }]
           : []),
         ...(citation.purchaseUrl
-          ? [
-              {
-                label: "Buy" as const,
-                url: citation.purchaseUrl,
-                showSeparator: Boolean(citation.url),
-              },
-            ]
+          ? [{ label: "Buy" as const, url: citation.purchaseUrl }]
           : []),
       ],
-      backReferences: positions.map((_, index) => ({
-        href:
-          positions.length > 1
-            ? `#citation-ref-${citation.id}-${index + 1}`
-            : `#citation-ref-${citation.id}`,
-        label: positions.length > 1 ? `↩${index + 1}` : "↩",
-      })),
+      backReferences: positions.map((_, index) =>
+        positions.length > 1
+          ? {
+              href: `#citation-ref-${citation.id}-${index + 1}`,
+              label: `↩${index + 1}`,
+              ariaLabel: `Back to reference ${index + 1} of ${positions.length}`,
+            }
+          : {
+              href: `#citation-ref-${citation.id}`,
+              label: "↩",
+              ariaLabel: "Back to reference",
+            }
+      ),
     }));
   }
 

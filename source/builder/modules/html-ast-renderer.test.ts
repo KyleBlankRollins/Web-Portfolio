@@ -21,6 +21,24 @@ describe("HtmlAstRenderer", () => {
     expect(result.html).toBe("<p>zero</p>");
   });
 
+  it("unwraps a truthy conditional template instead of leaving it inert", () => {
+    const renderer = new HtmlAstRenderer();
+
+    expect(
+      renderer.render(
+        '<div><template data-kbr-if="post"><p>{{post.title}}</p><template data-kbr-if="post.extra"><em>more</em></template></template></div>',
+        { post: { title: "Hello" } }
+      ).html
+    ).toBe("<div><p>Hello</p></div>");
+
+    expect(
+      renderer.render(
+        '<div><template data-kbr-if="post"><p>{{post.title}}</p></template></div>',
+        { post: undefined }
+      ).html
+    ).toBe("<div></div>");
+  });
+
   it("expands zero, one, and multiple loop iterations with local scope", () => {
     const renderer = new HtmlAstRenderer();
 

@@ -3,8 +3,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.

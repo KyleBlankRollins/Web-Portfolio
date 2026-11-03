@@ -22,9 +22,17 @@ export const tableOfContentsStyles = css`
     overflow: hidden;
   }
 
+  /* No gap: the slotted leading element carries its own margin, so an
+     empty or zero-width slot does not indent the toggle. */
+  .toc-bar {
+    display: flex;
+    align-items: center;
+  }
+
   /* Toggle button for mobile */
   .toc-toggle {
     display: none; /* Hidden by default on desktop */
+    flex: 1 1 auto;
     width: 100%;
     padding: var(--space-md);
     background: var(--color-background-secondary);
@@ -233,6 +241,69 @@ export const tableOfContentsStyles = css`
     padding-left: calc(var(--space-sm) + 2rem);
   }
 
+  /* Collapsible contents block, in the reading column. No card: a hairline
+     below, a mono label that toggles it, and the list in the text's own
+     measure when open. The sidebar card styling stays for the portfolio
+     and career rails. */
+  :host([collapsible]) .toc-wrapper {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+
+  /* With something slotted beside it the toggle gives up the row: the
+     slotted element takes the space and the toggle sits at the right. */
+  :host([collapsible]) ::slotted([slot="leading"]) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  :host([collapsible]) .toc-toggle {
+    display: flex;
+    flex: 0 0 auto;
+    width: auto;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    background: transparent;
+    border-bottom: 0;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-normal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  :host([collapsible]) .toc-toggle:hover {
+    background: transparent;
+    color: var(--color-text);
+  }
+
+  :host([collapsible]) .toc-toggle-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Capped so an open list inside a stuck bar never outgrows the
+     viewport; it scrolls instead. */
+  :host([collapsible]) .toc-container {
+    margin: var(--space-2xs) 0 var(--space-sm);
+    max-height: min(60vh, 24rem);
+    overflow-y: auto;
+  }
+
+  :host([collapsible]) .scroll-indicator {
+    display: none;
+  }
+
+  /* Block padding only: padding-left is what the per-level rules below
+     use to indent h3 under h2, and a shorthand here would flatten them. */
+  :host([collapsible]) .toc-link {
+    padding-block: var(--space-2xs);
+    font-size: var(--font-size-sm);
+  }
+
   /* Empty state */
   .toc-empty {
     color: var(--color-text-secondary);
@@ -279,6 +350,11 @@ export const tableOfContentsStyles = css`
       position: sticky;
       top: var(--space-sm);
       z-index: 100;
+    }
+
+    /* In the reading column the block scrolls with the text. */
+    :host([collapsible]) {
+      position: static;
     }
 
     .toc-toggle {

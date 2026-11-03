@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -50,23 +51,30 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-
-          <kbr-table-of-contents></kbr-table-of-contents>
-
-
-        </div>
-      </aside>
-      <article class="blog-post-content glass-surface">
+      <article class="blog-post-content">
         <h1 id="boundary-checklist">Boundary Checklist</h1>
         <div class="blog-post-metadata">
-  <div>
-    <time datetime="2026-08-01">August 1, 2026</time>
+  <div class="blog-post-date">
+    <time class="meta" datetime="2026-08-01">August 1, 2026</time>
   </div>
 </div>
 
+
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            Boundary Checklist
+          </p>
+        </kbr-table-of-contents>
         <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>Use this checklist before you renegotiate your home-work boundaries.</p>
 <h2 id="boundary-checklist">Boundary checklist</h2><ul>
@@ -81,39 +89,56 @@
 <p>Back to parent post: <a href="/intentional-work-patterns.html#supplements-heading">Intentional Work Patterns</a></p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+
+
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-deep-work">
-          <em>Deep Work: Rules for Focused Success in a Distracted World</em> by Cal Newport
-          <span class="citation-links">
+        <li id="citation-deep-work" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Deep Work: Rules for Focused Success in a Distracted World</cite>,
+            <span class="citation-author">Cal Newport</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://calnewport.com/writing/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://calnewport.com/writing/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-deep-work" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-deep-work" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-attention-residue">
-          <em>The cost of interrupted work: More speed and stress</em> by Gloria Mark, Daniela Gudith, and Ulrich Klocke
-          <span class="citation-links">
+        <li id="citation-attention-residue" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">The cost of interrupted work: More speed and stress</cite>,
+            <span class="citation-author">Gloria Mark, Daniela Gudith, and Ulrich Klocke</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-attention-residue" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-attention-residue" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>

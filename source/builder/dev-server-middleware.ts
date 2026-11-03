@@ -1,8 +1,20 @@
 import type { ViteDevServer } from "vite";
 import type { Connect } from "vite";
 import type { ServerResponse } from "node:http";
+import { readFileSync } from "node:fs";
+import { extname } from "node:path";
 import { BuildLogger } from "./helpers.js";
 import type { RenderedSite } from "./site-renderer.js";
+
+const FILE_CONTENT_TYPES: Record<string, string> = {
+  ".avif": "image/avif",
+  ".gif": "image/gif",
+  ".jpeg": "image/jpeg",
+  ".jpg": "image/jpeg",
+  ".png": "image/png",
+  ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+};
 
 /**
  * Serves renderer-owned documents before Vite handles assets and errors.
@@ -21,9 +33,20 @@ function createProcessingMiddleware(
 
     const cleanUrl = url.split("?")[0].split("#")[0];
     const outputPath = cleanUrl === "/" ? "index.html" : cleanUrl.slice(1);
-    const output = getRenderedSite().outputs.get(outputPath);
+    const renderedSite = getRenderedSite();
+    const output = renderedSite.outputs.get(outputPath);
     if (output === undefined) {
-      return next();
+      const sourcePath = renderedSite.files?.get(outputPath);
+      if (sourcePath === undefined) {
+        return next();
+      }
+
+      const contentType = FILE_CONTENT_TYPES[extname(outputPath).toLowerCase()];
+      if (contentType) {
+        res.setHeader("Content-Type", contentType);
+      }
+      res.end(readFileSync(sourcePath));
+      return;
     }
 
     if (outputPath.endsWith(".html")) {

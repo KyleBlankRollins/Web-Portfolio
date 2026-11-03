@@ -14,6 +14,7 @@ function discovery(
     ),
     supplementCandidates: [],
     publishedSupplements,
+    mediaAssets: [],
   };
 }
 

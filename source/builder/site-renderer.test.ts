@@ -98,6 +98,25 @@ describe("renderSite", () => {
       "<p>Markdown body survives</p>"
     );
   });
+
+  it("passes media files through without rendering them", () => {
+    const result = renderSite(
+      source,
+      [
+        {
+          outputPath: "post/media/diagram.png",
+          sourcePath: "/content/post/media/diagram.png",
+          kind: "file",
+        },
+      ],
+      assets
+    );
+
+    expect(result.outputs.has("post/media/diagram.png")).toBe(false);
+    expect(result.files?.get("post/media/diagram.png")).toBe(
+      "/content/post/media/diagram.png"
+    );
+  });
 });
 
 describe("loadSiteSource", () => {

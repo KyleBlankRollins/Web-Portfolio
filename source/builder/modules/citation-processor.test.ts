@@ -23,14 +23,14 @@ describe("CitationProcessor", () => {
       expect.objectContaining({
         title: "A <Book>",
         author: "An & Author",
-        links: [
+        links: [{ label: "Source", url: "https://example.com/book" }],
+        backReferences: [
           {
-            label: "View",
-            url: "https://example.com/book",
-            showSeparator: false,
+            href: "#citation-ref-book-1",
+            label: "↩",
+            ariaLabel: "Back to reference",
           },
         ],
-        backReferences: [{ href: "#citation-ref-book-1", label: "↩" }],
       }),
     ]);
   });
@@ -67,7 +67,7 @@ describe("CitationProcessor", () => {
     );
   });
 
-  it("supports a purchase-only link without a separator", () => {
+  it("supports a purchase-only link", () => {
     const result = processor.processCitationReferences(
       "Read this[^book-1].",
       [{ ...citation, url: undefined, purchaseUrl: "https://example.com/buy" }],
@@ -75,11 +75,11 @@ describe("CitationProcessor", () => {
     );
 
     expect(result.citationItems?.[0].links).toEqual([
-      { label: "Buy", url: "https://example.com/buy", showSeparator: false },
+      { label: "Buy", url: "https://example.com/buy" },
     ]);
   });
 
-  it("marks the purchase link separator when both links exist", () => {
+  it("lists the source link before the purchase link when both exist", () => {
     const result = processor.processCitationReferences(
       "Read this[^book-1].",
       [
@@ -92,8 +92,8 @@ describe("CitationProcessor", () => {
     );
 
     expect(result.citationItems?.[0].links).toEqual([
-      { label: "View", url: "https://example.com/book", showSeparator: false },
-      { label: "Buy", url: "https://example.com/buy", showSeparator: true },
+      { label: "Source", url: "https://example.com/book" },
+      { label: "Buy", url: "https://example.com/buy" },
     ]);
   });
 
@@ -114,9 +114,21 @@ describe("CitationProcessor", () => {
       '<sup id="citation-ref-book-1-3"><a href="#citation-book-1" class="citation-ref">[1]</a></sup>'
     );
     expect(result.citationItems?.[0].backReferences).toEqual([
-      { href: "#citation-ref-book-1-1", label: "↩1" },
-      { href: "#citation-ref-book-1-2", label: "↩2" },
-      { href: "#citation-ref-book-1-3", label: "↩3" },
+      {
+        href: "#citation-ref-book-1-1",
+        label: "↩1",
+        ariaLabel: "Back to reference 1 of 3",
+      },
+      {
+        href: "#citation-ref-book-1-2",
+        label: "↩2",
+        ariaLabel: "Back to reference 2 of 3",
+      },
+      {
+        href: "#citation-ref-book-1-3",
+        label: "↩3",
+        ariaLabel: "Back to reference 3 of 3",
+      },
     ]);
   });
 

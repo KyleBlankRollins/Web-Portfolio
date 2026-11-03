@@ -51,11 +51,32 @@ export default class AnchorCopyComponent extends LitElement {
         }
       }
 
+      /* The wrapper owns the heading's vertical rhythm. It zeroes the
+         heading's own margin-top below (a flex item's margin would not
+         collapse with the paragraph above it), which left the only space
+         above an h2 as the previous paragraph's 23px bottom margin - the
+         same as the space below it, so headings floated between sections
+         instead of opening one. About twice as much above as below is the
+         usual ratio; these values come from the space scale. */
       .heading-with-anchor {
         position: relative;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        margin-top: var(--space-lg);
+        margin-bottom: var(--space-1);
+      }
+
+      .heading-with-anchor:has(h3) {
+        margin-top: var(--space-md);
+        margin-bottom: 0;
+      }
+
+      .heading-with-anchor:has(h4),
+      .heading-with-anchor:has(h5),
+      .heading-with-anchor:has(h6) {
+        margin-top: var(--space-sm);
+        margin-bottom: 0;
       }
 
       .anchor-copy-btn {
@@ -115,7 +136,8 @@ export default class AnchorCopyComponent extends LitElement {
         }
       }
 
-      /* Ensure headings inside wrapper maintain their styling */
+      /* Margins move to the wrapper above; the heading keeps only its
+         size and face. */
       .heading-with-anchor h1,
       .heading-with-anchor h2,
       .heading-with-anchor h3,
@@ -123,6 +145,7 @@ export default class AnchorCopyComponent extends LitElement {
       .heading-with-anchor h5,
       .heading-with-anchor h6 {
         margin-top: 0;
+        margin-bottom: 0;
         flex: 1;
       }
 

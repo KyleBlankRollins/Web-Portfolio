@@ -256,22 +256,64 @@ sub {
    The resting underline stays. These are light-DOM prose links, where the
    underline is the only affordance distinguishing them from body copy -
    they share --color-text with it. Components that need a bare link
-   (.nav-card, .sample-link, .project-link, .citations a) already opt out
+   (.sample-link, .project-link, .citations a, .post-title-link) already opt out
    individually, as does the shadow-DOM `a` in shared-styles.ts. */
 a {
   color: var(--color-text);
+  /* A hairline in the border colour, set below the baseline, rather than
+     the default underline in the text colour: an essay with forty links
+     should not look striped. Colour-only links were considered and
+     rejected - the brand blue is under 3:1 against body text, which WCAG
+     1.4.1 needs before an underline can go. */
   text-decoration: underline;
-  transition: color var(--transition-normal);
+  text-decoration-color: var(--color-border-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition:
+    color var(--transition-normal),
+    text-decoration-color var(--transition-normal);
 }
 
 a:hover {
   color: var(--color-on-surface-hover);
+  text-decoration-color: currentColor;
 }
 
 /* UI Typography */
 .ui-label {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
+}
+
+/* Metadata roles. The site's one "system" voice: IBM Plex Mono, small, set
+   against the serif body. .eyebrow labels a section or an item (Recently,
+   Latest writing, Filter by tag); .meta carries dates, counts, and other
+   machine-ish facts next to prose. Both are deliberately quiet - secondary
+   text colour, no weight - so they read as annotation rather than heading.
+   Nothing else on the site uses the mono face outside code and the K_R
+   mark, which is what lets it mean "metadata" on sight. */
+.eyebrow,
+.meta {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 var(--space-xs);
+}
+
+a.meta {
+  color: var(--color-text-secondary);
+  text-decoration-color: var(--color-border-strong);
+}
+
+a.meta:hover {
+  color: var(--color-text);
 }
 
 /* Mobile Typography Adjustments */

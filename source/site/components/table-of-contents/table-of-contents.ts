@@ -42,6 +42,12 @@ export class KbrTableOfContents extends LitElement {
   @property({ type: String, attribute: "target-selector" })
   declare targetSelector: string;
 
+  /* Collapsed by default at every width, with the toggle always shown. For
+     a contents block that sits in the reading column rather than beside
+     it, where an open list would push the text down the page. */
+  @property({ type: Boolean, reflect: true })
+  declare collapsible: boolean;
+
   @state()
   declare private tocItems: TocItem[];
 
@@ -85,6 +91,7 @@ export class KbrTableOfContents extends LitElement {
     this.tocContainer = null;
     this.previousActiveId = "";
     this.isCollapsed = false;
+    this.collapsible = false;
     this.mediaQuery = null;
   }
 
@@ -93,11 +100,15 @@ export class KbrTableOfContents extends LitElement {
 
     // Set up media query for mobile detection
     this.mediaQuery = window.matchMedia("(max-width: 768px)");
-    this.isCollapsed = this.mediaQuery.matches; // Start collapsed on mobile
+    // Start collapsed on mobile, or always when collapsible
+    this.isCollapsed = this.collapsible || this.mediaQuery.matches;
 
-    // Listen for viewport changes
+    // Listen for viewport changes; a collapsible contents block keeps
+    // whatever state the reader left it in
     this.mediaQuery.addEventListener("change", (e) => {
-      this.isCollapsed = e.matches; // Collapse/expand based on viewport
+      if (!this.collapsible) {
+        this.isCollapsed = e.matches;
+      }
     });
 
     // Wait for DOM to be ready, then generate TOC
@@ -341,28 +352,33 @@ export class KbrTableOfContents extends LitElement {
 
     return html`
       <div class="toc-wrapper ${this.isCollapsed ? "collapsed" : "expanded"}">
-        <!-- Collapse/Expand Header (always visible on mobile) -->
-        <button
-          class="toc-toggle"
-          @click="${this.toggleCollapse}"
-          aria-expanded="${!this.isCollapsed}"
-          aria-label="${
-            this.isCollapsed ? "Expand" : "Collapse"
-          } table of contents"
-        >
-          <span class="toc-toggle-text">Table of Contents</span>
-          <svg
-            class="toc-toggle-icon ${
-              this.isCollapsed ? "collapsed" : "expanded"
-            }"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
+        <!-- Toggle bar. The "leading" slot lets a host put something
+             beside the toggle - the post page slots a compact copy of the
+             title in, which it reveals once the bar is stuck. -->
+        <div class="toc-bar">
+          <slot name="leading"></slot>
+          <button
+            class="toc-toggle"
+            @click="${this.toggleCollapse}"
+            aria-expanded="${!this.isCollapsed}"
+            aria-label="${
+              this.isCollapsed ? "Expand" : "Collapse"
+            } table of contents"
           >
-            <polyline points="6,9 12,15 18,9"></polyline>
-          </svg>
-        </button>
+            <span class="toc-toggle-text">Contents</span>
+            <svg
+              class="toc-toggle-icon ${
+                this.isCollapsed ? "collapsed" : "expanded"
+              }"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </button>
+        </div>
 
         <!-- TOC Content (hidden when collapsed on mobile) -->
         <div class="toc-content ${this.isCollapsed ? "hidden" : "visible"}">

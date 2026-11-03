@@ -1,23 +1,50 @@
+/* Series navigation (sidebar) and supplement list (article).
+
+   Neither block rendered before the conditional-template fix in
+   html-ast-renderer.ts: both sat inside a <template data-kbr-if> whose
+   wrapper survived the build, so these rules are the first time the markup
+   has been seen on a page. The series block lives in a 280px rail, which is
+   what drives the sizes below. */
+
 .post-series,
 .supplements {
-  margin-block: var(--space-lg);
+  margin-block: 0 var(--space-lg);
 }
 
-.post-series h2,
-.supplements h2 {
-  margin-bottom: var(--space-xs);
+/* The series rail sits between the date rule and the contents, as a
+   compact block: name and part on one line, previous/next on the next,
+   then every part as a wrapped mono list. It was a sidebar column with an
+   h2 - which, inside the article, the table of contents would list. */
+.post-series {
+  /* No rule of its own: the date rule sits above and the contents bar
+     below, and a third hairline between them read as a ladder. */
+  padding: var(--space-sm) 0 var(--space-2xs);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
 }
 
-.post-series > p {
+.post-series-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-2xs);
+}
+
+.post-series-title {
+  font-weight: var(--font-weight-semibold);
+}
+
+.post-series-part {
+  font-family: var(--font-family-mono);
   color: var(--color-text-secondary);
-  margin-top: 0;
 }
 
 .series-navigation {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-block: var(--space-md);
+  gap: var(--space-md);
+  margin: 0 0 var(--space-2xs);
 }
 
 .nav-button,
@@ -26,39 +53,64 @@
   text-decoration: none;
 }
 
+.nav-button {
+  display: inline-flex;
+  gap: var(--space-2xs);
+}
+
 .nav-button:hover,
 .supplement-link:hover {
   text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
-.series-list,
 .supplement-list {
   margin: 0;
   padding-left: var(--space-lg);
 }
 
-.series-item,
 .supplement-item {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.series-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-md);
 }
 
 .series-link {
-  color: var(--color-text);
-  display: flex;
-  gap: var(--space-sm);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  gap: var(--space-2xs);
   text-decoration: none;
 }
 
+.series-link:hover span:last-child {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .series-link.current {
+  color: var(--color-text);
   font-weight: var(--font-weight-semibold);
 }
 
 .part-number {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-secondary);
-  min-width: 7rem;
+}
+
+.supplements h2 {
+  margin-bottom: var(--space-xs);
 }
 
 .supplement-description {
   color: var(--color-text-secondary);
-  margin: var(--space-xs) 0 0;
+  margin: var(--space-2xs) 0 0;
 }

@@ -109,11 +109,6 @@
     var(--color-surface) 0%,
     var(--color-surface-hover) 100%
   );
-
-  /* Glass/Frosted Surface Properties */
-  --glass-background: rgba(248, 249, 250, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-blur: 24px;
 }
 
 /* Base Theme Dark Mode */
@@ -223,11 +218,6 @@
     var(--color-surface) 0%,
     var(--color-surface-hover) 100%
   );
-
-  /* Glass/Frosted Surface Properties */
-  --glass-background: rgba(30, 41, 59, 0.15);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: 12px;
 }
 
 /* Gradient Utility Classes - Available in all themes */
@@ -245,19 +235,4 @@
 
 .gradient-surface {
   background: var(--gradient-surface);
-}
-
-/* Glass/Frosted Surface Utility */
-/* Frosted panel utility. The padding here is a default sized for small
-   panels; anything long-form should set its own (see .blog-post-content in
-   blog-post.css). Shadows come from the elevation scale so they follow the
-   colour scheme instead of staying black in dark mode. */
-.glass-surface {
-  background: var(--glass-background);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border-radius: var(--radius);
-  padding: var(--space-sm);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-lg);
 }

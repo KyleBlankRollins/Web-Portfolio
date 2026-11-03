@@ -4,33 +4,37 @@
   padding: 0 var(--space-lg) var(--space-lg);
 }
 
+/* An index, not a stack of cards. Each entry is separated by a rule and
+   carries no background, hover lift, or shadow: on a flat page those made
+   every post the same weight as the content around it. The title in the
+   regular serif at xl, the mono date, and the description do the work. */
 [data-static-blog] .post-list-grid {
   display: grid;
-  gap: var(--space-lg);
   margin-bottom: var(--space-xl);
 }
 
 [data-static-blog] .post-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-lg);
-  transition: all var(--transition-normal);
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--color-border);
 }
 
-[data-static-blog] .post-card:hover {
-  box-shadow: 0 8px 25px var(--color-shadow);
-  transform: translateY(-2px);
-  border-color: var(--color-border-strong);
+[data-static-blog] .post-card:last-child {
+  border-bottom: 1px solid var(--color-border);
 }
 
 [data-static-blog] .post-card-header {
   margin-bottom: var(--space-sm);
 }
 
+/* The regular serif rather than the caps face the h2 element would get:
+   these are entries in a list, not section headings, and ten of them in
+   small caps outranked the page. */
 [data-static-blog] .post-card-title {
-  margin: 0;
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
 }
 
 [data-static-blog] .post-title-link {
@@ -39,12 +43,7 @@
 
 [data-static-blog] .post-title-link:hover {
   text-decoration: underline;
-}
-
-[data-static-blog] .post-card-date time {
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  font-style: italic;
+  text-underline-offset: 0.15em;
 }
 
 [data-static-blog] .post-card-description {
@@ -87,10 +86,23 @@
   color: var(--color-text-inverse);
 }
 
+/* Bordered rather than filled: in the base theme the surface and the page
+   are both white, so a fill alone disappeared. Compact chips keep the
+   sidebar lighter than the index it filters. */
 [data-static-blog] .tag-filter-container {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   padding: var(--space-md);
+}
+
+[data-static-blog] .tags-grid .tag-button,
+[data-static-blog] .post-tag {
+  padding: var(--space-2xs) var(--space-xs);
+  font-size: var(--font-size-xs);
+}
+
+[data-static-blog] .tag-count {
+  color: var(--color-text-tertiary);
 }
 
 [data-static-blog] .filter-header {
@@ -103,8 +115,13 @@
 }
 
 [data-static-blog] .filter-title {
-  color: var(--color-text);
-  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+[data-static-blog] .filter-results {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
 }
 
 [data-static-blog] .clear-filter-btn {
@@ -117,8 +134,9 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-static-blog] .post-card:hover {
-    transform: none;
+@media (max-width: 768px) {
+  /* .page-content already carries the side gutter at this width. */
+  [data-static-blog] .post-list-container {
+    padding-inline: 0;
   }
 }

@@ -1,17 +1,23 @@
 /**
  * Blog Post Layout Styles
- * 
- * CSS Grid layout for blog posts with table of contents sidebar and main content.
- * Typography is handled by typography.css - this file only contains layout rules.
+ *
+ * A single reading column. Typography scale comes from typography.css; this
+ * file sets the article's own size, measure and rhythm, and the pieces that
+ * sit inside it (metadata, series rail, contents, tags, citations).
  */
 
-/* Blog post layout container */
+/* The reading column.
+
+   20px type on a 32em measure, about 65 characters a line. The post page
+   used to run 18px at 80 characters beside a 280px rail; the single biggest
+   change a reader notices on a long essay is bigger type on a shorter line
+   with nothing beside it. The size is set here so every em below - the
+   measure, heading sizes, list gutters - scales with it, while the
+   rem-based spacing tokens stay on the site grid. */
 .blog-post-layout {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
-  grid-template-areas: "sidebar content";
-  gap: var(--space-lg);
-  max-width: var(--content-max-width);
+  font-size: 1.125rem;
+  width: 100%;
+  max-width: calc(32em + var(--space-lg) * 2);
   margin: 0 auto;
   padding: var(--space-lg);
   /* Fill the leftover height in body's flex column rather than computing it.
@@ -23,71 +29,289 @@
   flex: 1 0 auto;
 }
 
-/* Table of contents sidebar */
-.blog-toc-sidebar {
-  grid-area: sidebar;
-  min-width: 0; /* Prevent grid overflow */
-}
-
-/* Sticky container for TOC and tags */
-.blog-toc-sticky-container {
-  position: sticky;
-  top: var(--space-lg); /* Space from top of viewport when sticky */
-  max-height: calc(
-    100vh - var(--space-xl)
-  ); /* Prevent container from being taller than viewport */
-  overflow-y: auto; /* Allow scrolling if content is too tall */
-}
-
-/* Blog post content area */
-/* The article carries .glass-surface, whose 1rem padding is a utility default
-   sized for small frosted panels. At article length that leaves body copy
-   almost against the container edge, so the measure is overridden here. See
-   DF-28. */
 .blog-post-content {
-  grid-area: content;
-  min-width: 0; /* Prevent grid overflow */
-  max-width: none;
-  padding: var(--space-xl) var(--space-lg);
+  min-width: 0;
+  padding: 0;
+  /* Ragged right with hyphenation: line lengths stay even without
+     justification's rivers. The limits keep short words whole and leave at
+     least three letters on either side of the break. */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 7 4 3;
 }
 
-/* Blog post heading spacing (scoped to article content only) */
-.blog-post-content h1,
-.blog-post-content h2,
-.blog-post-content h3,
+/* Never break a heading, a code span, or anything set in the mono voice. */
+.blog-post-content :is(h1, h2, h3, h4, h5, h6, pre, code, .meta, .eyebrow),
+.blog-post-content :is(.blog-post-metadata, .post-series, .citation-actions),
+.blog-post-content kbr-table-of-contents {
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+/* The lede: the first paragraph of the text, a step up, so the piece has an
+   entry point. The metadata and contents blocks are divs and custom
+   elements, so first-of-type lands on the first paragraph - unless that
+   paragraph is the one the markdown renderer wraps around a leading
+   admonition, in which case the lede is the paragraph after it. */
+.blog-post-content > p:first-of-type:not(:has(kbr-admonition)),
+.blog-post-content > p:first-of-type:has(kbr-admonition) + p {
+  font-size: 1.1em;
+  line-height: 1.45;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+/* One step below the global h1: the caps face at 3rem wrapped a five-word
+   title to four lines in this column. */
+.blog-post-content h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  text-wrap: balance;
+  transform-origin: left top;
+}
+
+/* As the title scrolls off the top it shrinks toward its own corner and
+   fades, handing over to the compact copy in the masthead. Scroll-driven,
+   so it tracks the reader's hand; browsers without view() timelines just
+   scroll it away. transform and opacity only, so nothing reflows. */
+@supports (animation-timeline: view()) {
+  .blog-post-content h1 {
+    animation: post-title-shrink linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+  }
+}
+
+@keyframes post-title-shrink {
+  to {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+}
+
+/* ===================================
+   Sticky masthead
+   The contents bar (kbr-table-of-contents, collapsible) sticks to the top
+   of the viewport. post-masthead.ts sets data-stuck on it when the
+   sentinel before it has scrolled out, and the slotted compact title
+   fades in beside the toggle.
+   =================================== */
+
+.post-masthead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-background);
+  margin-bottom: var(--space-md);
+}
+
+/* An aside directly under the bar keeps only its bottom rule; its top one
+   would sit a few lines below the bar's. The markdown renderer wraps the
+   element in a paragraph, so that is the sibling; the custom property
+   inherits down to the admonition, which reads it in admonition.style.ts. */
+.post-masthead + p:has(> kbr-admonition:only-child) {
+  --admonition-rule-top: 0;
+  margin-top: 0;
+}
+
+/* In flow the title takes no room, so the toggle sits at the left where
+   the eye is. Once stuck the title fills the row and pushes the toggle to
+   the right as it fades in. */
+.post-masthead-title {
+  flex: 0 0 0;
+  width: 0;
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: 1.05em;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(0.25em);
+  transition:
+    opacity var(--transition-normal),
+    transform var(--transition-normal);
+  pointer-events: none;
+}
+
+.post-masthead[data-stuck] .post-masthead-title {
+  flex: 1 1 auto;
+  width: auto;
+  margin-right: var(--space-sm);
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-post-content h1 {
+    animation: none;
+  }
+
+  .post-masthead-title {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Article headings label the next paragraph; they do not announce a new
+   page. The h2 is a step above body size in the caps face - which is small
+   caps, so this is bold small caps on the text's own scale. h3 and h4 stay
+   at body size and differ by face: bold serif, then italic. The h1 is the
+   only large element on the page. Vertical spacing belongs to
+   .heading-with-anchor in anchor-copy.ts, which wraps every heading the
+   markdown renderer emits. */
+.blog-post-content h2 {
+  font-size: 1.05em;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.blog-post-content h3 {
+  font-size: 1em;
+  line-height: 1.35;
+  font-weight: var(--font-weight-bold);
+}
+
 .blog-post-content h4,
 .blog-post-content h5,
 .blog-post-content h6 {
-  margin-bottom: var(--space-sm);
+  font-size: 1em;
+  line-height: 1.35;
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
 }
 
-/* Special blog post elements that need layout/visual styling */
-.blog-post-content blockquote {
-  background: var(--color-background-secondary);
-  border-left: 4px solid var(--color-on-surface);
-  padding: var(--space-lg);
-  font-style: italic;
+/* Lists hang their markers in the left margin so the list text aligns with
+   the paragraph text instead of forming an indented block. Bullets are a
+   small dot in the secondary colour; numbers are the mono counter the
+   citations use. Only the text's own lists: the contents, series,
+   supplement and citation lists carry their own structure. */
+.blog-post-content > ul,
+.blog-post-content > ol,
+.blog-post-content li > ul,
+.blog-post-content li > ol,
+.blog-post-content blockquote ul,
+.blog-post-content blockquote ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.blog-post-content li > ul,
+.blog-post-content li > ol {
+  margin-top: var(--space-2);
+  padding-left: 1.5em;
+}
+
+.blog-post-content > ul > li,
+.blog-post-content > ol > li,
+.blog-post-content li > ul > li,
+.blog-post-content li > ol > li,
+.blog-post-content blockquote li {
+  position: relative;
+}
+
+.blog-post-content > ul > li::before,
+.blog-post-content li > ul > li::before,
+.blog-post-content blockquote ul > li::before {
+  content: "•";
+  position: absolute;
+  left: -1.25em;
   color: var(--color-text-secondary);
 }
 
-/* Inline code styling */
-.blog-post-content code {
-  background: var(--color-background-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 0em 0.2em;
-  font-family: var(--font-family-mono);
-  font-size: 0.875em;
-  color: var(--color-on-surface);
-  font-weight: var(--font-weight-medium);
-  box-shadow: 0 1px 2px var(--color-shadow-light);
-  transition: all 0.2s ease;
+.blog-post-content > ol,
+.blog-post-content li > ol,
+.blog-post-content blockquote ol {
+  counter-reset: item;
 }
 
-.blog-post-content code:hover {
-  background: var(--color-background-tertiary);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px var(--color-shadow);
+.blog-post-content > ol > li,
+.blog-post-content li > ol > li,
+.blog-post-content blockquote ol > li {
+  counter-increment: item;
+}
+
+.blog-post-content > ol > li::before,
+.blog-post-content li > ol > li::before,
+.blog-post-content blockquote ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2.25em;
+  width: 1.75em;
+  text-align: right;
+  font-family: var(--font-family-mono);
+  font-size: 0.8em;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+}
+
+/* Multi-line items had no gap at all and read as one block. A third of a
+   line separates them without turning the list into paragraphs. */
+.blog-post-content li + li {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  /* No margin to hang into at phone width: the markers tuck inside the
+     list's own padding instead. */
+  .blog-post-content > ul,
+  .blog-post-content blockquote ul {
+    padding-left: 1.25em;
+  }
+
+  .blog-post-content > ol,
+  .blog-post-content blockquote ol {
+    padding-left: 2.25em;
+  }
+}
+
+/* Quotations: a thin rule down the left, italic, a touch smaller, no
+   fill. This was a filled panel with 32px of padding on every side plus
+   the last paragraph's own bottom margin inside it, so a one-paragraph
+   quote carried 55px of empty panel below its last line. The quote's
+   spacing now comes from the same paragraph margin as the text around it. */
+.blog-post-content blockquote {
+  margin: 0 0 var(--space-md);
+  padding: 0 0 0 var(--space-md);
+  border-left: 2px solid var(--color-border-strong);
+  font-size: 0.95em;
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.blog-post-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* Images from a post's media/ directory are often screenshots wider than the
+   column, so they scale down to fit. The border keeps a light screenshot's
+   edge visible on a light surface. */
+.blog-post-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* Inline code: a tinted background and nothing else. It used to carry a
+   border, a shadow, and a hover lift as well, and a sentence with five
+   identifiers in it looked studded. */
+.blog-post-content code {
+  background: var(--color-background-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.05em 0.2em;
+  font-family: var(--font-family-mono);
+  font-size: 0.85em;
+  color: var(--color-on-surface);
+}
+
+/* A code span is one token: `check --fix` must not break at its own
+   hyphen and continue on the next line as `-fix`. */
+.blog-post-content :not(pre) > code {
+  white-space: nowrap;
 }
 
 /* Code block container styling */
@@ -107,9 +331,11 @@
     0 2px 8px var(--color-shadow),
     0 1px 4px var(--color-shadow-light);
 
-  /* Improved typography */
+  /* 15.3px against the 18px body. Prism's own stylesheet then scales
+     the code inside by a further 0.85, which is what had blocks rendering
+     at 13.7px - closer to a caption than to text. */
   line-height: 1.6;
-  font-size: 0.9rem;
+  font-size: 1rem;
 
   /* Smooth transitions */
   transition: all 0.3s ease;
@@ -125,19 +351,9 @@
 /* Code inside pre blocks */
 .blog-post-content pre code {
   background: none;
-  border: none;
   padding: 0;
-  font-size: inherit;
+  font-size: 0.85em;
   color: var(--color-text);
-  box-shadow: none;
-  font-weight: 400;
-  transition: none;
-}
-
-.blog-post-content pre code:hover {
-  background: none;
-  transform: none;
-  box-shadow: none;
 }
 
 /* Scrollbar styling for code blocks */
@@ -186,27 +402,28 @@
   }
 }
 
-/* Blog post metadata - visual styling only */
+/* Blog post metadata - visual styling only. The date is .meta (mono) from
+   typography.css. No rule of its own: the contents bar below closes the
+   front matter with the one hairline, and a second one here read as a
+   ladder. */
 .blog-post-metadata {
-  border-bottom: 2px solid var(--color-text-secondary);
-  padding: 0 0 var(--space-sm) 0;
-  margin-top: var(--space-md);
-  margin-bottom: var(--space-lg);
+  margin: 0 0 var(--space-sm);
 }
 
-.blog-post-date time {
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-}
-
+/* Tags sit after the text, above the references, on a hairline. They used
+   to be in the sidebar beside the title. */
 .blog-post-tags {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
   margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
 }
 
 .tags-label {
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
-  margin-right: var(--space-sm);
+  margin: 0;
 }
 
 .tag-list {
@@ -218,11 +435,12 @@
 .blog-tag {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   color: var(--color-text);
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  padding: var(--space-2xs) var(--space-xs);
   transition: all var(--transition-fast);
 }
 
@@ -233,155 +451,173 @@
 }
 
 /* Responsive design - layout only */
-@media (max-width: 1024px) {
-  .blog-post-layout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "sidebar"
-      "content";
-    gap: var(--space-lg);
-    padding: var(--space-md);
-  }
-
-  .blog-toc-sidebar {
-    order: 1;
-  }
-
-  .blog-post-content {
-    order: 2;
-  }
-}
-
 @media (max-width: 768px) {
   .blog-post-layout {
-    padding: var(--space-sm);
-    gap: var(--space-md);
-  }
-}
-
-@media (max-width: 480px) {
-  .blog-post-layout {
-    padding: var(--space-xs);
-  }
-
-  .blog-post-content {
-    padding: var(--space-sm);
+    padding: var(--space-md) var(--space-sm);
   }
 }
 
 /* ===================================
    Citations and Footnotes
+   Markup: templates/partials/blog-citations.html. Inline references are
+   emitted by citation-processor.ts as <sup><a class="citation-ref">.
    =================================== */
 
-/* Citation inline references (superscript numbers) */
+/* Inline reference: the bracketed number in the running text. No underline
+   so it reads as a mark, not a link; the colour says it is one. */
 .citation-ref {
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-mono);
+  font-size: 0.75em;
+  font-weight: var(--font-weight-normal);
   text-decoration: none;
   color: var(--color-on-surface);
-  margin-left: 0.1em;
+  padding: 0 0.1em;
+  border-radius: var(--radius-sm);
   transition: color var(--transition-fast);
 }
 
 .citation-ref:hover {
   text-decoration: underline;
+  text-underline-offset: 0.2em;
   color: var(--color-on-surface-hover);
 }
 
-/* Citations section container */
+/* Section: a hairline and then the References heading, which keeps the
+   blog-level h2 size from above but is pulled in to mark an appendix. */
 .blog-citations-container {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 2px solid var(--color-border);
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-strong);
 }
-
-/* Citations section */
 
 .citations h2 {
-  font-size: var(--font-size-lg);
-  color: var(--color-text);
-  margin-bottom: var(--space-md);
-  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-md);
 }
 
-/* Citations list */
+/* Entries: the ordinal is a mono counter in a narrow hanging column, so the
+   numbers line up with the body text's left edge and the entries hang from
+   them - the same relationship as the inline [1] to the sentence it follows.
+   A UA list marker would be serif, decimal-with-period, and sized to the
+   body. */
 .citations-list {
-  padding-left: var(--space-xl);
-  list-style-type: decimal;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: citation;
+  display: grid;
+  gap: var(--space-sm);
 }
 
-.citations-list li {
-  /* margin-bottom: var(--space-md); */
-  line-height: 1.6;
-  padding-left: var(--space-xs);
+.citation {
+  counter-increment: citation;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  column-gap: var(--space-2);
+  padding: 0;
 }
 
-.citations-list li:last-child {
-  margin-bottom: 0;
+.citation::before {
+  content: counter(citation);
+  grid-row: 1 / span 2;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  padding-top: 0.15em;
 }
 
-/* Citation title (italicized) */
-.citations em {
+.citation-source,
+.citation-actions {
+  margin: 0;
+}
+
+.citation-source {
+  line-height: var(--line-height-normal);
+}
+
+.citation-title {
   font-style: italic;
   color: var(--color-text);
-  font-weight: var(--font-weight-medium);
 }
 
-/* Citation links */
-.citation-links {
-  margin-left: var(--space-sm);
-  white-space: nowrap;
-}
-
-.citations a {
+/* The actions line is the site's metadata voice (see .meta in
+   typography.css): mono, small, secondary. Outbound links and return arrows
+   are two groups, spaced apart rather than separated by a bar. */
+.citation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-md);
+  row-gap: var(--space-2xs);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
   color: var(--color-text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all var(--transition-fast);
 }
 
-.citations a:hover {
-  text-decoration: underline;
-  color: var(--color-on-surface-hover);
-}
-
-/* Separator between links */
-.citation-separator {
-  margin: 0 var(--space-xs);
-  color: var(--color-text-tertiary);
-}
-
-/* Back-to-reference links */
+.citation-links,
 .citation-backrefs {
-  margin-left: var(--space-sm);
-  font-size: 1.2rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-sm);
 }
 
+.citation-link,
 .citation-backref {
   color: var(--color-text-secondary);
   text-decoration: none;
-  margin-left: var(--space-2xs);
   transition: color var(--transition-fast);
 }
 
+.citation-link:hover,
 .citation-backref:hover {
-  color: var(--color-on-surface);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
-/* Responsive adjustments for citations */
+/* Outbound links carry the north-east arrow; the return arrow is in the
+   label text already so it survives without CSS. */
+.citation-link::after {
+  content: " ↗";
+}
+
+/* Jump targets: when a reader follows a [1] down or an arrow back up, the
+   landing element is tinted for a moment so the eye finds it. The inline
+   target is the <sup>, but the tint goes on the link inside it: typography
+   .css gives sup a zero line-height, so a background on the sup itself
+   collapses to a sliver. */
+.citation:target,
+sup:target .citation-ref {
+  animation: citation-target-fade 2.5s ease-out forwards;
+  border-radius: var(--radius-sm);
+}
+
+.citation:target {
+  margin: 0 calc(-1 * var(--space-2));
+  padding: var(--space-2xs) var(--space-2);
+}
+
+@keyframes citation-target-fade {
+  0%,
+  40% {
+    background-color: var(--color-accent-subtle);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .citation:target,
+  sup:target .citation-ref {
+    animation: none;
+    background-color: var(--color-accent-subtle);
+  }
+}
+
 @media (max-width: 768px) {
-  .citations-list {
-    padding-left: var(--space-lg);
-  }
-
-  .citation-links {
-    display: block;
-    margin-left: 0;
-    margin-top: var(--space-2xs);
-  }
-
-  .citation-backrefs {
-    display: block;
-    margin-left: 0;
-    margin-top: var(--space-2xs);
+  .citation {
+    grid-template-columns: 2rem minmax(0, 1fr);
   }
 }

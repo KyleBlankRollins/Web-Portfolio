@@ -81,6 +81,44 @@ describe("ContentDiscovery", () => {
     });
   });
 
+  it("publishes a directory post's media files under its URL", () => {
+    const root = fixtureRoot();
+    writePost(root, "guide/guide.md");
+    mkdirSync(join(root, "guide", "media", "shots"), { recursive: true });
+    writeFileSync(join(root, "guide", "media", "diagram.png"), "binary");
+    writeFileSync(join(root, "guide", "media", "shots", "ci.png"), "binary");
+    writeFileSync(join(root, "guide", "media", ".DS_Store"), "binary");
+
+    const result = new ContentDiscovery(root).discover();
+    expect(result.mediaAssets).toEqual([
+      {
+        sourcePath: join(root, "guide", "media", "diagram.png"),
+        outputPath: "guide/media/diagram.png",
+        publicUrl: "/guide/media/diagram.png",
+        parentUrl: "/guide.html",
+      },
+      {
+        sourcePath: join(root, "guide", "media", "shots", "ci.png"),
+        outputPath: "guide/media/shots/ci.png",
+        publicUrl: "/guide/media/shots/ci.png",
+        parentUrl: "/guide.html",
+      },
+    ]);
+  });
+
+  it("does not publish media for an unpublished directory post", () => {
+    const root = fixtureRoot();
+    writePost(
+      root,
+      "guide/guide.md",
+      'title = "Guide"\ndescription = "Description"\ndate = "2025-01-01"\ntags = []\npublished = false'
+    );
+    mkdirSync(join(root, "guide", "media"), { recursive: true });
+    writeFileSync(join(root, "guide", "media", "diagram.png"), "binary");
+
+    expect(new ContentDiscovery(root).discover().mediaAssets).toEqual([]);
+  });
+
   it("throws when documents generate duplicate public URLs", () => {
     const root = fixtureRoot();
     writePost(root, "same.md");

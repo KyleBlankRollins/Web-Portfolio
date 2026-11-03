@@ -222,15 +222,7 @@ export class HtmlAstRenderer {
           }
           const loopNodes = collection.flatMap((item) => {
             const clone = this.cloneNode(element);
-            const content = (
-              clone as Element & {
-                content?: { childNodes: Node[] };
-              }
-            ).content;
-            const children = [
-              ...(content?.childNodes ??
-                (clone as Element & { childNodes: Node[] }).childNodes),
-            ];
+            const children = [...this.templateChildren(clone)];
             this.walk(
               children,
               { ...variables, [itemName]: item },
@@ -303,13 +295,24 @@ export class HtmlAstRenderer {
         }
 
         const condition = this.attribute(element, "data-kbr-if");
-        if (
-          condition !== undefined &&
-          !this.isTruthy(this.resolve(variables, condition))
-        ) {
-          nodes.splice(index, 1);
-          index -= 1;
-          continue;
+        if (condition !== undefined) {
+          if (!this.isTruthy(this.resolve(variables, condition))) {
+            nodes.splice(index, 1);
+            index -= 1;
+            continue;
+          }
+          if (element.nodeName === "template") {
+            // A truthy conditional on a <template> unwraps it, the same way
+            // data-kbr-for does. The wrapper used to survive with only the
+            // attribute stripped, which left its content inert in the browser:
+            // the homepage highlights and a post's series and supplement
+            // blocks were in the HTML but never rendered.
+            const children = [...this.templateChildren(element)];
+            this.walk(children, variables, options, metadata, state);
+            nodes.splice(index, 1, ...children);
+            index += children.length === 0 ? -1 : children.length - 1;
+            continue;
+          }
         }
 
         const rawPath = this.attribute(element, "data-kbr-html");
@@ -372,6 +375,16 @@ export class HtmlAstRenderer {
         this.walkTemplateContent(element, variables, options, metadata, state);
       }
     }
+  }
+
+  /* parse5 parks a <template>'s children on a `content` fragment rather than
+     on childNodes; anything else keeps them on childNodes. */
+  private templateChildren(node: Node): Node[] {
+    const source = node as Node & {
+      content?: { childNodes: Node[] };
+      childNodes?: Node[];
+    };
+    return source.content?.childNodes ?? source.childNodes ?? [];
   }
 
   private walkTemplateContent(

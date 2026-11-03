@@ -20,6 +20,8 @@
     "lint:prose:drafts": "tsx scripts/lint-prose.ts --drafts-only",
     "lint:prose:verbose": "tsx scripts/lint-prose.ts --verbose",
     "validate:drafts": "tsx scripts/validate-drafts.ts",
+    "images:optimize": "tsx scripts/images.ts",
+    "images:check": "tsx scripts/images.ts --check",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -23,9 +23,6 @@ Valid section headings (must match exactly):
 - Strategies for scaling yourself
 - Inbox zero and only necessary tabs
 - There is no moat. The concept is wrong. Products need to move, not stake out territory to defend. Product docs are not a moat.
-
-## Researching
-
 - Code example philosophy
 - Settings, character creation, and software docs
 - Intentional work patterns - connections
@@ -33,6 +30,8 @@ Valid section headings (must match exactly):
 - Intentional work patterns - spaces
 - Intentional work patterns - traps
 - Agent summaries and how they affect documentation retrieval
+
+## Researching
 
 ## Outlining
 
@@ -44,6 +43,7 @@ Valid section headings (must match exactly):
 
 ## Published
 
+- The docs tool I wanted (Ascribe)
 - AI Agent Workflows
 - Leading Through Change
 - Technical storytelling and drift at machine speed

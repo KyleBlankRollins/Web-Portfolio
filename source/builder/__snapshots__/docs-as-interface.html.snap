@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -50,34 +51,30 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <div class="blog-post-tags">
-  <span class="tags-label">Tags:</span>
-  <div class="tag-list">
-
-      <button class="blog-tag" data-tag="technical writing">technical writing</button>
-
-      <button class="blog-tag" data-tag="AI">AI</button>
-
-      <button class="blog-tag" data-tag="documentation">documentation</button>
-
-  </div>
-</div>
-
-        </div>
-      </aside>
-      <article class="blog-post-content glass-surface">
+      <article class="blog-post-content">
         <h1 id="technical-storytelling-and-drift-at-machine-speed">Technical Storytelling and Drift at Machine Speed</h1>
         <div class="blog-post-metadata">
-  <div>
-    <time datetime="2026-03-31">March 31, 2026</time>
+  <div class="blog-post-date">
+    <time class="meta" datetime="2026-03-31">March 31, 2026</time>
   </div>
 </div>
 
+
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            Technical Storytelling and Drift at Machine Speed
+          </p>
+        </kbr-table-of-contents>
         <p><kbr-admonition type="note"><strong>tl;dr:</strong> Documentation has always been an interface between a product and its users. Now it&#39;s also an interface between a product and automated systems. Technical writing skills like, precision, audience awareness, and knowing what to leave out are exactly what this new audience requires.</kbr-admonition></p>
 <h2 id="stories-as-technology">Stories as technology</h2><p>Storytelling is one of humanity&#39;s oldest knowledge systems. Long before people were writing things down, oral tradition was how communities preserved and transmitted what mattered. How to find water. Which plants would kill you. Who wronged whom three generations back.</p>
 <p>It worked, but stories drift. Every retelling introduces small changes. The teller interprets, omits, adapts for the audience. Details shift to fit the moment. Over time, the story serves the culture more than it serves the facts.</p>
@@ -105,39 +102,67 @@
 <p>That&#39;s a story worth telling clearly.</p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+        <div class="blog-post-tags">
+  <span class="tags-label eyebrow">Tagged</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+
+      <button class="blog-tag" data-tag="AI">AI</button>
+
+      <button class="blog-tag" data-tag="documentation">documentation</button>
+
+  </div>
+</div>
+
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-openai-codex">
-          <em>Introducing Codex</em> by OpenAI
-          <span class="citation-links">
+        <li id="citation-openai-codex" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Introducing Codex</cite>,
+            <span class="citation-author">OpenAI</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-openai-codex" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-openai-codex" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-zencoder-docs">
-          <em>How to improve technical documentation with generative AI</em> by Andrew Filev
-          <span class="citation-links">
+        <li id="citation-zencoder-docs" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">How to improve technical documentation with generative AI</cite>,
+            <span class="citation-author">Andrew Filev</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://www.infoworld.com/article/4063551/how-to-improve-technical-documentation-with-generative-ai.html" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-zencoder-docs" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-zencoder-docs" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>

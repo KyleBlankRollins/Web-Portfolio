@@ -41,6 +41,7 @@ export {
   type ContentDocument,
   type ContentDocumentKind,
   type ContentDiscoveryResult,
+  type MediaAsset,
 } from "./content-discovery.js";
 
 // Typed content graph
@@ -54,10 +55,12 @@ export {
 export {
   createLocalDocumentLinkIndex,
   resolveLocalDocumentLink,
+  resolveLocalMediaSource,
   type LocalDocumentLinkIndex,
   type LocalDocumentLinkIndexEntry,
   type ResolveLocalDocumentLinkInput,
   type ResolveLocalDocumentLinkResult,
+  type ResolveLocalMediaSourceInput,
 } from "./local-document-link-resolver.js";
 
 // Blog manifest

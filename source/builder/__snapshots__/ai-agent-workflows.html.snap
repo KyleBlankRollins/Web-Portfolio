@@ -4,8 +4,9 @@
 
 <!-- Theme bootstrap. Blocking on purpose, and kept first in <head>.
 
-     The gradient behind every page comes from --gradient-primary, which
-     only exists inside [data-theme="base"] and [data-theme="canney-valley"].
+     The page background and the gradient band above the header come from
+     --color-background and --gradient-primary, which only take their theme
+     values inside [data-theme="base"] and [data-theme="canney-valley"].
      Those attributes used to be stamped by theme-switcher.ts in
      connectedCallback - after the Lit bundle parses - so the page painted
      once with the properties.css fallbacks and then visibly repainted.
@@ -50,34 +51,30 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <div class="blog-post-tags">
-  <span class="tags-label">Tags:</span>
-  <div class="tag-list">
-
-      <button class="blog-tag" data-tag="AI">AI</button>
-
-      <button class="blog-tag" data-tag="coding agents">coding agents</button>
-
-      <button class="blog-tag" data-tag="workflows">workflows</button>
-
-  </div>
-</div>
-
-        </div>
-      </aside>
-      <article class="blog-post-content glass-surface">
+      <article class="blog-post-content">
         <h1 id="ai-agent-workflows">AI Agent Workflows</h1>
         <div class="blog-post-metadata">
-  <div>
-    <time datetime="2026-07-31">July 31, 2026</time>
+  <div class="blog-post-date">
+    <time class="meta" datetime="2026-07-31">July 31, 2026</time>
   </div>
 </div>
 
+
+        <!-- Sticky masthead: the contents bar sticks to the top of the
+             viewport, and once it is stuck (the sentinel above it has
+             scrolled away) a compact copy of the title fades in beside the
+             toggle. post-masthead.ts flips the attribute. -->
+        <div data-post-masthead-sentinel="" aria-hidden="true"></div>
+        <kbr-table-of-contents collapsible="" class="post-masthead" data-post-masthead="">
+          <p slot="leading" class="post-masthead-title" aria-hidden="true">
+            AI Agent Workflows
+          </p>
+        </kbr-table-of-contents>
         <p><kbr-admonition type="note">tl;dr: Humans define and review the work. Agents implement it. AI is most useful when a person draws the boundaries around a problem, an agent does the bounded work inside them, and a person reviews the result.</kbr-admonition></p>
 <p>For the last year or so, I have used AI tools and agents to help with work and personal projects. Most of the time, they augment work that I have already scoped and planned. They help me move faster, but they don&#39;t decide what I should be working on.</p>
 <p>Here are some of the workflows that have worked for me. Maybe they will help someone else streamline their work or get over a difficult learning curve.</p>
@@ -123,54 +120,86 @@
 <p>That does not mean humans should avoid agents during discovery. Research, comparison, summarization, and question generation are useful. An agent can support those activities, but a person still needs to decide what the work is, what constraints matter, and when it is complete. You should not cede your thinking or agency to an AI agent. This is a useful division of responsibility, not a rule that every task must follow. The boundary can move when the task, tools, or level of risk changes.</p>
 
 
-        <div class="blog-citations-container">
-  <section class="citations">
-    <h2>References</h2>
+        <div class="blog-post-tags">
+  <span class="tags-label eyebrow">Tagged</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="AI">AI</button>
+
+      <button class="blog-tag" data-tag="coding agents">coding agents</button>
+
+      <button class="blog-tag" data-tag="workflows">workflows</button>
+
+  </div>
+</div>
+
+        <!--
+  References list for a post. Rendered only when at least one citation is
+  used in the body. Each entry is two lines: the source (title and author),
+  then a mono "actions" line holding the outbound links and the return
+  arrows back to where the source is cited. Styles are in blog-post.css
+  under "Citations and Footnotes".
+-->
+<div class="blog-citations-container">
+  <section class="citations" aria-labelledby="citations-heading">
+    <h2 id="citations-heading">References</h2>
     <ol class="citations-list">
 
-        <li id="citation-refactor-plan">
-          <em>Refactor Plan: Processors Modularization</em> by Kyle Rollins
-          <span class="citation-links">
+        <li id="citation-refactor-plan" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Refactor Plan: Processors Modularization</cite>,
+            <span class="citation-author">Kyle Rollins</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/blob/prod/documentation/meta/refactor-processors.md" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-refactor-plan" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-refactor-plan" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-anti-patterns">
-          <em>Agentic Engineering Patterns: Anti-Patterns</em> by Simon Willison
-          <span class="citation-links">
+        <li id="citation-anti-patterns" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Agentic Engineering Patterns: Anti-Patterns</cite>,
+            <span class="citation-author">Simon Willison</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://simonwillison.net/guides/agentic-engineering-patterns/anti-patterns/" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-anti-patterns" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-anti-patterns" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
-        <li id="citation-admin-system">
-          <em>Web-Portfolio Admin System</em> by Kyle Rollins
-          <span class="citation-links">
+        <li id="citation-admin-system" class="citation">
+          <p class="citation-source">
+            <cite class="citation-title">Web-Portfolio Admin System</cite>,
+            <span class="citation-author">Kyle Rollins</span>
+          </p>
+          <p class="citation-actions">
+            <span class="citation-links">
 
+                <a class="citation-link" href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">Source</a>
 
-              <a href="https://github.com/KyleBlankRollins/Web-Portfolio/tree/prod/source/admin" target="_blank" rel="noopener">View</a>
+            </span>
+            <span class="citation-backrefs">
 
-          </span>
-          <span class="citation-backrefs">
+                <a class="citation-backref" href="#citation-ref-admin-system" aria-label="Back to reference">↩</a>
 
-              <a href="#citation-ref-admin-system" class="citation-backref">↩</a>
-
-          </span>
+            </span>
+          </p>
         </li>
 
     </ol>

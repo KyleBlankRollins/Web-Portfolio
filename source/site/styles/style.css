@@ -13,9 +13,12 @@
 
 html {
   color: var(--color-text);
-  /* Page-level gradient that sits beneath all content */
-  background: var(--gradient-primary);
-  background-attachment: fixed;
+  /* A flat page surface. This was --gradient-primary with a fixed
+     attachment, which ran a saturated brand gradient behind every page and
+     left each card and panel looking pasted on top of it. The gradient now
+     survives only as the thin band above the header (navigation.style.ts),
+     and the type carries the page. */
+  background: var(--color-background);
 }
 
 body {
@@ -40,7 +43,7 @@ body {
    same time.
 
    Most pages cap their own inner layout at --content-max-width already
-   (.blog-post-layout, .blog-layout, .timeline, .hero-content), so this is a
+   (.blog-post-layout, .blog-layout, .timeline, .hero), so this is a
    no-op for them. pages/portfolio.html had no such wrapper, and its prose ran
    the full viewport width on wide displays. See DF-23. */
 .page-content {
@@ -83,19 +86,23 @@ body {
   padding: 0;
 }
 
+/* Mono rather than the caps face: the footer is wayfinding, not a heading,
+   and the caps face is reserved for h1 and h2 (see typography.css). */
 .site-footer-nav a {
-  color: var(--color-text);
-  font-family: var(--font-family-heading);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
   text-decoration: none;
   padding: var(--space-xs) var(--space-2);
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
 .site-footer-nav a:hover {
-  background-color: var(--color-on-surface);
-  color: var(--color-text-inverse);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .site-footer-nav a:focus-visible {
@@ -182,38 +189,6 @@ body {
 
   p {
     margin: 0;
-  }
-}
-
-/* Navigation Card Styles - fix for anchor color inheritance */
-.nav-card {
-  color: var(--color-text);
-  text-decoration: none;
-  text-align: center;
-
-  &,
-  &:visited {
-    color: var(--color-text);
-  }
-
-  &:hover,
-  &:focus {
-    color: var(--color-text);
-    background-color: var(--color-background-secondary);
-    text-decoration: none;
-  }
-
-  /* Ensure all child elements use appropriate colors, not anchor defaults */
-  * {
-    color: inherit;
-  }
-
-  h2 {
-    color: var(--color-text);
-  }
-
-  p {
-    color: var(--color-text-secondary);
   }
 }
 
@@ -560,34 +535,87 @@ body {
   }
 }
 
-/* Hero Section */
-/* Asymmetric on purpose. The bottom was the same as the top, and
-   .cards-container then pulled itself up by --space-2xl to close the gap.
-   Halving the bottom padding here produces the same layout without a
-   negative margin. See DF-27. */
+/* ==========================================================================
+   HOMEPAGE
+   Hero and highlights. Both are plain text on the page surface, sized by
+   the type rather than by panels. The hero used to be a frosted .glass-surface
+   card sitting in a block of empty gradient; see index.html.
+   ========================================================================== */
+
 .hero {
-  padding: calc(var(--space-2xl) * 2) 0 var(--space-2xl);
-  text-align: center;
-  font-size: var(--font-size-lg);
-
-  .hero-content {
-    max-width: var(--content-narrow);
-    margin: 0 auto;
-
-    h1 {
-      margin-bottom: var(--space-lg);
-    }
-
-    .hero-subtitle {
-      font-size: var(--font-size-xl);
-      margin-bottom: var(--space-xl);
-      opacity: 0.9;
-    }
-  }
+  padding: var(--space-2xl) 0 var(--space-xl);
+  max-width: var(--content-narrow);
 }
 
-.hero.home .hero-content {
-  text-align: left;
+.hero h1 {
+  /* The caps face at 3rem over a 7-word sentence runs to three lines even at
+     --content-narrow. Pulled down a step, with the line-height tightened to
+     match, so the sentence reads as one thought. */
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  text-wrap: balance;
+}
+
+.hero .lead {
+  margin-bottom: 0;
+}
+
+.home-highlights {
+  padding-block: var(--space-xl) var(--space-2xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.home-highlights-heading h2 {
+  margin-top: 0;
+}
+
+.home-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+/* Not cards. A rule above each item, the eyebrow, then the content - the
+   same editorial structure as the blog index, so the homepage previews what
+   the rest of the site looks like. */
+.highlight-item {
+  border-top: 1px solid var(--color-border-strong);
+  padding-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.highlight-item h3 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: 1.3;
+}
+
+.highlight-item h3 a {
+  text-decoration: none;
+}
+
+.highlight-item h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.highlight-item p {
+  margin: 0;
+}
+
+.highlight-item .eyebrow {
+  margin: 0;
+}
+
+.highlight-item time,
+.highlight-item .highlight-link {
+  margin-top: auto;
+  padding-top: var(--space-xs);
+  align-self: flex-start;
 }
 
 /* Content visibility for performance */
@@ -605,7 +633,12 @@ body {
   }
 
   .hero {
-    padding: var(--space-xl) 0;
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    line-height: 1.2;
   }
 
   .container {
@@ -724,25 +757,5 @@ button:focus-visible {
   /* Portfolio project cards: reduce padding */
   .project-card {
     padding: var(--space-md);
-  }
-}
-
-.cards-container {
-  display: flex;
-  justify-content: center;
-}
-
-/* min-width: 0 so this can shrink below its content width. As a flex item it
-   defaults to min-width: auto, which pinned it to the grid's max-content size
-   and pushed a horizontal scrollbar onto every phone. */
-.cards {
-  width: 100%;
-  max-width: 1200px;
-  min-width: 0;
-}
-
-@media (max-width: 768px) {
-  .cards-container {
-    margin-top: var(--space-md);
   }
 }

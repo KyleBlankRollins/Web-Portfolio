@@ -13,54 +13,20 @@
   />
 </template>
 
+<!-- Plain text on the page surface. This was a frosted panel floating over
+     a full-page gradient, followed by three cards that repeated the header
+     navigation. The type now carries the hero, and the links into the rest
+     of the site live in the copy instead of in cards. -->
 <section class="hero home">
-  <div class="hero-content glass-surface">
-    <p class="hero-subtitle">Hello there!</p>
-    <p>
-      My name is Kyle. I'm a technical manager, technical writer, and developer.
-      I always enjoy solving challenging problems and look for the opportunities
-      in ambiguity.
-    </p>
-    <p>
-      While you're here, take a look at some of my work samples and projects.
-    </p>
-  </div>
+  <p class="eyebrow">Hello there!</p>
+  <h1>I'm Kyle, a technical manager, technical writer, and developer.</h1>
+  <p class="lead">
+    I enjoy solving challenging problems and look for the opportunities in
+    ambiguity. While you're here, take a look at my
+    <a href="/blog.html">writing</a>, my
+    <a href="/portfolio.html">work samples and projects</a>, and
+    <a href="/career.html">where I've worked</a>.
+  </p>
 </section>
 
 <template data-kbr-include="partials/home-highlights.html"></template>
-
-<section class="cards-container">
-  <div class="cards grid three-columns">
-    <a href="/blog.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="document" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Blog</h2>
-      </div>
-
-      <p>
-        Thoughts on technical writing, web development, and professional
-        insights.
-      </p>
-    </a>
-
-    <a href="/portfolio.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="code" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Portfolio</h2>
-      </div>
-
-      <p>
-        Examples of my work, timeline of experience, and interesting projects.
-      </p>
-    </a>
-
-    <a href="/career.html" class="nav-card card">
-      <div class="card-title">
-        <kbr-icon name="hierarchy" classes="card-icon icon-xl"></kbr-icon>
-        <h2>Career</h2>
-      </div>
-
-      <p>A timeline of where I've worked and what I've done.</p>
-    </a>
-  </div>
-</section>

@@ -265,6 +265,8 @@ All components have access to CSS custom properties:
 3. Write content in Markdown
 4. Processed automatically on dev server start
 
+For images, follow `documentation/images.md`: images go in the post directory's `media/` folder, and `npm run images:optimize` optimizes them before commit.
+
 ### Creating a Component
 
 1. Create directory: `source/site/components/component-name/`
