@@ -63,18 +63,20 @@ export default class AnchorCopyComponent extends LitElement {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        margin-top: var(--space-xl);
-        margin-bottom: var(--space-3);
+        margin-top: var(--space-lg);
+        margin-bottom: var(--space-1);
       }
 
       .heading-with-anchor:has(h3) {
-        margin-top: var(--space-lg);
+        margin-top: var(--space-md);
+        margin-bottom: 0;
       }
 
       .heading-with-anchor:has(h4),
       .heading-with-anchor:has(h5),
       .heading-with-anchor:has(h6) {
-        margin-top: var(--space-md);
+        margin-top: var(--space-sm);
+        margin-bottom: 0;
       }
 
       .anchor-copy-btn {

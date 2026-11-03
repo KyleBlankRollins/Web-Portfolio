@@ -6,23 +6,23 @@
   </head>
   <body>
     <template data-kbr-include="partials/header.html"></template>
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-          <template data-kbr-if="series">
-            <template data-kbr-include="partials/post-series.html"></template>
-          </template>
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <template data-kbr-include="partials/blog-tags.html"></template>
-        </div>
-      </aside>
       <article class="blog-post-content">
         <h1 id="{{titleAnchorId}}">{{title}}</h1>
         <template data-kbr-include="partials/blog-metadata.html"></template>
+        <template data-kbr-if="series">
+          <template data-kbr-include="partials/post-series.html"></template>
+        </template>
+        <kbr-table-of-contents collapsible></kbr-table-of-contents>
         <template data-kbr-slot="content"></template>
         <template data-kbr-if="supplements">
           <template data-kbr-include="partials/supplement-list.html"></template>
         </template>
+        <template data-kbr-include="partials/blog-tags.html"></template>
         <template data-kbr-include="partials/blog-citations.html"></template>
 
         <kbr-anchor-copy></kbr-anchor-copy>

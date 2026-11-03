@@ -51,15 +51,11 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-
-          <kbr-table-of-contents></kbr-table-of-contents>
-
-
-        </div>
-      </aside>
       <article class="blog-post-content">
         <h1 id="boundary-checklist">Boundary Checklist</h1>
         <div class="blog-post-metadata">
@@ -68,6 +64,8 @@
   </div>
 </div>
 
+
+        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
         <p><em>AI disclosure: This post was generated with AI to help me test the site&#39;s supplementary files features.</em></p>
 <p>Use this checklist before you renegotiate your home-work boundaries.</p>
 <h2 id="boundary-checklist">Boundary checklist</h2><ul>
@@ -80,6 +78,8 @@
 </ul>
 <p>Next supplement: <a href="/intentional-work-patterns/supplements/boundary-conversation-script.html?view=condensed#conversation-outline">Conversation script</a></p>
 <p>Back to parent post: <a href="/intentional-work-patterns.html#supplements-heading">Intentional Work Patterns</a></p>
+
+
 
 
         <!--

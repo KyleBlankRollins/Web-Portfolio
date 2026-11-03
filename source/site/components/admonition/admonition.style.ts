@@ -6,13 +6,15 @@ export const admonitionStyles = css`
     margin: var(--space-lg) 0;
   }
 
+  /* An aside, set a touch smaller between two hairlines. It was a filled
+     panel with a 4px coloured edge, which pulled more attention than the
+     text around it; the type colour now lives in the icon alone. */
   .admonition {
-    border-radius: var(--radius);
-    border-left: 4px solid;
-    padding: var(--space-md);
-    background-color: var(--color-background-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-sm) 0;
+    font-size: 0.95em;
     position: relative;
-    overflow: hidden;
   }
 
   /* Compact layout when no title */
@@ -51,11 +53,6 @@ export const admonitionStyles = css`
   }
 
   /* Note styling - blue theme */
-  .admonition-note {
-    border-left-color: var(--color-info-strong);
-    background-color: var(--color-info-subtle);
-  }
-
   .admonition-note .admonition-header,
   .admonition-note.compact .admonition-icon {
     color: var(--color-info-strong);
@@ -66,11 +63,6 @@ export const admonitionStyles = css`
   }
 
   /* Tip styling - green theme */
-  .admonition-tip {
-    border-left-color: var(--color-success-strong);
-    background-color: var(--color-success-subtle);
-  }
-
   .admonition-tip .admonition-header,
   .admonition-tip.compact .admonition-icon {
     color: var(--color-success-strong);
@@ -81,11 +73,6 @@ export const admonitionStyles = css`
   }
 
   /* Important styling - purple theme */
-  .admonition-important {
-    border-left-color: var(--color-accent-strong);
-    background-color: var(--color-accent-subtle);
-  }
-
   .admonition-important .admonition-header,
   .admonition-important.compact .admonition-icon {
     color: var(--color-accent-strong);
@@ -96,11 +83,6 @@ export const admonitionStyles = css`
   }
 
   /* Warning styling - orange theme */
-  .admonition-warning {
-    border-left-color: var(--color-warning-strong);
-    background-color: var(--color-warning-subtle);
-  }
-
   .admonition-warning .admonition-header,
   .admonition-warning.compact .admonition-icon {
     color: var(--color-warning-strong);
@@ -111,11 +93,6 @@ export const admonitionStyles = css`
   }
 
   /* Caution styling - red theme */
-  .admonition-caution {
-    border-left-color: var(--color-error-strong);
-    background-color: var(--color-error-subtle);
-  }
-
   .admonition-caution .admonition-header,
   .admonition-caution.compact .admonition-icon {
     color: var(--color-error-strong);
@@ -141,18 +118,13 @@ export const admonitionStyles = css`
   }
 
   /* Matches the article inline-code treatment in blog-post.css so the same
-     element does not render two ways depending on where it sits. The chip
-     keeps --color-background rather than the article's
-     --color-background-secondary: here it sits on a tinted -subtle panel, not
-     on the page, and needs to stay distinguishable from it. */
+     element does not render two ways depending on where it sits. */
   .admonition-content ::slotted(code) {
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
+    background-color: var(--color-background-secondary);
     border-radius: var(--radius-sm);
-    padding: 0em 0.2em;
+    padding: 0.05em 0.2em;
     font-family: var(--font-family-mono);
-    font-size: 0.875em;
+    font-size: 0.85em;
     color: var(--color-on-surface);
-    font-weight: var(--font-weight-medium);
   }
 `;

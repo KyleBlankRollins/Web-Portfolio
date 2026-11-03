@@ -1,6 +1,10 @@
 <nav class="post-series" aria-labelledby="post-series-title">
-  <h2 id="post-series-title">{{seriesName}}</h2>
-  <p>Part {{currentIndex}} of {{totalParts}}</p>
+  <p class="post-series-heading">
+    <span class="post-series-title" id="post-series-title">{{seriesName}}</span>
+    <span class="post-series-part"
+      >Part {{currentIndex}} of {{totalParts}}</span
+    >
+  </p>
   <div class="series-navigation">
     <a class="nav-button" data-kbr-if="previous" href="{{previous.url}}"
       ><span class="nav-text">Previous: {{previous.title}}</span

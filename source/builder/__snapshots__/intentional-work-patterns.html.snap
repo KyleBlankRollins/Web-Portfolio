@@ -51,13 +51,25 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
+      <article class="blog-post-content">
+        <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
+        <div class="blog-post-metadata">
+  <div class="blog-post-date">
+    <time class="meta" datetime="2025-12-26">December 26, 2025</time>
+  </div>
+</div>
 
-            <nav class="post-series" aria-labelledby="post-series-title">
-  <h2 id="post-series-title">Intentional Work Patterns</h2>
-  <p>Part 1 of 2</p>
+
+          <nav class="post-series" aria-labelledby="post-series-title">
+  <p class="post-series-heading">
+    <span class="post-series-title" id="post-series-title">Intentional Work Patterns</span>
+    <span class="post-series-part">Part 1 of 2</span>
+  </p>
   <div class="series-navigation">
 
     <a class="nav-button" href="/intentional-work-patterns-boundaries.html"><span class="nav-text">Next: Intentional Work Patterns - Boundaries</span><span class="nav-arrow">→</span></a>
@@ -82,30 +94,7 @@
 </nav>
 
 
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <div class="blog-post-tags">
-  <span class="tags-label">Tags:</span>
-  <div class="tag-list">
-
-      <button class="blog-tag" data-tag="habits">habits</button>
-
-      <button class="blog-tag" data-tag="intentionality">intentionality</button>
-
-      <button class="blog-tag" data-tag="remote work">remote work</button>
-
-  </div>
-</div>
-
-        </div>
-      </aside>
-      <article class="blog-post-content">
-        <h1 id="intentional-work-patterns">Intentional Work Patterns</h1>
-        <div class="blog-post-metadata">
-  <div class="blog-post-date">
-    <time class="meta" datetime="2025-12-26">December 26, 2025</time>
-  </div>
-</div>
-
+        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
         <p>Remote work offers flexibility, but without intentional structure, work can easily bleed into personal time. And personal distractions can fragment your workday. This series shares the specific habits and patterns I&#39;ve developed to maintain both productivity and work-life balance.</p>
 <p>While these patterns emerged from remote work, many of them apply to any work environment.</p>
 <ol>
@@ -139,6 +128,19 @@
   </ul>
 </section>
 
+
+        <div class="blog-post-tags">
+  <span class="tags-label eyebrow">Tagged</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="habits">habits</button>
+
+      <button class="blog-tag" data-tag="intentionality">intentionality</button>
+
+      <button class="blog-tag" data-tag="remote work">remote work</button>
+
+  </div>
+</div>
 
         <!--
   References list for a post. Rendered only when at least one citation is

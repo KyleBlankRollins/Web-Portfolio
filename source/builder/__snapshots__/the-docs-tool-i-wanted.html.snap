@@ -51,26 +51,11 @@
   <kbr-theme-switcher slot="theme-switcher"></kbr-theme-switcher>
 </kbr-navigation>
 
+    <!-- One column, nothing beside it. The table of contents, series rail
+         and tags used to sit in a sidebar at the same visual weight as the
+         article; they now sit in the reading order - contents collapsed
+         under the title, tags after the text - so the page is the text. -->
     <main class="blog-post-layout">
-      <aside class="blog-toc-sidebar">
-        <div class="blog-toc-sticky-container">
-
-          <kbr-table-of-contents></kbr-table-of-contents>
-          <div class="blog-post-tags">
-  <span class="tags-label">Tags:</span>
-  <div class="tag-list">
-
-      <button class="blog-tag" data-tag="technical writing">technical writing</button>
-
-      <button class="blog-tag" data-tag="documentation">documentation</button>
-
-      <button class="blog-tag" data-tag="tooling">tooling</button>
-
-  </div>
-</div>
-
-        </div>
-      </aside>
       <article class="blog-post-content">
         <h1 id="the-docs-tool-i-wanted">The Docs Tool I Wanted</h1>
         <div class="blog-post-metadata">
@@ -79,6 +64,8 @@
   </div>
 </div>
 
+
+        <kbr-table-of-contents collapsible=""></kbr-table-of-contents>
         <p><kbr-admonition type="note">tl;dr: I wanted docs-as-code to get the support programming languages get in an IDE: checks as you type, hints, a CLI and a UI that agree. Ascribe is my opinionated take on what that looks like. It&#39;s 0.4, early, and open source under the MPL.</kbr-admonition></p>
 <p>Docs-as-code is an approach to documentation that pairs technical writing process and knowledge with the environments and tools software engineers use. There are other definitions, but I find this one most useful.</p>
 <p>In my experience, docs-as-code has hewed strongly towards software engineering tools, process, and paradigms. But I&#39;ve missed features that dedicated tech writing tools like Flare or DITA have had for years: content reuse, conditional content, structured page types, and templates.</p>
@@ -189,6 +176,19 @@ The {product} agent watches your docs repository and syncs changes to {product}.
 <p>None of that makes docs good on its own. As I wrote in <a href="/ai-agent-workflows.html">AI Agent Workflows</a>, deterministic tools are scaffolding, not judgment. A page can pass every check and still answer the wrong question. The checks take the mechanical mistakes off the table, like a broken include, an undeclared phrase, or a link to a page that moved, so reviewers can spend their attention on whether the docs say the right thing.</p>
 <p>If you&#39;ve also wanted docs work to feel like working in a good IDE, try Ascribe on a small project and tell me where it breaks. The <a href="https://github.com/ascribed-dev/ascribe">repository</a> has the docs, the examples, and the <a href="https://github.com/ascribed-dev/ascribe/issues">issue tracker</a>.</p>
 
+
+        <div class="blog-post-tags">
+  <span class="tags-label eyebrow">Tagged</span>
+  <div class="tag-list">
+
+      <button class="blog-tag" data-tag="technical writing">technical writing</button>
+
+      <button class="blog-tag" data-tag="documentation">documentation</button>
+
+      <button class="blog-tag" data-tag="tooling">tooling</button>
+
+  </div>
+</div>
 
         <!--
   References list for a post. Rendered only when at least one citation is

@@ -1,25 +1,23 @@
 /**
  * Blog Post Layout Styles
- * 
- * CSS Grid layout for blog posts with table of contents sidebar and main content.
- * Typography is handled by typography.css - this file only contains layout rules.
+ *
+ * A single reading column. Typography scale comes from typography.css; this
+ * file sets the article's own size, measure and rhythm, and the pieces that
+ * sit inside it (metadata, series rail, contents, tags, citations).
  */
 
-/* Blog post layout container */
-/* The content track is capped at the reading measure and the pair is
-   centred, so the rail and the article sit together as one block instead
-   of the article hugging the rail with empty page to its right. 62ch, not
-   72: ch is the width of "0", which in Valkyrie is narrow against the
-   running text, so 72ch measured about 95 characters a line. 62ch lands
-   near 80, the top of the comfortable range. */
+/* The reading column.
+
+   20px type on a 32em measure, about 65 characters a line. The post page
+   used to run 18px at 80 characters beside a 280px rail; the single biggest
+   change a reader notices on a long essay is bigger type on a shorter line
+   with nothing beside it. The size is set here so every em below - the
+   measure, heading sizes, list gutters - scales with it, while the
+   rem-based spacing tokens stay on the site grid. */
 .blog-post-layout {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) minmax(0, 62ch);
-  grid-template-areas: "sidebar content";
-  justify-content: center;
-  gap: var(--space-lg);
+  font-size: 1.125rem;
   width: 100%;
-  max-width: var(--content-max-width);
+  max-width: calc(32em + var(--space-lg) * 2);
   margin: 0 auto;
   padding: var(--space-lg);
   /* Fill the leftover height in body's flex column rather than computing it.
@@ -31,31 +29,33 @@
   flex: 1 0 auto;
 }
 
-/* Table of contents sidebar */
-.blog-toc-sidebar {
-  grid-area: sidebar;
-  min-width: 0; /* Prevent grid overflow */
-}
-
-/* Sticky container for TOC and tags */
-.blog-toc-sticky-container {
-  position: sticky;
-  top: var(--space-lg); /* Space from top of viewport when sticky */
-  max-height: calc(
-    100vh - var(--space-xl)
-  ); /* Prevent container from being taller than viewport */
-  overflow-y: auto; /* Allow scrolling if content is too tall */
-}
-
-/* Blog post content area. Plain text on the page surface: the article used
-   to carry .glass-surface, a frosted panel over the page gradient, with
-   padding to keep the copy off the panel edge. With no panel there is no
-   edge, so the padding goes and a measure takes its place - the column could
-   otherwise run past 85 characters at 18px on a 1200px layout. */
 .blog-post-content {
-  grid-area: content;
-  min-width: 0; /* Prevent grid overflow */
+  min-width: 0;
   padding: 0;
+  /* Ragged right with hyphenation: line lengths stay even without
+     justification's rivers. The limits keep short words whole and leave at
+     least three letters on either side of the break. */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 7 4 3;
+}
+
+/* Never break a heading, a code span, or anything set in the mono voice. */
+.blog-post-content :is(h1, h2, h3, h4, h5, h6, pre, code, .meta, .eyebrow),
+.blog-post-content :is(.blog-post-metadata, .post-series, .citation-actions),
+.blog-post-content kbr-table-of-contents {
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+
+/* The lede: the first paragraph of the text, a step up, so the piece has an
+   entry point. The metadata and contents blocks are divs and custom
+   elements, so first-of-type lands on the first real paragraph. */
+.blog-post-content > p:first-of-type {
+  font-size: 1.1em;
+  line-height: 1.45;
+  hyphens: manual;
+  -webkit-hyphens: manual;
 }
 
 /* One step below the global h1: the caps face at 3rem wrapped a five-word
@@ -67,33 +67,116 @@
   text-wrap: balance;
 }
 
-/* Article headings: one step smaller than the global scale, with the
-   leading pulled in. The global h2 at 2rem with a 2.95rem line-height was
-   sized for page titles; in running text it read as a second title, and
-   the 53px leading put dead space inside any two-line heading. Vertical
-   spacing belongs to .heading-with-anchor in anchor-copy.ts, which wraps
-   every heading the markdown renderer emits. */
+/* Article headings label the next paragraph; they do not announce a new
+   page. The h2 is a step above body size in the caps face - which is small
+   caps, so this is bold small caps on the text's own scale. h3 and h4 stay
+   at body size and differ by face: bold serif, then italic. The h1 is the
+   only large element on the page. Vertical spacing belongs to
+   .heading-with-anchor in anchor-copy.ts, which wraps every heading the
+   markdown renderer emits. */
 .blog-post-content h2 {
-  font-size: 1.75rem;
-  line-height: 1.2;
+  font-size: 1.05em;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
 }
 
 .blog-post-content h3 {
-  font-size: 1.35rem;
-  line-height: 1.25;
+  font-size: 1em;
+  line-height: 1.35;
+  font-weight: var(--font-weight-bold);
 }
 
 .blog-post-content h4,
 .blog-post-content h5,
 .blog-post-content h6 {
-  font-size: 1.1rem;
-  line-height: 1.3;
+  font-size: 1em;
+  line-height: 1.35;
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
+}
+
+/* Lists hang their markers in the left margin so the list text aligns with
+   the paragraph text instead of forming an indented block. Bullets are a
+   small dot in the secondary colour; numbers are the mono counter the
+   citations use. Only the text's own lists: the contents, series,
+   supplement and citation lists carry their own structure. */
+.blog-post-content > ul,
+.blog-post-content > ol,
+.blog-post-content li > ul,
+.blog-post-content li > ol,
+.blog-post-content blockquote ul,
+.blog-post-content blockquote ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.blog-post-content li > ul,
+.blog-post-content li > ol {
+  margin-top: var(--space-2);
+  padding-left: 1.5em;
+}
+
+.blog-post-content > ul > li,
+.blog-post-content > ol > li,
+.blog-post-content li > ul > li,
+.blog-post-content li > ol > li,
+.blog-post-content blockquote li {
+  position: relative;
+}
+
+.blog-post-content > ul > li::before,
+.blog-post-content li > ul > li::before,
+.blog-post-content blockquote ul > li::before {
+  content: "•";
+  position: absolute;
+  left: -1.25em;
+  color: var(--color-text-secondary);
+}
+
+.blog-post-content > ol,
+.blog-post-content li > ol,
+.blog-post-content blockquote ol {
+  counter-reset: item;
+}
+
+.blog-post-content > ol > li,
+.blog-post-content li > ol > li,
+.blog-post-content blockquote ol > li {
+  counter-increment: item;
+}
+
+.blog-post-content > ol > li::before,
+.blog-post-content li > ol > li::before,
+.blog-post-content blockquote ol > li::before {
+  content: counter(item);
+  position: absolute;
+  left: -2.25em;
+  width: 1.75em;
+  text-align: right;
+  font-family: var(--font-family-mono);
+  font-size: 0.8em;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
 }
 
 /* Multi-line items had no gap at all and read as one block. A third of a
    line separates them without turning the list into paragraphs. */
 .blog-post-content li + li {
   margin-top: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  /* No margin to hang into at phone width: the markers tuck inside the
+     list's own padding instead. */
+  .blog-post-content > ul,
+  .blog-post-content blockquote ul {
+    padding-left: 1.25em;
+  }
+
+  .blog-post-content > ol,
+  .blog-post-content blockquote ol {
+    padding-left: 2.25em;
+  }
 }
 
 /* Special blog post elements that need layout/visual styling */
@@ -126,6 +209,12 @@
   font-family: var(--font-family-mono);
   font-size: 0.85em;
   color: var(--color-on-surface);
+}
+
+/* A code span is one token: `check --fix` must not break at its own
+   hyphen and continue on the next line as `-fix`. */
+.blog-post-content :not(pre) > code {
+  white-space: nowrap;
 }
 
 /* Code block container styling */
@@ -225,14 +314,20 @@
   margin-bottom: var(--space-lg);
 }
 
+/* Tags sit after the text, above the references, on a hairline. They used
+   to be in the sidebar beside the title. */
 .blog-post-tags {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
   margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
 }
 
 .tags-label {
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
-  margin-right: var(--space-sm);
+  margin: 0;
 }
 
 .tag-list {
@@ -244,11 +339,12 @@
 .blog-tag {
   background: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   color: var(--color-text);
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  padding: var(--space-2xs) var(--space-xs);
   transition: all var(--transition-fast);
 }
 
@@ -259,35 +355,9 @@
 }
 
 /* Responsive design - layout only */
-@media (max-width: 1024px) {
-  .blog-post-layout {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "sidebar"
-      "content";
-    gap: var(--space-lg);
-    padding: var(--space-md);
-  }
-
-  .blog-toc-sidebar {
-    order: 1;
-  }
-
-  .blog-post-content {
-    order: 2;
-  }
-}
-
 @media (max-width: 768px) {
   .blog-post-layout {
-    padding: var(--space-sm);
-    gap: var(--space-md);
-  }
-}
-
-@media (max-width: 480px) {
-  .blog-post-layout {
-    padding: var(--space-xs);
+    padding: var(--space-md) var(--space-sm);
   }
 }
 
