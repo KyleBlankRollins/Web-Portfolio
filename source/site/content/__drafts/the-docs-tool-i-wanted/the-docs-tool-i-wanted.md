@@ -87,7 +87,7 @@ pnpm add -g @quill/agent
 
 Say I mistype the include path as `_fragments/prerequisite.md`, without the "s". The VS Code extension underlines the path as I type, and hovering over it shows the problem.
 
-**TODO screenshot:** VS Code with the `@include` path underlined
+![VS Code with the mistyped include path underlined in red, and a hover beneath it: the included file _fragments/prerequisite.md doesn't exist, ascribe ASC021, Not found: _fragments/prerequisite.md](media/editor-include-error.png)
 
 The same check from the command line, trimmed to the two problems that matter here:
 
@@ -99,7 +99,7 @@ The same check from the command line, trimmed to the two problems that matter he
     │           ─────────────┬────────────
     │                        ╰────────────── include-target-missing
     │
-    │ Help: Fix the path. It's relative to the including file, or to the content root when it starts with `/`, and the file must be a Markdown source file inside the content root.
+    │ Help: Include `_fragments/prerequisites.md`
 ────╯
 [ASC155] Advice: no file includes this fragment, so nothing publishes it
    ╭─[ docs/_fragments/prerequisites.md:1:1 ]
@@ -112,7 +112,7 @@ The same check from the command line, trimmed to the two problems that matter he
 ───╯
 ```
 
-The second problem follows from the first. Ascribe checks the whole project, not only the file I'm editing, so it notices that the real fragment is no longer used anywhere.
+The first problem's help names the file I meant. The second problem follows from the first. Ascribe checks the whole project, not only the file I'm editing, so it notices that the real fragment is no longer used anywhere.
 
 ### In CI
 
@@ -133,7 +133,9 @@ Passing checks don't catch everything. Someone still has to read it, and reviewi
 
 Ascribe's review compares resolved pages, not files, and shows the pull request as rendered pages with the changes marked. If I edit the prerequisites fragment, the change shows on every page that includes it. Reformatting shows on none. A reviewer sees what readers will see.
 
-**TODO screenshot:** the page preview in review mode, with a changed block marked
+Here's the HTML report for a one-phrase change to the prerequisites fragment. The install page's own file didn't change, but the report shows the page with the change marked where it lands:
+
+![Ascribe's review report for install-agent.md, changed only through _fragments/prerequisites.md. The rendered page shows the Prerequisites list, with one item marked Changed: "A docs repository that Quill can read" now says "clone over HTTPS", with the removed word struck through and the added words highlighted](media/review-fragment-change.png)
 
 Comments left on a rendered page are ordinary GitHub review comments on the source lines. Ascribe itself doesn't store comments. The pull request is the record and anyone can reply on GitHub. Review runs in the VS Code page preview, in the site preview under `astro dev`, and as an HTML report from CI.
 
