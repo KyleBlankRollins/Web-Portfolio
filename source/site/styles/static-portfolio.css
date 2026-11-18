@@ -1,0 +1,838 @@
+/* ==========================================================================
+   PORTFOLIO
+   pages/portfolio.html, organized as chapters by context: Bryo Studio, open
+   source and side projects, and earlier work at 3M. Entries are rules and
+   "plates" (a screenshot, or a small hand-made diagram for software with no
+   screenshot), not cards. Minor pieces are compact index rows.
+
+   Everything uses site tokens so the page follows both themes in light and
+   dark, except the Bryo Studio inset, which keeps the studio's own palette
+   (Daylight and Night, from the bryostudio repo's brand/dist tokens).
+
+   Classes are prefixed pf- because the generic names the design wants
+   (entry, row, plate, links) are already taken elsewhere on the site.
+   ========================================================================== */
+
+.pf {
+  --pf-mono-size: 0.78rem;
+  --pf-mono-small: 0.72rem;
+}
+
+.pf h3,
+.pf h4 {
+  font-family: var(--font-family-primary);
+}
+
+/* Opening, and the chapter index that serves as the page's contents. */
+.pf-opening {
+  padding-bottom: var(--space-lg);
+}
+
+.pf-opening .lead {
+  margin: 0;
+}
+
+.pf-chapter-index {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-xl) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+.pf-chapter-index li {
+  border-top: 1px solid var(--color-border-strong);
+  padding-top: var(--space-sm);
+}
+
+.pf-chapter-index a {
+  display: block;
+  font-size: var(--font-size-lg);
+  line-height: 1.3;
+  margin-bottom: var(--space-2xs);
+  text-decoration: none;
+}
+
+.pf-chapter-index a:hover {
+  text-decoration: underline;
+}
+
+.pf-chapter-index p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.pf-chapter-num {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Chapters */
+.pf-chapter {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.pf-chapter-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--space-lg);
+  align-items: end;
+  margin-bottom: var(--space-lg);
+}
+
+.pf-chapter-head h2 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.pf-chapter-head p:last-child {
+  margin-bottom: 0;
+}
+
+/* Entries: a plate, then the eyebrow, title, one paragraph, tags, links. */
+.pf-entries {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl) var(--space-lg);
+}
+
+.pf-entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+.pf-entry .eyebrow {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--pf-mono-size);
+}
+
+.pf-entry h3 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+}
+
+.pf-entry p {
+  margin: 0;
+}
+
+.pf-traits {
+  list-style: none;
+  margin: var(--space-2xs) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-sm);
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-size);
+  color: var(--color-text-secondary);
+}
+
+.pf-traits li::before {
+  content: "+ ";
+  color: var(--color-text-tertiary);
+}
+
+.pf-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+.pf-links .meta {
+  font-size: var(--pf-mono-size);
+}
+
+/* Plates and screenshots */
+.pf-plate {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-secondary);
+  color: var(--color-text);
+}
+
+.pf-plate-caption {
+  position: absolute;
+  left: var(--space-sm);
+  top: var(--space-xs);
+  font-family: var(--font-family-mono);
+  font-size: 0.68rem;
+  color: var(--color-text-secondary);
+}
+
+.pf-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-secondary);
+}
+
+.pf-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Meowzer: the SDK over its four libraries. */
+.pf-sdk {
+  width: 100%;
+  max-width: 26rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-size);
+}
+
+.pf-sdk-top {
+  padding: 0.4rem;
+  text-align: center;
+  border: 1.5px solid var(--color-text);
+  background: var(--color-background);
+}
+
+.pf-sdk-libs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.pf-sdk-libs::before {
+  content: "";
+  position: absolute;
+  left: 12.5%;
+  right: 12.5%;
+  top: -0.9rem;
+  height: 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-bottom: 0;
+}
+
+.pf-sdk-libs span {
+  padding: 0.4rem 0.2rem;
+  line-height: 1.3;
+  text-align: center;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-background);
+}
+
+.pf-sdk-moods {
+  margin: 0.8rem 0 0;
+  text-align: center;
+  font-size: var(--pf-mono-small);
+  color: var(--color-text-secondary);
+}
+
+.pf-sdk-moods b {
+  font-weight: normal;
+  color: var(--color-on-surface);
+}
+
+/* Blueprint: the component count. */
+.pf-count {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: center;
+  width: 100%;
+}
+
+.pf-count-num {
+  font-family: var(--font-family-heading);
+  font-size: 6rem;
+  line-height: 0.8;
+  color: var(--color-on-surface);
+}
+
+.pf-count-label {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.pf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-small);
+}
+
+.pf-chips span {
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-background);
+}
+
+.pf-chips .pf-chip-more {
+  border-style: dashed;
+  color: var(--color-text-secondary);
+}
+
+/* kbr-skills: the build loop, numbered. */
+.pf-loop {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  counter-reset: step;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem 0.9rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-size);
+}
+
+.pf-loop li {
+  counter-increment: step;
+  padding-top: 0.35rem;
+  line-height: 1.3;
+  border-top: 1.5px solid var(--color-text);
+}
+
+.pf-loop li::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--color-on-surface);
+}
+
+.pf-loop li:nth-child(n + 4) {
+  border-top-color: var(--color-border-strong);
+}
+
+/* This site: a real excerpt from a template. */
+.pf-snippet {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  white-space: pre;
+  background: none;
+  border: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-small);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.pf-snippet .t {
+  color: var(--color-on-surface);
+}
+
+.pf-snippet .a {
+  color: var(--color-text-secondary);
+}
+
+.pf-snippet .v {
+  background: var(--color-accent-subtle);
+}
+
+/* ---------- Chapter 1: the Bryo Studio inset ---------- */
+
+.pf-studio {
+  --bryo-bg: #eef2e6;
+  --bryo-surface: #f8faf3;
+  --bryo-text: #14201a;
+  --bryo-muted: #4f5c53;
+  --bryo-border: #d3dacb;
+  --bryo-moss: #2f6b2b;
+  --bryo-moss-soft: #cfdfc6;
+  --bryo-river-soft: #cfe3e0;
+  --bryo-mark-moss: #3f8a3a;
+
+  margin-top: var(--space-xl);
+  padding: var(--space-xl);
+  border: 1px solid var(--bryo-border);
+  border-radius: var(--radius);
+  background: var(--bryo-bg);
+  color: var(--bryo-text);
+}
+
+[data-color-scheme="dark"] .pf-studio {
+  --bryo-bg: #0f1512;
+  --bryo-surface: #16201b;
+  --bryo-text: #e4ecdf;
+  --bryo-muted: #9aa79f;
+  --bryo-border: #2a3830;
+  --bryo-moss: #8fd16a;
+  --bryo-moss-soft: #1c2b1c;
+  --bryo-river-soft: #1b3030;
+  --bryo-mark-moss: #5fa04a;
+}
+
+.pf-studio :is(h2, h3) {
+  color: var(--bryo-text);
+}
+
+.pf-studio a {
+  color: var(--bryo-text);
+  text-decoration-color: var(--bryo-moss);
+}
+
+.pf-studio a:hover {
+  color: var(--bryo-moss);
+}
+
+.pf-studio :is(.pf-chapter-num, .meta, a.meta, .eyebrow, .pf-traits) {
+  color: var(--bryo-muted);
+}
+
+.pf-studio .pf-traits li::before {
+  color: var(--bryo-moss);
+}
+
+.pf-studio-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--bryo-border);
+}
+
+.pf-lockup {
+  width: 216px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.pf-lockup-dark,
+[data-color-scheme="dark"] .pf-lockup-light {
+  display: none;
+}
+
+[data-color-scheme="dark"] .pf-lockup-dark {
+  display: block;
+}
+
+.pf-studio .pf-chapter-head {
+  align-items: start;
+}
+
+.pf-motto {
+  margin: var(--space-sm) 0 0;
+  font-family: var(--font-family-mono);
+  font-size: 1.05rem;
+  color: var(--bryo-moss);
+}
+
+.pf-studio .pf-plate {
+  background: var(--bryo-surface);
+  border-color: var(--bryo-border);
+  color: var(--bryo-text);
+}
+
+.pf-studio .pf-plate-caption {
+  color: var(--bryo-muted);
+}
+
+/* Pizza Ambulance: the three feature leads, stacked like pizza boxes. */
+.pf-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 18px;
+}
+
+.pf-stack span {
+  display: block;
+  min-width: 15rem;
+  padding: 0.45rem 0.9rem;
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-size: 0.82rem;
+  border: 2px solid var(--bryo-text);
+  background: var(--bryo-surface);
+}
+
+.pf-stack span:nth-child(1) {
+  transform: translateX(14px) rotate(-2.5deg);
+  background: var(--bryo-river-soft);
+}
+
+.pf-stack span:nth-child(2) {
+  transform: translateX(-6px) rotate(1.2deg);
+  background: var(--bryo-moss-soft);
+}
+
+.pf-stack span:nth-child(3) {
+  transform: translateX(4px);
+}
+
+.pf-stack-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 26%;
+}
+
+.pf-ground-soil {
+  fill: var(--bryo-moss-soft);
+}
+
+.pf-ground-moss {
+  fill: var(--bryo-mark-moss);
+}
+
+/* Ascribe: one compiler, three surfaces, three outputs. */
+.pf-flow {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  font-family: var(--font-family-mono);
+  font-size: 0.74rem;
+}
+
+.pf-node {
+  padding: 0.4rem 0.55rem;
+  line-height: 1.35;
+  text-align: center;
+  border: 1.5px solid var(--bryo-text);
+  background: var(--bryo-surface);
+}
+
+.pf-node-src {
+  background: var(--bryo-moss-soft);
+}
+
+.pf-node-compiler {
+  padding: 0.7rem 0.6rem;
+  border-width: 2px;
+}
+
+.pf-node-compiler strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+}
+
+.pf-surfaces {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.pf-surfaces span {
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--bryo-border);
+  background: var(--bryo-bg);
+  color: var(--bryo-muted);
+}
+
+.pf-arrow {
+  font-size: 1rem;
+  color: var(--bryo-moss);
+}
+
+.pf-outs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pf-outs .pf-node {
+  background: var(--bryo-river-soft);
+}
+
+/* ---------- Chapter 3 ---------- */
+
+.pf-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+  margin-bottom: var(--space-xl);
+}
+
+.pf-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.pf-pair figure {
+  margin: 0;
+}
+
+.pf-pair .pf-shot {
+  aspect-ratio: 1 / 1;
+}
+
+.pf-pair figcaption {
+  margin-top: var(--space-2xs);
+}
+
+/* ---------- Index rows ----------
+   For pieces that need one line, not an entry: a ruled row with the name
+   and its line, two mono facts, a link, and a thumbnail that grows on
+   hover. Adapted from the index concept, without the expanding rows. */
+
+.pf-subhead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2xs) var(--space-md);
+  margin: var(--space-xl) 0 0;
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.pf-subhead h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.pf-subhead p {
+  margin: 0;
+}
+
+.pf-rows {
+  --pf-col-kind: 7.5rem;
+  --pf-col-fact: 12rem;
+  --pf-col-link: 7rem;
+  --pf-col-thumb: 4rem;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pf-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) var(--pf-col-kind) var(--pf-col-fact)
+    var(--pf-col-link) var(--pf-col-thumb);
+  column-gap: var(--space-md);
+  align-items: start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pf-row h4 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.5rem;
+}
+
+.pf-row h4 a {
+  text-decoration: none;
+}
+
+.pf-row h4 a:hover {
+  text-decoration: underline;
+}
+
+.pf-row-title p {
+  margin: 0.1rem 0 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.pf-row-fact,
+.pf-row-link {
+  padding-top: 0.15rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--pf-mono-small);
+  line-height: 1.2rem;
+  color: var(--color-text-secondary);
+}
+
+.pf-row .pf-row-link {
+  font-size: var(--pf-mono-small);
+  white-space: nowrap;
+}
+
+.pf-row-thumb {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.15rem;
+}
+
+.pf-row-thumb img {
+  display: block;
+  width: 4rem;
+  height: 2.6rem;
+  object-fit: cover;
+  object-position: top left;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-secondary);
+  transform-origin: top right;
+  transition: transform 120ms ease-out;
+}
+
+.pf-row-cover img {
+  width: 2.05rem;
+  height: 2.65rem;
+}
+
+@media (hover: hover) {
+  .pf-row:hover .pf-row-thumb img {
+    position: relative;
+    z-index: 2;
+    transform: scale(4);
+    box-shadow: 0 6px 24px var(--color-shadow-strong);
+  }
+
+  .pf-row:hover .pf-row-cover img {
+    transform: scale(4.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-row-thumb img {
+    transition: none;
+  }
+}
+
+/* ---------- Narrow layouts ---------- */
+
+@media (max-width: 960px) {
+  /* The title takes the row; kind, fact and link drop to one mono line
+     under it, and the thumbnail spans both lines. */
+  .pf-row {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title title title thumb"
+      "kind fact link thumb";
+    column-gap: var(--space-sm);
+    row-gap: 0.3rem;
+  }
+
+  .pf-row-title {
+    grid-area: title;
+  }
+
+  .pf-row-fact,
+  .pf-row-link {
+    padding-top: 0;
+  }
+
+  .pf-row-fact:nth-of-type(1) {
+    grid-area: kind;
+  }
+
+  .pf-row-fact:nth-of-type(2) {
+    grid-area: fact;
+  }
+
+  .pf-row-link {
+    grid-area: link;
+    justify-self: start;
+  }
+
+  .pf-row-thumb {
+    grid-area: thumb;
+  }
+
+  .pf-row-none {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .pf-chapter-index,
+  .pf-chapter-head,
+  .pf-entries,
+  .pf-feature {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pf-chapter-index {
+    gap: var(--space-sm);
+  }
+
+  .pf-chapter-head {
+    gap: var(--space-sm);
+  }
+
+  .pf-studio {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .pf-studio-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pf-lockup {
+    width: 176px;
+  }
+
+  .pf-plate {
+    padding-top: 2.25rem;
+  }
+
+  /* The diagram and the box stack are taller than 16:9 allows once the
+     plate is phone-width, so these two plates size to their content. */
+  .pf-studio .pf-plate:has(.pf-flow, .pf-stack) {
+    aspect-ratio: auto;
+  }
+
+  .pf-studio .pf-plate:has(.pf-stack) {
+    padding-bottom: var(--space-xl);
+  }
+
+  .pf-flow {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .pf-arrow {
+    transform: rotate(90deg);
+  }
+
+  .pf-outs {
+    flex-direction: row;
+  }
+
+  .pf-stack span {
+    min-width: 0;
+    width: min(15rem, 100%);
+  }
+
+  .pf-count-num {
+    font-size: 4.5rem;
+  }
+
+  .pf-loop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

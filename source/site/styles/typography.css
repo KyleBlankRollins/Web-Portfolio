@@ -256,7 +256,7 @@ sub {
    The resting underline stays. These are light-DOM prose links, where the
    underline is the only affordance distinguishing them from body copy -
    they share --color-text with it. Components that need a bare link
-   (.sample-link, .project-link, .citations a, .post-title-link) already opt out
+   (.sample-link, .citations a, .post-title-link) already opt out
    individually, as does the shadow-DOM `a` in shared-styles.ts. */
 a {
   color: var(--color-text);

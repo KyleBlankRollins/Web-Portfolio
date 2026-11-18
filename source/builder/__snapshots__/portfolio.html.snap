@@ -37,14 +37,14 @@
      /<post>/supplements/<page>.html as well as from the site root. -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Portfolio - Kyle Blank Rollins</title>
-<meta name="description" content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects.">
-<meta name="keywords" content="portfolio, technical writer, developer, Kyle Blank Rollins, projects">
+<meta name="description" content="Software I'm building, including Ascribe, plus web projects and technical writing samples.">
+<meta name="keywords" content="portfolio, technical writer, developer, Kyle Blank Rollins, projects, Ascribe, open source">
 <!-- Link previews (LinkedIn, Slack, Bluesky, etc.). Values come from
      socialMetadata() in source/builder/site-renderer.ts. The image source
      is scripts/og-image/og-default.html. -->
 <meta property="og:site_name" content="Kyle Blank Rollins">
 <meta property="og:title" content="Portfolio - Kyle Blank Rollins">
-<meta property="og:description" content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects.">
+<meta property="og:description" content="Software I'm building, including Ascribe, plus web projects and technical writing samples.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.kyleblankrollins.com/portfolio.html">
 <meta property="og:image" content="https://www.kyleblankrollins.com/images/og-default.png">
@@ -68,415 +68,467 @@
 
     <main class="page-content">
 
-<!-- Two-column rail, matching .blog-layout, .blog-post-layout and
-     .timeline: the table of contents reserves a grid track instead of
-     floating over the content. See phase 2. -->
-<div class="portfolio-layout">
-  <aside class="portfolio-toc">
-    <kbr-table-of-contents min-level="2" max-level="4"></kbr-table-of-contents>
-  </aside>
+<!-- Chapters by context: who the work was made as (Bryo Studio, open source,
+     3M), not what medium it is. One wide column; the chapter index under
+     the opening is the page's table of contents. Entries are rules and
+     plates, not cards. Minor pieces (older side projects, writing samples)
+     are compact index rows. Styles: styles/static-portfolio.css. -->
+<div class="pf">
+  <section class="pf-opening">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Samples of my work</h1>
+    <p class="lead">
+      Software I'm building, web projects from earlier in my career, and samples
+      of my technical writing.
+    </p>
 
-  <div class="portfolio-content">
-    <section>
-      <h1>Samples of my work</h1>
-      <p class="lead">
-        A showcase of my work as a technical writer and developer, including
-        examples, experience timeline, and notable projects.
-      </p>
-    </section>
+    <ol class="pf-chapter-index" aria-label="Chapters">
+      <li>
+        <span class="pf-chapter-num">Chapter 1</span>
+        <a href="#bryo-studio">Bryo Studio</a>
+        <p>Games, apps, and software I make on my own.</p>
+      </li>
+      <li>
+        <span class="pf-chapter-num">Chapter 2</span>
+        <a href="#open-source">Open source and side projects</a>
+        <p>Tools and libraries I'm building in the open, and older sites.</p>
+      </li>
+      <li>
+        <span class="pf-chapter-num">Chapter 3</span>
+        <a href="#earlier-work">Earlier work</a>
+        <p>Web projects and documentation from 3M, 2017 to 2021.</p>
+      </li>
+    </ol>
+  </section>
 
-    <section>
-      <h2>Writing samples</h2>
-      <p>
-        Most of my writing is covered under NDAs and not shareable. However, you
-        can find several documents below that showcase different types of
-        technical documentation.
-      </p>
-      <p>
-        If you're curious about these documents or my other work, contact me
-        through
-        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">LinkedIn</a>.
-      </p>
+  <!-- Chapter 1 -->
+  <section class="pf-studio" id="bryo-studio" aria-labelledby="bryo-title">
+    <div class="pf-studio-top">
+      <img class="pf-lockup pf-lockup-light" src="/images/bryo/daylight-lockup-horizontal.svg" alt="Bryo Studio" width="288" height="89">
+      <img class="pf-lockup pf-lockup-dark" src="/images/bryo/night-lockup-horizontal.svg" alt="Bryo Studio" width="288" height="89">
+      <a class="meta" href="https://bryostudio.com">bryostudio.com →</a>
+    </div>
 
+    <div class="pf-chapter-head">
       <div>
-        <h3>User Documentation</h3>
-        <div class="grid two-columns">
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img src="/images/samples/CScom-WN-Oct-2018.png" alt="ChartScript.com What's New in this Release cover" class="sample-image">
-            </div>
-            <div class="sample-content">
-              <h4>3M™ ChartScript.com What's New</h4>
-              <p>
-                High-level overview of software changes for multiple audiences:
-                transcriptionists, system administrators, and primary care
-                providers.
-              </p>
-              <a href="/samples/dcn300_cscom_rel_october_2018.pdf" class="sample-link">
-                View Document →
-              </a>
-            </div>
-          </article>
-
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img src="/images/samples/EAPG-meth-overview-jan-2020.png" alt="EAPG Methodology Overview cover" class="sample-image">
-            </div>
-            <div class="sample-content">
-              <h4>Enhanced Ambulatory Patient Grouping Systems</h4>
-              <p>
-                Publicly available methodology overview with historical context
-                and current implementation breakdown.
-              </p>
-              <a href="/samples/grp403_eapg_meth_overview_v315.pdf" class="sample-link">
-                View Document →
-              </a>
-            </div>
-          </article>
-
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img src="/images/samples/Provider-Client-WN-May-2019.png" alt="Provider Client What's New cover" class="sample-image">
-            </div>
-            <div class="sample-content">
-              <h4>Provider Client Release Notes</h4>
-              <p>
-                Software changes documentation highlighting workflows and
-                intersections between providers, transcriptionists, and QA
-                staff.
-              </p>
-              <a href="/samples/provider_client_rel_may_2019.pdf" class="sample-link">
-                View Document →
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <h3>Developer Documentation</h3>
-        <div class="grid two-columns">
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img src="/images/samples/mf-WN-v2019.1.3.png" alt="APCGP What's New cover" class="sample-image">
-            </div>
-            <div class="sample-content">
-              <h4>APCGP Software Release Overview</h4>
-              <p>
-                Comprehensive overview of software features and data structure
-                changes, serving as a central repository linking to detailed
-                technical documentation.
-              </p>
-              <a href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf" class="sample-link">
-                View Document →
-              </a>
-            </div>
-          </article>
-
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img src="/images/samples/opps-pricer-manual-v20.3.0.png" alt="TRICARE OPPS Pricer Software Manual cover" class="sample-image">
-            </div>
-            <div class="sample-content">
-              <h4>TRICARE OPPS Pricer Software Manual</h4>
-              <p>
-                Complete software manual covering download, installation,
-                interface, and reimbursement information for healthcare payment
-                processing.
-              </p>
-              <a href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf" class="sample-link">
-                View Document →
-              </a>
-            </div>
-          </article>
-        </div>
+        <span class="pf-chapter-num">Chapter 1</span>
+        <h2 id="bryo-title">Bryo Studio</h2>
+        <p class="pf-motto">small software, grown slowly.</p>
       </div>
-    </section>
-
-    <section>
-      <h2>Web projects</h2>
-      <p>
-        I'm always looking for an excuse to further my design and functional
-        skills on the web. I don't always have the time to pursue projects (let
-        alone finish them), but I typically learn a lot along the way.
-      </p>
-      <p>
-        Below, you'll see the projects I've completed. I plan to add more
-        experimental things at a later date.
-      </p>
-
       <div>
-        <h3>Redesigns</h3>
-        <div class="grid">
-          <article class="project-card card">
-            <div class="project-image-container">
-              <kbr-image-lightbox src="/images/sites/support-site-before.png" alt="3M HIS Support website before and after redesign" caption="3M HIS Support Website - Before and after redesign comparison" classes="project-image">
-              </kbr-image-lightbox>
-            </div>
-
-            <div class="project-info">
-              <div class="project-header">
-                <h4>3M HIS Support Website</h4>
-                <a href="https://support.3mhis.com/" class="project-link">Visit Site →</a>
-              </div>
-
-              <div class="project-content">
-                <div class="project-features">
-                  <h5>Key Features</h5>
-                  <ul>
-                    <li>
-                      <strong>Streamlined navigation.</strong> It's much easier
-                      for users to navigate and find what they're looking for.
-                    </li>
-                    <li>
-                      <strong>Visual hierarchy.</strong> Use of iconography,
-                      vertical placement, size, and color helps users better
-                      parse the site's more important aspects.
-                    </li>
-                  </ul>
-                </div>
-                <div class="project-description">
-                  <p>
-                    I worked with the support organization's web team to update
-                    the look and feel of our support website.
-                  </p>
-                  <p>
-                    It was much harder than it seems, as we were working with an
-                    Oracle knowledgebase tool that doesn't like to expose its
-                    inner workings.
-                  </p>
-                  <p>
-                    We were able to get around most of the issues by writing
-                    custom JavaScript and overwriting default CSS styles. We
-                    also trimmed as much as possible from what the tool shipped
-                    by default. All in all, despite the custom logic and styles,
-                    the site performs better than it did before the redesign and
-                    ships less code.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <h3>Greenfield Projects</h3>
-        <div class="grid">
-          <article class="project-card card">
-            <div class="project-image-container">
-              <kbr-image-lightbox src="/images/sites/wx/webhelp-next-cover.png" alt="Webhelp Next application interface" caption="Webhelp Next - Modern help content delivery application" classes="project-image">
-              </kbr-image-lightbox>
-            </div>
-
-            <div class="project-info">
-              <div class="project-header">
-                <h4>Webhelp Next</h4>
-              </div>
-
-              <div class="project-content">
-                <div class="project-features">
-                  <h5>Key Features</h5>
-                  <ul>
-                    <li>
-                      <strong>Announcements.</strong> Create announcements in
-                      Author-it and show them on the library's home page.
-                    </li>
-                    <li>
-                      <strong>Tutorials.</strong> Define select topics from
-                      Author-it in a sequential manner to guide users through
-                      specific task flows. This helps bring attention to
-                      workflows that may be buried in dense table of contents.
-                    </li>
-                    <li>
-                      <strong>Role-based filtering.</strong> Filter the table of
-                      contents based on roles that are defined in Author-it at a
-                      topic level.
-                    </li>
-                  </ul>
-                </div>
-                <div class="project-description">
-                  <p>
-                    Webhelp Next was a JavaScript single-page application (SPA)
-                    that understands custom transformed content from Author-it.
-                  </p>
-                  <p>
-                    The 3M HIS Technical Communications team uses Author-it to
-                    create and maintain documentation. In 2019, Author-it
-                    announced their intent to retire the SPA output the team had
-                    been using for product libraries.
-                  </p>
-                  <p>
-                    The proposed alternative didn't satisfy us. So, I set out to
-                    build our own SPA that could understand Author-it output on
-                    a deep level, yet only include the features customers
-                    needed. Enter Webhelp Next.
-                  </p>
-                  <p>
-                    <strong>Tools.</strong> Webhelp Next was built with Vue CLI.
-                    The content it consumes is transformed from XML to HTML via
-                    a custom XSLT file.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card card">
-            <div class="project-image-container">
-              <kbr-image-lightbox src="/images/sites/overview_dark.png" alt="Analytics page for Doc Dashboard showing the types of analytics available" caption="Doc Dashboard - Analytics overview interface" classes="project-image">
-              </kbr-image-lightbox>
-            </div>
-
-            <div class="project-info">
-              <div class="project-header">
-                <h4>Doc Dashboard</h4>
-              </div>
-
-              <div class="project-content">
-                <div class="project-features">
-                  <h5>Key Features</h5>
-                  <ul>
-                    <li>
-                      <strong>Metrics and internal sharing.</strong> In
-                      comparison to Google Analytics itself, Doc Dashboard is
-                      quite easy to use. More importantly, it's extremely easy
-                      to share within the company. Just copy a report's URL and
-                      send it to interested stakeholders.
-                    </li>
-                    <li>
-                      <strong>Analytics reports.</strong> Doc Dashboard has many
-                      reports that focus on specific data - and actions users
-                      can take based on that data. Each report processes the
-                      Google Analytics data independently to ensure it's
-                      reliable and usable.
-                    </li>
-                    <li>
-                      <strong>Plotly.js charts.</strong> Several types of charts
-                      visually present the report data. These charts are most
-                      often intentionally simple. The goal is to show concrete,
-                      actionable information.
-                    </li>
-                  </ul>
-                </div>
-                <div class="project-description">
-                  <p>
-                    Doc Dashboard v2.0 is a complete re-build of the first
-                    version. I completely re-worked the data structures to be
-                    innately flexible and expandable.
-                  </p>
-                  <p>
-                    The original version only collated and analyzed Google
-                    Analytics data for 3M Health Information Systems' online
-                    help. v2.0 serves as more of a hub, adding information from
-                    PDF documents and support content.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card card">
-            <div class="project-image-container">
-              <kbr-image-lightbox src="/images/sites/dok-compare.png" alt="Home page for the DoK Compare website" caption="DoK Compare - Personal project comparison website" classes="project-image">
-              </kbr-image-lightbox>
-            </div>
-
-            <div class="project-info">
-              <div class="project-header">
-                <h4>DoK Compare</h4>
-                <a href="https://dok-compare.kyleblankrollins.com/#/" class="project-link">Visit Site →</a>
-              </div>
-
-              <div class="project-content">
-                <div class="project-features">
-                  <h5>Key Features</h5>
-                  <ul>
-                    <li>
-                      <strong>Unit statistics.</strong> Every unit in Homeworld:
-                      Deserts of Kharak has a stats sheet. DoK Compare makes it
-                      easy to visualize those stats and see how different units
-                      stack up against each other.
-                    </li>
-                    <li>
-                      <strong>Dynamic value calculations.</strong> DoK Compare
-                      automatically calculates the difference in stat values,
-                      then indicates whether each units' stats are higher,
-                      lower, or equal.
-                    </li>
-                    <li>
-                      <strong>Responsive design.</strong> While small screens
-                      aren't ideal for comparing datasets, DoK Compare can
-                      shrink to a single-column view that maintains a usable
-                      format.
-                    </li>
-                  </ul>
-                </div>
-                <div class="project-description">
-                  <p>
-                    DoK Compare is based on the real-time strategy game
-                    Homeworld: Deserts of Kharak. It allows users to view unit
-                    statistics side-by-side.
-                  </p>
-                  <p>
-                    The statistics comparison updates dynamically as new units
-                    are selected.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card card">
-            <div class="project-image-container">
-              <kbr-image-lightbox src="/images/sites/the_canney_valley.png" alt="The home page of The Canney Valley" caption="The Canney Valley - Personal creative project website" classes="project-image">
-              </kbr-image-lightbox>
-            </div>
-
-            <div class="project-info">
-              <div class="project-header">
-                <h4>The Canney Valley</h4>
-                <a href="https://the-canney-valley.kyleblankrollins.com/" class="project-link">Visit Site →</a>
-              </div>
-
-              <div class="project-content">
-                <div class="project-features">
-                  <h5>Key Features</h5>
-                  <ul>
-                    <li>
-                      <strong>Gridsome GraphQL layer.</strong> The GraphQL data
-                      layer in Gridsome makes all sorts of interesting things
-                      possible. For example, creating lists of posts that share
-                      a tag or a series. And none of it requires a server - it's
-                      all done during the build process.
-                    </li>
-                    <li>
-                      <strong>Dynamic navigation.</strong> The navigation
-                      throughout The Canney Valley updates based on the most
-                      recent posts.
-                    </li>
-                    <li>
-                      <strong>Responsive design.</strong> The Canney Valley is
-                      mobile-friendly and can be viewed comfortably at nearly
-                      all screen sizes.
-                    </li>
-                  </ul>
-                </div>
-                <div class="project-description">
-                  <p>
-                    The Canney Valley (TCV) is where I publish technical
-                    tutorials and share my thoughts on life. Unfortunately, it
-                    hasn't gotten the attention it deserves in terms of content.
-                    Some day, I'll get to writing more.
-                  </p>
-                  <p>
-                    TCV is built with Gridsome, which is a static site generator
-                    that uses GraphQL and Vue.js.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
+        <p>
+          <a href="https://bryostudio.com">Bryo Studio</a> is where I make
+          games, mobile apps, and other software, on my own. It's named for
+          bryophytes, the mosses that grow quietly on stones by rivers.
+        </p>
       </div>
-    </section>
-  </div>
+    </div>
+
+    <div class="pf-entries">
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <div class="pf-stack">
+            <span>Medals, not money.</span>
+            <span>An open, hilly town.</span>
+            <span>Balance the stack.</span>
+          </div>
+          <svg class="pf-stack-ground" viewBox="0 0 64 8" preserveAspectRatio="none" shape-rendering="crispEdges">
+            <path class="pf-ground-soil" d="M0 5h10v-1h8v-1h10v1h6v1h30v3H0z"></path>
+            <path class="pf-ground-moss" d="M0 5h10v-1h8v-1h10v1h6v1h30v0.6H34v-1H28v-1H18v1H10v1H0z"></path>
+          </svg>
+          <span class="pf-plate-caption">godot 4 · gdscript</span>
+        </div>
+        <p class="eyebrow">Game · in development · Android first</p>
+        <h3>Pizza Ambulance</h3>
+        <p>
+          Bryo Studio's first game. Ride a bicycle with a tower of pizza boxes
+          strapped to the back, over hills, curbs, and corners, and keep the
+          pizzas hot and whole. Good deliveries earn medals that unlock hats,
+          bigger racks, and a scooter. Rescue jobs bring home pets.
+        </p>
+        <div class="pf-links">
+          <a class="meta" href="https://bryostudio.com/pizza-ambulance/">Game page and release notes →</a>
+        </div>
+      </article>
+
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <div class="pf-flow">
+            <div class="pf-node pf-node-src">
+              Markdown<br><small>+ ascribe.toml</small>
+            </div>
+            <span class="pf-arrow">→</span>
+            <div class="pf-node pf-node-compiler">
+              <strong>one compiler</strong>
+              <div class="pf-surfaces">
+                <span>editor</span><span>CLI</span><span>CI</span>
+              </div>
+            </div>
+            <span class="pf-arrow">→</span>
+            <div class="pf-outs">
+              <div class="pf-node">website</div>
+              <div class="pf-node">Markdown</div>
+              <div class="pf-node">JSON</div>
+            </div>
+          </div>
+          <span class="pf-plate-caption">rust · mpl</span>
+        </div>
+        <p class="eyebrow">Docs-as-code toolchain · early · open source</p>
+        <h3>Ascribe</h3>
+        <p>
+          A toolchain for documentation written as code. It builds Markdown into
+          a website, plain Markdown, and JSON, and the same compiler runs in the
+          editor, the CLI, and CI, so they always agree. Broken links, missing
+          headings, and undeclared names are errors as you type.
+        </p>
+        <ul class="pf-traits">
+          <li>includes, variants, variables</li>
+          <li>checked like code</li>
+          <li>MCP server and llms.txt</li>
+        </ul>
+        <div class="pf-links">
+          <a class="meta" href="https://ascribed-dev.com">ascribed-dev.com →</a>
+          <a class="meta" href="/the-docs-tool-i-wanted.html">Why I built it →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Chapter 2 -->
+  <section class="pf-chapter" id="open-source" aria-labelledby="oss-title">
+    <div class="pf-chapter-head">
+      <div>
+        <span class="pf-chapter-num">Chapter 2</span>
+        <h2 id="oss-title">Open source and side projects</h2>
+      </div>
+      <div>
+        <p>
+          These are the tools and libraries I'm building now, mostly in the
+          open. Most of them come from the same place: I wanted a tool that
+          didn't exist yet, so I started building it.
+        </p>
+      </div>
+    </div>
+
+    <div class="pf-entries">
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <div class="pf-sdk">
+            <div class="pf-sdk-top">meowzer sdk</div>
+            <div class="pf-sdk-libs">
+              <span>create</span><span>animate<br>+ move</span><span>behave</span><span>store</span>
+            </div>
+            <p class="pf-sdk-moods">
+              a cat <b>wanders</b> · <b>rests</b> · <b>plays</b> ·
+              <b>observes</b> · <b>explores</b>
+            </p>
+          </div>
+        </div>
+        <p class="eyebrow">TypeScript · GSAP · IndexedDB</p>
+        <h3>Meowzer</h3>
+        <p>
+          A system for putting autonomous, animated cats on a web page. Each cat
+          is pixel art generated from a seed, so you can share one as a short
+          code, and six personalities decide what it does next.
+        </p>
+        <div class="pf-links">
+          <a class="meta" href="https://github.com/KyleBlankRollins/meowzer">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <div class="pf-count">
+            <div class="pf-count-num">50</div>
+            <div>
+              <div class="pf-count-label">components</div>
+              <div class="pf-chips">
+                <span>button</span><span>input</span><span>date picker</span><span>modal</span><span>menu</span><span>tree</span><span class="pf-chip-more">+ 44</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="eyebrow">Lit · TypeScript · Vite · Astro</p>
+        <h3>Blueprint</h3>
+        <p>
+          A portable, customizable component library built on Lit, so the
+          components work in any framework, or in none. Design tokens are CSS
+          custom properties, so a theme is a set of variables. Its docs site has
+          live previews of each component.
+        </p>
+        <div class="pf-links">
+          <a class="meta" href="https://github.com/KyleBlankRollins/blueprint">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <ol class="pf-loop">
+            <li>research</li>
+            <li>plan</li>
+            <li>review the plan</li>
+            <li>implement</li>
+            <li>review the implementation</li>
+            <li>hand off between model tiers</li>
+          </ol>
+          <span class="pf-plate-caption">the agent build loop</span>
+        </div>
+        <p class="eyebrow">Agent Skills</p>
+        <h3>kbr-skills</h3>
+        <p>
+          A collection of Agent Skills that install into any harness that
+          supports the Agent Skills open standard, including Claude Code, GitHub
+          Copilot, Codex CLI, Gemini CLI, and Cursor. Alongside the build loop,
+          some skills apply semiotic analysis to system design, code review, and
+          interface decisions.
+        </p>
+        <div class="pf-links">
+          <a class="meta" href="https://github.com/KyleBlankRollins/kbr-skills">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="pf-entry">
+        <div class="pf-plate" aria-hidden="true">
+          <!-- The empty comments between the braces below split the text
+               node, so the builder doesn't interpolate them as variables. -->
+          <pre class="pf-snippet"><span class="t">&lt;template</span> <span class="a">data-kbr-for=</span><span class="v">"position of company.positions"</span><span class="t">&gt;</span>
+  <span class="t">&lt;article</span> <span class="a">class=</span>"timeline-entry"<span class="t">&gt;</span>
+    <span class="t">&lt;div</span> <span class="a">class=</span>"entry-header"<span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="a">class=</span>"entry-title"<span class="t">&gt;</span>
+        <span class="t">&lt;h3</span> <span class="a">class=</span>"job-title"<span class="t">&gt;</span><span class="v">{<!-- -->{position.title}}</span><span class="t">&lt;/h3&gt;</span>
+      <span class="t">&lt;/div&gt;</span>
+      <span class="t">&lt;div</span> <span class="a">class=</span>"entry-meta"<span class="t">&gt;</span>
+        <span class="t">&lt;div</span> <span class="a">class=</span>"date-range"<span class="t">&gt;</span><span class="v">{<!-- -->{position.dateRange}}</span><span class="t">&lt;/div&gt;</span></pre>
+          <span class="pf-plate-caption">templates/partials/timeline-static-content.html</span>
+        </div>
+        <p class="eyebrow">Vite · TypeScript · Lit · Vitest</p>
+        <h3>This site</h3>
+        <p>
+          kyleblankrollins.com is where I publish writing and work samples, and
+          where I try out ideas about how a small site should be built. A custom
+          static site generator builds HTML templates and Markdown posts into
+          static pages, and Vale checks posts against the Google developer
+          documentation style guide.
+        </p>
+        <div class="pf-links">
+          <a class="meta" href="https://github.com/KyleBlankRollins/Web-Portfolio">GitHub →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="pf-subhead">
+      <h3>Older side projects</h3>
+      <p class="meta">Personal sites, built to learn</p>
+    </div>
+    <ul class="pf-rows">
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="https://dok-compare.kyleblankrollins.com/#/">DoK Compare</a>
+          </h4>
+          <p>
+            Side-by-side unit statistics for Homeworld: Deserts of Kharak, with
+            each stat marked higher, lower, or equal.
+          </p>
+        </div>
+        <span class="pf-row-fact">site</span>
+        <span class="pf-row-fact pf-row-none">&nbsp;</span>
+        <a class="pf-row-link meta" href="https://dok-compare.kyleblankrollins.com/#/">Visit site →</a>
+        <a class="pf-row-thumb" href="/images/sites/dok-compare.png" tabindex="-1" aria-hidden="true"><img src="/images/sites/dok-compare.png" alt="" loading="lazy"></a>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="https://the-canney-valley.kyleblankrollins.com/">The Canney Valley</a>
+          </h4>
+          <p>
+            Where I publish technical tutorials and thoughts on life. Its
+            GraphQL layer builds lists of posts that share a tag or a series,
+            with no server.
+          </p>
+        </div>
+        <span class="pf-row-fact">site</span>
+        <span class="pf-row-fact">Gridsome · GraphQL · Vue.js</span>
+        <a class="pf-row-link meta" href="https://the-canney-valley.kyleblankrollins.com/">Visit site →</a>
+        <a class="pf-row-thumb" href="/images/sites/the_canney_valley.png" tabindex="-1" aria-hidden="true"><img src="/images/sites/the_canney_valley.png" alt="" loading="lazy"></a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Chapter 3 -->
+  <section class="pf-chapter" id="earlier-work" aria-labelledby="earlier-title">
+    <div class="pf-chapter-head">
+      <div>
+        <span class="pf-chapter-num">Chapter 3 · 3M, 2017 to 2021</span>
+        <h2 id="earlier-title">Earlier work</h2>
+      </div>
+      <div>
+        <p>
+          At 3M Health Information Systems I was a technical writer, then a
+          senior technical writer and web developer on the Technical
+          Communications team. These are the web projects and documents from
+          that time that I can share. The rest of the story is in my
+          <a href="/career.html">career timeline</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="pf-feature">
+      <div class="pf-pair">
+        <figure>
+          <a class="pf-shot" href="/images/sites/support-site-before.png"><img src="/images/sites/support-site-before.png" alt="3M HIS Support website before the redesign" loading="lazy"></a>
+          <figcaption class="meta">Before</figcaption>
+        </figure>
+        <figure>
+          <a class="pf-shot" href="/images/sites/support-site-after.png"><img src="/images/sites/support-site-after.png" alt="3M HIS Support website after the redesign" loading="lazy"></a>
+          <figcaption class="meta">After</figcaption>
+        </figure>
+      </div>
+      <article class="pf-entry">
+        <p class="eyebrow">Redesign · JavaScript · CSS</p>
+        <h3>3M HIS Support website</h3>
+        <p>
+          I worked with the support organization's web team to update the look
+          and feel of our support website. It was harder than it seems: the site
+          ran on an Oracle knowledgebase tool that doesn't like to expose its
+          inner workings.
+        </p>
+        <p>
+          Custom JavaScript, overridden default styles, and trimming what the
+          tool shipped by default got us there. The site performs better than it
+          did before the redesign and ships less code.
+        </p>
+        <ul class="pf-traits">
+          <li>streamlined navigation</li>
+          <li>visual hierarchy</li>
+        </ul>
+        <div class="pf-links">
+          <a class="meta" href="https://support.3mhis.com/">Visit site →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="pf-entries">
+      <article class="pf-entry">
+        <a class="pf-shot" href="/images/sites/wx/webhelp-next-cover.png"><img src="/images/sites/wx/webhelp-next-cover.png" alt="Webhelp Next application interface" loading="lazy"></a>
+        <p class="eyebrow">Greenfield · Vue CLI · XSLT</p>
+        <h3>Webhelp Next</h3>
+        <p>
+          In 2019, Author-it announced it would retire the single-page app
+          output the team used for product libraries. The proposed alternative
+          didn't satisfy us, so I built our own SPA that understood Author-it
+          output on a deep level, with only the features customers needed.
+        </p>
+        <ul class="pf-traits">
+          <li>announcements</li>
+          <li>tutorials</li>
+          <li>role-based filtering</li>
+        </ul>
+      </article>
+
+      <article class="pf-entry">
+        <a class="pf-shot" href="/images/sites/overview_dark.png"><img src="/images/sites/overview_dark.png" alt="Analytics page for Doc Dashboard showing the types of analytics available" loading="lazy"></a>
+        <p class="eyebrow">Greenfield · Google Analytics · Plotly.js</p>
+        <h3>Doc Dashboard</h3>
+        <p>
+          A complete rebuild of the first version, with data structures reworked
+          to be flexible and expandable. Version 1 analyzed Google Analytics
+          data for the online help; v2.0 is a hub that adds PDF documents and
+          support content. Sharing a report means copying its URL.
+        </p>
+        <ul class="pf-traits">
+          <li>metrics and internal sharing</li>
+          <li>analytics reports</li>
+          <li>simple charts</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="pf-subhead" id="writing-samples">
+      <h3>Writing samples</h3>
+      <p class="meta">
+        Most of my writing is under NDA. Questions?
+        <a class="meta" href="https://www.linkedin.com/in/kyle-blank-rollins/">Ask on LinkedIn</a>
+      </p>
+    </div>
+    <ul class="pf-rows pf-rows-docs">
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="/samples/dcn300_cscom_rel_october_2018.pdf">3M™ ChartScript.com What's New</a>
+          </h4>
+          <p>
+            High-level overview of software changes for transcriptionists,
+            system administrators, and primary care providers.
+          </p>
+        </div>
+        <span class="pf-row-fact">user docs</span>
+        <span class="pf-row-fact">October 2018</span>
+        <a class="pf-row-link meta" href="/samples/dcn300_cscom_rel_october_2018.pdf">PDF →</a>
+        <a class="pf-row-thumb pf-row-cover" href="/samples/dcn300_cscom_rel_october_2018.pdf" tabindex="-1" aria-hidden="true"><img src="/images/samples/CScom-WN-Oct-2018.png" alt="" loading="lazy"></a>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="/samples/grp403_eapg_meth_overview_v315.pdf">Enhanced Ambulatory Patient Grouping Systems</a>
+          </h4>
+          <p>
+            Publicly available methodology overview with historical context and
+            current implementation breakdown.
+          </p>
+        </div>
+        <span class="pf-row-fact">user docs</span>
+        <span class="pf-row-fact">January 2020</span>
+        <a class="pf-row-link meta" href="/samples/grp403_eapg_meth_overview_v315.pdf">PDF →</a>
+        <a class="pf-row-thumb pf-row-cover" href="/samples/grp403_eapg_meth_overview_v315.pdf" tabindex="-1" aria-hidden="true"><img src="/images/samples/EAPG-meth-overview-jan-2020.png" alt="" loading="lazy"></a>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="/samples/provider_client_rel_may_2019.pdf">Provider Client Release Notes</a>
+          </h4>
+          <p>
+            Software changes highlighting workflows and intersections between
+            providers, transcriptionists, and QA staff.
+          </p>
+        </div>
+        <span class="pf-row-fact">user docs</span>
+        <span class="pf-row-fact">May 2019</span>
+        <a class="pf-row-link meta" href="/samples/provider_client_rel_may_2019.pdf">PDF →</a>
+        <a class="pf-row-thumb pf-row-cover" href="/samples/provider_client_rel_may_2019.pdf" tabindex="-1" aria-hidden="true"><img src="/images/samples/Provider-Client-WN-May-2019.png" alt="" loading="lazy"></a>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf">APCGP Software Release Overview</a>
+          </h4>
+          <p>
+            Overview of software features and data structure changes, linking
+            out to the detailed technical documentation.
+          </p>
+        </div>
+        <span class="pf-row-fact">developer docs</span>
+        <span class="pf-row-fact">v2019.1.3</span>
+        <a class="pf-row-link meta" href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf">PDF →</a>
+        <a class="pf-row-thumb pf-row-cover" href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf" tabindex="-1" aria-hidden="true"><img src="/images/samples/mf-WN-v2019.1.3.png" alt="" loading="lazy"></a>
+      </li>
+      <li class="pf-row">
+        <div class="pf-row-title">
+          <h4>
+            <a href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf">TRICARE OPPS Pricer Software Manual</a>
+          </h4>
+          <p>
+            Complete manual covering download, installation, interface, and
+            reimbursement information for healthcare payment processing.
+          </p>
+        </div>
+        <span class="pf-row-fact">developer docs</span>
+        <span class="pf-row-fact">v20.3.0</span>
+        <a class="pf-row-link meta" href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf">PDF →</a>
+        <a class="pf-row-thumb pf-row-cover" href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf" tabindex="-1" aria-hidden="true"><img src="/images/samples/opps-pricer-manual-v20.3.0.png" alt="" loading="lazy"></a>
+      </li>
+    </ul>
+  </section>
 </div>
 </main>
 
