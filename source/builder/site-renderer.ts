@@ -97,13 +97,34 @@ export function renderSite(
       {
         defaultTitle: "Untitled",
         assets,
-        metadata: page.metadata,
+        metadata: { ...socialMetadata(page), ...page.metadata },
       }
     );
     outputs.set(page.outputPath, rendered);
   }
 
   return { outputs, files };
+}
+
+/** Absolute origin for link previews; crawlers ignore relative og: URLs. */
+export const SITE_URL = "https://www.kyleblankrollins.com";
+export const DEFAULT_SOCIAL_IMAGE = "/images/og-default.png";
+
+/**
+ * Values for the Open Graph and Twitter tags in partials/head.html, which
+ * LinkedIn, Slack and others read to build a link preview card. Page
+ * metadata is spread after this, so a page can override any of them.
+ */
+function socialMetadata(page: {
+  readonly outputPath: string;
+  readonly metadata?: Partial<TemplateVariables>;
+}): Partial<TemplateVariables> {
+  const path = page.outputPath.replace(/\\/g, "/");
+  return {
+    pageUrl: path === "index.html" ? `${SITE_URL}/` : `${SITE_URL}/${path}`,
+    socialImage: `${SITE_URL}${DEFAULT_SOCIAL_IMAGE}`,
+    ogType: page.metadata?.isBlogPost ? "article" : "website",
+  };
 }
 
 function readDirectoryFiles(
