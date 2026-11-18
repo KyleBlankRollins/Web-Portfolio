@@ -287,6 +287,11 @@ body {
     flex: 2;
   }
 
+  /* Software projects have no screenshot, so there is nothing to indent from. */
+  &:not(:has(.project-image-container)) .project-info {
+    margin-left: 0;
+  }
+
   .project-link {
     display: inline-flex;
     align-items: center;

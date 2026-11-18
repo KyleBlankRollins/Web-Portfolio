@@ -2,11 +2,11 @@
   <meta name="title" content="Portfolio - Kyle Blank Rollins" />
   <meta
     name="description"
-    content="A showcase of my work as a technical writer and developer, including examples, experience timeline, and notable projects."
+    content="Software I'm building, including Ascribe, plus web projects and technical writing samples."
   />
   <meta
     name="keywords"
-    content="portfolio, technical writer, developer, Kyle Blank Rollins, projects"
+    content="portfolio, technical writer, developer, Kyle Blank Rollins, projects, Ascribe, open source"
   />
 </template>
 
@@ -22,146 +22,311 @@
     <section>
       <h1>Samples of my work</h1>
       <p class="lead">
-        A showcase of my work as a technical writer and developer, including
-        examples, experience timeline, and notable projects.
+        Software I'm building, web projects from earlier in my career, and
+        samples of my technical writing.
       </p>
     </section>
 
     <section>
-      <h2>Writing samples</h2>
+      <h2>Software projects</h2>
       <p>
-        Most of my writing is covered under NDAs and not shareable. However, you
-        can find several documents below that showcase different types of
-        technical documentation.
-      </p>
-      <p>
-        If you're curious about these documents or my other work, contact me
-        through
-        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">LinkedIn</a>.
+        These are the tools and libraries I'm building now, mostly in the open.
+        Most of them come from the same place: I wanted a tool that didn't exist
+        yet, so I started building it.
       </p>
 
       <div>
-        <h3>User Documentation</h3>
-        <div class="grid two-columns">
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img
-                src="/images/samples/CScom-WN-Oct-2018.png"
-                alt="ChartScript.com What's New in this Release cover"
-                class="sample-image"
-              />
-            </div>
-            <div class="sample-content">
-              <h4>3M™ ChartScript.com What's New</h4>
-              <p>
-                High-level overview of software changes for multiple audiences:
-                transcriptionists, system administrators, and primary care
-                providers.
-              </p>
-              <a
-                href="/samples/dcn300_cscom_rel_october_2018.pdf"
-                class="sample-link"
-              >
-                View Document →
-              </a>
+        <h3>Bryo Studio</h3>
+        <p>
+          <a href="https://bryostudio.com">Bryo Studio</a> is where I make
+          games, mobile apps, and other software, on my own. It's named for
+          bryophytes, the mosses that grow quietly on stones by rivers, and its
+          motto is "small software, grown slowly."
+        </p>
+        <div class="grid">
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Pizza Ambulance</h4>
+                <a
+                  href="https://bryostudio.com/pizza-ambulance/"
+                  class="project-link"
+                  >Visit Site →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Balance the stack.</strong> Ride a bicycle with a
+                      tower of pizza boxes strapped to the back, over hills,
+                      curbs, and corners. Every bump counts.
+                    </li>
+                    <li>
+                      <strong>An open, hilly town.</strong> Take delivery jobs
+                      across town, down to a windy harbour with a drawbridge you
+                      can jump if you're brave.
+                    </li>
+                    <li>
+                      <strong>Medals, not money.</strong> Good deliveries earn
+                      medals that unlock hats, bigger racks, and a scooter.
+                      Rescue jobs bring home pets.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Pizza Ambulance is Bryo Studio's first game. Keep the pizzas
+                    hot, and keep them whole. It's in development and coming to
+                    Android first, with release notes for every version on its
+                    page.
+                  </p>
+                  <p><strong>Tools.</strong> Godot 4 and GDScript.</p>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img
-                src="/images/samples/EAPG-meth-overview-jan-2020.png"
-                alt="EAPG Methodology Overview cover"
-                class="sample-image"
-              />
-            </div>
-            <div class="sample-content">
-              <h4>Enhanced Ambulatory Patient Grouping Systems</h4>
-              <p>
-                Publicly available methodology overview with historical context
-                and current implementation breakdown.
-              </p>
-              <a
-                href="/samples/grp403_eapg_meth_overview_v315.pdf"
-                class="sample-link"
-              >
-                View Document →
-              </a>
-            </div>
-          </article>
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Ascribe</h4>
+                <a href="https://ascribed-dev.com" class="project-link"
+                  >Visit Site →</a
+                >
+              </div>
 
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img
-                src="/images/samples/Provider-Client-WN-May-2019.png"
-                alt="Provider Client What's New cover"
-                class="sample-image"
-              />
-            </div>
-            <div class="sample-content">
-              <h4>Provider Client Release Notes</h4>
-              <p>
-                Software changes documentation highlighting workflows and
-                intersections between providers, transcriptionists, and QA
-                staff.
-              </p>
-              <a
-                href="/samples/provider_client_rel_may_2019.pdf"
-                class="sample-link"
-              >
-                View Document →
-              </a>
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>A docs team's tools, in Markdown.</strong>
+                      Includes, variants shown as tabs, variables, page types,
+                      and templates are part of the file format, defined by a
+                      content model in <code>ascribe.toml</code>.
+                    </li>
+                    <li>
+                      <strong>Checked like code.</strong> Broken links, missing
+                      headings, and undeclared names are errors in the editor as
+                      you type and in CI. Code examples come from the code's own
+                      files.
+                    </li>
+                    <li>
+                      <strong>Built for agents.</strong> Coding agents get the
+                      project's rules and checks through an MCP server, and a
+                      published site serves <code>llms.txt</code> and a Markdown
+                      version of every page.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Ascribe is a toolchain for documentation written as code. It
+                    builds Markdown into a website, plain Markdown, and JSON.
+                    The same compiler runs in the editor, the CLI, and CI, so
+                    they always agree.
+                  </p>
+                  <p>
+                    I wrote about why I built it in
+                    <a href="/the-docs-tool-i-wanted.html"
+                      >The Docs Tool I Wanted</a
+                    >.
+                  </p>
+                  <p>
+                    <strong>Tools.</strong> Rust for the compiler and language
+                    server, with a VS Code extension, an npm CLI, and an Astro
+                    integration. It's early and open source under the MPL.
+                  </p>
+                </div>
+              </div>
             </div>
           </article>
         </div>
 
-        <h3>Developer Documentation</h3>
-        <div class="grid two-columns">
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img
-                src="/images/samples/mf-WN-v2019.1.3.png"
-                alt="APCGP What's New cover"
-                class="sample-image"
-              />
-            </div>
-            <div class="sample-content">
-              <h4>APCGP Software Release Overview</h4>
-              <p>
-                Comprehensive overview of software features and data structure
-                changes, serving as a central repository linking to detailed
-                technical documentation.
-              </p>
-              <a
-                href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
-                class="sample-link"
-              >
-                View Document →
-              </a>
+        <h3>Open source</h3>
+        <div class="grid">
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Meowzer</h4>
+                <a
+                  href="https://github.com/KyleBlankRollins/meowzer"
+                  class="project-link"
+                  >View on GitHub →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Procedural cats.</strong> Each cat is generated
+                      pixel art from a seed, so you can share a cat as a short
+                      code.
+                    </li>
+                    <li>
+                      <strong>Personality-driven behavior.</strong> Six
+                      personalities and a motivation system decide whether a cat
+                      wanders, rests, plays, observes, or explores.
+                    </li>
+                    <li>
+                      <strong>Movement and physics.</strong> Cats follow curved
+                      paths with velocity, friction, and boundaries, animated
+                      between idle, walking, running, sitting, sleeping, and
+                      playing.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Meowzer is a system for putting autonomous, animated cats on
+                    a web page. A high-level SDK ties together four libraries:
+                    one for creating cats, one for animation and movement, one
+                    for behavior, and one for storage.
+                  </p>
+                  <p>
+                    <strong>Tools.</strong> TypeScript, GSAP for animation, and
+                    IndexedDB for saving cat collections.
+                  </p>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="sample-card card">
-            <div class="sample-image-container">
-              <img
-                src="/images/samples/opps-pricer-manual-v20.3.0.png"
-                alt="TRICARE OPPS Pricer Software Manual cover"
-                class="sample-image"
-              />
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>Blueprint</h4>
+                <a
+                  href="https://github.com/KyleBlankRollins/blueprint"
+                  class="project-link"
+                  >View on GitHub →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>50 components.</strong> Everything from buttons
+                      and inputs to date pickers, modals, menus, and trees.
+                    </li>
+                    <li>
+                      <strong>Standard web components.</strong> Built on Lit, so
+                      the components work in any framework, or in none.
+                    </li>
+                    <li>
+                      <strong>Themeable.</strong> Design tokens are CSS custom
+                      properties, so a theme is a set of variables.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    Blueprint is a portable, customizable component library. It
+                    comes with a documentation site that has live previews of
+                    each component.
+                  </p>
+                  <p>
+                    <strong>Tools.</strong> Lit, TypeScript, Vite, and Astro for
+                    the docs.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="sample-content">
-              <h4>TRICARE OPPS Pricer Software Manual</h4>
-              <p>
-                Complete software manual covering download, installation,
-                interface, and reimbursement information for healthcare payment
-                processing.
-              </p>
-              <a
-                href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
-                class="sample-link"
-              >
-                View Document →
-              </a>
+          </article>
+
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>kbr-skills</h4>
+                <a
+                  href="https://github.com/KyleBlankRollins/kbr-skills"
+                  class="project-link"
+                  >View on GitHub →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>Agent workflow.</strong> Skills that structure an
+                      AI agent's build loop: research, plan, review the plan,
+                      implement, review the implementation, and hand off between
+                      model tiers.
+                    </li>
+                    <li>
+                      <strong>Semiotic engineering.</strong> Skills that apply
+                      semiotic analysis to system design, code review, and
+                      interface decisions.
+                    </li>
+                    <li>
+                      <strong>Portable.</strong> Each grouping is one
+                      self-contained directory that works on its own.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    kbr-skills is a collection of Agent Skills that install into
+                    any harness that supports the Agent Skills open standard,
+                    including Claude Code, GitHub Copilot, Codex CLI, Gemini
+                    CLI, and Cursor.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card card">
+            <div class="project-info">
+              <div class="project-header">
+                <h4>This site</h4>
+                <a
+                  href="https://github.com/KyleBlankRollins/Web-Portfolio"
+                  class="project-link"
+                  >View on GitHub →</a
+                >
+              </div>
+
+              <div class="project-content">
+                <div class="project-features">
+                  <h5>Key Features</h5>
+                  <ul>
+                    <li>
+                      <strong>A custom static site generator.</strong> HTML
+                      templates and Markdown posts are built into static pages,
+                      so the content is in the HTML rather than rendered by
+                      JavaScript.
+                    </li>
+                    <li>
+                      <strong>Prose linting.</strong> Vale checks blog posts
+                      against the Google developer documentation style guide.
+                    </li>
+                    <li>
+                      <strong>Themes.</strong> Two themes, each with light and
+                      dark modes.
+                    </li>
+                  </ul>
+                </div>
+                <div class="project-description">
+                  <p>
+                    kyleblankrollins.com is where I publish writing and work
+                    samples. It's also where I try out ideas about how a small
+                    site should be built.
+                  </p>
+                  <p>
+                    <strong>Tools.</strong> Vite, TypeScript, Lit, and Vitest.
+                  </p>
+                </div>
+              </div>
             </div>
           </article>
         </div>
@@ -483,6 +648,147 @@
                   </p>
                 </div>
               </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Writing samples</h2>
+      <p>
+        Most of my writing is covered under NDAs and not shareable. However, you
+        can find several documents below that showcase different types of
+        technical documentation.
+      </p>
+      <p>
+        If you're curious about these documents or my other work, contact me
+        through
+        <a href="https://www.linkedin.com/in/kyle-blank-rollins/">LinkedIn</a>.
+      </p>
+
+      <div>
+        <h3>User Documentation</h3>
+        <div class="grid two-columns">
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/CScom-WN-Oct-2018.png"
+                alt="ChartScript.com What's New in this Release cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>3M™ ChartScript.com What's New</h4>
+              <p>
+                High-level overview of software changes for multiple audiences:
+                transcriptionists, system administrators, and primary care
+                providers.
+              </p>
+              <a
+                href="/samples/dcn300_cscom_rel_october_2018.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/EAPG-meth-overview-jan-2020.png"
+                alt="EAPG Methodology Overview cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>Enhanced Ambulatory Patient Grouping Systems</h4>
+              <p>
+                Publicly available methodology overview with historical context
+                and current implementation breakdown.
+              </p>
+              <a
+                href="/samples/grp403_eapg_meth_overview_v315.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/Provider-Client-WN-May-2019.png"
+                alt="Provider Client What's New cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>Provider Client Release Notes</h4>
+              <p>
+                Software changes documentation highlighting workflows and
+                intersections between providers, transcriptionists, and QA
+                staff.
+              </p>
+              <a
+                href="/samples/provider_client_rel_may_2019.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <h3>Developer Documentation</h3>
+        <div class="grid two-columns">
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/mf-WN-v2019.1.3.png"
+                alt="APCGP What's New cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>APCGP Software Release Overview</h4>
+              <p>
+                Comprehensive overview of software features and data structure
+                changes, serving as a central repository linking to detailed
+                technical documentation.
+              </p>
+              <a
+                href="/samples/grp072_apcgp_mf_rel_v2019.1.3.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
+            </div>
+          </article>
+
+          <article class="sample-card card">
+            <div class="sample-image-container">
+              <img
+                src="/images/samples/opps-pricer-manual-v20.3.0.png"
+                alt="TRICARE OPPS Pricer Software Manual cover"
+                class="sample-image"
+              />
+            </div>
+            <div class="sample-content">
+              <h4>TRICARE OPPS Pricer Software Manual</h4>
+              <p>
+                Complete software manual covering download, installation,
+                interface, and reimbursement information for healthcare payment
+                processing.
+              </p>
+              <a
+                href="/samples/pbl018_tri_opps_pricer_stdalone_v20.3.0.pdf"
+                class="sample-link"
+              >
+                View Document →
+              </a>
             </div>
           </article>
         </div>
