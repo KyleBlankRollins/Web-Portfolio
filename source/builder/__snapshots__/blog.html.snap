@@ -39,6 +39,19 @@
 <title>Blog - Kyle Blank Rollins</title>
 <meta name="description" content="Thoughts on technical writing, web development, and professional insights.">
 <meta name="keywords" content="blog, technical writing, web development, Kyle Blank Rollins">
+<!-- Link previews (LinkedIn, Slack, Bluesky, etc.). Values come from
+     socialMetadata() in source/builder/site-renderer.ts. The image source
+     is scripts/og-image/og-default.html. -->
+<meta property="og:site_name" content="Kyle Blank Rollins">
+<meta property="og:title" content="Blog - Kyle Blank Rollins">
+<meta property="og:description" content="Thoughts on technical writing, web development, and professional insights.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kyleblankrollins.com/blog.html">
+<meta property="og:image" content="https://www.kyleblankrollins.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kyle Blank Rollins: technical manager, technical writer, and developer.">
+<meta name="twitter:card" content="summary_large_image">
 
 
     <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">

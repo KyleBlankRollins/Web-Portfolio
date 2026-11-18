@@ -39,6 +39,19 @@
 <title>Technical Storytelling and Drift at Machine Speed</title>
 <meta name="description" content="Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this.">
 <meta name="keywords" content="technical writing, AI agents, documentation, natural language, product interface">
+<!-- Link previews (LinkedIn, Slack, Bluesky, etc.). Values come from
+     socialMetadata() in source/builder/site-renderer.ts. The image source
+     is scripts/og-image/og-default.html. -->
+<meta property="og:site_name" content="Kyle Blank Rollins">
+<meta property="og:title" content="Technical Storytelling and Drift at Machine Speed">
+<meta property="og:description" content="Documentation has a new audience that acts on ambiguity instead of questioning it. Technical writers have been training for this.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.kyleblankrollins.com/docs-as-interface.html">
+<meta property="og:image" content="https://www.kyleblankrollins.com/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kyle Blank Rollins: technical manager, technical writer, and developer.">
+<meta name="twitter:card" content="summary_large_image">
 
 
     <link rel="stylesheet" crossorigin="" href="/assets/main-HASH.css"><link rel="modulepreload" crossorigin="" href="/assets/lit-HASH.js">
