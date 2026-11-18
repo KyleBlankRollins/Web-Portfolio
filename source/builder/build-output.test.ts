@@ -150,7 +150,12 @@ describe("built site output", () => {
     expect(homeHtml).toContain('class="home-highlights"');
     // The homepage highlights the newest post, which changes with each publish.
     expect(homeHtml).toContain(blogManifest.posts[0].title);
-    expect(homeHtml).toContain("Documentation Team Lead");
+    // It also shows the current role, which changes with each new position.
+    const currentRole = parseCareerContent(loadSiteSource().careerContent)
+      .flatMap((company) => company.positions)
+      .find((position) => position.endDate.toLowerCase() === "present");
+    expect(currentRole).toBeDefined();
+    expect(homeHtml).toContain(currentRole!.title);
     expect(homeHtml).not.toMatch(/<kbr-home-highlights\b/i);
 
     expect(careerHtml.match(/data-static-timeline/g)).toHaveLength(1);

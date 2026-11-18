@@ -92,17 +92,40 @@
             <article class="timeline-entry">
               <div class="entry-header">
                 <div class="entry-title">
-                  <h3 class="job-title">Documentation Team Lead</h3>
+                  <h3 class="job-title">Lead Engineer</h3>
                 </div>
                 <div class="entry-meta">
-                  <div class="date-range">Aug 2024 - Present</div>
+                  <div class="date-range">Mar 2026 - Present</div>
                   <div class="duration">DURATION</div>
                   <div class="employment-type">Full-time</div>
                   <div class="location">Remote</div>
                 </div>
               </div>
               <div class="description">
-                <p>Manage a team of engineers and technical writers.</p>
+                <p>My team moved to a new org in MongoDB: AI Builder Experience.</p>
+<p>This was yet another transition period for my team. We went from education engineers to AI researchers and software engineers.</p>
+<p>Currently, the team I lead (Agent Research and Tooling) conducts practical AI experiments and builds tools to help us analyze and support those experiments. We were also heavily involved in creating the official <a href="https://github.com/mongodb/agent-skills">MongoDB agent skills</a> and continue to be involved in that project&#39;s tooling.</p>
+
+              </div>
+
+            </article>
+
+            <article class="timeline-entry">
+              <div class="entry-header">
+                <div class="entry-title">
+                  <h3 class="job-title">Documentation Team Lead</h3>
+                </div>
+                <div class="entry-meta">
+                  <div class="date-range">Aug 2024 - Mar 2026</div>
+                  <div class="duration">DURATION</div>
+                  <div class="employment-type">Full-time</div>
+                  <div class="location">Remote</div>
+                </div>
+              </div>
+              <div class="description">
+                <p>I was promoted to lead the team of education engineers that I had joined a couple of years earlier.</p>
+<p>Shortly after being promoted, all of the products that we documented were deprecated. I led the team through a transition within the Docs org at MongoDB. We pivoted to building and maintaining code example and test tooling, among other docs-focused tools. This included a code example testing platform, VS Code extensions to make working with code examples easier, dashboard sites, and docs audit CLIs.</p>
+<p>We successfully took the code example philosophy our team used and expanded it to the docs org of about 50 people.</p>
 
               </div>
               <div class="skills">
